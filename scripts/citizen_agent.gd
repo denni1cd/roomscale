@@ -16,6 +16,7 @@ var travelled_distance := 0.0
 var _destination := Vector3.ZERO
 var _second_destination := Vector3.ZERO
 var _needs_second_leg := false
+var _delivery_resource := ""
 var _path: Array[Vector3] = []
 var _path_cursor := 0
 var _work_timer := 0.0
@@ -45,8 +46,11 @@ func _process(delta: float) -> void:
 	elif state == "WORK":
 		_work_timer += delta
 		_animate_work()
-		var work_duration := 0.35 if task_type == "DESK_INVESTIGATION" else 0.65 + float(citizen_id % 4) * 0.13
-		if _work_timer >= work_duration:
+		if task_type == "CONSTRUCTION_BUILD":
+			if coordinator.advance_construction_work(task_id, citizen_id, delta):
+				coordinator.complete_task(task_id)
+				_assign_next_task()
+		elif _work_timer >= (0.35 if task_type == "DESK_INVESTIGATION" else 0.65 + float(citizen_id % 4) * 0.13):
 			coordinator.complete_task(task_id)
 			carrying = false
 			_cargo.visible = false
@@ -68,6 +72,24 @@ func assign_player_goal_task(task: Dictionary) -> void:
 	_needs_second_leg = false
 	carrying = false
 	_cargo.visible = false
+	_navigate_to(_destination)
+
+
+func assign_project_task(task: Dictionary) -> void:
+	if task_id > 0:
+		coordinator.supersede_task(task_id, "reassigned to construction project")
+	task_id = int(task.id)
+	task_type = String(task.task_type)
+	_delivery_resource = String(task.get("resource", ""))
+	_needs_second_leg = task_type == "CONSTRUCTION_DELIVERY"
+	carrying = false
+	_cargo.visible = false
+	if _needs_second_leg:
+		_destination = task.source
+		_second_destination = task.target
+	else:
+		_destination = task.target
+		_second_destination = task.target
 	_navigate_to(_destination)
 
 
@@ -125,10 +147,29 @@ func _advance_path(delta: float) -> void:
 
 func _arrive_at_destination() -> void:
 	if _needs_second_leg and not carrying:
+		if task_type == "CONSTRUCTION_DELIVERY":
+			if not coordinator.confirm_project_pickup(task_id, self, _delivery_resource):
+				coordinator.fail_task(task_id, "material pickup could not be verified at stockpile")
+				_assign_next_task()
+				return
+			_set_cargo_resource(_delivery_resource)
 		carrying = true
 		_cargo.visible = true
 		_destination = _second_destination
 		_navigate_to(_destination)
+		return
+	if task_type == "CONSTRUCTION_DELIVERY" and carrying:
+		var carried_resource := String(_cargo.get_meta("cargo_resource", ""))
+		if not coordinator.confirm_project_delivery(task_id, self, _delivery_resource, carried_resource):
+			coordinator.fail_task(task_id, "carried material delivery could not be verified at build site")
+			carrying = false
+			_cargo.visible = false
+			_assign_next_task()
+			return
+		coordinator.complete_task(task_id)
+		carrying = false
+		_cargo.visible = false
+		_assign_next_task()
 		return
 	if task_type == "DESK_INVESTIGATION":
 		coordinator.report_investigation_arrival(citizen_id, task_id, global_position)
@@ -184,6 +225,24 @@ func _update_animation() -> void:
 
 func _animate_work() -> void:
 	_body.rotation.z = sin(_animation_time * 7.0) * 0.06
+
+
+func _set_cargo_resource(resource: String) -> void:
+	var cargo_mesh := BoxMesh.new()
+	var color := Color("c7a065")
+	match resource:
+		"wood":
+			cargo_mesh.size = Vector3(0.28, 0.13, 0.23)
+			color = Color("ca8547")
+		"metal":
+			cargo_mesh.size = Vector3(0.25, 0.16, 0.24)
+			color = Color("9fb6b8")
+		"mechanical_parts":
+			cargo_mesh.size = Vector3(0.23, 0.18, 0.22)
+			color = Color("efc257")
+	_cargo.mesh = cargo_mesh
+	_cargo.material_override = _material(color, 0.54)
+	_cargo.set_meta("cargo_resource", resource)
 
 
 func _material(color: Color, roughness: float) -> StandardMaterial3D:

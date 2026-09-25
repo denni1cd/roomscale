@@ -24,7 +24,8 @@ func _run() -> void:
 		"FloorNavigation", "SurfaceNavigation", "TaskCoordinator", "Citizen01", "Citizen50",
 		"Furniture/Desk/DeskSelectionCollider", "Furniture/Desk/DeskSelectionOutline",
 		"CameraRig/Camera", "KeyLight", "WorldEnvironment", "Overlay/Controls", "Overlay/CameraMode",
-		"Overlay/GoalStatus", "Overlay/ReachExploreButton"
+		"Overlay/GoalStatus", "Overlay/ReachExploreButton", "Overlay/ProjectStatus",
+		"Overlay/MaterialStatus", "Overlay/BuildStatus", "ConstructionSystem"
 	]
 	for node_path in required_nodes:
 		if scene.get_node_or_null(NodePath(node_path)) == null:
@@ -91,6 +92,10 @@ func _run() -> void:
 		return
 	var navigation := scene.get_node("FloorNavigation")
 	var surface_navigation := scene.get_node("SurfaceNavigation")
+	var construction := scene.get_node("ConstructionSystem")
+	if construction.has_project():
+		_fail("construction project must not exist before the barrier is confirmed")
+		return
 	var initial_surface_route: Dictionary = surface_navigation.route_between("FLOOR", "DESK", Vector3(-58.0, 0.0, 0.0), Vector3(-58.0, 30.0, -52.0))
 	if initial_surface_route.reachable or surface_navigation.has_connection("FLOOR", "DESK"):
 		_fail("floor and elevated desk navigation regions must initially be disconnected")
@@ -146,8 +151,124 @@ func _run() -> void:
 	if confirmed_route.reachable:
 		_fail("surface navigation unexpectedly reached the desk after barrier recognition")
 		return
+	if not construction.has_project():
+		_fail("BARRIER_CONFIRMED did not automatically create the traversal construction project")
+		return
+	var project_start: Dictionary = construction.status()
+	if project_start.state != "DELIVERING" or project_start.required != {"wood": 4, "metal": 4, "mechanical_parts": 3}:
+		_fail("project did not start with required materials and a delivery phase: %s" % project_start)
+		return
+	if project_start.stockpile != project_start.required or project_start.delivered != {"wood": 0, "metal": 0, "mechanical_parts": 0}:
+		_fail("project stockpile/delivered counts were initialized incorrectly: %s" % project_start)
+		return
+	var delivery_tasks: Array[Dictionary] = []
+	var distinct_delivery_owners: Dictionary = {}
+	var premature_build_tasks := 0
+	for task in coordinator.tasks:
+		if task.task_type == "CONSTRUCTION_DELIVERY":
+			delivery_tasks.append(task)
+			distinct_delivery_owners[int(task.citizen_id)] = true
+		elif task.task_type == "CONSTRUCTION_BUILD":
+			premature_build_tasks += 1
+	if delivery_tasks.size() != 11 or distinct_delivery_owners.size() != 11 or premature_build_tasks != 0:
+		_fail("expected 11 distinct material carriers and no builders before thresholds; deliveries=%d owners=%d builders=%d" % [delivery_tasks.size(), distinct_delivery_owners.size(), premature_build_tasks])
+		return
+	var delivery_material_counts := {"wood": 0, "metal": 0, "mechanical_parts": 0}
+	for task in delivery_tasks:
+		delivery_material_counts[task.resource] = int(delivery_material_counts[task.resource]) + int(task.amount)
+		if task.source != Vector3(18.0, 0.0, 55.0) or task.target != Vector3(-14.0, 0.0, -52.0):
+			_fail("material task did not link the depot to the construction site: %s" % task)
+			return
+	if delivery_material_counts != project_start.required:
+		_fail("delivery tasks do not cover the exact required materials: %s" % delivery_material_counts)
+		return
+	var delivery_route: Array[Vector3] = navigation.path_between(Vector3(18.0, 0.0, 55.0), Vector3(-14.0, 0.0, -52.0))
+	if delivery_route.is_empty() or delivery_route.size() < 8:
+		_fail("depot-to-construction delivery did not receive a real multi-waypoint floor path")
+		return
+	var delivery_route_length := 0.0
+	for index in range(delivery_route.size()):
+		if navigation.is_obstacle_position(delivery_route[index]):
+			_fail("delivery path entered blocked floor geometry: %s" % delivery_route[index])
+			return
+		if index > 0:
+			delivery_route_length += delivery_route[index - 1].distance_to(delivery_route[index])
+	if delivery_route_length < 100.0:
+		_fail("delivery route is unexpectedly short and does not establish floor travel: %.1f" % delivery_route_length)
+		return
+	var construction_elapsed := 0.0
+	var saw_carried_resource := false
+	var saw_builder_work := false
+	var project_status: Dictionary = construction.status()
+	while project_status.completed_stages < 3 and construction_elapsed < 120.0:
+		for child in scene.get_children():
+			if not child.name.begins_with("Citizen"):
+				continue
+			if child.task_type == "CONSTRUCTION_DELIVERY" and child.carrying:
+				var delivery_task: Dictionary = coordinator.get_task(child.task_id)
+				var parcel := child.get_node("Figure/Parcel") as MeshInstance3D
+				if not bool(delivery_task.picked_up) or not parcel.visible or String(parcel.get_meta("cargo_resource", "")) != String(delivery_task.resource):
+					_fail("citizen cargo did not match a verified physical stockpile pickup: %s" % delivery_task)
+					return
+				saw_carried_resource = true
+			elif child.task_type == "CONSTRUCTION_BUILD" and child.state == "WORK":
+				var build_task: Dictionary = coordinator.get_task(child.task_id)
+				var site: Vector3 = build_task.target
+				if child.global_position.distance_to(site) > 1.6:
+					_fail("builder received work progress away from the construction site")
+					return
+				saw_builder_work = true
+		for task in coordinator.tasks:
+			if task.task_type == "CONSTRUCTION_BUILD" and float(task.get("work_seconds", 0.0)) > 0.0:
+				saw_builder_work = true
+		await create_timer(0.25).timeout
+		construction_elapsed += 0.25
+		project_status = construction.status()
+	if project_status.completed_stages != 3 or absf(float(project_status.progress_percent) - 100.0) > 0.01:
+		_fail("builders did not complete base, winch, and launcher within the wait window: %s" % project_status)
+		return
+	if not saw_carried_resource or not saw_builder_work:
+		_fail("smoke did not observe attached resource cargo and on-site construction work")
+		return
+	if project_status.stockpile != {"wood": 0, "metal": 0, "mechanical_parts": 0} or project_status.delivered != project_status.required:
+		_fail("delivery bookkeeping did not consume and deliver each stockpile unit exactly once: %s" % project_status)
+		return
+	if project_status.stage_gates.size() != 3:
+		_fail("not all build stages recorded a material gate snapshot: %s" % project_status.stage_gates)
+		return
+	for stage_index in range(project_status.stage_gates.size()):
+		var gate: Dictionary = project_status.stage_gates[stage_index]
+		var required_gate: Dictionary = [{"wood": 2, "metal": 1, "mechanical_parts": 0}, {"wood": 3, "metal": 3, "mechanical_parts": 1}, {"wood": 4, "metal": 4, "mechanical_parts": 3}][stage_index]
+		for resource in ["wood", "metal", "mechanical_parts"]:
+			if int(gate[resource]) < int(required_gate[resource]):
+				_fail("builder stage %d unlocked before its %s threshold: %s" % [stage_index, resource, gate])
+				return
+	var completed_delivery_count := 0
+	var verified_delivery_counts := {"wood": 0, "metal": 0, "mechanical_parts": 0}
+	for task in coordinator.tasks:
+		if task.task_type == "CONSTRUCTION_DELIVERY":
+			if task.state != "complete" or not task.get("picked_up", false) or not task.get("delivered", false):
+				_fail("material task completed without both physical pickup and delivery: %s" % task)
+				return
+			if int(task.get("delivered_at", 0)) <= int(task.get("picked_up_at", 0)) or float(task.get("delivery_travelled_distance", 0.0)) < delivery_route_length * 0.9:
+				_fail("material credit arrived before a real depot-to-site walk: %s" % task)
+				return
+			verified_delivery_counts[task.resource] = int(verified_delivery_counts[task.resource]) + int(task.amount)
+			completed_delivery_count += 1
+	if completed_delivery_count != 11 or verified_delivery_counts != project_status.required:
+		_fail("verified delivery ledger does not match all stockpile units: %s" % verified_delivery_counts)
+		return
+	for component_path in ["GrappleBase", "BrassBasePlate", "WinchDrum", "WinchGear", "LauncherFrame", "LauncherArm"]:
+		var component := scene.get_node_or_null(NodePath("GrappleConstructionSite/%s" % component_path)) as MeshInstance3D
+		if component == null or not component.visible:
+			_fail("completed stage component is not visibly present: %s" % component_path)
+			return
+	if project_status.cable_deployed or surface_navigation.has_connection("FLOOR", "DESK") or project_status.floor_desk_connected:
+		_fail("M4 must not deploy cable or connect floor and desk navigation")
+		return
 	print("ROOMSCALE_M2_SMOKE_PASS nodes=%d citizens=%d tasks_active=%d tasks_available=%d moving=%d desk_detour=%.1fin" % [required_nodes.size(), citizen_count, coordinator.summary().active, coordinator.summary().available, moving_count, detour_length])
 	print("ROOMSCALE_M3_SMOKE_PASS selected=DESK explorers=%d arrived=%d barrier=%s elapsed=%.2fs" % [goal_status.expected_explorers, goal_status.arrived_explorers, goal_status.barrier.reason, arrival_wait])
+	print("ROOMSCALE_M4_SMOKE_PASS deliveries=%d stockpile=%s delivered=%s builder_gates=%d components=%d progress=%.1f%% walk=%.1fin elapsed=%.2fs cable=false connected=false" % [completed_delivery_count, project_status.stockpile, project_status.delivered, project_status.stage_gates.size(), project_status.completed_stages, project_status.progress_percent, delivery_route_length, construction_elapsed])
 	quit(0)
 
 

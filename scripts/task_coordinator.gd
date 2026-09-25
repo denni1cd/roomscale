@@ -2,11 +2,13 @@ extends Node
 ## Shared deterministic task queue. Task dictionaries retain each lifecycle state for inspection.
 
 signal reach_goal_updated(status: Dictionary)
+signal task_board_updated(status: Dictionary)
 
 const MAX_HISTORY := 500
 
 var navigation: Node
 var surface_navigation: Node
+var construction_system: Node
 var tasks: Array[Dictionary] = []
 var _next_task_id := 1
 var _created_count := 0
@@ -85,6 +87,78 @@ func supersede_task(task_id: int, reason: String) -> void:
 			task.state = "cancelled"
 			task.failure_reason = reason
 			return
+
+
+func create_construction_task(specification: Dictionary, citizen_id: int) -> Dictionary:
+	var task_id := _next_task_id
+	_next_task_id += 1
+	_created_count += 1
+	var task := specification.duplicate(true)
+	task["id"] = task_id
+	task["state"] = "reserved"
+	task["citizen_id"] = citizen_id
+	task["owner_hint"] = citizen_id
+	task["cycle"] = 0
+	task["progress"] = 0.0
+	task["created_at"] = Time.get_ticks_msec()
+	tasks.append(task)
+	_trim_history()
+	return task.duplicate(true)
+
+
+func confirm_project_pickup(task_id: int, citizen: Node3D, resource: String) -> bool:
+	var task := _find_task(task_id)
+	if task.is_empty() or task.task_type != "CONSTRUCTION_DELIVERY" or task.state != "active":
+		return false
+	if int(task.citizen_id) != int(citizen.citizen_id) or String(task.resource) != resource or bool(task.picked_up):
+		return false
+	if citizen.global_position.distance_to(task.source) > 1.6 or not construction_system.take_stock(resource, int(task.amount)):
+		return false
+	task.picked_up = true
+	task.picked_up_at = Time.get_ticks_msec()
+	task.pickup_travelled_distance = citizen.travelled_distance
+	task.progress = 0.5
+	task_board_updated.emit(summary())
+	return true
+
+
+func confirm_project_delivery(task_id: int, citizen: Node3D, resource: String, carried_resource: String) -> bool:
+	var task := _find_task(task_id)
+	if task.is_empty() or task.task_type != "CONSTRUCTION_DELIVERY" or task.state != "active":
+		return false
+	if int(task.citizen_id) != int(citizen.citizen_id) or String(task.resource) != resource or resource != carried_resource:
+		return false
+	if not bool(task.picked_up) or citizen.global_position.distance_to(task.target) > 1.6:
+		return false
+	var route: Array[Vector3] = navigation.path_between(task.source, task.target)
+	var required_travel := _path_length(route) * 0.9
+	if route.is_empty() or citizen.travelled_distance - float(task.pickup_travelled_distance) < required_travel:
+		return false
+	if not construction_system.accept_delivery(resource, int(task.amount), citizen.global_position):
+		return false
+	task.delivered = true
+	task.delivered_at = Time.get_ticks_msec()
+	task.delivery_travelled_distance = citizen.travelled_distance - float(task.pickup_travelled_distance)
+	task.progress = 1.0
+	task_board_updated.emit(summary())
+	return true
+
+
+func advance_construction_work(task_id: int, citizen_id: int, delta: float) -> bool:
+	var task := _find_task(task_id)
+	if task.is_empty() or task.task_type != "CONSTRUCTION_BUILD" or task.state != "active" or int(task.citizen_id) != citizen_id:
+		return false
+	var worker := get_parent().get_node_or_null("Citizen%02d" % (citizen_id + 1)) as Node3D
+	if not is_instance_valid(worker) or worker.state != "WORK" or worker.global_position.distance_to(task.target) > 1.6:
+		return false
+	var result: bool = construction_system.perform_builder_work(int(task.stage), delta)
+	task.work_seconds = float(task.get("work_seconds", 0.0)) + delta
+	if result:
+		task.progress = 1.0
+	else:
+		task.progress = float(construction_system.status().stage_progress)
+	task_board_updated.emit(summary())
+	return result
 
 
 func issue_reach_explore(surface_id: String, citizens: Array) -> Dictionary:
@@ -236,6 +310,13 @@ func get_task(task_id: int) -> Dictionary:
 	for task in tasks:
 		if task.id == task_id:
 			return task.duplicate(true)
+	return {}
+
+
+func _find_task(task_id: int) -> Dictionary:
+	for task in tasks:
+		if int(task.id) == task_id:
+			return task
 	return {}
 
 

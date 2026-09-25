@@ -6,6 +6,7 @@ const FloorNavigationController := preload("res://scripts/floor_navigation.gd")
 const SurfaceNavigationController := preload("res://scripts/surface_navigation.gd")
 const TaskCoordinatorController := preload("res://scripts/task_coordinator.gd")
 const CitizenAgentController := preload("res://scripts/citizen_agent.gd")
+const ConstructionSystemController := preload("res://scripts/construction_system.gd")
 const CITIZEN_HEIGHT_INCHES := 0.5
 
 const ROOM_WIDTH := 240.0
@@ -19,6 +20,7 @@ var _capture_saved := false
 var _materials: Dictionary = {}
 var _citizens: Array[Node3D] = []
 var _task_coordinator: Node
+var _construction_system: Node
 var _ui_timer := 0.0
 var _population_label: Label
 var _activity_label: Label
@@ -26,6 +28,9 @@ var _focus_label: Label
 var _desk_selection_outline: MeshInstance3D
 var _reach_button: Button
 var _goal_status_label: Label
+var _project_status_label: Label
+var _material_status_label: Label
+var _build_status_label: Label
 var _selected_surface := ""
 
 
@@ -393,7 +398,6 @@ func _build_population() -> void:
 	_task_coordinator.name = "TaskCoordinator"
 	_task_coordinator.navigation = navigation
 	_task_coordinator.surface_navigation = surface_navigation
-	_task_coordinator.reach_goal_updated.connect(_on_reach_goal_updated)
 	add_child(_task_coordinator)
 	_task_coordinator.seed_population(50)
 	var starts: Array[Vector3] = []
@@ -415,6 +419,14 @@ func _build_population() -> void:
 		citizen.initialize(citizen_id, spawn, navigation, _task_coordinator)
 		add_child(citizen)
 		_citizens.append(citizen)
+	_construction_system = ConstructionSystemController.new()
+	_construction_system.name = "ConstructionSystem"
+	_construction_system.configure(_task_coordinator, navigation, _citizens, self)
+	_task_coordinator.construction_system = _construction_system
+	_task_coordinator.reach_goal_updated.connect(_on_reach_goal_updated)
+	_task_coordinator.task_board_updated.connect(_on_task_board_updated)
+	_construction_system.project_updated.connect(_on_project_updated)
+	add_child(_construction_system)
 	if _citizens.size() > 23:
 		get_node("CameraRig").set_citizen_focus(_citizens[23])
 	print("ROOMSCALE_CITIZEN_SPAWN count=%d separate_nodes=true height=%.1fin" % [_citizens.size(), CITIZEN_HEIGHT_INCHES])
@@ -432,7 +444,7 @@ func _build_ui() -> void:
 	overlay.name = "Overlay"
 	add_child(overlay)
 	var title := _make_label("Title", Vector2(26.0, 20.0), 25, Color("fff2dc"))
-	title.text = "ROOMSCALE   /   MILESTONE 3\nA tiny clockwork civilization"
+	title.text = "ROOMSCALE   /   MILESTONE 4\nA tiny clockwork civilization"
 	overlay.add_child(title)
 	var help := _make_label("Controls", Vector2(28.0, 650.0), 16, Color("e5e6df"))
 	help.text = "CLICK DESK THEN REACH / EXPLORE     ENTER ISSUES GOAL     1 ROOM     2 SETTLEMENT     3 CITIZEN     WASD / ARROWS PAN     RIGHT DRAG ORBIT + TILT     WHEEL ZOOM"
@@ -446,7 +458,7 @@ func _build_ui() -> void:
 	_population_label.custom_minimum_size = Vector2(610.0, 30.0)
 	overlay.add_child(_population_label)
 	_activity_label = _make_label("TaskStatus", Vector2(28.0, 134.0), 15, Color("dde3da"))
-	_activity_label.custom_minimum_size = Vector2(630.0, 54.0)
+	_activity_label.custom_minimum_size = Vector2(820.0, 74.0)
 	overlay.add_child(_activity_label)
 	_goal_status_label = _make_label("GoalStatus", Vector2(28.0, 194.0), 17, Color("f2cf7e"))
 	_goal_status_label.custom_minimum_size = Vector2(700.0, 56.0)
@@ -463,6 +475,15 @@ func _build_ui() -> void:
 	var capture_hint := _make_label("CaptureHint", Vector2(28.0, 294.0), 13, Color("c1c9cb"))
 	capture_hint.text = "F12 captures the current interaction state."
 	overlay.add_child(capture_hint)
+	_project_status_label = _make_label("ProjectStatus", Vector2(28.0, 328.0), 16, Color("f4d69a"))
+	_project_status_label.custom_minimum_size = Vector2(820.0, 28.0)
+	overlay.add_child(_project_status_label)
+	_material_status_label = _make_label("MaterialStatus", Vector2(28.0, 356.0), 14, Color("d9e0d9"))
+	_material_status_label.custom_minimum_size = Vector2(820.0, 28.0)
+	overlay.add_child(_material_status_label)
+	_build_status_label = _make_label("BuildStatus", Vector2(28.0, 382.0), 14, Color("a8d7c4"))
+	_build_status_label.custom_minimum_size = Vector2(820.0, 28.0)
+	overlay.add_child(_build_status_label)
 	_focus_label = _make_label("CitizenFocus", Vector2(1000.0, 54.0), 15, Color("a9dad4"))
 	_focus_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_focus_label.custom_minimum_size = Vector2(255.0, 26.0)
@@ -482,7 +503,9 @@ func _update_population_ui() -> void:
 			carriers += 1
 	var summary: Dictionary = _task_coordinator.summary()
 	_population_label.text = "POPULATION  %02d / 50     WALKING  %02d     CARRYING  %02d     SCALE  0.5 in" % [_citizens.size(), moving, carriers]
-	_activity_label.text = "TASK BOARD  ACTIVE %02d   AVAILABLE %02d   COMPLETE %d\nWORKSHOP  ·  DEPOT  ·  HOUSING  ·  WORK AREA  ·  FLOOR PATROL" % [summary.active, summary.available, summary.completed_total]
+	var delivery_count: int = _construction_system.active_delivery_count() if is_instance_valid(_construction_system) else 0
+	var builder_count: int = _construction_system.active_builder_count() if is_instance_valid(_construction_system) else 0
+	_activity_label.text = "TASK BOARD  ACTIVE %02d   AVAILABLE %02d   COMPLETE %d\nPROJECT TASKS  HAULING %02d   BUILDERS %02d\nWORKSHOP  ·  DEPOT  ·  HOUSING  ·  WORK AREA  ·  FLOOR PATROL" % [summary.active, summary.available, summary.completed_total, delivery_count, builder_count]
 	_reach_button.visible = _selected_surface == SurfaceNavigationController.DESK_REGION
 	var goal: Dictionary = _task_coordinator.get_reach_goal_status()
 	if goal.is_empty():
@@ -494,10 +517,38 @@ func _update_population_ui() -> void:
 	if _focus_label.visible:
 		var focus: Node3D = _citizens[23]
 		_focus_label.text = "CITIZEN 24  ·  %s  ·  %s" % [focus.task_type.replace("_", " "), focus.state]
+	_update_project_ui()
 
 
-func _on_reach_goal_updated(_status: Dictionary) -> void:
+func _on_reach_goal_updated(status: Dictionary) -> void:
+	if is_instance_valid(_construction_system):
+		_construction_system.on_reach_goal_updated(status)
 	_update_population_ui()
+
+
+func _on_task_board_updated(_status: Dictionary) -> void:
+	_update_population_ui()
+
+
+func _on_project_updated(_status: Dictionary) -> void:
+	_update_project_ui()
+	_update_population_ui()
+
+
+func _update_project_ui() -> void:
+	if not is_instance_valid(_project_status_label) or not is_instance_valid(_construction_system):
+		return
+	var project: Dictionary = _construction_system.status()
+	if not bool(project.created):
+		_project_status_label.text = "PROJECT  Awaiting recognized barrier"
+		_material_status_label.text = "STOCKPILE  wood 4   metal 4   mechanical parts 3"
+		_build_status_label.text = "BUILD  Locked until material thresholds are met"
+		return
+	_project_status_label.text = "PROJECT  STEAMPUNK GRAPPLE  ·  %s  ·  Site (%.0f, %.0f) in" % [String(project.state).replace("_", " "), project.site.x, project.site.z]
+	var stockpile: Dictionary = project.stockpile
+	var delivered: Dictionary = project.delivered
+	_material_status_label.text = "MATERIALS  Stockpile W %d/4  M %d/4  P %d/3     Delivered W %d/4  M %d/4  P %d/3" % [stockpile.wood, stockpile.metal, stockpile.mechanical_parts, delivered.wood, delivered.metal, delivered.mechanical_parts]
+	_build_status_label.text = "BUILD  %s %02.0f%%  ·  Components %d / 3  ·  Cable undeployed  ·  Floor / desk disconnected" % [String(project.active_stage).to_upper(), project.progress_percent, project.completed_stages]
 
 
 func _unhandled_input(event: InputEvent) -> void:
