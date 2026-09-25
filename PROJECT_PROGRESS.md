@@ -9,7 +9,7 @@
 | M4 — Construction | PASS | `verification/milestone4-status.md`, `milestone4-smoke.log`, hauling and construction captures |
 | M5 — Grappling traversal | PASS | `verification/milestone5-status.md`, smoke log, and inspected cable/desk captures |
 | M6 — Integrated gameplay | PASS | `verification/milestone6-status.md`, smoke log, and inspected desk/reuse captures |
-| M7 — Automated verification | NOT STARTED | Full scenario and 10-run repeatability |
+| M7 — Automated verification | PASS | 10/10 full scenarios in fresh Godot processes; `verification/milestone7-repeatability-summary.md` |
 | M8 — Presentation pass | NOT STARTED | After functional milestones |
 
 ## Acceptance Criteria
@@ -35,17 +35,19 @@
 | AC-17 Autonomous Reuse | PASS | Two additional citizens are assigned the deployed FLOOR–DESK path automatically after desk exploration; no player/test command dispatches them. |
 | AC-18 Persistent Session State | PASS | Within the live session, cable segments and FLOOR–DESK connection remain operational through desk exploration and both later traversals; persistent save files are out of scope. |
 | AC-19 Player Feedback | PASS | HUD names the focused citizen and displays desk arrivals, explorations, route reuses, and infrastructure state. |
-| AC-20 Repeatability | NOT STARTED | Complete scenario test is M7. |
+| AC-20 Repeatability | PASS | Ten full scenarios passed consecutively in separate fresh Godot processes; per-run logs retained. |
 | AC-21 Zero Required Editor Work | PASS | Current project and scene pipeline are code-authored. |
 
 ## Latest Verification
 
 `TEST_ROOM_SCALE.ps1 -LogPath verification/milestone6-smoke.log` — **PASS**, Godot `4.7.2.stable.official.ed1daf0bf` (exit 0). M2–M5 regression gates pass. M3 confirmed the initial FLOOR–DESK disconnection after two physical approaches (16.50s). M4 verified all 11 depot deliveries, material gates, three completed construction stages, and 100% progress. M5 verified the 13-segment cable, a 63-point joined floor-A*/launcher/cable/desk route, and continuous arrival at 30in. M6 then recorded three distinct completed traversals, three desk explorations with 12.0 total seconds of validated work, and two coordinator-dispatched autonomous route reuses. Each task records at least 90% of its path distance, and 0.2s movement sampling saw no teleport-sized step (maximum 1.36in). Cable geometry and the navigation connection remained operational after the chain. Fresh visible captures were inspected: `verification/milestone6-desk-exploration.png` and `verification/milestone6-autonomous-route-reuse.png`.
 
+`TEST_ROOM_SCALE_REPEATABILITY.ps1 -RunCount 10 -PerRunTimeoutSeconds 360 -OverallTimeoutMinutes 60` — **PASS**, 10/10 fresh Godot processes, total 33.99 minutes. Every run exited 0 and included M2–M6 PASS markers; all ten per-run logs were rechecked for missing markers and script/smoke errors. Summary and status: `verification/milestone7-repeatability-summary.md`, `verification/milestone7-status.md`. Future runner defaults are 300 seconds per run and 40 minutes overall; first failure stops the batch.
+
 ## Open Issues
 
-No known blocking defect for M0–M6. Construction progress is bounded at 100%; the floor-to-desk link appears only after launcher completion. Desk exploration and autonomous route reuse are session-scoped; no save-file persistence is required by the plan.
+No known blocking defect for M0–M7. Construction progress is bounded at 100%; the floor-to-desk link appears only after launcher completion. Desk exploration and autonomous route reuse are session-scoped; no save-file persistence is required by the plan.
 
 ## Next Action
 
-Start M7 full-scenario automation and 10-run repeatability verification. Do not mark repeatability complete until those runs pass.
+M7 passed. Await review before starting M8; no M8 work has begun.

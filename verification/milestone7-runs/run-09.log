@@ -1,0 +1,19 @@
+RUN: 9/10
+STARTED_UTC: 2026-09-25T19:38:34.1477813Z
+DURATION_SECONDS: 203.27
+EXIT_CODE: 0
+TIMED_OUT: False
+FAILURE: 
+--- STDOUT ---
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ROOMSCALE_FLOOR_NAV_READY grid=60x45 cell=4in obstacles=15
+ROOMSCALE_CITIZEN_SPAWN count=50 separate_nodes=true height=0.5in
+ROOMSCALE_M2_READY Godot=4.7.2-stable (official) room=240x180 in citizens=50
+ROOMSCALE_M2_SMOKE_PASS nodes=32 citizens=50 tasks_active=47 tasks_available=5 moving=50 desk_detour=146.9in
+ROOMSCALE_M3_SMOKE_PASS selected=DESK explorers=2 arrived=2 barrier=no navigation connection between FLOOR and DESK elapsed=16.50s
+ROOMSCALE_M4_SMOKE_PASS deliveries=11 stockpile={ "wood": 0, "metal": 0, "mechanical_parts": 0 } delivered={ "wood": 4, "metal": 4, "mechanical_parts": 3 } builder_gates=3 components=3 progress=100.0% walk=128.3in elapsed=67.25s
+ROOMSCALE_M5_SMOKE_PASS cable_segments=13 route_points=63 traverser=Citizen10 target=DESK height=30.0in walked=143.3in route=142.8in max_step=1.34in elapsed=21.60s
+ROOMSCALE_M6_SMOKE_PASS arrivals=3 desk_explorations=3 reused=2 distinct_travelers=3 exploration_work=12.0s infrastructure=operational max_step=1.34in elapsed=91.00s
+
+--- STDERR ---
