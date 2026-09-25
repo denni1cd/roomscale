@@ -320,16 +320,73 @@ func _run() -> void:
 		max_sampled_y = maxf(max_sampled_y, current_position.y)
 	traversal_goal = coordinator.get_traversal_goal_status()
 	var completed_traversal: Dictionary = coordinator.get_task(int(traversal_goal.get("task_id", -1)))
-	if traversal_goal.state != "TRAVERSAL_COMPLETE" or climber.state != "ON_DESK" or climber.global_position.y < 29.99 or String(completed_traversal.get("target_region", "")) != "DESK":
+	if traversal_goal.state != "TRAVERSAL_COMPLETE" or completed_traversal.state != "complete" or climber.global_position.y < 29.99 or String(completed_traversal.get("target_region", "")) != "DESK":
 		_fail("citizen did not physically reach the elevated desk through the deployed path: %s" % traversal_goal)
 		return
 	if min_sampled_y > 1.0 or max_sampled_y < 29.99 or float(completed_traversal.get("actual_travelled_distance", 0.0)) < float(completed_traversal.get("route_length", 0.0)) * 0.9:
 		_fail("traversal did not record continuous floor-to-desk movement: %s y=%.1f..%.1f" % [completed_traversal, min_sampled_y, max_sampled_y])
 		return
+	var m6_elapsed := 0.0
+	var m6_status: Dictionary = coordinator.get_m6_status()
+	var m6_max_step := max_step_distance
+	var m6_previous_positions: Dictionary = {}
+	while (int(m6_status.desk_arrivals) < 3 or int(m6_status.desk_explorations_completed) < 3 or int(m6_status.autonomous_reuses_assigned) < 2) and m6_elapsed < 150.0:
+		for child in scene.get_children():
+			if not child.name.begins_with("Citizen"):
+				continue
+			var sample_id := child.get_instance_id()
+			var current_position: Vector3 = child.global_position
+			if m6_previous_positions.has(sample_id):
+				var frame_distance: float = current_position.distance_to(m6_previous_positions[sample_id])
+				m6_max_step = maxf(m6_max_step, frame_distance)
+				if frame_distance > 6.5 * 0.55 + 0.25:
+					_fail("M6 citizen movement discontinuity %.2fin on %s" % [frame_distance, child.name])
+					return
+			m6_previous_positions[sample_id] = current_position
+		await create_timer(0.2).timeout
+		m6_elapsed += 0.2
+		m6_status = coordinator.get_m6_status()
+	if int(m6_status.desk_arrivals) < 3 or int(m6_status.desk_explorations_completed) < 3 or int(m6_status.autonomous_reuses_assigned) != 2:
+		_fail("integrated M6 autonomous arrival/exploration/reuse chain timed out: %s" % m6_status)
+		return
+	if not bool(m6_status.infrastructure_operational) or not construction.status().cable_deployed or not surface_navigation.has_connection("FLOOR", "DESK"):
+		_fail("M6 cable or FLOOR-DESK connection did not remain operational during session")
+		return
+	var all_traversal_ids: Array = m6_status.traversal_task_ids
+	var all_exploration_ids: Array = m6_status.desk_exploration_task_ids
+	if all_traversal_ids.size() != 3 or all_exploration_ids.size() != 3:
+		_fail("M6 task ledger lacks three route arrivals and desk explorations: %s" % m6_status)
+		return
+	var traversal_owners: Dictionary = {}
+	var reuse_indices: Dictionary = {}
+	var total_exploration_work := 0.0
+	for id_variant in all_traversal_ids:
+		var route_task: Dictionary = coordinator.get_task(int(id_variant))
+		if route_task.state != "complete" or float(route_task.get("actual_travelled_distance", 0.0)) < float(route_task.route_length) * 0.9:
+			_fail("M6 route reuse was not completed by physical continuous travel: %s" % route_task)
+			return
+		traversal_owners[int(route_task.citizen_id)] = true
+		if bool(route_task.get("autonomous_reuse", false)):
+			reuse_indices[int(route_task.reuse_index)] = true
+	if traversal_owners.size() != 3 or not reuse_indices.has(1) or not reuse_indices.has(2):
+		_fail("M6 did not use three distinct explorers and both autonomous route reuses: owners=%s reuse=%s" % [traversal_owners, reuse_indices])
+		return
+	for id_variant in all_exploration_ids:
+		var explore_task: Dictionary = coordinator.get_task(int(id_variant))
+		if explore_task.state != "complete" or float(explore_task.get("work_seconds", 0.0)) < 4.0 or float(explore_task.get("actual_travelled_distance", 0.0)) < float(explore_task.route_length) * 0.9:
+			_fail("M6 desk surface exploration did not walk its route and perform work: %s" % explore_task)
+			return
+		total_exploration_work += float(explore_task.work_seconds)
+	var later_start: Vector3 = scene.get_node("Citizen50").global_position
+	var persistent_route: Dictionary = surface_navigation.route_between("FLOOR", "DESK", later_start, Vector3(-58.0, 30.0, -52.0))
+	if not persistent_route.reachable or persistent_route.path.size() < 12 or cable_root.get_child_count() < 12:
+		_fail("M6 session infrastructure did not preserve a usable full route and cable geometry")
+		return
 	print("ROOMSCALE_M2_SMOKE_PASS nodes=%d citizens=%d tasks_active=%d tasks_available=%d moving=%d desk_detour=%.1fin" % [required_nodes.size(), citizen_count, coordinator.summary().active, coordinator.summary().available, moving_count, detour_length])
 	print("ROOMSCALE_M3_SMOKE_PASS selected=DESK explorers=%d arrived=%d barrier=%s elapsed=%.2fs" % [goal_status.expected_explorers, goal_status.arrived_explorers, goal_status.barrier.reason, arrival_wait])
 	print("ROOMSCALE_M4_SMOKE_PASS deliveries=%d stockpile=%s delivered=%s builder_gates=%d components=%d progress=%.1f%% walk=%.1fin elapsed=%.2fs" % [completed_delivery_count, project_status.stockpile, project_status.delivered, project_status.stage_gates.size(), project_status.completed_stages, project_status.progress_percent, delivery_route_length, construction_elapsed])
 	print("ROOMSCALE_M5_SMOKE_PASS cable_segments=%d route_points=%d traverser=%s target=DESK height=%.1fin walked=%.1fin route=%.1fin max_step=%.2fin elapsed=%.2fs" % [cable_root.get_child_count() - 1, deployed_route.path.size(), climber.name, climber.global_position.y, completed_traversal.actual_travelled_distance, completed_traversal.route_length, max_step_distance, traversal_elapsed])
+	print("ROOMSCALE_M6_SMOKE_PASS arrivals=%d desk_explorations=%d reused=%d distinct_travelers=%d exploration_work=%.1fs infrastructure=%s max_step=%.2fin elapsed=%.2fs" % [m6_status.desk_arrivals, m6_status.desk_explorations_completed, m6_status.autonomous_reuses_assigned, traversal_owners.size(), total_exploration_work, "operational" if m6_status.infrastructure_operational else "missing", m6_max_step, m6_elapsed])
 	quit(0)
 
 

@@ -25,6 +25,16 @@ var patrol_stations: Array[Vector3] = [
 ]
 var _reach_goal: Dictionary = {}
 var _traversal_goal: Dictionary = {}
+var _desk_arrivals := 0
+var _desk_explorations_completed := 0
+var _autonomous_reuse_count := 0
+var _desk_exploration_tasks: Array[int] = []
+var _traversal_task_ids: Array[int] = []
+var _desk_waypoints: Array[Vector3] = [
+	Vector3(-45.0, 30.0, -45.0), Vector3(-42.0, 30.0, -66.0),
+	Vector3(-70.0, 30.0, -68.0), Vector3(-73.0, 30.0, -43.0),
+	Vector3(-58.0, 30.0, -52.0),
+]
 
 
 func _ready() -> void:
@@ -276,6 +286,7 @@ func create_traversal_task(citizen: Node3D, route: Array[Vector3]) -> Dictionary
 		"created_at": Time.get_ticks_msec(),
 	}
 	tasks.append(task)
+	_traversal_task_ids.append(task_id)
 	_traversal_goal = {"state": "TRAVERSE_IN_PROGRESS", "citizen_id": citizen.citizen_id, "task_id": task_id, "expected_route_length": task.route_length}
 	return task.duplicate(true)
 
@@ -307,8 +318,115 @@ func report_traversal_arrival(citizen: Node3D, task_id: int) -> bool:
 		"route_length": float(task.route_length),
 		"actual_travelled_distance": walked,
 	}
+	_desk_arrivals += 1
+	var explore_task := _create_desk_exploration_task(citizen, task_id)
+	citizen.assign_desk_exploration_task(explore_task)
 	task_board_updated.emit(summary())
 	return true
+
+
+func _create_desk_exploration_task(citizen: Node3D, traversal_id: int) -> Dictionary:
+	var path: Array[Vector3] = [citizen.global_position]
+	for waypoint in _desk_waypoints:
+		path.append(waypoint)
+	var task_id := _next_task_id
+	_next_task_id += 1
+	_created_count += 1
+	var task := {
+		"id": task_id, "task_type": "DESK_EXPLORATION", "state": "reserved",
+		"citizen_id": citizen.citizen_id, "owner_hint": citizen.citizen_id, "cycle": 0,
+		"source": citizen.global_position, "target": _desk_waypoints[_desk_waypoints.size() - 1],
+		"target_region": "DESK", "path": path, "route_length": _path_length(path),
+		"start_travelled_distance": citizen.travelled_distance, "traversal_task_id": traversal_id,
+		"progress": 0.0, "created_at": Time.get_ticks_msec(), "work_seconds": 0.0,
+	}
+	tasks.append(task)
+	_desk_exploration_tasks.append(task_id)
+	return task.duplicate(true)
+
+
+func begin_desk_exploration(citizen: Node3D, task_id: int) -> bool:
+	var task := _find_task(task_id)
+	if task.is_empty() or task.task_type != "DESK_EXPLORATION" or task.state != "active":
+		return false
+	if int(task.citizen_id) != citizen.citizen_id or not surface_navigation.has_connection("FLOOR", "DESK") or citizen.global_position.y < 29.0:
+		return false
+	var walked: float = citizen.travelled_distance - float(task.start_travelled_distance)
+	if walked < float(task.route_length) * 0.9 or citizen.global_position.distance_to(task.target) > 1.7:
+		return false
+	task.actual_travelled_distance = walked
+	task.arrived_at = Time.get_ticks_msec()
+	task.progress = 0.5
+	return true
+
+
+func advance_desk_exploration(citizen: Node3D, task_id: int, delta: float) -> bool:
+	var task := _find_task(task_id)
+	if task.is_empty() or task.task_type != "DESK_EXPLORATION" or task.state != "active":
+		return false
+	if int(task.citizen_id) != citizen.citizen_id or citizen.state != "WORK" or citizen.global_position.y < 29.0:
+		return false
+	if not surface_navigation.has_connection("FLOOR", "DESK") or construction_system == null or not construction_system.status().cable_deployed:
+		return false
+	task.work_seconds = float(task.work_seconds) + delta
+	task.progress = minf(0.99, 0.5 + float(task.work_seconds) / 4.0 * 0.49)
+	if float(task.work_seconds) < 4.0:
+		return false
+	task.state = "complete"
+	task.finished_at = Time.get_ticks_msec()
+	task.progress = 1.0
+	_desk_explorations_completed += 1
+	_completed_count += 1
+	if _autonomous_reuse_count < 2:
+		_dispatch_next_route_reuse()
+	else:
+		_traversal_goal["state"] = "M6_AUTONOMY_COMPLETE"
+		_traversal_goal["desk_explorations_completed"] = _desk_explorations_completed
+	task_board_updated.emit(summary())
+	return true
+
+
+func _dispatch_next_route_reuse() -> void:
+	if not surface_navigation.has_connection("FLOOR", "DESK") or construction_system == null or not construction_system.status().cable_deployed:
+		return
+	var citizens: Array[Node3D] = []
+	for child in get_parent().get_children():
+		if child is Node3D and child.name.begins_with("Citizen"):
+			var candidate := child as Node3D
+			if candidate.task_type == "GRAPPLE_TRAVERSAL" or candidate.task_type == "DESK_EXPLORATION" or candidate.state == "ON_DESK":
+				continue
+			citizens.append(candidate)
+	if citizens.is_empty():
+		return
+	citizens.sort_custom(func(a: Node3D, b: Node3D) -> bool:
+		return a.global_position.distance_to(Vector3(-14.0, 0.0, -52.0)) < b.global_position.distance_to(Vector3(-14.0, 0.0, -52.0)))
+	var traveler := citizens[0]
+	var route_request: Dictionary = surface_navigation.route_between("FLOOR", "DESK", traveler.global_position, Vector3(-58.0, 30.0, -52.0))
+	if not route_request.reachable:
+		return
+	var task := create_traversal_task(traveler, route_request.path)
+	if task.is_empty():
+		return
+	_autonomous_reuse_count += 1
+	var stored := _find_task(int(task.id))
+	stored["autonomous_reuse"] = true
+	stored["reuse_index"] = _autonomous_reuse_count
+	_traversal_goal["reuse_index"] = _autonomous_reuse_count
+	_traversal_goal["autonomous_reuse"] = true
+	traveler.assign_traversal_task(stored.duplicate(true))
+
+
+func get_m6_status() -> Dictionary:
+	var construction_status: Dictionary = construction_system.status() if construction_system != null else {}
+	var infrastructure_ok: bool = not construction_status.is_empty() and bool(construction_status.get("cable_deployed", false)) and surface_navigation.has_connection("FLOOR", "DESK")
+	return {
+		"desk_arrivals": _desk_arrivals,
+		"desk_explorations_completed": _desk_explorations_completed,
+		"autonomous_reuses_assigned": _autonomous_reuse_count,
+		"infrastructure_operational": infrastructure_ok,
+		"traversal_task_ids": _traversal_task_ids.duplicate(),
+		"desk_exploration_task_ids": _desk_exploration_tasks.duplicate(),
+	}
 
 
 func get_traversal_goal_status() -> Dictionary:

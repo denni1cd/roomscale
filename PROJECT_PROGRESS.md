@@ -8,7 +8,7 @@
 | M3 — Surface navigation and goal | PASS | `verification/milestone3-status.md`; headless and live UI path verified |
 | M4 — Construction | PASS | `verification/milestone4-status.md`, `milestone4-smoke.log`, hauling and construction captures |
 | M5 — Grappling traversal | PASS | `verification/milestone5-status.md`, smoke log, and inspected cable/desk captures |
-| M6 — Integrated gameplay | NOT STARTED | Blocked on M3–M5 |
+| M6 — Integrated gameplay | PASS | `verification/milestone6-status.md`, smoke log, and inspected desk/reuse captures |
 | M7 — Automated verification | NOT STARTED | Full scenario and 10-run repeatability |
 | M8 — Presentation pass | NOT STARTED | After functional milestones |
 
@@ -31,21 +31,21 @@
 | AC-13 Grappling Infrastructure | PASS | Completed launcher deploys a segmented visible cable from its top to a desk anchor. |
 | AC-14 Navigation Change | PASS | FLOOR and DESK remain disconnected until launcher completion; deployment registers the physical route. |
 | AC-15 Visible Traversal | PASS | Citizen follows floor A*, climbs the launcher and cable with continuous 3D movement, and reaches the desk at 30in. |
-| AC-16 Desk Exploration | NOT STARTED | M6 will add the exploration activity after arrival. |
-| AC-17 Autonomous Reuse | NOT STARTED | M6 |
-| AC-18 Persistent Session State | NOT STARTED | M5/M6 |
-| AC-19 Player Feedback | IN PROGRESS | M2 task board plus goal/barrier, project, inventory, construction, cable/link, and traversal progress feedback; integrated gameplay feedback remains. |
+| AC-16 Desk Exploration | PASS | Each climber walks a multi-waypoint route on the desk, then performs validated work; three completions recorded. |
+| AC-17 Autonomous Reuse | PASS | Two additional citizens are assigned the deployed FLOOR–DESK path automatically after desk exploration; no player/test command dispatches them. |
+| AC-18 Persistent Session State | PASS | Within the live session, cable segments and FLOOR–DESK connection remain operational through desk exploration and both later traversals; persistent save files are out of scope. |
+| AC-19 Player Feedback | PASS | HUD names the focused citizen and displays desk arrivals, explorations, route reuses, and infrastructure state. |
 | AC-20 Repeatability | NOT STARTED | Complete scenario test is M7. |
 | AC-21 Zero Required Editor Work | PASS | Current project and scene pipeline are code-authored. |
 
 ## Latest Verification
 
-`TEST_ROOM_SCALE.ps1 -LogPath verification/milestone5-smoke.log` — **PASS**, Godot `4.7.2.stable.official.ed1daf0bf` (exit 0). M2, M3, and M4 regressions passed. M3 confirmed the initial disconnection after both explorers approached in 16.50s. M4 delivered 11 resources (4/4/3), walked 128.3in on depot routes, completed all three stages, and reached 100% in 69.00s. M5 asserts cable/link are absent until launcher completion, then checks the 13-segment cable, a 63-point FLOOR-to-DESK route from the real M3 investigation position with floor A* prefix, and arrival on DESK at exactly 30in. Citizen18 walked 162.1in on a 160.4in route in 24.40s; maximum sampled step was 1.34in. Fresh inspected visible captures: `verification/milestone5-deployed-cable.png` and `verification/milestone5-citizen-on-desk.png`.
+`TEST_ROOM_SCALE.ps1 -LogPath verification/milestone6-smoke.log` — **PASS**, Godot `4.7.2.stable.official.ed1daf0bf` (exit 0). M2–M5 regression gates pass. M3 confirmed the initial FLOOR–DESK disconnection after two physical approaches (16.50s). M4 verified all 11 depot deliveries, material gates, three completed construction stages, and 100% progress. M5 verified the 13-segment cable, a 63-point joined floor-A*/launcher/cable/desk route, and continuous arrival at 30in. M6 then recorded three distinct completed traversals, three desk explorations with 12.0 total seconds of validated work, and two coordinator-dispatched autonomous route reuses. Each task records at least 90% of its path distance, and 0.2s movement sampling saw no teleport-sized step (maximum 1.36in). Cable geometry and the navigation connection remained operational after the chain. Fresh visible captures were inspected: `verification/milestone6-desk-exploration.png` and `verification/milestone6-autonomous-route-reuse.png`.
 
 ## Open Issues
 
-No known blocking defect for M0–M5. Construction progress is bounded at 100%; the floor-to-desk link appears only after launcher completion.
+No known blocking defect for M0–M6. Construction progress is bounded at 100%; the floor-to-desk link appears only after launcher completion. Desk exploration and autonomous route reuse are session-scoped; no save-file persistence is required by the plan.
 
 ## Next Action
 
-Start M6 integrated gameplay and desk exploration. Keep persistent session state, autonomous reuse, and repeatability for their assigned milestones.
+Start M7 full-scenario automation and 10-run repeatability verification. Do not mark repeatability complete until those runs pass.

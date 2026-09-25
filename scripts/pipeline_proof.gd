@@ -31,6 +31,7 @@ var _goal_status_label: Label
 var _project_status_label: Label
 var _material_status_label: Label
 var _build_status_label: Label
+var _m6_status_label: Label
 var _selected_surface := ""
 
 
@@ -445,7 +446,7 @@ func _build_ui() -> void:
 	overlay.name = "Overlay"
 	add_child(overlay)
 	var title := _make_label("Title", Vector2(26.0, 20.0), 25, Color("fff2dc"))
-	title.text = "ROOMSCALE   /   MILESTONE 5\nA tiny clockwork civilization"
+	title.text = "ROOMSCALE   /   MILESTONE 6\nA tiny clockwork civilization"
 	overlay.add_child(title)
 	var help := _make_label("Controls", Vector2(28.0, 650.0), 16, Color("e5e6df"))
 	help.text = "CLICK DESK THEN REACH / EXPLORE     ENTER ISSUES GOAL     1 ROOM     2 SETTLEMENT     3 CITIZEN     WASD / ARROWS PAN     RIGHT DRAG ORBIT + TILT     WHEEL ZOOM"
@@ -485,6 +486,9 @@ func _build_ui() -> void:
 	_build_status_label = _make_label("BuildStatus", Vector2(28.0, 382.0), 14, Color("a8d7c4"))
 	_build_status_label.custom_minimum_size = Vector2(820.0, 28.0)
 	overlay.add_child(_build_status_label)
+	_m6_status_label = _make_label("IntegratedStatus", Vector2(28.0, 408.0), 14, Color("c9d5ee"))
+	_m6_status_label.custom_minimum_size = Vector2(820.0, 28.0)
+	overlay.add_child(_m6_status_label)
 	_focus_label = _make_label("CitizenFocus", Vector2(1000.0, 54.0), 15, Color("a9dad4"))
 	_focus_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_focus_label.custom_minimum_size = Vector2(255.0, 26.0)
@@ -516,8 +520,12 @@ func _update_population_ui() -> void:
 	var camera_rig := get_node("CameraRig")
 	_focus_label.visible = camera_rig.view_mode == 2 and _citizens.size() > 23
 	if _focus_label.visible:
-		var focus: Node3D = _citizens[23]
-		_focus_label.text = "CITIZEN 24  ·  %s  ·  %s" % [focus.task_type.replace("_", " "), focus.state]
+		var focus: Node3D = camera_rig.get_focused_citizen()
+		if not is_instance_valid(focus):
+			focus = _citizens[23]
+		_focus_label.text = "%s  ·  %s  ·  %s" % [focus.name, focus.task_type.replace("_", " "), focus.state]
+	var m6: Dictionary = _task_coordinator.get_m6_status()
+	_m6_status_label.text = "DESK EXPLORATION  ARRIVED %d   EXPLORED %d   AUTONOMOUS ROUTE REUSES %d/2   INFRASTRUCTURE %s" % [m6.desk_arrivals, m6.desk_explorations_completed, m6.autonomous_reuses_assigned, "OPERATIONAL" if m6.infrastructure_operational else "AWAITING DEPLOYMENT"]
 	_update_project_ui()
 
 

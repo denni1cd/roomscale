@@ -131,6 +131,10 @@ func set_citizen_focus(citizen: Node3D, focus_offset: Vector3 = Vector3(0.0, 0.2
 		_apply_transform()
 
 
+func get_focused_citizen() -> Node3D:
+	return _citizen_focus
+
+
 func _apply_transform() -> void:
 	position = target
 	rotation = Vector3(0.0, yaw, 0.0)

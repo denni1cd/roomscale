@@ -50,6 +50,9 @@ func _process(delta: float) -> void:
 			if coordinator.advance_construction_work(task_id, citizen_id, delta):
 				coordinator.complete_task(task_id)
 				_assign_next_task()
+		elif task_type == "DESK_EXPLORATION":
+			if coordinator.advance_desk_exploration(self, task_id, delta):
+				state = "ON_DESK"
 		elif _work_timer >= (0.35 if task_type == "DESK_INVESTIGATION" else 0.65 + float(citizen_id % 4) * 0.13):
 			coordinator.complete_task(task_id)
 			carrying = false
@@ -111,6 +114,24 @@ func assign_traversal_task(task: Dictionary) -> void:
 	state = "TRAVEL"
 
 
+func assign_desk_exploration_task(task: Dictionary) -> void:
+	if task_id > 0:
+		coordinator.supersede_task(task_id, "desk route traversal completed; surface exploration assigned")
+	task_id = int(task.id)
+	task_type = String(task.task_type)
+	carrying = false
+	_cargo.visible = false
+	_path = task.path.duplicate()
+	_path_cursor = 0
+	_work_timer = 0.0
+	if _path.size() < 2:
+		coordinator.fail_task(task_id, "desk exploration route missing")
+		state = "IDLE"
+		return
+	coordinator.activate_task(task_id)
+	state = "TRAVEL"
+
+
 func _assign_next_task() -> void:
 	var task: Dictionary = coordinator.claim_for(citizen_id)
 	if task.is_empty():
@@ -165,10 +186,19 @@ func _advance_path(delta: float) -> void:
 func _arrive_at_destination() -> void:
 	if task_type == "GRAPPLE_TRAVERSAL":
 		if coordinator.report_traversal_arrival(self, task_id):
-			state = "ON_DESK"
+			if task_type == "GRAPPLE_TRAVERSAL":
+				state = "ON_DESK"
 		else:
 			coordinator.fail_task(task_id, "desk traversal arrival failed route, height, or travel validation")
 			state = "IDLE"
+		return
+	if task_type == "DESK_EXPLORATION":
+		if not coordinator.begin_desk_exploration(self, task_id):
+			coordinator.fail_task(task_id, "desk exploration failed surface, route, or infrastructure validation")
+			state = "IDLE"
+			return
+		state = "WORK"
+		_work_timer = 0.0
 		return
 	if _needs_second_leg and not carrying:
 		if task_type == "CONSTRUCTION_DELIVERY":
