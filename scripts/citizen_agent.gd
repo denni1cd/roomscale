@@ -45,7 +45,8 @@ func _process(delta: float) -> void:
 	elif state == "WORK":
 		_work_timer += delta
 		_animate_work()
-		if _work_timer >= 0.65 + float(citizen_id % 4) * 0.13:
+		var work_duration := 0.35 if task_type == "DESK_INVESTIGATION" else 0.65 + float(citizen_id % 4) * 0.13
+		if _work_timer >= work_duration:
 			coordinator.complete_task(task_id)
 			carrying = false
 			_cargo.visible = false
@@ -55,6 +56,19 @@ func _process(delta: float) -> void:
 
 func get_travelled_distance() -> float:
 	return travelled_distance
+
+
+func assign_player_goal_task(task: Dictionary) -> void:
+	if task_id > 0:
+		coordinator.supersede_task(task_id, "reassigned to player Reach / Explore goal")
+	task_id = int(task.id)
+	task_type = String(task.task_type)
+	_destination = task.target
+	_second_destination = task.target
+	_needs_second_leg = false
+	carrying = false
+	_cargo.visible = false
+	_navigate_to(_destination)
 
 
 func _assign_next_task() -> void:
@@ -116,6 +130,8 @@ func _arrive_at_destination() -> void:
 		_destination = _second_destination
 		_navigate_to(_destination)
 		return
+	if task_type == "DESK_INVESTIGATION":
+		coordinator.report_investigation_arrival(citizen_id, task_id, global_position)
 	state = "WORK"
 	_work_timer = 0.0
 

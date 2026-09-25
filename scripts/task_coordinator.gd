@@ -1,9 +1,12 @@
 extends Node
 ## Shared deterministic task queue. Task dictionaries retain each lifecycle state for inspection.
 
+signal reach_goal_updated(status: Dictionary)
+
 const MAX_HISTORY := 500
 
 var navigation: Node
+var surface_navigation: Node
 var tasks: Array[Dictionary] = []
 var _next_task_id := 1
 var _created_count := 0
@@ -18,6 +21,7 @@ var patrol_stations: Array[Vector3] = [
 	Vector3(-44.0, 0.0, 20.0), Vector3(42.0, 0.0, 22.0),
 	Vector3(42.0, 0.0, 78.0), Vector3(-45.0, 0.0, 79.0)
 ]
+var _reach_goal: Dictionary = {}
 
 
 func _ready() -> void:
@@ -73,6 +77,134 @@ func fail_task(task_id: int, reason: String) -> void:
 			_trim_history()
 			_enqueue_for(citizen_id, cycle)
 			return
+
+
+func supersede_task(task_id: int, reason: String) -> void:
+	for task in tasks:
+		if task.id == task_id and (task.state == "active" or task.state == "reserved"):
+			task.state = "cancelled"
+			task.failure_reason = reason
+			return
+
+
+func issue_reach_explore(surface_id: String, citizens: Array) -> Dictionary:
+	if surface_id != surface_navigation.DESK_REGION:
+		return {"accepted": false, "state": "REJECTED", "message": "Select the desk surface first."}
+	var route_request: Dictionary = surface_navigation.route_between(
+		surface_navigation.FLOOR_REGION, surface_id, Vector3(-58.0, 0.0, 0.0), Vector3(-58.0, 30.0, -52.0)
+	)
+	if route_request.reachable:
+		return {"accepted": true, "state": "REACHABLE", "message": "A route to the desk is available."}
+	var candidates: Array[Vector3] = surface_navigation.investigation_candidates()
+	var options: Array[Dictionary] = []
+	for citizen in citizens:
+		var citizen_node := citizen as Node3D
+		if not is_instance_valid(citizen_node):
+			continue
+		for candidate_index in range(candidates.size()):
+			var investigation_path: Array[Vector3] = surface_navigation.investigation_route(citizen_node.global_position, candidate_index)
+			if not investigation_path.is_empty():
+				options.append({
+					"citizen": citizen_node,
+					"candidate_index": candidate_index,
+					"path_length": _path_length(investigation_path),
+				})
+	options.sort_custom(func(left: Dictionary, right: Dictionary) -> bool: return float(left.path_length) < float(right.path_length))
+	var selected_citizens: Dictionary = {}
+	var selected_candidates: Dictionary = {}
+	var assignments: Array[Dictionary] = []
+	for option in options:
+		var explorer: Node3D = option.citizen
+		var candidate_index: int = option.candidate_index
+		if selected_citizens.has(explorer.get_instance_id()) or selected_candidates.has(candidate_index):
+			continue
+		selected_citizens[explorer.get_instance_id()] = true
+		selected_candidates[candidate_index] = true
+		assignments.append({"citizen": explorer, "candidate_index": candidate_index})
+		if assignments.size() == candidates.size():
+			break
+	if assignments.size() < candidates.size():
+		return {"accepted": false, "state": "NO_INVESTIGATORS", "message": "No floor route reaches each investigation point."}
+	_reach_goal = {
+		"accepted": true,
+		"surface": surface_id,
+		"state": "EXPLORERS_EN_ROUTE",
+		"route_request": route_request.duplicate(true),
+		"message": "Desk is selected. Explorers are approaching the desk edge to investigate the missing route.",
+		"expected_explorers": assignments.size(),
+		"arrived_explorers": 0,
+		"arrived_citizens": [],
+		"barrier": {},
+	}
+	for assignment in assignments:
+		var explorer: Node3D = assignment.citizen
+		var candidate: Vector3 = candidates[int(assignment.candidate_index)]
+		var task := _create_exploration_task(explorer.citizen_id, candidate, surface_id)
+		explorer.assign_player_goal_task(task)
+	reach_goal_updated.emit(get_reach_goal_status())
+	return get_reach_goal_status()
+
+
+func report_investigation_arrival(citizen_id: int, task_id: int, position: Vector3) -> void:
+	if _reach_goal.is_empty() or _reach_goal.state != "EXPLORERS_EN_ROUTE":
+		return
+	if _reach_goal.arrived_citizens.has(citizen_id):
+		return
+	if navigation.is_obstacle_position(position):
+		push_error("Investigator %d reached a blocked floor point: %s" % [citizen_id, position])
+		return
+	var requested_route: Dictionary = surface_navigation.route_between(
+		surface_navigation.FLOOR_REGION, String(_reach_goal.surface), position, Vector3(-58.0, 30.0, -52.0)
+	)
+	if requested_route.reachable:
+		return
+	_reach_goal.arrived_citizens.append(citizen_id)
+	_reach_goal.arrived_explorers = _reach_goal.arrived_citizens.size()
+	if _reach_goal.arrived_explorers >= _reach_goal.expected_explorers:
+		_reach_goal.state = "BARRIER_CONFIRMED"
+		_reach_goal.message = "Barrier recognized: floor explorers reached the desk edge, but no navigation link reaches the elevated desk."
+		_reach_goal.barrier = {
+			"from": surface_navigation.FLOOR_REGION,
+			"to": String(_reach_goal.surface),
+			"reason": requested_route.reason,
+			"recognized_after_approach": true,
+			"investigated_by": _reach_goal.arrived_citizens.duplicate(),
+			"approach_position": position,
+		}
+		reach_goal_updated.emit(get_reach_goal_status())
+
+
+func get_reach_goal_status() -> Dictionary:
+	return _reach_goal.duplicate(true)
+
+
+func _create_exploration_task(citizen_id: int, target: Vector3, surface_id: String) -> Dictionary:
+	var task_id := _next_task_id
+	_next_task_id += 1
+	_created_count += 1
+	var task := {
+		"id": task_id,
+		"task_type": "DESK_INVESTIGATION",
+		"state": "reserved",
+		"citizen_id": citizen_id,
+		"owner_hint": citizen_id,
+		"cycle": 0,
+		"source": Vector3.ZERO,
+		"target": target,
+		"target_region": surface_id,
+		"progress": 0.0,
+		"created_at": Time.get_ticks_msec(),
+	}
+	tasks.append(task)
+	_trim_history()
+	return task.duplicate(true)
+
+
+func _path_length(path: Array[Vector3]) -> float:
+	var length := 0.0
+	for index in range(1, path.size()):
+		length += path[index - 1].distance_to(path[index])
+	return length
 
 
 func summary() -> Dictionary:

@@ -3,6 +3,7 @@ extends Node3D
 
 const StrategyCameraController := preload("res://scripts/strategy_camera.gd")
 const FloorNavigationController := preload("res://scripts/floor_navigation.gd")
+const SurfaceNavigationController := preload("res://scripts/surface_navigation.gd")
 const TaskCoordinatorController := preload("res://scripts/task_coordinator.gd")
 const CitizenAgentController := preload("res://scripts/citizen_agent.gd")
 const CITIZEN_HEIGHT_INCHES := 0.5
@@ -22,6 +23,10 @@ var _ui_timer := 0.0
 var _population_label: Label
 var _activity_label: Label
 var _focus_label: Label
+var _desk_selection_outline: MeshInstance3D
+var _reach_button: Button
+var _goal_status_label: Label
+var _selected_surface := ""
 
 
 func _ready() -> void:
@@ -230,6 +235,23 @@ func _build_desk(parent: Node3D) -> void:
 	_add_box(desk, "DeskLampBase", Vector3(8.0, 1.5, 7.0), Vector3(25.0, 31.8, -8.0), Color("574539"), 0.38)
 	_add_cylinder(desk, "DeskLampStem", 0.8, 9.0, Vector3(25.0, 36.2, -8.0), Color("c49a51"))
 	_add_box(desk, "DeskLampShade", Vector3(9.0, 5.0, 8.0), Vector3(25.0, 42.0, -8.0), Color("e6bd78"), 0.55)
+	var selection_body := StaticBody3D.new()
+	selection_body.name = "DeskSelectionCollider"
+	selection_body.add_to_group("desk_goal_surface")
+	selection_body.collision_layer = 2
+	selection_body.collision_mask = 0
+	var selection_shape := CollisionShape3D.new()
+	var desk_surface_shape := BoxShape3D.new()
+	desk_surface_shape.size = Vector3(68.0, 3.0, 34.0)
+	selection_shape.shape = desk_surface_shape
+	selection_shape.position = Vector3(0.0, 28.5, 0.0)
+	selection_body.add_child(selection_shape)
+	desk.add_child(selection_body)
+	_desk_selection_outline = _add_box(desk, "DeskSelectionOutline", Vector3(69.0, 0.18, 35.0), Vector3(0.0, 30.12, 0.0), Color("e9bf59"), 0.32)
+	var outline_material := _desk_selection_outline.material_override as StandardMaterial3D
+	outline_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	outline_material.albedo_color.a = 0.35
+	_desk_selection_outline.visible = false
 
 
 func _build_chair(parent: Node3D) -> void:
@@ -363,9 +385,15 @@ func _build_population() -> void:
 	var navigation := FloorNavigationController.new()
 	navigation.name = "FloorNavigation"
 	add_child(navigation)
+	var surface_navigation := SurfaceNavigationController.new()
+	surface_navigation.name = "SurfaceNavigation"
+	surface_navigation.floor_navigation = navigation
+	add_child(surface_navigation)
 	_task_coordinator = TaskCoordinatorController.new()
 	_task_coordinator.name = "TaskCoordinator"
 	_task_coordinator.navigation = navigation
+	_task_coordinator.surface_navigation = surface_navigation
+	_task_coordinator.reach_goal_updated.connect(_on_reach_goal_updated)
 	add_child(_task_coordinator)
 	_task_coordinator.seed_population(50)
 	var starts: Array[Vector3] = []
@@ -404,10 +432,10 @@ func _build_ui() -> void:
 	overlay.name = "Overlay"
 	add_child(overlay)
 	var title := _make_label("Title", Vector2(26.0, 20.0), 25, Color("fff2dc"))
-	title.text = "ROOMSCALE   /   MILESTONE 2\nA tiny clockwork civilization"
+	title.text = "ROOMSCALE   /   MILESTONE 3\nA tiny clockwork civilization"
 	overlay.add_child(title)
 	var help := _make_label("Controls", Vector2(28.0, 650.0), 16, Color("e5e6df"))
-	help.text = "1 ROOM     2 SETTLEMENT     3 CITIZEN       WASD / ARROWS PAN     RIGHT DRAG ORBIT + TILT     MIDDLE DRAG PAN     WHEEL ZOOM"
+	help.text = "CLICK DESK THEN REACH / EXPLORE     ENTER ISSUES GOAL     1 ROOM     2 SETTLEMENT     3 CITIZEN     WASD / ARROWS PAN     RIGHT DRAG ORBIT + TILT     WHEEL ZOOM"
 	overlay.add_child(help)
 	var mode := _make_label("CameraMode", Vector2(1000.0, 28.0), 16, Color("e7c991"))
 	mode.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -420,6 +448,21 @@ func _build_ui() -> void:
 	_activity_label = _make_label("TaskStatus", Vector2(28.0, 134.0), 15, Color("dde3da"))
 	_activity_label.custom_minimum_size = Vector2(630.0, 54.0)
 	overlay.add_child(_activity_label)
+	_goal_status_label = _make_label("GoalStatus", Vector2(28.0, 194.0), 17, Color("f2cf7e"))
+	_goal_status_label.custom_minimum_size = Vector2(700.0, 56.0)
+	_goal_status_label.text = "GOAL  Click the desk surface to select it."
+	overlay.add_child(_goal_status_label)
+	_reach_button = Button.new()
+	_reach_button.name = "ReachExploreButton"
+	_reach_button.text = "REACH / EXPLORE DESK"
+	_reach_button.position = Vector2(28.0, 248.0)
+	_reach_button.size = Vector2(238.0, 38.0)
+	_reach_button.visible = false
+	_reach_button.pressed.connect(issue_reach_explore)
+	overlay.add_child(_reach_button)
+	var capture_hint := _make_label("CaptureHint", Vector2(28.0, 294.0), 13, Color("c1c9cb"))
+	capture_hint.text = "F12 captures the current interaction state."
+	overlay.add_child(capture_hint)
 	_focus_label = _make_label("CitizenFocus", Vector2(1000.0, 54.0), 15, Color("a9dad4"))
 	_focus_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_focus_label.custom_minimum_size = Vector2(255.0, 26.0)
@@ -440,11 +483,80 @@ func _update_population_ui() -> void:
 	var summary: Dictionary = _task_coordinator.summary()
 	_population_label.text = "POPULATION  %02d / 50     WALKING  %02d     CARRYING  %02d     SCALE  0.5 in" % [_citizens.size(), moving, carriers]
 	_activity_label.text = "TASK BOARD  ACTIVE %02d   AVAILABLE %02d   COMPLETE %d\nWORKSHOP  ·  DEPOT  ·  HOUSING  ·  WORK AREA  ·  FLOOR PATROL" % [summary.active, summary.available, summary.completed_total]
+	_reach_button.visible = _selected_surface == SurfaceNavigationController.DESK_REGION
+	var goal: Dictionary = _task_coordinator.get_reach_goal_status()
+	if goal.is_empty():
+		_goal_status_label.text = "GOAL  Click the desk surface to select it." if _selected_surface.is_empty() else "TARGET  DESK SURFACE SELECTED  ·  Choose Reach / Explore."
+	else:
+		_goal_status_label.text = "GOAL  %s\n%s" % [String(goal.state).replace("_", " "), String(goal.message)]
 	var camera_rig := get_node("CameraRig")
 	_focus_label.visible = camera_rig.view_mode == 2 and _citizens.size() > 23
 	if _focus_label.visible:
 		var focus: Node3D = _citizens[23]
 		_focus_label.text = "CITIZEN 24  ·  %s  ·  %s" % [focus.task_type.replace("_", " "), focus.state]
+
+
+func _on_reach_goal_updated(_status: Dictionary) -> void:
+	_update_population_ui()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		var mouse_button := event as InputEventMouseButton
+		if mouse_button.button_index == MOUSE_BUTTON_LEFT and mouse_button.pressed:
+			_select_surface_under_cursor(mouse_button.position)
+	elif event is InputEventKey:
+		var key := event as InputEventKey
+		if key.pressed and not key.echo:
+			if key.keycode == KEY_F12:
+				capture_interaction_state()
+				get_viewport().set_input_as_handled()
+			elif key.keycode == KEY_ENTER and _selected_surface == SurfaceNavigationController.DESK_REGION:
+				issue_reach_explore()
+				get_viewport().set_input_as_handled()
+
+
+func _select_surface_under_cursor(screen_position: Vector2) -> void:
+	select_surface_at_screen_position(screen_position)
+
+
+func select_surface_at_screen_position(screen_position: Vector2) -> bool:
+	var camera := get_node("CameraRig/Camera") as Camera3D
+	var ray_origin := camera.project_ray_origin(screen_position)
+	var ray_end := ray_origin + camera.project_ray_normal(screen_position) * 1000.0
+	var query := PhysicsRayQueryParameters3D.create(ray_origin, ray_end, 2)
+	var hit: Dictionary = get_world_3d().direct_space_state.intersect_ray(query)
+	if not hit.is_empty() and (hit.collider as Node).is_in_group("desk_goal_surface"):
+		return select_goal_surface(SurfaceNavigationController.DESK_REGION)
+	return false
+
+
+func select_goal_surface(surface_id: String) -> bool:
+	if surface_id != SurfaceNavigationController.DESK_REGION:
+		return false
+	_selected_surface = surface_id
+	_desk_selection_outline.visible = true
+	_reach_button.visible = true
+	_goal_status_label.text = "TARGET  DESK SURFACE SELECTED  ·  Choose Reach / Explore."
+	return true
+
+
+func issue_reach_explore() -> Dictionary:
+	if _selected_surface.is_empty():
+		return {"accepted": false, "state": "NO_TARGET", "message": "Select the desk surface first."}
+	return _task_coordinator.issue_reach_explore(_selected_surface, _citizens)
+
+
+func capture_interaction_state() -> void:
+	var goal: Dictionary = _task_coordinator.get_reach_goal_status()
+	var state_name := "startup"
+	if not goal.is_empty() and goal.state == "BARRIER_CONFIRMED":
+		state_name = "desk-investigation"
+	elif not goal.is_empty():
+		state_name = "explorers-approaching"
+	elif not _selected_surface.is_empty():
+		state_name = "target-selected"
+	_capture_frame_named("milestone3-%s" % state_name)
 
 
 func _make_label(node_name: String, at: Vector2, font_size: int, color: Color) -> Label:
@@ -518,22 +630,28 @@ func _material(color: Color, roughness: float) -> StandardMaterial3D:
 
 
 func _capture_frame() -> void:
-	var image := get_viewport().get_texture().get_image()
 	var tag := OS.get_environment("ROOMSCALE_RUN_TAG")
 	if tag.is_empty():
 		tag = "milestone1-room"
+	_capture_frame_named(tag)
+
+
+func _capture_frame_named(tag: String) -> void:
+	var image := get_viewport().get_texture().get_image()
 	var artifact_directory := ProjectSettings.globalize_path("res://verification")
 	DirAccess.make_dir_recursive_absolute(artifact_directory)
 	var image_path := "%s/%s.png" % [artifact_directory, tag]
 	var result := image.save_png(image_path)
 	var proof := FileAccess.open("%s/%s.log" % [artifact_directory, tag], FileAccess.WRITE)
-	proof.store_line("ROOMSCALE_M2_VISIBLE_PASS")
+	proof.store_line("ROOMSCALE_M3_VISIBLE_PASS")
 	proof.store_line("Godot=%s" % Engine.get_version_info().string)
 	proof.store_line("Room=%.0fx%.0f in; walls=%.0f in" % [ROOM_WIDTH, ROOM_DEPTH, WALL_HEIGHT])
 	proof.store_line("Furniture=Desk,Chair,Bookcase,Rug,household props")
 	proof.store_line("Camera=pan/orbit/tilt/zoom; presets=room,settlement,citizen")
 	proof.store_line("Population=%d separate citizens at 0.5in scale" % _citizens.size())
 	proof.store_line("TaskBoard=%s" % JSON.stringify(_task_coordinator.summary()))
+	proof.store_line("SelectedSurface=%s" % _selected_surface)
+	proof.store_line("Goal=%s" % JSON.stringify(_task_coordinator.get_reach_goal_status()))
 	proof.store_line("Screenshot=%s" % image_path)
 	proof.store_line("ImageSaveResult=%d" % result)
-	print("ROOMSCALE_M1_SCREENSHOT path=%s result=%d" % [image_path, result])
+	print("ROOMSCALE_VISIBLE_CAPTURE path=%s result=%d" % [image_path, result])
