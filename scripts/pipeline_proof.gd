@@ -19,6 +19,9 @@ var _capture_timer := 0.0
 var _capture_saved := false
 var _materials: Dictionary = {}
 var _citizens: Array[Node3D] = []
+var _animated_gear_roots: Array[Node3D] = []
+var _presentation_clock := 0.0
+var _boiler_light: OmniLight3D
 var _task_coordinator: Node
 var _construction_system: Node
 var _ui_timer := 0.0
@@ -48,12 +51,20 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	_presentation_clock += delta
+	for index in range(_animated_gear_roots.size()):
+		var gear := _animated_gear_roots[index]
+		gear.rotation.y += delta * (0.72 if index % 2 == 0 else -0.58)
+	if is_instance_valid(_boiler_light):
+		_boiler_light.light_energy = 20.0 + 5.0 * (0.5 + 0.5 * sin(_presentation_clock * 2.0))
 	_capture_timer += delta
 	_ui_timer += delta
 	if _ui_timer >= 0.2:
 		_ui_timer = 0.0
 		_update_population_ui()
-	if not _capture_saved and _capture_timer >= CAPTURE_DELAY_SECONDS and DisplayServer.get_name() != "headless":
+	var camera_rig := get_node_or_null("CameraRig") as StrategyCameraController
+	var camera_settled := not is_instance_valid(camera_rig) or not camera_rig.is_camera_transition_active()
+	if not _capture_saved and _capture_timer >= CAPTURE_DELAY_SECONDS and (camera_settled or _capture_timer >= 8.0) and DisplayServer.get_name() != "headless":
 		_capture_saved = true
 		_capture_frame()
 
@@ -90,9 +101,18 @@ func _build_workshop(parent: Node3D) -> void:
 	_add_box(shop, "WorkBench", Vector3(11.0, 1.2, 4.5), Vector3(3.5, 4.2, -2.0), Color("a27a4d"), 0.74)
 	for x in [-0.5, 7.5]:
 		_add_box(shop, "BenchLeg", Vector3(0.8, 4.0, 0.8), Vector3(x, 2.0, -2.0), Color("684a35"), 0.74)
-	_add_cylinder(shop, "GearWheel", 1.8, 0.55, Vector3(3.2, 5.1, -4.3), Color("d1a252"))
+	_build_animated_gear(shop, "BenchGear", Vector3(3.2, 5.1, -4.3), 1.8, 8)
 	_add_cylinder(shop, "Gauge", 0.8, 0.45, Vector3(0.0, 7.0, 1.0), Color("d3c18f"))
 	_add_world_label(shop, "WorkshopLabel", "WORKSHOP", Vector3(0.0, 14.0, 0.0), Color("f2d395"))
+	_add_steam_emitter(shop, "BoilerSteam", Vector3(-6.5, 17.0, -2.0))
+	_add_cylinder(shop, "BoilerGlow", 0.9, 0.4, Vector3(-6.5, 5.6, 0.76), Color("f0b55e"))
+	_boiler_light = OmniLight3D.new()
+	_boiler_light.name = "BoilerLamp"
+	_boiler_light.position = Vector3(-6.5, 7.0, 0.76)
+	_boiler_light.light_color = Color("f0a748")
+	_boiler_light.light_energy = 22.0
+	_boiler_light.omni_range = 12.0
+	shop.add_child(_boiler_light)
 
 
 func _build_depot(parent: Node3D) -> void:
@@ -347,14 +367,14 @@ func _build_lighting() -> void:
 	var light := DirectionalLight3D.new()
 	light.name = "KeyLight"
 	light.rotation_degrees = Vector3(-48.0, -34.0, 0.0)
-	light.light_energy = 0.9
+	light.light_energy = 0.8
 	light.shadow_enabled = true
 	add_child(light)
 	var fill := OmniLight3D.new()
 	fill.name = "RoomFill"
 	fill.position = Vector3(5.0, 68.0, 24.0)
 	fill.light_color = Color("f7d8a0")
-	fill.light_energy = 260.0
+	fill.light_energy = 82.0
 	fill.omni_range = 190.0
 	fill.omni_attenuation = 1.35
 	add_child(fill)
@@ -364,11 +384,23 @@ func _build_lighting() -> void:
 	resource.background_mode = Environment.BG_COLOR
 	resource.background_color = Color("17212b")
 	resource.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-	resource.ambient_light_color = Color("c8d1d5")
+	resource.ambient_light_color = Color("d5cdbb")
 	resource.ambient_light_energy = 0.34
 	resource.tonemap_mode = Environment.TONE_MAPPER_FILMIC
+	resource.glow_enabled = true
+	resource.glow_intensity = 0.14
+	resource.glow_bloom = 0.04
+	resource.glow_hdr_threshold = 1.5
 	environment.environment = resource
 	add_child(environment)
+	var lantern_fill := OmniLight3D.new()
+	lantern_fill.name = "SettlementLanternFill"
+	lantern_fill.position = Vector3(-25.0, 10.0, 60.0)
+	lantern_fill.light_color = Color("e5a95d")
+	lantern_fill.light_energy = 24.0
+	lantern_fill.omni_range = 38.0
+	lantern_fill.omni_attenuation = 1.5
+	add_child(lantern_fill)
 
 
 func _build_camera() -> void:
@@ -445,49 +477,53 @@ func _build_ui() -> void:
 	var overlay := CanvasLayer.new()
 	overlay.name = "Overlay"
 	add_child(overlay)
+	_add_ui_panel(overlay, "HudPanel", Rect2(16.0, 12.0, 570.0, 326.0), Color(0.035, 0.052, 0.068, 0.79))
+	_add_ui_panel(overlay, "CameraPanel", Rect2(988.0, 16.0, 270.0, 78.0), Color(0.035, 0.052, 0.068, 0.78))
+	_add_ui_panel(overlay, "ControlsPanel", Rect2(18.0, 628.0, 1244.0, 70.0), Color(0.035, 0.052, 0.068, 0.84))
 	var title := _make_label("Title", Vector2(26.0, 20.0), 25, Color("fff2dc"))
-	title.text = "ROOMSCALE   /   MILESTONE 6\nA tiny clockwork civilization"
+	title.text = "ROOMSCALE  ·  A LIVING TINY ROOM"
 	overlay.add_child(title)
-	var help := _make_label("Controls", Vector2(28.0, 650.0), 16, Color("e5e6df"))
-	help.text = "CLICK DESK THEN REACH / EXPLORE     ENTER ISSUES GOAL     1 ROOM     2 SETTLEMENT     3 CITIZEN     WASD / ARROWS PAN     RIGHT DRAG ORBIT + TILT     WHEEL ZOOM"
+	var help := _make_label("Controls", Vector2(28.0, 636.0), 14, Color("e5e6df"))
+	help.text = "1 ROOM  ·  2 SETTLEMENT  ·  3 CITIZEN    |    WASD / ARROWS PAN    ·    RIGHT DRAG ORBIT    ·    WHEEL ZOOM\nClick the desk, then Reach / Explore    ·    Enter issues goal    ·    F12 captures this moment"
+	help.custom_minimum_size = Vector2(1200.0, 52.0)
 	overlay.add_child(help)
 	var mode := _make_label("CameraMode", Vector2(1000.0, 28.0), 16, Color("e7c991"))
 	mode.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	var camera_rig := get_node("CameraRig")
 	mode.text = "VIEW  %s  ·  %d in" % [camera_rig.get_view_mode_name(), roundi(camera_rig.distance)]
 	overlay.add_child(mode)
-	_population_label = _make_label("PopulationStatus", Vector2(28.0, 104.0), 18, Color("f3dfb8"))
-	_population_label.custom_minimum_size = Vector2(610.0, 30.0)
+	_population_label = _make_label("PopulationStatus", Vector2(28.0, 62.0), 15, Color("f3dfb8"))
+	_population_label.custom_minimum_size = Vector2(530.0, 24.0)
 	overlay.add_child(_population_label)
-	_activity_label = _make_label("TaskStatus", Vector2(28.0, 134.0), 15, Color("dde3da"))
-	_activity_label.custom_minimum_size = Vector2(820.0, 74.0)
+	_activity_label = _make_label("TaskStatus", Vector2(28.0, 88.0), 13, Color("dde3da"))
+	_activity_label.custom_minimum_size = Vector2(530.0, 48.0)
 	overlay.add_child(_activity_label)
-	_goal_status_label = _make_label("GoalStatus", Vector2(28.0, 194.0), 17, Color("f2cf7e"))
-	_goal_status_label.custom_minimum_size = Vector2(700.0, 56.0)
+	_goal_status_label = _make_label("GoalStatus", Vector2(28.0, 140.0), 14, Color("f2cf7e"))
+	_goal_status_label.custom_minimum_size = Vector2(530.0, 42.0)
 	_goal_status_label.text = "GOAL  Click the desk surface to select it."
 	overlay.add_child(_goal_status_label)
 	_reach_button = Button.new()
 	_reach_button.name = "ReachExploreButton"
 	_reach_button.text = "REACH / EXPLORE DESK"
-	_reach_button.position = Vector2(28.0, 248.0)
+	_reach_button.position = Vector2(28.0, 184.0)
 	_reach_button.size = Vector2(238.0, 38.0)
 	_reach_button.visible = false
 	_reach_button.pressed.connect(issue_reach_explore)
 	overlay.add_child(_reach_button)
-	var capture_hint := _make_label("CaptureHint", Vector2(28.0, 294.0), 13, Color("c1c9cb"))
+	var capture_hint := _make_label("CaptureHint", Vector2(28.0, 232.0), 12, Color("c1c9cb"))
 	capture_hint.text = "F12 captures the current interaction state."
 	overlay.add_child(capture_hint)
-	_project_status_label = _make_label("ProjectStatus", Vector2(28.0, 328.0), 16, Color("f4d69a"))
-	_project_status_label.custom_minimum_size = Vector2(820.0, 28.0)
+	_project_status_label = _make_label("ProjectStatus", Vector2(28.0, 254.0), 13, Color("f4d69a"))
+	_project_status_label.custom_minimum_size = Vector2(530.0, 22.0)
 	overlay.add_child(_project_status_label)
-	_material_status_label = _make_label("MaterialStatus", Vector2(28.0, 356.0), 14, Color("d9e0d9"))
-	_material_status_label.custom_minimum_size = Vector2(820.0, 28.0)
+	_material_status_label = _make_label("MaterialStatus", Vector2(28.0, 278.0), 12, Color("d9e0d9"))
+	_material_status_label.custom_minimum_size = Vector2(530.0, 20.0)
 	overlay.add_child(_material_status_label)
-	_build_status_label = _make_label("BuildStatus", Vector2(28.0, 382.0), 14, Color("a8d7c4"))
-	_build_status_label.custom_minimum_size = Vector2(820.0, 28.0)
+	_build_status_label = _make_label("BuildStatus", Vector2(28.0, 300.0), 12, Color("a8d7c4"))
+	_build_status_label.custom_minimum_size = Vector2(530.0, 20.0)
 	overlay.add_child(_build_status_label)
-	_m6_status_label = _make_label("IntegratedStatus", Vector2(28.0, 408.0), 14, Color("c9d5ee"))
-	_m6_status_label.custom_minimum_size = Vector2(820.0, 28.0)
+	_m6_status_label = _make_label("IntegratedStatus", Vector2(28.0, 322.0), 12, Color("c9d5ee"))
+	_m6_status_label.custom_minimum_size = Vector2(530.0, 20.0)
 	overlay.add_child(_m6_status_label)
 	_focus_label = _make_label("CitizenFocus", Vector2(1000.0, 54.0), 15, Color("a9dad4"))
 	_focus_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -507,14 +543,14 @@ func _update_population_ui() -> void:
 		if citizen.carrying:
 			carriers += 1
 	var summary: Dictionary = _task_coordinator.summary()
-	_population_label.text = "POPULATION  %02d / 50     WALKING  %02d     CARRYING  %02d     SCALE  0.5 in" % [_citizens.size(), moving, carriers]
+	_population_label.text = "POP %02d / 50   WALK %02d   CARRY %02d   SCALE 0.5 in" % [_citizens.size(), moving, carriers]
 	var delivery_count: int = _construction_system.active_delivery_count() if is_instance_valid(_construction_system) else 0
 	var builder_count: int = _construction_system.active_builder_count() if is_instance_valid(_construction_system) else 0
-	_activity_label.text = "TASK BOARD  ACTIVE %02d   AVAILABLE %02d   COMPLETE %d\nPROJECT TASKS  HAULING %02d   BUILDERS %02d\nWORKSHOP  ·  DEPOT  ·  HOUSING  ·  WORK AREA  ·  FLOOR PATROL" % [summary.active, summary.available, summary.completed_total, delivery_count, builder_count]
+	_activity_label.text = "TASKS  ACTIVE %02d · READY %02d · DONE %d\nHAUL %02d · BUILD %02d   WORKSHOP / DEPOT / HOMES / FLOOR" % [summary.active, summary.available, summary.completed_total, delivery_count, builder_count]
 	_reach_button.visible = _selected_surface == SurfaceNavigationController.DESK_REGION
 	var goal: Dictionary = _task_coordinator.get_reach_goal_status()
 	if goal.is_empty():
-		_goal_status_label.text = "GOAL  Click the desk surface to select it." if _selected_surface.is_empty() else "TARGET  DESK SURFACE SELECTED  ·  Choose Reach / Explore."
+		_goal_status_label.text = "GOAL  Click desk to select." if _selected_surface.is_empty() else "TARGET  DESK SELECTED · Choose Reach / Explore."
 	else:
 		_goal_status_label.text = "GOAL  %s\n%s" % [String(goal.state).replace("_", " "), String(goal.message)]
 	var camera_rig := get_node("CameraRig")
@@ -525,7 +561,7 @@ func _update_population_ui() -> void:
 			focus = _citizens[23]
 		_focus_label.text = "%s  ·  %s  ·  %s" % [focus.name, focus.task_type.replace("_", " "), focus.state]
 	var m6: Dictionary = _task_coordinator.get_m6_status()
-	_m6_status_label.text = "DESK EXPLORATION  ARRIVED %d   EXPLORED %d   AUTONOMOUS ROUTE REUSES %d/2   INFRASTRUCTURE %s" % [m6.desk_arrivals, m6.desk_explorations_completed, m6.autonomous_reuses_assigned, "OPERATIONAL" if m6.infrastructure_operational else "AWAITING DEPLOYMENT"]
+	_m6_status_label.text = "DESK  ARRIVED %d · EXPLORED %d · REUSES %d/2 · LINK %s" % [m6.desk_arrivals, m6.desk_explorations_completed, m6.autonomous_reuses_assigned, "LIVE" if m6.infrastructure_operational else "WAITING"]
 	_update_project_ui()
 
 
@@ -638,6 +674,76 @@ func _make_label(node_name: String, at: Vector2, font_size: int, color: Color) -
 	return label
 
 
+func _add_ui_panel(parent: CanvasLayer, node_name: String, bounds: Rect2, fill: Color) -> void:
+	var panel := Panel.new()
+	panel.name = node_name
+	panel.position = bounds.position
+	panel.size = bounds.size
+	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var style := StyleBoxFlat.new()
+	style.bg_color = fill
+	style.border_color = Color(0.69, 0.51, 0.29, 0.65)
+	style.set_border_width_all(1)
+	style.set_corner_radius_all(9)
+	style.shadow_color = Color(0.0, 0.0, 0.0, 0.28)
+	style.shadow_size = 8
+	style.shadow_offset = Vector2(1.0, 3.0)
+	panel.add_theme_stylebox_override("panel", style)
+	parent.add_child(panel)
+
+
+func _build_animated_gear(parent: Node3D, node_name: String, at: Vector3, radius: float, teeth: int) -> void:
+	var gear_root := Node3D.new()
+	gear_root.name = node_name
+	gear_root.position = at
+	parent.add_child(gear_root)
+	_animated_gear_roots.append(gear_root)
+	_add_cylinder(gear_root, "BrassWheel", radius, 0.55, Vector3.ZERO, Color("c99443"))
+	_add_cylinder(gear_root, "Hub", radius * 0.29, 0.72, Vector3.ZERO, Color("6c5140"))
+	for tooth_index in range(teeth):
+		var angle := TAU * float(tooth_index) / float(teeth)
+		var tooth := _add_box(gear_root, "Tooth%02d" % tooth_index,
+			Vector3(radius * 0.45, 0.8, radius * 0.26),
+			Vector3(cos(angle) * radius * 0.9, 0.0, sin(angle) * radius * 0.9), Color("dfb75e"), 0.43)
+		tooth.rotation.y = -angle
+
+
+func _add_steam_emitter(parent: Node3D, node_name: String, at: Vector3) -> void:
+	var particles := GPUParticles3D.new()
+	particles.name = node_name
+	particles.position = at
+	particles.amount = 22
+	particles.lifetime = 2.8
+	particles.explosiveness = 0.0
+	particles.randomness = 0.48
+	particles.emitting = true
+	particles.visibility_aabb = AABB(Vector3(-4.0, -2.0, -4.0), Vector3(8.0, 28.0, 8.0))
+	var motion := ParticleProcessMaterial.new()
+	motion.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_SPHERE
+	motion.emission_sphere_radius = 0.45
+	motion.direction = Vector3(0.0, 1.0, 0.0)
+	motion.spread = 14.0
+	motion.initial_velocity_min = 1.2
+	motion.initial_velocity_max = 2.6
+	motion.gravity = Vector3(0.0, -0.15, 0.0)
+	motion.damping_min = 0.12
+	motion.damping_max = 0.34
+	motion.scale_min = 0.3
+	motion.scale_max = 0.7
+	motion.color = Color(0.78, 0.84, 0.87, 0.55)
+	particles.process_material = motion
+	var puff := SphereMesh.new()
+	puff.radius = 0.55
+	puff.height = 1.1
+	var steam_material := StandardMaterial3D.new()
+	steam_material.albedo_color = Color(0.82, 0.88, 0.9, 0.5)
+	steam_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	steam_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	puff.material = steam_material
+	particles.draw_pass_1 = puff
+	parent.add_child(particles)
+
+
 func _add_box(parent: Node3D, node_name: String, size: Vector3, at: Vector3, color: Color, roughness: float = 0.8) -> MeshInstance3D:
 	var item := MeshInstance3D.new()
 	item.name = node_name
@@ -699,7 +805,7 @@ func _material(color: Color, roughness: float) -> StandardMaterial3D:
 func _capture_frame() -> void:
 	var tag := OS.get_environment("ROOMSCALE_RUN_TAG")
 	if tag.is_empty():
-		tag = "milestone1-room"
+		tag = "milestone8-launch-startup"
 	_capture_frame_named(tag)
 
 

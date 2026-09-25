@@ -10,7 +10,7 @@
 | M5 — Grappling traversal | PASS | `verification/milestone5-status.md`, smoke log, and inspected cable/desk captures |
 | M6 — Integrated gameplay | PASS | `verification/milestone6-status.md`, smoke log, and inspected desk/reuse captures |
 | M7 — Automated verification | PASS | 10/10 full scenarios in fresh Godot processes; `verification/milestone7-repeatability-summary.md` |
-| M8 — Presentation pass | NOT STARTED | After functional milestones |
+| M8 — Presentation pass | PASS | `verification/milestone8-status.md`, `milestone8-smoke.log`, inspected launch screenshots |
 
 ## Acceptance Criteria
 
@@ -19,7 +19,7 @@
 | AC-01 Automated Bootstrap | PASS | Setup, run, and test scripts; no editor work required. |
 | AC-02 3D Room | PASS | Runtime-generated room and furnishings. |
 | AC-03 Scale | PASS | Inch-based world; citizen figure height checked at 0.5in. |
-| AC-04 Camera | PASS | Room, settlement (132in), and citizen views; pan/orbit/tilt/zoom checks. |
+| AC-04 Camera | PASS | Room (300in), settlement (132in), and citizen views; eased presets and pan/orbit/tilt/zoom checks. |
 | AC-05 Population | PASS | Exactly 50 separate citizen nodes, all assigned active tasks. |
 | AC-06 Autonomous Activity | PASS | Citizens move, carry parcels, and cycle shared tasks deterministically. |
 | AC-07 Floor Navigation | PASS | Grid A* detours around furniture and settlement footprints. |
@@ -44,10 +44,12 @@
 
 `TEST_ROOM_SCALE_REPEATABILITY.ps1 -RunCount 10 -PerRunTimeoutSeconds 360 -OverallTimeoutMinutes 60` — **PASS**, 10/10 fresh Godot processes, total 33.99 minutes. Every run exited 0 and included M2–M6 PASS markers; all ten per-run logs were rechecked for missing markers and script/smoke errors. Summary and status: `verification/milestone7-repeatability-summary.md`, `verification/milestone7-status.md`. Future runner defaults are 300 seconds per run and 40 minutes overall; first failure stops the batch.
 
+`TEST_ROOM_SCALE.ps1 -TimeoutSeconds 300 -LogPath verification/milestone8-smoke.log` — **PASS**, Godot `4.7.2.stable.official.ed1daf0bf` (exit 0). M2–M6 regression assertions and M8 presentation assertions all passed. Camera controls include eased preset transitions; smoke confirms desk selection works while transition state is active. The presentation pass adds a toothed animated workshop gear, emitted boiler steam, warm pulsing boiler light, more balanced ambient/glow lighting, brass-edged translucent HUD panels, and a smaller HUD that leaves more of the room visible. `RUN_ROOM_SCALE.ps1` launched the production scene and produced fresh captures: `verification/milestone8-launch-startup.png` (room composition) and `verification/milestone8-settlement-view.png` (132in settlement composition). Both were inspected; the broad room shot is the primary composition, while the settlement preset intentionally gives a closer crop of the living work area. Details: `verification/milestone8-status.md`.
+
 ## Open Issues
 
-No known blocking defect for M0–M7. Construction progress is bounded at 100%; the floor-to-desk link appears only after launcher completion. Desk exploration and autonomous route reuse are session-scoped; no save-file persistence is required by the plan.
+No known blocking defect. Construction progress is bounded at 100%; the floor-to-desk link appears only after launcher completion. Desk exploration and autonomous route reuse are session-scoped; no save-file persistence is required by the plan.
 
 ## Next Action
 
-M7 passed. Await review before starting M8; no M8 work has begun.
+All planned milestones M0–M8 are complete and verified. Preserve the user-owned `poc_project_plan.md`; no further milestone work is in scope.

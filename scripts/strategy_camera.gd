@@ -18,6 +18,7 @@ var _orbit_dragging := false
 var _pan_dragging := false
 var _citizen_focus: Node3D
 var _citizen_focus_offset := Vector3(0.0, 0.25, 0.0)
+var _camera_transition_active := false
 
 
 func _ready() -> void:
@@ -63,29 +64,36 @@ func _process(delta: float) -> void:
 	if Input.is_key_pressed(KEY_S) or Input.is_key_pressed(KEY_DOWN):
 		movement.y -= 1.0
 	if movement.length_squared() > 0.0:
+		_camera_transition_active = true
 		_citizen_focus = null
 		var right := Vector3(cos(yaw), 0.0, sin(yaw))
 		var forward := Vector3(sin(yaw), 0.0, -cos(yaw))
 		var pan_scale := maxf(12.0, distance * 0.8)
 		target += (right * movement.x + forward * movement.y).normalized() * pan_scale * delta
 	if Input.is_key_pressed(KEY_Q):
+		_camera_transition_active = true
 		target.y += maxf(8.0, distance * 0.4) * delta
 	if Input.is_key_pressed(KEY_E):
+		_camera_transition_active = true
 		target.y -= maxf(8.0, distance * 0.4) * delta
 	if view_mode == 2 and is_instance_valid(_citizen_focus):
-		target = _citizen_focus.global_position + _citizen_focus_offset
-	_apply_transform()
+		var focus_target := _citizen_focus.global_position + _citizen_focus_offset
+		if target.distance_to(focus_target) > 0.05:
+			_camera_transition_active = true
+		target = focus_target
+	_apply_transform(delta)
 
 
 func set_view_mode(mode: int) -> void:
+	var previous_mode := view_mode
 	view_mode = clampi(mode, 0, 2)
 	match view_mode:
 		0: # Room
 			target = Vector3(0.0, 20.0, 0.0)
 			distance = 300.0
 			tilt_degrees = 52.0
-		1: # Settlement: frame all four work sites and the walking floor
-			target = Vector3(0.0, 3.0, 55.0)
+		1: # Settlement: frame the room-scale work sites and walking floor together
+			target = Vector3(0.0, 8.0, 22.0)
 			distance = 132.0
 			tilt_degrees = 55.0
 		2: # Citizen: close detail scale beside the desk
@@ -94,6 +102,8 @@ func set_view_mode(mode: int) -> void:
 			tilt_degrees = 48.0
 			if is_instance_valid(_citizen_focus):
 				target = _citizen_focus.global_position + _citizen_focus_offset
+	if view_mode != previous_mode:
+		_camera_transition_active = true
 	_apply_transform()
 	var label := get_node_or_null("../Overlay/CameraMode") as Label
 	if label:
@@ -107,6 +117,7 @@ func orbit_by(delta: Vector2) -> void:
 
 
 func pan_by(delta: Vector2) -> void:
+	_camera_transition_active = true
 	_citizen_focus = null
 	var right := Vector3(cos(yaw), 0.0, sin(yaw))
 	var forward := Vector3(sin(yaw), 0.0, -cos(yaw))
@@ -135,8 +146,18 @@ func get_focused_citizen() -> Node3D:
 	return _citizen_focus
 
 
-func _apply_transform() -> void:
-	position = target
+func is_camera_transition_active() -> bool:
+	return _camera_transition_active
+
+
+func _apply_transform(delta: float = 0.0) -> void:
+	if _camera_transition_active and delta > 0.0:
+		position = position.lerp(target, 1.0 - exp(-7.0 * delta))
+		if position.distance_to(target) < 0.05:
+			position = target
+			_camera_transition_active = false
+	elif not _camera_transition_active:
+		position = target
 	rotation = Vector3(0.0, yaw, 0.0)
 	if is_instance_valid(camera):
 		var tilt := deg_to_rad(tilt_degrees)

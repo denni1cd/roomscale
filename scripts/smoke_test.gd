@@ -20,10 +20,12 @@ func _run() -> void:
 		"Room/Floor", "Room/WallBack", "Room/WallLeft", "Room/WallRight",
 		"Furniture/Desk/DeskTop", "Furniture/Chair/ChairSeat", "Furniture/Bookcase",
 		"Furniture/Rug", "Furniture/SideTable", "Props/StorageBox",
-		"Settlement/Workshop", "Settlement/Depot", "Settlement/Housing", "Settlement/WorkArea",
+		"Settlement/Workshop", "Settlement/Workshop/BenchGear", "Settlement/Workshop/BoilerSteam", "Settlement/Workshop/BoilerLamp",
+		"Settlement/Depot", "Settlement/Housing", "Settlement/WorkArea",
 		"FloorNavigation", "SurfaceNavigation", "TaskCoordinator", "Citizen01", "Citizen50",
 		"Furniture/Desk/DeskSelectionCollider", "Furniture/Desk/DeskSelectionOutline",
 		"CameraRig/Camera", "KeyLight", "WorldEnvironment", "Overlay/Controls", "Overlay/CameraMode",
+		"Overlay/HudPanel", "Overlay/CameraPanel", "Overlay/ControlsPanel", "Overlay/IntegratedStatus",
 		"Overlay/GoalStatus", "Overlay/ReachExploreButton", "Overlay/ProjectStatus",
 		"Overlay/MaterialStatus", "Overlay/BuildStatus", "ConstructionSystem"
 	]
@@ -44,7 +46,7 @@ func _run() -> void:
 		_fail("chair seat is not at the planned 18-inch height")
 		return
 	var camera_rig := scene.get_node("CameraRig")
-	if not camera_rig.has_method("set_view_mode") or not camera_rig.has_method("orbit_by") or not camera_rig.has_method("pan_by") or not camera_rig.has_method("zoom_by"):
+	if not camera_rig.has_method("set_view_mode") or not camera_rig.has_method("orbit_by") or not camera_rig.has_method("pan_by") or not camera_rig.has_method("zoom_by") or not camera_rig.has_method("is_camera_transition_active"):
 		_fail("strategy camera does not expose all navigation controls")
 		return
 	camera_rig.set_view_mode(0)
@@ -70,6 +72,13 @@ func _run() -> void:
 	camera_rig.zoom_by(1.1)
 	if camera_rig.distance <= citizen_distance:
 		_fail("zoom input did not change camera distance")
+		return
+	if not camera_rig.is_camera_transition_active():
+		_fail("camera preset/pan transitions are not eased")
+		return
+	var boiler_steam := scene.get_node("Settlement/Workshop/BoilerSteam") as GPUParticles3D
+	if not boiler_steam.emitting or boiler_steam.amount < 1 or scene.get_node("Settlement/Workshop/BenchGear").get_child_count() < 10:
+		_fail("procedural steam/animated cog presentation details are missing")
 		return
 	var citizen_count := 0
 	var distinct_citizens: Dictionary = {}
@@ -387,6 +396,7 @@ func _run() -> void:
 	print("ROOMSCALE_M4_SMOKE_PASS deliveries=%d stockpile=%s delivered=%s builder_gates=%d components=%d progress=%.1f%% walk=%.1fin elapsed=%.2fs" % [completed_delivery_count, project_status.stockpile, project_status.delivered, project_status.stage_gates.size(), project_status.completed_stages, project_status.progress_percent, delivery_route_length, construction_elapsed])
 	print("ROOMSCALE_M5_SMOKE_PASS cable_segments=%d route_points=%d traverser=%s target=DESK height=%.1fin walked=%.1fin route=%.1fin max_step=%.2fin elapsed=%.2fs" % [cable_root.get_child_count() - 1, deployed_route.path.size(), climber.name, climber.global_position.y, completed_traversal.actual_travelled_distance, completed_traversal.route_length, max_step_distance, traversal_elapsed])
 	print("ROOMSCALE_M6_SMOKE_PASS arrivals=%d desk_explorations=%d reused=%d distinct_travelers=%d exploration_work=%.1fs infrastructure=%s max_step=%.2fin elapsed=%.2fs" % [m6_status.desk_arrivals, m6_status.desk_explorations_completed, m6_status.autonomous_reuses_assigned, traversal_owners.size(), total_exploration_work, "operational" if m6_status.infrastructure_operational else "missing", m6_max_step, m6_elapsed])
+	print("ROOMSCALE_M8_SMOKE_PASS steam=%s cog_teeth=%d hud_panels=3 camera_easing=verified" % [boiler_steam.emitting, scene.get_node("Settlement/Workshop/BenchGear").get_child_count() - 2])
 	quit(0)
 
 
