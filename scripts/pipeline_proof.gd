@@ -2,33 +2,156 @@ extends Node3D
 ## Milestone 1: entirely code-generated room, all dimensions measured in inches.
 
 const StrategyCameraController := preload("res://scripts/strategy_camera.gd")
+const FloorNavigationController := preload("res://scripts/floor_navigation.gd")
+const TaskCoordinatorController := preload("res://scripts/task_coordinator.gd")
+const CitizenAgentController := preload("res://scripts/citizen_agent.gd")
+const CITIZEN_HEIGHT_INCHES := 0.5
 
 const ROOM_WIDTH := 240.0
 const ROOM_DEPTH := 180.0
 const WALL_HEIGHT := 72.0
 const FLOOR_THICKNESS := 1.0
-const CAPTURE_DELAY_SECONDS := 1.5
+const CAPTURE_DELAY_SECONDS := 3.2
 
 var _capture_timer := 0.0
 var _capture_saved := false
 var _materials: Dictionary = {}
+var _citizens: Array[Node3D] = []
+var _task_coordinator: Node
+var _ui_timer := 0.0
+var _population_label: Label
+var _activity_label: Label
+var _focus_label: Label
 
 
 func _ready() -> void:
 	_build_room()
 	_build_furniture()
 	_build_room_props()
+	_build_settlement()
 	_build_lighting()
 	_build_camera()
+	_build_population()
 	_build_ui()
-	print("ROOMSCALE_M1_READY Godot=%s room=%.0fx%.0f in" % [Engine.get_version_info().string, ROOM_WIDTH, ROOM_DEPTH])
+	print("ROOMSCALE_M2_READY Godot=%s room=%.0fx%.0f in citizens=%d" % [Engine.get_version_info().string, ROOM_WIDTH, ROOM_DEPTH, _citizens.size()])
 
 
 func _process(delta: float) -> void:
 	_capture_timer += delta
+	_ui_timer += delta
+	if _ui_timer >= 0.2:
+		_ui_timer = 0.0
+		_update_population_ui()
 	if not _capture_saved and _capture_timer >= CAPTURE_DELAY_SECONDS and DisplayServer.get_name() != "headless":
 		_capture_saved = true
 		_capture_frame()
+
+
+func _build_settlement() -> void:
+	var settlement := Node3D.new()
+	settlement.name = "Settlement"
+	add_child(settlement)
+	_build_workshop(settlement)
+	_build_depot(settlement)
+	_build_housing(settlement)
+	_build_work_area(settlement)
+
+
+func _build_workshop(parent: Node3D) -> void:
+	var shop := Node3D.new()
+	shop.name = "Workshop"
+	shop.position = Vector3(-20.0, 0.0, 42.0)
+	parent.add_child(shop)
+	_add_box(shop, "Foundation", Vector3(26.0, 1.0, 18.0), Vector3(0.0, 0.5, 0.0), Color("594b3a"), 0.86)
+	_add_box(shop, "BackWall", Vector3(23.0, 8.0, 1.0), Vector3(0.0, 4.5, -8.0), Color("70533d"), 0.82)
+	for x in [-11.0, 11.0]:
+		_add_box(shop, "SideWall", Vector3(1.0, 8.0, 16.0), Vector3(x, 4.5, 0.0), Color("805e41"), 0.82)
+	for x in [-8.5, 8.5]:
+		_add_box(shop, "FrontWall", Vector3(6.0, 8.0, 1.0), Vector3(x, 4.5, 8.0), Color("775239"), 0.82)
+	# Two roof wings leave an open inspection slot above the boiler and workbench.
+	_add_box(shop, "RoofWingLeft", Vector3(10.0, 2.0, 20.0), Vector3(-8.0, 9.5, 0.0), Color("3d4d4c"), 0.7)
+	_add_box(shop, "RoofWingRight", Vector3(10.0, 2.0, 20.0), Vector3(8.0, 9.5, 0.0), Color("465653"), 0.7)
+	_add_box(shop, "SignBoard", Vector3(13.0, 2.6, 1.0), Vector3(0.0, 8.1, 9.0), Color("d4ae68"), 0.64)
+	_add_box(shop, "WorkshopSign", Vector3(9.5, 0.7, 0.3), Vector3(0.0, 8.1, 9.7), Color("f0d79a"), 0.7)
+	_add_cylinder(shop, "Boiler", 2.7, 8.0, Vector3(-6.5, 4.0, -2.0), Color("677875"))
+	_add_cylinder(shop, "BoilerBand", 2.85, 0.65, Vector3(-6.5, 4.0, -2.0), Color("c7984e"))
+	_add_cylinder(shop, "Chimney", 1.6, 9.0, Vector3(-6.5, 12.0, -2.0), Color("474542"))
+	_add_box(shop, "WorkBench", Vector3(11.0, 1.2, 4.5), Vector3(3.5, 4.2, -2.0), Color("a27a4d"), 0.74)
+	for x in [-0.5, 7.5]:
+		_add_box(shop, "BenchLeg", Vector3(0.8, 4.0, 0.8), Vector3(x, 2.0, -2.0), Color("684a35"), 0.74)
+	_add_cylinder(shop, "GearWheel", 1.8, 0.55, Vector3(3.2, 5.1, -4.3), Color("d1a252"))
+	_add_cylinder(shop, "Gauge", 0.8, 0.45, Vector3(0.0, 7.0, 1.0), Color("d3c18f"))
+	_add_world_label(shop, "WorkshopLabel", "WORKSHOP", Vector3(0.0, 14.0, 0.0), Color("f2d395"))
+
+
+func _build_depot(parent: Node3D) -> void:
+	var depot := Node3D.new()
+	depot.name = "Depot"
+	depot.position = Vector3(18.0, 0.0, 42.0)
+	parent.add_child(depot)
+	_add_box(depot, "Platform", Vector3(24.0, 1.0, 18.0), Vector3(0.0, 0.5, 0.0), Color("654a37"), 0.84)
+	_add_box(depot, "BackWall", Vector3(22.0, 7.0, 1.0), Vector3(0.0, 4.0, -7.5), Color("9a7047"), 0.83)
+	for x in [-10.5, 10.5]:
+		_add_box(depot, "SidePost", Vector3(1.5, 7.0, 15.0), Vector3(x, 4.0, 0.0), Color("765139"), 0.8)
+	_add_box(depot, "RoofWingLeft", Vector3(9.5, 1.6, 18.0), Vector3(-7.0, 8.0, 0.0), Color("a47b4e"), 0.72)
+	_add_box(depot, "RoofWingRight", Vector3(9.5, 1.6, 18.0), Vector3(7.0, 8.0, 0.0), Color("b58b58"), 0.72)
+	_add_box(depot, "Awning", Vector3(23.0, 1.2, 5.0), Vector3(0.0, 6.8, 9.5), Color("c6a166"), 0.83)
+	_add_box(depot, "DepotSign", Vector3(11.0, 2.2, 0.8), Vector3(0.0, 6.1, 8.0), Color("c39b5a"), 0.68)
+	for x in [-6.0, 0.0, 6.0]:
+		_add_box(depot, "ResourceCrate", Vector3(4.8, 4.3, 4.6), Vector3(x, 2.7, -2.4), Color("b18450"), 0.84)
+		_add_box(depot, "CrateBand", Vector3(5.0, 0.45, 4.8), Vector3(x, 3.0, -2.4), Color("d0a158"), 0.7)
+	_add_cylinder(depot, "PartsBarrel", 2.6, 4.8, Vector3(7.0, 2.9, 4.4), Color("63756b"))
+	_add_cylinder(depot, "BarrelHoop", 2.75, 0.45, Vector3(7.0, 2.9, 4.4), Color("c89a4e"))
+	_add_world_label(depot, "DepotLabel", "DEPOT", Vector3(0.0, 12.0, 0.0), Color("f0d79a"))
+
+
+func _build_housing(parent: Node3D) -> void:
+	var housing := Node3D.new()
+	housing.name = "Housing"
+	housing.position = Vector3(-25.0, 0.0, 66.0)
+	parent.add_child(housing)
+	for index in range(2):
+		var x := -4.2 + float(index) * 8.4
+		_add_box(housing, "HutFloor", Vector3(7.4, 0.7, 7.0), Vector3(x, 0.35, 0.0), Color("745338"), 0.82)
+		_add_box(housing, "TentBack", Vector3(7.0, 3.1, 0.6), Vector3(x, 2.2, -3.0), Color("9e7953"), 0.91)
+		_add_box(housing, "TentLeft", Vector3(0.6, 3.1, 6.0), Vector3(x - 3.2, 2.2, 0.0), Color("bb9769"), 0.92)
+		_add_box(housing, "TentRight", Vector3(0.6, 3.1, 6.0), Vector3(x + 3.2, 2.2, 0.0), Color("a78358"), 0.92)
+		var roof_left := _add_box(housing, "CanvasRoof", Vector3(4.1, 0.45, 7.8), Vector3(x - 1.5, 4.15, 0.0), Color("c9ad7a"), 0.88)
+		roof_left.rotation.z = deg_to_rad(-32.0)
+		var roof_right := _add_box(housing, "CanvasRoof", Vector3(4.1, 0.45, 7.8), Vector3(x + 1.5, 4.15, 0.0), Color("9e8562"), 0.88)
+		roof_right.rotation.z = deg_to_rad(32.0)
+		_add_box(housing, "TentFlap", Vector3(3.0, 2.0, 0.3), Vector3(x, 1.55, 3.2), Color("806749"), 0.9)
+	_add_cylinder(housing, "LanternPost", 0.28, 6.0, Vector3(0.0, 3.0, -6.0), Color("78583a"))
+	_add_sphere(housing, "Lantern", Vector3(2.0, 2.0, 2.0), Vector3(0.0, 6.3, -6.0), Color("e4bf74"))
+	_add_world_label(housing, "HousingLabel", "HOMES", Vector3(0.0, 9.5, 0.0), Color("f3dca9"))
+
+
+func _build_work_area(parent: Node3D) -> void:
+	var area := Node3D.new()
+	area.name = "WorkArea"
+	area.position = Vector3(11.0, 0.0, 66.0)
+	parent.add_child(area)
+	_add_box(area, "WorkMat", Vector3(23.0, 0.3, 12.0), Vector3(0.0, 0.2, 0.0), Color("80664b"), 0.91)
+	_add_box(area, "AssemblyBench", Vector3(14.0, 1.0, 4.5), Vector3(0.0, 3.7, 0.0), Color("9a714a"), 0.74)
+	for x in [-5.5, 5.5]:
+		_add_box(area, "AssemblyLeg", Vector3(0.8, 3.4, 0.8), Vector3(x, 1.7, 0.0), Color("654933"), 0.76)
+	_add_box(area, "GearBlank", Vector3(4.0, 0.8, 4.0), Vector3(-3.5, 4.6, 0.0), Color("d0a150"), 0.48)
+	_add_cylinder(area, "PartsTin", 1.6, 3.0, Vector3(4.5, 5.5, 0.0), Color("64716b"))
+	_add_world_label(area, "WorkAreaLabel", "WORK YARD", Vector3(0.0, 8.0, 0.0), Color("f1d59d"))
+
+
+func _add_world_label(parent: Node3D, node_name: String, text: String, at: Vector3, color: Color) -> void:
+	var label := Label3D.new()
+	label.name = node_name
+	label.text = text
+	label.position = at
+	label.font_size = 48
+	label.pixel_size = 0.02
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.modulate = color
+	label.outline_modulate = Color("342c21")
+	label.outline_size = 4
+	parent.add_child(label)
 
 
 func _build_room() -> void:
@@ -148,15 +271,16 @@ func _build_bookcase(parent: Node3D) -> void:
 func _build_rug(parent: Node3D) -> void:
 	var rug := Node3D.new()
 	rug.name = "Rug"
-	rug.position = Vector3(12.0, 0.0, 22.0)
+	rug.position = Vector3(50.0, 0.0, -22.0)
 	parent.add_child(rug)
-	_add_box(rug, "RugUnderlay", Vector3(92.0, 0.4, 68.0), Vector3(0.0, 0.22, 0.0), Color("394b50"), 0.98)
-	_add_box(rug, "RugField", Vector3(86.0, 0.15, 62.0), Vector3(0.0, 0.5, 0.0), Color("a66e4e"), 0.95)
+	# Decorative weave remains under 0.1in high so half-inch citizens stay visible above it.
+	_add_box(rug, "RugUnderlay", Vector3(92.0, 0.06, 68.0), Vector3(0.0, 0.03, 0.0), Color("394b50"), 0.98)
+	_add_box(rug, "RugField", Vector3(86.0, 0.025, 62.0), Vector3(0.0, 0.072, 0.0), Color("a66e4e"), 0.95)
 	for x in [-39.0, 39.0]:
-		_add_box(rug, "RugBorderLong", Vector3(3.0, 0.2, 54.0), Vector3(x, 0.61, 0.0), Color("dfba7a"), 0.88)
+		_add_box(rug, "RugBorderLong", Vector3(3.0, 0.025, 54.0), Vector3(x, 0.097, 0.0), Color("dfba7a"), 0.88)
 	for z in [-25.0, 25.0]:
-		_add_box(rug, "RugBorderShort", Vector3(78.0, 0.2, 3.0), Vector3(0.0, 0.61, z), Color("dfba7a"), 0.88)
-	_add_box(rug, "RugMedallion", Vector3(16.0, 0.22, 16.0), Vector3(0.0, 0.65, 0.0), Color("d5aa69"), 0.9)
+		_add_box(rug, "RugBorderShort", Vector3(78.0, 0.025, 3.0), Vector3(0.0, 0.097, z), Color("dfba7a"), 0.88)
+	_add_box(rug, "RugMedallion", Vector3(16.0, 0.025, 16.0), Vector3(0.0, 0.112, 0.0), Color("d5aa69"), 0.9)
 
 
 func _build_side_table_and_lamp(parent: Node3D) -> void:
@@ -230,6 +354,49 @@ func _build_camera() -> void:
 	camera.current = true
 	rig.add_child(camera)
 	add_child(rig)
+	var startup_mode := OS.get_environment("ROOMSCALE_VIEW_MODE")
+	if not startup_mode.is_empty():
+		rig.set_view_mode(clampi(int(startup_mode), 0, 2))
+
+
+func _build_population() -> void:
+	var navigation := FloorNavigationController.new()
+	navigation.name = "FloorNavigation"
+	add_child(navigation)
+	_task_coordinator = TaskCoordinatorController.new()
+	_task_coordinator.name = "TaskCoordinator"
+	_task_coordinator.navigation = navigation
+	add_child(_task_coordinator)
+	_task_coordinator.seed_population(50)
+	var starts: Array[Vector3] = []
+	for citizen_id in range(50):
+		var column := citizen_id % 10
+		var row := citizen_id / 10
+		var proposed := Vector3(-47.0 + float(column) * 10.4, 0.0, 17.0 + float(row) * 14.0)
+		var spawn: Vector3 = navigation.nearest_walkable_position(proposed)
+		if not is_finite(spawn.x):
+			push_error("No walkable spawn position for citizen %d" % citizen_id)
+			continue
+		var attempts := 0
+		while _overlaps_spawn(spawn, starts) and attempts < 8:
+			attempts += 1
+			proposed += Vector3(0.0, 0.0, 4.0)
+			spawn = navigation.nearest_walkable_position(proposed)
+		starts.append(spawn)
+		var citizen: Node3D = CitizenAgentController.new()
+		citizen.initialize(citizen_id, spawn, navigation, _task_coordinator)
+		add_child(citizen)
+		_citizens.append(citizen)
+	if _citizens.size() > 23:
+		get_node("CameraRig").set_citizen_focus(_citizens[23])
+	print("ROOMSCALE_CITIZEN_SPAWN count=%d separate_nodes=true height=%.1fin" % [_citizens.size(), CITIZEN_HEIGHT_INCHES])
+
+
+func _overlaps_spawn(candidate: Vector3, existing: Array[Vector3]) -> bool:
+	for position in existing:
+		if Vector2(candidate.x - position.x, candidate.z - position.z).length() < 2.0:
+			return true
+	return false
 
 
 func _build_ui() -> void:
@@ -237,15 +404,47 @@ func _build_ui() -> void:
 	overlay.name = "Overlay"
 	add_child(overlay)
 	var title := _make_label("Title", Vector2(26.0, 20.0), 25, Color("fff2dc"))
-	title.text = "ROOMSCALE   /   MILESTONE 1\nA room becomes a landscape"
+	title.text = "ROOMSCALE   /   MILESTONE 2\nA tiny clockwork civilization"
 	overlay.add_child(title)
 	var help := _make_label("Controls", Vector2(28.0, 650.0), 16, Color("e5e6df"))
 	help.text = "1 ROOM     2 SETTLEMENT     3 CITIZEN       WASD / ARROWS PAN     RIGHT DRAG ORBIT + TILT     MIDDLE DRAG PAN     WHEEL ZOOM"
 	overlay.add_child(help)
 	var mode := _make_label("CameraMode", Vector2(1000.0, 28.0), 16, Color("e7c991"))
 	mode.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	mode.text = "VIEW  ROOM  ·  300 in"
+	var camera_rig := get_node("CameraRig")
+	mode.text = "VIEW  %s  ·  %d in" % [camera_rig.get_view_mode_name(), roundi(camera_rig.distance)]
 	overlay.add_child(mode)
+	_population_label = _make_label("PopulationStatus", Vector2(28.0, 104.0), 18, Color("f3dfb8"))
+	_population_label.custom_minimum_size = Vector2(610.0, 30.0)
+	overlay.add_child(_population_label)
+	_activity_label = _make_label("TaskStatus", Vector2(28.0, 134.0), 15, Color("dde3da"))
+	_activity_label.custom_minimum_size = Vector2(630.0, 54.0)
+	overlay.add_child(_activity_label)
+	_focus_label = _make_label("CitizenFocus", Vector2(1000.0, 54.0), 15, Color("a9dad4"))
+	_focus_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_focus_label.custom_minimum_size = Vector2(255.0, 26.0)
+	overlay.add_child(_focus_label)
+	_update_population_ui()
+
+
+func _update_population_ui() -> void:
+	if not is_instance_valid(_population_label) or not is_instance_valid(_activity_label) or not is_instance_valid(_task_coordinator):
+		return
+	var moving := 0
+	var carriers := 0
+	for citizen in _citizens:
+		if citizen.state == "TRAVEL" or citizen.state == "CARRY":
+			moving += 1
+		if citizen.carrying:
+			carriers += 1
+	var summary: Dictionary = _task_coordinator.summary()
+	_population_label.text = "POPULATION  %02d / 50     WALKING  %02d     CARRYING  %02d     SCALE  0.5 in" % [_citizens.size(), moving, carriers]
+	_activity_label.text = "TASK BOARD  ACTIVE %02d   AVAILABLE %02d   COMPLETE %d\nWORKSHOP  ·  DEPOT  ·  HOUSING  ·  WORK AREA  ·  FLOOR PATROL" % [summary.active, summary.available, summary.completed_total]
+	var camera_rig := get_node("CameraRig")
+	_focus_label.visible = camera_rig.view_mode == 2 and _citizens.size() > 23
+	if _focus_label.visible:
+		var focus: Node3D = _citizens[23]
+		_focus_label.text = "CITIZEN 24  ·  %s  ·  %s" % [focus.task_type.replace("_", " "), focus.state]
 
 
 func _make_label(node_name: String, at: Vector2, font_size: int, color: Color) -> Label:
@@ -328,11 +527,13 @@ func _capture_frame() -> void:
 	var image_path := "%s/%s.png" % [artifact_directory, tag]
 	var result := image.save_png(image_path)
 	var proof := FileAccess.open("%s/%s.log" % [artifact_directory, tag], FileAccess.WRITE)
-	proof.store_line("ROOMSCALE_M1_VISIBLE_PASS")
+	proof.store_line("ROOMSCALE_M2_VISIBLE_PASS")
 	proof.store_line("Godot=%s" % Engine.get_version_info().string)
 	proof.store_line("Room=%.0fx%.0f in; walls=%.0f in" % [ROOM_WIDTH, ROOM_DEPTH, WALL_HEIGHT])
 	proof.store_line("Furniture=Desk,Chair,Bookcase,Rug,household props")
 	proof.store_line("Camera=pan/orbit/tilt/zoom; presets=room,settlement,citizen")
+	proof.store_line("Population=%d separate citizens at 0.5in scale" % _citizens.size())
+	proof.store_line("TaskBoard=%s" % JSON.stringify(_task_coordinator.summary()))
 	proof.store_line("Screenshot=%s" % image_path)
 	proof.store_line("ImageSaveResult=%d" % result)
 	print("ROOMSCALE_M1_SCREENSHOT path=%s result=%d" % [image_path, result])

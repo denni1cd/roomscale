@@ -20,6 +20,8 @@ func _run() -> void:
 		"Room/Floor", "Room/WallBack", "Room/WallLeft", "Room/WallRight",
 		"Furniture/Desk/DeskTop", "Furniture/Chair/ChairSeat", "Furniture/Bookcase",
 		"Furniture/Rug", "Furniture/SideTable", "Props/StorageBox",
+		"Settlement/Workshop", "Settlement/Depot", "Settlement/Housing", "Settlement/WorkArea",
+		"FloorNavigation", "TaskCoordinator", "Citizen01", "Citizen50",
 		"CameraRig/Camera", "KeyLight", "WorldEnvironment", "Overlay/Controls", "Overlay/CameraMode"
 	]
 	for node_path in required_nodes:
@@ -66,7 +68,50 @@ func _run() -> void:
 	if camera_rig.distance <= citizen_distance:
 		_fail("zoom input did not change camera distance")
 		return
-	print("ROOMSCALE_M1_SMOKE_PASS nodes=%d room=240x180in desk=30in chair=18in camera=pan/orbit/tilt/zoom presets=3" % required_nodes.size())
+	var citizen_count := 0
+	var distinct_citizens: Dictionary = {}
+	for child in scene.get_children():
+		if child.name.begins_with("Citizen"):
+			citizen_count += 1
+			distinct_citizens[child.get_instance_id()] = true
+	if citizen_count != 50 or distinct_citizens.size() != 50:
+		_fail("expected exactly 50 separate citizen nodes, found %d" % citizen_count)
+		return
+	var first_citizen := scene.get_node("Citizen01")
+	var figure := first_citizen.get_node("Figure")
+	if not is_equal_approx(float(figure.get_meta("body_height_inches")), 0.5):
+		_fail("citizen procedural figure is not 0.5 inches tall")
+		return
+	var coordinator := scene.get_node("TaskCoordinator")
+	var task_summary: Dictionary = coordinator.summary()
+	if task_summary.active != 50 or task_summary.available < 1 or task_summary.created_total < 50:
+		_fail("shared task board did not assign 50 active tasks with queued work: %s" % task_summary)
+		return
+	var navigation := scene.get_node("FloorNavigation")
+	var obstacle_detour: Array[Vector3] = navigation.path_between(Vector3(-58.0, 0.0, 0.0), Vector3(-58.0, 0.0, -80.0))
+	if obstacle_detour.is_empty():
+		_fail("A* floor path could not route around the desk footprint")
+		return
+	var detour_length := 0.0
+	for index in range(obstacle_detour.size()):
+		if navigation.is_obstacle_position(obstacle_detour[index]):
+			_fail("A* path entered blocked geometry at %s" % obstacle_detour[index])
+			return
+		if index > 0:
+			detour_length += obstacle_detour[index - 1].distance_to(obstacle_detour[index])
+	if detour_length < 100.0:
+		_fail("obstacle test route did not detour around major furniture")
+		return
+	var distance_before: float = first_citizen.get_travelled_distance()
+	await create_timer(1.5).timeout
+	var moving_count := 0
+	for child in scene.get_children():
+		if child.name.begins_with("Citizen") and child.state in ["TRAVEL", "CARRY"] and child.get_travelled_distance() > 0.0:
+			moving_count += 1
+	if moving_count < 30 or first_citizen.get_travelled_distance() < distance_before:
+		_fail("autonomous task assignment did not produce visible floor movement: moving=%d" % moving_count)
+		return
+	print("ROOMSCALE_M2_SMOKE_PASS nodes=%d citizens=%d tasks_active=%d tasks_available=%d moving=%d desk_detour=%.1fin" % [required_nodes.size(), citizen_count, coordinator.summary().active, coordinator.summary().available, moving_count, detour_length])
 	quit(0)
 
 

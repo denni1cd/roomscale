@@ -16,6 +16,7 @@ var distance := 300.0
 var view_mode := 0
 var _orbit_dragging := false
 var _pan_dragging := false
+var _citizen_focus: Node3D
 
 
 func _ready() -> void:
@@ -61,6 +62,7 @@ func _process(delta: float) -> void:
 	if Input.is_key_pressed(KEY_S) or Input.is_key_pressed(KEY_DOWN):
 		movement.y -= 1.0
 	if movement.length_squared() > 0.0:
+		_citizen_focus = null
 		var right := Vector3(cos(yaw), 0.0, sin(yaw))
 		var forward := Vector3(sin(yaw), 0.0, -cos(yaw))
 		var pan_scale := maxf(12.0, distance * 0.8)
@@ -69,6 +71,8 @@ func _process(delta: float) -> void:
 		target.y += maxf(8.0, distance * 0.4) * delta
 	if Input.is_key_pressed(KEY_E):
 		target.y -= maxf(8.0, distance * 0.4) * delta
+	if view_mode == 2 and is_instance_valid(_citizen_focus):
+		target = _citizen_focus.global_position + Vector3(0.0, 0.25, 0.0)
 	_apply_transform()
 
 
@@ -79,14 +83,16 @@ func set_view_mode(mode: int) -> void:
 			target = Vector3(0.0, 20.0, 0.0)
 			distance = 300.0
 			tilt_degrees = 52.0
-		1: # Settlement: desk and the center of the open floor
-			target = Vector3(-25.0, 17.0, -22.0)
+		1: # Settlement: frame all four work sites and the walking floor
+			target = Vector3(0.0, 3.0, 55.0)
 			distance = 132.0
-			tilt_degrees = 48.0
+			tilt_degrees = 55.0
 		2: # Citizen: close detail scale beside the desk
-			target = Vector3(-52.0, 19.0, -38.0)
-			distance = 52.0
-			tilt_degrees = 42.0
+			target = Vector3(-5.0, 3.0, 53.0)
+			distance = 11.0
+			tilt_degrees = 48.0
+			if is_instance_valid(_citizen_focus):
+				target = _citizen_focus.global_position + Vector3(0.0, 0.25, 0.0)
 	_apply_transform()
 	var label := get_node_or_null("../Overlay/CameraMode") as Label
 	if label:
@@ -100,6 +106,7 @@ func orbit_by(delta: Vector2) -> void:
 
 
 func pan_by(delta: Vector2) -> void:
+	_citizen_focus = null
 	var right := Vector3(cos(yaw), 0.0, sin(yaw))
 	var forward := Vector3(sin(yaw), 0.0, -cos(yaw))
 	var scale := distance * 0.002
@@ -115,6 +122,13 @@ func zoom_by(factor: float) -> void:
 		label.text = "VIEW  %s  ·  %d in" % [_mode_name(), roundi(distance)]
 
 
+func set_citizen_focus(citizen: Node3D) -> void:
+	_citizen_focus = citizen
+	if view_mode == 2 and is_instance_valid(_citizen_focus):
+		target = _citizen_focus.global_position + Vector3(0.0, 0.25, 0.0)
+		_apply_transform()
+
+
 func _apply_transform() -> void:
 	position = target
 	rotation = Vector3(0.0, yaw, 0.0)
@@ -126,3 +140,7 @@ func _apply_transform() -> void:
 
 func _mode_name() -> String:
 	return ["ROOM", "SETTLEMENT", "CITIZEN"][view_mode]
+
+
+func get_view_mode_name() -> String:
+	return _mode_name()
