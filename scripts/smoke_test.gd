@@ -161,6 +161,9 @@ func _run() -> void:
 	if project_start.stockpile != project_start.required or project_start.delivered != {"wood": 0, "metal": 0, "mechanical_parts": 0}:
 		_fail("project stockpile/delivered counts were initialized incorrectly: %s" % project_start)
 		return
+	if project_start.cable_deployed or surface_navigation.has_connection("FLOOR", "DESK"):
+		_fail("grapple cable or navigation connection appeared before the launcher was built")
+		return
 	var delivery_tasks: Array[Dictionary] = []
 	var distinct_delivery_owners: Dictionary = {}
 	var premature_build_tasks := 0
@@ -201,6 +204,9 @@ func _run() -> void:
 	var saw_builder_work := false
 	var project_status: Dictionary = construction.status()
 	while project_status.completed_stages < 3 and construction_elapsed < 120.0:
+		if construction.status().cable_deployed or surface_navigation.has_connection("FLOOR", "DESK"):
+			_fail("cable or FLOOR-DESK link appeared before all construction stages completed")
+			return
 		for child in scene.get_children():
 			if not child.name.begins_with("Citizen"):
 				continue
@@ -263,12 +269,67 @@ func _run() -> void:
 		if component == null or not component.visible:
 			_fail("completed stage component is not visibly present: %s" % component_path)
 			return
-	if project_status.cable_deployed or surface_navigation.has_connection("FLOOR", "DESK") or project_status.floor_desk_connected:
-		_fail("M4 must not deploy cable or connect floor and desk navigation")
+	if not project_status.cable_deployed or not surface_navigation.has_connection("FLOOR", "DESK") or not project_status.floor_desk_connected:
+		_fail("completed grapple construction did not deploy cable and connect FLOOR to DESK")
+		return
+	var deployed_route: Dictionary = surface_navigation.route_between("FLOOR", "DESK", approach_position, Vector3(-58.0, 30.0, -52.0))
+	if not deployed_route.reachable or deployed_route.path.size() < 12 or deployed_route.reason != "deployed grapple cable":
+		_fail("deployed connection did not expose its physical cable route: %s" % deployed_route)
+		return
+	var route_height := 0.0
+	var route_prefix_points := 0
+	var largest_route_gap := 0.0
+	for index in range(deployed_route.path.size()):
+		route_height = maxf(route_height, deployed_route.path[index].y)
+		if deployed_route.path[index].y <= 0.05:
+			route_prefix_points += 1
+		if index > 0:
+			largest_route_gap = maxf(largest_route_gap, deployed_route.path[index - 1].distance_to(deployed_route.path[index]))
+	if route_prefix_points < 2 or route_height < 29.99 or largest_route_gap > 8.0:
+		_fail("floor A* did not join continuous launcher/cable/desk route geometry: prefix=%d peak=%.1f gap=%.1f" % [route_prefix_points, route_height, largest_route_gap])
+		return
+	var cable_root := scene.get_node_or_null("DeployedGrappleCable") as Node3D
+	if cable_root == null or cable_root.get_child_count() < 12:
+		_fail("deployed grapple cable is missing visible segmented geometry")
+		return
+	var traversal_goal: Dictionary = coordinator.get_traversal_goal_status()
+	if traversal_goal.state != "TRAVERSE_IN_PROGRESS":
+		_fail("cable deployment did not assign its autonomous traversal task: %s" % traversal_goal)
+		return
+	var traversal_task: Dictionary = coordinator.get_task(int(traversal_goal.task_id))
+	var climber := scene.get_node("Citizen%02d" % (int(traversal_goal.citizen_id) + 1)) as Node3D
+	if traversal_task.task_type != "GRAPPLE_TRAVERSAL" or traversal_task.state != "active" or climber.task_type != "GRAPPLE_TRAVERSAL":
+		_fail("grapple travel was not assigned through an active production task: %s" % traversal_task)
+		return
+	var traversal_elapsed := 0.0
+	var min_sampled_y := climber.global_position.y
+	var max_sampled_y := min_sampled_y
+	var last_sampled_position: Vector3 = climber.global_position
+	var max_step_distance := 0.0
+	while coordinator.get_traversal_goal_status().state != "TRAVERSAL_COMPLETE" and traversal_elapsed < 60.0:
+		await create_timer(0.2).timeout
+		traversal_elapsed += 0.2
+		var current_position: Vector3 = climber.global_position
+		var frame_distance := current_position.distance_to(last_sampled_position)
+		max_step_distance = maxf(max_step_distance, frame_distance)
+		if frame_distance > 6.5 * 0.55 + 0.25:
+			_fail("climber made a discontinuous movement step of %.2fin" % frame_distance)
+			return
+		last_sampled_position = current_position
+		min_sampled_y = minf(min_sampled_y, current_position.y)
+		max_sampled_y = maxf(max_sampled_y, current_position.y)
+	traversal_goal = coordinator.get_traversal_goal_status()
+	var completed_traversal: Dictionary = coordinator.get_task(int(traversal_goal.get("task_id", -1)))
+	if traversal_goal.state != "TRAVERSAL_COMPLETE" or climber.state != "ON_DESK" or climber.global_position.y < 29.99 or String(completed_traversal.get("target_region", "")) != "DESK":
+		_fail("citizen did not physically reach the elevated desk through the deployed path: %s" % traversal_goal)
+		return
+	if min_sampled_y > 1.0 or max_sampled_y < 29.99 or float(completed_traversal.get("actual_travelled_distance", 0.0)) < float(completed_traversal.get("route_length", 0.0)) * 0.9:
+		_fail("traversal did not record continuous floor-to-desk movement: %s y=%.1f..%.1f" % [completed_traversal, min_sampled_y, max_sampled_y])
 		return
 	print("ROOMSCALE_M2_SMOKE_PASS nodes=%d citizens=%d tasks_active=%d tasks_available=%d moving=%d desk_detour=%.1fin" % [required_nodes.size(), citizen_count, coordinator.summary().active, coordinator.summary().available, moving_count, detour_length])
 	print("ROOMSCALE_M3_SMOKE_PASS selected=DESK explorers=%d arrived=%d barrier=%s elapsed=%.2fs" % [goal_status.expected_explorers, goal_status.arrived_explorers, goal_status.barrier.reason, arrival_wait])
-	print("ROOMSCALE_M4_SMOKE_PASS deliveries=%d stockpile=%s delivered=%s builder_gates=%d components=%d progress=%.1f%% walk=%.1fin elapsed=%.2fs cable=false connected=false" % [completed_delivery_count, project_status.stockpile, project_status.delivered, project_status.stage_gates.size(), project_status.completed_stages, project_status.progress_percent, delivery_route_length, construction_elapsed])
+	print("ROOMSCALE_M4_SMOKE_PASS deliveries=%d stockpile=%s delivered=%s builder_gates=%d components=%d progress=%.1f%% walk=%.1fin elapsed=%.2fs" % [completed_delivery_count, project_status.stockpile, project_status.delivered, project_status.stage_gates.size(), project_status.completed_stages, project_status.progress_percent, delivery_route_length, construction_elapsed])
+	print("ROOMSCALE_M5_SMOKE_PASS cable_segments=%d route_points=%d traverser=%s target=DESK height=%.1fin walked=%.1fin route=%.1fin max_step=%.2fin elapsed=%.2fs" % [cable_root.get_child_count() - 1, deployed_route.path.size(), climber.name, climber.global_position.y, completed_traversal.actual_travelled_distance, completed_traversal.route_length, max_step_distance, traversal_elapsed])
 	quit(0)
 
 

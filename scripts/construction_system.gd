@@ -15,6 +15,7 @@ const STAGES := [
 
 var coordinator: Node
 var navigation: Node
+var surface_navigation: Node
 var citizens: Array = []
 var scene_root: Node3D
 var stockpile := {"wood": 4, "metal": 4, "mechanical_parts": 3}
@@ -22,6 +23,8 @@ var delivered := {"wood": 0, "metal": 0, "mechanical_parts": 0}
 var picked_up := {"wood": 0, "metal": 0, "mechanical_parts": 0}
 var project_state := "AWAITING_BARRIER"
 var project_created := false
+var traversal_deployed := false
+var traversal_arrival: Dictionary = {}
 var _active_stage := -1
 var _completed_stages := 0
 var _stage_work := 0.0
@@ -106,8 +109,9 @@ func status() -> Dictionary:
 		"stage_gates": _stage_gate_snapshots.duplicate(true),
 		"progress_percent": total_progress,
 		"site": SITE_POSITION,
-		"cable_deployed": false,
-		"floor_desk_connected": navigation.has_connection("FLOOR", "DESK") if navigation.has_method("has_connection") else false,
+		"cable_deployed": traversal_deployed,
+		"floor_desk_connected": surface_navigation.has_connection("FLOOR", "DESK") if is_instance_valid(surface_navigation) else false,
+		"traversal": coordinator.get_traversal_goal_status(),
 	}
 
 
@@ -211,6 +215,100 @@ func _complete_component(stage_index: int) -> void:
 		project_state = "WAITING_FOR_MATERIALS"
 	_emit_update()
 	_update_build_unlocks()
+	if _completed_stages >= STAGES.size():
+		_deploy_traversal()
+
+
+func _deploy_traversal() -> void:
+	if traversal_deployed or not project_created or _completed_stages < STAGES.size():
+		return
+	if not is_instance_valid(surface_navigation):
+		push_error("Grapple deployment blocked: surface navigation is unavailable")
+		return
+	var desk_anchor := Vector3(-58.0, 30.0, -52.0)
+	var cable_anchor_position := desk_anchor + Vector3(3.0, 0.0, 0.0)
+	var launcher_tip := SITE_POSITION + Vector3(0.0, 11.0, -1.6)
+	var cable_path: Array[Vector3] = [launcher_tip]
+	for index in range(1, 13):
+		var ratio := float(index) / 13.0
+		var point := launcher_tip.lerp(desk_anchor, ratio)
+		point.y -= sin(PI * ratio) * 1.5
+		cable_path.append(point)
+	cable_path.append(cable_anchor_position)
+	var tower_base := SITE_POSITION + Vector3(0.0, 0.6, -1.6)
+	var surface_route: Array[Vector3] = [SITE_POSITION, tower_base]
+	for step in range(1, 5):
+		surface_route.append(tower_base.lerp(launcher_tip, float(step) / 4.0))
+	for point_index in range(1, cable_path.size()):
+		var segment_start := cable_path[point_index - 1]
+		var segment_end := cable_path[point_index]
+		var length_steps := maxi(1, ceili(segment_start.distance_to(segment_end) / 3.0))
+		for step in range(1, length_steps + 1):
+			surface_route.append(segment_start.lerp(segment_end, float(step) / float(length_steps)))
+	surface_route.append(desk_anchor)
+	_create_cable_visual(cable_path)
+	if not surface_navigation.connect_regions("FLOOR", "DESK", surface_route):
+		var failed_visual := scene_root.get_node_or_null("DeployedGrappleCable")
+		if is_instance_valid(failed_visual):
+			failed_visual.queue_free()
+		return
+	traversal_deployed = true
+	var carriers: Array[Dictionary] = []
+	for citizen in citizens:
+		var climber := citizen as Node3D
+		if _delivery_citizen_ids.has(climber.citizen_id) or _construction_worker_ids.has(climber.citizen_id):
+			continue
+		var floor_route: Array[Vector3] = navigation.path_between(climber.global_position, SITE_POSITION)
+		if floor_route.is_empty():
+			continue
+		carriers.append({"citizen": climber, "floor_route": floor_route, "distance": _path_length(floor_route)})
+	carriers.sort_custom(func(left: Dictionary, right: Dictionary) -> bool: return float(left.distance) < float(right.distance))
+	if carriers.is_empty():
+		project_state = "CABLE_DEPLOYED_NO_CLIMBER"
+		_emit_update()
+		return
+	var climber: Node3D = carriers[0].citizen
+	var route: Array[Vector3] = carriers[0].floor_route.duplicate()
+	if route[route.size() - 1].distance_to(SITE_POSITION) > 0.1:
+		route.append(SITE_POSITION)
+	for index in range(1, surface_route.size()):
+		route.append(surface_route[index])
+	var traversal_task: Dictionary = coordinator.create_traversal_task(climber, route)
+	climber.assign_traversal_task(traversal_task)
+	project_state = "TRAVERSE_IN_PROGRESS"
+	_emit_update()
+
+
+func _create_cable_visual(path: Array[Vector3]) -> void:
+	var cable_root := Node3D.new()
+	cable_root.name = "DeployedGrappleCable"
+	scene_root.add_child(cable_root)
+	var cable_material := _material(Color("364443"))
+	for index in range(1, path.size()):
+		var start := path[index - 1]
+		var finish := path[index]
+		var direction := finish - start
+		var segment := MeshInstance3D.new()
+		segment.name = "CableSegment%02d" % index
+		var mesh := CylinderMesh.new()
+		mesh.top_radius = 0.28
+		mesh.bottom_radius = 0.28
+		mesh.height = direction.length()
+		segment.mesh = mesh
+		segment.position = (start + finish) * 0.5
+		segment.quaternion = Quaternion(Vector3.UP, direction.normalized())
+		segment.material_override = cable_material
+		cable_root.add_child(segment)
+	var anchor := MeshInstance3D.new()
+	anchor.name = "DeskGrappleAnchor"
+	var anchor_mesh := CylinderMesh.new()
+	anchor_mesh.top_radius = 1.7
+	anchor_mesh.bottom_radius = 1.7
+	anchor_mesh.height = 0.8
+	anchor.mesh = anchor_mesh
+	anchor.position = path[path.size() - 1] + Vector3(0.0, 0.25, 0.0)
+	anchor.material_override = _material(Color("c79445"))
+	cable_root.add_child(anchor)
 
 
 func _nearest_available_builders(target: Vector3, count: int) -> Array[Node3D]:

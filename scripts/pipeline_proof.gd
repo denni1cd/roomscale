@@ -422,6 +422,7 @@ func _build_population() -> void:
 	_construction_system = ConstructionSystemController.new()
 	_construction_system.name = "ConstructionSystem"
 	_construction_system.configure(_task_coordinator, navigation, _citizens, self)
+	_construction_system.surface_navigation = surface_navigation
 	_task_coordinator.construction_system = _construction_system
 	_task_coordinator.reach_goal_updated.connect(_on_reach_goal_updated)
 	_task_coordinator.task_board_updated.connect(_on_task_board_updated)
@@ -444,7 +445,7 @@ func _build_ui() -> void:
 	overlay.name = "Overlay"
 	add_child(overlay)
 	var title := _make_label("Title", Vector2(26.0, 20.0), 25, Color("fff2dc"))
-	title.text = "ROOMSCALE   /   MILESTONE 4\nA tiny clockwork civilization"
+	title.text = "ROOMSCALE   /   MILESTONE 5\nA tiny clockwork civilization"
 	overlay.add_child(title)
 	var help := _make_label("Controls", Vector2(28.0, 650.0), 16, Color("e5e6df"))
 	help.text = "CLICK DESK THEN REACH / EXPLORE     ENTER ISSUES GOAL     1 ROOM     2 SETTLEMENT     3 CITIZEN     WASD / ARROWS PAN     RIGHT DRAG ORBIT + TILT     WHEEL ZOOM"
@@ -548,7 +549,14 @@ func _update_project_ui() -> void:
 	var stockpile: Dictionary = project.stockpile
 	var delivered: Dictionary = project.delivered
 	_material_status_label.text = "MATERIALS  Stockpile W %d/4  M %d/4  P %d/3     Delivered W %d/4  M %d/4  P %d/3" % [stockpile.wood, stockpile.metal, stockpile.mechanical_parts, delivered.wood, delivered.metal, delivered.mechanical_parts]
-	_build_status_label.text = "BUILD  %s %02.0f%%  ·  Components %d / 3  ·  Cable undeployed  ·  Floor / desk disconnected" % [String(project.active_stage).to_upper(), project.progress_percent, project.completed_stages]
+	if not project.cable_deployed:
+		_build_status_label.text = "BUILD  %s %02.0f%%  ·  Components %d / 3  ·  Cable undeployed  ·  Floor / desk disconnected" % [String(project.active_stage).to_upper(), project.progress_percent, project.completed_stages]
+	else:
+		var traversal: Dictionary = project.traversal
+		var traversal_text := String(traversal.get("state", "CABLE_DEPLOYED" )).replace("_", " ")
+		if traversal.has("actual_travelled_distance"):
+			traversal_text += "  %.0f in walked to DESK" % float(traversal.actual_travelled_distance)
+		_build_status_label.text = "TRAVERSAL  CABLE DEPLOYED  ·  FLOOR ↔ DESK CONNECTED  ·  %s" % traversal_text
 
 
 func _unhandled_input(event: InputEvent) -> void:

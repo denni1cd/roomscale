@@ -24,6 +24,7 @@ var patrol_stations: Array[Vector3] = [
 	Vector3(42.0, 0.0, 78.0), Vector3(-45.0, 0.0, 79.0)
 ]
 var _reach_goal: Dictionary = {}
+var _traversal_goal: Dictionary = {}
 
 
 func _ready() -> void:
@@ -250,6 +251,68 @@ func report_investigation_arrival(citizen_id: int, task_id: int, position: Vecto
 
 func get_reach_goal_status() -> Dictionary:
 	return _reach_goal.duplicate(true)
+
+
+func create_traversal_task(citizen: Node3D, route: Array[Vector3]) -> Dictionary:
+	if not surface_navigation.has_connection("FLOOR", "DESK") or route.size() < 2:
+		return {}
+	var task_id := _next_task_id
+	_next_task_id += 1
+	_created_count += 1
+	var task := {
+		"id": task_id,
+		"task_type": "GRAPPLE_TRAVERSAL",
+		"state": "reserved",
+		"citizen_id": citizen.citizen_id,
+		"owner_hint": citizen.citizen_id,
+		"cycle": 0,
+		"source": route[0],
+		"target": route[route.size() - 1],
+		"target_region": "DESK",
+		"path": route.duplicate(),
+		"route_length": _path_length(route),
+		"start_travelled_distance": citizen.travelled_distance,
+		"progress": 0.0,
+		"created_at": Time.get_ticks_msec(),
+	}
+	tasks.append(task)
+	_traversal_goal = {"state": "TRAVERSE_IN_PROGRESS", "citizen_id": citizen.citizen_id, "task_id": task_id, "expected_route_length": task.route_length}
+	return task.duplicate(true)
+
+
+func report_traversal_arrival(citizen: Node3D, task_id: int) -> bool:
+	var task := _find_task(task_id)
+	if task.is_empty() or task.task_type != "GRAPPLE_TRAVERSAL" or task.state != "active":
+		return false
+	if int(task.citizen_id) != citizen.citizen_id or String(task.target_region) != "DESK":
+		return false
+	if citizen.global_position.y < 29.0 or citizen.global_position.distance_to(task.target) > 1.7:
+		return false
+	if not surface_navigation.has_connection("FLOOR", "DESK"):
+		return false
+	var walked: float = citizen.travelled_distance - float(task.start_travelled_distance)
+	if walked < float(task.route_length) * 0.9:
+		return false
+	task.state = "complete"
+	task.progress = 1.0
+	task.actual_travelled_distance = walked
+	task.finished_at = Time.get_ticks_msec()
+	_completed_count += 1
+	_traversal_goal = {
+		"state": "TRAVERSAL_COMPLETE",
+		"citizen_id": citizen.citizen_id,
+		"task_id": task_id,
+		"target": citizen.global_position,
+		"target_region": "DESK",
+		"route_length": float(task.route_length),
+		"actual_travelled_distance": walked,
+	}
+	task_board_updated.emit(summary())
+	return true
+
+
+func get_traversal_goal_status() -> Dictionary:
+	return _traversal_goal.duplicate(true)
 
 
 func _create_exploration_task(citizen_id: int, target: Vector3, surface_id: String) -> Dictionary:

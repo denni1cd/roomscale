@@ -17,6 +17,7 @@ var view_mode := 0
 var _orbit_dragging := false
 var _pan_dragging := false
 var _citizen_focus: Node3D
+var _citizen_focus_offset := Vector3(0.0, 0.25, 0.0)
 
 
 func _ready() -> void:
@@ -72,7 +73,7 @@ func _process(delta: float) -> void:
 	if Input.is_key_pressed(KEY_E):
 		target.y -= maxf(8.0, distance * 0.4) * delta
 	if view_mode == 2 and is_instance_valid(_citizen_focus):
-		target = _citizen_focus.global_position + Vector3(0.0, 0.25, 0.0)
+		target = _citizen_focus.global_position + _citizen_focus_offset
 	_apply_transform()
 
 
@@ -92,7 +93,7 @@ func set_view_mode(mode: int) -> void:
 			distance = 11.0
 			tilt_degrees = 48.0
 			if is_instance_valid(_citizen_focus):
-				target = _citizen_focus.global_position + Vector3(0.0, 0.25, 0.0)
+				target = _citizen_focus.global_position + _citizen_focus_offset
 	_apply_transform()
 	var label := get_node_or_null("../Overlay/CameraMode") as Label
 	if label:
@@ -122,10 +123,11 @@ func zoom_by(factor: float) -> void:
 		label.text = "VIEW  %s  ·  %d in" % [_mode_name(), roundi(distance)]
 
 
-func set_citizen_focus(citizen: Node3D) -> void:
+func set_citizen_focus(citizen: Node3D, focus_offset: Vector3 = Vector3(0.0, 0.25, 0.0)) -> void:
 	_citizen_focus = citizen
+	_citizen_focus_offset = focus_offset
 	if view_mode == 2 and is_instance_valid(_citizen_focus):
-		target = _citizen_focus.global_position + Vector3(0.0, 0.25, 0.0)
+		target = _citizen_focus.global_position + _citizen_focus_offset
 		_apply_transform()
 
 
@@ -136,6 +138,9 @@ func _apply_transform() -> void:
 		var tilt := deg_to_rad(tilt_degrees)
 		camera.position = Vector3(0.0, sin(tilt) * distance, cos(tilt) * distance)
 		camera.rotation = Vector3(-tilt, 0.0, 0.0)
+	var label := get_node_or_null("../Overlay/CameraMode") as Label
+	if label:
+		label.text = "VIEW  %s  ·  %d in" % [_mode_name(), roundi(distance)]
 
 
 func _mode_name() -> String:

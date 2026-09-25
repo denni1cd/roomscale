@@ -93,6 +93,24 @@ func assign_project_task(task: Dictionary) -> void:
 	_navigate_to(_destination)
 
 
+func assign_traversal_task(task: Dictionary) -> void:
+	if task_id > 0:
+		coordinator.supersede_task(task_id, "assigned grapple traversal")
+	task_id = int(task.id)
+	task_type = String(task.task_type)
+	carrying = false
+	_cargo.visible = false
+	_path = task.path.duplicate()
+	_path_cursor = 0
+	_work_timer = 0.0
+	if _path.size() < 2:
+		coordinator.fail_task(task_id, "grapple traversal path missing")
+		state = "IDLE"
+		return
+	coordinator.activate_task(task_id)
+	state = "TRAVEL"
+
+
 func _assign_next_task() -> void:
 	var task: Dictionary = coordinator.claim_for(citizen_id)
 	if task.is_empty():
@@ -131,21 +149,27 @@ func _advance_path(delta: float) -> void:
 		_arrive_at_destination()
 		return
 	var waypoint := _path[_path_cursor]
-	var remaining := Vector2(waypoint.x - position.x, waypoint.z - position.z)
-	if remaining.length() <= 0.42:
+	var remaining := waypoint - global_position
+	if remaining.length() <= 0.05:
 		_path_cursor += 1
 		if _path_cursor >= _path.size():
 			_arrive_at_destination()
 		return
 	var direction := remaining.normalized()
 	var step := minf(WALK_SPEED * delta, remaining.length())
-	position.x += direction.x * step
-	position.z += direction.y * step
-	rotation.y = atan2(direction.x, direction.y)
+	global_position += direction * step
+	rotation.y = atan2(direction.x, direction.z)
 	travelled_distance += step
 
 
 func _arrive_at_destination() -> void:
+	if task_type == "GRAPPLE_TRAVERSAL":
+		if coordinator.report_traversal_arrival(self, task_id):
+			state = "ON_DESK"
+		else:
+			coordinator.fail_task(task_id, "desk traversal arrival failed route, height, or travel validation")
+			state = "IDLE"
+		return
 	if _needs_second_leg and not carrying:
 		if task_type == "CONSTRUCTION_DELIVERY":
 			if not coordinator.confirm_project_pickup(task_id, self, _delivery_resource):
