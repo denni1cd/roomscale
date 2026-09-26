@@ -37,18 +37,17 @@ An elevated navigable surface is described by `surface`:
 {
   "region_id": "WORKBENCH_TOP",
   "height": 36,
-  "anchor": [72, 36, -65],
-  "approach_points": [[24, 0, -65], [120, 0, -65], [72, 0, -102], [72, 0, -28]]
+  "anchor": [72, 36, -65]
 }
 ```
 
-The region ID must be unique and must match `target_surface_id` when it is the designated goal. `height` must agree with the top of the object and be below the room walls. `anchor` must be on the surface footprint. At least two approach points must lie on the floor, outside the blocking footprint, inside the room, and at floor height. The current rectangular implementation uses these points to derive investigation and traversal-construction geometry.
+The region ID must be unique and must match `target_surface_id` when it is the designated goal. `height` must agree with the top of the object and be below the room walls. `anchor` must be on the surface footprint. The current rectangular implementation derives investigation candidates from the object center, width/depth, rotation, navigation padding, safe clearance, room bounds, obstacle footprints, and floor reachability. An optional `approach_points` array may provide a validated hint/override for a future special case, but it is not required for ordinary rectangular surfaces.
 
 Object kinds choose a generic procedural visual archetype. Unknown semantic labels remain data; adding a new visual archetype is a renderer extension, not a room-specific gameplay branch.
 
 ## Validation and runtime checks
 
-Room loading fails with diagnostics for a missing/invalid floor, nonpositive or inconsistent dimensions, duplicate object IDs, out-of-bounds object or spawn footprints, malformed geometry, invalid surface height/anchor/approaches, unknown target surface, and missing construction/activity metadata. Before citizens spawn, the active room must also yield at least two walkable and reachable target approaches and a reachable derived construction site.
+Room loading fails with diagnostics for a missing/invalid floor, nonpositive or inconsistent dimensions, duplicate object IDs, out-of-bounds object or spawn footprints, malformed geometry, invalid surface height/anchor or optional approach hints, unknown target surface, and missing construction/activity metadata. Before citizens spawn, the active room must also yield at least two walkable and reachable geometry-derived target approaches and a reachable derived construction site.
 
 The fast test exercises parsing, both valid room definitions, malformed cases, generated obstacles, target discovery, navigation approaches, reachable derived sites, region connectivity, and bounded task history. The full scenario verifies actual movement, hauling, construction, climbing, exploration, and route reuse for each room.
 
@@ -61,7 +60,7 @@ The future photo-reconstruction stage should provide:
 3. Major object semantic labels and stable IDs with position, dimensions, and orientation.
 4. Conservative floor-obstacle footprints and whether each object blocks floor navigation.
 5. Elevated rectangular navigable surfaces with region IDs, footprint, height, and target anchor.
-6. Candidate reachable floor approaches around each elevated surface, or enough geometry to derive them.
+6. Enough elevated-surface geometry to derive reachable floor approaches; optional candidate hints may be supplied for special cases.
 7. Settlement landmarks, a reachable depot pickup point, spawn region, activity stations, and camera framing metadata where these are not derived by the simulation.
 8. Provenance/confidence for reconstructed fields so later tooling can distinguish measured values from defaults.
 

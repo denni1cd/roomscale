@@ -2,12 +2,15 @@ extends Node
 ## Navigation regions and elevated surfaces are projected from RoomDefinition.
 
 const FLOOR_REGION := "FLOOR"
+const INVESTIGATION_CLEARANCE_INCHES := 4.0
 
 var floor_navigation: Node
 var room_definition: Dictionary = {}
 var regions: Dictionary = {}
 var connections: Array[Dictionary] = []
 var goal_surface_id := ""
+var _floor_height := 0.0
+var _spawn_center := Vector3.ZERO
 
 
 func configure(definition: Dictionary, floor_nav: Node) -> void:
@@ -16,6 +19,11 @@ func configure(definition: Dictionary, floor_nav: Node) -> void:
 	regions.clear()
 	regions[FLOOR_REGION] = {"height": 0.0, "kind": "room_floor", "region_id": FLOOR_REGION}
 	goal_surface_id = String(room_definition.get("target_surface_id", ""))
+	var floor_data: Dictionary = room_definition.get("floor", {})
+	_floor_height = float(floor_data.get("height", 0.0))
+	var spawn_data: Dictionary = room_definition.get("spawn", {})
+	if spawn_data.has("center"):
+		_spawn_center = _vector(spawn_data.center)
 	for object_variant in room_definition.objects:
 		var object: Dictionary = object_variant
 		if not object.has("surface"):
@@ -24,6 +32,7 @@ func configure(definition: Dictionary, floor_nav: Node) -> void:
 		var region_id := String(surface.region_id)
 		var pos: Vector3 = _vector(object.position)
 		var dims: Array = object.dimensions
+		var padding: Array = object.get("navigation_padding", [0.0, 0.0, 0.0])
 		regions[region_id] = {
 			"height": float(surface.height),
 			"kind": "elevated_surface",
@@ -31,9 +40,12 @@ func configure(definition: Dictionary, floor_nav: Node) -> void:
 			"object_id": String(object.id),
 			"object_name": String(object.name),
 			"center": Vector3(pos.x, float(surface.height), pos.z),
+			"floor_center": Vector3(pos.x, _floor_height, pos.z),
 			"dimensions": Vector2(float(dims[0]), float(dims[2])),
+			"rotation_degrees": float(object.get("rotation_degrees", 0.0)),
+			"navigation_padding": Vector2(float(padding[0]), float(padding[2])),
 			"anchor": _vector(surface.anchor),
-			"approach_points": surface.get("approach_points", []).duplicate(true),
+			"approach_hints": surface.get("approach_points", []).duplicate(true),
 			"goal": region_id == goal_surface_id,
 		}
 	connections.clear()
@@ -107,11 +119,79 @@ func investigation_candidates() -> Array[Vector3]:
 
 
 func investigation_candidates_for(region_id: String) -> Array[Vector3]:
-	var candidates: Array[Vector3] = []
 	var goal: Dictionary = regions.get(region_id, {})
-	for item in goal.get("approach_points", []):
-		candidates.append(_vector(item))
+	if goal.is_empty() or region_id == FLOOR_REGION:
+		return []
+	var hinted := _filtered_hint_candidates(goal)
+	if hinted.size() >= 2:
+		return hinted
+	return _derive_investigation_candidates(goal)
+
+
+func _derive_investigation_candidates(surface: Dictionary) -> Array[Vector3]:
+	var candidates: Array[Vector3] = []
+	var center: Vector3 = surface.get("floor_center", Vector3.ZERO)
+	var dimensions: Vector2 = surface.get("dimensions", Vector2.ZERO)
+	var padding: Vector2 = surface.get("navigation_padding", Vector2.ZERO)
+	var angle := deg_to_rad(float(surface.get("rotation_degrees", 0.0)))
+	var local_x_axis := Vector2(cos(angle), sin(angle))
+	var local_z_axis := Vector2(-sin(angle), cos(angle))
+	var x_offset := dimensions.x * 0.5 + padding.x + INVESTIGATION_CLEARANCE_INCHES
+	var z_offset := dimensions.y * 0.5 + padding.y + INVESTIGATION_CLEARANCE_INCHES
+	var offsets: Array[Vector2] = [
+		local_x_axis * x_offset,
+		local_x_axis * -x_offset,
+		local_z_axis * z_offset,
+		local_z_axis * -z_offset,
+	]
+	for offset in offsets:
+		var candidate := Vector3(center.x + offset.x, _floor_height, center.z + offset.y)
+		if _candidate_is_valid(candidate, surface):
+			_append_distinct(candidates, candidate)
 	return candidates
+
+
+func _filtered_hint_candidates(surface: Dictionary) -> Array[Vector3]:
+	var candidates: Array[Vector3] = []
+	for item in surface.get("approach_hints", []):
+		if not item is Array or item.size() != 3:
+			continue
+		var candidate := _vector(item)
+		if _candidate_is_valid(candidate, surface):
+			_append_distinct(candidates, candidate)
+	return candidates
+
+
+func _candidate_is_valid(candidate: Vector3, surface: Dictionary) -> bool:
+	if not is_instance_valid(floor_navigation) or not floor_navigation.is_walkable(candidate):
+		return false
+	var bounds: Rect2 = floor_navigation.room_bounds()
+	if not bounds.has_point(Vector2(candidate.x, candidate.z)):
+		return false
+	if _inside_surface_blocking_footprint(candidate, surface):
+		return false
+	if floor_navigation.is_obstacle_position(candidate):
+		return false
+	return not floor_navigation.path_between(_spawn_center, candidate).is_empty()
+
+
+func _inside_surface_blocking_footprint(candidate: Vector3, surface: Dictionary) -> bool:
+	var center: Vector3 = surface.get("floor_center", Vector3.ZERO)
+	var dimensions: Vector2 = surface.get("dimensions", Vector2.ZERO)
+	var padding: Vector2 = surface.get("navigation_padding", Vector2.ZERO)
+	var angle := deg_to_rad(float(surface.get("rotation_degrees", 0.0)))
+	var delta := Vector2(candidate.x - center.x, candidate.z - center.z)
+	var local_x := delta.x * cos(angle) + delta.y * sin(angle)
+	var local_z := -delta.x * sin(angle) + delta.y * cos(angle)
+	return absf(local_x) <= dimensions.x * 0.5 + padding.x and absf(local_z) <= dimensions.y * 0.5 + padding.y
+
+
+func _append_distinct(candidates: Array[Vector3], candidate: Vector3) -> bool:
+	for existing in candidates:
+		if existing.distance_to(candidate) < 1.0:
+			return false
+	candidates.append(candidate)
+	return true
 
 
 func investigation_route(start: Vector3, candidate_index: int) -> Array[Vector3]:

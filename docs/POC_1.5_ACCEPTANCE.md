@@ -6,32 +6,32 @@ The evidence below is from fresh Godot 4.7.2 processes running the production sc
 
 | Criterion | Status | Verification evidence |
 | --- | --- | --- |
-| AC-1 POC 1 regression | PASS | Room A full scenario in `verification/poc15/room_a/inspection-final.log`; M2-M6/M8 all pass. |
+| AC-1 POC 1 regression | PASS | Current Room A full scenario in `verification/poc15/ac10-room_a.log`; M2-M6/M8 all pass after removing hand-authored approaches. |
 | AC-2 Builder cleanup | PASS | M4 evidence reports `builders_returned=true`; smoke asserts zero active builders, empty construction worker set, and no construction task remains on a citizen. |
 | AC-3 Bounded task history | PASS | `verification/poc15/fast-locked-source.log`; canceled/superseded fixture remains at 500/500 after overflow. |
 | AC-4 RoomDefinition exists | PASS | `scripts/room_definition.gd`, `rooms/room_a.json`, `rooms/room_b.json`; both load through the same parser. |
-| AC-5 Room A migrated | PASS | Room A production log loads `room_a`, generates its objects and navigation from JSON, then completes M2-M6/M8. |
+| AC-5 Room A migrated | PASS | `verification/poc15/ac10-room_a.log` loads `room_a`, generates geometry/navigation and derived approaches from JSON, then completes M2-M6/M8. |
 | AC-6 Geometry data driven | PASS | `pipeline_proof.gd` iterates object descriptors; both logs verify generated floor/object geometry. |
 | AC-7 Obstacles data driven | PASS | Floor navigation reports 11 Room A and 12 Room B generated obstacle rectangles; smoke compares them with blocking objects. |
 | AC-8 Elevated surfaces data driven | PASS | Generic `surface` records produce `STUDY_SURFACE` and `BENCH_SURFACE`; both targets are selected and explored. |
 | AC-9 Generic surface goals | PASS | Runtime goal/task/navigation code uses region IDs and `target_surface_id`; source audit has no hard-coded DESK gameplay region. |
-| AC-10 Dynamic investigation | PASS | M3 in both room logs: two citizens physically reach definition-derived approaches and confirm the missing connection. |
+| AC-10 Dynamic investigation | PASS | `verification/poc15/ac10-fast.log` proves both JSON rooms omit required `approach_points` and generated candidates are clear/reachable; `ac10-room_a.log` and `ac10-room_b.log` pass M3 with two physical investigators; geometry derivation uses four rotated edge candidates with bounds/obstacle/reachability filters. |
 | AC-11 Dynamic construction site | PASS | M4 in both logs reports a derived reachable clear site: Room A `(2,0,-52)`, Room B `(12,0,-64)`. |
 | AC-12 Dynamic traversal | PASS | M5 in both logs reports geometry-derived routes and target heights: Room A 79.2in to 30in; Room B 81.2in to 36in. |
 | AC-13 Room B exists | PASS | `rooms/room_b.json` changes dimensions, target type/location/elevation, obstacles, furniture, and settlement positions. |
-| AC-14 No Room B gameplay changes | PASS | `verification/poc15/cross-room-final/summary.md` is 3/3 A→B→A; no source changes between runs and no room-specific branch in gameplay systems. |
+| AC-14 No Room B gameplay changes | PASS | `verification/poc15/ac10-cross-room/summary.md` is 3/3 A→B→A after the AC-10 correction; no source changes between runs and no room-specific branch in gameplay systems. |
 | AC-15 Room switching | PASS | `RUN_ROOM_SCALE.ps1 -Room room_a` and `-Room room_b`; test runner accepts the same room parameter. |
-| AC-16 Validation | PASS | Fast log covers 12 malformed definitions: missing floor, unknown target, duplicate IDs, invalid bounds, outside approaches, unusable approaches, malformed dimensions/metadata. |
-| AC-17 Room A complete loop | PASS | Room A M2-M6/M8 markers and nine visual phases in `verification/poc15/visual/room_a/`. |
-| AC-18 Room B complete loop | PASS | Room B M2-M6/M8 markers and nine visual phases in `verification/poc15/visual/cross-room/step-02-room_b/`. |
-| AC-19 Cross-room regression | PASS | `cross-room-final/summary.md`, 3/3 steps. |
+| AC-16 Validation | PASS | Fast log covers 12 malformed definitions: missing floor, unknown target, duplicate IDs, invalid bounds, malformed optional hints, outside/blocked hints, and malformed dimensions/metadata. |
+| AC-17 Room A complete loop | PASS | `verification/poc15/ac10-room_a.log` contains Room A M2-M6/M8 markers; prior nine visual phases remain in `verification/poc15/visual/room_a/`. |
+| AC-18 Room B complete loop | PASS | `verification/poc15/ac10-room_b.log` contains Room B M2-M6/M8 markers; prior nine visual phases remain in `verification/poc15/visual/cross-room/step-02-room_b/`. |
+| AC-19 Cross-room regression | PASS | `verification/poc15/ac10-cross-room/summary.md`, 3/3 steps. |
 | AC-20 Room A stability | PASS | `repeatability/room_a/summary.md`, 5/5; per-run logs `run-01.log` through `run-05.log`. |
 | AC-21 Room B stability | PASS | `repeatability/room_b/summary.md`, 5/5; per-run logs `run-01.log` through `run-05.log`. |
 | AC-22 Real movement | PASS | M5/M6 logs record 79.3in/81.3in continuous traversal with sampled maximum steps; smoke rejects discontinuities and teleport-sized jumps. |
 | AC-23 Persistent infrastructure | PASS | M6 in both room logs reports `persistent_link=true`, three explorations, and two autonomous route reuses. |
 | AC-24 Grapple presentation | PASS | M5 reports eight segmented cable pieces, radius 0.07in, and partial deployment; visual phases include grapple deployment. |
 | AC-25 Citizen inspection | PASS | Smoke clicks a citizen marker and asserts identifier, TASK, and TARGET text; visual evidence includes `citizen-inspection`. |
-| AC-26 Fast verification layer | PASS | `TEST_ROOM_SCALE_FAST.ps1` and `scripts/room_definition_test.gd`; fast log PASS. |
+| AC-26 Fast verification layer | PASS | `TEST_ROOM_SCALE_FAST.ps1` and `scripts/room_definition_test.gd`; `verification/poc15/ac10-fast.log` PASS with no required explicit approaches and generated candidate checks. |
 | AC-27 Repository documentation | PASS | `README.md`, copied plans under `docs/`, this matrix, and `PROJECT_PROGRESS.md`. |
 | AC-28 Photo pipeline contract | PASS | `docs/RoomDefinition_Contract.md` defines scale, floor/walls, objects, obstacle footprints, elevated surfaces, approaches, provenance, and validation. |
 | AC-29 Zero manual level authoring | PASS | Both rooms launch from JSON and code-generated geometry; no Godot editor steps are required. |

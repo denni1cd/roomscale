@@ -93,26 +93,36 @@ static func validate(definition: Dictionary) -> Array[String]:
 				var size: Array = object.dimensions
 				if not is_equal_approx(float(anchor[1]), float(surface.height)) or absf(float(anchor[0]) - float(pos[0])) > float(size[0]) * 0.5 or absf(float(anchor[2]) - float(pos[2])) > float(size[2]) * 0.5:
 					errors.append("surface %s anchor is outside the navigable surface bounds" % region_id)
-			var approaches: Array = surface.get("approach_points", [])
-			if approaches.size() < 2:
-				errors.append("surface %s requires at least two approach points" % region_id)
-			for approach in approaches:
-				if not _number_vector(approach, 3):
-					errors.append("surface %s has malformed approach point" % region_id)
-				elif room_size.size() == 2 and (absf(float(approach[0]) - float(floor_center[0])) > float(room_size[0]) * 0.5 - 1.0 or absf(float(approach[2]) - float(floor_center[2])) > float(room_size[1]) * 0.5 - 1.0):
-					errors.append("surface %s approach point lies outside the room floor" % region_id)
-				elif floor is Dictionary and _finite_number(floor.get("height", null)) and not is_equal_approx(float(approach[1]), float(floor.height)):
-					errors.append("surface %s approach point height must match the floor" % region_id)
-				elif _number_vector(object.get("position", null), 3) and _positive_vector(object.get("dimensions", null), 3):
-					var pos: Array = object.position
-					var size: Array = object.dimensions
-					var pad: Array = object.get("navigation_padding", [0.0, 0.0, 0.0])
-					if not _number_vector(pad, 3):
-						pad = [0.0, 0.0, 0.0]
-					var blocked_x := float(size[0]) * 0.5 + float(pad[0])
-					var blocked_z := float(size[2]) * 0.5 + float(pad[2])
-					if absf(float(approach[0]) - float(pos[0])) <= blocked_x and absf(float(approach[2]) - float(pos[2])) <= blocked_z:
-						errors.append("surface %s approach point is inside its blocking footprint" % region_id)
+			if surface.has("approach_points"):
+				var approach_value: Variant = surface.get("approach_points")
+				if not approach_value is Array:
+					errors.append("surface %s approach_points hint must be an array" % region_id)
+				else:
+					var approaches: Array = approach_value
+					if approaches.size() < 2:
+						errors.append("surface %s optional approach_points hint must contain at least two points" % region_id)
+					for approach in approaches:
+						if not _number_vector(approach, 3):
+							errors.append("surface %s has malformed approach point" % region_id)
+						elif room_size.size() == 2 and (absf(float(approach[0]) - float(floor_center[0])) > float(room_size[0]) * 0.5 - 1.0 or absf(float(approach[2]) - float(floor_center[2])) > float(room_size[1]) * 0.5 - 1.0):
+							errors.append("surface %s approach point lies outside the room floor" % region_id)
+						elif floor is Dictionary and _finite_number(floor.get("height", null)) and not is_equal_approx(float(approach[1]), float(floor.height)):
+							errors.append("surface %s approach point height must match the floor" % region_id)
+						elif _number_vector(object.get("position", null), 3) and _positive_vector(object.get("dimensions", null), 3):
+							var surface_pos: Array = object.position
+							var surface_size: Array = object.dimensions
+							var pad: Array = object.get("navigation_padding", [0.0, 0.0, 0.0])
+							if not _number_vector(pad, 3):
+								pad = [0.0, 0.0, 0.0]
+							var angle := deg_to_rad(float(object.get("rotation_degrees", 0.0)))
+							var delta_x := float(approach[0]) - float(surface_pos[0])
+							var delta_z := float(approach[2]) - float(surface_pos[2])
+							var local_x := delta_x * cos(angle) + delta_z * sin(angle)
+							var local_z := -delta_x * sin(angle) + delta_z * cos(angle)
+							var blocked_x := float(surface_size[0]) * 0.5 + float(pad[0])
+							var blocked_z := float(surface_size[2]) * 0.5 + float(pad[2])
+							if absf(local_x) <= blocked_x and absf(local_z) <= blocked_z:
+								errors.append("surface %s approach point is inside its blocking footprint" % region_id)
 	if target_surface_id.is_empty() or target_surface_id == "FLOOR" or not surface_ids.has(target_surface_id):
 		errors.append("target_surface_id references an unknown navigable surface: %s" % target_surface_id)
 	var construction: Variant = definition.get("construction", null)

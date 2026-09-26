@@ -21,6 +21,15 @@ func _run() -> void:
 		if String(definition.id) != room_id or definition.has("construction") and definition.construction.has("site"):
 			_fail("room contract identity or derived-site boundary failed for %s" % room_id)
 			return
+		var target_object: Dictionary = {}
+		for object_variant in definition.objects:
+			var object: Dictionary = object_variant
+			if object.has("surface") and String(object.surface.region_id) == String(definition.target_surface_id):
+				target_object = object
+				break
+		if target_object.is_empty() or target_object.surface.has("approach_points"):
+			_fail("%s must derive investigation points without required approach_points" % room_id)
+			return
 		definitions.append(definition)
 		var navigation := FloorNavigationController.new()
 		navigation.configure(definition)
@@ -37,9 +46,14 @@ func _run() -> void:
 		if String(goal.object_id).is_empty() or goal.dimensions.x <= 0.0 or goal.dimensions.y <= 0.0:
 			_fail("target discovery failed for %s" % room_id)
 			return
-		if surface_navigation.investigation_candidates().size() < 2:
+		var candidates: Array[Vector3] = surface_navigation.investigation_candidates()
+		if candidates.size() < 2:
 			_fail("approach geometry discovery failed for %s" % room_id)
 			return
+		for candidate in candidates:
+			if not navigation.room_bounds().has_point(Vector2(candidate.x, candidate.z)) or navigation.is_obstacle_position(candidate) or navigation.path_between(RoomDefinitionLoader.vector3_from(definition.spawn.center), candidate).is_empty():
+				_fail("derived investigation candidate is invalid for %s: %s" % [room_id, candidate])
+				return
 		var derived_site: Dictionary = surface_navigation.derive_construction_site(navigation)
 		if not derived_site.valid or navigation.is_obstacle_position(derived_site.position) or navigation.path_between(RoomDefinitionLoader.vector3_from(definition.construction.depot_pickup), derived_site.position).is_empty():
 			_fail("dynamic construction site derivation failed for %s: %s" % [room_id, derived_site])

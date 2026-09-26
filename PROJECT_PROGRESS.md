@@ -18,10 +18,10 @@ POC 1.5 is PASS. The current production source has no Room B gameplay branch and
 
 | Gate | Result | Evidence |
 | --- | --- | --- |
-| Fast deterministic verification | PASS | `verification/poc15/fast-locked-source.log`; 2 definitions, 12 malformed cases, generated obstacles, derived approaches/sites, runtime navigation validation, region connectivity, bounded task history 500/500 |
-| Room A complete scenario | PASS | `verification/poc15/room_a/inspection-final.log`; M2-M6/M8 PASS, 50 citizens, real deliveries/build/traversal/reuse, citizen inspection |
-| Room B complete scenario | PASS | `verification/poc15/room_b/schema-integration.log`; 260x220 room, Workbench target at 36in, same M2-M6/M8 production markers |
-| Cross-room regression | PASS | `verification/poc15/cross-room-final/summary.md`; Room A → Room B → Room A, 3/3 |
+| Fast deterministic verification | PASS | `verification/poc15/ac10-fast.log`; 2 definitions without required approach hints, 12 malformed cases, geometry-derived reachable candidates, generated obstacles, derived sites, runtime navigation validation, region connectivity, bounded task history 500/500 |
+| Room A complete scenario | PASS | `verification/poc15/ac10-room_a.log`; M2-M6/M8 PASS, 50 citizens, real deliveries/build/traversal/reuse, citizen inspection |
+| Room B complete scenario | PASS | `verification/poc15/ac10-room_b.log`; 260x220 room, Workbench target at 36in, same M2-M6/M8 production markers |
+| Cross-room regression | PASS | `verification/poc15/ac10-cross-room/summary.md`; Room A → Room B → Room A, 3/3 |
 | Room A repeatability | PASS | `verification/poc15/repeatability/room_a/summary.md`; 5/5 fresh full runs |
 | Room B repeatability | PASS | `verification/poc15/repeatability/room_b/summary.md`; 5/5 fresh full runs |
 | Visual verification | PASS | `verification/poc15/visual/room_a/` and `verification/poc15/visual/cross-room/step-02-room_b/`; nine 1280x720 phases per room |
