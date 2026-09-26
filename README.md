@@ -60,4 +60,5 @@ Room-specific coordinates belong in the selected data file. Gameplay code uses s
 - `rooms/` — authoritative room inputs.
 - `scripts/` — runtime systems and deterministic integration/fast tests.
 - `docs/` — project plans, RoomDefinition/photo-pipeline contract, and acceptance evidence.
+- `screenshots/` — final Room A and Room B production captures, indexed by scenario phase.
 - `verification/` — retained POC 1 history and POC 1.5 run logs, summaries, and visual captures.
