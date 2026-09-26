@@ -18,9 +18,11 @@ func _run() -> void:
 	await process_frame
 	scene.capture_interaction_state()
 	var camera := scene.get_node("CameraRig/Camera") as Camera3D
-	var desk_screen_position := camera.unproject_position(Vector3(-58.0, 30.0, -52.0))
-	if not scene.select_surface_at_screen_position(desk_screen_position):
-		push_error("M3_EVIDENCE_FAIL: production desk screen-ray selection failed")
+	var navigation := scene.get_node("SurfaceNavigation")
+	var target_surface: Dictionary = navigation.goal_surface()
+	var target_screen_position := camera.unproject_position(target_surface.anchor)
+	if not scene.select_surface_at_screen_position(target_screen_position):
+		push_error("M3_EVIDENCE_FAIL: production target-surface screen-ray selection failed")
 		quit(1)
 		return
 	await process_frame

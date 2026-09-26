@@ -1,4 +1,4 @@
-# RoomScale POC 1 Progress
+# RoomScale POC 1 and POC 1.5 Progress
 
 | Milestone | Status | Evidence |
 | --- | --- | --- |
@@ -11,6 +11,20 @@
 | M6 — Integrated gameplay | PASS | `verification/milestone6-status.md`, smoke log, and inspected desk/reuse captures |
 | M7 — Automated verification | PASS | 10/10 full scenarios in fresh Godot processes; `verification/milestone7-repeatability-summary.md` |
 | M8 — Presentation pass | PASS | `verification/milestone8-status.md`, `milestone8-smoke.log`, inspected launch screenshots |
+
+## POC 1.5 completion
+
+POC 1.5 is PASS. The current production source has no Room B gameplay branch and no fixed Room A target coordinates in citizen, task, navigation, construction, traversal, or exploration systems. The complete evidence map is [docs/POC_1.5_ACCEPTANCE.md](docs/POC_1.5_ACCEPTANCE.md).
+
+| Gate | Result | Evidence |
+| --- | --- | --- |
+| Fast deterministic verification | PASS | `verification/poc15/fast-locked-source.log`; 2 definitions, 12 malformed cases, generated obstacles, derived approaches/sites, runtime navigation validation, region connectivity, bounded task history 500/500 |
+| Room A complete scenario | PASS | `verification/poc15/room_a/inspection-final.log`; M2-M6/M8 PASS, 50 citizens, real deliveries/build/traversal/reuse, citizen inspection |
+| Room B complete scenario | PASS | `verification/poc15/room_b/schema-integration.log`; 260x220 room, Workbench target at 36in, same M2-M6/M8 production markers |
+| Cross-room regression | PASS | `verification/poc15/cross-room-final/summary.md`; Room A → Room B → Room A, 3/3 |
+| Room A repeatability | PASS | `verification/poc15/repeatability/room_a/summary.md`; 5/5 fresh full runs |
+| Room B repeatability | PASS | `verification/poc15/repeatability/room_b/summary.md`; 5/5 fresh full runs |
+| Visual verification | PASS | `verification/poc15/visual/room_a/` and `verification/poc15/visual/cross-room/step-02-room_b/`; nine 1280x720 phases per room |
 
 ## Acceptance Criteria
 

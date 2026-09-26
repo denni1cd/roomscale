@@ -1,54 +1,73 @@
 extends Node
-## Small inch-scale A* grid. Furniture and structures occupy blocked floor cells.
+## A* floor grid populated only from the active RoomDefinition.
 
 const CELL_INCHES := 4.0
-const MIN_X := -118.0
-const MIN_Z := -88.0
-const CELLS_X := 60
-const CELLS_Z := 45
 
 var grid := AStarGrid2D.new()
 var obstacle_rects: Array[Dictionary] = []
+var room_definition: Dictionary = {}
+var _origin := Vector2.ZERO
+var _floor_center := Vector3.ZERO
+var _floor_height := 0.0
+
+
+func configure(definition: Dictionary) -> void:
+	room_definition = definition.duplicate(true)
 
 
 func _ready() -> void:
-	grid.region = Rect2i(0, 0, CELLS_X, CELLS_Z)
+	_rebuild_grid()
+
+
+func _rebuild_grid() -> void:
+	if room_definition.is_empty():
+		push_error("Floor navigation requires a RoomDefinition before entering the scene tree.")
+		return
+	var dimensions: Array = room_definition.dimensions
+	var width := float(dimensions[0])
+	var depth := float(dimensions[1])
+	_floor_center = Vector3(float(room_definition.floor.center[0]), float(room_definition.floor.center[1]), float(room_definition.floor.center[2]))
+	_floor_height = float(room_definition.floor.height)
+	_origin = Vector2(_floor_center.x - width * 0.5 + CELL_INCHES * 0.5, _floor_center.z - depth * 0.5 + CELL_INCHES * 0.5)
+	var cells_x := maxi(1, floori((width - CELL_INCHES) / CELL_INCHES) + 1)
+	var cells_z := maxi(1, floori((depth - CELL_INCHES) / CELL_INCHES) + 1)
+	grid.region = Rect2i(0, 0, cells_x, cells_z)
 	grid.cell_size = Vector2(CELL_INCHES, CELL_INCHES)
 	grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_AT_LEAST_ONE_WALKABLE
 	grid.update()
-	_add_blocked_rect(Vector2(0.0, 0.0), Vector2(4.0, 4.0), "wall clearance")
-	_add_blocked_rect(Vector2(0.0, -89.0), Vector2(118.0, 3.0), "back wall")
-	_add_blocked_rect(Vector2(-119.0, 0.0), Vector2(3.0, 86.0), "left wall")
-	_add_blocked_rect(Vector2(119.0, 0.0), Vector2(3.0, 86.0), "right wall")
-	# Major furniture from the generated M1 room; extents include a walking margin.
-	_add_blocked_rect(Vector2(-58.0, -52.0), Vector2(38.0, 21.0), "desk")
-	_add_blocked_rect(Vector2(-58.0, -20.0), Vector2(16.0, 15.0), "chair")
-	_add_blocked_rect(Vector2(91.0, -63.0), Vector2(19.0, 12.0), "bookcase")
-	_add_blocked_rect(Vector2(44.0, -15.0), Vector2(13.0, 11.0), "side table")
-	_add_blocked_rect(Vector2(75.0, 43.0), Vector2(11.0, 10.0), "storage box")
-	_add_blocked_rect(Vector2(-99.0, 12.0), Vector2(10.0, 10.0), "waste bin")
-	_add_blocked_rect(Vector2(-91.0, -46.0), Vector2(10.0, 10.0), "plant pot")
-	# Settlement footprints, leaving clear approaches at each entrance/work station.
-	_add_blocked_rect(Vector2(-20.0, 42.0), Vector2(13.0, 9.0), "workshop")
-	_add_blocked_rect(Vector2(18.0, 42.0), Vector2(12.0, 9.0), "depot")
-	_add_blocked_rect(Vector2(-25.0, 66.0), Vector2(9.0, 7.0), "housing")
-	_add_blocked_rect(Vector2(11.0, 66.0), Vector2(10.0, 5.0), "assembly bench")
-	grid.update()
+	obstacle_rects.clear()
+	for object_variant in room_definition.objects:
+		var object: Dictionary = object_variant
+		if not bool(object.get("blocks_navigation", false)):
+			continue
+		var position := _vector(object.position)
+		var dimensions_array: Array = object.dimensions
+		var dimensions_2d := Vector2(float(dimensions_array[0]), float(dimensions_array[2]))
+		var padding_array: Array = object.get("navigation_padding", [0.0, 0.0, 0.0])
+		var padding := Vector2(float(padding_array[0]), float(padding_array[2]))
+		var angle := deg_to_rad(float(object.get("rotation_degrees", 0.0)))
+		var rotated_half := Vector2(
+			absf(cos(angle)) * dimensions_2d.x * 0.5 + absf(sin(angle)) * dimensions_2d.y * 0.5,
+			absf(sin(angle)) * dimensions_2d.x * 0.5 + absf(cos(angle)) * dimensions_2d.y * 0.5
+		)
+		_add_blocked_rect(Vector2(position.x, position.z), rotated_half + padding, String(object.id))
+	_mark_obstacle_cells()
+	print("ROOMSCALE_FLOOR_NAV_READY room=%s grid=%dx%d cell=%.0fin obstacles=%d" % [room_definition.id, cells_x, cells_z, CELL_INCHES, obstacle_rects.size()])
+
+
+func _add_blocked_rect(center: Vector2, half: Vector2, reason: String) -> void:
+	obstacle_rects.append({"center": center, "half": half, "reason": reason})
+
+
+func _mark_obstacle_cells() -> void:
 	for rect in obstacle_rects:
 		var center: Vector2 = rect.center
 		var half: Vector2 = rect.half
 		var left := _world_to_cell(Vector2(center.x - half.x, center.y - half.y))
 		var right := _world_to_cell(Vector2(center.x + half.x, center.y + half.y))
-		for x in range(left.x, right.x + 1):
-			for z in range(left.y, right.y + 1):
-				var cell := Vector2i(x, z)
-				if grid.region.has_point(cell):
-					grid.set_point_solid(cell, true)
-	print("ROOMSCALE_FLOOR_NAV_READY grid=%dx%d cell=%.0fin obstacles=%d" % [CELLS_X, CELLS_Z, CELL_INCHES, obstacle_rects.size()])
-
-
-func _add_blocked_rect(center: Vector2, half: Vector2, reason: String) -> void:
-	obstacle_rects.append({"center": center, "half": half, "reason": reason})
+		for x in range(maxi(left.x, 0), mini(right.x, grid.region.size.x - 1) + 1):
+			for z in range(maxi(left.y, 0), mini(right.y, grid.region.size.y - 1) + 1):
+				grid.set_point_solid(Vector2i(x, z), true)
 
 
 func path_between(start: Vector3, finish: Vector3) -> Array[Vector3]:
@@ -62,9 +81,9 @@ func path_between(start: Vector3, finish: Vector3) -> Array[Vector3]:
 	var result: Array[Vector3] = []
 	for id in ids:
 		var position := _cell_to_world(id)
-		result.append(Vector3(position.x, 0.0, position.y))
-	if not result[-1].is_equal_approx(Vector3(finish.x, 0.0, finish.z)):
-		result.append(Vector3(finish.x, 0.0, finish.z))
+		result.append(Vector3(position.x, _floor_height, position.y))
+	if not result[-1].is_equal_approx(Vector3(finish.x, _floor_height, finish.z)):
+		result.append(Vector3(finish.x, _floor_height, finish.z))
 	return result
 
 
@@ -78,7 +97,7 @@ func nearest_walkable_position(position: Vector3) -> Vector3:
 	if cell.x < 0:
 		return Vector3(INF, 0.0, INF)
 	var world := _cell_to_world(cell)
-	return Vector3(world.x, 0.0, world.y)
+	return Vector3(world.x, _floor_height, world.y)
 
 
 func is_obstacle_position(position: Vector3) -> bool:
@@ -90,12 +109,17 @@ func is_obstacle_position(position: Vector3) -> bool:
 	return false
 
 
+func room_bounds() -> Rect2:
+	var dimensions: Array = room_definition.dimensions
+	return Rect2(_floor_center.x - float(dimensions[0]) * 0.5, _floor_center.z - float(dimensions[1]) * 0.5, float(dimensions[0]), float(dimensions[1]))
+
+
 func _world_to_cell(position: Vector2) -> Vector2i:
-	return Vector2i(roundi((position.x - MIN_X) / CELL_INCHES), roundi((position.y - MIN_Z) / CELL_INCHES))
+	return Vector2i(roundi((position.x - _origin.x) / CELL_INCHES), roundi((position.y - _origin.y) / CELL_INCHES))
 
 
 func _cell_to_world(cell: Vector2i) -> Vector2:
-	return Vector2(MIN_X + float(cell.x) * CELL_INCHES, MIN_Z + float(cell.y) * CELL_INCHES)
+	return _origin + Vector2(float(cell.x) * CELL_INCHES, float(cell.y) * CELL_INCHES)
 
 
 func _nearest_walkable_cell(origin: Vector2i) -> Vector2i:
@@ -110,3 +134,7 @@ func _nearest_walkable_cell(origin: Vector2i) -> Vector2i:
 				if grid.region.has_point(candidate) and not grid.is_point_solid(candidate):
 					return candidate
 	return Vector2i(-1, -1)
+
+
+func _vector(values: Array) -> Vector3:
+	return Vector3(float(values[0]), float(values[1]), float(values[2]))

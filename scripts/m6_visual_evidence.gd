@@ -1,5 +1,5 @@
 extends SceneTree
-## Visible evidence for autonomous desk exploration and a later cable-route reuse.
+## Visible evidence for autonomous elevated-surface exploration and route reuse.
 
 func _initialize() -> void:
 	call_deferred("_run")
@@ -12,9 +12,11 @@ func _run() -> void:
 	await process_frame
 	await process_frame
 	var camera := scene.get_node("CameraRig/Camera") as Camera3D
-	var desk_pos: Vector2 = camera.unproject_position(Vector3(-58.0, 30.0, -52.0))
-	if not scene.select_surface_at_screen_position(desk_pos) or not scene.issue_reach_explore().accepted:
-		_fail("production desk selection/Reach failed")
+	var navigation := scene.get_node("SurfaceNavigation")
+	var target_surface: Dictionary = navigation.goal_surface()
+	var target_pos: Vector2 = camera.unproject_position(target_surface.anchor)
+	if not scene.select_surface_at_screen_position(target_pos) or not scene.issue_reach_explore().accepted:
+		_fail("production target-surface selection/Reach failed")
 		return
 	var coordinator := scene.get_node("TaskCoordinator")
 	var construction := scene.get_node("ConstructionSystem")
@@ -41,7 +43,7 @@ func _run() -> void:
 	elapsed = 0.0
 	while elapsed < 70.0:
 		for child in scene.get_children():
-			if child.name.begins_with("Citizen") and child.task_type == "DESK_EXPLORATION" and child.state == "WORK":
+			if child.name.begins_with("Citizen") and child.task_type == "SURFACE_EXPLORATION" and child.state == "WORK":
 				first_explorer = child
 				explore_task = coordinator.get_task(child.task_id)
 				break
@@ -50,7 +52,7 @@ func _run() -> void:
 		await create_timer(0.2).timeout
 		elapsed += 0.2
 	if first_explorer == null:
-		_fail("first citizen did not visibly begin desk exploration")
+		_fail("first citizen did not visibly begin elevated-surface exploration")
 		return
 	rig.set_view_mode(2)
 	rig.distance = 8.0
@@ -64,12 +66,12 @@ func _run() -> void:
 	rig._apply_transform()
 	await process_frame
 	await process_frame
-	_save_capture("milestone6-desk-exploration")
+	_save_capture("milestone6-surface-exploration")
 	var reuse_citizen: Node3D
 	elapsed = 0.0
 	while elapsed < 50.0:
 		for child in scene.get_children():
-			if child.name.begins_with("Citizen") and child.task_type == "GRAPPLE_TRAVERSAL" and bool(coordinator.get_task(child.task_id).get("autonomous_reuse", false)) and child.global_position.y > 14.0:
+			if child.name.begins_with("Citizen") and child.task_type == "SURFACE_TRAVERSAL" and bool(coordinator.get_task(child.task_id).get("autonomous_reuse", false)) and child.global_position.y > float(target_surface.height) * 0.4:
 				reuse_citizen = child
 				break
 		if reuse_citizen != null:
@@ -93,8 +95,8 @@ func _run() -> void:
 	_save_capture("milestone6-autonomous-route-reuse")
 	var m6: Dictionary = coordinator.get_m6_status()
 	var proof := FileAccess.open("res://verification/milestone6-visual.log", FileAccess.WRITE)
-	proof.store_line("Desk exploration capture: citizen=%s position=%s state=%s work_seconds=%.2f route=%.1fin walked=%.1fin" % [first_explorer.name, first_explorer.global_position, first_explorer.state, explore_task.get("work_seconds", 0.0), explore_task.get("route_length", 0.0), explore_task.get("actual_travelled_distance", 0.0)])
-	proof.store_line("Autonomous reuse capture: citizen=%s position=%s state=%s task=%s cable_segments=%d arrivals=%d reuses=%d infrastructure=%s" % [reuse_citizen.name, reuse_citizen.global_position, reuse_citizen.state, JSON.stringify(coordinator.get_task(reuse_citizen.task_id)), scene.get_node("DeployedGrappleCable").get_child_count() - 1, m6.desk_arrivals, m6.autonomous_reuses_assigned, m6.infrastructure_operational])
+	proof.store_line("Surface exploration capture: citizen=%s position=%s state=%s work_seconds=%.2f route=%.1fin walked=%.1fin" % [first_explorer.name, first_explorer.global_position, first_explorer.state, explore_task.get("work_seconds", 0.0), explore_task.get("route_length", 0.0), explore_task.get("actual_travelled_distance", 0.0)])
+	proof.store_line("Autonomous reuse capture: citizen=%s position=%s state=%s task=%s cable_segments=%d arrivals=%d reuses=%d infrastructure=%s" % [reuse_citizen.name, reuse_citizen.global_position, reuse_citizen.state, JSON.stringify(coordinator.get_task(reuse_citizen.task_id)), scene.get_node("DeployedGrappleCable").get_child_count() - 1, m6.target_arrivals, m6.autonomous_reuses_assigned, m6.infrastructure_operational])
 	print("ROOMSCALE_M6_VISIBLE_EVIDENCE_PASS exploration_and_autonomous_route_reuse_captured")
 	quit(0)
 

@@ -1,12 +1,12 @@
 extends Node
 ## M4 project inventory, verified deliveries, and work-driven component construction.
 
+const RoomDefinitionLoader := preload("res://scripts/room_definition.gd")
+
 signal project_updated(status: Dictionary)
 
 const RESOURCE_ORDER := ["wood", "metal", "mechanical_parts"]
 const REQUIRED := {"wood": 4, "metal": 4, "mechanical_parts": 3}
-const SITE_POSITION := Vector3(-14.0, 0.0, -52.0)
-const DEPOT_PICKUP := Vector3(18.0, 0.0, 55.0)
 const STAGES := [
 	{"name": "base", "required": {"wood": 2, "metal": 1, "mechanical_parts": 0}, "work_seconds": 4.0},
 	{"name": "winch", "required": {"wood": 3, "metal": 3, "mechanical_parts": 1}, "work_seconds": 5.0},
@@ -18,6 +18,11 @@ var navigation: Node
 var surface_navigation: Node
 var citizens: Array = []
 var scene_root: Node3D
+var room_definition: Dictionary = {}
+var site_position := Vector3.ZERO
+var depot_pickup := Vector3.ZERO
+var target_region := ""
+var target_anchor := Vector3.ZERO
 var stockpile := {"wood": 4, "metal": 4, "mechanical_parts": 3}
 var delivered := {"wood": 0, "metal": 0, "mechanical_parts": 0}
 var picked_up := {"wood": 0, "metal": 0, "mechanical_parts": 0}
@@ -33,13 +38,37 @@ var _construction_worker_ids: Dictionary = {}
 var _stage_gate_snapshots: Array[Dictionary] = []
 var _visuals: Dictionary = {}
 var _site_root: Node3D
+var _deployment_segments: Array[MeshInstance3D] = []
+var _deployment_anchor: MeshInstance3D
+var _deployment_timer := 0.0
+var _deployment_cursor := 0
+var _deployment_path: Array[Vector3] = []
 
 
-func configure(task_coordinator: Node, floor_navigation: Node, population: Array, scene: Node3D) -> void:
+func configure(task_coordinator: Node, floor_navigation: Node, population: Array, scene: Node3D, definition: Dictionary) -> void:
 	coordinator = task_coordinator
 	navigation = floor_navigation
 	citizens = population
 	scene_root = scene
+	room_definition = definition.duplicate(true)
+	site_position = coordinator.get_construction_site()
+	depot_pickup = RoomDefinitionLoader.vector3_from(room_definition.construction.depot_pickup)
+	target_region = String(surface_navigation.goal_surface_id)
+	var target_surface: Dictionary = surface_navigation.regions.get(target_region, {})
+	target_anchor = target_surface.get("anchor", Vector3.ZERO)
+
+
+func _process(delta: float) -> void:
+	if _deployment_segments.is_empty() or traversal_deployed:
+		return
+	_deployment_timer += delta
+	while _deployment_timer >= 0.075 and _deployment_cursor < _deployment_segments.size():
+		_deployment_timer -= 0.075
+		_deployment_segments[_deployment_cursor].visible = true
+		_deployment_cursor += 1
+	if _deployment_cursor >= _deployment_segments.size() and is_instance_valid(_deployment_anchor) and not _deployment_anchor.visible:
+		_deployment_anchor.visible = true
+		_finish_traversal_deployment()
 
 
 func on_reach_goal_updated(goal: Dictionary) -> void:
@@ -63,7 +92,7 @@ func take_stock(resource: String, amount: int) -> bool:
 func accept_delivery(resource: String, amount: int, destination: Vector3) -> bool:
 	if not project_created or not delivered.has(resource) or amount <= 0:
 		return false
-	if destination.distance_to(SITE_POSITION) > 1.5:
+	if destination.distance_to(site_position) > 1.5:
 		return false
 	if int(delivered[resource]) + amount > int(REQUIRED[resource]):
 		return false
@@ -77,7 +106,7 @@ func can_builder_work(stage_index: int) -> bool:
 	return project_created and stage_index == _active_stage and _active_stage >= 0 and _active_stage < STAGES.size()
 
 
-func perform_builder_work(stage_index: int, delta: float) -> bool:
+func perform_builder_work(stage_index: int, delta: float, task_id: int = -1) -> bool:
 	if not can_builder_work(stage_index) or delta <= 0.0:
 		return stage_index < _active_stage
 	_stage_work += delta
@@ -85,7 +114,7 @@ func perform_builder_work(stage_index: int, delta: float) -> bool:
 	if _stage_work + 0.0001 < required_work:
 		_emit_update()
 		return false
-	_complete_component(stage_index)
+	_complete_component(stage_index, task_id)
 	return true
 
 
@@ -108,9 +137,9 @@ func status() -> Dictionary:
 		"completed_stages": _completed_stages,
 		"stage_gates": _stage_gate_snapshots.duplicate(true),
 		"progress_percent": total_progress,
-		"site": SITE_POSITION,
+		"site": site_position,
 		"cable_deployed": traversal_deployed,
-		"floor_desk_connected": surface_navigation.has_connection("FLOOR", "DESK") if is_instance_valid(surface_navigation) else false,
+		"floor_target_connected": surface_navigation.has_connection("FLOOR", target_region) if is_instance_valid(surface_navigation) else false,
 		"traversal": coordinator.get_traversal_goal_status(),
 	}
 
@@ -142,7 +171,7 @@ func _create_project() -> void:
 	var candidates: Array[Dictionary] = []
 	for citizen in citizens:
 		var carrier := citizen as Node3D
-		var path: Array[Vector3] = navigation.path_between(carrier.global_position, DEPOT_PICKUP)
+		var path: Array[Vector3] = navigation.path_between(carrier.global_position, depot_pickup)
 		if not path.is_empty():
 			candidates.append({"citizen": carrier, "distance": _path_length(path)})
 	candidates.sort_custom(func(left: Dictionary, right: Dictionary) -> bool: return float(left.distance) < float(right.distance))
@@ -152,8 +181,8 @@ func _create_project() -> void:
 		var resource := resource_jobs[index]
 		var task: Dictionary = coordinator.create_construction_task({
 			"task_type": "CONSTRUCTION_DELIVERY",
-			"source": DEPOT_PICKUP,
-			"target": SITE_POSITION,
+			"source": depot_pickup,
+			"target": site_position,
 			"resource": resource,
 			"amount": 1,
 			"picked_up": false,
@@ -186,13 +215,14 @@ func _start_build_stage(stage_index: int) -> void:
 	_stage_work = 0.0
 	_stage_gate_snapshots.append(delivered.duplicate(true))
 	project_state = "BUILDING_%s" % String(STAGES[stage_index].name).to_upper()
-	var builders := _nearest_available_builders(SITE_POSITION, 2)
+	_construction_worker_ids.clear()
+	var builders := _nearest_available_builders(site_position, 2)
 	for builder in builders:
 		_construction_worker_ids[builder.citizen_id] = true
 		var task: Dictionary = coordinator.create_construction_task({
 			"task_type": "CONSTRUCTION_BUILD",
 			"source": Vector3.ZERO,
-			"target": SITE_POSITION,
+			"target": site_position,
 			"stage": stage_index,
 			"material_gate": STAGES[stage_index].required.duplicate(true),
 			"picked_up": false,
@@ -201,16 +231,20 @@ func _start_build_stage(stage_index: int) -> void:
 	_emit_update()
 
 
-func _complete_component(stage_index: int) -> void:
+func _complete_component(stage_index: int, completing_task_id: int) -> void:
 	_stage_work = 0.0
 	_completed_stages = stage_index + 1
 	_active_stage = -1
+	coordinator.cancel_construction_stage(stage_index, completing_task_id)
+	_construction_worker_ids.clear()
 	var components: Array = _visuals.get(String(STAGES[stage_index].name), [])
 	for component in components:
 		if is_instance_valid(component):
 			component.visible = true
 	if _completed_stages >= STAGES.size():
 		project_state = "CONSTRUCTION_COMPLETE"
+		_delivery_citizen_ids.clear()
+		_construction_worker_ids.clear()
 	else:
 		project_state = "WAITING_FOR_MATERIALS"
 	_emit_update()
@@ -222,60 +256,34 @@ func _complete_component(stage_index: int) -> void:
 func _deploy_traversal() -> void:
 	if traversal_deployed or not project_created or _completed_stages < STAGES.size():
 		return
-	if not is_instance_valid(surface_navigation):
-		push_error("Grapple deployment blocked: surface navigation is unavailable")
+	if not is_instance_valid(surface_navigation) or not surface_navigation.regions.has(target_region):
+		push_error("Grapple deployment blocked: target surface navigation is unavailable")
 		return
-	var desk_anchor := Vector3(-58.0, 30.0, -52.0)
-	var cable_anchor_position := desk_anchor + Vector3(3.0, 0.0, 0.0)
-	var launcher_tip := SITE_POSITION + Vector3(0.0, 11.0, -1.6)
+	var launcher_tip := site_position + Vector3(0.0, 11.0, -1.6)
+	var tower_base := site_position + Vector3(0.0, 0.6, -1.6)
+	var cable_distance := launcher_tip.distance_to(target_anchor)
+	var segment_count := clampi(ceili(cable_distance / 10.0), 8, 24)
 	var cable_path: Array[Vector3] = [launcher_tip]
-	for index in range(1, 13):
-		var ratio := float(index) / 13.0
-		var point := launcher_tip.lerp(desk_anchor, ratio)
-		point.y -= sin(PI * ratio) * 1.5
+	for index in range(1, segment_count + 1):
+		var ratio := float(index) / float(segment_count)
+		var point := launcher_tip.lerp(target_anchor, ratio)
+		point.y -= sin(PI * ratio) * minf(2.0, cable_distance * 0.025)
 		cable_path.append(point)
-	cable_path.append(cable_anchor_position)
-	var tower_base := SITE_POSITION + Vector3(0.0, 0.6, -1.6)
-	var surface_route: Array[Vector3] = [SITE_POSITION, tower_base]
+	var surface_route: Array[Vector3] = [site_position, tower_base]
 	for step in range(1, 5):
 		surface_route.append(tower_base.lerp(launcher_tip, float(step) / 4.0))
 	for point_index in range(1, cable_path.size()):
-		var segment_start := cable_path[point_index - 1]
-		var segment_end := cable_path[point_index]
-		var length_steps := maxi(1, ceili(segment_start.distance_to(segment_end) / 3.0))
-		for step in range(1, length_steps + 1):
-			surface_route.append(segment_start.lerp(segment_end, float(step) / float(length_steps)))
-	surface_route.append(desk_anchor)
+		var start := cable_path[point_index - 1]
+		var finish := cable_path[point_index]
+		var subdivisions := maxi(1, ceili(start.distance_to(finish) / 2.5))
+		for substep in range(1, subdivisions + 1):
+			surface_route.append(start.lerp(finish, float(substep) / float(subdivisions)))
+	if not surface_navigation.connect_regions("FLOOR", target_region, surface_route):
+		push_error("Grapple deployment blocked: generated route could not connect the selected surface.")
+		return
+	_deployment_path = surface_route
 	_create_cable_visual(cable_path)
-	if not surface_navigation.connect_regions("FLOOR", "DESK", surface_route):
-		var failed_visual := scene_root.get_node_or_null("DeployedGrappleCable")
-		if is_instance_valid(failed_visual):
-			failed_visual.queue_free()
-		return
-	traversal_deployed = true
-	var carriers: Array[Dictionary] = []
-	for citizen in citizens:
-		var climber := citizen as Node3D
-		if _delivery_citizen_ids.has(climber.citizen_id) or _construction_worker_ids.has(climber.citizen_id):
-			continue
-		var floor_route: Array[Vector3] = navigation.path_between(climber.global_position, SITE_POSITION)
-		if floor_route.is_empty():
-			continue
-		carriers.append({"citizen": climber, "floor_route": floor_route, "distance": _path_length(floor_route)})
-	carriers.sort_custom(func(left: Dictionary, right: Dictionary) -> bool: return float(left.distance) < float(right.distance))
-	if carriers.is_empty():
-		project_state = "CABLE_DEPLOYED_NO_CLIMBER"
-		_emit_update()
-		return
-	var climber: Node3D = carriers[0].citizen
-	var route: Array[Vector3] = carriers[0].floor_route.duplicate()
-	if route[route.size() - 1].distance_to(SITE_POSITION) > 0.1:
-		route.append(SITE_POSITION)
-	for index in range(1, surface_route.size()):
-		route.append(surface_route[index])
-	var traversal_task: Dictionary = coordinator.create_traversal_task(climber, route)
-	climber.assign_traversal_task(traversal_task)
-	project_state = "TRAVERSE_IN_PROGRESS"
+	project_state = "DEPLOYING_TRAVERSAL"
 	_emit_update()
 
 
@@ -283,7 +291,10 @@ func _create_cable_visual(path: Array[Vector3]) -> void:
 	var cable_root := Node3D.new()
 	cable_root.name = "DeployedGrappleCable"
 	scene_root.add_child(cable_root)
-	var cable_material := _material(Color("364443"))
+	var cable_material := _material(Color("263536"))
+	_deployment_segments.clear()
+	_deployment_cursor = 0
+	_deployment_timer = 0.0
 	for index in range(1, path.size()):
 		var start := path[index - 1]
 		var finish := path[index]
@@ -291,31 +302,64 @@ func _create_cable_visual(path: Array[Vector3]) -> void:
 		var segment := MeshInstance3D.new()
 		segment.name = "CableSegment%02d" % index
 		var mesh := CylinderMesh.new()
-		mesh.top_radius = 0.28
-		mesh.bottom_radius = 0.28
+		mesh.top_radius = 0.07
+		mesh.bottom_radius = 0.07
 		mesh.height = direction.length()
 		segment.mesh = mesh
 		segment.position = (start + finish) * 0.5
 		segment.quaternion = Quaternion(Vector3.UP, direction.normalized())
 		segment.material_override = cable_material
+		segment.visible = false
 		cable_root.add_child(segment)
-	var anchor := MeshInstance3D.new()
-	anchor.name = "DeskGrappleAnchor"
+		_deployment_segments.append(segment)
+	_deployment_anchor = MeshInstance3D.new()
+	_deployment_anchor.name = "SurfaceGrappleAnchor"
 	var anchor_mesh := CylinderMesh.new()
-	anchor_mesh.top_radius = 1.7
-	anchor_mesh.bottom_radius = 1.7
-	anchor_mesh.height = 0.8
-	anchor.mesh = anchor_mesh
-	anchor.position = path[path.size() - 1] + Vector3(0.0, 0.25, 0.0)
-	anchor.material_override = _material(Color("c79445"))
-	cable_root.add_child(anchor)
+	anchor_mesh.top_radius = 0.34
+	anchor_mesh.bottom_radius = 0.34
+	anchor_mesh.height = 0.24
+	_deployment_anchor.mesh = anchor_mesh
+	_deployment_anchor.position = path.back() + Vector3(0.0, 0.12, 0.0)
+	_deployment_anchor.material_override = _material(Color("d8a64f"))
+	_deployment_anchor.visible = false
+	cable_root.add_child(_deployment_anchor)
 
+
+func _finish_traversal_deployment() -> void:
+	traversal_deployed = true
+	var carriers: Array[Dictionary] = []
+	for citizen in citizens:
+		var climber := citizen as Node3D
+		if _delivery_citizen_ids.has(climber.citizen_id) or _construction_worker_ids.has(climber.citizen_id) or climber.task_type == "CONSTRUCTION_BUILD":
+			continue
+		var floor_route: Array[Vector3] = navigation.path_between(climber.global_position, site_position)
+		if not floor_route.is_empty():
+			carriers.append({"citizen": climber, "floor_route": floor_route, "distance": _path_length(floor_route)})
+	carriers.sort_custom(func(left: Dictionary, right: Dictionary) -> bool: return float(left.distance) < float(right.distance))
+	if carriers.is_empty():
+		project_state = "CABLE_DEPLOYED_NO_CLIMBER"
+		_emit_update()
+		return
+	var climber: Node3D = carriers[0].citizen
+	var route: Array[Vector3] = carriers[0].floor_route.duplicate()
+	if route.back().distance_to(site_position) > 0.1:
+		route.append(site_position)
+	for index in range(1, _deployment_path.size()):
+		route.append(_deployment_path[index])
+	var traversal_task: Dictionary = coordinator.create_traversal_task(climber, route)
+	if traversal_task.is_empty():
+		project_state = "CABLE_DEPLOYED_NO_CLIMBER"
+		_emit_update()
+		return
+	climber.assign_traversal_task(traversal_task)
+	project_state = "TRAVERSE_IN_PROGRESS"
+	_emit_update()
 
 func _nearest_available_builders(target: Vector3, count: int) -> Array[Node3D]:
 	var candidates: Array[Dictionary] = []
 	for citizen in citizens:
 		var builder := citizen as Node3D
-		if _delivery_citizen_ids.has(builder.citizen_id) or _construction_worker_ids.has(builder.citizen_id):
+		if _delivery_citizen_ids.has(builder.citizen_id) or _construction_worker_ids.has(builder.citizen_id) or builder.task_type == "CONSTRUCTION_BUILD":
 			continue
 		var path: Array[Vector3] = navigation.path_between(builder.global_position, target)
 		if not path.is_empty():
@@ -330,7 +374,7 @@ func _nearest_available_builders(target: Vector3, count: int) -> Array[Node3D]:
 func _create_visible_project() -> void:
 	_site_root = Node3D.new()
 	_site_root.name = "GrappleConstructionSite"
-	_site_root.position = SITE_POSITION
+	_site_root.position = site_position
 	scene_root.add_child(_site_root)
 	var blueprint := _add_box(_site_root, "BlueprintFootprint", Vector3(12.0, 0.08, 9.0), Vector3(0.0, 0.08, 0.0), Color("56aac1", 0.55))
 	var blueprint_material := blueprint.material_override as StandardMaterial3D
@@ -356,7 +400,9 @@ func _add_stockpile_visuals() -> void:
 	var depot := scene_root.get_node("Settlement/Depot") as Node3D
 	var stock := Node3D.new()
 	stock.name = "ConstructionStockpile"
-	stock.position = Vector3(0.0, 0.0, 5.8)
+	var depot_position := RoomDefinitionLoader.vector3_from(room_definition.landmarks.depot)
+	var pickup_offset := depot_pickup - depot_position
+	stock.position = Vector3(0.0, 0.0, clampf(pickup_offset.z, -7.0, 7.0))
 	depot.add_child(stock)
 	_add_box(stock, "WoodUnitOne", Vector3(3.8, 2.1, 2.6), Vector3(-5.0, 1.1, 0.0), Color("a77442"))
 	_add_box(stock, "WoodUnitTwo", Vector3(3.8, 2.1, 2.6), Vector3(-5.0, 3.3, 0.0), Color("bd8c4b"))

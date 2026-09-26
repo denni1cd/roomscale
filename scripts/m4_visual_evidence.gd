@@ -12,9 +12,11 @@ func _run() -> void:
 	await process_frame
 	await process_frame
 	var camera := scene.get_node("CameraRig/Camera") as Camera3D
-	var desk_pos: Vector2 = camera.unproject_position(Vector3(-58.0, 30.0, -52.0))
-	if not scene.select_surface_at_screen_position(desk_pos) or not scene.issue_reach_explore().accepted:
-		push_error("M4_EVIDENCE_FAIL: production desk selection/Reach failed")
+	var navigation := scene.get_node("SurfaceNavigation")
+	var target_surface: Dictionary = navigation.goal_surface()
+	var target_pos: Vector2 = camera.unproject_position(target_surface.anchor)
+	if not scene.select_surface_at_screen_position(target_pos) or not scene.issue_reach_explore().accepted:
+		push_error("M4_EVIDENCE_FAIL: production target-surface selection/Reach failed")
 		quit(1)
 		return
 	var coordinator := scene.get_node("TaskCoordinator")
@@ -68,7 +70,7 @@ func _run() -> void:
 			break
 	rig.set_view_mode(1)
 	rig.set_citizen_focus(null)
-	rig.target = construction.SITE_POSITION + Vector3(0.0, 4.0, 0.0)
+	rig.target = coordinator.get_construction_site() + Vector3(0.0, 4.0, 0.0)
 	rig.distance = 82.0
 	rig.tilt_degrees = 42.0
 	rig._apply_transform()

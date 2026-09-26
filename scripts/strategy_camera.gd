@@ -19,11 +19,31 @@ var _pan_dragging := false
 var _citizen_focus: Node3D
 var _citizen_focus_offset := Vector3(0.0, 0.25, 0.0)
 var _camera_transition_active := false
+var _room_focus := Vector3.ZERO
+var _settlement_focus := Vector3(0.0, 8.0, 22.0)
+var _room_width := 240.0
 
 
 func _ready() -> void:
 	_apply_transform()
 	set_view_mode(0)
+
+
+func configure_room(definition: Dictionary) -> void:
+	var dimensions: Array = definition.get("dimensions", [240.0, 180.0])
+	_room_width = float(dimensions[0])
+	var camera_data: Dictionary = definition.get("camera", {})
+	_room_focus = Vector3(float(camera_data.get("focus", [0.0, 0.0, 0.0])[0]), 0.0, float(camera_data.get("focus", [0.0, 0.0, 0.0])[2]))
+	var landmarks: Dictionary = definition.get("landmarks", {})
+	var average := Vector3.ZERO
+	var count := 0
+	for landmark in ["workshop", "depot", "housing", "work_area"]:
+		if landmarks.has(landmark):
+			average += Vector3(float(landmarks[landmark][0]), 0.0, float(landmarks[landmark][2]))
+			count += 1
+	if count > 0:
+		average /= float(count)
+		_settlement_focus = Vector3(average.x, 8.0, average.z)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -89,15 +109,15 @@ func set_view_mode(mode: int) -> void:
 	view_mode = clampi(mode, 0, 2)
 	match view_mode:
 		0: # Room
-			target = Vector3(0.0, 20.0, 0.0)
-			distance = 300.0
+			target = Vector3(_room_focus.x, 20.0, _room_focus.z)
+			distance = maxf(300.0, _room_width * 1.25)
 			tilt_degrees = 52.0
 		1: # Settlement: frame the room-scale work sites and walking floor together
-			target = Vector3(0.0, 8.0, 22.0)
-			distance = 132.0
+			target = _settlement_focus
+			distance = maxf(132.0, _room_width * 0.55)
 			tilt_degrees = 55.0
-		2: # Citizen: close detail scale beside the desk
-			target = Vector3(-5.0, 3.0, 53.0)
+		2: # Citizen: close detail scale for citizen inspection
+			target = _room_focus + Vector3(0.0, 3.0, 0.0)
 			distance = 11.0
 			tilt_degrees = 48.0
 			if is_instance_valid(_citizen_focus):
@@ -140,6 +160,17 @@ func set_citizen_focus(citizen: Node3D, focus_offset: Vector3 = Vector3(0.0, 0.2
 	if view_mode == 2 and is_instance_valid(_citizen_focus):
 		target = _citizen_focus.global_position + _citizen_focus_offset
 		_apply_transform()
+
+
+func focus_at(world_position: Vector3, desired_distance: float, desired_tilt: float = 52.0, desired_yaw: float = 0.0) -> void:
+	_citizen_focus = null
+	target = world_position
+	distance = clampf(desired_distance, MIN_DISTANCE, MAX_DISTANCE)
+	tilt_degrees = clampf(desired_tilt, MIN_TILT_DEGREES, MAX_TILT_DEGREES)
+	yaw = desired_yaw
+	position = target
+	_camera_transition_active = false
+	_apply_transform()
 
 
 func get_focused_citizen() -> Node3D:

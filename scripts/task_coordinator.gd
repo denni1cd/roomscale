@@ -1,103 +1,154 @@
 extends Node
-## Shared deterministic task queue. Task dictionaries retain each lifecycle state for inspection.
+## Generic citizen tasking, surface investigation, and traversal reuse.
+
+const RoomDefinitionLoader := preload("res://scripts/room_definition.gd")
 
 signal reach_goal_updated(status: Dictionary)
 signal task_board_updated(status: Dictionary)
 
 const MAX_HISTORY := 500
+const FLOOR_REGION := "FLOOR"
 
 var navigation: Node
 var surface_navigation: Node
 var construction_system: Node
+var room_definition: Dictionary = {}
 var tasks: Array[Dictionary] = []
 var _next_task_id := 1
 var _created_count := 0
 var _completed_count := 0
 var _failed_count := 0
-
+var _cancelled_count := 0
 var workshop_stations: Array[Vector3] = []
-var depot_station := Vector3(18.0, 0.0, 55.0)
-var housing_station := Vector3(-14.0, 0.0, 66.0)
-var work_area_station := Vector3(-3.0, 0.0, 77.0)
-var patrol_stations: Array[Vector3] = [
-	Vector3(-44.0, 0.0, 20.0), Vector3(42.0, 0.0, 22.0),
-	Vector3(42.0, 0.0, 78.0), Vector3(-45.0, 0.0, 79.0)
-]
+var depot_station := Vector3.ZERO
+var housing_station := Vector3.ZERO
+var work_area_station := Vector3.ZERO
+var patrol_stations: Array[Vector3] = []
+var _goal_region := ""
+var _goal_label := "elevated surface"
+var _goal_center := Vector3.ZERO
+var _construction_site := Vector3.ZERO
 var _reach_goal: Dictionary = {}
 var _traversal_goal: Dictionary = {}
-var _desk_arrivals := 0
-var _desk_explorations_completed := 0
+var _target_arrivals := 0
+var _target_explorations_completed := 0
 var _autonomous_reuse_count := 0
-var _desk_exploration_tasks: Array[int] = []
+var _surface_exploration_tasks: Array[int] = []
 var _traversal_task_ids: Array[int] = []
-var _desk_waypoints: Array[Vector3] = [
-	Vector3(-45.0, 30.0, -45.0), Vector3(-42.0, 30.0, -66.0),
-	Vector3(-70.0, 30.0, -68.0), Vector3(-73.0, 30.0, -43.0),
-	Vector3(-58.0, 30.0, -52.0),
-]
+
+
+func configure_room(definition: Dictionary) -> void:
+	room_definition = definition.duplicate(true)
+	var activities: Dictionary = room_definition.activity_stations
+	workshop_stations = _vectors(activities.workshop)
+	depot_station = RoomDefinitionLoader.vector3_from(room_definition.construction.depot_pickup)
+	housing_station = RoomDefinitionLoader.vector3_from(activities.housing)
+	work_area_station = RoomDefinitionLoader.vector3_from(activities.work_area)
+	patrol_stations = _vectors(activities.patrol)
+	if is_instance_valid(surface_navigation):
+		_set_goal_from_surface()
+	var derived: Dictionary = surface_navigation.derive_construction_site(navigation) if is_instance_valid(surface_navigation) else {}
+	if bool(derived.get("valid", false)):
+		_construction_site = derived.position
 
 
 func _ready() -> void:
-	workshop_stations = [Vector3(-20.0, 0.0, 55.0), Vector3(-8.0, 0.0, 55.0), Vector3(-14.0, 0.0, 57.0)]
+	_set_goal_from_surface()
+	var derived: Dictionary = surface_navigation.derive_construction_site(navigation) if is_instance_valid(surface_navigation) else {}
+	if bool(derived.get("valid", false)):
+		_construction_site = derived.position
+
+
+func _set_goal_from_surface() -> void:
+	if not is_instance_valid(surface_navigation):
+		return
+	_goal_region = String(surface_navigation.goal_surface_id)
+	var surface: Dictionary = surface_navigation.goal_surface()
+	_goal_label = String(surface.get("object_name", "elevated surface"))
+	_goal_center = surface.get("center", Vector3.ZERO)
 
 
 func seed_population(count: int) -> void:
 	for citizen_id in range(count):
 		_enqueue_for(citizen_id, 0)
-	# Keep a small reserve so the live board always exposes available work.
 	for offset in range(5):
 		_enqueue_for(offset, 1)
 
 
 func claim_for(citizen_id: int) -> Dictionary:
-	for index in range(tasks.size()):
-		if tasks[index].state == "available":
-			tasks[index].state = "reserved"
-			tasks[index].citizen_id = citizen_id
-			return tasks[index].duplicate(true)
+	for task in tasks:
+		if task.state == "available":
+			task.state = "reserved"
+			task.citizen_id = citizen_id
+			return task.duplicate(true)
 	return {}
 
 
 func activate_task(task_id: int) -> void:
-	for task in tasks:
-		if task.id == task_id and task.state == "reserved":
-			task.state = "active"
-			task.started_at = Time.get_ticks_msec()
-			return
+	var task := _find_task(task_id)
+	if not task.is_empty() and task.state == "reserved":
+		task.state = "active"
+		task.started_at = Time.get_ticks_msec()
 
 
 func complete_task(task_id: int) -> void:
-	for index in range(tasks.size()):
-		if tasks[index].id == task_id and (tasks[index].state == "active" or tasks[index].state == "reserved"):
-			var citizen_id: int = tasks[index].citizen_id
-			var cycle: int = tasks[index].cycle + 1
-			tasks[index].state = "complete"
-			tasks[index].finished_at = Time.get_ticks_msec()
-			_completed_count += 1
-			_trim_history()
-			_enqueue_for(citizen_id, cycle)
-			return
+	var task := _find_task(task_id)
+	if task.is_empty() or not task.state in ["active", "reserved"]:
+		return
+	var citizen_id := int(task.citizen_id)
+	var cycle := int(task.get("cycle", 0)) + 1
+	task.state = "complete"
+	task.finished_at = Time.get_ticks_msec()
+	_completed_count += 1
+	_trim_history()
+	_enqueue_for(citizen_id, cycle)
+	task_board_updated.emit(summary())
 
 
 func fail_task(task_id: int, reason: String) -> void:
-	for index in range(tasks.size()):
-		if tasks[index].id == task_id and (tasks[index].state == "active" or tasks[index].state == "reserved"):
-			var citizen_id: int = tasks[index].citizen_id
-			var cycle: int = tasks[index].cycle + 1
-			tasks[index].state = "failed"
-			tasks[index].failure_reason = reason
-			_failed_count += 1
-			_trim_history()
-			_enqueue_for(citizen_id, cycle)
-			return
+	var task := _find_task(task_id)
+	if task.is_empty() or not task.state in ["active", "reserved"]:
+		return
+	var citizen_id := int(task.citizen_id)
+	var cycle := int(task.get("cycle", 0)) + 1
+	task.state = "failed"
+	task.failure_reason = reason
+	task.finished_at = Time.get_ticks_msec()
+	_failed_count += 1
+	_trim_history()
+	_enqueue_for(citizen_id, cycle)
+	task_board_updated.emit(summary())
 
 
 func supersede_task(task_id: int, reason: String) -> void:
+	cancel_task(task_id, reason)
+
+
+func cancel_task(task_id: int, reason: String) -> bool:
+	var task := _find_task(task_id)
+	if task.is_empty() or not task.state in ["active", "reserved"]:
+		return false
+	task.state = "cancelled"
+	task.failure_reason = reason
+	task.finished_at = Time.get_ticks_msec()
+	_cancelled_count += 1
+	_trim_history()
+	task_board_updated.emit(summary())
+	return true
+
+
+func cancel_construction_stage(stage_index: int, keep_task_id: int = -1) -> void:
+	var release_ids: Array[int] = []
 	for task in tasks:
-		if task.id == task_id and (task.state == "active" or task.state == "reserved"):
-			task.state = "cancelled"
-			task.failure_reason = reason
-			return
+		if task.task_type == "CONSTRUCTION_BUILD" and int(task.get("stage", -1)) == stage_index and int(task.id) != keep_task_id and task.state in ["active", "reserved"]:
+			release_ids.append(int(task.id))
+	for task_id in release_ids:
+		var task := _find_task(task_id)
+		var citizen_id := int(task.citizen_id)
+		if cancel_task(task_id, "construction stage completed by another builder"):
+			var citizen := get_parent().get_node_or_null("Citizen%02d" % (citizen_id + 1))
+			if is_instance_valid(citizen):
+				citizen.cancel_task_and_resume(task_id)
 
 
 func create_construction_task(specification: Dictionary, citizen_id: int) -> Dictionary:
@@ -162,7 +213,7 @@ func advance_construction_work(task_id: int, citizen_id: int, delta: float) -> b
 	var worker := get_parent().get_node_or_null("Citizen%02d" % (citizen_id + 1)) as Node3D
 	if not is_instance_valid(worker) or worker.state != "WORK" or worker.global_position.distance_to(task.target) > 1.6:
 		return false
-	var result: bool = construction_system.perform_builder_work(int(task.stage), delta)
+	var result: bool = construction_system.perform_builder_work(int(task.stage), delta, task_id)
 	task.work_seconds = float(task.get("work_seconds", 0.0)) + delta
 	if result:
 		task.progress = 1.0
@@ -173,49 +224,49 @@ func advance_construction_work(task_id: int, citizen_id: int, delta: float) -> b
 
 
 func issue_reach_explore(surface_id: String, citizens: Array) -> Dictionary:
-	if surface_id != surface_navigation.DESK_REGION:
-		return {"accepted": false, "state": "REJECTED", "message": "Select the desk surface first."}
-	var route_request: Dictionary = surface_navigation.route_between(
-		surface_navigation.FLOOR_REGION, surface_id, Vector3(-58.0, 0.0, 0.0), Vector3(-58.0, 30.0, -52.0)
-	)
+	if not surface_navigation.regions.has(surface_id) or surface_id == FLOOR_REGION:
+		return {"accepted": false, "state": "REJECTED", "message": "Select an elevated surface first."}
+	_goal_region = surface_id
+	var surface: Dictionary = surface_navigation.regions[surface_id]
+	_goal_label = String(surface.get("object_name", "elevated surface"))
+	_goal_center = surface.get("center", Vector3.ZERO)
+	var route_request: Dictionary = surface_navigation.route_between(FLOOR_REGION, surface_id, Vector3.ZERO, _goal_center)
 	if route_request.reachable:
-		return {"accepted": true, "state": "REACHABLE", "message": "A route to the desk is available."}
-	var candidates: Array[Vector3] = surface_navigation.investigation_candidates()
+		return {"accepted": true, "state": "REACHABLE", "message": "A route to %s is available." % _goal_label}
+	var candidates: Array[Vector3] = surface_navigation.investigation_candidates_for(surface_id)
 	var options: Array[Dictionary] = []
+	var needed := mini(2, candidates.size())
 	for citizen in citizens:
-		var citizen_node := citizen as Node3D
-		if not is_instance_valid(citizen_node):
+		var node := citizen as Node3D
+		if not is_instance_valid(node):
 			continue
-		for candidate_index in range(candidates.size()):
-			var investigation_path: Array[Vector3] = surface_navigation.investigation_route(citizen_node.global_position, candidate_index)
-			if not investigation_path.is_empty():
-				options.append({
-					"citizen": citizen_node,
-					"candidate_index": candidate_index,
-					"path_length": _path_length(investigation_path),
-				})
+		for candidate_index in range(needed):
+			var route: Array[Vector3] = navigation.path_between(node.global_position, candidates[candidate_index])
+			if not route.is_empty():
+				options.append({"citizen": node, "candidate_index": candidate_index, "path_length": _path_length(route)})
 	options.sort_custom(func(left: Dictionary, right: Dictionary) -> bool: return float(left.path_length) < float(right.path_length))
-	var selected_citizens: Dictionary = {}
-	var selected_candidates: Dictionary = {}
+	var used_citizens: Dictionary = {}
+	var used_points: Dictionary = {}
 	var assignments: Array[Dictionary] = []
 	for option in options:
 		var explorer: Node3D = option.citizen
-		var candidate_index: int = option.candidate_index
-		if selected_citizens.has(explorer.get_instance_id()) or selected_candidates.has(candidate_index):
+		var candidate_index := int(option.candidate_index)
+		if used_citizens.has(explorer.get_instance_id()) or used_points.has(candidate_index):
 			continue
-		selected_citizens[explorer.get_instance_id()] = true
-		selected_candidates[candidate_index] = true
+		used_citizens[explorer.get_instance_id()] = true
+		used_points[candidate_index] = true
 		assignments.append({"citizen": explorer, "candidate_index": candidate_index})
-		if assignments.size() == candidates.size():
+		if assignments.size() == needed:
 			break
-	if assignments.size() < candidates.size():
-		return {"accepted": false, "state": "NO_INVESTIGATORS", "message": "No floor route reaches each investigation point."}
+	if needed < 2 or assignments.size() < needed:
+		return {"accepted": false, "state": "NO_INVESTIGATORS", "message": "No floor route reaches each generated investigation point."}
 	_reach_goal = {
 		"accepted": true,
 		"surface": surface_id,
+		"label": _goal_label,
 		"state": "EXPLORERS_EN_ROUTE",
 		"route_request": route_request.duplicate(true),
-		"message": "Desk is selected. Explorers are approaching the desk edge to investigate the missing route.",
+		"message": "%s is selected. Explorers are approaching its edge to investigate the missing route." % _goal_label,
 		"expected_explorers": assignments.size(),
 		"arrived_explorers": 0,
 		"arrived_citizens": [],
@@ -224,33 +275,31 @@ func issue_reach_explore(surface_id: String, citizens: Array) -> Dictionary:
 	for assignment in assignments:
 		var explorer: Node3D = assignment.citizen
 		var candidate: Vector3 = candidates[int(assignment.candidate_index)]
-		var task := _create_exploration_task(explorer.citizen_id, candidate, surface_id)
+		var task := _create_investigation_task(explorer.citizen_id, candidate, surface_id)
 		explorer.assign_player_goal_task(task)
 	reach_goal_updated.emit(get_reach_goal_status())
 	return get_reach_goal_status()
 
 
 func report_investigation_arrival(citizen_id: int, task_id: int, position: Vector3) -> void:
-	if _reach_goal.is_empty() or _reach_goal.state != "EXPLORERS_EN_ROUTE":
-		return
-	if _reach_goal.arrived_citizens.has(citizen_id):
+	if _reach_goal.is_empty() or _reach_goal.state != "EXPLORERS_EN_ROUTE" or _reach_goal.arrived_citizens.has(citizen_id):
 		return
 	if navigation.is_obstacle_position(position):
-		push_error("Investigator %d reached a blocked floor point: %s" % [citizen_id, position])
+		push_error("Investigator %d reached blocked room geometry: %s" % [citizen_id, position])
 		return
-	var requested_route: Dictionary = surface_navigation.route_between(
-		surface_navigation.FLOOR_REGION, String(_reach_goal.surface), position, Vector3(-58.0, 30.0, -52.0)
-	)
+	var surface_id := String(_reach_goal.surface)
+	var surface: Dictionary = surface_navigation.regions[surface_id]
+	var requested_route: Dictionary = surface_navigation.route_between(FLOOR_REGION, surface_id, position, surface.anchor)
 	if requested_route.reachable:
 		return
 	_reach_goal.arrived_citizens.append(citizen_id)
 	_reach_goal.arrived_explorers = _reach_goal.arrived_citizens.size()
 	if _reach_goal.arrived_explorers >= _reach_goal.expected_explorers:
 		_reach_goal.state = "BARRIER_CONFIRMED"
-		_reach_goal.message = "Barrier recognized: floor explorers reached the desk edge, but no navigation link reaches the elevated desk."
+		_reach_goal.message = "Barrier recognized: floor explorers reached %s, but no navigation link reaches its elevated surface." % String(_reach_goal.label)
 		_reach_goal.barrier = {
-			"from": surface_navigation.FLOOR_REGION,
-			"to": String(_reach_goal.surface),
+			"from": FLOOR_REGION,
+			"to": surface_id,
 			"reason": requested_route.reason,
 			"recognized_after_approach": true,
 			"investigated_by": _reach_goal.arrived_citizens.duplicate(),
@@ -263,43 +312,41 @@ func get_reach_goal_status() -> Dictionary:
 	return _reach_goal.duplicate(true)
 
 
+func get_construction_site() -> Vector3:
+	return _construction_site
+
+
 func create_traversal_task(citizen: Node3D, route: Array[Vector3]) -> Dictionary:
-	if not surface_navigation.has_connection("FLOOR", "DESK") or route.size() < 2:
+	if not surface_navigation.has_connection(FLOOR_REGION, _goal_region) or route.size() < 2:
 		return {}
-	var task_id := _next_task_id
-	_next_task_id += 1
-	_created_count += 1
-	var task := {
-		"id": task_id,
-		"task_type": "GRAPPLE_TRAVERSAL",
+	var task := _create_task_record({
+		"task_type": "SURFACE_TRAVERSAL",
 		"state": "reserved",
 		"citizen_id": citizen.citizen_id,
 		"owner_hint": citizen.citizen_id,
 		"cycle": 0,
 		"source": route[0],
-		"target": route[route.size() - 1],
-		"target_region": "DESK",
+		"target": route.back(),
+		"target_region": _goal_region,
 		"path": route.duplicate(),
 		"route_length": _path_length(route),
 		"start_travelled_distance": citizen.travelled_distance,
 		"progress": 0.0,
-		"created_at": Time.get_ticks_msec(),
-	}
-	tasks.append(task)
-	_traversal_task_ids.append(task_id)
-	_traversal_goal = {"state": "TRAVERSE_IN_PROGRESS", "citizen_id": citizen.citizen_id, "task_id": task_id, "expected_route_length": task.route_length}
-	return task.duplicate(true)
+	})
+	_traversal_task_ids.append(int(task.id))
+	_traversal_goal = {"state": "TRAVERSE_IN_PROGRESS", "citizen_id": citizen.citizen_id, "task_id": task.id, "expected_route_length": task.route_length, "target_region": _goal_region}
+	return task
 
 
 func report_traversal_arrival(citizen: Node3D, task_id: int) -> bool:
 	var task := _find_task(task_id)
-	if task.is_empty() or task.task_type != "GRAPPLE_TRAVERSAL" or task.state != "active":
+	if task.is_empty() or task.task_type != "SURFACE_TRAVERSAL" or task.state != "active":
 		return false
-	if int(task.citizen_id) != citizen.citizen_id or String(task.target_region) != "DESK":
+	var region := String(task.target_region)
+	var required_height := float(surface_navigation.regions[region].height)
+	if int(task.citizen_id) != citizen.citizen_id or citizen.global_position.y < required_height - 1.0 or citizen.global_position.distance_to(task.target) > 1.7:
 		return false
-	if citizen.global_position.y < 29.0 or citizen.global_position.distance_to(task.target) > 1.7:
-		return false
-	if not surface_navigation.has_connection("FLOOR", "DESK"):
+	if not surface_navigation.has_connection(FLOOR_REGION, region):
 		return false
 	var walked: float = citizen.travelled_distance - float(task.start_travelled_distance)
 	if walked < float(task.route_length) * 0.9:
@@ -309,47 +356,44 @@ func report_traversal_arrival(citizen: Node3D, task_id: int) -> bool:
 	task.actual_travelled_distance = walked
 	task.finished_at = Time.get_ticks_msec()
 	_completed_count += 1
-	_traversal_goal = {
-		"state": "TRAVERSAL_COMPLETE",
-		"citizen_id": citizen.citizen_id,
-		"task_id": task_id,
-		"target": citizen.global_position,
-		"target_region": "DESK",
-		"route_length": float(task.route_length),
-		"actual_travelled_distance": walked,
-	}
-	_desk_arrivals += 1
-	var explore_task := _create_desk_exploration_task(citizen, task_id)
-	citizen.assign_desk_exploration_task(explore_task)
+	_trim_history()
+	_traversal_goal = {"state": "TRAVERSAL_COMPLETE", "citizen_id": citizen.citizen_id, "task_id": task_id, "target": citizen.global_position, "target_region": region, "route_length": float(task.route_length), "actual_travelled_distance": walked}
+	_target_arrivals += 1
+	var exploration_task := _create_surface_exploration_task(citizen, task_id, region)
+	citizen.assign_surface_exploration_task(exploration_task)
 	task_board_updated.emit(summary())
 	return true
 
 
-func _create_desk_exploration_task(citizen: Node3D, traversal_id: int) -> Dictionary:
-	var path: Array[Vector3] = [citizen.global_position]
-	for waypoint in _desk_waypoints:
-		path.append(waypoint)
-	var task_id := _next_task_id
-	_next_task_id += 1
-	_created_count += 1
-	var task := {
-		"id": task_id, "task_type": "DESK_EXPLORATION", "state": "reserved",
-		"citizen_id": citizen.citizen_id, "owner_hint": citizen.citizen_id, "cycle": 0,
-		"source": citizen.global_position, "target": _desk_waypoints[_desk_waypoints.size() - 1],
-		"target_region": "DESK", "path": path, "route_length": _path_length(path),
-		"start_travelled_distance": citizen.travelled_distance, "traversal_task_id": traversal_id,
-		"progress": 0.0, "created_at": Time.get_ticks_msec(), "work_seconds": 0.0,
-	}
-	tasks.append(task)
-	_desk_exploration_tasks.append(task_id)
-	return task.duplicate(true)
+func _create_surface_exploration_task(citizen: Node3D, traversal_id: int, region: String) -> Dictionary:
+	var path: Array[Vector3] = surface_navigation.exploration_route(citizen.global_position, region)
+	var task := _create_task_record({
+		"task_type": "SURFACE_EXPLORATION",
+		"state": "reserved",
+		"citizen_id": citizen.citizen_id,
+		"owner_hint": citizen.citizen_id,
+		"cycle": 0,
+		"source": citizen.global_position,
+		"target": path.back() if not path.is_empty() else citizen.global_position,
+		"target_region": region,
+		"path": path,
+		"route_length": _path_length(path),
+		"start_travelled_distance": citizen.travelled_distance,
+		"traversal_task_id": traversal_id,
+		"progress": 0.0,
+		"work_seconds": 0.0,
+	})
+	_surface_exploration_tasks.append(int(task.id))
+	return task
 
 
-func begin_desk_exploration(citizen: Node3D, task_id: int) -> bool:
+func begin_surface_exploration(citizen: Node3D, task_id: int) -> bool:
 	var task := _find_task(task_id)
-	if task.is_empty() or task.task_type != "DESK_EXPLORATION" or task.state != "active":
+	if task.is_empty() or task.task_type != "SURFACE_EXPLORATION" or task.state != "active":
 		return false
-	if int(task.citizen_id) != citizen.citizen_id or not surface_navigation.has_connection("FLOOR", "DESK") or citizen.global_position.y < 29.0:
+	var region := String(task.target_region)
+	var height := float(surface_navigation.regions[region].height)
+	if int(task.citizen_id) != citizen.citizen_id or citizen.global_position.y < height - 1.0:
 		return false
 	var walked: float = citizen.travelled_distance - float(task.start_travelled_distance)
 	if walked < float(task.route_length) * 0.9 or citizen.global_position.distance_to(task.target) > 1.7:
@@ -360,13 +404,15 @@ func begin_desk_exploration(citizen: Node3D, task_id: int) -> bool:
 	return true
 
 
-func advance_desk_exploration(citizen: Node3D, task_id: int, delta: float) -> bool:
+func advance_surface_exploration(citizen: Node3D, task_id: int, delta: float) -> bool:
 	var task := _find_task(task_id)
-	if task.is_empty() or task.task_type != "DESK_EXPLORATION" or task.state != "active":
+	if task.is_empty() or task.task_type != "SURFACE_EXPLORATION" or task.state != "active":
 		return false
-	if int(task.citizen_id) != citizen.citizen_id or citizen.state != "WORK" or citizen.global_position.y < 29.0:
+	var region := String(task.target_region)
+	var height := float(surface_navigation.regions[region].height)
+	if int(task.citizen_id) != citizen.citizen_id or citizen.state != "WORK" or citizen.global_position.y < height - 1.0:
 		return false
-	if not surface_navigation.has_connection("FLOOR", "DESK") or construction_system == null or not construction_system.status().cable_deployed:
+	if not surface_navigation.has_connection(FLOOR_REGION, region) or construction_system == null or not construction_system.status().cable_deployed:
 		return false
 	task.work_seconds = float(task.work_seconds) + delta
 	task.progress = minf(0.99, 0.5 + float(task.work_seconds) / 4.0 * 0.49)
@@ -375,33 +421,34 @@ func advance_desk_exploration(citizen: Node3D, task_id: int, delta: float) -> bo
 	task.state = "complete"
 	task.finished_at = Time.get_ticks_msec()
 	task.progress = 1.0
-	_desk_explorations_completed += 1
+	_target_explorations_completed += 1
 	_completed_count += 1
+	_trim_history()
 	if _autonomous_reuse_count < 2:
 		_dispatch_next_route_reuse()
 	else:
-		_traversal_goal["state"] = "M6_AUTONOMY_COMPLETE"
-		_traversal_goal["desk_explorations_completed"] = _desk_explorations_completed
+		_traversal_goal["state"] = "AUTONOMOUS_REUSE_COMPLETE"
+		_traversal_goal["target_explorations_completed"] = _target_explorations_completed
 	task_board_updated.emit(summary())
 	return true
 
 
 func _dispatch_next_route_reuse() -> void:
-	if not surface_navigation.has_connection("FLOOR", "DESK") or construction_system == null or not construction_system.status().cable_deployed:
+	if not surface_navigation.has_connection(FLOOR_REGION, _goal_region) or construction_system == null or not construction_system.status().cable_deployed:
 		return
 	var citizens: Array[Node3D] = []
 	for child in get_parent().get_children():
 		if child is Node3D and child.name.begins_with("Citizen"):
 			var candidate := child as Node3D
-			if candidate.task_type == "GRAPPLE_TRAVERSAL" or candidate.task_type == "DESK_EXPLORATION" or candidate.state == "ON_DESK":
+			if candidate.task_type == "SURFACE_TRAVERSAL" or candidate.task_type == "SURFACE_EXPLORATION" or candidate.state == "ON_SURFACE":
 				continue
 			citizens.append(candidate)
 	if citizens.is_empty():
 		return
-	citizens.sort_custom(func(a: Node3D, b: Node3D) -> bool:
-		return a.global_position.distance_to(Vector3(-14.0, 0.0, -52.0)) < b.global_position.distance_to(Vector3(-14.0, 0.0, -52.0)))
+	citizens.sort_custom(func(a: Node3D, b: Node3D) -> bool: return a.global_position.distance_to(_construction_site) < b.global_position.distance_to(_construction_site))
 	var traveler := citizens[0]
-	var route_request: Dictionary = surface_navigation.route_between("FLOOR", "DESK", traveler.global_position, Vector3(-58.0, 30.0, -52.0))
+	var surface: Dictionary = surface_navigation.regions[_goal_region]
+	var route_request: Dictionary = surface_navigation.route_between(FLOOR_REGION, _goal_region, traveler.global_position, surface.anchor)
 	if not route_request.reachable:
 		return
 	var task := create_traversal_task(traveler, route_request.path)
@@ -418,14 +465,14 @@ func _dispatch_next_route_reuse() -> void:
 
 func get_m6_status() -> Dictionary:
 	var construction_status: Dictionary = construction_system.status() if construction_system != null else {}
-	var infrastructure_ok: bool = not construction_status.is_empty() and bool(construction_status.get("cable_deployed", false)) and surface_navigation.has_connection("FLOOR", "DESK")
+	var infrastructure_ok: bool = not construction_status.is_empty() and bool(construction_status.get("cable_deployed", false)) and surface_navigation.has_connection(FLOOR_REGION, _goal_region)
 	return {
-		"desk_arrivals": _desk_arrivals,
-		"desk_explorations_completed": _desk_explorations_completed,
+		"target_arrivals": _target_arrivals,
+		"target_explorations_completed": _target_explorations_completed,
 		"autonomous_reuses_assigned": _autonomous_reuse_count,
 		"infrastructure_operational": infrastructure_ok,
 		"traversal_task_ids": _traversal_task_ids.duplicate(),
-		"desk_exploration_task_ids": _desk_exploration_tasks.duplicate(),
+		"surface_exploration_task_ids": _surface_exploration_tasks.duplicate(),
 	}
 
 
@@ -433,13 +480,9 @@ func get_traversal_goal_status() -> Dictionary:
 	return _traversal_goal.duplicate(true)
 
 
-func _create_exploration_task(citizen_id: int, target: Vector3, surface_id: String) -> Dictionary:
-	var task_id := _next_task_id
-	_next_task_id += 1
-	_created_count += 1
-	var task := {
-		"id": task_id,
-		"task_type": "DESK_INVESTIGATION",
+func _create_investigation_task(citizen_id: int, target: Vector3, surface_id: String) -> Dictionary:
+	return _create_task_record({
+		"task_type": "SURFACE_INVESTIGATION",
 		"state": "reserved",
 		"citizen_id": citizen_id,
 		"owner_hint": citizen_id,
@@ -448,8 +491,15 @@ func _create_exploration_task(citizen_id: int, target: Vector3, surface_id: Stri
 		"target": target,
 		"target_region": surface_id,
 		"progress": 0.0,
-		"created_at": Time.get_ticks_msec(),
-	}
+	})
+
+
+func _create_task_record(specification: Dictionary) -> Dictionary:
+	var task := specification.duplicate(true)
+	task["id"] = _next_task_id
+	_next_task_id += 1
+	_created_count += 1
+	task["created_at"] = Time.get_ticks_msec()
 	tasks.append(task)
 	_trim_history()
 	return task.duplicate(true)
@@ -468,6 +518,7 @@ func summary() -> Dictionary:
 	var active := 0
 	var complete := 0
 	var failed := 0
+	var cancelled := 0
 	for task in tasks:
 		match String(task.state):
 			"available": available += 1
@@ -475,23 +526,13 @@ func summary() -> Dictionary:
 			"active": active += 1
 			"complete": complete += 1
 			"failed": failed += 1
-	return {
-		"available": available,
-		"reserved": reserved,
-		"active": active,
-		"complete": complete,
-		"failed": failed,
-		"completed_total": _completed_count,
-		"failed_total": _failed_count,
-		"created_total": _created_count,
-	}
+			"cancelled": cancelled += 1
+	return {"available": available, "reserved": reserved, "active": active, "complete": complete, "failed": failed, "cancelled": cancelled, "retained_tasks": tasks.size(), "completed_total": _completed_count, "failed_total": _failed_count, "cancelled_total": _cancelled_count, "created_total": _created_count}
 
 
 func get_task(task_id: int) -> Dictionary:
-	for task in tasks:
-		if task.id == task_id:
-			return task.duplicate(true)
-	return {}
+	var task := _find_task(task_id)
+	return task.duplicate(true) if not task.is_empty() else {}
 
 
 func _find_task(task_id: int) -> Dictionary:
@@ -523,27 +564,23 @@ func _enqueue_for(citizen_id: int, cycle: int) -> void:
 		_:
 			kind = "FLOOR_PATROL"
 			target = patrol_stations[(citizen_id + cycle) % patrol_stations.size()]
-	var task_id := _next_task_id
-	_next_task_id += 1
-	_created_count += 1
-	tasks.append({
-		"id": task_id,
-		"task_type": kind,
-		"state": "available",
-		"citizen_id": -1,
-		"owner_hint": citizen_id,
-		"cycle": cycle,
-		"source": source,
-		"target": target,
-		"progress": 0.0,
-		"created_at": Time.get_ticks_msec(),
-	})
-	_trim_history()
+	_create_task_record({"task_type": kind, "state": "available", "citizen_id": -1, "owner_hint": citizen_id, "cycle": cycle, "source": source, "target": target, "progress": 0.0})
 
 
 func _trim_history() -> void:
 	while tasks.size() > MAX_HISTORY:
-		if tasks[0].state == "complete" or tasks[0].state == "failed":
-			tasks.pop_front()
-		else:
+		var removable_index := -1
+		for index in range(tasks.size()):
+			if tasks[index].state in ["complete", "failed", "cancelled"]:
+				removable_index = index
+				break
+		if removable_index < 0:
 			break
+		tasks.remove_at(removable_index)
+
+
+func _vectors(values: Array) -> Array[Vector3]:
+	var result: Array[Vector3] = []
+	for value in values:
+		result.append(RoomDefinitionLoader.vector3_from(value))
+	return result
