@@ -9,7 +9,7 @@ This is the current disposition against the 48 criteria in `RoomScale_POC_2_Proj
 | AC-3 — Repository Documentation | PASS | `README.md`, `docs/RoomDefinition_Contract.md`, skill references, this matrix, and `m9-status.md`. |
 | AC-4 — Flexible Photo Count | DOCUMENTED | Skill accepts any number of same-room photographs; no separate variable-count run was performed. |
 | AC-5 — Ordinary Photo Input | PASS | The canonical workflow used ordinary room photographs in `photo_holder/`; no specialized capture hardware was used. |
-| AC-6 — Optional Scale Reference | DOCUMENTED | Skill permits known measurements but does not require them; both independent reconstructions disclosed approximate scale. |
+| AC-6 — Optional Scale Reference | PASS | Canonical and fresh-Luna reconstruction notes state no known dimension or photo scale was supplied; both produce approximate dimensions from ordinary object proportions (`candidates/primary/attempt-1/reconstruction-note.md`, `fresh-luna-v2/attempt_1/reconstruction-note.md`). |
 | AC-7 — Coverage Awareness | PASS | Primary and fresh-Luna reconstruction notes identify occlusion, perimeter ambiguity, estimates, and limits. |
 | AC-8 — Actionable Additional-Photo Request | DOCUMENTED | The skill requests a specific additional view only when a material ambiguity cannot be resolved; canonical views were sufficient, so a request was not exercised. |
 | AC-9 — Same-Room Reconciliation | PASS | Four-view primary reconstruction note treats the photos as one physical room. |
