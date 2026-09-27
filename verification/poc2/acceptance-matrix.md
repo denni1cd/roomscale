@@ -5,13 +5,13 @@ This is the current disposition against the 48 criteria in `RoomScale_POC_2_Proj
 | Criterion | Disposition | Evidence / limit |
 | --- | --- | --- |
 | AC-1 — Reconstruction Skill Exists | PASS | `skills/roomscale-room-reconstruction/SKILL.md`; `m1-status.md`. |
-| AC-2 — Skill Is Self-Contained | PARTIAL | A fresh reader reviewed the M1 skeleton (`m1-fresh-reader-review.md`) and an independent fresh-Luna run produced a valid candidate (`m7-status.md`); the original reader review predates the v2 contract expansion. |
+| AC-2 — Skill Is Self-Contained | PASS | A new Luna context used only the current packaged skill/references, two canonical photos, and the validator interface; after validator-directed repair it produced a valid candidate. See `fresh-luna-final/final-report.md` and `m7-status.md`. |
 | AC-3 — Repository Documentation | PASS | `README.md`, `docs/RoomDefinition_Contract.md`, skill references, this matrix, and `m9-status.md`. |
-| AC-4 — Flexible Photo Count | DOCUMENTED | Skill accepts any number of same-room photographs; no separate variable-count run was performed. |
+| AC-4 — Flexible Photo Count | PASS | The current-skill fresh-context run used exactly two of the four canonical photos and produced a structurally/runtime-navigation-valid candidate after repair; see `fresh-luna-final/final-report.md`. |
 | AC-5 — Ordinary Photo Input | PASS | The canonical workflow used ordinary room photographs in `photo_holder/`; no specialized capture hardware was used. |
-| AC-6 — Optional Scale Reference | PASS | Canonical and fresh-Luna reconstruction notes state no known dimension or photo scale was supplied; both produce approximate dimensions from ordinary object proportions (`candidates/primary/attempt-1/reconstruction-note.md`, `fresh-luna-v2/attempt_1/reconstruction-note.md`). |
+| AC-6 — Optional Scale Reference | PASS | The canonical and final current-skill fresh-Luna runs state that no known dimension or photo scale was supplied; both produce approximate dimensions from ordinary object proportions (`candidates/primary/attempt-1/reconstruction-note.md`, `fresh-luna-final/final-report.md`). |
 | AC-7 — Coverage Awareness | PASS | Primary and fresh-Luna reconstruction notes identify occlusion, perimeter ambiguity, estimates, and limits. |
-| AC-8 — Actionable Additional-Photo Request | DOCUMENTED | The skill requests a specific additional view only when a material ambiguity cannot be resolved; canonical views were sufficient, so a request was not exercised. |
+| AC-8 — Actionable Additional-Photo Request | DOCUMENTED | A fresh one-photo check found enough evidence for a recognizable playable approximation, disclosed the unseen shell as uncertain, and did not request another view. The positive request branch remains unexercised; see `ac8-photo-request-test/`. |
 | AC-9 — Same-Room Reconciliation | PASS | Four-view primary reconstruction note treats the photos as one physical room. |
 | AC-10 — Cross-View Object Association | PASS | Primary note associates repeated windows, desk, stool, hammock, and doors rather than duplicating them. |
 | AC-11 — Cross-View Consistency | PASS | Primary candidate and note encode a single layout hypothesis and disclose uncertain wall assignments and dimensions. |
@@ -49,10 +49,10 @@ This is the current disposition against the 48 criteria in `RoomScale_POC_2_Proj
 | AC-43 — Canonical Photo Test | PASS | The four photos in `photo_holder/` are identified as the canonical input in M3 evidence. |
 | AC-44 — Canonical Room Recognizable | PASS | Reviewer-approved whole-room view; ceiling color is present in the data but not clearly shown by the saved open-top view. |
 | AC-45 — Canonical Room Playable | PASS | Final candidate completes the production loop without candidate-specific gameplay source changes. |
-| AC-46 — Fresh-Context Reproducibility | PASS | Independent fresh-Luna candidate passes after documented repairs; this is workflow/validation evidence, not gameplay evidence. |
+| AC-46 — Fresh-Context Reproducibility | PASS | A fresh Luna context used the current skill with only two canonical photos and passed structural/runtime-navigation validation after one repair; see `fresh-luna-final/final-report.md`. This is not gameplay evidence. |
 | AC-47 — Secondary AI Usability | PASS | Distinct Astra context produced a candidate that passed after two repairs; no gameplay claim for that room. |
-| AC-48 — Durable Repository Workflow | DOCUMENTED | README now documents photo input, candidate location, validator/repair loop, and production run; a clean clone/new-room trial was not performed. |
+| AC-48 — Durable Repository Workflow | PARTIAL | A clean local clone contained the skill, README workflow, and validator; the fast suite passed and the two-photo candidate validated after user-supplied photos/candidate were added (`clean-clone-fast.log`, `clean-clone-two-photo-validation.log`). The test used the canonical room, not a different room. |
 
 ## Overall disposition
 
-The canonical candidate passes structural/runtime-navigation validation and the complete production gameplay loop. The visual reconstruction is recognizable at whole-room scale, but the small citizen/cable are difficult to resolve in gameplay screenshots, and the saved open-top view does not clearly demonstrate the turquoise ceiling plane. AC-2 and AC-48 retain documented limitations above. Root review is complete; the Aphrael Work handoff remains pending, and this matrix does not declare the overall POC complete.
+The canonical candidate passes structural/runtime-navigation validation and the complete production gameplay loop. The visual reconstruction is recognizable at whole-room scale, but the small citizen/cable are difficult to resolve in gameplay screenshots, and the saved open-top view does not clearly demonstrate the turquoise ceiling plane. AC-8 remains documented-only and AC-48 remains partial. Root review is complete; the Aphrael Work handoff remains pending, and this matrix does not declare the overall POC complete.

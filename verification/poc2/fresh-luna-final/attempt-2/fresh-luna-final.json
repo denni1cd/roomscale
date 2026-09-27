@@ -1,0 +1,50 @@
+{
+  "schema_version": 2,
+  "id": "fresh-luna-final",
+  "display_name": "Green Room with Hammock and Computer Desk",
+  "dimensions": [180, 168],
+  "floor": {"center": [0, 0, 0], "dimensions": [180, 168], "height": 0},
+  "wall_height": 96,
+  "room_shell": {
+    "wall_thickness": 2,
+    "baseboard_height": 4,
+    "baseboard_appearance": {"base_color": "805a37", "material": "wood"},
+    "crown_molding_height": 4,
+    "crown_molding_appearance": {"base_color": "765034", "material": "wood"},
+    "floor_appearance": {"base_color": "858178", "material": "fabric"},
+    "ceiling_appearance": {"base_color": "145753", "material": "paint"},
+    "walls": [
+      {"id": "north-wall", "side": "north", "appearance": {"base_color": "0e5748", "material": "paint"}, "openings": [
+        {"id": "north-window", "kind": "window", "offset": 62, "width": 56, "bottom": 32, "height": 48, "appearance": {"base_color": "9db7bb", "accent_color": "6d543a", "material": "glass", "transparency": 0.28}}
+      ]},
+      {"id": "west-wall", "side": "west", "appearance": {"base_color": "0e5748", "material": "paint"}, "openings": [
+        {"id": "west-window", "kind": "window", "offset": 24, "width": 56, "bottom": 32, "height": 48, "appearance": {"base_color": "9db7bb", "accent_color": "6d543a", "material": "glass", "transparency": 0.28}}
+      ]},
+      {"id": "south-wall", "side": "south", "appearance": {"base_color": "0e5748", "material": "paint"}, "openings": [
+        {"id": "south-french-doors", "kind": "door", "offset": 108, "width": 64, "bottom": 0, "height": 80, "appearance": {"base_color": "a78254", "accent_color": "c9ad83", "material": "wood"}}
+      ]},
+      {"id": "east-wall", "side": "east", "appearance": {"base_color": "0e5748", "material": "paint"}, "openings": []}
+    ]
+  },
+  "objects": [
+    {"id": "hammock-and-stand", "name": "striped fabric hammock on a dark support stand", "kind": "hammock", "position": [-20, 0, -50], "dimensions": [110, 40, 24], "rotation_degrees": -15, "blocks_navigation": true, "appearance": {"archetype": "simple", "base_color": "665354", "accent_color": "b5a4a0", "material": "fabric"}},
+    {"id": "carpet-mat", "name": "dark mat beneath the hammock", "kind": "rug", "position": [-18, 0, -28], "dimensions": [72, 1, 38], "blocks_navigation": false, "appearance": {"archetype": "rug", "base_color": "343735", "material": "fabric"}},
+    {"id": "clothes-and-toys", "name": "small bright clothes and toy pile", "kind": "clothing and toys", "position": [-28, 0, -24], "dimensions": [38, 10, 18], "blocks_navigation": false, "appearance": {"archetype": "box", "base_color": "435b45", "accent_color": "b44c65", "material": "fabric"}},
+    {"id": "computer-desk", "name": "wide wooden computer desk", "kind": "desk", "position": [-35, 0, 46], "dimensions": [78, 30, 28], "blocks_navigation": true, "appearance": {"archetype": "table", "base_color": "493827", "accent_color": "75583d", "material": "wood"}, "surface": {"region_id": "COMPUTER_DESK_TOP", "height": 30, "anchor": [-35, 30, 46]}},
+    {"id": "left-computer-monitor", "name": "left computer monitor", "kind": "computer monitor", "position": [-48, 30, 46], "dimensions": [26, 18, 4], "blocks_navigation": false, "appearance": {"archetype": "box", "base_color": "141817", "material": "plastic"}},
+    {"id": "right-computer-monitor", "name": "right computer monitor", "kind": "computer monitor", "position": [-20, 30, 46], "dimensions": [23, 16, 4], "blocks_navigation": false, "appearance": {"archetype": "box", "base_color": "171b1a", "material": "plastic"}},
+    {"id": "desk-chair", "name": "dark office chair with blue accents", "kind": "office chair", "position": [-35, 0, 16], "dimensions": [26, 38, 26], "blocks_navigation": true, "appearance": {"archetype": "chair", "base_color": "202826", "accent_color": "17487c", "material": "fabric"}},
+    {"id": "glass-front-cabinet", "name": "tall pine display cabinet", "kind": "display cabinet", "position": [25, 0, 62], "dimensions": [40, 76, 22], "blocks_navigation": true, "appearance": {"archetype": "cabinet", "base_color": "a47745", "accent_color": "d1b17d", "material": "wood"}},
+    {"id": "storage-tote", "name": "gray plastic storage tote", "kind": "storage bin", "position": [17, 0, 38], "dimensions": [26, 16, 20], "blocks_navigation": true, "appearance": {"archetype": "box_with_lid", "base_color": "929996", "material": "plastic"}},
+    {"id": "green-floor-seat", "name": "bright green low saucer seat on a black ring base", "kind": "low chair", "position": [34, 0, 5], "dimensions": [34, 12, 32], "blocks_navigation": true, "appearance": {"archetype": "chair", "base_color": "54e653", "accent_color": "202625", "material": "plastic"}},
+    {"id": "floor-lamp", "name": "tall floor lamp with a pale bowl shade", "kind": "floor lamp", "position": [70, 0, -42], "dimensions": [12, 64, 12], "blocks_navigation": true, "appearance": {"archetype": "cylinder", "base_color": "393d3a", "accent_color": "ded6bb", "material": "metal"}},
+    {"id": "large-wall-art", "name": "large fantasy-themed wall picture above the desk", "kind": "wall art", "position": [-50, 58, 82], "dimensions": [52, 28, 1], "blocks_navigation": false, "appearance": {"archetype": "simple", "base_color": "786448", "accent_color": "b28c57", "material": "other"}},
+    {"id": "map-poster", "name": "framed colorful map poster on the window-side wall", "kind": "map poster", "position": [88.5, 40, -18], "dimensions": [1, 30, 22], "blocks_navigation": false, "appearance": {"archetype": "simple", "base_color": "337c83", "accent_color": "d7bd79", "material": "other"}}
+  ],
+  "target_surface_id": "COMPUTER_DESK_TOP",
+  "construction": {"depot_pickup": [63, 0, -20]},
+  "landmarks": {"workshop": [-70, 0, 2], "depot": [64, 0, -20], "housing": [68, 0, 40], "work_area": [0, 0, 28]},
+  "activity_stations": {"workshop": [[-70, 0, 2]], "housing": [68, 0, 40], "work_area": [0, 0, 28], "patrol": [[-82, 0, 10], [75, 0, 12], [72, 0, 68], [-78, 0, 54]]},
+  "spawn": {"center": [64, 0, -20], "dimensions": [10, 0, 10]},
+  "camera": {"yaw_degrees": 32, "focus": [0, 32, 0]}
+}
