@@ -9,6 +9,7 @@ const CitizenAgentController := preload("res://scripts/citizen_agent.gd")
 const ConstructionSystemController := preload("res://scripts/construction_system.gd")
 const RoomDefinitionLoader := preload("res://scripts/room_definition.gd")
 const CITIZEN_HEIGHT_INCHES := 0.5
+const CROWN_INTERIOR_PROJECTION := 0.75
 
 var ROOM_WIDTH := 240.0
 var ROOM_DEPTH := 180.0
@@ -31,6 +32,8 @@ var _population_label: Label
 var _activity_label: Label
 var _focus_label: Label
 var _surface_outlines: Dictionary = {}
+var _cutaway_wall_group: Node3D
+var _cutaway_wall_side := ""
 var _reach_button: Button
 var _goal_status_label: Label
 var _project_status_label: Label
@@ -46,13 +49,14 @@ func _ready() -> void:
 	var room_id := OS.get_environment("ROOMSCALE_ROOM")
 	if room_id.is_empty():
 		room_id = "room_a"
-	var loaded: Dictionary = RoomDefinitionLoader.load_file("res://rooms/%s.json" % room_id)
+	var loaded: Dictionary = RoomDefinitionLoader.load_requested()
 	if not bool(loaded.ok):
 		for diagnostic in loaded.errors:
 			push_error("ROOMDEFINITION_INVALID room=%s: %s" % [room_id, diagnostic])
 		get_tree().quit(1)
 		return
 	_room_definition = loaded.definition
+	room_id = String(_room_definition.id)
 	_build_room()
 	_build_furniture()
 	_build_settlement()
@@ -77,6 +81,7 @@ func _process(delta: float) -> void:
 		_ui_timer = 0.0
 		_update_population_ui()
 	var camera_rig := get_node_or_null("CameraRig") as StrategyCameraController
+	_update_cutaway_wall(camera_rig)
 	var camera_settled := not is_instance_valid(camera_rig) or not camera_rig.is_camera_transition_active()
 	if OS.get_environment("ROOMSCALE_DISABLE_STARTUP_CAPTURE") != "1" and not _capture_saved and _capture_timer >= CAPTURE_DELAY_SECONDS and (camera_settled or _capture_timer >= 8.0) and DisplayServer.get_name() != "headless":
 		_capture_saved = true
@@ -211,17 +216,204 @@ func _build_room() -> void:
 	ROOM_DEPTH = float(dimensions[1])
 	WALL_HEIGHT = float(_room_definition.wall_height)
 	var floor_color := Color(String(_room_definition.get("floor_color", "795b43")))
-	_add_box(room, "Floor", Vector3(ROOM_WIDTH, FLOOR_THICKNESS, ROOM_DEPTH), floor_center + Vector3(0.0, -FLOOR_THICKNESS * 0.5 + floor_height, 0.0), floor_color, 0.82)
+	var room_shell_value: Variant = _room_definition.get("room_shell", {})
+	var room_shell: Dictionary = room_shell_value if room_shell_value is Dictionary else {}
+	var floor_appearance_value: Variant = room_shell.get("floor_appearance", {})
+	var floor_appearance: Dictionary = floor_appearance_value if floor_appearance_value is Dictionary else {}
+	floor_color = _appearance_color(floor_appearance, "base_color", floor_color)
+	var floor_mesh := _add_box(room, "Floor", Vector3(ROOM_WIDTH, FLOOR_THICKNESS, ROOM_DEPTH), Vector3(floor_center.x, floor_height - FLOOR_THICKNESS * 0.5, floor_center.z), floor_color, 0.82)
+	if not floor_appearance.is_empty():
+		floor_mesh.material_override = _appearance_material(floor_appearance, floor_color, 0.82)
 	var seam_count := maxi(1, floori(ROOM_WIDTH / 12.0))
 	for index in range(1, seam_count):
 		var x := floor_center.x - ROOM_WIDTH * 0.5 + float(index) * ROOM_WIDTH / float(seam_count)
 		_add_box(room, "FloorSeam%02d" % index, Vector3(0.18, 0.025, ROOM_DEPTH - 1.0), Vector3(x, floor_height + 0.012, floor_center.z), floor_color.darkened(0.18), 0.92)
+	if int(_room_definition.get("schema_version", 1)) >= 2:
+		_build_data_room_shell(room, room_shell)
+	else:
+		_build_legacy_room_shell(room, floor_center, floor_height)
+
+
+func _build_legacy_room_shell(room: Node3D, floor_center: Vector3, floor_height: float) -> void:
 	_add_box(room, "WallBack", Vector3(ROOM_WIDTH, WALL_HEIGHT, 2.0), Vector3(floor_center.x, floor_height + WALL_HEIGHT * 0.5, floor_center.z - ROOM_DEPTH * 0.5), Color("d9c9aa"), 0.94)
 	_add_box(room, "WallLeft", Vector3(2.0, WALL_HEIGHT, ROOM_DEPTH), Vector3(floor_center.x - ROOM_WIDTH * 0.5, floor_height + WALL_HEIGHT * 0.5, floor_center.z), Color("c6b99f"), 0.95)
 	_add_box(room, "WallRight", Vector3(2.0, WALL_HEIGHT, ROOM_DEPTH), Vector3(floor_center.x + ROOM_WIDTH * 0.5, floor_height + WALL_HEIGHT * 0.5, floor_center.z), Color("c6b99f"), 0.95)
 	_add_box(room, "BaseboardBack", Vector3(ROOM_WIDTH, 3.0, 1.0), Vector3(floor_center.x, floor_height + 1.5, floor_center.z - ROOM_DEPTH * 0.5 + 1.0), Color("76583f"), 0.78)
 	_add_box(room, "BaseboardLeft", Vector3(1.0, 3.0, ROOM_DEPTH), Vector3(floor_center.x - ROOM_WIDTH * 0.5 + 1.0, floor_height + 1.5, floor_center.z), Color("76583f"), 0.78)
 	_add_box(room, "BaseboardRight", Vector3(1.0, 3.0, ROOM_DEPTH), Vector3(floor_center.x + ROOM_WIDTH * 0.5 - 1.0, floor_height + 1.5, floor_center.z), Color("76583f"), 0.78)
+
+
+func _build_data_room_shell(room: Node3D, shell: Dictionary) -> void:
+	var walls: Array = shell.get("walls", [])
+	var thickness := float(shell.get("wall_thickness", 2.0))
+	var trim_height := float(shell.get("baseboard_height", 3.0))
+	var cutaway_id := String(_room_definition.get("camera", {}).get("cutaway_wall_id", "")) if _room_definition.get("camera", {}) is Dictionary else ""
+	var floor_center := RoomDefinitionLoader.vector3_from(_room_definition.floor.center)
+	var floor_height := float(_room_definition.floor.height)
+	var room_dimensions: Array = _room_definition.dimensions
+	var trim_appearance_value: Variant = shell.get("baseboard_appearance", {})
+	var trim_appearance: Dictionary = trim_appearance_value if trim_appearance_value is Dictionary else {}
+	var trim_color := _appearance_color(trim_appearance, "base_color", Color("76583f"))
+	var crown_height_value: Variant = shell.get("crown_molding_height", 0.0)
+	var crown_height := float(crown_height_value) if RoomDefinitionLoader._positive_number(crown_height_value) else 0.0
+	var crown_appearance_value: Variant = shell.get("crown_molding_appearance", {})
+	var crown_appearance: Dictionary = crown_appearance_value if crown_appearance_value is Dictionary else {}
+	var crown_color := _appearance_color(crown_appearance, "base_color", Color("76583f"))
+	for wall_variant in walls:
+		var wall: Dictionary = wall_variant
+		var side := String(wall.side)
+		var wall_visual := Node3D.new()
+		wall_visual.name = "ShellWall_%s" % String(wall.id)
+		room.add_child(wall_visual)
+		if String(wall.get("id", "")) == cutaway_id:
+			_cutaway_wall_group = wall_visual
+			_cutaway_wall_side = side
+		var side_length := float(room_dimensions[0]) if side in ["north", "south"] else float(room_dimensions[1])
+		var appearance_value: Variant = wall.get("appearance", {})
+		var appearance: Dictionary = appearance_value if appearance_value is Dictionary else {}
+		var wall_color := _appearance_color(appearance, "base_color", Color("d9c9aa"))
+		var openings_value: Variant = wall.get("openings", [])
+		var openings: Array = openings_value if openings_value is Array else []
+		openings.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return float(a.offset) < float(b.offset))
+		var cursor := 0.0
+		for opening_variant in openings:
+			var opening: Dictionary = opening_variant
+			var offset := float(opening.offset)
+			var opening_width := float(opening.width)
+			var opening_bottom := float(opening.get("bottom", 0.0))
+			var opening_height := float(opening.height)
+			if offset > cursor:
+				_add_shell_segment(wall_visual, "Wall_%s_%02d" % [side, int(cursor)], side, floor_center, room_dimensions, cursor, offset - cursor, 0.0, WALL_HEIGHT, thickness, wall_color, appearance)
+			if opening_bottom > 0.0:
+				_add_shell_segment(wall_visual, "Wall_%s_Sill_%s" % [side, opening.id], side, floor_center, room_dimensions, offset, opening_width, 0.0, opening_bottom, thickness, wall_color, appearance)
+			var opening_top := opening_bottom + opening_height
+			if opening_top < WALL_HEIGHT:
+				_add_shell_segment(wall_visual, "Wall_%s_Head_%s" % [side, opening.id], side, floor_center, room_dimensions, offset, opening_width, opening_top, WALL_HEIGHT - opening_top, thickness, wall_color, appearance)
+			_build_shell_opening(wall_visual, side, floor_center, room_dimensions, offset, opening_width, opening_bottom, opening_height, thickness, opening)
+			cursor = offset + opening_width
+		if cursor < side_length:
+			_add_shell_segment(wall_visual, "Wall_%s_End" % side, side, floor_center, room_dimensions, cursor, side_length - cursor, 0.0, WALL_HEIGHT, thickness, wall_color, appearance)
+		if trim_height > 0.0:
+			var trim_cursor := 0.0
+			for opening_variant in openings:
+				var opening: Dictionary = opening_variant
+				if float(opening.get("bottom", 0.0)) >= trim_height:
+					continue
+				var trim_offset := float(opening.offset)
+				var trim_width := float(opening.width)
+				if trim_offset > trim_cursor:
+					_add_shell_segment(wall_visual, "Trim_%s_%02d" % [side, int(trim_cursor)], side, floor_center, room_dimensions, trim_cursor, trim_offset - trim_cursor, 0.0, trim_height, maxf(1.0, thickness * 0.7), trim_color, trim_appearance)
+				trim_cursor = trim_offset + trim_width
+			if trim_cursor < side_length:
+				_add_shell_segment(wall_visual, "Trim_%s_End" % side, side, floor_center, room_dimensions, trim_cursor, side_length - trim_cursor, 0.0, trim_height, maxf(1.0, thickness * 0.7), trim_color, trim_appearance)
+		if crown_height > 0.0:
+			var crown_cursor := 0.0
+			var crown_bottom := WALL_HEIGHT - crown_height
+			for opening_variant in openings:
+				var opening: Dictionary = opening_variant
+				var opening_top := float(opening.get("bottom", 0.0)) + float(opening.height)
+				if opening_top <= crown_bottom:
+					continue
+				var crown_offset := float(opening.offset)
+				var crown_width := float(opening.width)
+				if crown_offset > crown_cursor:
+					_add_shell_segment(wall_visual, "Crown_%s_%02d" % [side, int(crown_cursor)], side, floor_center, room_dimensions, crown_cursor, crown_offset - crown_cursor, crown_bottom, crown_height, thickness + CROWN_INTERIOR_PROJECTION, crown_color, crown_appearance, CROWN_INTERIOR_PROJECTION * 0.5)
+				crown_cursor = crown_offset + crown_width
+			if crown_cursor < side_length:
+				_add_shell_segment(wall_visual, "Crown_%s_End" % side, side, floor_center, room_dimensions, crown_cursor, side_length - crown_cursor, crown_bottom, crown_height, thickness + CROWN_INTERIOR_PROJECTION, crown_color, crown_appearance, CROWN_INTERIOR_PROJECTION * 0.5)
+	var ceiling_appearance_value: Variant = shell.get("ceiling_appearance", {})
+	if shell.has("ceiling_appearance") and ceiling_appearance_value is Dictionary:
+		var ceiling_appearance: Dictionary = ceiling_appearance_value
+		var ceiling_color := _appearance_color(ceiling_appearance, "base_color", Color("ece5d4"))
+		var ceiling_mesh := MeshInstance3D.new()
+		ceiling_mesh.name = "Ceiling"
+		var plane := PlaneMesh.new()
+		plane.size = Vector2(float(room_dimensions[0]), float(room_dimensions[1]))
+		ceiling_mesh.mesh = plane
+		ceiling_mesh.position = Vector3(floor_center.x, floor_height + WALL_HEIGHT, floor_center.z)
+		var ceiling_material := _appearance_material(ceiling_appearance, ceiling_color, 1.0)
+		ceiling_material.cull_mode = BaseMaterial3D.CULL_FRONT
+		ceiling_mesh.material_override = ceiling_material
+		room.add_child(ceiling_mesh)
+	_update_cutaway_wall(get_node_or_null("CameraRig") as StrategyCameraController)
+
+
+func _update_cutaway_wall(camera_rig: StrategyCameraController) -> void:
+	if not is_instance_valid(_cutaway_wall_group) or not is_instance_valid(camera_rig):
+		return
+	var camera := camera_rig.get_node_or_null("Camera") as Camera3D
+	if not is_instance_valid(camera):
+		return
+	var floor_center := RoomDefinitionLoader.vector3_from(_room_definition.floor.center)
+	var viewer_offset := Vector2(camera.global_position.x - floor_center.x, camera.global_position.z - floor_center.z).normalized()
+	var wall_normal := Vector2.ZERO
+	match _cutaway_wall_side:
+		"north": wall_normal = Vector2(0.0, -1.0)
+		"south": wall_normal = Vector2(0.0, 1.0)
+		"east": wall_normal = Vector2(1.0, 0.0)
+		"west": wall_normal = Vector2(-1.0, 0.0)
+	_cutaway_wall_group.visible = viewer_offset.dot(wall_normal) < 0.35
+
+
+func _add_shell_segment(parent: Node3D, node_name: String, side: String, floor_center: Vector3, room_dimensions: Array, offset: float, length: float, bottom: float, height: float, thickness: float, color: Color, appearance: Dictionary, interior_offset: float = 0.0) -> void:
+	if length <= 0.0 or height <= 0.0:
+		return
+	var position := Vector3.ZERO
+	var size := Vector3.ZERO
+	if side in ["north", "south"]:
+		var z := floor_center.z - float(room_dimensions[1]) * 0.5 if side == "north" else floor_center.z + float(room_dimensions[1]) * 0.5
+		position = Vector3(floor_center.x - float(room_dimensions[0]) * 0.5 + offset + length * 0.5, float(_room_definition.floor.height) + bottom + height * 0.5, z)
+		size = Vector3(length, height, thickness)
+	else:
+		var x := floor_center.x - float(room_dimensions[0]) * 0.5 if side == "west" else floor_center.x + float(room_dimensions[0]) * 0.5
+		position = Vector3(x, float(_room_definition.floor.height) + bottom + height * 0.5, floor_center.z - float(room_dimensions[1]) * 0.5 + offset + length * 0.5)
+		size = Vector3(thickness, height, length)
+	match side:
+		"north": position.z += interior_offset
+		"south": position.z -= interior_offset
+		"east": position.x -= interior_offset
+		"west": position.x += interior_offset
+	var mesh := _add_box(parent, node_name, size, position, color, 0.9)
+	mesh.material_override = _appearance_material(appearance, color, 0.9)
+
+
+func _build_shell_opening(parent: Node3D, side: String, floor_center: Vector3, room_dimensions: Array, offset: float, width: float, bottom: float, height: float, wall_thickness: float, opening: Dictionary) -> void:
+	var appearance_value: Variant = opening.get("appearance", {})
+	var appearance: Dictionary = appearance_value if appearance_value is Dictionary else {}
+	var kind := String(opening.kind)
+	var frame_color := _appearance_color(appearance, "accent_color", Color("76583f"))
+	var frame := 1.5
+	var opening_thickness := maxf(0.35, wall_thickness * 0.25)
+	var trimmed_width := maxf(0.5, width - frame * 2.0)
+	var trimmed_height := maxf(0.5, height - frame * 2.0)
+	_add_shell_segment(parent, "OpeningFrameLeft_%s" % opening.id, side, floor_center, room_dimensions, offset, frame, bottom, height, wall_thickness + 0.4, frame_color, appearance)
+	_add_shell_segment(parent, "OpeningFrameRight_%s" % opening.id, side, floor_center, room_dimensions, offset + width - frame, frame, bottom, height, wall_thickness + 0.4, frame_color, appearance)
+	_add_shell_segment(parent, "OpeningFrameHead_%s" % opening.id, side, floor_center, room_dimensions, offset + frame, trimmed_width, bottom + height - frame, frame, wall_thickness + 0.4, frame_color, appearance)
+	if bottom > 0.0:
+		_add_shell_segment(parent, "OpeningFrameSill_%s" % opening.id, side, floor_center, room_dimensions, offset + frame, trimmed_width, bottom, frame, wall_thickness + 0.4, frame_color, appearance)
+	if kind == "opening":
+		return
+	var panel_position := Vector3.ZERO
+	var panel_size := Vector3.ZERO
+	var coordinate := offset + width * 0.5
+	if side in ["north", "south"]:
+		var z := floor_center.z - float(room_dimensions[1]) * 0.5 if side == "north" else floor_center.z + float(room_dimensions[1]) * 0.5
+		panel_position = Vector3(floor_center.x - float(room_dimensions[0]) * 0.5 + coordinate, float(_room_definition.floor.height) + bottom + height * 0.5, z)
+		panel_size = Vector3(trimmed_width, trimmed_height, opening_thickness)
+	else:
+		var x := floor_center.x - float(room_dimensions[0]) * 0.5 if side == "west" else floor_center.x + float(room_dimensions[0]) * 0.5
+		panel_position = Vector3(x, float(_room_definition.floor.height) + bottom + height * 0.5, floor_center.z - float(room_dimensions[1]) * 0.5 + coordinate)
+		panel_size = Vector3(opening_thickness, trimmed_height, trimmed_width)
+	var panel_color := _appearance_color(appearance, "base_color", Color("819ba0") if kind == "window" else Color("795b43"))
+	if kind == "window":
+		var glass_appearance := appearance.duplicate(true)
+		glass_appearance["material"] = "glass"
+		glass_appearance["transparency"] = float(appearance.get("transparency", 0.36))
+		var pane := _add_box(parent, "WindowPane_%s" % opening.id, panel_size, panel_position, panel_color, 0.22)
+		pane.material_override = _appearance_material(glass_appearance, panel_color, 0.22)
+	else:
+		var door := _add_box(parent, "DoorPanel_%s" % opening.id, panel_size, panel_position, panel_color, 0.72)
+		door.material_override = _appearance_material(appearance, panel_color, 0.72)
 
 
 func _build_furniture() -> void:
@@ -244,7 +436,41 @@ func _build_room_object(parent: Node3D, object: Dictionary) -> void:
 	root.rotation_degrees.y = float(object.get("rotation_degrees", 0.0))
 	root.set_meta("semantic_name", String(object.get("name", object.id)))
 	parent.add_child(root)
-	var color := Color(String(object.get("color", "80664b")))
+	var legacy_color := Color(String(object.get("color", "80664b")))
+	var appearance_value: Variant = object.get("appearance", null)
+	if appearance_value is Dictionary:
+		_build_appearance_object(root, dimensions, String(object.kind), appearance_value, legacy_color)
+	elif int(_room_definition.get("schema_version", 1)) >= 2:
+		_build_appearance_object(root, dimensions, String(object.kind), {}, legacy_color)
+	else:
+		_build_legacy_room_object(root, dimensions, object, legacy_color)
+	if object.has("surface"):
+		var surface: Dictionary = object.surface
+		var region_id := String(surface.region_id)
+		var surface_height := float(surface.height)
+		var body := StaticBody3D.new()
+		body.name = "GoalSurfaceCollider"
+		body.add_to_group("goal_surface")
+		body.set_meta("region_id", region_id)
+		body.set_meta("semantic_name", String(object.get("name", object.id)))
+		body.collision_layer = 2
+		body.collision_mask = 0
+		var collision := CollisionShape3D.new()
+		var shape := BoxShape3D.new()
+		shape.size = Vector3(dimensions.x, 2.4, dimensions.z)
+		collision.shape = shape
+		collision.position = Vector3(0.0, surface_height - position.y - 1.2, 0.0)
+		body.add_child(collision)
+		root.add_child(body)
+		var outline := _add_box(root, "SelectionOutline", Vector3(dimensions.x + 1.4, 0.18, dimensions.z + 1.4), Vector3(0.0, surface_height - position.y + 0.16, 0.0), Color("e9bf59"), 0.32)
+		var outline_material := outline.material_override as StandardMaterial3D
+		outline_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		outline_material.albedo_color.a = 0.36
+		outline.visible = false
+		_surface_outlines[region_id] = outline
+
+
+func _build_legacy_room_object(root: Node3D, dimensions: Vector3, object: Dictionary, color: Color) -> void:
 	var kind := String(object.kind)
 	match kind:
 		"rug":
@@ -289,30 +515,118 @@ func _build_room_object(parent: Node3D, object: Dictionary) -> void:
 		_:
 			_add_box(root, "Body", dimensions, Vector3(0.0, dimensions.y * 0.5, 0.0), color, 0.78)
 			_add_box(root, "Lid", Vector3(dimensions.x * 1.04, maxf(0.8, dimensions.y * 0.1), dimensions.z * 1.04), Vector3(0.0, dimensions.y * 0.98, 0.0), color.lightened(0.12), 0.66)
-	if object.has("surface"):
-		var surface: Dictionary = object.surface
-		var region_id := String(surface.region_id)
-		var surface_height := float(surface.height)
-		var body := StaticBody3D.new()
-		body.name = "GoalSurfaceCollider"
-		body.add_to_group("goal_surface")
-		body.set_meta("region_id", region_id)
-		body.set_meta("semantic_name", String(object.name))
-		body.collision_layer = 2
-		body.collision_mask = 0
-		var collision := CollisionShape3D.new()
-		var shape := BoxShape3D.new()
-		shape.size = Vector3(dimensions.x, 2.4, dimensions.z)
-		collision.shape = shape
-		collision.position = Vector3(0.0, surface_height - 1.2, 0.0)
-		body.add_child(collision)
-		root.add_child(body)
-		var outline := _add_box(root, "SelectionOutline", Vector3(dimensions.x + 1.4, 0.18, dimensions.z + 1.4), Vector3(0.0, surface_height + 0.16, 0.0), Color("e9bf59"), 0.32)
-		var outline_material := outline.material_override as StandardMaterial3D
-		outline_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-		outline_material.albedo_color.a = 0.36
-		outline.visible = false
-		_surface_outlines[region_id] = outline
+
+
+func _build_appearance_object(root: Node3D, dimensions: Vector3, semantic_kind: String, appearance: Dictionary, fallback_color: Color) -> void:
+	var base_color := _appearance_color(appearance, "base_color", fallback_color)
+	var accent_color := _appearance_color(appearance, "accent_color", base_color.darkened(0.18))
+	var archetype := String(appearance.get("archetype", semantic_kind)).to_lower()
+	var width := dimensions.x
+	var height := dimensions.y
+	var depth := dimensions.z
+	match archetype:
+		"rug":
+			_add_styled_box(root, "RugSurface", Vector3(width, maxf(0.05, height), depth), Vector3(0.0, height * 0.5, 0.0), appearance, base_color, 0.96)
+		"table", "desk", "workbench":
+			var top_thickness := clampf(height * 0.06, 1.2, 3.0)
+			_add_styled_box(root, "TableTop", Vector3(width, top_thickness, depth), Vector3(0.0, height - top_thickness * 0.5, 0.0), appearance, base_color, 0.62)
+			var leg_height := maxf(0.8, height - top_thickness)
+			for x_sign in [-1.0, 1.0]:
+				for z_sign in [-1.0, 1.0]:
+					_add_styled_box(root, "TableLeg_%s_%s" % [x_sign, z_sign], Vector3(maxf(0.8, width * 0.035), leg_height, maxf(0.8, depth * 0.04)), Vector3(x_sign * width * 0.43, leg_height * 0.5, z_sign * depth * 0.42), appearance, accent_color, 0.8, true)
+			if archetype == "workbench":
+				_add_styled_box(root, "WorkbenchRail", Vector3(width * 0.72, 1.0, 0.8), Vector3(0.0, height + 1.3, -depth * 0.36), appearance, accent_color, 0.62, true)
+				_add_styled_box(root, "WorkbenchVice", Vector3(width * 0.16, 1.2, depth * 0.18), Vector3(-width * 0.28, height + 0.6, -depth * 0.18), appearance, accent_color.lightened(0.25), 0.4, true)
+		"chair":
+			var seat_y := height * 0.62
+			_add_styled_box(root, "ChairSeat", Vector3(width, maxf(1.5, height * 0.12), depth * 0.78), Vector3(0.0, seat_y, depth * 0.08), appearance, base_color, 0.8)
+			var leg_size := maxf(1.0, minf(width, depth) * 0.08)
+			for x_sign in [-1.0, 1.0]:
+				for z_sign in [-1.0, 1.0]:
+					_add_styled_box(root, "ChairLeg_%s_%s" % [x_sign, z_sign], Vector3(leg_size, maxf(0.8, seat_y), leg_size), Vector3(x_sign * width * 0.38, seat_y * 0.5, z_sign * depth * 0.3), appearance, accent_color, 0.78, true)
+			var back_height := maxf(2.0, height - seat_y)
+			_add_styled_box(root, "ChairBack", Vector3(width, back_height, maxf(1.2, depth * 0.1)), Vector3(0.0, seat_y + back_height * 0.5, -depth * 0.4), appearance, base_color, 0.82)
+		"cabinet", "bookcase", "wardrobe", "shelf", "dresser":
+			var body_thickness := maxf(1.5, minf(width, depth) * 0.07)
+			_add_styled_box(root, "CabinetBack", Vector3(width, height, body_thickness), Vector3(0.0, height * 0.5, -depth * 0.5 + body_thickness * 0.5), appearance, accent_color, 0.84, true)
+			for x_sign in [-1.0, 1.0]:
+				_add_styled_box(root, "CabinetSide_%s" % x_sign, Vector3(body_thickness, height, depth), Vector3(x_sign * (width * 0.5 - body_thickness * 0.5), height * 0.5, 0.0), appearance, base_color, 0.82)
+			_add_styled_box(root, "CabinetTop", Vector3(width, body_thickness, depth), Vector3(0.0, height - body_thickness * 0.5, 0.0), appearance, accent_color, 0.76, true)
+			if archetype in ["bookcase", "shelf"]:
+				for shelf_index in range(1, 5):
+					var shelf_y := height * float(shelf_index) / 5.0
+					_add_styled_box(root, "Shelf_%d" % shelf_index, Vector3(width - body_thickness * 2.0, maxf(1.0, body_thickness * 0.6), depth * 0.88), Vector3(0.0, shelf_y, 0.0), appearance, accent_color, 0.72, true)
+			else:
+				var door_width := maxf(1.0, width * 0.44)
+				_add_styled_box(root, "CabinetDoorLeft", Vector3(door_width, height * 0.82, maxf(0.7, body_thickness * 0.5)), Vector3(-width * 0.23, height * 0.49, depth * 0.5), appearance, base_color, 0.76)
+				_add_styled_box(root, "CabinetDoorRight", Vector3(door_width, height * 0.82, maxf(0.7, body_thickness * 0.5)), Vector3(width * 0.23, height * 0.49, depth * 0.5), appearance, base_color, 0.76)
+				_add_styled_box(root, "CabinetHandleLeft", Vector3(0.7, maxf(1.2, height * 0.08), 0.6), Vector3(-width * 0.04, height * 0.5, depth * 0.53), appearance, accent_color, 0.42, true)
+				_add_styled_box(root, "CabinetHandleRight", Vector3(0.7, maxf(1.2, height * 0.08), 0.6), Vector3(width * 0.04, height * 0.5, depth * 0.53), appearance, accent_color, 0.42, true)
+		"bed":
+			var frame_height := maxf(1.5, height * 0.24)
+			_add_styled_box(root, "BedFrame", Vector3(width, frame_height, depth), Vector3(0.0, frame_height * 0.5, 0.0), appearance, accent_color, 0.72, true)
+			_add_styled_box(root, "Mattress", Vector3(width * 0.96, maxf(1.5, height - frame_height), depth * 0.94), Vector3(0.0, height - (height - frame_height) * 0.5, 0.0), appearance, base_color, 0.96)
+			_add_styled_box(root, "Pillow", Vector3(width * 0.34, maxf(1.0, height * 0.12), depth * 0.18), Vector3(0.0, height - 0.5, -depth * 0.34), appearance, accent_color.lightened(0.3), 0.98, true)
+		"sofa":
+			var cushion_y := maxf(1.5, height * 0.48)
+			_add_styled_box(root, "SofaBase", Vector3(width, cushion_y, depth), Vector3(0.0, cushion_y * 0.5, 0.0), appearance, accent_color, 0.85, true)
+			_add_styled_box(root, "SofaSeat", Vector3(width * 0.78, cushion_y * 0.55, depth * 0.68), Vector3(0.0, cushion_y + cushion_y * 0.2, depth * 0.02), appearance, base_color, 0.96)
+			_add_styled_box(root, "SofaBack", Vector3(width * 0.78, maxf(2.0, height - cushion_y), depth * 0.18), Vector3(0.0, cushion_y + (height - cushion_y) * 0.5, -depth * 0.38), appearance, base_color, 0.96)
+			for x_sign in [-1.0, 1.0]:
+				_add_styled_box(root, "SofaArm_%s" % x_sign, Vector3(width * 0.11, height * 0.72, depth * 0.78), Vector3(x_sign * width * 0.44, height * 0.36, depth * 0.02), appearance, accent_color, 0.88, true)
+		"cylinder":
+			var cylinder := _add_cylinder(root, "CylinderBody", minf(width, depth) * 0.5, height, Vector3(0.0, height * 0.5, 0.0), base_color)
+			cylinder.material_override = _appearance_material(appearance, base_color, 0.68)
+		"plant":
+			var pot_height := maxf(1.0, height * 0.22)
+			var pot := _add_cylinder(root, "PlantPot", minf(width, depth) * 0.42, pot_height, Vector3(0.0, pot_height * 0.5, 0.0), accent_color)
+			pot.material_override = _appearance_material(appearance, accent_color, 0.78)
+			var stem_height := maxf(1.0, height - pot_height)
+			_add_styled_box(root, "PlantStem", Vector3(maxf(0.6, width * 0.06), stem_height, maxf(0.6, depth * 0.06)), Vector3(0.0, pot_height + stem_height * 0.5, 0.0), appearance, base_color.darkened(0.25), 0.94)
+			for leaf_index in range(4):
+				var angle := TAU * float(leaf_index) / 4.0
+				var leaf := _add_sphere(root, "PlantLeaf_%d" % leaf_index, Vector3(width * 0.4, height * 0.16, depth * 0.35), Vector3(cos(angle) * width * 0.15, height * (0.68 + float(leaf_index % 2) * 0.08), sin(angle) * depth * 0.15), base_color)
+				leaf.material_override = _appearance_material(appearance, base_color, 0.92)
+		"box_with_lid":
+			_add_styled_box(root, "ObjectBody", dimensions, Vector3(0.0, height * 0.5, 0.0), appearance, base_color, 0.82)
+			_add_styled_box(root, "ObjectLid", Vector3(width * 1.04, maxf(0.8, height * 0.1), depth * 1.04), Vector3(0.0, height * 0.98, 0.0), appearance, accent_color, 0.72, true)
+		_:
+			_add_styled_box(root, "ObjectBody", dimensions, Vector3(0.0, height * 0.5, 0.0), appearance, base_color, 0.84)
+
+
+func _add_styled_box(parent: Node3D, node_name: String, size: Vector3, at: Vector3, appearance: Dictionary, color: Color, roughness: float = 0.8, accent: bool = false) -> MeshInstance3D:
+	var selected_color := _appearance_color(appearance, "accent_color", color) if accent else color
+	var mesh := _add_box(parent, node_name, size, at, selected_color, roughness)
+	mesh.material_override = _appearance_material(appearance, selected_color, roughness)
+	return mesh
+
+
+func _appearance_color(appearance: Variant, field: String, fallback: Color) -> Color:
+	if appearance is Dictionary and appearance.has(field) and appearance.get(field) is String and not String(appearance.get(field)).is_empty():
+		return Color(String(appearance.get(field)))
+	return fallback
+
+
+func _appearance_material(appearance: Dictionary, color: Color, default_roughness: float) -> StandardMaterial3D:
+	var material := _material(color, default_roughness).duplicate() as StandardMaterial3D
+	var category := String(appearance.get("material", "other")).to_lower()
+	match category:
+		"metal":
+			material.metallic = 0.72
+			material.roughness = 0.38
+		"glass":
+			material.roughness = 0.18
+		"fabric":
+			material.roughness = 0.96
+		"stone", "ceramic":
+			material.roughness = 0.72
+		"wood":
+			material.roughness = 0.76
+	var transparency := float(appearance.get("transparency", 0.35 if category == "glass" else 0.0))
+	if transparency > 0.0:
+		material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		material.albedo_color.a = 1.0 - transparency
+	return material
 
 
 func _build_lighting() -> void:
@@ -322,9 +636,14 @@ func _build_lighting() -> void:
 	light.light_energy = 0.8
 	light.shadow_enabled = true
 	add_child(light)
+	var camera_value: Variant = _room_definition.get("camera", {})
+	var camera_data: Dictionary = camera_value if camera_value is Dictionary else {}
+	var floor_center := RoomDefinitionLoader.vector3_from(_room_definition.floor.center)
+	var fill_position: Variant = camera_data.get("fill_position", [floor_center.x + 5.0, floor_center.y + WALL_HEIGHT, floor_center.z + 24.0])
+	var lantern_position: Variant = camera_data.get("lantern_position", [floor_center.x - ROOM_WIDTH * 0.12, floor_center.y + 10.0, floor_center.z + ROOM_DEPTH * 0.33])
 	var fill := OmniLight3D.new()
 	fill.name = "RoomFill"
-	fill.position = RoomDefinitionLoader.vector3_from(_room_definition.camera.fill_position)
+	fill.position = RoomDefinitionLoader.vector3_from(fill_position)
 	fill.light_color = Color("f7d8a0")
 	fill.light_energy = 82.0
 	fill.omni_range = maxf(190.0, ROOM_WIDTH * 0.9)
@@ -347,7 +666,7 @@ func _build_lighting() -> void:
 	add_child(environment)
 	var lantern_fill := OmniLight3D.new()
 	lantern_fill.name = "SettlementLanternFill"
-	lantern_fill.position = RoomDefinitionLoader.vector3_from(_room_definition.camera.lantern_position)
+	lantern_fill.position = RoomDefinitionLoader.vector3_from(lantern_position)
 	lantern_fill.light_color = Color("e5a95d")
 	lantern_fill.light_energy = 24.0
 	lantern_fill.omni_range = 38.0
@@ -398,10 +717,11 @@ func _build_population() -> bool:
 	var spawn: Dictionary = _room_definition.spawn
 	var spawn_center := RoomDefinitionLoader.vector3_from(spawn.center)
 	var spawn_dimensions: Array = spawn.dimensions
+	var floor_height := float(_room_definition.floor.height)
 	for citizen_id in range(50):
 		var column := citizen_id % 10
 		var row := floori(float(citizen_id) / 10.0)
-		var proposed := Vector3(spawn_center.x - float(spawn_dimensions[0]) * 0.5 + 4.0 + float(column) * (float(spawn_dimensions[0]) - 8.0) / 9.0, 0.0, spawn_center.z - float(spawn_dimensions[2]) * 0.5 + 4.0 + float(row) * (float(spawn_dimensions[2]) - 8.0) / 4.0)
+		var proposed := Vector3(spawn_center.x - float(spawn_dimensions[0]) * 0.5 + 4.0 + float(column) * (float(spawn_dimensions[0]) - 8.0) / 9.0, floor_height, spawn_center.z - float(spawn_dimensions[2]) * 0.5 + 4.0 + float(row) * (float(spawn_dimensions[2]) - 8.0) / 4.0)
 		var spawn_position: Vector3 = navigation.nearest_walkable_position(proposed)
 		if not is_finite(spawn_position.x):
 			push_error("No walkable spawn position for citizen %d" % citizen_id)

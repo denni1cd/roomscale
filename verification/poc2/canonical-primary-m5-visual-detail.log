@@ -1,0 +1,16 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 591.86 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5090
+
+ROOMSCALE_FLOOR_NAV_READY room=room_photo_luna grid=54x48 cell=4in obstacles=6
+ROOMSCALE_CITIZEN_SPAWN count=50 separate_nodes=true height=0.5in
+ROOMSCALE_M2_READY Godot=4.7.2-stable (official) room=room_photo_luna size=216x192 in citizens=50
+ROOMSCALE_VISUAL_CAPTURE phase=grapple-deployment path=C:\Users\Zero\python_projects\ai\roomscale\verification\poc2\canonical-primary-visuals-m5-detail/room_photo_luna-grapple-deployment.png size=1280x720
+ROOMSCALE_TRAVERSAL_START route=80.8in timeout=32.4s start=(84.75757, 0.0, -75.24243) target=(22.0, 30.0, -77.0)
+ROOMSCALE_VISUAL_CAPTURE phase=citizen-traversal path=C:\Users\Zero\python_projects\ai\roomscale\verification\poc2\canonical-primary-visuals-m5-detail/room_photo_luna-citizen-traversal.png size=1280x720
+ROOMSCALE_VISUAL_CAPTURE phase=citizen-traversal-detail path=C:\Users\Zero\python_projects\ai\roomscale\verification\poc2\canonical-primary-visuals-m5-detail/room_photo_luna-citizen-traversal-detail.png size=1280x720
+
+ERROR: ROOMSCALE_SMOKE_FAIL: climber made a discontinuous movement step of 5.14in
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _fail (res://scripts/smoke_test.gd:630)
+       [1] _run (res://scripts/smoke_test.gd:387)

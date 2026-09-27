@@ -1,0 +1,26 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 591.86 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5090
+
+ROOMSCALE_FLOOR_NAV_READY room=room_photo_luna grid=54x48 cell=4in obstacles=6
+ROOMSCALE_CITIZEN_SPAWN count=50 separate_nodes=true height=0.5in
+ROOMSCALE_M2_READY Godot=4.7.2-stable (official) room=room_photo_luna size=216x192 in citizens=50
+ROOMSCALE_VISUAL_CAPTURE phase=grapple-deployment path=C:\Users\Zero\python_projects\ai\roomscale\verification\poc2\canonical-primary-visuals-m5-final/room_photo_luna-grapple-deployment.png size=1280x720
+ROOMSCALE_TRAVERSAL_START route=80.8in timeout=32.4s start=(84.68124, 0.0, -75.31876) target=(22.0, 30.0, -77.0)
+ROOMSCALE_VISUAL_CAPTURE phase=citizen-traversal path=C:\Users\Zero\python_projects\ai\roomscale\verification\poc2\canonical-primary-visuals-m5-final/room_photo_luna-citizen-traversal.png size=1280x720
+ROOMSCALE_VISUAL_CAPTURE phase=citizen-traversal-detail path=C:\Users\Zero\python_projects\ai\roomscale\verification\poc2\canonical-primary-visuals-m5-final/room_photo_luna-citizen-traversal-detail.png size=1280x720
+ROOMSCALE_M6_BUDGET task=738 type=SURFACE_EXPLORATION route=196.1in added=66.8s cumulative=86.8s
+ROOMSCALE_VISUAL_CAPTURE phase=elevated-surface-exploration path=C:\Users\Zero\python_projects\ai\roomscale\verification\poc2\canonical-primary-visuals-m5-final/room_photo_luna-elevated-surface-exploration.png size=1280x720
+ROOMSCALE_VISUAL_CAPTURE phase=elevated-surface-exploration-detail path=C:\Users\Zero\python_projects\ai\roomscale\verification\poc2\canonical-primary-visuals-m5-final/room_photo_luna-elevated-surface-exploration-detail.png size=1280x720
+ROOMSCALE_M6_BUDGET task=967 type=SURFACE_TRAVERSAL route=230.1in added=71.9s cumulative=158.7s
+ROOMSCALE_M6_BUDGET task=1205 type=SURFACE_EXPLORATION route=196.1in added=66.8s cumulative=225.5s
+ROOMSCALE_M6_BUDGET task=1410 type=SURFACE_TRAVERSAL route=230.1in added=71.9s cumulative=297.5s
+ROOMSCALE_M6_BUDGET task=1671 type=SURFACE_EXPLORATION route=196.1in added=66.8s cumulative=364.3s
+ROOMSCALE_VISUAL_EVIDENCE_PASS room=room_photo_luna phases=5 captured=["grapple-deployment", "citizen-traversal", "citizen-traversal-detail", "elevated-surface-exploration", "elevated-surface-exploration-detail"] directory=C:\Users\Zero\python_projects\ai\roomscale\verification\poc2\canonical-primary-visuals-m5-final
+ROOMSCALE_ROOM=room_photo_luna TARGET=Computer desk REGION=DESK_SURFACE FLOOR=216x192 SITE=(82.0, 0.0, -78.0)
+ROOMSCALE_M2_SMOKE_PASS room=room_photo_luna citizens=50 active=47 available=2 moving=42 obstacles=6 detour=237.9in
+ROOMSCALE_M3_SMOKE_PASS room=room_photo_luna selected=Computer desk investigators=2 arrived=2 barrier=no navigation connection between FLOOR and DESK_SURFACE elapsed=29.25s
+ROOMSCALE_M4_SMOKE_PASS room=room_photo_luna deliveries=11 delivered={ "wood": 4, "metal": 4, "mechanical_parts": 3 } builders_returned=true gates=3 components=3 site=(82.0, 0.0, -78.0) elapsed=64.25s
+ROOMSCALE_M5_SMOKE_PASS room=room_photo_luna cable_segments=8 radius=0.07in partial_deploy=true traverser=Citizen45 height=30.0in walked=82.8in route=80.8in max_step=3.26in max_step_interval=0.217s max_sample_speed=6.50in/s speed_cap=6.5in/s step_tolerance=0.25in elapsed=12.00s
+ROOMSCALE_M6_SMOKE_PASS room=room_photo_luna arrivals=3 explorations=3 reused=2 distinct_travelers=3 work=12.0s persistent_link=true max_step=5.53in max_step_interval=0.217s max_sample_speed=6.50in/s speed_cap=6.5in/s step_tolerance=0.25in elapsed=162.40s budget=364.26s
+ROOMSCALE_M8_SMOKE_PASS room=room_photo_luna steam=true cog_teeth=8 citizen_inspection=true camera_easing=verified
+

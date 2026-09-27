@@ -1,0 +1,11 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ROOMSCALE_FLOOR_NAV_READY room=room_photo_luna grid=54x48 cell=4in obstacles=6
+ROOMSCALE_CITIZEN_SPAWN count=50 separate_nodes=true height=0.5in
+ROOMSCALE_M2_READY Godot=4.7.2-stable (official) room=room_photo_luna size=216x192 in citizens=50
+
+ERROR: ROOMSCALE_SMOKE_FAIL: construction project initialized with incorrect inventory or state: { "created": true, "state": "DELIVERING", "required": { "wood": 4, "metal": 4, "mechanical_parts": 3 }, "stockpile": { "wood": 4, "metal": 3, "mechanical_parts": 3 }, "picked_up": { "wood": 0, "metal": 1, "mechanical_parts": 0 }, "delivered": { "wood": 0, "metal": 0, "mechanical_parts": 0 }, "active_stage": "locked", "stage_progress": 0.0, "completed_stages": 0, "stage_gates": [], "progress_percent": 0.0, "site": (82.0, 0.0, -78.0), "cable_deployed": false, "floor_target_connected": false, "traversal": {  } }
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _fail (res://scripts/smoke_test.gd:581)
+       [1] _run (res://scripts/smoke_test.gd:205)

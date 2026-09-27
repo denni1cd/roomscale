@@ -1,0 +1,842 @@
+{
+  "schema_version": 2,
+  "id": "astra_room",
+  "display_name": "Green study with hammock",
+  "dimensions": [
+    156,
+    144
+  ],
+  "floor": {
+    "center": [
+      0,
+      0,
+      0
+    ],
+    "dimensions": [
+      156,
+      144
+    ],
+    "height": 0
+  },
+  "wall_height": 108,
+  "room_shell": {
+    "wall_thickness": 2,
+    "baseboard_height": 5,
+    "baseboard_appearance": {
+      "base_color": "ae7945",
+      "material": "wood"
+    },
+    "floor_appearance": {
+      "base_color": "b8b7af",
+      "material": "fabric"
+    },
+    "ceiling_appearance": {
+      "base_color": "308e91",
+      "material": "paint"
+    },
+    "crown_molding_height": 5,
+    "crown_molding_appearance": {
+      "base_color": "b58b55",
+      "material": "wood"
+    },
+    "walls": [
+      {
+        "id": "hammock-wall",
+        "side": "north",
+        "appearance": {
+          "base_color": "285f47",
+          "material": "paint"
+        },
+        "openings": [
+          {
+            "id": "hammock-window",
+            "kind": "window",
+            "offset": 24,
+            "width": 96,
+            "bottom": 25,
+            "height": 68,
+            "appearance": {
+              "base_color": "c5d9dc",
+              "accent_color": "b58b55",
+              "material": "glass",
+              "transparency": 0.62
+            }
+          }
+        ]
+      },
+      {
+        "id": "lamp-wall",
+        "side": "east",
+        "appearance": {
+          "base_color": "245a45",
+          "material": "paint"
+        },
+        "openings": [
+          {
+            "id": "lamp-window",
+            "kind": "window",
+            "offset": 24,
+            "width": 86,
+            "bottom": 25,
+            "height": 68,
+            "appearance": {
+              "base_color": "c5d9dc",
+              "accent_color": "b58b55",
+              "material": "glass",
+              "transparency": 0.62
+            }
+          }
+        ]
+      },
+      {
+        "id": "desk-wall",
+        "side": "south",
+        "appearance": {
+          "base_color": "286849",
+          "material": "paint"
+        },
+        "openings": []
+      },
+      {
+        "id": "door-wall",
+        "side": "west",
+        "appearance": {
+          "base_color": "286246",
+          "material": "paint"
+        },
+        "openings": [
+          {
+            "id": "french-doors",
+            "kind": "door",
+            "offset": 28,
+            "width": 66,
+            "bottom": 0,
+            "height": 82,
+            "appearance": {
+              "base_color": "b78349",
+              "accent_color": "d0ddd7",
+              "material": "wood"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "objects": [
+    {
+      "id": "computer-desk",
+      "name": "Dark computer desk",
+      "kind": "desk",
+      "position": [
+        30,
+        0,
+        38
+      ],
+      "dimensions": [
+        66,
+        30,
+        30
+      ],
+      "rotation_degrees": 0,
+      "blocks_navigation": true,
+      "navigation_padding": [
+        1.0,
+        0,
+        1.0
+      ],
+      "appearance": {
+        "archetype": "table",
+        "base_color": "302c29",
+        "accent_color": "171f20",
+        "material": "wood"
+      },
+      "surface": {
+        "region_id": "DESK_TOP",
+        "height": 30,
+        "anchor": [
+          24,
+          30,
+          29
+        ]
+      }
+    },
+    {
+      "id": "desk-monitor-left",
+      "name": "First large monitor",
+      "kind": "monitor",
+      "position": [
+        13,
+        33,
+        38
+      ],
+      "dimensions": [
+        25,
+        19,
+        2
+      ],
+      "blocks_navigation": false,
+      "appearance": {
+        "archetype": "box",
+        "base_color": "161b20",
+        "accent_color": "555b5c",
+        "material": "plastic"
+      }
+    },
+    {
+      "id": "desk-monitor-right",
+      "name": "Second large monitor",
+      "kind": "monitor",
+      "position": [
+        40,
+        33,
+        38
+      ],
+      "dimensions": [
+        25,
+        19,
+        2
+      ],
+      "blocks_navigation": false,
+      "appearance": {
+        "archetype": "box",
+        "base_color": "161b20",
+        "accent_color": "555b5c",
+        "material": "plastic"
+      }
+    },
+    {
+      "id": "desk-monitor-left-stand",
+      "kind": "monitor_stand",
+      "position": [
+        13,
+        30,
+        38
+      ],
+      "dimensions": [
+        7,
+        3,
+        7
+      ],
+      "blocks_navigation": false,
+      "appearance": {
+        "archetype": "box",
+        "base_color": "292e31",
+        "material": "plastic"
+      }
+    },
+    {
+      "id": "desk-monitor-right-stand",
+      "kind": "monitor_stand",
+      "position": [
+        40,
+        30,
+        38
+      ],
+      "dimensions": [
+        7,
+        3,
+        7
+      ],
+      "blocks_navigation": false,
+      "appearance": {
+        "archetype": "box",
+        "base_color": "292e31",
+        "material": "plastic"
+      }
+    },
+    {
+      "id": "desk-laptop",
+      "kind": "laptop",
+      "position": [
+        57,
+        30,
+        39
+      ],
+      "dimensions": [
+        12,
+        9,
+        1
+      ],
+      "blocks_navigation": false,
+      "appearance": {
+        "archetype": "box",
+        "base_color": "41484b",
+        "material": "metal"
+      }
+    },
+    {
+      "id": "office-chair",
+      "name": "Dark office chair behind desk",
+      "kind": "office_chair",
+      "position": [
+        28,
+        0,
+        62
+      ],
+      "dimensions": [
+        23,
+        44,
+        18
+      ],
+      "rotation_degrees": 180,
+      "blocks_navigation": true,
+      "navigation_padding": [
+        0.0,
+        0,
+        0.0
+      ],
+      "appearance": {
+        "archetype": "chair",
+        "base_color": "131d23",
+        "accent_color": "365474",
+        "material": "fabric"
+      }
+    },
+    {
+      "id": "rocking-chair",
+      "name": "Wood rocking chair",
+      "kind": "rocking_chair",
+      "position": [
+        56,
+        0,
+        5
+      ],
+      "dimensions": [
+        24,
+        38,
+        31
+      ],
+      "rotation_degrees": 0,
+      "blocks_navigation": true,
+      "navigation_padding": [
+        1.0,
+        0,
+        1.0
+      ],
+      "appearance": {
+        "archetype": "chair",
+        "base_color": "754629",
+        "accent_color": "493023",
+        "material": "wood"
+      }
+    },
+    {
+      "id": "computer-on-chair",
+      "kind": "computer_tower",
+      "position": [
+        56,
+        17,
+        7
+      ],
+      "dimensions": [
+        10,
+        17,
+        17
+      ],
+      "blocks_navigation": false,
+      "appearance": {
+        "archetype": "box",
+        "base_color": "282a2c",
+        "accent_color": "525859",
+        "material": "metal"
+      }
+    },
+    {
+      "id": "hammock-and-frame",
+      "name": "Striped hammock on dark stand",
+      "kind": "hammock_with_stand",
+      "position": [
+        0,
+        0,
+        -49
+      ],
+      "dimensions": [
+        118,
+        40,
+        34
+      ],
+      "rotation_degrees": 0,
+      "blocks_navigation": true,
+      "navigation_padding": [
+        1.0,
+        0,
+        1.0
+      ],
+      "appearance": {
+        "archetype": "bed",
+        "base_color": "8e9188",
+        "accent_color": "313c3c",
+        "material": "fabric"
+      }
+    },
+    {
+      "id": "hammock-floor-mat",
+      "kind": "mat",
+      "position": [
+        0,
+        0,
+        -43
+      ],
+      "dimensions": [
+        101,
+        0.15,
+        38
+      ],
+      "blocks_navigation": false,
+      "appearance": {
+        "archetype": "rug",
+        "base_color": "303739",
+        "material": "fabric"
+      }
+    },
+    {
+      "id": "bright-blanket-pile",
+      "name": "Bright green blanket beneath hammock",
+      "kind": "blanket",
+      "position": [
+        -12,
+        0.2,
+        -33
+      ],
+      "dimensions": [
+        34,
+        5,
+        18
+      ],
+      "blocks_navigation": false,
+      "appearance": {
+        "archetype": "simple",
+        "base_color": "74b829",
+        "accent_color": "397566",
+        "material": "fabric"
+      }
+    },
+    {
+      "id": "corner-plush-pile",
+      "kind": "plush_toys",
+      "position": [
+        -66,
+        0,
+        -54
+      ],
+      "dimensions": [
+        19,
+        23,
+        23
+      ],
+      "blocks_navigation": true,
+      "navigation_padding": [
+        0.0,
+        0,
+        0.0
+      ],
+      "appearance": {
+        "archetype": "simple",
+        "base_color": "d5d3cc",
+        "accent_color": "b0b6c5",
+        "material": "fabric"
+      }
+    },
+    {
+      "id": "corner-dragon-decoration",
+      "kind": "dragon_decoration",
+      "position": [
+        65,
+        0,
+        -59
+      ],
+      "dimensions": [
+        17,
+        31,
+        17
+      ],
+      "blocks_navigation": true,
+      "navigation_padding": [
+        0.0,
+        0,
+        0.0
+      ],
+      "appearance": {
+        "archetype": "simple",
+        "base_color": "303e35",
+        "accent_color": "748450",
+        "material": "fabric"
+      }
+    },
+    {
+      "id": "floor-lamp-base",
+      "kind": "floor_lamp",
+      "position": [
+        69,
+        0,
+        -4
+      ],
+      "dimensions": [
+        11,
+        66,
+        11
+      ],
+      "blocks_navigation": true,
+      "navigation_padding": [
+        0.0,
+        0,
+        0.0
+      ],
+      "appearance": {
+        "archetype": "cylinder",
+        "base_color": "a8a79d",
+        "accent_color": "d6d5c8",
+        "material": "metal"
+      }
+    },
+    {
+      "id": "floor-lamp-shade",
+      "kind": "lamp_shade",
+      "position": [
+        69,
+        66,
+        -4
+      ],
+      "dimensions": [
+        14,
+        6,
+        14
+      ],
+      "blocks_navigation": false,
+      "appearance": {
+        "archetype": "cylinder",
+        "base_color": "e3e0cb",
+        "material": "plastic"
+      }
+    },
+    {
+      "id": "green-floor-seat",
+      "name": "Lime bowl-shaped floor seat",
+      "kind": "floor_seat",
+      "position": [
+        -3,
+        0,
+        -3
+      ],
+      "dimensions": [
+        23,
+        12,
+        21
+      ],
+      "blocks_navigation": true,
+      "navigation_padding": [
+        1.0,
+        0,
+        1.0
+      ],
+      "appearance": {
+        "archetype": "cylinder",
+        "base_color": "73da53",
+        "accent_color": "202b2b",
+        "material": "plastic"
+      }
+    },
+    {
+      "id": "display-cabinet",
+      "name": "Tall wood and glass display cabinet",
+      "kind": "display_cabinet",
+      "position": [
+        -67,
+        0,
+        47
+      ],
+      "dimensions": [
+        33,
+        76,
+        18
+      ],
+      "rotation_degrees": 90,
+      "blocks_navigation": true,
+      "navigation_padding": [
+        1.0,
+        0,
+        1.0
+      ],
+      "appearance": {
+        "archetype": "cabinet",
+        "base_color": "ad733c",
+        "accent_color": "4b5045",
+        "material": "wood"
+      }
+    },
+    {
+      "id": "cabinet-collectibles-lower",
+      "kind": "boxed_collectibles",
+      "position": [
+        -67,
+        76,
+        47
+      ],
+      "dimensions": [
+        17,
+        7,
+        31
+      ],
+      "blocks_navigation": false,
+      "appearance": {
+        "archetype": "box",
+        "base_color": "e5dec9",
+        "accent_color": "353d39",
+        "material": "other"
+      }
+    },
+    {
+      "id": "cabinet-collectibles-upper",
+      "kind": "boxed_collectibles",
+      "position": [
+        -67,
+        83,
+        47
+      ],
+      "dimensions": [
+        15,
+        7,
+        22
+      ],
+      "blocks_navigation": false,
+      "appearance": {
+        "archetype": "box",
+        "base_color": "ddd6c2",
+        "accent_color": "343e3c",
+        "material": "other"
+      }
+    },
+    {
+      "id": "storage-bin",
+      "name": "Gray open storage bin",
+      "kind": "storage_bin",
+      "position": [
+        -44,
+        0,
+        58
+      ],
+      "dimensions": [
+        17,
+        14,
+        15
+      ],
+      "blocks_navigation": true,
+      "navigation_padding": [
+        0.5,
+        0,
+        0.5
+      ],
+      "appearance": {
+        "archetype": "box",
+        "base_color": "8c9da8",
+        "accent_color": "5d6c72",
+        "material": "plastic"
+      }
+    },
+    {
+      "id": "spare-equipment",
+      "kind": "stored_computer_equipment",
+      "position": [
+        -22,
+        0,
+        68
+      ],
+      "dimensions": [
+        20,
+        15,
+        5
+      ],
+      "blocks_navigation": true,
+      "navigation_padding": [
+        0.5,
+        0,
+        0.5
+      ],
+      "appearance": {
+        "archetype": "box",
+        "base_color": "202a2d",
+        "material": "plastic"
+      }
+    },
+    {
+      "id": "dragon-wall-art",
+      "name": "Wide dragon artwork",
+      "kind": "wall_art",
+      "position": [
+        20,
+        72,
+        68
+      ],
+      "dimensions": [
+        65,
+        30,
+        0.5
+      ],
+      "blocks_navigation": false,
+      "appearance": {
+        "archetype": "box",
+        "base_color": "9a9478",
+        "accent_color": "514c42",
+        "material": "other"
+      },
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "dragon-wall-emblem",
+      "kind": "wall_decoration",
+      "position": [
+        20,
+        48,
+        68
+      ],
+      "dimensions": [
+        13,
+        14,
+        0.5
+      ],
+      "blocks_navigation": false,
+      "appearance": {
+        "archetype": "simple",
+        "base_color": "bec5bd",
+        "material": "metal"
+      },
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "map-wall-art",
+      "kind": "framed_map",
+      "position": [
+        74,
+        48,
+        -61
+      ],
+      "dimensions": [
+        0.5,
+        30,
+        17
+      ],
+      "blocks_navigation": false,
+      "appearance": {
+        "archetype": "box",
+        "base_color": "7ca5ae",
+        "accent_color": "876446",
+        "material": "other"
+      },
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "target_surface_id": "DESK_TOP",
+  "construction": {
+    "depot_pickup": [
+      -35,
+      0,
+      20
+    ]
+  },
+  "landmarks": {
+    "workshop": [
+      -42,
+      0,
+      5
+    ],
+    "depot": [
+      -35,
+      0,
+      20
+    ],
+    "housing": [
+      -42,
+      0,
+      -14
+    ],
+    "work_area": [
+      10,
+      0,
+      8
+    ]
+  },
+  "activity_stations": {
+    "workshop": [
+      [
+        -38,
+        0,
+        5
+      ],
+      [
+        -44,
+        0,
+        9
+      ]
+    ],
+    "housing": [
+      -38,
+      0,
+      -13
+    ],
+    "work_area": [
+      10,
+      0,
+      8
+    ],
+    "patrol": [
+      [
+        -27,
+        0,
+        -17
+      ],
+      [
+        -25,
+        0,
+        31
+      ],
+      [
+        20,
+        0,
+        12
+      ],
+      [
+        35,
+        0,
+        -18
+      ],
+      [
+        -50,
+        0,
+        24
+      ]
+    ]
+  },
+  "spawn": {
+    "center": [
+      -28,
+      0,
+      0
+    ],
+    "dimensions": [
+      10,
+      0,
+      10
+    ]
+  },
+  "camera": {
+    "focus": [
+      0,
+      25,
+      0
+    ],
+    "yaw_degrees": 90,
+    "cutaway_wall_id": "lamp-wall"
+  }
+}

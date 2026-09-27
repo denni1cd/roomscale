@@ -35,6 +35,7 @@ var _target_explorations_completed := 0
 var _autonomous_reuse_count := 0
 var _surface_exploration_tasks: Array[int] = []
 var _traversal_task_ids: Array[int] = []
+var _m6_completed_task_results: Dictionary = {}
 
 
 func configure_room(definition: Dictionary) -> void:
@@ -230,7 +231,8 @@ func issue_reach_explore(surface_id: String, citizens: Array) -> Dictionary:
 	var surface: Dictionary = surface_navigation.regions[surface_id]
 	_goal_label = String(surface.get("object_name", "elevated surface"))
 	_goal_center = surface.get("center", Vector3.ZERO)
-	var route_request: Dictionary = surface_navigation.route_between(FLOOR_REGION, surface_id, Vector3.ZERO, _goal_center)
+	var spawn_center := RoomDefinitionLoader.vector3_from(room_definition.spawn.center)
+	var route_request: Dictionary = surface_navigation.route_between(FLOOR_REGION, surface_id, spawn_center, _goal_center)
 	if route_request.reachable:
 		return {"accepted": true, "state": "REACHABLE", "message": "A route to %s is available." % _goal_label}
 	var candidates: Array[Vector3] = surface_navigation.investigation_candidates_for(surface_id)
@@ -356,6 +358,7 @@ func report_traversal_arrival(citizen: Node3D, task_id: int) -> bool:
 	task.actual_travelled_distance = walked
 	task.finished_at = Time.get_ticks_msec()
 	_completed_count += 1
+	_snapshot_m6_task_result(task)
 	_trim_history()
 	_traversal_goal = {"state": "TRAVERSAL_COMPLETE", "citizen_id": citizen.citizen_id, "task_id": task_id, "target": citizen.global_position, "target_region": region, "route_length": float(task.route_length), "actual_travelled_distance": walked}
 	_target_arrivals += 1
@@ -423,6 +426,7 @@ func advance_surface_exploration(citizen: Node3D, task_id: int, delta: float) ->
 	task.progress = 1.0
 	_target_explorations_completed += 1
 	_completed_count += 1
+	_snapshot_m6_task_result(task)
 	_trim_history()
 	if _autonomous_reuse_count < 2:
 		_dispatch_next_route_reuse()
@@ -474,6 +478,19 @@ func get_m6_status() -> Dictionary:
 		"traversal_task_ids": _traversal_task_ids.duplicate(),
 		"surface_exploration_task_ids": _surface_exploration_tasks.duplicate(),
 	}
+
+
+func get_m6_task_result(task_id: int) -> Dictionary:
+	if _m6_completed_task_results.has(task_id):
+		return _m6_completed_task_results[task_id].duplicate(true)
+	return get_task(task_id)
+
+
+func _snapshot_m6_task_result(task: Dictionary) -> void:
+	var task_id := int(task.get("id", -1))
+	if task_id < 0 or (not _traversal_task_ids.has(task_id) and not _surface_exploration_tasks.has(task_id)):
+		return
+	_m6_completed_task_results[task_id] = task.duplicate(true)
 
 
 func get_traversal_goal_status() -> Dictionary:

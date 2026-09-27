@@ -22,6 +22,7 @@ var _camera_transition_active := false
 var _room_focus := Vector3.ZERO
 var _settlement_focus := Vector3(0.0, 8.0, 22.0)
 var _room_width := 240.0
+var _floor_height := 0.0
 
 
 func _ready() -> void:
@@ -32,8 +33,17 @@ func _ready() -> void:
 func configure_room(definition: Dictionary) -> void:
 	var dimensions: Array = definition.get("dimensions", [240.0, 180.0])
 	_room_width = float(dimensions[0])
-	var camera_data: Dictionary = definition.get("camera", {})
-	_room_focus = Vector3(float(camera_data.get("focus", [0.0, 0.0, 0.0])[0]), 0.0, float(camera_data.get("focus", [0.0, 0.0, 0.0])[2]))
+	var floor_value: Variant = definition.get("floor", {})
+	var floor_data: Dictionary = floor_value if floor_value is Dictionary else {}
+	_floor_height = float(floor_data.get("height", 0.0))
+	var floor_center_value: Variant = floor_data.get("center", [0.0, _floor_height, 0.0])
+	var floor_center: Array = floor_center_value if floor_center_value is Array and floor_center_value.size() == 3 else [0.0, _floor_height, 0.0]
+	var camera_value: Variant = definition.get("camera", {})
+	var camera_data: Dictionary = camera_value if camera_value is Dictionary else {}
+	var focus_value: Variant = camera_data.get("focus", floor_center)
+	var focus: Array = focus_value if focus_value is Array and focus_value.size() == 3 else floor_center
+	_room_focus = Vector3(float(focus[0]), _floor_height, float(focus[2]))
+	yaw = deg_to_rad(float(camera_data.get("yaw_degrees", 0.0)))
 	var landmarks: Dictionary = definition.get("landmarks", {})
 	var average := Vector3.ZERO
 	var count := 0
@@ -43,7 +53,7 @@ func configure_room(definition: Dictionary) -> void:
 			count += 1
 	if count > 0:
 		average /= float(count)
-		_settlement_focus = Vector3(average.x, 8.0, average.z)
+		_settlement_focus = Vector3(average.x, _floor_height + 8.0, average.z)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -109,7 +119,7 @@ func set_view_mode(mode: int) -> void:
 	view_mode = clampi(mode, 0, 2)
 	match view_mode:
 		0: # Room
-			target = Vector3(_room_focus.x, 20.0, _room_focus.z)
+			target = Vector3(_room_focus.x, _floor_height + 20.0, _room_focus.z)
 			distance = maxf(300.0, _room_width * 1.25)
 			tilt_degrees = 52.0
 		1: # Settlement: frame the room-scale work sites and walking floor together

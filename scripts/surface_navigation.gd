@@ -17,10 +17,10 @@ func configure(definition: Dictionary, floor_nav: Node) -> void:
 	room_definition = definition.duplicate(true)
 	floor_navigation = floor_nav
 	regions.clear()
-	regions[FLOOR_REGION] = {"height": 0.0, "kind": "room_floor", "region_id": FLOOR_REGION}
 	goal_surface_id = String(room_definition.get("target_surface_id", ""))
 	var floor_data: Dictionary = room_definition.get("floor", {})
 	_floor_height = float(floor_data.get("height", 0.0))
+	regions[FLOOR_REGION] = {"height": _floor_height, "kind": "room_floor", "region_id": FLOOR_REGION}
 	var spawn_data: Dictionary = room_definition.get("spawn", {})
 	if spawn_data.has("center"):
 		_spawn_center = _vector(spawn_data.center)
@@ -38,7 +38,7 @@ func configure(definition: Dictionary, floor_nav: Node) -> void:
 			"kind": "elevated_surface",
 			"region_id": region_id,
 			"object_id": String(object.id),
-			"object_name": String(object.name),
+			"object_name": String(object.get("name", object.get("id", "Object"))),
 			"center": Vector3(pos.x, float(surface.height), pos.z),
 			"floor_center": Vector3(pos.x, _floor_height, pos.z),
 			"dimensions": Vector2(float(dims[0]), float(dims[2])),
@@ -134,10 +134,20 @@ func _derive_investigation_candidates(surface: Dictionary) -> Array[Vector3]:
 	var dimensions: Vector2 = surface.get("dimensions", Vector2.ZERO)
 	var padding: Vector2 = surface.get("navigation_padding", Vector2.ZERO)
 	var angle := deg_to_rad(float(surface.get("rotation_degrees", 0.0)))
-	var local_x_axis := Vector2(cos(angle), sin(angle))
-	var local_z_axis := Vector2(-sin(angle), cos(angle))
-	var x_offset := dimensions.x * 0.5 + padding.x + INVESTIGATION_CLEARANCE_INCHES
-	var z_offset := dimensions.y * 0.5 + padding.y + INVESTIGATION_CLEARANCE_INCHES
+	var cosine := absf(cos(angle))
+	var sine := absf(sin(angle))
+	var local_x_axis := Vector2(cos(angle), -sin(angle))
+	var local_z_axis := Vector2(sin(angle), cos(angle))
+	var local_half_x := dimensions.x * 0.5 + padding.x
+	var local_half_z := dimensions.y * 0.5 + padding.y
+	var world_half_x := cosine * local_half_x + sine * local_half_z
+	var world_half_z := sine * local_half_x + cosine * local_half_z
+	var safe_world_half_x := world_half_x + INVESTIGATION_CLEARANCE_INCHES
+	var safe_world_half_z := world_half_z + INVESTIGATION_CLEARANCE_INCHES
+	var x_axis_aabb_escape := minf(safe_world_half_x / maxf(cosine, 0.001), safe_world_half_z / maxf(sine, 0.001))
+	var z_axis_aabb_escape := minf(safe_world_half_x / maxf(sine, 0.001), safe_world_half_z / maxf(cosine, 0.001))
+	var x_offset := maxf(local_half_x + INVESTIGATION_CLEARANCE_INCHES, x_axis_aabb_escape)
+	var z_offset := maxf(local_half_z + INVESTIGATION_CLEARANCE_INCHES, z_axis_aabb_escape)
 	var offsets: Array[Vector2] = [
 		local_x_axis * x_offset,
 		local_x_axis * -x_offset,
@@ -181,8 +191,8 @@ func _inside_surface_blocking_footprint(candidate: Vector3, surface: Dictionary)
 	var padding: Vector2 = surface.get("navigation_padding", Vector2.ZERO)
 	var angle := deg_to_rad(float(surface.get("rotation_degrees", 0.0)))
 	var delta := Vector2(candidate.x - center.x, candidate.z - center.z)
-	var local_x := delta.x * cos(angle) + delta.y * sin(angle)
-	var local_z := -delta.x * sin(angle) + delta.y * cos(angle)
+	var local_x := delta.x * cos(angle) - delta.y * sin(angle)
+	var local_z := delta.x * sin(angle) + delta.y * cos(angle)
 	return absf(local_x) <= dimensions.x * 0.5 + padding.x and absf(local_z) <= dimensions.y * 0.5 + padding.y
 
 
@@ -207,13 +217,19 @@ func exploration_route(start: Vector3, region_id: String) -> Array[Vector3]:
 	var region: Dictionary = regions[region_id]
 	var center: Vector3 = region.center
 	var half: Vector2 = region.dimensions * 0.36
-	var points: Array[Vector3] = [
-		Vector3(center.x - half.x, center.y, center.z - half.y),
-		Vector3(center.x + half.x, center.y, center.z - half.y),
-		Vector3(center.x + half.x, center.y, center.z + half.y),
-		Vector3(center.x - half.x, center.y, center.z + half.y),
-		Vector3(center.x, center.y, center.z),
+	var angle := deg_to_rad(float(region.get("rotation_degrees", 0.0)))
+	var local_points: Array[Vector2] = [
+		Vector2(-half.x, -half.y),
+		Vector2(half.x, -half.y),
+		Vector2(half.x, half.y),
+		Vector2(-half.x, half.y),
+		Vector2.ZERO,
 	]
+	var points: Array[Vector3] = []
+	for local_point in local_points:
+		var world_x := local_point.x * cos(angle) + local_point.y * sin(angle)
+		var world_z := -local_point.x * sin(angle) + local_point.y * cos(angle)
+		points.append(Vector3(center.x + world_x, center.y, center.z + world_z))
 	var path: Array[Vector3] = [start]
 	path.append_array(points)
 	return path
@@ -227,7 +243,7 @@ func derive_construction_site(floor_nav: Node) -> Dictionary:
 	var bounds: Rect2 = floor_nav.room_bounds()
 	for approach in investigation_candidates():
 		var direction := Vector2(approach.x - center.x, approach.z - center.z).normalized()
-		var proposed := Vector3(approach.x + direction.x * 12.0, 0.0, approach.z + direction.y * 12.0)
+		var proposed := Vector3(approach.x + direction.x * 12.0, _floor_height, approach.z + direction.y * 12.0)
 		if not bounds.grow(-4.0).has_point(Vector2(proposed.x, proposed.z)):
 			continue
 		var site: Vector3 = floor_nav.nearest_walkable_position(proposed)

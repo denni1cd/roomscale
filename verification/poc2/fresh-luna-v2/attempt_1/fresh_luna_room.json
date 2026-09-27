@@ -1,0 +1,182 @@
+{
+  "schema_version": 2,
+  "id": "fresh_luna_room",
+  "display_name": "Emerald Office with Hammock",
+  "dimensions": [192, 168],
+  "floor": {
+    "center": [0, 0, 0],
+    "dimensions": [192, 168],
+    "height": 0
+  },
+  "wall_height": 96,
+  "objects": [
+    {
+      "id": "computer_desk",
+      "name": "Computer workstation desk",
+      "kind": "desk",
+      "position": [0, 0, -68],
+      "dimensions": [68, 30, 30],
+      "blocks_navigation": true,
+      "appearance": {"archetype": "table", "base_color": "211b18", "accent_color": "322a25", "material": "other"},
+      "surface": {"region_id": "DESK_TOP", "height": 30, "anchor": [0, 30, -68]}
+    },
+    {
+      "id": "desk_rug",
+      "name": "Dark rug under workstation",
+      "kind": "rug",
+      "position": [0, 0.2, -43],
+      "dimensions": [76, 0.4, 52],
+      "blocks_navigation": false,
+      "appearance": {"archetype": "rug", "base_color": "55534d", "material": "fabric"}
+    },
+    {
+      "id": "office_chair",
+      "name": "Dark office chair",
+      "kind": "office_chair",
+      "position": [0, 0, -38],
+      "dimensions": [25, 39, 25],
+      "blocks_navigation": true,
+      "appearance": {"archetype": "chair", "base_color": "171b20", "accent_color": "29323a", "material": "plastic"}
+    },
+    {
+      "id": "wooden_computer_stand",
+      "name": "Low wooden computer stand beside desk",
+      "kind": "small_cabinet",
+      "position": [-49, 0, -62],
+      "dimensions": [28, 29, 23],
+      "blocks_navigation": true,
+      "appearance": {"archetype": "cabinet", "base_color": "795031", "accent_color": "a36b39", "material": "wood"}
+    },
+    {
+      "id": "glass_display_cabinet",
+      "name": "Tall glass-front wood cabinet",
+      "kind": "display_cabinet",
+      "position": [72, 0, -39],
+      "dimensions": [26, 76, 35],
+      "blocks_navigation": true,
+      "appearance": {"archetype": "cabinet", "base_color": "925e35", "accent_color": "c18a51", "material": "wood"},
+      "surface": {"region_id": "DISPLAY_CABINET_TOP", "height": 76, "anchor": [72, 76, -39]}
+    },
+    {
+      "id": "storage_tote",
+      "name": "Gray plastic storage tote",
+      "kind": "storage_bin",
+      "position": [77, 0, 37],
+      "dimensions": [27, 17, 24],
+      "blocks_navigation": true,
+      "appearance": {"archetype": "box_with_lid", "base_color": "8b8e8c", "accent_color": "a4a6a4", "material": "plastic"}
+    },
+    {
+      "id": "hammock",
+      "name": "Striped fabric hammock and support frame",
+      "kind": "hammock",
+      "position": [-31, 0, 35],
+      "dimensions": [112, 47, 30],
+      "blocks_navigation": true,
+      "appearance": {"archetype": "simple", "base_color": "81766a", "accent_color": "b5a38f", "material": "fabric"}
+    },
+    {
+      "id": "green_saucer_chair",
+      "name": "Bright green low saucer chair",
+      "kind": "floor_chair",
+      "position": [18, 0, 48],
+      "dimensions": [34, 17, 34],
+      "blocks_navigation": true,
+      "appearance": {"archetype": "chair", "base_color": "43d947", "accent_color": "202421", "material": "plastic"}
+    },
+    {
+      "id": "floor_lamp",
+      "name": "Silver floor lamp with white bowl shade",
+      "kind": "floor_lamp",
+      "position": [-79, 0, -23],
+      "dimensions": [13, 66, 13],
+      "blocks_navigation": true,
+      "appearance": {"archetype": "simple", "base_color": "b7b7ad", "accent_color": "e6e1d4", "material": "metal"}
+    },
+    {
+      "id": "dragon_triptych",
+      "name": "Large three-panel fantasy dragon wall art",
+      "kind": "wall_art",
+      "position": [8, 43, -82],
+      "dimensions": [68, 35, 1],
+      "blocks_navigation": false,
+      "appearance": {"archetype": "simple", "base_color": "786149", "accent_color": "b28149", "material": "other"}
+    },
+    {
+      "id": "silver_dragon_emblem",
+      "name": "Silver dragon-shaped wall ornament",
+      "kind": "wall_decoration",
+      "position": [14, 20, -81],
+      "dimensions": [17, 19, 1],
+      "blocks_navigation": false,
+      "appearance": {"archetype": "simple", "base_color": "bfc1bc", "material": "metal"}
+    },
+    {
+      "id": "map_picture",
+      "name": "Framed colorful map picture",
+      "kind": "wall_art",
+      "position": [-61, 53, -82],
+      "dimensions": [23, 31, 1],
+      "blocks_navigation": false,
+      "appearance": {"archetype": "simple", "base_color": "4d8290", "accent_color": "b18c5c", "material": "other"}
+    },
+    {
+      "id": "wall_clock",
+      "name": "Small decorative wall clock",
+      "kind": "wall_clock",
+      "position": [69, 59, -82],
+      "dimensions": [13, 18, 2],
+      "blocks_navigation": false,
+      "appearance": {"archetype": "simple", "base_color": "795b3e", "accent_color": "b9a17c", "material": "wood"}
+    },
+    {
+      "id": "scroll_wall_ornament",
+      "name": "Dark metal scrollwork wall ornament",
+      "kind": "wall_decoration",
+      "position": [-92, 70, 28],
+      "dimensions": [2, 13, 35],
+      "blocks_navigation": false,
+      "appearance": {"archetype": "simple", "base_color": "30271f", "material": "metal"}
+    }
+  ],
+  "target_surface_id": "DESK_TOP",
+  "construction": {
+    "depot_pickup": [35, 0, 25]
+  },
+  "landmarks": {
+    "workshop": [38, 0, 43],
+    "depot": [56, 0, 28],
+    "housing": [51, 0, 57],
+    "work_area": [-28, 0, 61]
+  },
+  "activity_stations": {
+    "workshop": [[33, 0, 42], [43, 0, 42]],
+    "housing": [50, 0, 61],
+    "work_area": [-28, 0, 62],
+    "patrol": [[-72, 0, 0], [-34, 0, 8], [31, 0, -7], [74, 0, 5], [27, 0, 69]]
+  },
+  "spawn": {
+    "center": [18, 0, 13],
+    "footprint": [10, 0, 10]
+  },
+  "room_shell": {
+    "wall_thickness": 3,
+    "baseboard_height": 5,
+    "baseboard_appearance": {"base_color": "9a7149", "material": "wood"},
+    "ceiling_appearance": {"base_color": "168d86", "material": "paint"},
+    "crown_molding_height": 5,
+    "crown_molding_appearance": {"base_color": "a6794b", "material": "wood"},
+    "floor_appearance": {"base_color": "8d8981", "material": "fabric"},
+    "walls": [
+      {"id": "north-wall", "side": "north", "appearance": {"base_color": "087c35", "material": "paint"}},
+      {"id": "south-wall", "side": "south", "appearance": {"base_color": "087c35", "material": "paint"}, "openings": [{"id": "south-window", "kind": "window", "offset": 66, "width": 58, "bottom": 29, "height": 56, "appearance": {"base_color": "95bfca", "accent_color": "815a39", "material": "glass", "transparency": 0.35}}]},
+      {"id": "west-wall", "side": "west", "appearance": {"base_color": "087c35", "material": "paint"}, "openings": [{"id": "west-window", "kind": "window", "offset": 43, "width": 58, "bottom": 29, "height": 56, "appearance": {"base_color": "95bfca", "accent_color": "815a39", "material": "glass", "transparency": 0.35}}]},
+      {"id": "east-wall", "side": "east", "appearance": {"base_color": "087c35", "material": "paint"}, "openings": [{"id": "east-double-doors", "kind": "door", "offset": 39, "width": 76, "bottom": 0, "height": 82, "appearance": {"base_color": "9a6b3e", "accent_color": "c09260", "material": "wood"}}]}
+    ]
+  },
+  "camera": {
+    "cutaway_wall_id": "south-wall"
+  }
+}
+
+

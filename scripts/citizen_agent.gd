@@ -13,6 +13,7 @@ var task_type := "IDLE"
 var state := "IDLE"
 var carrying := false
 var travelled_distance := 0.0
+var simulation_elapsed := 0.0
 var _destination := Vector3.ZERO
 var _second_destination := Vector3.ZERO
 var _needs_second_leg := false
@@ -40,6 +41,7 @@ func initialize(id: int, start: Vector3, floor_navigation: Node, task_system: No
 
 
 func _process(delta: float) -> void:
+	simulation_elapsed += delta
 	_animation_time += delta
 	if state == "TRAVEL" or state == "CARRY":
 		_advance_path(delta)

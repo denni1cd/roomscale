@@ -1,0 +1,287 @@
+{
+  "schema_version": 2,
+  "id": "room_photo_luna",
+  "display_name": "Green Room",
+  "dimensions": [216, 192],
+  "floor": {
+    "center": [0, 0, 0],
+    "dimensions": [216, 192],
+    "height": 0
+  },
+  "floor_color": "8c857a",
+  "wall_height": 100,
+  "room_shell": {
+    "wall_thickness": 2,
+    "baseboard_height": 5,
+    "baseboard_appearance": {
+      "base_color": "956332",
+      "accent_color": "bd864a",
+      "material": "wood"
+    },
+    "ceiling_appearance": {
+      "base_color": "22a39e",
+      "material": "paint"
+    },
+    "crown_molding_height": 6,
+    "crown_molding_appearance": {
+      "base_color": "a36d38",
+      "accent_color": "cc9850",
+      "material": "wood"
+    },
+    "floor_appearance": {
+      "base_color": "8c857a",
+      "material": "fabric"
+    },
+    "walls": [
+      {
+        "id": "north_wall",
+        "side": "north",
+        "appearance": {
+          "base_color": "0d5942",
+          "material": "paint"
+        },
+        "openings": [
+          {
+            "id": "north_window",
+            "kind": "window",
+            "offset": 15,
+            "width": 64,
+            "bottom": 28,
+            "height": 52,
+            "appearance": {
+              "base_color": "98b8bc",
+              "accent_color": "79502d",
+              "material": "wood"
+            }
+          }
+        ]
+      },
+      {
+        "id": "south_wall",
+        "side": "south",
+        "appearance": {
+          "base_color": "105a41",
+          "material": "paint"
+        }
+      },
+      {
+        "id": "east_wall",
+        "side": "east",
+        "appearance": {
+          "base_color": "0a553f",
+          "material": "paint"
+        },
+        "openings": [
+          {
+            "id": "east_french_doors",
+            "kind": "door",
+            "offset": 82,
+            "width": 72,
+            "bottom": 0,
+            "height": 82,
+            "appearance": {
+              "base_color": "936338",
+              "accent_color": "c08b4b",
+              "material": "wood"
+            }
+          }
+        ]
+      },
+      {
+        "id": "west_wall",
+        "side": "west",
+        "appearance": {
+          "base_color": "105a43",
+          "material": "paint"
+        },
+        "openings": [
+          {
+            "id": "west_window",
+            "kind": "window",
+            "offset": 40,
+            "width": 72,
+            "bottom": 28,
+            "height": 52,
+            "appearance": {
+              "base_color": "9ab8bb",
+              "accent_color": "79502d",
+              "material": "wood"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "objects": [
+    {
+      "id": "computer_desk",
+      "name": "Computer desk",
+      "kind": "desk",
+      "position": [22, 0, -77],
+      "dimensions": [78, 30, 32],
+      "rotation_degrees": 0,
+      "navigation_padding": [5, 0, 1],
+      "blocks_navigation": true,
+      "appearance": {
+        "archetype": "table",
+        "base_color": "25292a",
+        "accent_color": "171a1b",
+        "material": "metal"
+      },
+      "surface": {
+        "region_id": "DESK_SURFACE",
+        "height": 30,
+        "anchor": [22, 30, -77]
+      }
+    },
+    {
+      "id": "dual_monitors",
+      "name": "Two computer monitors",
+      "kind": "computer_monitors",
+      "position": [22, 30, -86],
+      "dimensions": [52, 20, 3],
+      "blocks_navigation": false,
+      "appearance": {
+        "archetype": "simple",
+        "base_color": "15191c",
+        "accent_color": "555d60",
+        "material": "plastic"
+      }
+    },
+    {
+      "id": "rocking_chair",
+      "name": "Wooden rocking chair",
+      "kind": "rocking_chair",
+      "position": [-18, 0, -27],
+      "dimensions": [30, 40, 32],
+      "rotation_degrees": 180,
+      "blocks_navigation": true,
+      "appearance": {
+        "archetype": "chair",
+        "base_color": "71472f",
+        "accent_color": "965f3c",
+        "material": "wood"
+      }
+    },
+    {
+      "id": "glass_display_cabinet",
+      "name": "Glass-front wood display cabinet",
+      "kind": "display_cabinet",
+      "position": [83, 0, -43],
+      "dimensions": [38, 78, 22],
+      "blocks_navigation": true,
+      "appearance": {
+        "archetype": "cabinet",
+        "base_color": "995f30",
+        "accent_color": "c18a4d",
+        "material": "wood"
+      }
+    },
+    {
+      "id": "hammock",
+      "name": "Freestanding fabric hammock",
+      "kind": "hammock",
+      "position": [-54, 0, 28],
+      "dimensions": [98, 44, 42],
+      "rotation_degrees": -10,
+      "navigation_padding": [0, 0, 2],
+      "blocks_navigation": true,
+      "appearance": {
+        "archetype": "sofa",
+        "base_color": "a9a59a",
+        "accent_color": "343739",
+        "material": "fabric"
+      }
+    },
+    {
+      "id": "hammock_rug",
+      "name": "Small rug under the hammock",
+      "kind": "rug",
+      "position": [-54, 0, 28],
+      "dimensions": [98, 0.4, 48],
+      "rotation_degrees": -10,
+      "blocks_navigation": false,
+      "appearance": {
+        "archetype": "rug",
+        "base_color": "746e65",
+        "material": "fabric"
+      }
+    },
+    {
+      "id": "low_green_stool",
+      "name": "Low bright-green stool",
+      "kind": "stool",
+      "position": [48, 0, 55],
+      "dimensions": [28, 12, 28],
+      "blocks_navigation": true,
+      "appearance": {
+        "archetype": "cylinder",
+        "base_color": "70d92c",
+        "accent_color": "252a28",
+        "material": "plastic"
+      }
+    },
+    {
+      "id": "floor_lamp",
+      "name": "Floor lamp",
+      "kind": "floor_lamp",
+      "position": [-98, 0, 70],
+      "dimensions": [12, 72, 12],
+      "blocks_navigation": true,
+      "appearance": {
+        "archetype": "cylinder",
+        "base_color": "aaa79c",
+        "accent_color": "e4dfcf",
+        "material": "metal"
+      }
+    },
+    {
+      "id": "dragon_wall_art",
+      "name": "Large fantasy wall artwork",
+      "kind": "framed_artwork",
+      "position": [22, 54, -93],
+      "dimensions": [70, 30, 1.4],
+      "blocks_navigation": false,
+      "appearance": {
+        "archetype": "simple",
+        "base_color": "544235",
+        "accent_color": "98704d",
+        "material": "other"
+      }
+    }
+  ],
+  "target_surface_id": "DESK_SURFACE",
+  "construction": {
+    "depot_pickup": [94, 0, 63]
+  },
+  "landmarks": {
+    "workshop": [64, 0, 78],
+    "depot": [96, 0, 78],
+    "housing": [95, 0, 54],
+    "work_area": [58, 0, 80]
+  },
+  "activity_stations": {
+    "workshop": [
+      [70, 0, 70],
+      [78, 0, 78],
+      [65, 0, 88]
+    ],
+    "housing": [95, 0, 76],
+    "work_area": [55, 0, 78],
+    "patrol": [
+      [-82, 0, -82],
+      [73, 0, -87],
+      [95, 0, 25],
+      [-85, 0, 72],
+      [20, 0, 82]
+    ]
+  },
+  "spawn": {
+    "center": [86, 0, 82],
+    "dimensions": [24, 0, 20]
+  },
+  "camera": {
+    "focus": [0, 0, 0],
+    "cutaway_wall_id": "south_wall"
+  }
+}

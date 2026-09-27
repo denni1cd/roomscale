@@ -14,6 +14,8 @@ func _run() -> void:
 	var camera := scene.get_node("CameraRig/Camera") as Camera3D
 	var navigation := scene.get_node("SurfaceNavigation")
 	var target_surface: Dictionary = navigation.goal_surface()
+	var floor_height := float(navigation.regions.get("FLOOR", {}).get("height", 0.0))
+	var target_height := float(target_surface.height)
 	var target_pos: Vector2 = camera.unproject_position(target_surface.anchor)
 	if not scene.select_surface_at_screen_position(target_pos) or not scene.issue_reach_explore().accepted:
 		_fail("production target-surface selection/Reach failed")
@@ -71,7 +73,7 @@ func _run() -> void:
 	elapsed = 0.0
 	while elapsed < 50.0:
 		for child in scene.get_children():
-			if child.name.begins_with("Citizen") and child.task_type == "SURFACE_TRAVERSAL" and bool(coordinator.get_task(child.task_id).get("autonomous_reuse", false)) and child.global_position.y > float(target_surface.height) * 0.4:
+			if child.name.begins_with("Citizen") and child.task_type == "SURFACE_TRAVERSAL" and bool(coordinator.get_task(child.task_id).get("autonomous_reuse", false)) and child.global_position.y > floor_height + (target_height - floor_height) * 0.4:
 				reuse_citizen = child
 				break
 		if reuse_citizen != null:

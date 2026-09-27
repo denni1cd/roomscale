@@ -1,0 +1,12 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ROOMSCALE_FLOOR_NAV_READY room=room_photo_luna grid=54x48 cell=4in obstacles=6
+ROOMSCALE_CITIZEN_SPAWN count=50 separate_nodes=true height=0.5in
+ROOMSCALE_M2_READY Godot=4.7.2-stable (official) room=room_photo_luna size=216x192 in citizens=50
+ROOMSCALE_TRAVERSAL_START route=80.8in timeout=32.4s start=(84.75343, 0.0, -75.24657) target=(22.0, 30.0, -77.0)
+
+ERROR: ROOMSCALE_SMOKE_FAIL: integrated autonomous surface exploration and route reuse timed out: { "target_arrivals": 3, "target_explorations_completed": 2, "autonomous_reuses_assigned": 2, "infrastructure_operational": true, "traversal_task_ids": [660, 992, 1463], "surface_exploration_task_ids": [743, 1235, 1710] }
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _fail (res://scripts/smoke_test.gd:520)
+       [1] _run (res://scripts/smoke_test.gd:416)

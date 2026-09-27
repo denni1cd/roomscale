@@ -1,0 +1,197 @@
+{
+  "schema_version": 2,
+  "id": "fresh_luna_room",
+  "display_name": "Green Office with Hammock",
+  "dimensions": [192, 168],
+  "floor": {
+    "center": [0, 0, 0],
+    "dimensions": [192, 168],
+    "height": 0
+  },
+  "wall_height": 96,
+  "room_shell": {
+    "wall_thickness": 2,
+    "baseboard_height": 4,
+    "baseboard_appearance": { "base_color": "805c3a", "material": "wood" },
+    "floor_appearance": { "base_color": "8b8679", "material": "fabric" },
+    "walls": [
+      {
+        "id": "north-wall",
+        "side": "north",
+        "appearance": { "base_color": "174b36", "material": "paint" },
+        "openings": [
+          {
+            "id": "north-window",
+            "kind": "window",
+            "offset": 66,
+            "width": 62,
+            "bottom": 34,
+            "height": 48,
+            "appearance": { "base_color": "9fcbd1", "accent_color": "815a3b", "material": "glass", "transparency": 0.28 }
+          }
+        ]
+      },
+      {
+        "id": "south-wall",
+        "side": "south",
+        "appearance": { "base_color": "174b36", "material": "paint" },
+        "openings": [
+          {
+            "id": "south-french-doors",
+            "kind": "door",
+            "offset": 111,
+            "width": 62,
+            "bottom": 0,
+            "height": 82,
+            "appearance": { "base_color": "a8733f", "accent_color": "d2ac72", "material": "wood" }
+          }
+        ]
+      },
+      {
+        "id": "west-wall",
+        "side": "west",
+        "appearance": { "base_color": "174b36", "material": "paint" },
+        "openings": [
+          {
+            "id": "west-window",
+            "kind": "window",
+            "offset": 27,
+            "width": 58,
+            "bottom": 34,
+            "height": 48,
+            "appearance": { "base_color": "9fcbd1", "accent_color": "815a3b", "material": "glass", "transparency": 0.28 }
+          }
+        ]
+      },
+      {
+        "id": "east-wall",
+        "side": "east",
+        "appearance": { "base_color": "174b36", "material": "paint" },
+        "openings": []
+      }
+    ]
+  },
+  "objects": [
+    {
+      "id": "hammock",
+      "name": "Striped hammock on a freestanding frame",
+      "kind": "hammock",
+      "position": [-45, 0, -51],
+      "dimensions": [82, 36, 34],
+      "rotation_degrees": -7,
+      "blocks_navigation": true,
+      "appearance": { "archetype": "simple", "base_color": "8c7769", "accent_color": "d8c4a5", "material": "fabric" }
+    },
+    {
+      "id": "floor-lamp",
+      "kind": "floor lamp",
+      "position": [-72, 0, 2],
+      "dimensions": [12, 66, 12],
+      "blocks_navigation": true,
+      "appearance": { "archetype": "cylinder", "base_color": "aaa69b", "accent_color": "eee3c7", "material": "metal" }
+    },
+    {
+      "id": "work-desk",
+      "name": "Computer desk with monitors",
+      "kind": "desk",
+      "position": [-20, 0, 59],
+      "dimensions": [70, 29, 26],
+      "blocks_navigation": true,
+      "appearance": { "archetype": "workbench", "base_color": "302b27", "accent_color": "a77548", "material": "wood" },
+      "surface": {
+        "region_id": "OFFICE_DESK_TOP",
+        "height": 29,
+        "anchor": [-20, 29, 59]
+      }
+    },
+    {
+      "id": "display-cabinet",
+      "name": "Tall glass-front wooden display cabinet",
+      "kind": "curio cabinet",
+      "position": [54, 0, 49],
+      "dimensions": [30, 72, 22],
+      "blocks_navigation": true,
+      "appearance": { "archetype": "cabinet", "base_color": "946139", "accent_color": "c89c63", "material": "wood" }
+    },
+    {
+      "id": "rocking-chair",
+      "kind": "wooden rocking chair",
+      "position": [-65, 0, 32],
+      "dimensions": [30, 42, 34],
+      "blocks_navigation": true,
+      "appearance": { "archetype": "chair", "base_color": "754b2f", "accent_color": "a67442", "material": "wood" }
+    },
+    {
+      "id": "green-saucer-chair",
+      "name": "Low lime-green saucer chair",
+      "kind": "saucer chair",
+      "position": [34, 0, -8],
+      "dimensions": [28, 12, 28],
+      "blocks_navigation": true,
+      "appearance": { "archetype": "chair", "base_color": "83e83e", "accent_color": "26312a", "material": "plastic" }
+    },
+    {
+      "id": "floor-rug",
+      "kind": "gray rug under the desk",
+      "position": [-21, 0, 16],
+      "dimensions": [64, 1, 38],
+      "blocks_navigation": false,
+      "appearance": { "archetype": "rug", "base_color": "716f69", "accent_color": "a8a49b", "material": "fabric" }
+    },
+    {
+      "id": "storage-bin",
+      "kind": "plastic storage bin",
+      "position": [41, 0, 17],
+      "dimensions": [18, 21, 18],
+      "blocks_navigation": true,
+      "appearance": { "archetype": "box_with_lid", "base_color": "999d92", "accent_color": "c4c6bc", "material": "plastic" }
+    },
+    {
+      "id": "dragon-wall-art",
+      "kind": "large dragon triptych wall art",
+      "position": [-20, 56, 82],
+      "dimensions": [64, 32, 1],
+      "blocks_navigation": false,
+      "appearance": { "archetype": "simple", "base_color": "55483a", "accent_color": "a24c2d", "material": "other" }
+    },
+    {
+      "id": "map-poster",
+      "kind": "framed map poster",
+      "position": [-94, 40, -7],
+      "dimensions": [1, 30, 21],
+      "blocks_navigation": false,
+      "appearance": { "archetype": "simple", "base_color": "729a9a", "accent_color": "a95d49", "material": "other" }
+    },
+    {
+      "id": "wall-clock",
+      "kind": "decorative wall clock",
+      "position": [-94, 48, 44],
+      "dimensions": [1, 22, 14],
+      "blocks_navigation": false,
+      "appearance": { "archetype": "simple", "base_color": "80603e", "accent_color": "d0b780", "material": "wood" }
+    }
+  ],
+  "target_surface_id": "OFFICE_DESK_TOP",
+  "construction": {
+    "depot_pickup": [27, 0, -23]
+  },
+  "landmarks": {
+    "workshop": [-12, 0, -18],
+    "depot": [37, 0, -31],
+    "housing": [12, 0, 18],
+    "work_area": [-20, 0, 34]
+  },
+  "activity_stations": {
+    "workshop": [[-12, 0, -18]],
+    "housing": [12, 0, 18],
+    "work_area": [-20, 0, 34],
+    "patrol": [[-78, 0, -9], [72, 0, -37], [72, 0, 19], [-15, 0, -74]]
+  },
+  "spawn": {
+    "center": [0, 0, -28],
+    "dimensions": [12, 0, 12]
+  },
+  "camera": {
+    "cutaway_wall_id": "south-wall"
+  }
+}

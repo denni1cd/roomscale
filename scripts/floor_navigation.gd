@@ -46,11 +46,12 @@ func _rebuild_grid() -> void:
 		var padding_array: Array = object.get("navigation_padding", [0.0, 0.0, 0.0])
 		var padding := Vector2(float(padding_array[0]), float(padding_array[2]))
 		var angle := deg_to_rad(float(object.get("rotation_degrees", 0.0)))
+		var local_half := dimensions_2d * 0.5 + padding
 		var rotated_half := Vector2(
-			absf(cos(angle)) * dimensions_2d.x * 0.5 + absf(sin(angle)) * dimensions_2d.y * 0.5,
-			absf(sin(angle)) * dimensions_2d.x * 0.5 + absf(cos(angle)) * dimensions_2d.y * 0.5
+			absf(cos(angle)) * local_half.x + absf(sin(angle)) * local_half.y,
+			absf(sin(angle)) * local_half.x + absf(cos(angle)) * local_half.y
 		)
-		_add_blocked_rect(Vector2(position.x, position.z), rotated_half + padding, String(object.id))
+		_add_blocked_rect(Vector2(position.x, position.z), rotated_half, String(object.id))
 	_mark_obstacle_cells()
 	print("ROOMSCALE_FLOOR_NAV_READY room=%s grid=%dx%d cell=%.0fin obstacles=%d" % [room_definition.id, cells_x, cells_z, CELL_INCHES, obstacle_rects.size()])
 

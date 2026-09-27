@@ -1,0 +1,23 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 591.86 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5090
+
+ROOMSCALE_FLOOR_NAV_READY room=room_photo_luna grid=54x48 cell=4in obstacles=6
+ROOMSCALE_CITIZEN_SPAWN count=50 separate_nodes=true height=0.5in
+ROOMSCALE_M2_READY Godot=4.7.2-stable (official) room=room_photo_luna size=216x192 in citizens=50
+ROOMSCALE_VISUAL_CAPTURE phase=initial-room path=C:\Users\Zero\python_projects\ai\roomscale\verification\poc2\canonical-primary-visuals/room_photo_luna-initial-room.png size=1280x720
+ROOMSCALE_VISUAL_CAPTURE phase=citizen-inspection path=C:\Users\Zero\python_projects\ai\roomscale\verification\poc2\canonical-primary-visuals/room_photo_luna-citizen-inspection.png size=1280x720
+ROOMSCALE_VISUAL_CAPTURE phase=living-civilization path=C:\Users\Zero\python_projects\ai\roomscale\verification\poc2\canonical-primary-visuals/room_photo_luna-living-civilization.png size=1280x720
+ROOMSCALE_VISUAL_CAPTURE phase=target-investigation path=C:\Users\Zero\python_projects\ai\roomscale\verification\poc2\canonical-primary-visuals/room_photo_luna-target-investigation.png size=1280x720
+
+ERROR: Condition "hr != ((HRESULT)0x00000000)" is true. Returning: ERR_CANT_OPEN
+   at: audio_device_init (drivers/wasapi/audio_driver_wasapi.cpp:275)
+ERROR: WASAPI: init_output_device error.
+   at: init (drivers/wasapi/audio_driver_wasapi.cpp:600)
+WARNING: All audio drivers failed, falling back to the dummy driver.
+   at: initialize (servers/audio/audio_server.cpp:258)
+ERROR: ROOMSCALE_SMOKE_FAIL: construction project initialized with incorrect inventory or state: { "created": true, "state": "DELIVERING", "required": { "wood": 4, "metal": 4, "mechanical_parts": 3 }, "stockpile": { "wood": 3, "metal": 4, "mechanical_parts": 3 }, "picked_up": { "wood": 1, "metal": 0, "mechanical_parts": 0 }, "delivered": { "wood": 0, "metal": 0, "mechanical_parts": 0 }, "active_stage": "locked", "stage_progress": 0.0, "completed_stages": 0, "stage_gates": [], "progress_percent": 0.0, "site": (82.0, 0.0, -78.0), "cable_deployed": false, "floor_target_connected": false, "traversal": {  } }
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _fail (res://scripts/smoke_test.gd:520)
+       [1] _run (res://scripts/smoke_test.gd:206)
+       [2] _capture_visual (res://scripts/smoke_test.gd:516)

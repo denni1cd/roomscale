@@ -1,0 +1,12 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ROOMSCALE_FLOOR_NAV_READY room=m2_fixture grid=60x45 cell=4in obstacles=11
+ROOMSCALE_CITIZEN_SPAWN count=50 separate_nodes=true height=0.5in
+ROOMSCALE_M2_READY Godot=4.7.2-stable (official) room=m2_fixture size=240x180 in citizens=50
+ROOMSCALE_TRAVERSAL_START route=85.2in timeout=33.1s start=(5.999998, 5.0, -64.12093) target=(-58.0, 35.0, -52.0)
+
+ERROR: ROOMSCALE_SMOKE_FAIL: session infrastructure failed to preserve a usable traversal route
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _fail (res://scripts/smoke_test.gd:520)
+       [1] _run (res://scripts/smoke_test.gd:450)

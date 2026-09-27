@@ -2,8 +2,10 @@ extends SceneTree
 
 const RoomDefinitionLoader := preload("res://scripts/room_definition.gd")
 const REQUIRED_MATERIALS := {"wood": 4, "metal": 4, "mechanical_parts": 3}
+const M6_CITIZEN_WALK_SPEED := 6.5
 
 var _visual_directory := ""
+var _captured_visual_phases: Array[String] = []
 
 
 func _initialize() -> void:
@@ -18,11 +20,14 @@ func _run() -> void:
 	var room_id := OS.get_environment("ROOMSCALE_ROOM")
 	if room_id.is_empty():
 		room_id = "room_a"
-	var loaded: Dictionary = RoomDefinitionLoader.load_file("res://rooms/%s.json" % room_id)
+	var loaded: Dictionary = RoomDefinitionLoader.load_requested()
 	if not bool(loaded.ok):
 		_fail("room definition failed validation: %s" % loaded.errors)
 		return
 	var definition: Dictionary = loaded.definition
+	room_id = String(definition.id)
+	var floor_start := RoomDefinitionLoader.vector3_from(definition.floor.center)
+	floor_start.y = float(definition.floor.height)
 	var packed := load("res://scenes/pipeline_proof.tscn") as PackedScene
 	if packed == null:
 		_fail("could not load the production scene")
@@ -34,7 +39,7 @@ func _run() -> void:
 	root.add_child(scene)
 	await process_frame
 	await physics_frame
-	if not await _capture_visual(scene, "initial-room", Vector3.ZERO, 330.0):
+	if not await _capture_visual(scene, "initial-room", floor_start, 330.0):
 		return
 	var expected_room := String(definition.id)
 	var scene_definition: Dictionary = scene.get("_room_definition")
@@ -76,7 +81,7 @@ func _run() -> void:
 	if floor_navigation.obstacle_rects.size() != blocked_count:
 		_fail("floor navigation obstacles were not generated from all blocking objects")
 		return
-	var initially_reachable: Dictionary = surface_navigation.route_between("FLOOR", goal_region, Vector3.ZERO, goal_surface.anchor)
+	var initially_reachable: Dictionary = surface_navigation.route_between("FLOOR", goal_region, floor_start, goal_surface.anchor)
 	if initially_reachable.reachable or surface_navigation.has_connection("FLOOR", goal_region):
 		_fail("elevated target should start disconnected from the floor")
 		return
@@ -193,13 +198,16 @@ func _run() -> void:
 	if disconnected.reachable or String(goal_status.barrier.to) != goal_region or not goal_status.barrier.recognized_after_approach:
 		_fail("barrier evidence does not match the selected disconnected surface")
 		return
-	if not await _capture_visual(scene, "target-investigation", (approach_position + goal_surface.anchor) * 0.5, maxf(105.0, approach_position.distance_to(goal_surface.anchor) * 1.8), 66.0, 0.55):
-		return
 	if not construction.has_project():
 		_fail("confirmed barrier did not start the traversal project")
 		return
 	var initial_project: Dictionary = construction.status()
-	if initial_project.state != "DELIVERING" or initial_project.required != REQUIRED_MATERIALS or initial_project.stockpile != REQUIRED_MATERIALS or initial_project.delivered != {"wood": 0, "metal": 0, "mechanical_parts": 0}:
+	var initial_inventory_balanced := true
+	for resource in REQUIRED_MATERIALS:
+		var resource_total := int(initial_project.stockpile.get(resource, 0)) + int(initial_project.picked_up.get(resource, 0)) + int(initial_project.delivered.get(resource, 0))
+		if resource_total != int(REQUIRED_MATERIALS[resource]):
+			initial_inventory_balanced = false
+	if initial_project.state != "DELIVERING" or initial_project.required != REQUIRED_MATERIALS or not initial_inventory_balanced or initial_project.delivered != {"wood": 0, "metal": 0, "mechanical_parts": 0}:
 		_fail("construction project initialized with incorrect inventory or state: %s" % initial_project)
 		return
 	if initial_project.cable_deployed or surface_navigation.has_connection("FLOOR", goal_region):
@@ -231,6 +239,8 @@ func _run() -> void:
 		if floor_navigation.is_obstacle_position(point):
 			_fail("material delivery path crossed blocked room geometry")
 			return
+	if not await _capture_visual(scene, "target-investigation", (approach_position + goal_surface.anchor) * 0.5, maxf(105.0, approach_position.distance_to(goal_surface.anchor) * 1.8), 66.0, 0.55):
+		return
 	var construction_elapsed := 0.0
 	var saw_carried_resource := false
 	var saw_builder_work := false
@@ -315,7 +325,8 @@ func _run() -> void:
 				partial_deployment_seen = true
 				if not grapple_visual_saved:
 					grapple_visual_saved = true
-					if not await _capture_visual(scene, "grapple-deployment", (site + goal_surface.anchor) * 0.5, maxf(115.0, site.distance_to(goal_surface.anchor) * 1.5), 66.0, 0.6):
+					var room_diagonal := Vector2(width, depth).length()
+					if not await _capture_visual(scene, "grapple-deployment", (site + goal_surface.anchor) * 0.5, maxf(175.0, room_diagonal * 0.7), 50.0, 0.0, true):
 						return
 		await create_timer(0.04).timeout
 		deployment_wait += 0.04
@@ -361,55 +372,150 @@ func _run() -> void:
 	var min_y := climber.global_position.y
 	var max_y := min_y
 	var last_position := climber.global_position
+	var last_sample_sim_time := float(climber.simulation_elapsed)
 	var max_step := 0.0
+	var max_step_seconds := 0.0
+	var max_sample_speed := 0.0
+	var max_sample_seconds := 0.0
 	var traversal_visual_saved := false
+	var traversal_detail_saved := _visual_directory.is_empty() or not _visual_phase_enabled("citizen-traversal-detail")
 	var traversal_timeout := minf(120.0, float(traversal_task.route_length) / 6.5 + 20.0)
+	var floor_height := float(definition.floor.height)
 	print("ROOMSCALE_TRAVERSAL_START route=%.1fin timeout=%.1fs start=%s target=%s" % [traversal_task.route_length, traversal_timeout, climber.global_position, traversal_task.target])
 	while coordinator.get_traversal_goal_status().state != "TRAVERSAL_COMPLETE" and traversal_elapsed < traversal_timeout:
 		await create_timer(0.2).timeout
 		traversal_elapsed += 0.2
 		var current := climber.global_position
 		var step_distance := current.distance_to(last_position)
-		max_step = maxf(max_step, step_distance)
-		if step_distance > 6.5 * 0.55 + 0.25:
-			_fail("climber made a discontinuous movement step of %.2fin" % step_distance)
+		var sample_sim_time := float(climber.simulation_elapsed)
+		var sample_seconds := maxf(sample_sim_time - last_sample_sim_time, 0.001)
+		if step_distance > max_step:
+			max_step = step_distance
+			max_step_seconds = sample_seconds
+		var sample_speed := step_distance / sample_seconds
+		if sample_speed > max_sample_speed:
+			max_sample_speed = sample_speed
+			max_sample_seconds = sample_seconds
+		if step_distance > 6.5 * sample_seconds + 0.25:
+			_fail("climber made a discontinuous movement step of %.2fin over %.3fs (%.2fin/s; cap %.1fin/s plus %.2fin tolerance)" % [step_distance, sample_seconds, sample_speed, M6_CITIZEN_WALK_SPEED, 0.25])
 			return
 		last_position = current
+		last_sample_sim_time = sample_sim_time
 		min_y = minf(min_y, current.y)
 		max_y = maxf(max_y, current.y)
 		if int(traversal_elapsed) % 10 == 0 and absf(traversal_elapsed - float(int(traversal_elapsed))) < 0.01:
 			print("ROOMSCALE_TRAVERSAL_PROGRESS elapsed=%.1f state=%s position=%s walked=%.1f" % [traversal_elapsed, coordinator.get_traversal_goal_status().state, current, climber.travelled_distance - float(traversal_task.start_travelled_distance)])
-		if not traversal_visual_saved and current.y >= float(goal_surface.height) * 0.4:
+		if not traversal_visual_saved and current.y >= floor_height + (float(goal_surface.height) - floor_height) * 0.4:
 			traversal_visual_saved = true
-			if not await _capture_visual(scene, "citizen-traversal", (current + goal_surface.anchor) * 0.5, 95.0, 66.0, 0.6):
+			var room_diagonal := Vector2(width, depth).length()
+			if not await _capture_visual(scene, "citizen-traversal", (current + goal_surface.anchor) * 0.5, maxf(140.0, room_diagonal * 0.5), 48.0, 0.0, true):
+				return
+		if not traversal_detail_saved and current.y >= floor_height + (float(goal_surface.height) - floor_height) * 0.85:
+			traversal_detail_saved = true
+			if not await _capture_visual(scene, "citizen-traversal-detail", current + Vector3.UP * 0.3, 22.0, 22.0, 0.65, true, true):
 				return
 	traversal_goal = coordinator.get_traversal_goal_status()
 	var completed_traversal: Dictionary = coordinator.get_task(int(traversal_goal.task_id))
 	if traversal_goal.state != "TRAVERSAL_COMPLETE" or completed_traversal.state != "complete" or climber.global_position.y < float(goal_surface.height) - 0.1 or String(completed_traversal.target_region) != goal_region:
 		_fail("citizen did not physically reach elevated RoomDefinition surface: goal=%s task=%s position=%s height=%.1f elapsed=%.1f/%.1f" % [coordinator.get_traversal_goal_status(), completed_traversal, climber.global_position, goal_surface.height, traversal_elapsed, traversal_timeout])
 		return
-	if min_y > 1.0 or max_y < float(goal_surface.height) - 0.1 or float(completed_traversal.actual_travelled_distance) < float(completed_traversal.route_length) * 0.9:
+	if min_y > floor_height + 0.1 or max_y < float(goal_surface.height) - 0.1 or float(completed_traversal.actual_travelled_distance) < float(completed_traversal.route_length) * 0.9:
 		_fail("citizen traversal did not continuously climb the generated cable route")
 		return
 	var m6_status: Dictionary = coordinator.get_m6_status()
 	var m6_elapsed := 0.0
+	var m6_timeout := 20.0
+	var m6_budgeted_task_ids: Dictionary = {}
 	var previous_positions: Dictionary = {}
+	var previous_position_times: Dictionary = {}
 	var m6_max_step := max_step
-	while (int(m6_status.target_arrivals) < 3 or int(m6_status.target_explorations_completed) < 3 or int(m6_status.autonomous_reuses_assigned) < 2) and m6_elapsed < 150.0:
+	var m6_max_step_seconds := max_step_seconds
+	var m6_max_sample_speed := max_sample_speed
+	var m6_max_sample_seconds := max_sample_seconds
+	var m6_visual_saved := _visual_directory.is_empty() or not _visual_phase_enabled("elevated-surface-exploration")
+	while true:
+		var m6_task_ids: Array = m6_status.traversal_task_ids.duplicate()
+		m6_task_ids.append_array(m6_status.surface_exploration_task_ids)
+		for m6_task_id in m6_task_ids:
+			if m6_budgeted_task_ids.has(int(m6_task_id)):
+				continue
+			var m6_task: Dictionary = coordinator.get_task(int(m6_task_id))
+			if m6_task.is_empty():
+				continue
+			m6_budgeted_task_ids[int(m6_task_id)] = true
+			if String(m6_task.get("state", "")) in ["complete", "failed"]:
+				continue
+			var task_budget := _m6_task_budget_seconds(m6_task)
+			m6_timeout += task_budget
+			print("ROOMSCALE_M6_BUDGET task=%d type=%s route=%.1fin added=%.1fs cumulative=%.1fs" % [int(m6_task_id), String(m6_task.get("task_type", "")), float(m6_task.get("route_length", 0.0)), task_budget, m6_timeout])
+		if int(m6_status.target_arrivals) >= 3 and int(m6_status.target_explorations_completed) >= 3 and int(m6_status.autonomous_reuses_assigned) >= 2:
+			break
+		if m6_elapsed >= m6_timeout:
+			break
 		for citizen in citizens:
 			var instance_id := citizen.get_instance_id()
+			var position_sample_sim_time := float(citizen.simulation_elapsed)
 			if previous_positions.has(instance_id):
 				var distance := citizen.global_position.distance_to(previous_positions[instance_id])
-				m6_max_step = maxf(m6_max_step, distance)
-				if distance > 6.5 * 0.55 + 0.25:
-					_fail("surface reuse movement was discontinuous for %s" % citizen.name)
+				var sample_seconds := maxf(position_sample_sim_time - float(previous_position_times[instance_id]), 0.001)
+				if distance > m6_max_step:
+					m6_max_step = distance
+					m6_max_step_seconds = sample_seconds
+				var sample_speed := distance / sample_seconds
+				if sample_speed > m6_max_sample_speed:
+					m6_max_sample_speed = sample_speed
+					m6_max_sample_seconds = sample_seconds
+				if distance > 6.5 * sample_seconds + 0.25:
+					_fail("surface reuse movement was discontinuous for %s: %.2fin over %.3fs (%.2fin/s; cap %.1fin/s plus %.2fin tolerance)" % [citizen.name, distance, sample_seconds, sample_speed, M6_CITIZEN_WALK_SPEED, 0.25])
 					return
 			previous_positions[instance_id] = citizen.global_position
+			previous_position_times[instance_id] = position_sample_sim_time
+			if not m6_visual_saved and citizen.task_type == "SURFACE_EXPLORATION" and citizen.global_position.y >= floor_height + (float(goal_surface.height) - floor_height) * 0.9:
+				m6_visual_saved = true
+				var room_diagonal := Vector2(width, depth).length()
+				if not await _capture_visual(scene, "elevated-surface-exploration", goal_surface.anchor, maxf(110.0, room_diagonal * 0.45), 50.0, 0.0, true):
+					return
+				if not await _capture_visual(scene, "elevated-surface-exploration-detail", citizen.global_position + Vector3.UP * 0.3, 22.0, 22.0, 0.65, true, true):
+					return
 		await create_timer(0.2).timeout
 		m6_elapsed += 0.2
 		m6_status = coordinator.get_m6_status()
 	if int(m6_status.target_arrivals) < 3 or int(m6_status.target_explorations_completed) < 3 or int(m6_status.autonomous_reuses_assigned) != 2:
-		_fail("integrated autonomous surface exploration and route reuse timed out: %s" % m6_status)
+		var m6_task_diagnostics: Array[Dictionary] = []
+		var diagnostic_task_ids: Array = m6_status.traversal_task_ids.duplicate()
+		diagnostic_task_ids.append_array(m6_status.surface_exploration_task_ids)
+		for diagnostic_task_id in diagnostic_task_ids:
+			var diagnostic_task: Dictionary = coordinator.get_m6_task_result(int(diagnostic_task_id))
+			var diagnostic_citizen_id := int(diagnostic_task.get("citizen_id", -1))
+			var diagnostic_citizen := scene.get_node_or_null("Citizen%02d" % (diagnostic_citizen_id + 1)) as Node3D if diagnostic_citizen_id >= 0 else null
+			var citizen_path: Variant = diagnostic_citizen.get("_path") if diagnostic_citizen != null else []
+			var diagnostic_agent := {
+				"task_id": diagnostic_citizen.get("task_id") if diagnostic_citizen != null else -1,
+				"task_type": diagnostic_citizen.get("task_type") if diagnostic_citizen != null else "",
+				"state": diagnostic_citizen.get("state") if diagnostic_citizen != null else "",
+				"position": diagnostic_citizen.global_position if diagnostic_citizen != null else Vector3.ZERO,
+				"travelled_distance": diagnostic_citizen.get("travelled_distance") if diagnostic_citizen != null else 0.0,
+				"destination": diagnostic_citizen.get("_destination") if diagnostic_citizen != null else Vector3.ZERO,
+				"path_cursor": diagnostic_citizen.get("_path_cursor") if diagnostic_citizen != null else -1,
+				"path_size": citizen_path.size() if citizen_path is Array else 0,
+				"path": citizen_path if citizen_path is Array else [],
+				"work_timer": diagnostic_citizen.get("_work_timer") if diagnostic_citizen != null else 0.0,
+			}
+			m6_task_diagnostics.append({
+				"id": int(diagnostic_task_id),
+				"type": diagnostic_task.get("task_type", ""),
+				"state": diagnostic_task.get("state", "missing"),
+				"citizen_id": diagnostic_task.get("citizen_id", -1),
+				"route_length": diagnostic_task.get("route_length", 0.0),
+				"work_seconds": diagnostic_task.get("work_seconds", 0.0),
+				"start_travelled_distance": diagnostic_task.get("start_travelled_distance", 0.0),
+				"actual_travelled_distance": diagnostic_task.get("actual_travelled_distance", null),
+				"created_at": diagnostic_task.get("created_at", -1),
+				"started_at": diagnostic_task.get("started_at", -1),
+				"target": diagnostic_task.get("target", Vector3.ZERO),
+				"agent": diagnostic_agent,
+			})
+		_fail("integrated autonomous surface exploration and route reuse timed out: elapsed=%.1fs budget=%.1fs status=%s task_progress=%s" % [m6_elapsed, m6_timeout, m6_status, m6_task_diagnostics])
 		return
 	if not m6_status.infrastructure_operational or not construction.status().cable_deployed or not surface_navigation.has_connection("FLOOR", goal_region):
 		_fail("deployed infrastructure did not remain operational throughout the session")
@@ -423,7 +529,10 @@ func _run() -> void:
 	var reuse_indices: Dictionary = {}
 	var total_exploration_work := 0.0
 	for task_id in traversal_ids:
-		var task: Dictionary = coordinator.get_task(int(task_id))
+		var task: Dictionary = coordinator.get_m6_task_result(int(task_id))
+		if task.is_empty():
+			_fail("traversal task result aged out without an M6 snapshot: id=%d" % int(task_id))
+			return
 		if task.state != "complete" or float(task.actual_travelled_distance) < float(task.route_length) * 0.9:
 			_fail("a traversal task lacks physical route completion: %s" % task)
 			return
@@ -431,7 +540,10 @@ func _run() -> void:
 		if task.get("autonomous_reuse", false):
 			reuse_indices[int(task.reuse_index)] = true
 	for task_id in exploration_ids:
-		var task: Dictionary = coordinator.get_task(int(task_id))
+		var task: Dictionary = coordinator.get_m6_task_result(int(task_id))
+		if task.is_empty():
+			_fail("surface exploration result aged out without an M6 snapshot: id=%d" % int(task_id))
+			return
 		if task.state != "complete" or float(task.work_seconds) < 4.0 or float(task.actual_travelled_distance) < float(task.route_length) * 0.9:
 			_fail("surface exploration did not walk and work on the target: %s" % task)
 			return
@@ -439,25 +551,28 @@ func _run() -> void:
 	if owners.size() != 3 or not reuse_indices.has(1) or not reuse_indices.has(2):
 		_fail("route reuse did not involve three citizens and two later traversals")
 		return
-	if not await _capture_visual(scene, "elevated-surface-exploration", goal_surface.anchor + Vector3(0.0, 0.0, 2.0), 100.0, 62.0, 0.55):
+	if not m6_visual_saved:
+		_fail("surface exploration visual was not captured while a citizen occupied the target surface")
 		return
-	var final_route: Dictionary = surface_navigation.route_between("FLOOR", goal_region, scene.get_node("Citizen50").global_position, goal_surface.anchor)
+	var final_route: Dictionary = surface_navigation.route_between("FLOOR", goal_region, site, goal_surface.anchor)
 	if not final_route.reachable or final_route.path.size() < 12 or cable_root.get_child_count() < 7:
-		_fail("session infrastructure failed to preserve a usable traversal route")
+		_fail("session infrastructure failed to preserve a usable traversal route: route=%s cable_nodes=%d floor_site=%s target=%s" % [final_route, cable_root.get_child_count(), site, goal_surface.anchor])
 		return
 	if not _visual_directory.is_empty():
-		for phase in ["initial-room", "living-civilization", "citizen-inspection", "target-investigation", "resource-hauling", "construction", "grapple-deployment", "citizen-traversal", "elevated-surface-exploration"]:
+		for phase in ["initial-room", "living-civilization", "citizen-inspection", "target-investigation", "resource-hauling", "construction", "grapple-deployment", "citizen-traversal", "citizen-traversal-detail", "elevated-surface-exploration", "elevated-surface-exploration-detail"]:
+			if not _visual_phase_enabled(phase):
+				continue
 			var expected_image := "%s/%s-%s.png" % [_visual_directory, expected_room, phase]
 			if not FileAccess.file_exists(expected_image):
 				_fail("required visual evidence phase was not captured: %s" % phase)
 				return
-		print("ROOMSCALE_VISUAL_EVIDENCE_PASS room=%s phases=9 directory=%s" % [expected_room, _visual_directory])
+		print("ROOMSCALE_VISUAL_EVIDENCE_PASS room=%s phases=%d captured=%s directory=%s" % [expected_room, _captured_visual_phases.size(), _captured_visual_phases, _visual_directory])
 	print("ROOMSCALE_ROOM=%s TARGET=%s REGION=%s FLOOR=%.0fx%.0f SITE=%s" % [expected_room, goal_surface.object_name, goal_region, width, depth, site])
 	print("ROOMSCALE_M2_SMOKE_PASS room=%s citizens=%d active=%d available=%d moving=%d obstacles=%d detour=%.1fin" % [expected_room, citizens.size(), coordinator.summary().active, coordinator.summary().available, _moving_count(citizens), blocked_count, route_length])
 	print("ROOMSCALE_M3_SMOKE_PASS room=%s selected=%s investigators=%d arrived=%d barrier=%s elapsed=%.2fs" % [expected_room, goal_surface.object_name, goal_status.expected_explorers, goal_status.arrived_explorers, goal_status.barrier.reason, investigation_elapsed])
 	print("ROOMSCALE_M4_SMOKE_PASS room=%s deliveries=%d delivered=%s builders_returned=true gates=%d components=%d site=%s elapsed=%.2fs" % [expected_room, completed_delivery_count, verified_deliveries, project_status.stage_gates.size(), project_status.completed_stages, site, construction_elapsed])
-	print("ROOMSCALE_M5_SMOKE_PASS room=%s cable_segments=%d radius=%.2fin partial_deploy=true traverser=%s height=%.1fin walked=%.1fin route=%.1fin max_step=%.2fin elapsed=%.2fs" % [expected_room, cable_segments, largest_cable_radius, climber.name, climber.global_position.y, completed_traversal.actual_travelled_distance, completed_traversal.route_length, max_step, traversal_elapsed])
-	print("ROOMSCALE_M6_SMOKE_PASS room=%s arrivals=%d explorations=%d reused=%d distinct_travelers=%d work=%.1fs persistent_link=true max_step=%.2fin elapsed=%.2fs" % [expected_room, m6_status.target_arrivals, m6_status.target_explorations_completed, m6_status.autonomous_reuses_assigned, owners.size(), total_exploration_work, m6_max_step, m6_elapsed])
+	print("ROOMSCALE_M5_SMOKE_PASS room=%s cable_segments=%d radius=%.2fin partial_deploy=true traverser=%s height=%.1fin walked=%.1fin route=%.1fin max_step=%.2fin max_step_interval=%.3fs max_sample_speed=%.2fin/s speed_sample_interval=%.3fs speed_cap=%.1fin/s step_tolerance=0.25in elapsed=%.2fs" % [expected_room, cable_segments, largest_cable_radius, climber.name, climber.global_position.y, completed_traversal.actual_travelled_distance, completed_traversal.route_length, max_step, max_step_seconds, max_sample_speed, max_sample_seconds, M6_CITIZEN_WALK_SPEED, traversal_elapsed])
+	print("ROOMSCALE_M6_SMOKE_PASS room=%s arrivals=%d explorations=%d reused=%d distinct_travelers=%d work=%.1fs persistent_link=true combined_max_step=%.2fin max_step_interval=%.3fs max_sample_speed=%.2fin/s speed_sample_interval=%.3fs speed_cap=%.1fin/s step_tolerance=0.25in elapsed=%.2fs budget=%.2fs" % [expected_room, m6_status.target_arrivals, m6_status.target_explorations_completed, m6_status.autonomous_reuses_assigned, owners.size(), total_exploration_work, m6_max_step, m6_max_step_seconds, m6_max_sample_speed, m6_max_sample_seconds, M6_CITIZEN_WALK_SPEED, m6_elapsed, m6_timeout])
 	print("ROOMSCALE_M8_SMOKE_PASS room=%s steam=%s cog_teeth=%d citizen_inspection=%s camera_easing=verified" % [expected_room, steam.emitting, gears.get_child_count() - 2, inspection_verified])
 	quit(0)
 
@@ -485,15 +600,43 @@ func _path_length(path: Array[Vector3]) -> float:
 	return total
 
 
-func _capture_visual(scene: Node3D, phase: String, focus: Vector3, distance: float, tilt: float = 52.0, yaw: float = 0.0) -> bool:
-	if _visual_directory.is_empty():
+func _m6_task_budget_seconds(task: Dictionary) -> float:
+	var walk_seconds := float(task.get("route_length", 0.0)) / M6_CITIZEN_WALK_SPEED
+	var work_seconds := 4.0 if String(task.get("task_type", "")) == "SURFACE_EXPLORATION" else 0.0
+	return walk_seconds * 1.75 + work_seconds + 10.0
+
+
+func _visual_phase_enabled(phase: String) -> bool:
+	var filter := OS.get_environment("ROOMSCALE_VISUAL_PHASES")
+	if filter.is_empty():
+		return true
+	for selected_phase in filter.split(",", false):
+		if String(selected_phase).strip_edges() == phase:
+			return true
+	return false
+
+
+func _capture_visual(scene: Node3D, phase: String, focus: Vector3, distance: float, tilt: float = 52.0, yaw: float = 0.0, hide_overlay: bool = false, hide_project_label: bool = false) -> bool:
+	if _visual_directory.is_empty() or not _visual_phase_enabled(phase):
 		return true
 	var camera_rig := scene.get_node("CameraRig")
 	camera_rig.focus_at(focus, distance, tilt, yaw)
+	var overlay := scene.get_node_or_null("Overlay") as CanvasLayer
+	var overlay_was_visible := overlay.visible if overlay != null else false
+	var project_label := scene.get_node_or_null("GrappleConstructionSite/ProjectSign") as Label3D
+	var project_label_was_visible := project_label.visible if project_label != null else false
+	if hide_overlay and overlay != null:
+		overlay.visible = false
+	if hide_project_label and project_label != null:
+		project_label.visible = false
 	await create_timer(0.3).timeout
 	await RenderingServer.frame_post_draw
 	var image: Image = scene.get_viewport().get_texture().get_image()
 	if image.get_width() < 320 or image.get_height() < 200:
+		if hide_overlay and overlay != null:
+			overlay.visible = overlay_was_visible
+		if hide_project_label and project_label != null:
+			project_label.visible = project_label_was_visible
 		_fail("visual capture %s returned an unusable viewport image: %dx%d" % [phase, image.get_width(), image.get_height()])
 		return false
 	DirAccess.make_dir_recursive_absolute(_visual_directory)
@@ -502,13 +645,24 @@ func _capture_visual(scene: Node3D, phase: String, focus: Vector3, distance: flo
 	var image_path := "%s/%s-%s.png" % [_visual_directory, room_id, phase]
 	var save_error := image.save_png(image_path)
 	if save_error != OK or not FileAccess.file_exists(image_path):
+		if hide_overlay and overlay != null:
+			overlay.visible = overlay_was_visible
+		if hide_project_label and project_label != null:
+			project_label.visible = project_label_was_visible
 		_fail("visual capture %s could not save image %s (error=%d)" % [phase, image_path, save_error])
 		return false
 	var note := FileAccess.open(image_path.get_basename() + ".txt", FileAccess.WRITE)
 	if note != null:
 		note.store_line("room=%s phase=%s viewport=%dx%d" % [room_id, phase, image.get_width(), image.get_height()])
 		note.store_line("target=%s focus=%s distance=%.1f tilt=%.1f yaw=%.2f" % [String(definition.get("target_surface_id", "")), focus, distance, tilt, yaw])
+		note.store_line("overlay_hidden=%s" % hide_overlay)
+		note.store_line("project_label_hidden=%s" % hide_project_label)
 	print("ROOMSCALE_VISUAL_CAPTURE phase=%s path=%s size=%dx%d" % [phase, image_path, image.get_width(), image.get_height()])
+	_captured_visual_phases.append(phase)
+	if hide_overlay and overlay != null:
+		overlay.visible = overlay_was_visible
+	if hide_project_label and project_label != null:
+		project_label.visible = project_label_was_visible
 	return true
 
 

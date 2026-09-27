@@ -1,0 +1,502 @@
+{
+  "activity_stations": {
+    "housing": [
+      -14.0,
+      5.0,
+      66.0
+    ],
+    "patrol": [
+      [
+        -44.0,
+        5.0,
+        20.0
+      ],
+      [
+        42.0,
+        5.0,
+        22.0
+      ],
+      [
+        42.0,
+        5.0,
+        78.0
+      ],
+      [
+        -45.0,
+        5.0,
+        79.0
+      ]
+    ],
+    "work_area": [
+      -3.0,
+      5.0,
+      77.0
+    ],
+    "workshop": [
+      [
+        -20.0,
+        5.0,
+        55.0
+      ],
+      [
+        -8.0,
+        5.0,
+        55.0
+      ],
+      [
+        -14.0,
+        5.0,
+        57.0
+      ]
+    ]
+  },
+  "camera": {
+    "cutaway_wall_id": "north-wall",
+    "fill_position": [
+      5.0,
+      73.0,
+      24.0
+    ],
+    "focus": [
+      0.0,
+      5.0,
+      0.0
+    ],
+    "lantern_position": [
+      -25.0,
+      15.0,
+      60.0
+    ]
+  },
+  "construction": {
+    "depot_pickup": [
+      18.0,
+      5.0,
+      55.0
+    ]
+  },
+  "dimensions": [
+    240.0,
+    180.0
+  ],
+  "display_name": "Room A · Study",
+  "floor": {
+    "center": [
+      0.0,
+      5.0,
+      0.0
+    ],
+    "dimensions": [
+      240.0,
+      180.0
+    ],
+    "height": 5.0
+  },
+  "floor_color": "795b43",
+  "id": "m2_invalid",
+  "landmarks": {
+    "depot": [
+      18.0,
+      5.0,
+      42.0
+    ],
+    "housing": [
+      -25.0,
+      5.0,
+      66.0
+    ],
+    "work_area": [
+      11.0,
+      5.0,
+      66.0
+    ],
+    "workshop": [
+      -20.0,
+      5.0,
+      42.0
+    ]
+  },
+  "objects": [
+    {
+      "appearance": {
+        "accent_color": "c2985c",
+        "archetype": "workbench",
+        "base_color": "81593e",
+        "material": "wood"
+      },
+      "blocks_navigation": true,
+      "color": "81593e",
+      "dimensions": [
+        68.0,
+        30.0,
+        34.0
+      ],
+      "id": "desk",
+      "kind": "table",
+      "name": "Desk",
+      "navigation_padding": [
+        8.0,
+        0.0,
+        7.0
+      ],
+      "position": [
+        -58.0,
+        5.0,
+        -52.0
+      ],
+      "rotation_degrees": 15.0,
+      "surface": {
+        "anchor": [
+          -58.0,
+          35.0,
+          -52.0
+        ],
+        "height": 35.0,
+        "region_id": "STUDY_SURFACE"
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "color": "546d68",
+      "dimensions": [
+        25.0,
+        19.0,
+        23.0
+      ],
+      "id": "chair",
+      "kind": "chair",
+      "name": "Chair",
+      "navigation_padding": [
+        3.0,
+        0.0,
+        3.0
+      ],
+      "position": [
+        -58.0,
+        5.0,
+        -20.0
+      ]
+    },
+    {
+      "blocks_navigation": true,
+      "color": "74503a",
+      "dimensions": [
+        32.0,
+        63.0,
+        17.0
+      ],
+      "id": "bookcase",
+      "kind": "bookcase",
+      "name": "Bookcase",
+      "navigation_padding": [
+        3.0,
+        0.0,
+        2.0
+      ],
+      "position": [
+        91.0,
+        5.0,
+        -63.0
+      ]
+    },
+    {
+      "blocks_navigation": false,
+      "color": "a66e4e",
+      "dimensions": [
+        92.0,
+        0.12,
+        68.0
+      ],
+      "id": "rug",
+      "kind": "rug",
+      "name": "Rug",
+      "position": [
+        50.0,
+        8.0,
+        -22.0
+      ]
+    },
+    {
+      "blocks_navigation": true,
+      "color": "80583d",
+      "dimensions": [
+        20.0,
+        20.0,
+        17.0
+      ],
+      "id": "side_table",
+      "kind": "table",
+      "name": "Side Table",
+      "navigation_padding": [
+        2.0,
+        0.0,
+        2.0
+      ],
+      "position": [
+        44.0,
+        5.0,
+        -15.0
+      ]
+    },
+    {
+      "appearance": {
+        "accent_color": "d5b47a",
+        "archetype": "simple",
+        "base_color": "a98254",
+        "material": "wood"
+      },
+      "blocks_navigation": true,
+      "color": "a98254",
+      "dimensions": [
+        17.0,
+        15.0,
+        14.0
+      ],
+      "id": "storage_box",
+      "kind": "box",
+      "name": "Storage Box",
+      "navigation_padding": [
+        2.0,
+        0.0,
+        2.0
+      ],
+      "position": [
+        75.0,
+        5.0,
+        43.0
+      ]
+    },
+    {
+      "blocks_navigation": true,
+      "color": "637674",
+      "dimensions": [
+        16.0,
+        14.0,
+        16.0
+      ],
+      "id": "waste_bin",
+      "kind": "cylinder",
+      "name": "Waste Bin",
+      "navigation_padding": [
+        2.0,
+        0.0,
+        2.0
+      ],
+      "position": [
+        -99.0,
+        5.0,
+        12.0
+      ]
+    },
+    {
+      "blocks_navigation": true,
+      "color": "789166",
+      "dimensions": [
+        13.0,
+        42.0,
+        12.0
+      ],
+      "id": "plant",
+      "kind": "plant",
+      "name": "Room Plant",
+      "navigation_padding": [
+        2.0,
+        0.0,
+        2.0
+      ],
+      "position": [
+        -91.0,
+        5.0,
+        -46.0
+      ]
+    },
+    {
+      "blocks_navigation": true,
+      "color": "594b3a",
+      "dimensions": [
+        26.0,
+        10.0,
+        18.0
+      ],
+      "id": "workshop",
+      "kind": "settlement",
+      "name": "Workshop",
+      "navigation_padding": [
+        3.0,
+        0.0,
+        3.0
+      ],
+      "position": [
+        -20.0,
+        5.0,
+        42.0
+      ]
+    },
+    {
+      "blocks_navigation": true,
+      "color": "654a37",
+      "dimensions": [
+        24.0,
+        9.0,
+        18.0
+      ],
+      "id": "depot",
+      "kind": "settlement",
+      "name": "Depot",
+      "navigation_padding": [
+        3.0,
+        0.0,
+        3.0
+      ],
+      "position": [
+        18.0,
+        5.0,
+        42.0
+      ]
+    },
+    {
+      "blocks_navigation": true,
+      "color": "745338",
+      "dimensions": [
+        28.0,
+        7.0,
+        17.0
+      ],
+      "id": "housing",
+      "kind": "settlement",
+      "name": "Housing",
+      "navigation_padding": [
+        3.0,
+        0.0,
+        3.0
+      ],
+      "position": [
+        -25.0,
+        5.0,
+        66.0
+      ]
+    },
+    {
+      "blocks_navigation": true,
+      "color": "80664b",
+      "dimensions": [
+        23.0,
+        5.0,
+        12.0
+      ],
+      "id": "work_area",
+      "kind": "settlement",
+      "name": "Work Area",
+      "navigation_padding": [
+        2.0,
+        0.0,
+        2.0
+      ],
+      "position": [
+        11.0,
+        5.0,
+        66.0
+      ]
+    }
+  ],
+  "room_shell": {
+    "baseboard_appearance": {
+      "base_color": "76583f",
+      "material": "wood"
+    },
+    "baseboard_height": 3.0,
+    "floor_appearance": {
+      "base_color": "795b43",
+      "material": "wood"
+    },
+    "wall_thickness": 2.0,
+    "walls": [
+      {
+        "appearance": {
+          "base_color": "d9c9aa",
+          "material": "paint"
+        },
+        "id": "north-wall",
+        "openings": [
+          {
+            "appearance": {
+              "accent_color": "c2985c",
+              "base_color": "795b43",
+              "material": "wood"
+            },
+            "bottom": 0.0,
+            "height": 70.0,
+            "id": "north-door",
+            "kind": "door",
+            "offset": 70.0,
+            "width": 36.0
+          },
+          {
+            "appearance": {
+              "accent_color": "f1e8d4",
+              "base_color": "9bbec8",
+              "material": "glass",
+              "transparency": 0.36
+            },
+            "bottom": 28.0,
+            "height": 32.0,
+            "id": "north-window",
+            "kind": "window",
+            "offset": 145.0,
+            "width": 40.0
+          }
+        ],
+        "side": "north"
+      },
+      {
+        "appearance": {
+          "base_color": "d4c4a8",
+          "material": "paint"
+        },
+        "id": "south-wall",
+        "side": "North"
+      },
+      {
+        "appearance": {
+          "base_color": "cfc2a7",
+          "material": "paint"
+        },
+        "id": "east-wall",
+        "side": "east"
+      },
+      {
+        "appearance": {
+          "base_color": "cfc2a7",
+          "material": "paint"
+        },
+        "id": "west-wall",
+        "openings": [
+          {
+            "bottom": 1.0,
+            "height": 40.0,
+            "id": "west-gap",
+            "kind": "opening",
+            "offset": 60.0,
+            "width": 32.0
+          }
+        ],
+        "side": "west"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "spawn": {
+    "center": [
+      0.0,
+      5.0,
+      46.0
+    ],
+    "dimensions": [
+      96.0,
+      0.0,
+      56.0
+    ]
+  },
+  "target_surface_id": "STUDY_SURFACE",
+  "wall_height": 72.0
+}
