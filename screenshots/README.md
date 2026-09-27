@@ -15,3 +15,7 @@ These are the final production captures from the verified POC 1.5 runs. Each roo
 | Elevated-surface exploration | [room_a-elevated-surface-exploration.png](room_a-elevated-surface-exploration.png) | [room_b-elevated-surface-exploration.png](room_b-elevated-surface-exploration.png) |
 
 The authoritative logs and capture sidecars remain under `verification/poc15/`.
+
+## RoomScale POC 2
+
+POC 2 photo-reconstruction captures are in [poc2/](poc2/). The [improvements document](../docs/POC2_Improvements.md) explains the reconstruction workflow, schema and renderer changes, validation, and visual limits.
