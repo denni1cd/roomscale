@@ -1,6 +1,6 @@
 # Milestone 9 — Documentation and Final Verification
 
-Status: **PASS for repository instructions and final verification artifacts; overall POC disposition remains with the parent review.**
+Status: **PASS for repository instructions and final verification artifacts; overall POC is not declared complete because acceptance limitations and the Aphrael Work handoff remain open.**
 
 ## Updated durable workflow
 
@@ -8,7 +8,7 @@ Status: **PASS for repository instructions and final verification artifacts; ove
 - `docs/RoomDefinition_Contract.md` and `skills/roomscale-room-reconstruction/references/roomdefinition-contract.md` now agree on schema-v2 fields, the 1-inch interior floor-edge clearance, the optional `[x,y,z]` nonnegative navigation-padding vector and default, and spawn center/footprint shape.
 - `skills/roomscale-room-reconstruction/SKILL.md` points the reconstruction model to those placement rules and preserves the photo-evidence/uncertainty and no-manual-authoring requirements.
 - `verification/poc2/acceptance-matrix.md` gives all 48 criteria a conservative status and separates tested, documented-only, partial, and visually limited evidence.
-- Milestone evidence includes M0–M8 status, candidate attempts, validation logs, full production logs, and screenshot notes. Root review and the separate front-door handoff are pending and are not represented as AC passes.
+- Milestone evidence includes M0–M8 status, candidate attempts, validation logs, full production logs, and screenshot notes. Root review is complete. The Aphrael Work request remains pending, and no Aphrael implementation result is claimed.
 
 ## Final verification
 

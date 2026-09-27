@@ -55,4 +55,4 @@ This is the current disposition against the 48 criteria in `RoomScale_POC_2_Proj
 
 ## Overall disposition
 
-The canonical candidate passes structural/runtime-navigation validation and the complete production gameplay loop. The visual reconstruction is recognizable at whole-room scale, but the small citizen/cable are difficult to resolve in gameplay screenshots, and the saved open-top view does not clearly demonstrate the turquoise ceiling plane. AC-2 and AC-48 retain documented limitations above. Root review and the separate front-door handoff remain pending; this matrix does not declare the overall POC complete.
+The canonical candidate passes structural/runtime-navigation validation and the complete production gameplay loop. The visual reconstruction is recognizable at whole-room scale, but the small citizen/cable are difficult to resolve in gameplay screenshots, and the saved open-top view does not clearly demonstrate the turquoise ceiling plane. AC-2 and AC-48 retain documented limitations above. Root review is complete; the Aphrael Work handoff remains pending, and this matrix does not declare the overall POC complete.
