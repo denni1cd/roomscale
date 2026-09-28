@@ -172,6 +172,18 @@ func _run() -> void:
 	if not _expect_invalid(malformed, "offset must be nonnegative") or not _expect_invalid(malformed, "base_color must be a valid") or not _expect_invalid(malformed, "glass_color must be a valid") or not _expect_invalid(malformed, "transparency must be between"):
 		return
 	malformed = v2_fixture.duplicate(true)
+	malformed.room_shell.walls[0].openings[1].exterior_scene = []
+	if not _expect_invalid(malformed, "exterior_scene must be an object"):
+		return
+	malformed = v2_fixture.duplicate(true)
+	malformed.room_shell.walls[0].openings[1].exterior_scene = {"elements":[{"shape":"tree", "position":[0, 0, 12], "dimensions":[8, 16, 8]}]}
+	if not _expect_invalid(malformed, "shape must be one of box, sphere, cylinder"):
+		return
+	malformed = v2_fixture.duplicate(true)
+	malformed.room_shell.walls[0].openings[1].exterior_scene = {"elements":[{"shape":"box", "position":[0, 0], "dimensions":[8, 0, 8]}]}
+	if not _expect_invalid(malformed, "position must contain three finite numbers") or not _expect_invalid(malformed, "dimensions must contain three positive finite numbers"):
+		return
+	malformed = v2_fixture.duplicate(true)
 	malformed.camera = {"fill_position": {"bad": "vector"}, "cutaway_wall_id": {"bad": "wall id"}}
 	if not _expect_invalid(malformed, "camera.fill_position") or not _expect_invalid(malformed, "camera.cutaway_wall_id"):
 		return
@@ -233,7 +245,7 @@ func _run() -> void:
 	if history_fixture.tasks.size() > history_fixture.MAX_HISTORY:
 		_fail("task history exceeded its configured bound during long-run cancellation")
 		return
-	print("ROOMSCALE_FAST_TEST_PASS rooms=2 legacy_schema=verified schema_v2=verified malformed_cases=26 candidate_file=verified obstacles=generated rotated_bounds=verified rotated_approaches=verified elevated_floor=verified elevated_nonblocking_objects=verified room_shell_openings=verified ceiling_crown=verified generic_appearance=verified targets=discovered sites=reachable runtime_navigation=validated region_connectivity=verified task_history=%d/%d" % [history_fixture.tasks.size(), history_fixture.MAX_HISTORY])
+	print("ROOMSCALE_FAST_TEST_PASS rooms=2 legacy_schema=verified schema_v2=verified malformed_cases=29 candidate_file=verified obstacles=generated rotated_bounds=verified rotated_approaches=verified elevated_floor=verified elevated_nonblocking_objects=verified room_shell_openings=verified exterior_scene=verified ceiling_crown=verified generic_appearance=verified targets=discovered sites=reachable runtime_navigation=validated region_connectivity=verified task_history=%d/%d" % [history_fixture.tasks.size(), history_fixture.MAX_HISTORY])
 	quit(0)
 
 
@@ -487,9 +499,45 @@ func _verify_v2_geometry_and_renderer(fixture: Dictionary) -> bool:
 	if room.get_node_or_null("ShellWall_north-wall/FrenchDoorGlass_north-door") == null or room.get_node_or_null("ShellWall_north-wall/WindowPane_north-window") == null or room.get_node_or_null("ShellWall_north-wall/FrenchDoorMuntinH_north-door_0_34") == null or room.get_node_or_null("ShellWall_north-wall/WindowMuntinV_north-window") == null:
 		_fail("styled door/window geometry missing; north wall nodes=%s" % [north_opening_names])
 		return false
-	if room.get_node_or_null("ShellWall_north-wall/ExteriorGreenery_north-window") == null or room.get_node_or_null("ShellWall_north-wall/PorchRailTop_north-window") == null:
-		_fail("window backdrop omitted the greenery or porch rail visible in photo-derived rooms")
+	for side in ["north", "south", "east", "west"]:
+		var shell_wall := room.get_node_or_null("ShellWall_%s-wall" % side) as Node3D
+		if shell_wall == null:
+			continue
+		for visual_variant in shell_wall.get_children():
+			var node_name := String(visual_variant.name)
+			if node_name.begins_with("ExteriorDeck_") or node_name.begins_with("PorchRail") or node_name.begins_with("ExteriorTree") or node_name.begins_with("ExteriorGreenery_") or node_name.begins_with("ExteriorSceneElement_"):
+				_fail("ordinary window acquired undeclared exterior scenery: %s" % node_name)
+				return false
+	var explicit_exterior_fixture: Dictionary = fixture.duplicate(true)
+	explicit_exterior_fixture.room_shell.walls[0].openings[1].exterior_scene = {"elements":[
+		{"shape":"box", "position":[0, 0, 12], "dimensions":[10, 8, 2], "appearance":{"base_color":"cc3322", "material":"paint"}},
+		{"shape":"sphere", "position":[0, 8, 20], "dimensions":[4, 4, 4], "appearance":{"base_color":"22aa55", "material":"plant"}}
+	]}
+	if not RoomDefinitionLoader.validate(explicit_exterior_fixture).is_empty():
+		_fail("valid explicit exterior scene was rejected by validation")
 		return false
+	var explicit_exterior_renderer := PipelineProofController.new()
+	explicit_exterior_renderer.set("_room_definition", explicit_exterior_fixture)
+	explicit_exterior_renderer.call("_build_room")
+	var explicit_exterior_wall := explicit_exterior_renderer.get_node_or_null("Room/ShellWall_north-wall") as Node3D
+	var exterior_elements: Array[MeshInstance3D] = []
+	if explicit_exterior_wall != null:
+		for visual_variant in explicit_exterior_wall.get_children():
+			if String(visual_variant.name).begins_with("ExteriorSceneElement_") and visual_variant is MeshInstance3D:
+				exterior_elements.append(visual_variant as MeshInstance3D)
+	if exterior_elements.size() != 2:
+		_fail("explicit exterior scene should render exactly the two declared shapes; found %d" % exterior_elements.size())
+		return false
+	var explicit_box := exterior_elements[0] if exterior_elements[0].mesh is BoxMesh else exterior_elements[1]
+	var explicit_sphere := exterior_elements[0] if exterior_elements[0].mesh is SphereMesh else exterior_elements[1]
+	var explicit_floor_center := RoomDefinitionLoader.vector3_from(explicit_exterior_fixture.floor.center)
+	var explicit_room_dimensions: Array = explicit_exterior_fixture.dimensions
+	var explicit_window: Dictionary = explicit_exterior_fixture.room_shell.walls[0].openings[1]
+	var explicit_origin := Vector3(explicit_floor_center.x - float(explicit_room_dimensions[0]) * 0.5 + float(explicit_window.offset) + float(explicit_window.width) * 0.5, float(explicit_exterior_fixture.floor.height) + float(explicit_window.bottom) + float(explicit_window.height) * 0.5, explicit_floor_center.z - float(explicit_room_dimensions[1]) * 0.5 - float(explicit_exterior_fixture.room_shell.wall_thickness) * 0.5)
+	if not explicit_box.mesh is BoxMesh or not explicit_sphere.mesh is SphereMesh or not explicit_box.position.is_equal_approx(explicit_origin + Vector3(0.0, 0.0, -12.0)) or not explicit_sphere.position.is_equal_approx(explicit_origin + Vector3(0.0, 8.0, -20.0)):
+		_fail("explicit exterior scene shapes did not follow opening-relative axes and dimensions")
+		return false
+	explicit_exterior_renderer.free()
 	var window_muntin := room.get_node("ShellWall_north-wall/WindowMuntinV_north-window") as MeshInstance3D
 	var window_frame_material := window_muntin.material_override as StandardMaterial3D if window_muntin != null else null
 	if window_frame_material == null or window_frame_material.albedo_color.a < 0.99:
@@ -594,6 +642,10 @@ func _verify_v2_geometry_and_renderer(fixture: Dictionary) -> bool:
 	if display_visual == null or not glass_pane_found or display_visual.get_node_or_null("DisplayShelf_2") == null:
 		_fail("display cabinet renderer omitted glass frontage or interior shelves")
 		return false
+	for cabinet_part in display_visual.get_children():
+		if String(cabinet_part.name).begins_with("CabinetCollectible_"):
+			_fail("display cabinet renderer added undeclared items above the cabinet")
+			return false
 	var cabinet_frame_material: StandardMaterial3D
 	for cabinet_part in display_visual.get_children():
 		if String(cabinet_part.name).begins_with("CabinetSide_"):
@@ -627,11 +679,17 @@ func _verify_v2_geometry_and_renderer(fixture: Dictionary) -> bool:
 	if collectibles_visual == null or collectibles_visual.get_node_or_null("CollectibleBox_0_0") == null:
 		_fail("display-top collectibles renderer omitted its individual boxes")
 		return false
-	var art_fixture := {"id":"visual_dragon_art_test", "kind":"wall_art", "position":[0, 0, 0], "dimensions":[65, 30, 1], "appearance":{"archetype":"dragon_triptych", "base_color":"9a9478", "accent_color":"514c42", "material":"other"}}
+	var art_fixture := {"id":"visual_triptych_art_test", "kind":"wall_art", "position":[0, 0, 0], "dimensions":[65, 30, 1], "appearance":{"archetype":"triptych_art", "base_color":"9a9478", "accent_color":"514c42", "material":"other"}}
 	object_renderer.call("_build_room_object", object_parent, art_fixture)
-	var art_visual := object_parent.get_node_or_null("visual_dragon_art_test")
-	if art_visual == null or art_visual.get_node_or_null("DragonWingLeft") == null or art_visual.get_node_or_null("ArtPanel_2") == null:
-		_fail("dragon triptych renderer omitted its panel composition or dragon silhouette")
+	var art_visual := object_parent.get_node_or_null("visual_triptych_art_test")
+	if art_visual == null or art_visual.get_node_or_null("TriptychTriangle_0") == null or art_visual.get_node_or_null("ArtPanel_2") == null:
+		_fail("generic triptych renderer omitted its panel composition or abstract shapes")
+		return false
+	var emblem_fixture := {"id":"visual_wall_emblem_test", "kind":"wall_decoration", "position":[0, 0, 0], "dimensions":[14, 14, 1], "appearance":{"archetype":"wall_emblem", "base_color":"bec5bd", "accent_color":"666a66", "material":"metal"}}
+	object_renderer.call("_build_room_object", object_parent, emblem_fixture)
+	var emblem_visual := object_parent.get_node_or_null("visual_wall_emblem_test")
+	if emblem_visual == null or emblem_visual.get_node_or_null("EmblemRay_0") == null or emblem_visual.get_node_or_null("EmblemCenter") == null:
+		_fail("generic wall emblem renderer omitted its radial geometry")
 		return false
 	var bookcase_fixture := {"id":"visual_built_in_test", "kind":"bookcase", "position":[0, 0, 0], "dimensions":[94, 101, 22], "appearance":{"archetype":"built_in_bookcase", "base_color":"785638", "accent_color":"50351f", "material":"wood"}}
 	object_renderer.call("_build_room_object", object_parent, bookcase_fixture)

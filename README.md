@@ -6,7 +6,7 @@ RoomScale is a small 3D civilization simulation where half-inch citizens treat a
 
 POC 1.5 is complete and verified. Room A and Room B each pass the complete production scenario through the same gameplay systems; the required A → B → A sequence and five-run-per-room stability gates are recorded in [the acceptance matrix](docs/POC_1.5_ACCEPTANCE.md).
 
-POC 2 adds a portable photo-to-RoomDefinition workflow. The packaged reconstruction skill is in `skills/roomscale-room-reconstruction/`; the current canonical photo candidate, attempt history, logs, captures, and per-criterion status are under `verification/poc2/`. The user accepts primary attempt 7 for current tests; closer visual resemblance is deferred graphics work. See [the POC 2 acceptance matrix](verification/poc2/acceptance-matrix.md) for the remaining fresh-AI different-room authoring evidence.
+POC 2 is complete: its final architectural cleanup and required regression suite have passed. The packaged photo-to-RoomDefinition skill is in `skills/roomscale-room-reconstruction/`; the accepted canonical photo candidate is `verification/poc2/candidates/primary/attempt-7/room_photo_luna.json`, with attempt history, validation/gameplay logs, captures, and per-criterion status under `verification/poc2/`. AC-48 fresh-context different-room evidence also passes. POC 2 was marked complete only after these final checks passed; see [the acceptance matrix](verification/poc2/acceptance-matrix.md) and [milestone 9 status](verification/poc2/m9-status.md) for the evidence. The user accepts attempt 7 for current tests; closer visual resemblance is deferred graphics work.
 
 ## Setup and launch
 
@@ -66,8 +66,8 @@ Room placement data has a one-inch interior floor-edge clearance. Optional objec
 ./TEST_ROOM_SCALE.ps1 -Room verification/poc2/candidates/candidate_room.json -TimeoutSeconds 360
 
 # Current canonical photo-based candidate (validation and gameplay evidence)
-./VALIDATE_ROOM_SCALE.ps1 -Room verification/poc2/candidates/primary/attempt-2/room_photo_luna.json
-./TEST_ROOM_SCALE.ps1 -Room verification/poc2/candidates/primary/attempt-2/room_photo_luna.json -TimeoutSeconds 360
+./VALIDATE_ROOM_SCALE.ps1 -Room verification/poc2/candidates/primary/attempt-7/room_photo_luna.json
+./TEST_ROOM_SCALE.ps1 -Room verification/poc2/candidates/primary/attempt-7/room_photo_luna.json -TimeoutSeconds 360
 
 # Required no-source-change cross-room sequence
 ./TEST_ROOM_SCALE_CROSSROOM.ps1 -PerRunTimeoutSeconds 360 -OverallTimeoutMinutes 18

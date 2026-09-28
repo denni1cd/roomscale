@@ -11,7 +11,7 @@ POC 2 adds a photo-to-`RoomDefinition` workflow. A multimodal AI uses the packag
 
 ## Primary photo-alignment revisions
 
-Attempt 6 and the newer attempt 7 are preserved under `verification/poc2/candidates/primary/`. The photo-derived layout includes the deep-green shell, adjoining divided windows, hammock and stand, workstation, storage cabinet, French doors, rocking chair, saucer seat, and wall art. Attempt 7 adjusts the carpet and oak-trim palette, increases glazing transparency, corrects the wall-art orientation, and adds a generic deck, rail, and foliage backdrop behind windows. The previous candidate and original photos remain intact.
+Attempt 6 and the newer attempt 7 are preserved under `verification/poc2/candidates/primary/`. The photo-derived layout includes the deep-green shell, adjoining divided windows, hammock and stand, workstation, storage cabinet, French doors, rocking chair, saucer seat, and wall art. Attempt 7 adjusts the carpet and oak-trim palette, increases glazing transparency, corrects the wall-art orientation, and represents the visible outdoor view as opening-relative `exterior_scene` primitives in its RoomDefinition. The previous candidate and original photos remain intact.
 
 The captures show the prior overview and attempt-7 visual revision:
 
@@ -42,7 +42,17 @@ The candidate passes structural and runtime-navigation validation with six gener
 
 A separate clone was created at `C:\Users\Zero\AppData\Local\Temp\roomscale-ac48-fresh-context-20260928`, commit `2dda51b979850794a5f1d292705d37bb51756b02`. Its `git status --short` was empty before inputs. The only room-specific inputs added were the four ordinary photos from `photo_holder/second_room/`. This fresh context used the clone's README, reconstruction skill and its references, `docs/RoomDefinition_Contract.md`, and those photos; it did not use any earlier second-room candidate, note, capture, or log.
 
-The new `room_hearth_living_room_fresh.json` and untouched attempt 1 are saved with the reconstruction note, provenance, both validator logs, and `gameplay.log` under `verification/poc2/candidates/secondary-room/fresh-context/`. Attempt 1 passed without repair: structural and runtime-navigation validation passed with seven blockers, four reachable target approaches, and a valid derived construction site. The full production run used the required 360-second timeout, exited 0, and recorded M2, M3, M4, M5, M6, and M8 PASS markers. No renderer or gameplay source files changed. AC-48 is resolved.
+The new `room_hearth_living_room_fresh.json` and untouched attempt 1 are saved with the reconstruction note, provenance, both validator logs, and `gameplay.log` under `verification/poc2/candidates/secondary-room/fresh-context/`. Attempt 1 passed without repair: structural and runtime-navigation validation passed with seven blockers, four reachable target approaches, and a valid derived construction site. The full production run used the required 360-second timeout, exited 0, and recorded M2, M3, M4, M5, M6, and M8 PASS markers. That AC-48 reproduction itself changed no renderer or gameplay source. AC-48 is resolved.
+
+## Final architectural cleanup
+
+The former generic window path added a porch/deck, railings, tree trunks, foliage, and backdrop colors to every window. That default is removed. An opening can now carry an optional, validator-supported `exterior_scene` made from bounded, generic boxes, spheres, and vertical cylinders positioned relative to the opening's exterior face. Missing data produces an ordinary window with no generated outdoor geometry.
+
+The canonical attempt-7 candidate now describes its two photographed outdoor views with explicit `exterior_scene` data. The living-room AC-48 candidate has no such data, and its windows do not acquire a deck, railing, trees, or foliage. The synchronized RoomDefinition contracts and reconstruction skill describe the shape, coordinate, appearance, and validation rules.
+
+The audit also generalized the triptych and emblem renderers to abstract palette-driven geometry, retained their dragon-named archetypes only as generic compatibility aliases, removed undeclared objects from display cabinets, and made framed-map and collectible colors follow their appearance data. Hammock, display cabinet, boxed collectibles, stone fireplace, and octagonal glass table remain reusable semantic shapes. No gameplay behavior system changed.
+
+The fast suite verifies both no-scene and explicit-scene behavior. The final closure regressions pass for canonical attempt 7, Room A, Room B, and the different-room fresh-context candidate; each photo candidate passes validation and full M2–M6/M8 gameplay. New initial-room captures were reviewed for the canonical room and living room: [canonical](../verification/poc2/architecture-cleanup-visual/canonical/room_photo_luna-initial-room.png), [living room](../verification/poc2/architecture-cleanup-visual/secondary-room/room_hearth_living_room_fresh-initial-room.png). Logs and implementation evidence are indexed in [`m9-status.md`](../verification/poc2/m9-status.md). All 48 acceptance criteria remain PASS.
 ## Verification and open acceptance
 
 - `TEST_ROOM_SCALE_FAST.ps1` passes for Room A, Room B, schema v2, malformed inputs, derived obstacles, and navigation. Godot emits existing leaked-resource warnings at shutdown after the explicit pass marker.
