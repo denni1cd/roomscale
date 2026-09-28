@@ -460,7 +460,7 @@ static func _validate_appearance(value: Variant, label: String, errors: Array[St
 		errors.append("%s must be an object" % label)
 		return
 	var appearance: Dictionary = value
-	for field in ["base_color", "accent_color"]:
+	for field in ["base_color", "accent_color", "glass_color"]:
 		if appearance.has(field) and not _valid_color(appearance.get(field)):
 			errors.append("%s.%s must be a valid HTML color string" % [label, field])
 	if appearance.has("archetype") and (not appearance.get("archetype") is String or String(appearance.archetype).strip_edges().is_empty()):

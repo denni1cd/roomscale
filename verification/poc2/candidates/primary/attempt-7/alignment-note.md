@@ -1,0 +1,5 @@
+# Photo alignment revision: attempt 7
+
+The user reviewed the prior candidate and said it still looked substantially unlike the photographs. This revision preserves attempt 6 and addresses visible cues that the shared procedural renderer can represent: warm gray carpet, golden-oak trim and door/window frames, brighter deep-green walls, more transparent window/door glass, and a visible porch deck, rail, tree trunks, and foliage behind windows. These outdoor shapes are generic geometry grounded in the source photos, not copied photo textures.
+
+The candidate keeps the same inferred room perimeter, opening placement, furniture layout, and gameplay target as attempt 6. Capture focus was raised to include the large wall art while keeping the desk, cabinet, and openings visible. All dimensions remain estimates. Geometry, fabric, artwork, and lighting are still stylized. The user has since reviewed attempt 7, said it looks much better, and accepted it for current tests. Closer visual resemblance remains future graphics work; the acceptance is scoped to the current POC test use and does not imply photorealism or exact measurements.

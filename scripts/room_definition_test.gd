@@ -168,8 +168,8 @@ func _run() -> void:
 		return
 	malformed = v2_fixture.duplicate(true)
 	malformed.room_shell.walls[0].openings[0].offset = {"bad": "number"}
-	malformed.room_shell.walls[0].openings[0].appearance = {"base_color": ["bad"], "transparency": {"bad": 1}}
-	if not _expect_invalid(malformed, "offset must be nonnegative") or not _expect_invalid(malformed, "base_color must be a valid") or not _expect_invalid(malformed, "transparency must be between"):
+	malformed.room_shell.walls[0].openings[0].appearance = {"base_color": ["bad"], "glass_color": ["bad"], "transparency": {"bad": 1}}
+	if not _expect_invalid(malformed, "offset must be nonnegative") or not _expect_invalid(malformed, "base_color must be a valid") or not _expect_invalid(malformed, "glass_color must be a valid") or not _expect_invalid(malformed, "transparency must be between"):
 		return
 	malformed = v2_fixture.duplicate(true)
 	malformed.camera = {"fill_position": {"bad": "vector"}, "cutaway_wall_id": {"bad": "wall id"}}
@@ -300,8 +300,8 @@ func _make_v2_fixture(source: Dictionary) -> Dictionary:
 		"floor_appearance": {"base_color":"795b43", "material":"wood"},
 		"walls": [
 			{"id":"north-wall", "side":"north", "appearance":{"base_color":"d9c9aa", "material":"paint"}, "openings":[
-				{"id":"north-door", "kind":"door", "offset":70.0, "width":36.0, "bottom":0.0, "height":70.0, "appearance":{"base_color":"795b43", "accent_color":"c2985c", "material":"wood"}},
-				{"id":"north-window", "kind":"window", "offset":145.0, "width":40.0, "bottom":28.0, "height":32.0, "appearance":{"base_color":"9bbec8", "accent_color":"f1e8d4", "material":"glass", "transparency":0.36}}
+				{"id":"north-door", "kind":"door", "offset":70.0, "width":36.0, "bottom":0.0, "height":70.0, "appearance":{"archetype":"french_door", "base_color":"795b43", "accent_color":"c2985c", "glass_color":"9bbec8", "material":"wood", "transparency":0.48}},
+				{"id":"north-window", "kind":"window", "offset":145.0, "width":40.0, "bottom":28.0, "height":32.0, "appearance":{"archetype":"transomed_window", "base_color":"9bbec8", "accent_color":"f1e8d4", "material":"glass", "transparency":0.36}}
 			]},
 			{"id":"south-wall", "side":"south", "appearance":{"base_color":"d4c4a8", "material":"paint"}},
 			{"id":"east-wall", "side":"east", "appearance":{"base_color":"cfc2a7", "material":"paint"}},
@@ -481,8 +481,19 @@ func _verify_v2_geometry_and_renderer(fixture: Dictionary) -> bool:
 	if default_ceiling == null or not default_ceiling.mesh is PlaneMesh or default_ceiling_material == null or not default_ceiling_material.albedo_color.is_equal_approx(Color("ece5d4")):
 		_fail("present empty ceiling appearance must render with the documented generic ceiling defaults")
 		return false
-	if room.get_node_or_null("ShellWall_north-wall/DoorPanel_north-door") == null or room.get_node_or_null("ShellWall_north-wall/WindowPane_north-window") == null:
-		_fail("door or window opening did not create its generic frame/panel geometry")
+	var north_opening_names: Array[String] = []
+	for opening_visual in room.get_node("ShellWall_north-wall").get_children():
+		north_opening_names.append(String(opening_visual.name))
+	if room.get_node_or_null("ShellWall_north-wall/FrenchDoorGlass_north-door") == null or room.get_node_or_null("ShellWall_north-wall/WindowPane_north-window") == null or room.get_node_or_null("ShellWall_north-wall/FrenchDoorMuntinH_north-door_0_34") == null or room.get_node_or_null("ShellWall_north-wall/WindowMuntinV_north-window") == null:
+		_fail("styled door/window geometry missing; north wall nodes=%s" % [north_opening_names])
+		return false
+	if room.get_node_or_null("ShellWall_north-wall/ExteriorGreenery_north-window") == null or room.get_node_or_null("ShellWall_north-wall/PorchRailTop_north-window") == null:
+		_fail("window backdrop omitted the greenery or porch rail visible in photo-derived rooms")
+		return false
+	var window_muntin := room.get_node("ShellWall_north-wall/WindowMuntinV_north-window") as MeshInstance3D
+	var window_frame_material := window_muntin.material_override as StandardMaterial3D if window_muntin != null else null
+	if window_frame_material == null or window_frame_material.albedo_color.a < 0.99:
+		_fail("wood window muntins inherited transparency from their glass appearance")
 		return false
 	var west_wall := room.get_node("ShellWall_west-wall") as Node3D
 	var gap_center := Vector3(-120.0, 5.0 + 1.0 + 20.0, -90.0 + 60.0 + 16.0)
@@ -514,6 +525,17 @@ func _verify_v2_geometry_and_renderer(fixture: Dictionary) -> bool:
 	if renderer.get("_cutaway_wall_group") != room.get_node("ShellWall_north-wall"):
 		_fail("camera cutaway selector did not resolve the generic wall ID")
 		return false
+	var carpet_fixture: Dictionary = fixture.duplicate(true)
+	carpet_fixture.room_shell.floor_appearance = {"base_color":"8d887f", "material":"fabric"}
+	var carpet_renderer := PipelineProofController.new()
+	carpet_renderer.set("_room_definition", carpet_fixture)
+	carpet_renderer.call("_build_room")
+	var carpet_room := carpet_renderer.get_node_or_null("Room") as Node3D
+	for visual_variant in carpet_room.get_children():
+		if String(visual_variant.name).begins_with("FloorSeam"):
+			_fail("fabric carpet renderer added wood plank seams")
+			return false
+	carpet_renderer.free()
 	var object_renderer := PipelineProofController.new()
 	object_renderer.set("_room_definition", fixture)
 	var object_parent := Node3D.new()
@@ -539,6 +561,120 @@ func _verify_v2_geometry_and_renderer(fixture: Dictionary) -> bool:
 	if generic_box == null or object_parent.get_node_or_null("storage_box/ObjectLid") != null:
 		_fail("generic unknown semantic kind did not use its documented simple archetype")
 		return false
+	var hammock_fixture := {"id":"visual_hammock_test", "kind":"hammock", "position":[0, 0, 0], "dimensions":[48, 30, 24], "appearance":{"archetype":"hammock", "base_color":"a9a59a", "accent_color":"343739", "material":"fabric"}}
+	object_renderer.call("_build_room_object", object_parent, hammock_fixture)
+	var hammock_visual := object_parent.get_node_or_null("visual_hammock_test")
+	var hammock_frame_found := false
+	if hammock_visual != null:
+		for visual_variant in hammock_visual.get_children():
+			if String(visual_variant.name).begins_with("HammockAFrame_"):
+				hammock_frame_found = true
+	if hammock_visual == null or hammock_visual.get_node_or_null("HammockFabricStripe_0") == null or not hammock_frame_found:
+		_fail("hammock renderer omitted striped suspended fabric or its freestanding frame")
+		return false
+	var rocker_fixture := {"id":"visual_rocker_test", "kind":"rocking_chair", "position":[0, 0, 0], "dimensions":[26, 38, 32], "appearance":{"archetype":"rocking_chair", "base_color":"754629", "accent_color":"493023", "material":"wood"}}
+	object_renderer.call("_build_room_object", object_parent, rocker_fixture)
+	var rocker_visual := object_parent.get_node_or_null("visual_rocker_test")
+	var rocker_runner_found := false
+	if rocker_visual != null:
+		for visual_variant in rocker_visual.get_children():
+			if String(visual_variant.name).begins_with("Rocker_"):
+				rocker_runner_found = true
+	if rocker_visual == null or not rocker_runner_found or rocker_visual.get_node_or_null("BackSlat_1") == null:
+		_fail("rocking chair renderer omitted curved runners or back slats")
+		return false
+	var cabinet_fixture := {"id":"visual_display_test", "kind":"display_cabinet", "position":[0, 0, 0], "dimensions":[34, 76, 20], "appearance":{"archetype":"display_cabinet", "base_color":"ad733c", "accent_color":"4b5045", "material":"wood", "transparency":0.66}}
+	object_renderer.call("_build_room_object", object_parent, cabinet_fixture)
+	var display_visual := object_parent.get_node_or_null("visual_display_test")
+	var glass_pane_found := false
+	if display_visual != null:
+		for visual_variant in display_visual.get_children():
+			if String(visual_variant.name).begins_with("DisplayGlass_"):
+				glass_pane_found = true
+	if display_visual == null or not glass_pane_found or display_visual.get_node_or_null("DisplayShelf_2") == null:
+		_fail("display cabinet renderer omitted glass frontage or interior shelves")
+		return false
+	var cabinet_frame_material: StandardMaterial3D
+	for cabinet_part in display_visual.get_children():
+		if String(cabinet_part.name).begins_with("CabinetSide_"):
+			var cabinet_mesh := cabinet_part as MeshInstance3D
+			cabinet_frame_material = cabinet_mesh.material_override as StandardMaterial3D if cabinet_mesh != null else null
+			break
+	var cabinet_glass_material: StandardMaterial3D
+	for cabinet_part in display_visual.get_children():
+		if String(cabinet_part.name).begins_with("DisplayGlass_"):
+			var cabinet_mesh := cabinet_part as MeshInstance3D
+			cabinet_glass_material = cabinet_mesh.material_override as StandardMaterial3D if cabinet_mesh != null else null
+			break
+	if cabinet_frame_material == null or cabinet_frame_material.albedo_color.a < 0.99 or cabinet_glass_material == null or cabinet_glass_material.albedo_color.a >= 0.99:
+		_fail("display cabinet should keep its wood frame opaque while its glass remains translucent")
+		return false
+	var seat_fixture := {"id":"visual_floor_seat_test", "kind":"floor_seat", "position":[0, 0, 0], "dimensions":[24, 12, 22], "appearance":{"archetype":"floor_seat", "base_color":"73da53", "accent_color":"202b2b", "material":"plastic"}}
+	object_renderer.call("_build_room_object", object_parent, seat_fixture)
+	var seat_visual := object_parent.get_node_or_null("visual_floor_seat_test")
+	if seat_visual == null or seat_visual.get_node_or_null("ShallowScoop") == null:
+		_fail("saucer-style floor seat renderer omitted its shallow scoop")
+		return false
+	var blanket_fixture := {"id":"visual_blanket_pile_test", "kind":"blanket", "position":[0, 0, 0], "dimensions":[34, 5, 18], "appearance":{"archetype":"blanket_pile", "base_color":"74b829", "accent_color":"397566", "material":"fabric"}}
+	object_renderer.call("_build_room_object", object_parent, blanket_fixture)
+	var blanket_visual := object_parent.get_node_or_null("visual_blanket_pile_test")
+	if blanket_visual == null or blanket_visual.get_node_or_null("BlanketFold_0") == null or blanket_visual.get_node_or_null("BlanketMound_0") == null:
+		_fail("blanket pile renderer omitted its folded cloth surface or soft mound")
+		return false
+	var collectibles_fixture := {"id":"visual_collectibles_test", "kind":"boxed_collectibles", "position":[0, 0, 0], "dimensions":[16, 8, 29], "appearance":{"archetype":"boxed_collectibles", "base_color":"d8d1c1", "accent_color":"51463c", "material":"other"}}
+	object_renderer.call("_build_room_object", object_parent, collectibles_fixture)
+	var collectibles_visual := object_parent.get_node_or_null("visual_collectibles_test")
+	if collectibles_visual == null or collectibles_visual.get_node_or_null("CollectibleBox_0_0") == null:
+		_fail("display-top collectibles renderer omitted its individual boxes")
+		return false
+	var art_fixture := {"id":"visual_dragon_art_test", "kind":"wall_art", "position":[0, 0, 0], "dimensions":[65, 30, 1], "appearance":{"archetype":"dragon_triptych", "base_color":"9a9478", "accent_color":"514c42", "material":"other"}}
+	object_renderer.call("_build_room_object", object_parent, art_fixture)
+	var art_visual := object_parent.get_node_or_null("visual_dragon_art_test")
+	if art_visual == null or art_visual.get_node_or_null("DragonWingLeft") == null or art_visual.get_node_or_null("ArtPanel_2") == null:
+		_fail("dragon triptych renderer omitted its panel composition or dragon silhouette")
+		return false
+	var bookcase_fixture := {"id":"visual_built_in_test", "kind":"bookcase", "position":[0, 0, 0], "dimensions":[94, 101, 22], "appearance":{"archetype":"built_in_bookcase", "base_color":"785638", "accent_color":"50351f", "material":"wood"}}
+	object_renderer.call("_build_room_object", object_parent, bookcase_fixture)
+	var built_in_visual := object_parent.get_node_or_null("visual_built_in_test")
+	if built_in_visual == null or built_in_visual.get_node_or_null("BuiltInCabinetDoor_0") == null or built_in_visual.get_node_or_null("BuiltInShelf_3") == null or built_in_visual.get_node_or_null("Book_2_4") == null:
+		_fail("built-in bookcase renderer omitted lower cabinets, shelves, or shelf contents")
+		return false
+	var fireplace_fixture := {"id":"visual_stone_hearth_test", "kind":"fireplace", "position":[0, 0, 0], "dimensions":[82, 86, 24], "appearance":{"archetype":"stone_fireplace", "base_color":"57534d", "accent_color":"8e8069", "material":"stone"}}
+	object_renderer.call("_build_room_object", object_parent, fireplace_fixture)
+	var fireplace_visual := object_parent.get_node_or_null("visual_stone_hearth_test")
+	var fireplace_stone_found := false
+	if fireplace_visual != null:
+		for fireplace_part in fireplace_visual.get_children():
+			if String(fireplace_part.name).begins_with("SideStone_"):
+				fireplace_stone_found = true
+	if fireplace_visual == null or fireplace_visual.get_node_or_null("FireboxRecess") == null or not fireplace_stone_found or fireplace_visual.get_node_or_null("WoodMantel") == null:
+		_fail("stone fireplace renderer omitted its recess, masonry surround, or mantel")
+		return false
+	var table_fixture := {"id":"visual_octagonal_glass_table_test", "kind":"coffee_table", "position":[0, 0, 0], "dimensions":[84, 19, 66], "appearance":{"archetype":"octagonal_glass_table", "base_color":"9a9082", "accent_color":"3c271a", "material":"wood", "transparency":0.22}}
+	object_renderer.call("_build_room_object", object_parent, table_fixture)
+	var table_visual := object_parent.get_node_or_null("visual_octagonal_glass_table_test")
+	var table_rim := table_visual.get_node_or_null("OctagonalWoodRim_0") as MeshInstance3D if table_visual != null else null
+	var table_rim_material := table_rim.material_override as StandardMaterial3D if table_rim != null else null
+	var table_leg_found := false
+	if table_visual != null:
+		for table_part in table_visual.get_children():
+			if String(table_part.name).begins_with("SplayedWoodLeg_"):
+				table_leg_found = true
+				break
+	if table_visual == null or table_visual.get_node_or_null("OctagonalGlassInset") == null or not table_leg_found or table_rim_material == null or table_rim_material.albedo_color.a < 0.99:
+		_fail("glass coffee table renderer omitted octagonal glass/supports or made its wood frame transparent")
+		return false
+	var opening_fixture: Dictionary = fixture.duplicate(true)
+	opening_fixture.room_shell.walls[0].openings[0].appearance.archetype = "sliding_glass_door"
+	opening_fixture.room_shell.walls[0].openings[1].appearance.archetype = "shaded_window"
+	var opening_renderer := PipelineProofController.new()
+	opening_renderer.set("_room_definition", opening_fixture)
+	opening_renderer.call("_build_room")
+	var opening_wall := opening_renderer.get_node_or_null("Room/ShellWall_north-wall") as Node3D
+	if opening_wall == null or opening_wall.get_node_or_null("SlidingDoorGlass_north-door") == null or opening_wall.get_node_or_null("SlidingDoorStile_north-door") == null or opening_wall.get_node_or_null("RollerShade_north-window") == null or opening_wall.get_node_or_null("ShadeFold_north-window_1") == null:
+		_fail("renderer omitted generic shaded-window or sliding-glass-door detail")
+		return false
+	opening_renderer.free()
 	object_renderer.free()
 	renderer.free()
 	root.remove_child(surface_navigation)

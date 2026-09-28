@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "id": "room_hearth_living_room",
+  "display_name": "Hearth Living Room",
+  "dimensions": [300, 264],
+  "floor": {"center": [0, 0, 0], "dimensions": [300, 264], "height": 0},
+  "wall_height": 108,
+  "floor_color": "77736c",
+  "room_shell": {
+    "wall_thickness": 2,
+    "baseboard_height": 5,
+    "baseboard_appearance": {"base_color": "533a27", "material": "wood"},
+    "floor_appearance": {"base_color": "77736c", "material": "fabric"},
+    "ceiling_appearance": {"base_color": "ebe5dc", "material": "paint"},
+    "crown_molding_height": 5,
+    "crown_molding_appearance": {"base_color": "533a27", "material": "wood"},
+    "walls": [
+      {"id": "hearth-wall", "side": "north", "appearance": {"base_color": "9d958a", "material": "paint"}, "openings": []},
+      {"id": "art-wall", "side": "south", "appearance": {"base_color": "aaa196", "material": "paint"}, "openings": []},
+      {"id": "window-wall", "side": "east", "appearance": {"base_color": "9b9387", "material": "paint"}, "openings": [
+        {"id": "east-window-left", "kind": "window", "offset": 14, "width": 82, "bottom": 27, "height": 71, "appearance": {"base_color": "abc2bd", "accent_color": "533a27", "material": "glass", "transparency": 0.42, "archetype": "shaded_window"}},
+        {"id": "east-window-right", "kind": "window", "offset": 111, "width": 82, "bottom": 27, "height": 71, "appearance": {"base_color": "abc2bd", "accent_color": "533a27", "material": "glass", "transparency": 0.42, "archetype": "shaded_window"}},
+        {"id": "east-patio-slider", "kind": "door", "offset": 211, "width": 42, "bottom": 0, "height": 82, "appearance": {"base_color": "abc2bd", "accent_color": "533a27", "glass_color": "abc2bd", "material": "glass", "transparency": 0.38, "archetype": "sliding_glass_door"}}
+      ]},
+      {"id": "west-wall", "side": "west", "appearance": {"base_color": "a79e91", "material": "paint"}, "openings": []}
+    ]
+  },
+  "objects": [
+    {"id": "left-built-in", "name": "Oak built-in bookcase and lower cabinets", "kind": "bookcase", "position": [-96, 0, -113], "dimensions": [94, 101, 22], "rotation_degrees": 0, "blocks_navigation": true, "navigation_padding": [0, 0, 0], "appearance": {"archetype": "built_in_bookcase", "base_color": "785638", "accent_color": "50351f", "material": "wood"}},
+    {"id": "stone-fireplace", "name": "Broad irregular-stone fireplace with raised hearth", "kind": "fireplace", "position": [0, 0, -113], "dimensions": [82, 86, 24], "rotation_degrees": 0, "blocks_navigation": true, "navigation_padding": [0, 0, 0], "appearance": {"archetype": "stone_fireplace", "base_color": "57534d", "accent_color": "8e8069", "material": "stone"}},
+    {"id": "right-built-in", "name": "Oak built-in bookcase and lower cabinets", "kind": "bookcase", "position": [96, 0, -113], "dimensions": [94, 101, 22], "rotation_degrees": 0, "blocks_navigation": true, "navigation_padding": [0, 0, 0], "appearance": {"archetype": "built_in_bookcase", "base_color": "785638", "accent_color": "50351f", "material": "wood"}},
+    {"id": "octagonal-coffee-table", "name": "Large octagonal glass-top coffee table", "kind": "coffee_table", "position": [0, 0, 8], "dimensions": [84, 19, 66], "rotation_degrees": 0, "blocks_navigation": true, "navigation_padding": [1, 0, 1], "appearance": {"archetype": "octagonal_glass_table", "base_color": "9a9082", "accent_color": "3c271a", "material": "wood", "transparency": 0.22}, "surface": {"region_id": "COFFEE_TABLE_TOP", "height": 19, "anchor": [0, 19, 8]}},
+    {"id": "green-sofa", "name": "Deep green three-seat sofa near the open living area", "kind": "sofa", "position": [82, 0, 91], "dimensions": [106, 38, 40], "rotation_degrees": 180, "blocks_navigation": true, "navigation_padding": [2, 0, 2], "appearance": {"archetype": "sofa", "base_color": "17433d", "accent_color": "102e2c", "material": "fabric"}},
+    {"id": "window-side-table", "name": "Small oak end table beside the windows", "kind": "table", "position": [115, 0, 18], "dimensions": [24, 27, 20], "rotation_degrees": 0, "blocks_navigation": true, "navigation_padding": [0, 0, 0], "appearance": {"archetype": "table", "base_color": "885c36", "accent_color": "51351f", "material": "wood"}},
+    {"id": "fire-ice-dragon-triptych", "name": "Orange-and-blue dragon canvas triptych on the opposite wall", "kind": "wall_art", "position": [-82, 58, 129], "dimensions": [80, 44, 1], "rotation_degrees": 180, "blocks_navigation": false, "navigation_padding": [0, 0, 0], "appearance": {"archetype": "dragon_triptych", "base_color": "c84925", "accent_color": "1679c5", "material": "other"}},
+    {"id": "patterned-floor-cushions", "name": "Two patterned cushions on the carpet", "kind": "floor_cushions", "position": [-103, 1, 36], "dimensions": [29, 7, 20], "rotation_degrees": -12, "blocks_navigation": false, "navigation_padding": [0, 0, 0], "appearance": {"archetype": "fabric_pile", "base_color": "e1e3da", "accent_color": "cf6559", "material": "fabric"}}
+  ],
+  "target_surface_id": "COFFEE_TABLE_TOP",
+  "construction": {"depot_pickup": [-105, 0, 75]},
+  "landmarks": {"workshop": [-116, 0, 78], "depot": [-105, 0, 75], "housing": [-117, 0, 108], "work_area": [-90, 0, 106]},
+  "activity_stations": {"workshop": [[-116, 0, 78], [-111, 0, 85], [-122, 0, 85]], "housing": [-116, 0, 107], "work_area": [-90, 0, 106], "patrol": [[-72, 0, 76], [73, 0, 75], [101, 0, -43], [-95, 0, -40], [0, 0, 103]]},
+  "spawn": {"center": [-38, 0, 72], "dimensions": [12, 0, 12]},
+  "camera": {"focus": [0, 32, 0], "yaw_degrees": 30, "cutaway_wall_id": "art-wall"}
+}

@@ -1,0 +1,5 @@
+# Photo alignment revision: attempt 6
+
+This revision responds to the review that the earlier render did not look enough like the supplied photographs. It keeps the same photo-derived room candidate and corrects the largest visible mismatches: the desk and chair arrangement, blanket placement, carpet and wood colors, opaque wood frames around glass, and the plain stacked cabinet boxes. The candidate still uses a low-poly procedural renderer and estimated room dimensions; it is a visual approximation, not a photorealistic reconstruction.
+
+The source photos and earlier candidate attempts remain unchanged. The user has now reviewed the revision and said the room still looks substantially unlike the photos. AC-18 and AC-44 remain failed; this candidate is not accepted as a close match. The renderer can represent the visible object categories and broad groupings, but its low-poly geometry, approximate dimensions, camera framing, and simplified materials/art do not yet reproduce the photographed room closely enough.

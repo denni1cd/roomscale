@@ -278,7 +278,21 @@ func _run() -> void:
 		await create_timer(0.25).timeout
 		construction_elapsed += 0.25
 	if int(construction.status().completed_stages) != 3 or not saw_carried_resource or not saw_builder_work:
-		_fail("verified hauling or real builder work did not complete all stages: %s" % construction.status())
+		var incomplete_deliveries: Array[Dictionary] = []
+		for task in coordinator.tasks:
+			if String(task.get("task_type", "")) != "CONSTRUCTION_DELIVERY" or String(task.get("state", "")) == "complete":
+				continue
+			var owner_state := "missing"
+			var owner_position := "unknown"
+			var owner_task_id := -1
+			for citizen in citizens:
+				if int(citizen.get("citizen_id")) == int(task.get("citizen_id", -1)):
+					owner_state = String(citizen.get("state"))
+					owner_position = str(citizen.global_position)
+					owner_task_id = int(citizen.get("task_id"))
+					break
+			incomplete_deliveries.append({"resource":task.get("resource", ""), "task_state":task.get("state", ""), "citizen_id":task.get("citizen_id", -1), "owner_state":owner_state, "owner_position":owner_position, "owner_task_id":owner_task_id})
+		_fail("verified hauling or real builder work did not complete all stages: status=%s incomplete_deliveries=%s" % [construction.status(), incomplete_deliveries])
 		return
 	var project_status: Dictionary = construction.status()
 	var completed_delivery_count := 0
