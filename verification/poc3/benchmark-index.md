@@ -1,5 +1,7 @@
 # POC 3 benchmark review
 
+[Codex visual review](visual-review.md): all 18 final images inspected; meaningful improvement, but overall game-like presentation is not approved yet.
+
 Human visual acceptance (AC-43) remains open. The canonical final set contains 18 production-simulation captures in [final-benchmark](final-benchmark/); matching earlier views are preserved in [baseline](baseline/).
 
 Start with these close views:

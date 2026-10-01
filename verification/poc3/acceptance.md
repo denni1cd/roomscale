@@ -4,6 +4,11 @@ Implementation branch: `codex/roomscale-poc3-visual-fidelity`.
 The POC is **not declared complete**: AC-43 and final human visual acceptance
 remain open. Read the images, not just pass markers.
 
+Codex directly inspected all 18 final images and three baseline comparisons on
+2026-10-01. [Visual review](visual-review.md) records improvements and unresolved
+composition, material, shadow-readability and capture-framing issues. Codex does
+not recommend signing off AC-43 yet; this does not replace required human review.
+
 ## Milestones
 
 | Milestone | Status / evidence |
