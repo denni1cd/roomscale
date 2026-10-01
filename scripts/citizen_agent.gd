@@ -4,6 +4,9 @@ extends Node3D
 const BODY_HEIGHT := 0.5
 const WALK_SPEED := 6.5
 const CitizenMeshScale := 1.0
+const G := preload("res://scripts/visuals/visual_geometry.gd")
+const Materials := preload("res://scripts/visuals/material_library.gd")
+static var _shared_meshes: Dictionary = {}
 
 var citizen_id := -1
 var navigation: Node
@@ -28,6 +31,11 @@ var _right_arm: MeshInstance3D
 var _left_leg: MeshInstance3D
 var _right_leg: MeshInstance3D
 var _cargo: MeshInstance3D
+var _role_tool: Node3D
+var _role_pack: Node3D
+var _fine_details: Array[Node3D] = []
+var _detail_visible := true
+var _lod_timer := 0.0
 
 
 func initialize(id: int, start: Vector3, floor_navigation: Node, task_system: Node) -> void:
@@ -41,6 +49,13 @@ func initialize(id: int, start: Vector3, floor_navigation: Node, task_system: No
 
 
 func _process(delta: float) -> void:
+	_lod_timer += delta
+	if _lod_timer >= 0.4:
+		_lod_timer = 0.0
+		var camera := get_viewport().get_camera_3d()
+		_detail_visible = camera == null or camera.global_position.distance_squared_to(global_position) < 144.0
+		for detail in _fine_details:
+			detail.visible = _detail_visible
 	simulation_elapsed += delta
 	_animation_time += delta
 	if state == "TRAVEL" or state == "CARRY":
@@ -259,7 +274,7 @@ func _build_figure() -> void:
 	var leather := _material(Color("574537"), 0.8)
 	var face := _material(Color("edcba2"), 0.9)
 	_body = _box(model, "Body", Vector3(0.15, 0.21, 0.11), Vector3(0.0, 0.23, 0.0), coat)
-	var head := _sphere(model, "Head", 0.14, Vector3(0.0, 0.385, 0.0), face)
+	var head := _sphere(model, "Head", 0.068, Vector3(0.0, 0.395, 0.0), face)
 	var hat := _cylinder(model, "ClockworkCap", 0.09, 0.05, Vector3(0.0, 0.475, 0.0), brass)
 	var cap_brim := _cylinder(model, "CapBrim", 0.105, 0.018, Vector3(0.0, 0.448, 0.0), leather)
 	_left_arm = _capsule(model, "LeftArm", 0.023, 0.17, Vector3(-0.105, 0.235, 0.0), leather)
@@ -267,14 +282,36 @@ func _build_figure() -> void:
 	_left_leg = _capsule(model, "LeftLeg", 0.025, 0.19, Vector3(-0.045, 0.095, 0.0), leather)
 	_right_leg = _capsule(model, "RightLeg", 0.025, 0.19, Vector3(0.045, 0.095, 0.0), leather)
 	_add_box(model, "Belt", Vector3(0.16, 0.035, 0.12), Vector3(0.0, 0.16, 0.0), brass)
-	_cargo = _box(model, "Parcel", Vector3(0.16, 0.12, 0.14), Vector3(0.0, 0.26, -0.13), _material(Color("e0ad4e"), 0.68))
+	for side in [-1.0, 1.0]:
+		var goggle := _cylinder(model, "Goggle%s" % side, 0.025, 0.018, Vector3(side * 0.031, 0.409, 0.059), brass)
+		goggle.rotation.x = PI * 0.5
+		var lens := _cylinder(model, "Lens%s" % side, 0.017, 0.02, Vector3(side * 0.031, 0.409, 0.07), Materials.get_material("glass", Color("204a53")))
+		lens.rotation.x = PI * 0.5
+		_box(model, "Boot%s" % side, Vector3(0.064, 0.045, 0.09), Vector3(side * 0.045, 0.025, 0.019), leather)
+		_box(model, "ShoulderPlate%s" % side, Vector3(0.056, 0.04, 0.066), Vector3(side * 0.099, 0.307, 0.0), brass)
+	_box(model, "Buckle", Vector3(0.037, 0.025, 0.016), Vector3(0, 0.173, 0.071), brass)
+	_role_pack = _box(model, "ExplorerPack", Vector3(0.115, 0.13, 0.065), Vector3(0, 0.255, -0.089), leather)
+	_role_tool = Node3D.new()
+	_role_tool.name = "BuilderHammer"
+	_role_tool.position = Vector3(0.12, 0.22, 0.035)
+	model.add_child(_role_tool)
+	_box(_role_tool, "Handle", Vector3(0.018, 0.15, 0.018), Vector3(0, 0.035, 0), leather)
+	_box(_role_tool, "HammerHead", Vector3(0.075, 0.035, 0.03), Vector3(0, 0.115, 0), brass)
+	_cargo = _box(model, "Parcel", Vector3(0.16, 0.12, 0.14), Vector3(0.0, 0.26, 0.14), _material(Color("e0ad4e"), 0.68))
 	_cargo.visible = false
 	# Keep references alive and make intended scale explicit to the debugger.
 	model.set_meta("body_height_inches", BODY_HEIGHT * CitizenMeshScale)
 	model.set_meta("task_id", task_id)
+	for child in model.get_children():
+		if String(child.name).begins_with("Goggle") or String(child.name).begins_with("Lens") or String(child.name).begins_with("ShoulderPlate") or String(child.name).begins_with("Boot") or child.name == "Buckle":
+			_fine_details.append(child)
 
 
 func _update_animation() -> void:
+	if state != "WORK":
+		_body.rotation.z = 0.0
+	_role_tool.visible = _detail_visible and task_type == "CONSTRUCTION_BUILD"
+	_role_pack.visible = _detail_visible and task_type in ["SURFACE_INVESTIGATION", "SURFACE_TRAVERSAL", "SURFACE_EXPLORATION"]
 	var walking := state == "TRAVEL" or state == "CARRY"
 	if walking:
 		var gait := sin(_animation_time * 11.0)
@@ -283,6 +320,14 @@ func _update_animation() -> void:
 		_right_leg.rotation.x = -gait * 0.42
 		_left_arm.rotation.x = -gait * 0.35
 		_right_arm.rotation.x = gait * 0.35
+		if carrying:
+			_left_arm.rotation.x = -0.85
+			_right_arm.rotation.x = -0.85
+		if task_type == "SURFACE_TRAVERSAL" and _path_cursor < _path.size() and _path[_path_cursor].y > global_position.y + 0.01:
+			_left_arm.rotation.x = -1.6 + gait * 0.55
+			_right_arm.rotation.x = -1.6 - gait * 0.55
+			_left_leg.rotation.x = gait * 0.75
+			_right_leg.rotation.x = -gait * 0.75
 	else:
 		_body.position.y = 0.23 + sin(_animation_time * 2.4) * 0.008
 		_left_leg.rotation.x = 0.0
@@ -293,6 +338,7 @@ func _update_animation() -> void:
 		else:
 			_left_arm.rotation.x = 0.0
 			_right_arm.rotation.x = 0.0
+	_role_tool.rotation.x = _right_arm.rotation.x
 
 
 func _animate_work() -> void:
@@ -300,6 +346,8 @@ func _animate_work() -> void:
 
 
 func _set_cargo_resource(resource: String) -> void:
+	for child in _cargo.get_children():
+		child.free()
 	var cargo_mesh := BoxMesh.new()
 	var color := Color("c7a065")
 	match resource:
@@ -315,22 +363,27 @@ func _set_cargo_resource(resource: String) -> void:
 	_cargo.mesh = cargo_mesh
 	_cargo.material_override = _material(color, 0.54)
 	_cargo.set_meta("cargo_resource", resource)
+	if resource == "wood":
+		_cargo.mesh = null
+		for index in range(3):
+			G.box(_cargo, "Plank%d" % index, Vector3(0.32, 0.032, 0.065), Vector3(0, 0.065 + index * 0.032, 0), "wood", Color("9b633a"), 0.005)
+		for side in [-1, 1]:
+			G.box(_cargo, "Strap%d" % side, Vector3(0.025, 0.12, 0.25), Vector3(side * 0.095, 0.025, 0), "rope", Color("66533e"), 0.003)
+	elif resource == "metal":
+		for index in range(3):
+			G.box(_cargo, "Ingot%d" % index, Vector3(0.23, 0.026, 0.21), Vector3(0, 0.08 + index * 0.026, 0), "iron", Color("667e87"), 0.01)
+	else:
+		G.gear(_cargo, "CarriedGear", 0.07, Vector3(0, 0.11, 0), 8)
 
 
 func _material(color: Color, roughness: float) -> StandardMaterial3D:
-	var material := StandardMaterial3D.new()
-	material.albedo_color = color
-	material.roughness = roughness
-	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	return material
+	return Materials.get_material("brass" if roughness < 0.5 else "leather", color, roughness)
 
 
 func _box(parent: Node3D, node_name: String, size: Vector3, at: Vector3, material: Material) -> MeshInstance3D:
 	var item := MeshInstance3D.new()
 	item.name = node_name
-	var mesh := BoxMesh.new()
-	mesh.size = size
-	item.mesh = mesh
+	item.mesh = G.rounded_box(size, minf(size.x, minf(size.y, size.z)) * 0.15)
 	item.position = at
 	item.material_override = material
 	parent.add_child(item)
@@ -344,10 +397,15 @@ func _add_box(parent: Node3D, node_name: String, size: Vector3, at: Vector3, mat
 func _sphere(parent: Node3D, node_name: String, radius: float, at: Vector3, material: Material) -> MeshInstance3D:
 	var item := MeshInstance3D.new()
 	item.name = node_name
-	var mesh := SphereMesh.new()
-	mesh.radius = radius
-	mesh.height = radius * 2.0
-	item.mesh = mesh
+	var key := "sphere:%s" % radius
+	if not _shared_meshes.has(key):
+		var mesh := SphereMesh.new()
+		mesh.radius = radius
+		mesh.height = radius * 2.0
+		mesh.radial_segments = 16
+		mesh.rings = 8
+		_shared_meshes[key] = mesh
+	item.mesh = _shared_meshes[key]
 	item.position = at
 	item.material_override = material
 	parent.add_child(item)
@@ -357,11 +415,15 @@ func _sphere(parent: Node3D, node_name: String, radius: float, at: Vector3, mate
 func _cylinder(parent: Node3D, node_name: String, radius: float, height: float, at: Vector3, material: Material) -> MeshInstance3D:
 	var item := MeshInstance3D.new()
 	item.name = node_name
-	var mesh := CylinderMesh.new()
-	mesh.top_radius = radius
-	mesh.bottom_radius = radius
-	mesh.height = height
-	item.mesh = mesh
+	var key := "cylinder:%s:%s" % [radius, height]
+	if not _shared_meshes.has(key):
+		var mesh := CylinderMesh.new()
+		mesh.top_radius = radius
+		mesh.bottom_radius = radius
+		mesh.height = height
+		mesh.radial_segments = 16
+		_shared_meshes[key] = mesh
+	item.mesh = _shared_meshes[key]
 	item.position = at
 	item.material_override = material
 	parent.add_child(item)
@@ -371,10 +433,15 @@ func _cylinder(parent: Node3D, node_name: String, radius: float, height: float, 
 func _capsule(parent: Node3D, node_name: String, radius: float, height: float, at: Vector3, material: Material) -> MeshInstance3D:
 	var item := MeshInstance3D.new()
 	item.name = node_name
-	var mesh := CapsuleMesh.new()
-	mesh.radius = radius
-	mesh.height = height
-	item.mesh = mesh
+	var key := "capsule:%s:%s" % [radius, height]
+	if not _shared_meshes.has(key):
+		var mesh := CapsuleMesh.new()
+		mesh.radius = radius
+		mesh.height = height
+		mesh.radial_segments = 12
+		mesh.rings = 4
+		_shared_meshes[key] = mesh
+	item.mesh = _shared_meshes[key]
 	item.position = at
 	item.material_override = material
 	parent.add_child(item)

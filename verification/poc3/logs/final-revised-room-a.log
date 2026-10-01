@@ -1,0 +1,36 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 591.86 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5090
+
+ROOMSCALE_FLOOR_NAV_READY room=room_a grid=60x45 cell=4in obstacles=11
+ROOMSCALE_CITIZEN_SPAWN count=50 separate_nodes=true height=0.5in
+ROOMSCALE_M2_READY Godot=4.7.2-stable (official) room=room_a size=240x180 in citizens=50
+ROOMSCALE_VISUAL_CAPTURE phase=initial-room path=C:\Users\Zero\python_projects\ai\roomscale\verification\poc3\final-revised/room_a-initial-room.png size=1280x720
+ROOMSCALE_VISUAL_CAPTURE phase=citizen-inspection path=C:\Users\Zero\python_projects\ai\roomscale\verification\poc3\final-revised/room_a-citizen-inspection.png size=1280x720
+ROOMSCALE_VISUAL_CAPTURE phase=living-civilization path=C:\Users\Zero\python_projects\ai\roomscale\verification\poc3\final-revised/room_a-living-civilization.png size=1280x720
+ROOMSCALE_VISUAL_CAPTURE phase=settlement-close path=C:\Users\Zero\python_projects\ai\roomscale\verification\poc3\final-revised/room_a-settlement-close.png size=1280x720
+ROOMSCALE_VISUAL_CAPTURE phase=citizen-close path=C:\Users\Zero\python_projects\ai\roomscale\verification\poc3\final-revised/room_a-citizen-close.png size=1280x720
+ROOMSCALE_VISUAL_CAPTURE phase=target-investigation path=C:\Users\Zero\python_projects\ai\roomscale\verification\poc3\final-revised/room_a-target-investigation.png size=1280x720
+ROOMSCALE_VISUAL_CAPTURE phase=resource-hauling path=C:\Users\Zero\python_projects\ai\roomscale\verification\poc3\final-revised/room_a-resource-hauling.png size=1280x720
+ROOMSCALE_VISUAL_CAPTURE phase=resource-carry-close path=C:\Users\Zero\python_projects\ai\roomscale\verification\poc3\final-revised/room_a-resource-carry-close.png size=1280x720
+ROOMSCALE_VISUAL_CAPTURE phase=construction path=C:\Users\Zero\python_projects\ai\roomscale\verification\poc3\final-revised/room_a-construction.png size=1280x720
+ROOMSCALE_VISUAL_CAPTURE phase=grapple-deployment path=C:\Users\Zero\python_projects\ai\roomscale\verification\poc3\final-revised/room_a-grapple-deployment.png size=1280x720
+ROOMSCALE_VISUAL_CAPTURE phase=grapple-complete path=C:\Users\Zero\python_projects\ai\roomscale\verification\poc3\final-revised/room_a-grapple-complete.png size=1280x720
+ROOMSCALE_TRAVERSAL_START route=87.2in timeout=33.4s start=(2.0, 0.0, -42.05834) target=(-58.0, 30.0, -52.0)
+ROOMSCALE_VISUAL_CAPTURE phase=citizen-traversal path=C:\Users\Zero\python_projects\ai\roomscale\verification\poc3\final-revised/room_a-citizen-traversal.png size=1280x720
+ROOMSCALE_VISUAL_CAPTURE phase=citizen-traversal-detail path=C:\Users\Zero\python_projects\ai\roomscale\verification\poc3\final-revised/room_a-citizen-traversal-detail.png size=1280x720
+ROOMSCALE_M6_BUDGET task=288 type=SURFACE_EXPLORATION route=177.1in added=61.7s cumulative=81.7s
+ROOMSCALE_VISUAL_CAPTURE phase=elevated-surface-exploration path=C:\Users\Zero\python_projects\ai\roomscale\verification\poc3\final-revised/room_a-elevated-surface-exploration.png size=1280x720
+ROOMSCALE_VISUAL_CAPTURE phase=elevated-surface-exploration-detail path=C:\Users\Zero\python_projects\ai\roomscale\verification\poc3\final-revised/room_a-elevated-surface-exploration-detail.png size=1280x720
+ROOMSCALE_M6_BUDGET task=369 type=SURFACE_TRAVERSAL route=161.1in added=53.4s cumulative=135.1s
+ROOMSCALE_M6_BUDGET task=428 type=SURFACE_EXPLORATION route=177.1in added=61.7s cumulative=196.8s
+ROOMSCALE_M6_BUDGET task=506 type=SURFACE_TRAVERSAL route=158.5in added=52.7s cumulative=249.4s
+ROOMSCALE_M6_BUDGET task=575 type=SURFACE_EXPLORATION route=177.1in added=61.7s cumulative=311.1s
+ROOMSCALE_VISUAL_EVIDENCE_PASS room=room_a phases=15 captured=["initial-room", "citizen-inspection", "living-civilization", "settlement-close", "citizen-close", "target-investigation", "resource-hauling", "resource-carry-close", "construction", "grapple-deployment", "grapple-complete", "citizen-traversal", "citizen-traversal-detail", "elevated-surface-exploration", "elevated-surface-exploration-detail"] directory=C:\Users\Zero\python_projects\ai\roomscale\verification\poc3\final-revised
+ROOMSCALE_ROOM=room_a TARGET=Desk REGION=STUDY_SURFACE FLOOR=240x180 SITE=(2.0, 0.0, -52.0)
+ROOMSCALE_M2_SMOKE_PASS room=room_a citizens=50 active=47 available=2 moving=44 obstacles=11 detour=145.3in
+ROOMSCALE_M3_SMOKE_PASS room=room_a selected=Desk investigators=2 arrived=2 barrier=no navigation connection between FLOOR and STUDY_SURFACE elapsed=16.00s
+ROOMSCALE_M4_SMOKE_PASS room=room_a deliveries=11 delivered={ "wood": 4, "metal": 4, "mechanical_parts": 3 } builders_returned=true gates=3 components=3 site=(2.0, 0.0, -52.0) elapsed=50.75s
+ROOMSCALE_M5_SMOKE_PASS room=room_a cable_segments=8 radius=0.07in partial_deploy=true traverser=Citizen35 height=30.0in walked=87.3in route=87.2in max_step=3.23in max_step_interval=0.533s max_sample_speed=6.50in/s speed_sample_interval=0.217s speed_cap=6.5in/s step_tolerance=0.25in elapsed=12.40s
+ROOMSCALE_M6_SMOKE_PASS room=room_a arrivals=3 explorations=3 reused=2 distinct_travelers=3 work=12.0s persistent_link=true combined_max_step=5.50in max_step_interval=0.846s max_sample_speed=6.50in/s speed_sample_interval=0.217s speed_cap=6.5in/s step_tolerance=0.25in elapsed=134.00s budget=311.11s
+ROOMSCALE_M8_SMOKE_PASS room=room_a steam=true cog_teeth=8 citizen_inspection=true camera_easing=verified
+

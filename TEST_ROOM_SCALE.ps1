@@ -11,7 +11,7 @@ $ErrorActionPreference = 'Stop'
 $ProjectRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 . (Join-Path $ProjectRoot 'scripts/Resolve-RoomScaleRoom.ps1')
 $SelectedRoom = Resolve-RoomScaleRoomInput -Value $Room -ProjectRoot $ProjectRoot
-$knownVisualPhases = @('initial-room', 'citizen-inspection', 'living-civilization', 'target-investigation', 'resource-hauling', 'construction', 'grapple-deployment', 'citizen-traversal', 'citizen-traversal-detail', 'elevated-surface-exploration', 'elevated-surface-exploration-detail')
+$knownVisualPhases = @('initial-room', 'citizen-inspection', 'living-civilization', 'settlement-close', 'citizen-close', 'resource-carry-close', 'builder-close', 'citizen-climb-close', 'elevated-citizen-close', 'grapple-complete', 'target-investigation', 'resource-hauling', 'construction', 'grapple-deployment', 'citizen-traversal', 'citizen-traversal-detail', 'elevated-surface-exploration', 'elevated-surface-exploration-detail')
 foreach ($phase in $VisualPhases) {
 	if ($phase -notin $knownVisualPhases) { throw "Unknown visual phase '$phase'. Choose one of: $($knownVisualPhases -join ', ')" }
 }

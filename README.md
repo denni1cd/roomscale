@@ -4,6 +4,14 @@ RoomScale is a small 3D civilization simulation where half-inch citizens treat a
 
 ## Current status
 
+POC 3 visual work is on `codex/roomscale-poc3-visual-fidelity`: semantic visual
+resolution, generated GLB desk, detailed furniture, shared materials, clockwork
+citizens/settlement, task-driven resource props, staged grapple machinery, and
+attachment-before-navigation deployment. See [the visual workflow](docs/POC3_VISUALS.md)
+and [current acceptance status](verification/poc3/acceptance.md). POC 3 visual
+completion still requires the plan's human review; functional results alone
+do not satisfy its presentation gate.
+
 POC 1.5 is complete and verified. Room A and Room B each pass the complete production scenario through the same gameplay systems; the required A → B → A sequence and five-run-per-room stability gates are recorded in [the acceptance matrix](docs/POC_1.5_ACCEPTANCE.md).
 
 POC 2 adds a portable photo-to-RoomDefinition workflow. The packaged reconstruction skill is in `skills/roomscale-room-reconstruction/`; the current canonical photo candidate, attempt history, logs, captures, and per-criterion status are under `verification/poc2/`. The user accepts primary attempt 7 for current tests; closer visual resemblance is deferred graphics work. See [the POC 2 acceptance matrix](verification/poc2/acceptance-matrix.md) for the remaining fresh-AI different-room authoring evidence.

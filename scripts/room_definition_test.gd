@@ -481,6 +481,7 @@ func _verify_v2_geometry_and_renderer(fixture: Dictionary) -> bool:
 	if default_ceiling == null or not default_ceiling.mesh is PlaneMesh or default_ceiling_material == null or not default_ceiling_material.albedo_color.is_equal_approx(Color("ece5d4")):
 		_fail("present empty ceiling appearance must render with the documented generic ceiling defaults")
 		return false
+	empty_ceiling_renderer.free()
 	var north_opening_names: Array[String] = []
 	for opening_visual in room.get_node("ShellWall_north-wall").get_children():
 		north_opening_names.append(String(opening_visual.name))

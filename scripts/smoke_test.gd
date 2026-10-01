@@ -174,6 +174,11 @@ func _run() -> void:
 		return
 	if not await _capture_visual(scene, "living-civilization", Vector3(0.0, 4.0, 50.0), 138.0, 62.0, 0.25):
 		return
+	var workshop_position := RoomDefinitionLoader.vector3_from(definition.landmarks.workshop)
+	if not await _capture_visual(scene, "settlement-close", workshop_position + Vector3.UP * 4.0, 42.0, 35.0, 0.4, true):
+		return
+	if not await _capture_visual(scene, "citizen-close", inspected_citizen.global_position + Vector3.UP * 0.25, 2.0, 24.0, 0.3, true, false, inspected_citizen):
+		return
 	var site: Vector3 = coordinator.get_construction_site()
 	if not scene.issue_reach_explore().accepted:
 		_fail("Reach / Explore did not accept the selected generic surface")
@@ -262,6 +267,8 @@ func _run() -> void:
 					hauling_visual_saved = true
 					if not await _capture_visual(scene, "resource-hauling", (depot_position + site) * 0.5, maxf(175.0, depot_position.distance_to(site) * 1.3), 68.0, 0.35):
 						return
+					if not await _capture_visual(scene, "resource-carry-close", citizen.global_position + Vector3.UP * 0.25, 2.0, 24.0, 0.3, true, false, citizen):
+						return
 			elif citizen.task_type == "CONSTRUCTION_BUILD" and citizen.state == "WORK":
 				if citizen.global_position.distance_to(site) > 1.6:
 					_fail("builder performed work away from the derived site")
@@ -271,6 +278,8 @@ func _run() -> void:
 				if not construction_visual_saved and int(build_status.completed_stages) >= 1 and String(build_status.active_stage) == "winch" and float(build_status.stage_progress) >= 0.1:
 					construction_visual_saved = true
 					if not await _capture_visual(scene, "construction", site + Vector3(0.0, 8.0, 0.0), 74.0, 68.0, 0.6):
+						return
+					if not await _capture_visual(scene, "builder-close", citizen.global_position + Vector3.UP * 0.25, 2.0, 24.0, 0.3, true, true, citizen):
 						return
 		for task in coordinator.tasks:
 			if task.task_type == "CONSTRUCTION_BUILD" and float(task.get("work_seconds", 0.0)) > 0.0:
@@ -327,6 +336,9 @@ func _run() -> void:
 	var grapple_visual_saved := false
 	var deployment_wait := 0.0
 	while not construction.status().cable_deployed and deployment_wait < 8.0:
+		if surface_navigation.has_connection("FLOOR", goal_region) and not construction.status().cable_deployed:
+			_fail("navigation connection activated before visible cable attachment and settling")
+			return
 		if is_instance_valid(cable_root):
 			var visible_segments := 0
 			var total_segments := 0
@@ -346,6 +358,8 @@ func _run() -> void:
 		deployment_wait += 0.04
 	if not construction.status().cable_deployed or not partial_deployment_seen:
 		_fail("grapple did not deploy visibly over time")
+		return
+	if not await _capture_visual(scene, "grapple-complete", site + Vector3.UP * 5.0, 32.0, 32.0, 0.6, true, true):
 		return
 	var cable_segments := 0
 	var largest_cable_radius := 0.0
@@ -393,6 +407,7 @@ func _run() -> void:
 	var max_sample_seconds := 0.0
 	var traversal_visual_saved := false
 	var traversal_detail_saved := _visual_directory.is_empty() or not _visual_phase_enabled("citizen-traversal-detail")
+	var traversal_close_saved := _visual_directory.is_empty() or not _visual_phase_enabled("citizen-climb-close")
 	var traversal_timeout := minf(120.0, float(traversal_task.route_length) / 6.5 + 20.0)
 	var floor_height := float(definition.floor.height)
 	print("ROOMSCALE_TRAVERSAL_START route=%.1fin timeout=%.1fs start=%s target=%s" % [traversal_task.route_length, traversal_timeout, climber.global_position, traversal_task.target])
@@ -424,6 +439,10 @@ func _run() -> void:
 			var room_diagonal := Vector2(width, depth).length()
 			if not await _capture_visual(scene, "citizen-traversal", (current + goal_surface.anchor) * 0.5, maxf(140.0, room_diagonal * 0.5), 48.0, 0.0, true):
 				return
+		if not traversal_close_saved and current.y >= floor_height + (float(goal_surface.height) - floor_height) * 0.4:
+			traversal_close_saved = true
+			if not await _capture_visual(scene, "citizen-climb-close", current + Vector3.UP * 0.25, 2.0, 22.0, 0.3, true, true, climber):
+				return
 		if not traversal_detail_saved and current.y >= floor_height + (float(goal_surface.height) - floor_height) * 0.85:
 			traversal_detail_saved = true
 			if not await _capture_visual(scene, "citizen-traversal-detail", current + Vector3.UP * 0.3, 22.0, 22.0, 0.65, true, true):
@@ -446,7 +465,7 @@ func _run() -> void:
 	var m6_max_step_seconds := max_step_seconds
 	var m6_max_sample_speed := max_sample_speed
 	var m6_max_sample_seconds := max_sample_seconds
-	var m6_visual_saved := _visual_directory.is_empty() or not _visual_phase_enabled("elevated-surface-exploration")
+	var m6_visual_saved := _visual_directory.is_empty() or not (_visual_phase_enabled("elevated-surface-exploration") or _visual_phase_enabled("elevated-surface-exploration-detail") or _visual_phase_enabled("elevated-citizen-close"))
 	while true:
 		var m6_task_ids: Array = m6_status.traversal_task_ids.duplicate()
 		m6_task_ids.append_array(m6_status.surface_exploration_task_ids)
@@ -490,6 +509,8 @@ func _run() -> void:
 				if not await _capture_visual(scene, "elevated-surface-exploration", goal_surface.anchor, maxf(110.0, room_diagonal * 0.45), 50.0, 0.0, true):
 					return
 				if not await _capture_visual(scene, "elevated-surface-exploration-detail", citizen.global_position + Vector3.UP * 0.3, 22.0, 22.0, 0.65, true, true):
+					return
+				if not await _capture_visual(scene, "elevated-citizen-close", citizen.global_position + Vector3.UP * 0.25, 2.0, 22.0, 0.65, true, true, citizen):
 					return
 		await create_timer(0.2).timeout
 		m6_elapsed += 0.2
@@ -573,7 +594,7 @@ func _run() -> void:
 		_fail("session infrastructure failed to preserve a usable traversal route: route=%s cable_nodes=%d floor_site=%s target=%s" % [final_route, cable_root.get_child_count(), site, goal_surface.anchor])
 		return
 	if not _visual_directory.is_empty():
-		for phase in ["initial-room", "living-civilization", "citizen-inspection", "target-investigation", "resource-hauling", "construction", "grapple-deployment", "citizen-traversal", "citizen-traversal-detail", "elevated-surface-exploration", "elevated-surface-exploration-detail"]:
+		for phase in ["initial-room", "living-civilization", "settlement-close", "citizen-close", "resource-carry-close", "builder-close", "citizen-climb-close", "elevated-citizen-close", "grapple-complete", "citizen-inspection", "target-investigation", "resource-hauling", "construction", "grapple-deployment", "citizen-traversal", "citizen-traversal-detail", "elevated-surface-exploration", "elevated-surface-exploration-detail"]:
 			if not _visual_phase_enabled(phase):
 				continue
 			var expected_image := "%s/%s-%s.png" % [_visual_directory, expected_room, phase]
@@ -630,11 +651,15 @@ func _visual_phase_enabled(phase: String) -> bool:
 	return false
 
 
-func _capture_visual(scene: Node3D, phase: String, focus: Vector3, distance: float, tilt: float = 52.0, yaw: float = 0.0, hide_overlay: bool = false, hide_project_label: bool = false) -> bool:
+func _capture_visual(scene: Node3D, phase: String, focus: Vector3, distance: float, tilt: float = 52.0, yaw: float = 0.0, hide_overlay: bool = false, hide_project_label: bool = false, subject: Node3D = null) -> bool:
 	if _visual_directory.is_empty() or not _visual_phase_enabled(phase):
 		return true
 	var camera_rig := scene.get_node("CameraRig")
 	camera_rig.focus_at(focus, distance, tilt, yaw)
+	if is_instance_valid(subject):
+		camera_rig.distance = distance
+		camera_rig.yaw = subject.global_rotation.y + yaw
+		camera_rig.call("_apply_transform")
 	var overlay := scene.get_node_or_null("Overlay") as CanvasLayer
 	var overlay_was_visible := overlay.visible if overlay != null else false
 	var project_label := scene.get_node_or_null("GrappleConstructionSite/ProjectSign") as Label3D
@@ -643,7 +668,15 @@ func _capture_visual(scene: Node3D, phase: String, focus: Vector3, distance: flo
 		overlay.visible = false
 	if hide_project_label and project_label != null:
 		project_label.visible = false
-	await create_timer(0.3).timeout
+	await create_timer(0.5 if is_instance_valid(subject) else 0.3).timeout
+	# Capture-only camera fitting: keep the live subject centered without pausing
+	# or changing any simulation state, including the production zoom limits.
+	if is_instance_valid(subject):
+		focus = subject.global_position + Vector3.UP * 0.25
+		yaw = subject.global_rotation.y + yaw
+		camera_rig.focus_at(focus, distance, tilt, yaw)
+		camera_rig.distance = distance
+		camera_rig.call("_apply_transform")
 	await RenderingServer.frame_post_draw
 	var image: Image = scene.get_viewport().get_texture().get_image()
 	if image.get_width() < 320 or image.get_height() < 200:
@@ -671,6 +704,14 @@ func _capture_visual(scene: Node3D, phase: String, focus: Vector3, distance: flo
 		note.store_line("target=%s focus=%s distance=%.1f tilt=%.1f yaw=%.2f" % [String(definition.get("target_surface_id", "")), focus, distance, tilt, yaw])
 		note.store_line("overlay_hidden=%s" % hide_overlay)
 		note.store_line("project_label_hidden=%s" % hide_project_label)
+		note.store_line("engine=%s render=%s" % [Engine.get_version_info().string, RenderingServer.get_current_rendering_method()])
+		var asset_sources: Dictionary = {}
+		for object_node in scene.get_node("RoomObjects").get_children():
+			asset_sources[String(object_node.name)] = object_node.get_meta("visual_source", "unknown")
+		note.store_line("visual_sources=%s" % asset_sources)
+		note.store_line("fps=%s draw_calls=%s objects=%s primitives=%s" % [Performance.get_monitor(Performance.TIME_FPS), Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME), Performance.get_monitor(Performance.RENDER_TOTAL_OBJECTS_IN_FRAME), Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME)])
+		if is_instance_valid(subject):
+			note.store_line("subject=%s state=%s task=%s" % [subject.name, subject.get("state"), subject.get("task_type")])
 	print("ROOMSCALE_VISUAL_CAPTURE phase=%s path=%s size=%dx%d" % [phase, image_path, image.get_width(), image.get_height()])
 	_captured_visual_phases.append(phase)
 	if hide_overlay and overlay != null:

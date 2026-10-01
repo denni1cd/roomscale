@@ -2,6 +2,9 @@ extends Node
 ## M4 project inventory, verified deliveries, and work-driven component construction.
 
 const RoomDefinitionLoader := preload("res://scripts/room_definition.gd")
+const GrappleDetails := preload("res://scripts/visuals/grapple_details.gd")
+const G := preload("res://scripts/visuals/visual_geometry.gd")
+const Materials := preload("res://scripts/visuals/material_library.gd")
 
 signal project_updated(status: Dictionary)
 
@@ -43,6 +46,8 @@ var _deployment_anchor: MeshInstance3D
 var _deployment_timer := 0.0
 var _deployment_cursor := 0
 var _deployment_path: Array[Vector3] = []
+var _detail_groups: Array[Node3D] = []
+var _work_steam: GPUParticles3D
 
 
 func configure(task_coordinator: Node, floor_navigation: Node, population: Array, scene: Node3D, definition: Dictionary) -> void:
@@ -59,15 +64,21 @@ func configure(task_coordinator: Node, floor_navigation: Node, population: Array
 
 
 func _process(delta: float) -> void:
+	if not _detail_groups.is_empty():
+		var progress := _stage_work / float(STAGES[_active_stage].work_seconds) if _active_stage >= 0 else 0.0
+		GrappleDetails.animate(_detail_groups, _completed_stages, _active_stage, progress, project_state == "DEPLOYING_TRAVERSAL", delta)
+		if is_instance_valid(_work_steam):
+			_work_steam.emitting = (project_state == "DEPLOYING_TRAVERSAL") or (_active_stage >= 0 and _stage_work > 0.0)
 	if _deployment_segments.is_empty() or traversal_deployed:
 		return
 	_deployment_timer += delta
-	while _deployment_timer >= 0.075 and _deployment_cursor < _deployment_segments.size():
-		_deployment_timer -= 0.075
+	while _deployment_timer >= 0.18 and _deployment_cursor < _deployment_segments.size():
+		_deployment_timer -= 0.18
 		_deployment_segments[_deployment_cursor].visible = true
 		_deployment_cursor += 1
 	if _deployment_cursor >= _deployment_segments.size() and is_instance_valid(_deployment_anchor) and not _deployment_anchor.visible:
 		_deployment_anchor.visible = true
+	if _deployment_cursor >= _deployment_segments.size() and _deployment_timer >= 0.5:
 		_finish_traversal_deployment()
 
 
@@ -278,9 +289,6 @@ func _deploy_traversal() -> void:
 		var subdivisions := maxi(1, ceili(start.distance_to(finish) / 2.5))
 		for substep in range(1, subdivisions + 1):
 			surface_route.append(start.lerp(finish, float(substep) / float(subdivisions)))
-	if not surface_navigation.connect_regions("FLOOR", target_region, surface_route):
-		push_error("Grapple deployment blocked: generated route could not connect the selected surface.")
-		return
 	_deployment_path = surface_route
 	_create_cable_visual(cable_path)
 	project_state = "DEPLOYING_TRAVERSAL"
@@ -302,8 +310,8 @@ func _create_cable_visual(path: Array[Vector3]) -> void:
 		var segment := MeshInstance3D.new()
 		segment.name = "CableSegment%02d" % index
 		var mesh := CylinderMesh.new()
-		mesh.top_radius = 0.07
-		mesh.bottom_radius = 0.07
+		mesh.top_radius = 0.035
+		mesh.bottom_radius = 0.035
 		mesh.height = direction.length()
 		segment.mesh = mesh
 		segment.position = (start + finish) * 0.5
@@ -326,6 +334,9 @@ func _create_cable_visual(path: Array[Vector3]) -> void:
 
 
 func _finish_traversal_deployment() -> void:
+	if not surface_navigation.connect_regions("FLOOR", target_region, _deployment_path):
+		push_error("Grapple deployment blocked: generated route could not connect the selected surface.")
+		return
 	traversal_deployed = true
 	var carriers: Array[Dictionary] = []
 	for citizen in citizens:
@@ -384,14 +395,22 @@ func _create_visible_project() -> void:
 	var base := _add_box(_site_root, "GrappleBase", Vector3(10.0, 1.3, 8.0), Vector3(0.0, 0.65, 0.0), Color("72533a"), false)
 	var base_plate := _add_box(_site_root, "BrassBasePlate", Vector3(8.0, 0.35, 6.0), Vector3(0.0, 1.45, 0.0), Color("bd914d"), false)
 	var winch := _add_cylinder(_site_root, "WinchDrum", 2.4, 1.8, Vector3(0.0, 3.0, 0.0), Color("677977"), false)
+	winch.rotation.x = PI * 0.5
+	winch.position.y = 3.6
 	var gear := _add_cylinder(_site_root, "WinchGear", 2.1, 0.45, Vector3(0.0, 3.0, 1.2), Color("d1a14e"), false)
 	gear.rotation.x = deg_to_rad(90.0)
+	gear.position.y = 3.6
 	var launcher := _add_box(_site_root, "LauncherFrame", Vector3(1.3, 7.0, 1.3), Vector3(0.0, 5.0, -1.6), Color("4d6666"), false)
 	var arm := _add_box(_site_root, "LauncherArm", Vector3(1.1, 5.0, 1.1), Vector3(0.0, 8.2, -1.6), Color("be9650"), false)
 	arm.rotation.x = deg_to_rad(22.0)
 	_visuals["base"] = [base, base_plate]
 	_visuals["winch"] = [winch, gear]
 	_visuals["launcher"] = [launcher, arm]
+	_detail_groups = GrappleDetails.build(_site_root)
+	scene_root.call("_add_steam_emitter", _detail_groups[1], "PressureSteam", Vector3(-3.0, 5.2, 0))
+	_work_steam = _detail_groups[1].get_node("PressureSteam") as GPUParticles3D
+	_work_steam.amount = 8
+	_work_steam.emitting = false
 	_add_world_label(_site_root, "ProjectSign", "GRAPPLE PROJECT", Vector3(0.0, 11.0, 3.0))
 	_add_stockpile_visuals()
 

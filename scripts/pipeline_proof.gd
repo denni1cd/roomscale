@@ -8,6 +8,9 @@ const TaskCoordinatorController := preload("res://scripts/task_coordinator.gd")
 const CitizenAgentController := preload("res://scripts/citizen_agent.gd")
 const ConstructionSystemController := preload("res://scripts/construction_system.gd")
 const RoomDefinitionLoader := preload("res://scripts/room_definition.gd")
+const VisualResolver := preload("res://scripts/visuals/visual_resolver.gd")
+const MaterialLibrary := preload("res://scripts/visuals/material_library.gd")
+const SettlementDetails := preload("res://scripts/visuals/settlement_details.gd")
 const CITIZEN_HEIGHT_INCHES := 0.5
 const CROWN_INTERIOR_PROJECTION := 0.75
 
@@ -21,6 +24,7 @@ var _room_definition: Dictionary = {}
 var _capture_timer := 0.0
 var _capture_saved := false
 var _materials: Dictionary = {}
+var _visual_resolver := VisualResolver.new()
 var _citizens: Array[Node3D] = []
 var _animated_gear_roots: Array[Node3D] = []
 var _presentation_clock := 0.0
@@ -70,11 +74,14 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	_presentation_clock += delta
+	var settlement := get_node_or_null("Settlement") as Node3D
+	if settlement != null:
+		SettlementDetails.animate(settlement, _presentation_clock)
 	for index in range(_animated_gear_roots.size()):
 		var gear := _animated_gear_roots[index]
 		gear.rotation.y += delta * (0.72 if index % 2 == 0 else -0.58)
 	if is_instance_valid(_boiler_light):
-		_boiler_light.light_energy = 20.0 + 5.0 * (0.5 + 0.5 * sin(_presentation_clock * 2.0))
+		_boiler_light.light_energy = 0.65 + 0.12 * (0.5 + 0.5 * sin(_presentation_clock * 2.0))
 	_capture_timer += delta
 	_ui_timer += delta
 	if _ui_timer >= 0.2:
@@ -96,6 +103,7 @@ func _build_settlement() -> void:
 	_build_depot(settlement)
 	_build_housing(settlement)
 	_build_work_area(settlement)
+	SettlementDetails.decorate(settlement, _room_definition)
 
 
 func _build_workshop(parent: Node3D) -> void:
@@ -129,7 +137,7 @@ func _build_workshop(parent: Node3D) -> void:
 	_boiler_light.name = "BoilerLamp"
 	_boiler_light.position = Vector3(-6.5, 7.0, 0.76)
 	_boiler_light.light_color = Color("f0a748")
-	_boiler_light.light_energy = 22.0
+	_boiler_light.light_energy = 0.8
 	_boiler_light.omni_range = 12.0
 	shop.add_child(_boiler_light)
 
@@ -534,14 +542,7 @@ func _build_room_object(parent: Node3D, object: Dictionary) -> void:
 	root.rotation_degrees.y = float(object.get("rotation_degrees", 0.0))
 	root.set_meta("semantic_name", String(object.get("name", object.id)))
 	parent.add_child(root)
-	var legacy_color := Color(String(object.get("color", "80664b")))
-	var appearance_value: Variant = object.get("appearance", null)
-	if appearance_value is Dictionary:
-		_build_appearance_object(root, dimensions, String(object.kind), appearance_value, legacy_color)
-	elif int(_room_definition.get("schema_version", 1)) >= 2:
-		_build_appearance_object(root, dimensions, String(object.kind), {}, legacy_color)
-	else:
-		_build_legacy_room_object(root, dimensions, object, legacy_color)
+	_visual_resolver.render(root, object, _render_object_fallback)
 	if object.has("surface"):
 		var surface: Dictionary = object.surface
 		var region_id := String(surface.region_id)
@@ -566,6 +567,18 @@ func _build_room_object(parent: Node3D, object: Dictionary) -> void:
 		outline_material.albedo_color.a = 0.36
 		outline.visible = false
 		_surface_outlines[region_id] = outline
+
+
+func _render_object_fallback(root: Node3D, object: Dictionary) -> void:
+	var dimensions := RoomDefinitionLoader.vector3_from(object.dimensions)
+	var color := Color(String(object.get("color", "80664b")))
+	var appearance: Variant = object.get("appearance", null)
+	if appearance is Dictionary:
+		_build_appearance_object(root, dimensions, String(object.kind), appearance, color)
+	elif int(_room_definition.get("schema_version", 1)) >= 2:
+		_build_appearance_object(root, dimensions, String(object.kind), {}, color)
+	else:
+		_build_legacy_room_object(root, dimensions, object, color)
 
 
 func _build_legacy_room_object(root: Node3D, dimensions: Vector3, object: Dictionary, color: Color) -> void:
@@ -1268,8 +1281,8 @@ func _appearance_color(appearance: Variant, field: String, fallback: Color) -> C
 
 
 func _appearance_material(appearance: Dictionary, color: Color, default_roughness: float) -> StandardMaterial3D:
-	var material := _material(color, default_roughness).duplicate() as StandardMaterial3D
 	var category := String(appearance.get("material", "other")).to_lower()
+	var material := MaterialLibrary.get_material(category, color, default_roughness).duplicate() as StandardMaterial3D
 	match category:
 		"metal":
 			material.metallic = 0.72
@@ -1305,7 +1318,7 @@ func _build_lighting() -> void:
 	fill.name = "RoomFill"
 	fill.position = RoomDefinitionLoader.vector3_from(fill_position)
 	fill.light_color = Color("f7d8a0")
-	fill.light_energy = 82.0
+	fill.light_energy = 1.8
 	fill.omni_range = maxf(190.0, ROOM_WIDTH * 0.9)
 	fill.omni_attenuation = 1.35
 	add_child(fill)
@@ -1316,7 +1329,7 @@ func _build_lighting() -> void:
 	resource.background_color = Color("17212b")
 	resource.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	resource.ambient_light_color = Color("d5cdbb")
-	resource.ambient_light_energy = 0.34
+	resource.ambient_light_energy = 0.55
 	resource.tonemap_mode = Environment.TONE_MAPPER_FILMIC
 	resource.glow_enabled = true
 	resource.glow_intensity = 0.14
@@ -1328,7 +1341,7 @@ func _build_lighting() -> void:
 	lantern_fill.name = "SettlementLanternFill"
 	lantern_fill.position = RoomDefinitionLoader.vector3_from(lantern_position)
 	lantern_fill.light_color = Color("e5a95d")
-	lantern_fill.light_energy = 24.0
+	lantern_fill.light_energy = 1.4
 	lantern_fill.omni_range = 38.0
 	lantern_fill.omni_attenuation = 1.5
 	add_child(lantern_fill)
@@ -1787,9 +1800,10 @@ func _material(color: Color, roughness: float) -> StandardMaterial3D:
 	var key := "%s_%.2f" % [color.to_html(), roughness]
 	if _materials.has(key):
 		return _materials[key] as StandardMaterial3D
-	var material := StandardMaterial3D.new()
-	material.albedo_color = color
-	material.roughness = roughness
+	var category := "wood" if color.r > color.b * 1.15 and roughness > 0.55 else "paint"
+	if roughness < 0.55:
+		category = "brass" if color.r > color.b * 1.2 else "iron"
+	var material := MaterialLibrary.get_material(category, color, roughness)
 	_materials[key] = material
 	return material
 

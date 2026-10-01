@@ -1,5 +1,15 @@
 # RoomScale POC 1 and POC 1.5 Progress
 
+## POC 3 implementation
+
+The visual implementation and retained baseline are on
+`codex/roomscale-poc3-visual-fidelity`. Functional A/B/photo-room scenarios pass,
+the semantic catalog and original automated GLB pipeline are implemented, and
+enhanced citizens, settlement details, furniture, resources and grapple stages
+are captured from real simulation. See [the POC 3 acceptance record](verification/poc3/acceptance.md)
+for exact evidence, failed iterations, performance caveats and outstanding
+human visual acceptance. POC 3 is not declared complete from functional tests.
+
 | Milestone | Status | Evidence |
 | --- | --- | --- |
 | M0 — Agent/engine proof | PASS | `verification/milestone0-status.md`, commit `dbdedb0` |
@@ -66,4 +76,5 @@ No known blocking defect. Construction progress is bounded at 100%; the floor-to
 
 ## Next Action
 
-All planned milestones M0–M8 are complete and verified. Preserve the user-owned `poc_project_plan.md`; no further milestone work is in scope.
+POC 1/1.5 milestones remain complete. Current work is POC 3, authorized by
+`RoomScale_POC_3_Project_Plan.md`; preserve the earlier plans and evidence.
