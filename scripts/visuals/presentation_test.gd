@@ -13,6 +13,20 @@ func _run() -> void:
 	if population.size() != 50:
 		_fail("expected 50 production citizens")
 		return
+	var streets := scene.get_node("Settlement/SettlementStreets")
+	if not streets.find_children("*", "CollisionObject3D", true, false).is_empty():
+		_fail("decorative streets must not introduce gameplay collision")
+		return
+	if not bool(scene.get("_presentation_mode")) or scene.get_node("Overlay/HudPanel").visible:
+		_fail("normal presentation must keep the diagnostic panel compact")
+		return
+	scene.set("_presentation_mode", false)
+	scene.call("_apply_presentation_mode")
+	if not scene.get_node("Overlay/HudPanel").visible or scene.get_node("Overlay/PresentationPanel").visible:
+		_fail("diagnostics must remain available through the presentation toggle")
+		return
+	scene.set("_presentation_mode", true)
+	scene.call("_apply_presentation_mode")
 	for citizen in population:
 		var figure := citizen.get_node("Figure") as Node3D
 		if figure.find_children("Goggle*", "MeshInstance3D", false, false).size() != 2 or figure.get_node_or_null("BuilderHammer") == null or figure.get_node_or_null("ExplorerPack") == null:

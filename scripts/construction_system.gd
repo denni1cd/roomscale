@@ -387,13 +387,21 @@ func _create_visible_project() -> void:
 	_site_root.name = "GrappleConstructionSite"
 	_site_root.position = site_position
 	scene_root.add_child(_site_root)
+	var work_light := OmniLight3D.new()
+	work_light.name = "WorkLamp"
+	work_light.position = Vector3(0, 2.8, 3)
+	work_light.light_color = Color("f9d4a0")
+	work_light.light_energy = 0.65
+	work_light.omni_range = 12
+	_site_root.add_child(work_light)
 	var blueprint := _add_box(_site_root, "BlueprintFootprint", Vector3(12.0, 0.08, 9.0), Vector3(0.0, 0.08, 0.0), Color("56aac1", 0.55))
 	var blueprint_material := blueprint.material_override as StandardMaterial3D
 	blueprint_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	blueprint_material.albedo_color.a = 0.38
 	_visuals["blueprint"] = blueprint
-	var base := _add_box(_site_root, "GrappleBase", Vector3(10.0, 1.3, 8.0), Vector3(0.0, 0.65, 0.0), Color("72533a"), false)
-	var base_plate := _add_box(_site_root, "BrassBasePlate", Vector3(8.0, 0.35, 6.0), Vector3(0.0, 1.45, 0.0), Color("bd914d"), false)
+	# Open-frame foundation leaves the authoritative worker position visible.
+	var base := _add_box(_site_root, "GrappleBase", Vector3(10.0, 0.12, 0.7), Vector3(0.0, 0.06, -3.5), Color("72533a"), false)
+	var base_plate := _add_box(_site_root, "BrassBasePlate", Vector3(8.0, 0.12, 0.6), Vector3(0.0, 0.06, 3.5), Color("a88751"), false)
 	var winch := _add_cylinder(_site_root, "WinchDrum", 2.4, 1.8, Vector3(0.0, 3.0, 0.0), Color("677977"), false)
 	winch.rotation.x = PI * 0.5
 	winch.position.y = 3.6

@@ -48,6 +48,7 @@ static func decorate(settlement: Node3D, definition: Dictionary) -> void:
 		G.box(settlement, "StationBench%d" % index, Vector3(1.2, 0.08, 0.6), at + Vector3(0, 0.37, -0.5), "wood", Color("79533b"), 0.025)
 		for side in [-1, 1]:
 			G.box(settlement, "BenchLeg%d_%d" % [index, side], Vector3(0.08, 0.35, 0.5), at + Vector3(side * 0.47, 0.17, -0.5), "iron", Color("2f4147"), 0.02)
+	preload("res://scripts/visuals/settlement_composition.gd").build(settlement, definition)
 
 static func animate(settlement: Node3D, clock: float) -> void:
 	var flywheel := settlement.get_node_or_null("Workshop/ClockworkDetails/Flywheel") as Node3D

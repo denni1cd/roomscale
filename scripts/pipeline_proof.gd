@@ -45,6 +45,8 @@ var _material_status_label: Label
 var _build_status_label: Label
 var _m6_status_label: Label
 var _inspection_label: Label
+var _presentation_mode := true
+var _compact_status: Label
 var _selected_citizen: Node3D
 var _selected_surface := ""
 
@@ -232,6 +234,8 @@ func _build_room() -> void:
 	var floor_mesh := _add_box(room, "Floor", Vector3(ROOM_WIDTH, FLOOR_THICKNESS, ROOM_DEPTH), Vector3(floor_center.x, floor_height - FLOOR_THICKNESS * 0.5, floor_center.z), floor_color, 0.82)
 	if not floor_appearance.is_empty():
 		floor_mesh.material_override = _appearance_material(floor_appearance, floor_color, 0.82)
+	if floor_appearance.is_empty() or String(floor_appearance.get("material", "")) == "wood":
+		floor_mesh.material_override = MaterialLibrary.floor_material(floor_color.lerp(Color("7c8280"), 0.55))
 	if String(floor_appearance.get("material", "")).to_lower() == "wood":
 		var seam_count := maxi(1, floori(ROOM_WIDTH / 12.0))
 		for index in range(1, seam_count):
@@ -1317,8 +1321,8 @@ func _build_lighting() -> void:
 	var fill := OmniLight3D.new()
 	fill.name = "RoomFill"
 	fill.position = RoomDefinitionLoader.vector3_from(fill_position)
-	fill.light_color = Color("f7d8a0")
-	fill.light_energy = 1.8
+	fill.light_color = Color("dbe4ec")
+	fill.light_energy = 1.2
 	fill.omni_range = maxf(190.0, ROOM_WIDTH * 0.9)
 	fill.omni_attenuation = 1.35
 	add_child(fill)
@@ -1328,8 +1332,8 @@ func _build_lighting() -> void:
 	resource.background_mode = Environment.BG_COLOR
 	resource.background_color = Color("17212b")
 	resource.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-	resource.ambient_light_color = Color("d5cdbb")
-	resource.ambient_light_energy = 0.55
+	resource.ambient_light_color = Color("d5dce4")
+	resource.ambient_light_energy = 0.72
 	resource.tonemap_mode = Environment.TONE_MAPPER_FILMIC
 	resource.glow_enabled = true
 	resource.glow_intensity = 0.14
@@ -1492,7 +1496,21 @@ func _build_ui() -> void:
 	_inspection_label.custom_minimum_size = Vector2(255.0, 72.0)
 	_inspection_label.text = "CITIZEN INSPECTION\nClick a citizen"
 	overlay.add_child(_inspection_label)
+	_add_ui_panel(overlay, "PresentationPanel", Rect2(20, 18, 420, 74), Color(0.035, 0.052, 0.068, 0.72))
+	_compact_status = _make_label("PresentationStatus", Vector2(34, 27), 16, Color("f5e3c5"))
+	overlay.add_child(_compact_status)
+	_apply_presentation_mode()
 	_update_population_ui()
+
+func _apply_presentation_mode() -> void:
+	var overlay := get_node("Overlay")
+	for child in overlay.get_children():
+		if child.name in ["PresentationPanel", "PresentationStatus"]:
+			child.visible = _presentation_mode
+		elif child.name != "ReachExploreButton":
+			child.visible = not _presentation_mode
+	_reach_button.position = Vector2(20, 100) if _presentation_mode else Vector2(28, 184)
+
 
 
 func _update_population_ui() -> void:
@@ -1529,6 +1547,11 @@ func _update_population_ui() -> void:
 	var m6: Dictionary = _task_coordinator.get_m6_status()
 	_m6_status_label.text = "%s  ARRIVED %d · EXPLORED %d · REUSES %d/2 · LINK %s" % [_goal_surface_name().to_upper(), m6.target_arrivals, m6.target_explorations_completed, m6.autonomous_reuses_assigned, "LIVE" if m6.infrastructure_operational else "WAITING"]
 	_update_project_ui()
+	if is_instance_valid(_compact_status):
+		var project: Dictionary = _construction_system.status()
+		_compact_status.text = "ROOMSCALE  ·  %d CITIZENS\n%s   ·   F3 diagnostics" % [_citizens.size(), String(project.state).replace("_", " ") if project.created else "Explore the room"]
+		if _presentation_mode:
+			_focus_label.visible = false
 
 
 func _on_reach_goal_updated(status: Dictionary) -> void:
@@ -1578,7 +1601,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event is InputEventKey:
 		var key := event as InputEventKey
 		if key.pressed and not key.echo:
-			if key.keycode == KEY_F12:
+			if key.keycode == KEY_F3:
+				_presentation_mode = not _presentation_mode
+				_apply_presentation_mode()
+				get_viewport().set_input_as_handled()
+			elif key.keycode == KEY_F12:
 				capture_interaction_state()
 				get_viewport().set_input_as_handled()
 			elif key.keycode == KEY_ENTER and _selected_surface == surface_navigation_goal_id():

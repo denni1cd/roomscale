@@ -172,7 +172,8 @@ func _run() -> void:
 		return
 	if not await _capture_visual(scene, "citizen-inspection", inspected_citizen.global_position, 28.0, 55.0, 0.3):
 		return
-	if not await _capture_visual(scene, "living-civilization", Vector3(0.0, 4.0, 50.0), 138.0, 62.0, 0.25):
+	var settlement_center: Vector3 = (scene.get_node("Settlement/Workshop").position + scene.get_node("Settlement/WorkArea").position) * 0.5 + Vector3.UP * 2
+	if not await _capture_visual(scene, "living-civilization", settlement_center, 64.0, 38.0, 0.12, true):
 		return
 	var workshop_position := RoomDefinitionLoader.vector3_from(definition.landmarks.workshop)
 	if not await _capture_visual(scene, "settlement-close", workshop_position + Vector3.UP * 4.0, 42.0, 35.0, 0.4, true):
@@ -279,7 +280,7 @@ func _run() -> void:
 					construction_visual_saved = true
 					if not await _capture_visual(scene, "construction", site + Vector3(0.0, 8.0, 0.0), 74.0, 68.0, 0.6):
 						return
-					if not await _capture_visual(scene, "builder-close", citizen.global_position + Vector3.UP * 0.25, 2.0, 24.0, 0.3, true, true, citizen):
+					if not await _capture_visual(scene, "builder-close", citizen.global_position + Vector3.UP * 0.25, 2.0, 8.0, 0.6, true, true, citizen):
 						return
 		for task in coordinator.tasks:
 			if task.task_type == "CONSTRUCTION_BUILD" and float(task.get("work_seconds", 0.0)) > 0.0:
@@ -443,9 +444,9 @@ func _run() -> void:
 			traversal_close_saved = true
 			if not await _capture_visual(scene, "citizen-climb-close", current + Vector3.UP * 0.25, 2.0, 22.0, 0.3, true, true, climber):
 				return
-		if not traversal_detail_saved and current.y >= floor_height + (float(goal_surface.height) - floor_height) * 0.85:
+		if not traversal_detail_saved and current.y >= floor_height + (float(goal_surface.height) - floor_height) * 0.5:
 			traversal_detail_saved = true
-			if not await _capture_visual(scene, "citizen-traversal-detail", current + Vector3.UP * 0.3, 22.0, 22.0, 0.65, true, true):
+			if not await _capture_visual(scene, "citizen-traversal-detail", current + Vector3.UP * 0.3, 3.5, 18.0, 1.2, true, true, climber):
 				return
 	traversal_goal = coordinator.get_traversal_goal_status()
 	var completed_traversal: Dictionary = coordinator.get_task(int(traversal_goal.task_id))
@@ -508,7 +509,7 @@ func _run() -> void:
 				var room_diagonal := Vector2(width, depth).length()
 				if not await _capture_visual(scene, "elevated-surface-exploration", goal_surface.anchor, maxf(110.0, room_diagonal * 0.45), 50.0, 0.0, true):
 					return
-				if not await _capture_visual(scene, "elevated-surface-exploration-detail", citizen.global_position + Vector3.UP * 0.3, 22.0, 22.0, 0.65, true, true):
+				if not await _capture_visual(scene, "elevated-surface-exploration-detail", citizen.global_position + Vector3.UP * 0.3, 3.0, 18.0, 0.65, true, true, citizen):
 					return
 				if not await _capture_visual(scene, "elevated-citizen-close", citizen.global_position + Vector3.UP * 0.25, 2.0, 22.0, 0.65, true, true, citizen):
 					return

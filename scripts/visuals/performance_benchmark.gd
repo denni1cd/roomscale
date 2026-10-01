@@ -43,7 +43,15 @@ func _run() -> void:
 		var elapsed := float(Time.get_ticks_usec() - started) / 1000000.0
 		samples.sort()
 		results.append({"view": view, "frames": samples.size(), "duration_seconds": elapsed, "fps": samples.size() / elapsed, "median_ms": samples[samples.size() / 2], "p95_ms": samples[floori(samples.size() * 0.95)], "max_ms": samples.back(), "cpu_process_ms": Performance.get_monitor(Performance.TIME_PROCESS) * 1000.0, "draw_calls": Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME), "primitives": Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME), "population": 50})
-	var file := FileAccess.open("res://verification/poc3/performance.json", FileAccess.WRITE)
+	var output := OS.get_environment("ROOMSCALE_PERFORMANCE_PATH")
+	if output.is_empty():
+		output = "res://verification/poc3/performance.json"
+	DirAccess.make_dir_recursive_absolute(output.get_base_dir())
+	var file := FileAccess.open(output, FileAccess.WRITE)
+	if file == null:
+		push_error("Performance output could not be written: " + output)
+		quit(1)
+		return
 	file.store_string(JSON.stringify({"engine": Engine.get_version_info().string, "renderer": RenderingServer.get_current_rendering_method(), "vsync": "disabled", "results": results}, "  "))
 	print("ROOMSCALE_PERFORMANCE_PASS %s" % [results])
 	quit()

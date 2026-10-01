@@ -19,6 +19,7 @@ static func build(parent: Node3D, object: Dictionary, recipe: Dictionary) -> boo
 			for x in [-1, 1]:
 				for z in [-1, 1]:
 					G.box(parent, "TaperedLeg_%d_%d" % [x, z], Vector3(d.x * 0.04, d.y - t, d.z * 0.07), Vector3(x * d.x * 0.44, (d.y - t) * 0.5, z * d.z * 0.41), "wood", dark, 0.2)
+					G.box(parent, "LegCollar%d_%d" % [x, z], Vector3(d.x * 0.048, 0.55, d.z * 0.085), Vector3(x * d.x * 0.44, d.y * 0.16, z * d.z * 0.41), "wood", wood, 0.12)
 			for x in [-1, 1]:
 				G.box(parent, "Apron%d" % x, Vector3(d.x * 0.88, d.y * 0.1, 0.7), Vector3(0, d.y - t - d.y * 0.05, x * d.z * 0.41), "wood", dark, 0.15)
 			if d.x > d.y * 1.5:
@@ -37,10 +38,17 @@ static func build(parent: Node3D, object: Dictionary, recipe: Dictionary) -> boo
 			for x in [-1, 1]:
 				G.box(parent, "BackPost%d" % x, Vector3(d.x * 0.08, d.y * 0.45, d.z * 0.08), Vector3(x * d.x * 0.43, d.y * 0.76, -d.z * 0.37), "wood", dark, 0.16)
 			G.box(parent, "UpholsteredBack", Vector3(d.x * 0.81, d.y * 0.33, d.z * 0.13), Vector3(0, d.y * 0.79, -d.z * 0.37), "leather", wood, 0.65)
+			for x in [-1, 1]:
+				G.box(parent, "SideStretcher%d" % x, Vector3(d.x * 0.05, d.y * 0.035, d.z * 0.67), Vector3(x * d.x * 0.4, seat * 0.35, 0), "wood", dark, 0.12)
+				for y in [0.73, 0.86]:
+					G.cylinder(parent, "UpholsteryButton", 0.18, 0.1, Vector3(x * d.x * 0.2, d.y * y, -d.z * 0.29), "leather", dark).rotation.x = PI * 0.5
 		_:
 			G.box(parent, "BackPanel", Vector3(d.x, d.y, d.z * 0.06), Vector3(0, d.y * 0.5, -d.z * 0.46), "wood", dark, 0.15)
 			for x in [-1, 1]:
 				G.box(parent, "Side%d" % x, Vector3(d.x * 0.06, d.y, d.z), Vector3(x * d.x * 0.47, d.y * 0.5, 0), "wood", wood, 0.22)
+				G.box(parent, "FaceStile%d" % x, Vector3(d.x * 0.085, d.y * 0.96, 0.65), Vector3(x * d.x * 0.45, d.y * 0.5, d.z * 0.46), "wood", dark, 0.16)
+			G.box(parent, "Cornice", Vector3(d.x, d.y * 0.045, d.z), Vector3(0, d.y * 0.976, 0), "wood", dark, 0.2)
+			G.box(parent, "Plinth", Vector3(d.x, d.y * 0.055, d.z), Vector3(0, d.y * 0.0275, 0), "wood", dark, 0.2)
 			for row in range(5):
 				var y := d.y * (0.025 + row * 0.238)
 				G.box(parent, "Shelf%d" % row, Vector3(d.x * 0.95, d.y * 0.025, d.z), Vector3(0, y, 0), "wood", wood, 0.16)

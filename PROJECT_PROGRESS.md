@@ -10,6 +10,11 @@ are captured from real simulation. See [the POC 3 acceptance record](verificatio
 for exact evidence, failed iterations, performance caveats and outstanding
 human visual acceptance. POC 3 is not declared complete from functional tests.
 
+The scene-composition refinement adds linked districts, storage clusters,
+miniature homes, human pencil/coin references, a neutral low-contrast floor,
+lit working poses and compact presentation HUD. Iterations and canonical
+refinement evidence are preserved separately; see [the refinement review](verification/poc3/refinement/review.md).
+
 | Milestone | Status | Evidence |
 | --- | --- | --- |
 | M0 — Agent/engine proof | PASS | `verification/milestone0-status.md`, commit `dbdedb0` |

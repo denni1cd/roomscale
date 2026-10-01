@@ -12,8 +12,11 @@ static func build(parent: Node3D) -> Array[Node3D]:
 	var iron := Color("2e4149")
 	var brass := Color("b18a48")
 	var copper := Color("a76543")
+	G.box(groups[0], "AssemblyBlock", Vector3(0.5, 0.16, 0.24), Vector3(0, 0.08, -0.38), "wood", Color("72513b"), 0.025)
+	G.cylinder(groups[1], "AssemblyPin", 0.045, 0.09, Vector3(0.1, 0.205, -0.38), "iron", iron)
 	for x in [-1, 1]:
 		for z in [-1, 1]:
+			G.box(groups[0], "FrameFoot%d_%d" % [x, z], Vector3(0.4, 1.6, 0.4), Vector3(x * 4, 0.8, z * 2.5), "iron", iron, 0.06)
 			G.cylinder(groups[0], "FoundationBolt%d_%d" % [x, z], 0.25, 0.2, Vector3(x * 3.5, 1.75, z * 2.5), "iron", iron)
 		G.box(groups[0], "Rail%d" % x, Vector3(0.5, 0.5, 7.5), Vector3(x * 4, 1.7, 0), "iron", iron, 0.1)
 		G.box(groups[1], "BearingStand%d" % x, Vector3(0.5, 3.5, 1.0), Vector3(0, 3.1, x * 1.55), "iron", iron, 0.15)

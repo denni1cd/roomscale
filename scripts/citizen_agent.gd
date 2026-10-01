@@ -33,6 +33,8 @@ var _right_leg: MeshInstance3D
 var _cargo: MeshInstance3D
 var _role_tool: Node3D
 var _role_pack: Node3D
+var _role_badge: MeshInstance3D
+var _traversal_clip: Node3D
 var _fine_details: Array[Node3D] = []
 var _detail_visible := true
 var _lod_timer := 0.0
@@ -290,13 +292,20 @@ func _build_figure() -> void:
 		_box(model, "Boot%s" % side, Vector3(0.064, 0.045, 0.09), Vector3(side * 0.045, 0.025, 0.019), leather)
 		_box(model, "ShoulderPlate%s" % side, Vector3(0.056, 0.04, 0.066), Vector3(side * 0.099, 0.307, 0.0), brass)
 	_box(model, "Buckle", Vector3(0.037, 0.025, 0.016), Vector3(0, 0.173, 0.071), brass)
+	_role_badge = _box(model, "RoleChest", Vector3(0.085, 0.045, 0.02), Vector3(0, 0.28, 0.065), brass)
+	_traversal_clip = Node3D.new()
+	_traversal_clip.name = "CableSafetyClip"
+	model.add_child(_traversal_clip)
+	_box(_traversal_clip, "SafetyLanyard", Vector3(0.015, 0.18, 0.015), Vector3(0.075, 0.11, 0), leather)
+	var clip := _cylinder(_traversal_clip, "CableClamp", 0.018, 0.045, Vector3(0.055, 0.021, 0), Materials.get_material("iron", Color("728990")))
+	clip.rotation.x = PI * 0.5
 	_role_pack = _box(model, "ExplorerPack", Vector3(0.115, 0.13, 0.065), Vector3(0, 0.255, -0.089), leather)
 	_role_tool = Node3D.new()
 	_role_tool.name = "BuilderHammer"
 	_role_tool.position = Vector3(0.12, 0.22, 0.035)
 	model.add_child(_role_tool)
 	_box(_role_tool, "Handle", Vector3(0.018, 0.15, 0.018), Vector3(0, 0.035, 0), leather)
-	_box(_role_tool, "HammerHead", Vector3(0.075, 0.035, 0.03), Vector3(0, 0.115, 0), brass)
+	_box(_role_tool, "HammerHead", Vector3(0.10, 0.05, 0.045), Vector3(0, 0.115, 0), Materials.get_material("iron", Color("667b84")))
 	_cargo = _box(model, "Parcel", Vector3(0.16, 0.12, 0.14), Vector3(0.0, 0.26, 0.14), _material(Color("e0ad4e"), 0.68))
 	_cargo.visible = false
 	# Keep references alive and make intended scale explicit to the debugger.
@@ -312,6 +321,17 @@ func _update_animation() -> void:
 		_body.rotation.z = 0.0
 	_role_tool.visible = _detail_visible and task_type == "CONSTRUCTION_BUILD"
 	_role_pack.visible = _detail_visible and task_type in ["SURFACE_INVESTIGATION", "SURFACE_TRAVERSAL", "SURFACE_EXPLORATION"]
+	_traversal_clip.visible = _detail_visible and task_type == "SURFACE_TRAVERSAL"
+	var builder := task_type == "CONSTRUCTION_BUILD"
+	var explorer := task_type in ["SURFACE_INVESTIGATION", "SURFACE_TRAVERSAL", "SURFACE_EXPLORATION"]
+	_role_badge.material_override = Materials.get_material("paint", Color("d4933b") if builder else (Color("498e99") if explorer else (Color("698955") if carrying else Color("887660"))))
+	if builder and state == "WORK":
+		var construction := get_parent().get_node_or_null("ConstructionSystem")
+		if construction != null:
+			var work_at: Vector3 = construction.status().site
+			var toward := work_at + Vector3(0, 0, -0.4) - global_position
+			if Vector2(toward.x, toward.z).length() > 0.02:
+				rotation.y = atan2(toward.x, toward.z)
 	var walking := state == "TRAVEL" or state == "CARRY"
 	if walking:
 		var gait := sin(_animation_time * 11.0)
@@ -333,12 +353,13 @@ func _update_animation() -> void:
 		_left_leg.rotation.x = 0.0
 		_right_leg.rotation.x = 0.0
 		if state == "WORK":
-			_left_arm.rotation.x = sin(_animation_time * 9.0) * 0.68
-			_right_arm.rotation.x = -sin(_animation_time * 9.0) * 0.68
+			_left_arm.rotation.x = -0.7 if builder else sin(_animation_time * 9.0) * 0.68
+			_right_arm.rotation.x = -1.0 + sin(_animation_time * 9.0) * 0.85 if builder else -sin(_animation_time * 9.0) * 0.68
 		else:
 			_left_arm.rotation.x = 0.0
 			_right_arm.rotation.x = 0.0
 	_role_tool.rotation.x = _right_arm.rotation.x
+	_role_tool.position = _right_arm.position + Vector3(0.025, -cos(_right_arm.rotation.x) * 0.075, -sin(_right_arm.rotation.x) * 0.075)
 
 
 func _animate_work() -> void:

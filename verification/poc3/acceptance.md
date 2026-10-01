@@ -9,6 +9,11 @@ Codex directly inspected all 18 final images and three baseline comparisons on
 composition, material, shadow-readability and capture-framing issues. Codex does
 not recommend signing off AC-43 yet; this does not replace required human review.
 
+The subsequent [refinement review](refinement/review.md) records the connected
+settlement, scale references, floor/lighting, working poses and new captures.
+Original visual-review.md and final-reviewed/ remain historical evidence.
+The plan's human acceptance requirement remains outstanding.
+
 ## Milestones
 
 | Milestone | Status / evidence |

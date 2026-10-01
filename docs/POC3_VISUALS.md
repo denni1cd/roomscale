@@ -1,5 +1,34 @@
 # POC 3 visual implementation
 
+## Scene refinement
+
+`settlement_composition.gd` derives streets, utility lines, satellite housing,
+stores and work-yard machinery from existing landmarks. It adds no collision
+or navigation data. Street boards use MultiMesh; utilities clear citizen height.
+Solid decorative props stay in the original reserved building yards. The human
+pencil is approximately seven inches long and the coin one inch across.
+
+The shared floor shader uses world coordinates, low-contrast grain, roughness
+variation and derivative-antialiased board joints that fade with distance.
+The floor is more neutral than miniature stained wood, copper and warm windows.
+Nonwood photo floors keep their appearance mapping.
+
+F3 switches between the default compact HUD and existing diagnostics.
+Reach / Explore remains available in both. Close captures temporarily hide the
+overlay without changing simulation; wide captures preserve state in sidecars.
+
+Builders face an assembly block at the actual construction site. Their hammer
+follows the animated arm endpoint during active work. An open-frame foundation
+exposes the worker position, and a local work lamp improves shadow readability.
+Tasks drive chest accents, the existing pack/tool/cargo and a safety clip.
+
+The generated desk adds leg collars; chairs have stretchers and upholstery
+buttons; shelves have face stiles, cornice and plinth. The canonical refinement
+captures and ten-question assessment are in `verification/poc3/refinement/review.md`.
+Earlier reviewed captures are unchanged. To preserve earlier performance data,
+set `ROOMSCALE_PERFORMANCE_PATH=res://verification/poc3/refinement/performance.json`
+when running the existing benchmark script alone.
+
 Work is on `codex/roomscale-poc3-visual-fidelity`; the authoritative scope is
 `RoomScale_POC_3_Project_Plan.md`. Evidence and limitations live under
 `verification/poc3/`. Baseline details are in `verification/poc3/m0-status.md`.

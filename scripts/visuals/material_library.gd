@@ -4,6 +4,16 @@ static var _cache: Dictionary = {}
 static var _definitions: Dictionary = {}
 static var _textures: Dictionary = {}
 static var _loaded := false
+static var _floor_cache: Dictionary = {}
+
+static func floor_material(color: Color) -> ShaderMaterial:
+	var key := color.to_html()
+	if not _floor_cache.has(key):
+		var material := ShaderMaterial.new()
+		material.shader = preload("res://visual/floor_wood.gdshader")
+		material.set_shader_parameter("timber_color", color)
+		_floor_cache[key] = material
+	return _floor_cache[key]
 
 static func get_material(category: String, color: Color, roughness: float = 0.8) -> StandardMaterial3D:
 	if not _loaded:
@@ -21,11 +31,14 @@ static func get_material(category: String, color: Color, roughness: float = 0.8)
 	material.albedo_color = color
 	material.roughness = float(properties.get("roughness", roughness))
 	material.metallic = float(properties.get("metallic", 0.0))
-	if category in ["wood", "canvas", "fabric", "rope", "leather", "stone"]:
+	if category in ["wood", "floor_wood", "canvas", "fabric", "rope", "leather", "stone"]:
 		material.albedo_texture = _texture(category)
 		material.uv1_triplanar = true
 		material.uv1_world_triplanar = true
-		material.uv1_scale = Vector3(0.006, 0.2, 0.18) if category == "wood" else Vector3.ONE * 0.5
+		material.uv1_scale = Vector3(0.06, 0.12, 0.10) if category == "wood" else Vector3.ONE * 0.5
+		if category == "floor_wood":
+			material.uv1_scale = Vector3(0.025, 0.08, 0.07)
+			material.roughness = 0.92
 	if properties.has("emission"):
 		material.emission_enabled = true
 		material.emission = color
@@ -46,7 +59,7 @@ static func _texture(category: String) -> NoiseTexture2D:
 	noise.fractal_octaves = 3
 	texture.noise = noise
 	var gradient := Gradient.new()
-	gradient.set_color(0, Color(0.72, 0.72, 0.72))
+	gradient.set_color(0, Color(0.94, 0.94, 0.94) if category == "floor_wood" else Color(0.84, 0.84, 0.84))
 	gradient.set_color(1, Color(1.0, 1.0, 1.0))
 	texture.color_ramp = gradient
 	_textures[category] = texture
