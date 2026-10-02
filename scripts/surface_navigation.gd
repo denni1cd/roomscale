@@ -55,6 +55,15 @@ func goal_surface() -> Dictionary:
 	return regions.get(goal_surface_id, {}).duplicate(true)
 
 
+func remove_object_surface(object_id: String) -> void:
+	var removed: Array[String] = []
+	for region in regions:
+		if String(regions[region].get("object_id", "")) == object_id: removed.append(region)
+	for region in removed:
+		regions.erase(region)
+		connections = connections.filter(func(link: Dictionary) -> bool: return String(link.from) != region and String(link.to) != region)
+
+
 func route_between(start_region: String, end_region: String, start: Vector3, finish: Vector3) -> Dictionary:
 	if not regions.has(start_region) or not regions.has(end_region):
 		return {"reachable": false, "path": [], "reason": "unknown navigation region"}

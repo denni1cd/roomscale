@@ -1,0 +1,21 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ROOMSCALE_VISUAL_ASSET object=desk source=res://assets/generated/writing_desk.glb normalization={ "source_bounds": [P: (-34.0, 0.0, -17.0), S: (68.0, 30.0, 34.0)], "fitted_dimensions": (68.0, 30.0, 34.0) }
+ROOMSCALE_VISUAL_ASSET object=side_table source=res://assets/generated/writing_desk.glb normalization={ "source_bounds": [P: (-34.0, 0.0, -17.0), S: (68.0, 30.0, 34.0)], "fitted_dimensions": (20.0, 20.0, 17.0) }
+ROOMSCALE_FLOOR_NAV_READY room=room_a grid=60x45 cell=4in obstacles=11
+ROOMSCALE_CITIZEN_SPAWN count=50 separate_nodes=true height=0.5in
+ROOMSCALE_M2_READY Godot=4.7.2-stable (official) room=room_a size=240x180 in citizens=50
+POC4_SALVAGE_STAGE object=chair state=STRIPPED work=8.0 yields={ "metal": 2.0 }
+POC4_SALVAGE_STAGE object=chair state=PARTIAL work=20.0 yields={ "wood": 5.0, "metal": 2.0 }
+ROOMSCALE_FLOOR_NAV_READY room=room_a grid=60x45 cell=4in obstacles=11
+POC4_SALVAGE_STAGE object=chair state=FRAME work=32.0 yields={ "wood": 3.0 }
+ROOMSCALE_FLOOR_NAV_READY room=room_a grid=60x45 cell=4in obstacles=10
+POC4_SALVAGE_STAGE object=chair state=DEPLETED work=42.0 yields={ "wood": 5.0 }
+POC4_M1_PASS {"days":2.00000000000001,"drinks":298,"economy":{"food":{"available":4802.0,"consumed":197.0,"delivered":0.0,"in_transit":0.0,"received":0.0,"reserved":1.0},"metal":{"available":0.0,"consumed":0.0,"delivered":0.0,"in_transit":0.0,"received":0.0,"reserved":0.0},"water":{"available":4700.0,"consumed":298.0,"delivered":0.0,"in_transit":0.0,"received":0.0,"reserved":2.0},"wood":{"available":0.0,"consumed":0.0,"delivered":0.0,"in_transit":0.0,"received":0.0,"reserved":0.0}},"food_days":48.02,"meals":197,"population":50,"resting":9,"rests":132,"shelter":44,"urgent":3,"water_days":31.3333333333333}
+POC4_M2_PASS accounting=conserved reservation=exclusive forecast=population_based normal_ui=verified
+POC4_M3_PASS priority_ranking=verified production_labor=verified directives=validated
+POC4_M4_PASS generic_profiles=chair_table_box contract=standard_room_definition invalid_metadata=rejected
+POC4_M5_PASS protected=verified stages=4 real_work=verified pickups=5 deliveries=5 geometry=altered navigation=updated conservation=verified
+POC4_SPEED_PASS pause=true 4x=true 10x=true fixed_step=0.1
+POC4_FAST_PASS
+

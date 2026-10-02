@@ -1,5 +1,5 @@
 param(
-	[string]$Room = 'room_a'
+	[string]$Room = 'room_poc4'
 )
 
 $ErrorActionPreference = 'Stop'

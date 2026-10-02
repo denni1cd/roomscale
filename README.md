@@ -4,6 +4,14 @@ RoomScale is a small 3D civilization simulation where half-inch citizens treat a
 
 ## Current status
 
+POC 4 is **PASS**: 50 citizens maintain food, water and rest needs; civilization
+priorities and salvage authorization drive real resource hauling, construction,
+and access to elevated water. All 45 criteria, five consecutive complete scenarios,
+seven days after recovery, and thirty days of stability passed. See the
+[final report](verification/poc4/final-report.md),
+[acceptance matrix](verification/poc4/acceptance.md), and
+[gameplay guide](docs/POC4_GAMEPLAY.md).
+
 POC 3 visual work is on `codex/roomscale-poc3-visual-fidelity`: semantic visual
 resolution, generated GLB desk, detailed furniture, shared materials, clockwork
 citizens/settlement, task-driven resource props, staged grapple machinery, and
@@ -30,6 +38,7 @@ The PowerShell setup script checks for Godot 4.7.2 standard Windows x86-64 and d
 
 ```powershell
 ./SETUP_ROOM_SCALE.ps1
+./RUN_ROOM_SCALE.ps1 # Default: POC 4 living economy
 ./RUN_ROOM_SCALE.ps1 -Room room_a
 ./RUN_ROOM_SCALE.ps1 -Room room_b
 # Any safe room ID in rooms/, or a project-local RoomDefinition JSON file
@@ -60,6 +69,10 @@ Room placement data has a one-inch interior floor-edge clearance. Optional objec
 
 ## Controls
 
+- In POC 4, set Survival/Resources/Construction priorities, issue **Secure Water**,
+  select **Chair**, and choose **Authorize Salvage** when materials are missing.
+  Citizens choose their own tasks. Watch reserves and project supply in the HUD.
+- **Pause / 1x / 4x / 10x** control simulation time; **F3** toggles diagnostics.
 - Click the highlighted elevated surface, then choose **Reach / Explore** or press Enter.
 - Click a citizen to inspect its identifier, state, current task, and destination/target.
 - `1`, `2`, `3` switch between room, settlement, and citizen views.
@@ -70,6 +83,10 @@ Room placement data has a one-inch interior floor-edge clearance. Optional objec
 
 ```powershell
 # Fast deterministic room, navigation, geometry, and task-cleanup checks
+# POC 4 full gates; add -CaptureVisuals to a Sustained run for screenshots
+./TEST_ROOM_SCALE_POC4.ps1 -Mode All
+./TEST_ROOM_SCALE_POC4.ps1 -Mode Sustained -CaptureVisuals
+
 ./TEST_ROOM_SCALE_FAST.ps1 -TimeoutSeconds 30
 
 # Structural plus derived-navigation validation before a candidate is integrated
@@ -82,8 +99,8 @@ Room placement data has a one-inch interior floor-edge clearance. Optional objec
 ./TEST_ROOM_SCALE.ps1 -Room verification/poc2/candidates/candidate_room.json -TimeoutSeconds 360
 
 # Current canonical photo-based candidate (validation and gameplay evidence)
-./VALIDATE_ROOM_SCALE.ps1 -Room verification/poc2/candidates/primary/attempt-2/room_photo_luna.json
-./TEST_ROOM_SCALE.ps1 -Room verification/poc2/candidates/primary/attempt-2/room_photo_luna.json -TimeoutSeconds 360
+./VALIDATE_ROOM_SCALE.ps1 -Room verification/poc2/candidates/primary/attempt-7/room_photo_luna.json
+./TEST_ROOM_SCALE.ps1 -Room verification/poc2/candidates/primary/attempt-7/room_photo_luna.json -TimeoutSeconds 360
 
 # Required no-source-change cross-room sequence
 ./TEST_ROOM_SCALE_CROSSROOM.ps1 -PerRunTimeoutSeconds 360 -OverallTimeoutMinutes 18

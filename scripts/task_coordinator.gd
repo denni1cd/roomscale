@@ -12,6 +12,7 @@ const FLOOR_REGION := "FLOOR"
 var navigation: Node
 var surface_navigation: Node
 var construction_system: Node
+var civilization: Node
 var room_definition: Dictionary = {}
 var tasks: Array[Dictionary] = []
 var _next_task_id := 1
@@ -77,11 +78,25 @@ func seed_population(count: int) -> void:
 
 
 func claim_for(citizen_id: int) -> Dictionary:
+	if is_instance_valid(civilization):
+		var citizen := get_parent().get_node_or_null("Citizen%02d" % (citizen_id + 1)) as Node3D
+		if is_instance_valid(citizen):
+			var strategic: Dictionary = civilization.claim(citizen)
+			if not strategic.is_empty(): return strategic
+			if civilization.should_interrupt(citizen): return {}
+	var selected: Dictionary = {}
+	var best := -INF
 	for task in tasks:
-		if task.state == "available":
-			task.state = "reserved"
-			task.citizen_id = citizen_id
-			return task.duplicate(true)
+		if task.state != "available": continue
+		var score: float = civilization.routine_score(task, citizen_id) if is_instance_valid(civilization) else 0.0
+		if selected.is_empty() and score > -INF or score > best:
+			selected = task
+			best = score
+	if not selected.is_empty():
+		selected.state = "reserved"
+		selected.citizen_id = citizen_id
+		if is_instance_valid(civilization): civilization.planner.record(String(selected.task_type))
+		return selected.duplicate(true)
 	return {}
 
 
@@ -112,6 +127,7 @@ func fail_task(task_id: int, reason: String) -> void:
 		return
 	var citizen_id := int(task.citizen_id)
 	var cycle := int(task.get("cycle", 0)) + 1
+	if is_instance_valid(civilization): civilization.release(task)
 	task.state = "failed"
 	task.failure_reason = reason
 	task.finished_at = Time.get_ticks_msec()
@@ -129,6 +145,7 @@ func cancel_task(task_id: int, reason: String) -> bool:
 	var task := _find_task(task_id)
 	if task.is_empty() or not task.state in ["active", "reserved"]:
 		return false
+	if is_instance_valid(civilization): civilization.release(task)
 	task.state = "cancelled"
 	task.failure_reason = reason
 	task.finished_at = Time.get_ticks_msec()
@@ -164,6 +181,7 @@ func create_construction_task(specification: Dictionary, citizen_id: int) -> Dic
 	task["cycle"] = 0
 	task["progress"] = 0.0
 	task["created_at"] = Time.get_ticks_msec()
+	task["created_sim"] = float(civilization.seconds) if is_instance_valid(civilization) else 0.0
 	tasks.append(task)
 	_trim_history()
 	return task.duplicate(true)
@@ -175,7 +193,7 @@ func confirm_project_pickup(task_id: int, citizen: Node3D, resource: String) -> 
 		return false
 	if int(task.citizen_id) != int(citizen.citizen_id) or String(task.resource) != resource or bool(task.picked_up):
 		return false
-	if citizen.global_position.distance_to(task.source) > 1.6 or not construction_system.take_stock(resource, int(task.amount)):
+	if citizen.global_position.distance_to(task.source) > 1.6 or not construction_system.take_stock(resource, int(task.amount), int(task.get("ticket", -1))):
 		return false
 	task.picked_up = true
 	task.picked_up_at = Time.get_ticks_msec()
@@ -197,7 +215,7 @@ func confirm_project_delivery(task_id: int, citizen: Node3D, resource: String, c
 	var required_travel := _path_length(route) * 0.9
 	if route.is_empty() or citizen.travelled_distance - float(task.pickup_travelled_distance) < required_travel:
 		return false
-	if not construction_system.accept_delivery(resource, int(task.amount), citizen.global_position):
+	if not construction_system.accept_delivery(resource, int(task.amount), citizen.global_position, int(task.get("ticket", -1))):
 		return false
 	task.delivered = true
 	task.delivered_at = Time.get_ticks_msec()
@@ -228,6 +246,10 @@ func issue_reach_explore(surface_id: String, citizens: Array) -> Dictionary:
 	if not surface_navigation.regions.has(surface_id) or surface_id == FLOOR_REGION:
 		return {"accepted": false, "state": "REJECTED", "message": "Select an elevated surface first."}
 	_goal_region = surface_id
+	surface_navigation.goal_surface_id = surface_id
+	var site: Dictionary = surface_navigation.derive_construction_site(navigation)
+	if not site.get("valid", false): return {"accepted": false, "state": "NO_SITE", "message": "No clear construction site reaches this surface."}
+	_construction_site = site.position
 	var surface: Dictionary = surface_navigation.regions[surface_id]
 	_goal_label = String(surface.get("object_name", "elevated surface"))
 	_goal_center = surface.get("center", Vector3.ZERO)
@@ -517,6 +539,7 @@ func _create_task_record(specification: Dictionary) -> Dictionary:
 	_next_task_id += 1
 	_created_count += 1
 	task["created_at"] = Time.get_ticks_msec()
+	task["created_sim"] = float(civilization.seconds) if is_instance_valid(civilization) else 0.0
 	tasks.append(task)
 	_trim_history()
 	return task.duplicate(true)
@@ -560,6 +583,10 @@ func _find_task(task_id: int) -> Dictionary:
 
 
 func _enqueue_for(citizen_id: int, cycle: int) -> void:
+	if is_instance_valid(civilization):
+		for pending in tasks:
+			if pending.state == "available" and int(pending.get("owner_hint", -1)) == citizen_id:
+				return
 	var selector := posmod(citizen_id + cycle, 5)
 	var kind := ""
 	var source := Vector3.ZERO

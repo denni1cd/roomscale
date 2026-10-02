@@ -48,6 +48,19 @@ var _deployment_cursor := 0
 var _deployment_path: Array[Vector3] = []
 var _detail_groups: Array[Node3D] = []
 var _work_steam: GPUParticles3D
+var economy: RefCounted
+
+
+func requirements() -> Dictionary:
+	var result := REQUIRED.duplicate(true)
+	if economy != null: result.mechanical_parts = 0
+	return result
+
+
+func stage_requirements(stage: int) -> Dictionary:
+	var result: Dictionary = STAGES[stage].required.duplicate(true)
+	if economy != null: result.mechanical_parts = 0
+	return result
 
 
 func configure(task_coordinator: Node, floor_navigation: Node, population: Array, scene: Node3D, definition: Dictionary) -> void:
@@ -84,6 +97,9 @@ func _process(delta: float) -> void:
 
 func on_reach_goal_updated(goal: Dictionary) -> void:
 	if goal.get("state", "") == "BARRIER_CONFIRMED" and not project_created:
+		target_region = String(goal.surface)
+		target_anchor = surface_navigation.regions[target_region].anchor
+		site_position = coordinator.get_construction_site()
 		_create_project()
 
 
@@ -91,7 +107,14 @@ func has_project() -> bool:
 	return project_created
 
 
-func take_stock(resource: String, amount: int) -> bool:
+func take_stock(resource: String, amount: int, ticket_id: int = -1) -> bool:
+	if economy != null:
+		if not economy.tickets.has(ticket_id): return false
+		var ticket: Dictionary = economy.tickets[ticket_id]
+		if ticket.resource != resource or float(ticket.amount) != amount or ticket.owner != "traversal": return false
+		if not economy.pickup(ticket_id): return false
+		picked_up[resource] += amount
+		return true
 	if not project_created or not stockpile.has(resource) or amount <= 0 or int(stockpile[resource]) < amount:
 		return false
 	stockpile[resource] = int(stockpile[resource]) - amount
@@ -100,13 +123,17 @@ func take_stock(resource: String, amount: int) -> bool:
 	return true
 
 
-func accept_delivery(resource: String, amount: int, destination: Vector3) -> bool:
+func accept_delivery(resource: String, amount: int, destination: Vector3, ticket_id: int = -1) -> bool:
 	if not project_created or not delivered.has(resource) or amount <= 0:
 		return false
 	if destination.distance_to(site_position) > 1.5:
 		return false
-	if int(delivered[resource]) + amount > int(REQUIRED[resource]):
+	if int(delivered[resource]) + amount > int(requirements()[resource]):
 		return false
+	if economy != null:
+		if not economy.tickets.has(ticket_id): return false
+		var ticket: Dictionary = economy.tickets[ticket_id]
+		if ticket.resource != resource or float(ticket.amount) != amount or ticket.owner != "traversal" or not economy.deliver(ticket_id): return false
 	delivered[resource] = int(delivered[resource]) + amount
 	_emit_update()
 	_update_build_unlocks()
@@ -139,8 +166,8 @@ func status() -> Dictionary:
 	return {
 		"created": project_created,
 		"state": project_state,
-		"required": REQUIRED.duplicate(true),
-		"stockpile": stockpile.duplicate(true),
+		"required": requirements(),
+		"stockpile": {"wood": economy.available.wood, "metal": economy.available.metal, "mechanical_parts": 0} if economy != null else stockpile.duplicate(true),
 		"picked_up": picked_up.duplicate(true),
 		"delivered": delivered.duplicate(true),
 		"active_stage": current_stage_name,
@@ -175,6 +202,10 @@ func _create_project() -> void:
 	project_created = true
 	project_state = "DELIVERING"
 	_create_visible_project()
+	if economy != null:
+		project_state = "WAITING_FOR_MATERIALS"
+		_emit_update()
+		return
 	var resource_jobs: Array[String] = [
 		"wood", "wood", "metal", "wood", "metal", "mechanical_parts",
 		"metal", "wood", "metal", "mechanical_parts", "mechanical_parts",
@@ -212,7 +243,7 @@ func _update_build_unlocks() -> void:
 
 
 func _has_materials_for_stage(stage_index: int) -> bool:
-	var threshold: Dictionary = STAGES[stage_index].required
+	var threshold: Dictionary = stage_requirements(stage_index)
 	for resource in RESOURCE_ORDER:
 		if int(delivered[resource]) < int(threshold[resource]):
 			return false
@@ -227,6 +258,9 @@ func _start_build_stage(stage_index: int) -> void:
 	_stage_gate_snapshots.append(delivered.duplicate(true))
 	project_state = "BUILDING_%s" % String(STAGES[stage_index].name).to_upper()
 	_construction_worker_ids.clear()
+	if economy != null:
+		_emit_update()
+		return
 	var builders := _nearest_available_builders(site_position, 2)
 	for builder in builders:
 		_construction_worker_ids[builder.citizen_id] = true
@@ -253,6 +287,9 @@ func _complete_component(stage_index: int, completing_task_id: int) -> void:
 		if is_instance_valid(component):
 			component.visible = true
 	if _completed_stages >= STAGES.size():
+		if economy != null:
+			for ticket_id in economy.tickets.keys():
+				if economy.tickets[ticket_id].owner == "traversal" and economy.tickets[ticket_id].state == "delivered": economy.consume(ticket_id, true)
 		project_state = "CONSTRUCTION_COMPLETE"
 		_delivery_citizen_ids.clear()
 		_construction_worker_ids.clear()
@@ -338,6 +375,10 @@ func _finish_traversal_deployment() -> void:
 		push_error("Grapple deployment blocked: generated route could not connect the selected surface.")
 		return
 	traversal_deployed = true
+	if economy != null:
+		project_state = "CABLE_DEPLOYED"
+		_emit_update()
+		return
 	var carriers: Array[Dictionary] = []
 	for citizen in citizens:
 		var climber := citizen as Node3D

@@ -4,6 +4,7 @@ extends RefCounted
 const APPEARANCE_MATERIALS := ["wood", "metal", "fabric", "glass", "stone", "plastic", "ceramic", "paint", "plant", "other"]
 const WALL_SIDES := ["north", "south", "east", "west"]
 const OPENING_KINDS := ["door", "window", "opening"]
+const ResourceProfiles := preload("res://scripts/resource_system.gd")
 
 
 static func load_file(path: String) -> Dictionary:
@@ -177,6 +178,8 @@ static func validate(definition: Dictionary) -> Array[String]:
 
 		if object.has("appearance"):
 			_validate_appearance(object.get("appearance"), "object %s appearance" % object_id, errors)
+		if object.has("resource_profile"):
+			for diagnostic in ResourceProfiles.validate_profile(object.resource_profile): errors.append("object %s %s" % [object_id, diagnostic])
 		if object.has("surface"):
 			var surface_value: Variant = object.get("surface")
 			if not surface_value is Dictionary:
@@ -243,6 +246,22 @@ static func validate(definition: Dictionary) -> Array[String]:
 							if absf(local_x) <= blocked_x and absf(local_z) <= blocked_z:
 								errors.append("surface %s approach point is inside its blocking footprint" % region_id)
 
+	for object in objects:
+		if object is Dictionary and object.get("resource_profile") is Dictionary:
+			var region: Variant = object.resource_profile.get("region_id", "FLOOR")
+			if region is String and not surface_ids.has(region): errors.append("resource_profile references unknown region: " + region)
+	if definition.has("civilization"):
+		if not definition.civilization is Dictionary: errors.append("civilization must be an object")
+		else:
+			var config: Dictionary = definition.civilization
+			if config.has("economy_construction") and not config.economy_construction is bool: errors.append("civilization.economy_construction must be boolean")
+			for field in ["shelter_capacity", "rest_capacity"]:
+				if config.has(field) and (not _finite_number(config[field]) or float(config[field]) < 0 or float(config[field]) != floorf(float(config[field]))): errors.append("civilization.%s must be a nonnegative integer" % field)
+			if config.has("stock"):
+				if not config.stock is Dictionary: errors.append("civilization.stock must be an object")
+				else:
+					for resource in config.stock:
+						if resource not in ResourceProfiles.RESOURCES or not _finite_number(config.stock[resource]) or float(config.stock[resource]) < 0: errors.append("invalid civilization stock: " + String(resource))
 	if target_surface_id.is_empty() or target_surface_id == "FLOOR" or not surface_ids.has(target_surface_id):
 		errors.append("target_surface_id references an unknown navigable surface: %s" % target_surface_id)
 	var construction_value: Variant = definition.get("construction", null)
@@ -506,6 +525,17 @@ static func validate_navigation(definition: Dictionary, floor_navigation: Node, 
 	var construction_site: Dictionary = surface_navigation.derive_construction_site(floor_navigation)
 	if not construction_site.get("valid", false):
 		errors.append("no reachable traversal construction site can be derived: %s" % construction_site.get("reason", "unknown reason"))
+	for object in definition.objects:
+		if not object.get("resource_profile") is Dictionary or object.resource_profile.get("contents", {}).is_empty(): continue
+		var region_id := String(object.resource_profile.get("region_id", "FLOOR"))
+		var position := vector3_from(object.position)
+		if region_id == "FLOOR":
+			if not is_equal_approx(position.y, float(definition.floor.height)) or floor_navigation.is_obstacle_position(position) or floor_navigation.path_between(vector3_from(spawn_center_value), position).is_empty(): errors.append("resource source %s must have a clear reachable floor extraction point" % object.id)
+		elif surface_navigation.regions.has(region_id):
+			var region: Dictionary = surface_navigation.regions[region_id]
+			var offset: Vector3 = position - region.center
+			var local := offset.rotated(Vector3.UP, -deg_to_rad(float(region.rotation_degrees)))
+			if not is_equal_approx(position.y, float(region.height)) or absf(local.x) > float(region.dimensions.x) * 0.5 or absf(local.z) > float(region.dimensions.y) * 0.5: errors.append("resource source %s extraction point must lie on its declared surface" % object.id)
 	return errors
 
 

@@ -1,0 +1,50 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 591.86 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5090
+
+ROOMSCALE_VISUAL_ASSET object=desk source=res://assets/generated/writing_desk.glb normalization={ "source_bounds": [P: (-34.0, 0.0, -17.0), S: (68.0, 30.0, 34.0)], "fitted_dimensions": (68.0, 30.0, 34.0) }
+ROOMSCALE_VISUAL_ASSET object=side_table source=res://assets/generated/writing_desk.glb normalization={ "source_bounds": [P: (-34.0, 0.0, -17.0), S: (68.0, 30.0, 34.0)], "fitted_dimensions": (20.0, 20.0, 17.0) }
+ROOMSCALE_FLOOR_NAV_READY room=room_poc4 grid=60x45 cell=4in obstacles=11
+ROOMSCALE_CITIZEN_SPAWN count=50 separate_nodes=true height=0.5in
+ROOMSCALE_M2_READY Godot=4.7.2-stable (official) room=room_poc4 size=240x180 in citizens=50
+POC4_CHECK_PASS 01 population=50 and production simulation initializes
+POC4_CHECK_PASS 02 generic elevated water and material sources discovered
+POC4_CHECK_PASS 03 persistent citizen needs initialized
+POC4_CHECK_PASS 04 starting construction stock insufficient
+POC4_CHECK_PASS capture starting-settlement
+POC4_CHECK_PASS 05 real need decay and water consumption lower forecast
+POC4_CHECK_PASS 06 water shortage forecast
+POC4_CHECK_PASS capture declining-water
+POC4_CHECK_PASS 07 civilization Secure Water directive
+POC4_CHECK_PASS 08 water source initially unreachable
+POC4_RESOURCE_REACH resource=water source=water_cup region=STUDY_SURFACE
+POC4_CHECK_PASS 09 existing physical investigation creates traversal project
+POC4_CHECK_PASS 10 protected objects remain intact during shortage
+POC4_CHECK_PASS 11 planner explains missing authorized construction resources
+POC4_CHECK_PASS 12 high-level salvage authorization
+POC4_CHECK_PASS capture salvage-authorized
+POC4_SALVAGE_STAGE object=chair state=STRIPPED work=8.0 yields={ "metal": 2.0 }
+POC4_CHECK_PASS capture salvage-stage-1
+POC4_CHECK_PASS capture resource-hauling
+POC4_SALVAGE_STAGE object=chair state=PARTIAL work=20.0 yields={ "wood": 5.0, "metal": 2.0 }
+POC4_CHECK_PASS capture salvage-stage-2
+ROOMSCALE_FLOOR_NAV_READY room=room_poc4 grid=60x45 cell=4in obstacles=11
+POC4_SALVAGE_STAGE object=chair state=FRAME work=32.0 yields={ "wood": 3.0 }
+POC4_CHECK_PASS capture salvage-stage-3
+ROOMSCALE_FLOOR_NAV_READY room=room_poc4 grid=60x45 cell=4in obstacles=10
+POC4_SALVAGE_STAGE object=chair state=DEPLETED work=42.0 yields={ "wood": 5.0 }
+POC4_CHECK_PASS capture salvage-stage-4
+POC4_CHECK_PASS capture construction-supplied
+POC4_CHECK_PASS capture traversal-complete
+POC4_CHECK_PASS capture water-acquisition
+POC4_CHECK_PASS 13 complete water crisis recovery within bounded time
+POC4_CHECK_PASS 14 citizens perform genuine staged salvage work
+POC4_CHECK_PASS 15 visible persistent depleted object
+POC4_CHECK_PASS 16 physical bundle pickup/carry/delivery
+POC4_CHECK_PASS 17 exclusive reserved/transit/delivered/consumed project material
+POC4_CHECK_PASS 18 existing construction builds and activates traversal
+POC4_CHECK_PASS 19 citizens climb to elevated source and return stored water
+POC4_CHECK_PASS 20 recovered water forecast
+POC4_CHECK_PASS capture water-recovered
+POC4_M6_PASS recovered_seconds=738.0 water_visits=32 status={"days":1.23000000000017,"drinks":171,"economy":{"food":{"available":303.0,"consumed":100.0,"delivered":0.0,"in_transit":0.0,"received":104.0,"reserved":1.0},"metal":{"available":0.0,"consumed":4.0,"delivered":0.0,"in_transit":0.0,"received":4.0,"reserved":0.0},"water":{"available":163.0,"consumed":171.0,"delivered":0.0,"in_transit":0.0,"received":248.0,"reserved":14.0},"wood":{"available":9.0,"consumed":4.0,"delivered":0.0,"in_transit":0.0,"received":13.0,"reserved":0.0}},"food_days":3.03,"meals":100,"population":50,"resting":10,"rests":66,"shelter":50,"urgent":9,"water_days":1.08666666666667}
+POC4_SCENARIO_PASS {"captures":["C:\\Users\\Zero\\python_projects\\ai\\roomscale\\verification\\poc4\\presentation-before\\scenario-visuals/starting-settlement.png","C:\\Users\\Zero\\python_projects\\ai\\roomscale\\verification\\poc4\\presentation-before\\scenario-visuals/declining-water.png","C:\\Users\\Zero\\python_projects\\ai\\roomscale\\verification\\poc4\\presentation-before\\scenario-visuals/salvage-authorized.png","C:\\Users\\Zero\\python_projects\\ai\\roomscale\\verification\\poc4\\presentation-before\\scenario-visuals/salvage-stage-1.png","C:\\Users\\Zero\\python_projects\\ai\\roomscale\\verification\\poc4\\presentation-before\\scenario-visuals/resource-hauling.png","C:\\Users\\Zero\\python_projects\\ai\\roomscale\\verification\\poc4\\presentation-before\\scenario-visuals/salvage-stage-2.png","C:\\Users\\Zero\\python_projects\\ai\\roomscale\\verification\\poc4\\presentation-before\\scenario-visuals/salvage-stage-3.png","C:\\Users\\Zero\\python_projects\\ai\\roomscale\\verification\\poc4\\presentation-before\\scenario-visuals/salvage-stage-4.png","C:\\Users\\Zero\\python_projects\\ai\\roomscale\\verification\\poc4\\presentation-before\\scenario-visuals/construction-supplied.png","C:\\Users\\Zero\\python_projects\\ai\\roomscale\\verification\\poc4\\presentation-before\\scenario-visuals/traversal-complete.png","C:\\Users\\Zero\\python_projects\\ai\\roomscale\\verification\\poc4\\presentation-before\\scenario-visuals/water-acquisition.png","C:\\Users\\Zero\\python_projects\\ai\\roomscale\\verification\\poc4\\presentation-before\\scenario-visuals/water-recovered.png"],"checks":["01 population=50 and production simulation initializes","02 generic elevated water and material sources discovered","03 persistent citizen needs initialized","04 starting construction stock insufficient","capture starting-settlement","05 real need decay and water consumption lower forecast","06 water shortage forecast","capture declining-water","07 civilization Secure Water directive","08 water source initially unreachable","09 existing physical investigation creates traversal project","10 protected objects remain intact during shortage","11 planner explains missing authorized construction resources","12 high-level salvage authorization","capture salvage-authorized","capture salvage-stage-1","capture resource-hauling","capture salvage-stage-2","capture salvage-stage-3","capture salvage-stage-4","capture construction-supplied","capture traversal-complete","capture water-acquisition","13 complete water crisis recovery within bounded time","14 citizens perform genuine staged salvage work","15 visible persistent depleted object","16 physical bundle pickup/carry/delivery","17 exclusive reserved/transit/delivered/consumed project material","18 existing construction builds and activates traversal","19 citizens climb to elevated source and return stored water","20 recovered water forecast","capture water-recovered"],"days_after_recovery":0.0,"max_active_task_seconds":257.500000000036,"max_bundles":9,"max_movement_per_tick":0.650002837181091,"max_tasks":500,"max_tickets":24,"observations":{"climb":true,"delivered":true,"haul":true,"in_transit":true,"reserved":true,"salvage_work":true},"recovered_seconds":738.000000000099,"result":"PASS","salvage":{"authorized":true,"progress":0.0,"stage":4,"stages":[{"name":"STRIPPED","work":8.0,"yields":{"metal":2.0}},{"name":"PARTIAL","work":12.0,"yields":{"metal":2.0,"wood":5.0}},{"name":"FRAME","work":12.0,"yields":{"wood":3.0}},{"name":"DEPLETED","work":10.0,"yields":{"wood":5.0}}],"state":"DEPLETED","work":42.0000000000003,"yielded":{"metal":4.0,"wood":13.0}},"source_visits":{"food":13,"water":32},"sources":{"food_cache":{"extracted":{"food":104.0},"initial":{"food":12000.0},"position":"(-44.0, 0.0, 20.0)","region":"FLOOR","remaining":{"food":11896.0},"reserved":{"food":0.0},"work":2.0},"water_cup":{"extracted":{"water":256.0},"initial":{"water":25000.0},"position":"(-58.0, 30.0, -50.0)","region":"STUDY_SURFACE","remaining":{"water":24744.0},"reserved":{"water":48.0},"work":2.0}},"status":{"days":1.23000000000017,"drinks":171,"economy":{"food":{"available":303.0,"consumed":100.0,"delivered":0.0,"in_transit":0.0,"received":104.0,"reserved":1.0},"metal":{"available":0.0,"consumed":4.0,"delivered":0.0,"in_transit":0.0,"received":4.0,"reserved":0.0},"water":{"available":163.0,"consumed":171.0,"delivered":0.0,"in_transit":0.0,"received":248.0,"reserved":14.0},"wood":{"available":9.0,"consumed":4.0,"delivered":0.0,"in_transit":0.0,"received":13.0,"reserved":0.0}},"food_days":3.03,"meals":100,"population":50,"resting":10,"rests":66,"shelter":50,"urgent":9,"water_days":1.08666666666667},"wall_seconds":6.477}
+

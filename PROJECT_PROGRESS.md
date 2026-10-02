@@ -1,4 +1,30 @@
-# RoomScale POC 1 and POC 1.5 Progress
+# RoomScale Progress
+
+## POC 4 completion
+
+**PASS** on 2026-10-02. Milestones 0–9 and all 45 acceptance criteria are
+complete. The canonical water crisis is resolved through authorized furniture
+salvage, physical hauling, existing construction/traversal, and stored water;
+50 citizens continue consuming food/water and resting autonomously.
+
+| Milestone | Status | Evidence under verification/poc4/ |
+| --- | --- | --- |
+| M0 — Regression and Baseline Gate | PASS | `baseline/`, `m0-m2-status.md` |
+| M1 — Core Needs | PASS | `final-fast/fast.log`, `release/stability-30days.json` |
+| M2 — Economy and Forecasting | PASS | Exclusive tickets, conservation audits, real consumption in final fast/full logs |
+| M3 — Priorities and Directives | PASS | Ranking and production labor checks; rendered high-level controls |
+| M4 — Room Resource Profiles | PASS | Generic profiles; `final-fast/contract.log`, alternate-surface scenario |
+| M5 — Staged Salvage | PASS | Four on-site stages, 13 wood/4 metal, real bundles and delivery |
+| M6 — Needs-to-Expansion Integration | PASS | `release/repeat-01.json`, complete causal chain |
+| M7 — Sustained Simulation | PASS | Five seven-day runs plus rendered `final-evidence/sustained-7days.json` |
+| M8 — Automated Verification | PASS | `release/summary.json`: 8/8, including five consecutive scenarios and 30 days |
+| M9 — Gameplay Presentation Pass | PASS | 17 inspected captures, normal HUD/inspection, `visual-review.md` |
+
+See the [criterion matrix](verification/poc4/acceptance.md) and
+[final report](verification/poc4/final-report.md) for exact commands, results,
+architecture changes and scope limits. The default launch is now POC 4;
+explicit historical rooms retain their existing scenarios. Earlier POC 3 human
+visual acceptance remains a separate historical gate.
 
 ## POC 3 implementation
 
@@ -85,5 +111,6 @@ No known blocking defect. Construction progress is bounded at 100%; the floor-to
 
 ## Next Action
 
-POC 1/1.5 milestones remain complete. Current work is POC 3, authorized by
-`RoomScale_POC_3_Project_Plan.md`; preserve the earlier plans and evidence.
+POC 4 implementation and verification are complete. Play with
+`./RUN_ROOM_SCALE.ps1`; no Godot editing is needed. Earlier plans and evidence
+remain preserved.

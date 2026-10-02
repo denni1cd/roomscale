@@ -7,6 +7,8 @@ const SurfaceNavigationController := preload("res://scripts/surface_navigation.g
 const TaskCoordinatorController := preload("res://scripts/task_coordinator.gd")
 const CitizenAgentController := preload("res://scripts/citizen_agent.gd")
 const ConstructionSystemController := preload("res://scripts/construction_system.gd")
+const CivilizationSimulation := preload("res://scripts/civilization_simulation.gd")
+const ResourceProfiles := preload("res://scripts/resource_system.gd")
 const RoomDefinitionLoader := preload("res://scripts/room_definition.gd")
 const VisualResolver := preload("res://scripts/visuals/visual_resolver.gd")
 const MaterialLibrary := preload("res://scripts/visuals/material_library.gd")
@@ -71,7 +73,17 @@ func _ready() -> void:
 	if not _build_population():
 		return
 	_build_ui()
+	if _room_definition.has("civilization"):
+		start_civilization(_room_definition.civilization)
 	print("ROOMSCALE_M2_READY Godot=%s room=%s size=%.0fx%.0f in citizens=%d" % [Engine.get_version_info().string, _room_definition.id, ROOM_WIDTH, ROOM_DEPTH, _citizens.size()])
+
+
+func start_civilization(config: Dictionary) -> Node:
+	var simulation := CivilizationSimulation.new()
+	simulation.name = "CivilizationSimulation"
+	add_child(simulation)
+	simulation.configure(self, config)
+	return simulation
 
 
 func _process(delta: float) -> void:
@@ -547,6 +559,19 @@ func _build_room_object(parent: Node3D, object: Dictionary) -> void:
 	root.set_meta("semantic_name", String(object.get("name", object.id)))
 	parent.add_child(root)
 	_visual_resolver.render(root, object, _render_object_fallback)
+	if ResourceProfiles.derive(object).harvestable:
+		var object_body := StaticBody3D.new()
+		object_body.name = "ResourceSelectionCollider"
+		object_body.collision_layer = 4
+		object_body.collision_mask = 0
+		object_body.set_meta("object_id", String(object.id))
+		var selection_shape := CollisionShape3D.new()
+		var selection_box := BoxShape3D.new()
+		selection_box.size = dimensions
+		selection_shape.shape = selection_box
+		selection_shape.position.y = dimensions.y * 0.5
+		object_body.add_child(selection_shape)
+		root.add_child(object_body)
 	if object.has("surface"):
 		var surface: Dictionary = object.surface
 		var region_id := String(surface.region_id)
@@ -588,6 +613,9 @@ func _render_object_fallback(root: Node3D, object: Dictionary) -> void:
 func _build_legacy_room_object(root: Node3D, dimensions: Vector3, object: Dictionary, color: Color) -> void:
 	var kind := String(object.kind)
 	match kind:
+		"water_container":
+			_add_cylinder(root, "Container", dimensions.x * 0.5, dimensions.y, Vector3(0, dimensions.y * 0.5, 0), Color("8bb3c0"))
+			_add_cylinder(root, "WaterContents", dimensions.x * 0.44, 0.08, Vector3(0, dimensions.y + 0.04, 0), Color("287eae"))
 		"rug":
 			_add_box(root, "RugSurface", Vector3(dimensions.x, maxf(0.05, dimensions.y), dimensions.z), Vector3(0.0, dimensions.y * 0.5, 0.0), color, 0.96)
 		"table", "workbench":
@@ -1505,8 +1533,10 @@ func _build_ui() -> void:
 func _apply_presentation_mode() -> void:
 	var overlay := get_node("Overlay")
 	for child in overlay.get_children():
-		if child.name in ["PresentationPanel", "PresentationStatus"]:
+		if child.name == "CivilizationHUD":
 			child.visible = _presentation_mode
+		elif child.name in ["PresentationPanel", "PresentationStatus"]:
+			child.visible = _presentation_mode and not has_node("CivilizationSimulation")
 		elif child.name != "ReachExploreButton":
 			child.visible = not _presentation_mode
 	_reach_button.position = Vector2(20, 100) if _presentation_mode else Vector2(28, 184)
@@ -1597,7 +1627,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		var mouse_button := event as InputEventMouseButton
 		if mouse_button.button_index == MOUSE_BUTTON_LEFT and mouse_button.pressed:
 			if not select_surface_at_screen_position(mouse_button.position):
-				select_citizen_at_screen_position(mouse_button.position)
+				if not select_resource_object_at_screen_position(mouse_button.position): select_citizen_at_screen_position(mouse_button.position)
 	elif event is InputEventKey:
 		var key := event as InputEventKey
 		if key.pressed and not key.echo:
@@ -1626,6 +1656,16 @@ func select_surface_at_screen_position(screen_position: Vector2) -> bool:
 	if not hit.is_empty() and (hit.collider as Node).is_in_group("goal_surface"):
 		return select_goal_surface(String((hit.collider as Node).get_meta("region_id", "")))
 	return false
+
+
+func select_resource_object_at_screen_position(screen_position: Vector2) -> bool:
+	var civilization := get_node_or_null("CivilizationSimulation")
+	if civilization == null: return false
+	var camera := get_node("CameraRig/Camera") as Camera3D
+	var origin := camera.project_ray_origin(screen_position)
+	var query := PhysicsRayQueryParameters3D.create(origin, origin + camera.project_ray_normal(screen_position) * 1000, 4)
+	var hit: Dictionary = get_world_3d().direct_space_state.intersect_ray(query)
+	return not hit.is_empty() and civilization.hud.select_object(String(hit.collider.get_meta("object_id", "")))
 
 
 func select_citizen_at_screen_position(screen_position: Vector2) -> bool:

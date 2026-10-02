@@ -38,6 +38,8 @@ var _traversal_clip: Node3D
 var _fine_details: Array[Node3D] = []
 var _detail_visible := true
 var _lod_timer := 0.0
+var needs: Dictionary = {}
+var _idle_timer := 0.0
 
 
 func initialize(id: int, start: Vector3, floor_navigation: Node, task_system: Node) -> void:
@@ -60,13 +62,28 @@ func _process(delta: float) -> void:
 			detail.visible = _detail_visible
 	simulation_elapsed += delta
 	_animation_time += delta
+	if not needs.is_empty():
+		var civilization: Node = coordinator.civilization
+		if task_type in ["WORKSHOP_MAINTENANCE", "DEPOT_RUN", "HOUSING_CHECK", "WORK_AREA_JOB", "FLOOR_PATROL"] and civilization.should_interrupt(self):
+			coordinator.cancel_task(task_id, "urgent self-care")
+			_assign_next_task()
+		if state in ["IDLE", "ON_SURFACE"]:
+			_idle_timer += delta
+			if _idle_timer >= 0.5:
+				_idle_timer = 0
+				_assign_next_task()
 	if state == "TRAVEL" or state == "CARRY":
 		_advance_path(delta)
 	elif state == "WORK":
 		_work_timer += delta
 		_animate_work()
-		if task_type == "CONSTRUCTION_BUILD":
-			if coordinator.advance_construction_work(task_id, citizen_id, delta):
+		if task_type.begins_with("NEED_") or task_type in ["SALVAGE", "RESOURCE_COLLECT"]:
+			if coordinator.civilization.work(self, delta):
+				coordinator.complete_task(task_id)
+				_assign_next_task()
+		elif task_type == "CONSTRUCTION_BUILD":
+			var effort: float = delta if needs.is_empty() else delta * coordinator.civilization.needs.work_factor(needs)
+			if coordinator.advance_construction_work(task_id, citizen_id, effort):
 				coordinator.complete_task(task_id)
 				_assign_next_task()
 		elif task_type == "SURFACE_EXPLORATION":
@@ -165,7 +182,7 @@ func cancel_task_and_resume(cancelled_task_id: int) -> void:
 
 
 func get_inspection_status() -> Dictionary:
-	return {"id": citizen_id, "state": state, "task": task_type, "target": _destination}
+	return {"id": citizen_id, "state": state, "task": task_type, "target": _destination, "needs": needs.duplicate(true)}
 
 
 func _assign_next_task() -> void:
@@ -177,7 +194,8 @@ func _assign_next_task() -> void:
 	task_type = String(task.task_type)
 	_destination = task.target
 	_second_destination = task.target
-	_needs_second_leg = task_type == "DEPOT_RUN"
+	_needs_second_leg = task_type in ["DEPOT_RUN", "BUNDLE_HAUL", "CONSTRUCTION_DELIVERY"]
+	_delivery_resource = String(task.get("resource", ""))
 	if _needs_second_leg:
 		_destination = task.source
 		_second_destination = task.target
@@ -190,7 +208,7 @@ func _assign_next_task() -> void:
 
 
 func _navigate_to(destination: Vector3) -> void:
-	_path = navigation.path_between(position, destination)
+	_path = coordinator.civilization.route_for(self, destination) if is_instance_valid(coordinator.civilization) else navigation.path_between(position, destination)
 	_path_cursor = 0
 	_work_timer = 0.0
 	if _path.is_empty():
@@ -236,6 +254,12 @@ func _arrive_at_destination() -> void:
 		_work_timer = 0.0
 		return
 	if _needs_second_leg and not carrying:
+		if task_type == "BUNDLE_HAUL":
+			if not coordinator.civilization.pickup_bundle(self):
+				coordinator.fail_task(task_id, "bundle pickup validation failed")
+				_assign_next_task()
+				return
+			_set_cargo_resource(_delivery_resource)
 		if task_type == "CONSTRUCTION_DELIVERY":
 			if not coordinator.confirm_project_pickup(task_id, self, _delivery_resource):
 				coordinator.fail_task(task_id, "material pickup could not be verified at stockpile")
@@ -246,6 +270,15 @@ func _arrive_at_destination() -> void:
 		_cargo.visible = true
 		_destination = _second_destination
 		_navigate_to(_destination)
+		return
+	if task_type in ["BUNDLE_HAUL", "RESOURCE_COLLECT"] and carrying:
+		if not coordinator.civilization.deliver_bundle(self):
+			coordinator.fail_task(task_id, "bundle delivery travel/ownership validation failed")
+		else:
+			coordinator.complete_task(task_id)
+		carrying = false
+		_cargo.visible = false
+		_assign_next_task()
 		return
 	if task_type == "CONSTRUCTION_DELIVERY" and carrying:
 		var carried_resource := String(_cargo.get_meta("cargo_resource", ""))
@@ -264,6 +297,14 @@ func _arrive_at_destination() -> void:
 		coordinator.report_investigation_arrival(citizen_id, task_id, global_position)
 	state = "WORK"
 	_work_timer = 0.0
+
+
+func begin_resource_return(resource: String) -> void:
+	carrying = true
+	_cargo.visible = true
+	_set_cargo_resource(resource)
+	_destination = coordinator.depot_station
+	_navigate_to(_destination)
 
 
 func _build_figure() -> void:
@@ -322,13 +363,14 @@ func _update_animation() -> void:
 	_right_arm.rotation = Vector3.ZERO
 	if state != "WORK":
 		_body.rotation.z = 0.0
-	_role_tool.visible = _detail_visible and task_type == "CONSTRUCTION_BUILD"
+	_role_tool.visible = _detail_visible and task_type in ["CONSTRUCTION_BUILD", "SALVAGE"]
 	_role_pack.visible = _detail_visible and task_type in ["SURFACE_INVESTIGATION", "SURFACE_TRAVERSAL", "SURFACE_EXPLORATION"]
-	_traversal_clip.visible = _detail_visible and task_type == "SURFACE_TRAVERSAL"
-	var builder := task_type == "CONSTRUCTION_BUILD"
+	var climbing := task_type in ["SURFACE_TRAVERSAL", "RESOURCE_COLLECT"] and _path_cursor < _path.size() and absf(_path[_path_cursor].y - global_position.y) > 0.01
+	_traversal_clip.visible = _detail_visible and climbing
+	var builder := task_type in ["CONSTRUCTION_BUILD", "SALVAGE"]
 	var explorer := task_type in ["SURFACE_INVESTIGATION", "SURFACE_TRAVERSAL", "SURFACE_EXPLORATION"]
 	_role_badge.material_override = Materials.get_material("paint", Color("d4933b") if builder else (Color("498e99") if explorer else (Color("698955") if carrying else Color("887660"))))
-	if builder and state == "WORK":
+	if task_type == "CONSTRUCTION_BUILD" and state == "WORK":
 		var construction := get_parent().get_node_or_null("ConstructionSystem")
 		if construction != null:
 			var work_at: Vector3 = construction.status().site
@@ -346,7 +388,7 @@ func _update_animation() -> void:
 		if carrying:
 			_left_arm.rotation.x = -0.85
 			_right_arm.rotation.x = -0.85
-		if task_type == "SURFACE_TRAVERSAL" and _path_cursor < _path.size() and _path[_path_cursor].y > global_position.y + 0.01:
+		if climbing:
 			_left_arm.rotation.x = -1.6 + gait * 0.55
 			_right_arm.rotation.x = -1.6 - gait * 0.55
 			_left_leg.rotation.x = gait * 0.75
@@ -363,7 +405,7 @@ func _update_animation() -> void:
 			_right_arm.rotation.x = 0.0
 	_role_tool.rotation.x = _right_arm.rotation.x
 	_role_tool.position = _right_arm.position + Vector3(0.025, -cos(_right_arm.rotation.x) * 0.075, -sin(_right_arm.rotation.x) * 0.075)
-	if builder and state == "WORK":
+	if task_type == "CONSTRUCTION_BUILD" and state == "WORK":
 		_pose_builder()
 	else:
 		_left_arm.scale.y = 1.0
@@ -371,6 +413,18 @@ func _update_animation() -> void:
 		_left_arm.position = Vector3(-0.105, 0.235, 0)
 		_right_arm.position = Vector3(0.105, 0.235, 0)
 		_body.rotation.x = 0.0
+	if task_type == "NEED_REST" and state == "WORK":
+		_body.rotation.x = 0.35
+		_left_leg.rotation.x = 0.4
+		_right_leg.rotation.x = 0.4
+		_left_arm.rotation.x = 0
+		_right_arm.rotation.x = 0
+	if task_type == "SALVAGE" and state == "WORK":
+		var task: Dictionary = coordinator.get_task(task_id)
+		var object: Dictionary = coordinator.civilization.resources.objects[String(task.object_id)].data
+		var at := Vector3(float(object.position[0]), global_position.y, float(object.position[2]))
+		var toward := at - global_position
+		rotation.y = atan2(toward.x, toward.z)
 
 
 func _pose_builder() -> void:
@@ -418,6 +472,12 @@ func _set_cargo_resource(resource: String) -> void:
 		"mechanical_parts":
 			cargo_mesh.size = Vector3(0.23, 0.18, 0.22)
 			color = Color("efc257")
+		"water":
+			cargo_mesh.size = Vector3(0.12, 0.17, 0.12)
+			color = Color("469ac1")
+		"food":
+			cargo_mesh.size = Vector3(0.18, 0.12, 0.17)
+			color = Color("d6b072")
 	_cargo.mesh = cargo_mesh
 	_cargo.material_override = _material(color, 0.54)
 	_cargo.set_meta("cargo_resource", resource)
@@ -430,6 +490,12 @@ func _set_cargo_resource(resource: String) -> void:
 	elif resource == "metal":
 		for index in range(3):
 			G.box(_cargo, "Ingot%d" % index, Vector3(0.23, 0.026, 0.21), Vector3(0, 0.08 + index * 0.026, 0), "iron", Color("667e87"), 0.01)
+	elif resource == "water":
+		_cargo.mesh = null
+		G.cylinder(_cargo, "WaterFlask", 0.06, 0.17, Vector3(0, 0.035, 0), "ceramic", Color("469ac1"))
+		G.cylinder(_cargo, "FlaskStopper", 0.035, 0.025, Vector3(0, 0.13, 0), "wood", Color("725333"))
+	elif resource == "food":
+		G.box(_cargo, "BreadBundle", Vector3(0.14, 0.025, 0.12), Vector3(0, 0.07, 0), "canvas", Color("d6b072"), 0.01)
 	else:
 		G.gear(_cargo, "CarriedGear", 0.07, Vector3(0, 0.11, 0), 8)
 
