@@ -40,6 +40,8 @@ static func build(settlement: Node3D, definition: Dictionary) -> void:
 			_crate(root, at + Vector3(6 + i * 1.1, 0, 4), i)
 		_barrel(root, at + Vector3(7.5, 0, -4))
 		_barrel(root, at + Vector3(8.5, 0, -3))
+	# Follow the neighborhood perimeter rather than crossing its central streets.
+	poles = [poles[0], poles[1], poles[3], poles[2]]
 	for i in range(poles.size()):
 		var start := poles[i] + Vector3.UP * 3.5
 		var end := poles[(i + 1) % poles.size()] + Vector3.UP * 3.5
@@ -125,6 +127,9 @@ static func _line(parent: Node3D, label: String, a: Vector3, b: Vector3, radius:
 static func _lantern(parent: Node3D, at: Vector3) -> void:
 	G.cylinder(parent, "UtilityPole", 0.07, 3.7, at + Vector3.UP * 1.85, "wood", Color("594335"))
 	G.box(parent, "Crossarm", Vector3(1.1, 0.08, 0.08), at + Vector3.UP * 3.3, "iron", Color("293b40"), 0.02)
+	G.cylinder(parent, "WireInsulator", 0.13, 0.18, at + Vector3.UP * 3.43, "paint", Color("acb5a6"))
+	G.cylinder(parent, "PoleFoot", 0.16, 0.12, at + Vector3.UP * 0.06, "iron", Color("293b40"))
+	G.box(parent, "DistributionBox", Vector3(0.24, 0.35, 0.18), at + Vector3(0, 1.6, 0.12), "iron", Color("486164"), 0.025)
 	G.box(parent, "LanternGlass", Vector3(0.28, 0.4, 0.28), at + Vector3(0.45, 3, 0), "lamp", Color("ffc477"), 0.035)
 	for y in [2.76, 3.23]:
 		G.box(parent, "LanternCap", Vector3(0.38, 0.08, 0.38), at + Vector3(0.45, y, 0), "iron", Color("293b40"), 0.03)

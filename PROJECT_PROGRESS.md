@@ -10,6 +10,10 @@ are captured from real simulation. See [the POC 3 acceptance record](verificatio
 for exact evidence, failed iterations, performance caveats and outstanding
 human visual acceptance. POC 3 is not declared complete from functional tests.
 
+The final constrained polish improves builder/tool contact, routes utility wires
+around the settlement perimeter with physical fittings, and adds quiet floor wear.
+See [the final polish review](verification/poc3/refinement/final-polish/review.md).
+
 The scene-composition refinement adds linked districts, storage clusters,
 miniature homes, human pencil/coin references, a neutral low-contrast floor,
 lit working poses and compact presentation HUD. Iterations and canonical

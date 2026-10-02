@@ -13,6 +13,7 @@ void fragment() {
 	float aa = max(fwidth(surface_world.x), 0.012);
 	float joint = 1.0 - smoothstep(0.018, 0.018 + aa, joint_distance);
 	float fade = 1.0 - smoothstep(30.0, 100.0, length(CAMERA_POSITION_WORLD - surface_world));
-	ALBEDO = timber_color.rgb * (0.965 + grain * 0.003 + detail * 0.001 + board_tint * 0.012 - joint * 0.035 * fade);
-	ROUGHNESS = 0.91 + grain * 0.025;
+	float wear = sin(surface_world.x * 0.31 + sin(surface_world.z * 0.17)) * sin(surface_world.z * 0.23);
+	ALBEDO = timber_color.rgb * (0.965 + grain * 0.003 + detail * 0.001 + board_tint * 0.012 + wear * 0.012 - joint * 0.035 * fade);
+	ROUGHNESS = 0.91 + grain * 0.025 + wear * 0.018;
 }

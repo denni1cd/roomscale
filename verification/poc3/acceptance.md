@@ -14,6 +14,11 @@ settlement, scale references, floor/lighting, working poses and new captures.
 Original visual-review.md and final-reviewed/ remain historical evidence.
 The plan's human acceptance requirement remains outstanding.
 
+The [final constrained polish review](refinement/final-polish/review.md) records
+clearer builder contact, perimeter utility routing, restrained floor wear and
+blueprint/rug clearance. It is the latest agent assessment and evidence set;
+earlier review reservations above are preserved as historical findings.
+
 ## Milestones
 
 | Milestone | Status / evidence |

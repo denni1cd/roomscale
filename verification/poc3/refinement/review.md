@@ -1,5 +1,8 @@
 # POC 3 scene refinement review
 
+The subsequent constrained cleanup is recorded in
+[final-polish/review.md](final-polish/review.md), with separately saved runtime evidence.
+
 Branch: `codex/roomscale-poc3-visual-fidelity`. This continues the existing plan
 and renderer. No new POC, simulation systems, navigation rules or staged actors.
 Human acceptance of AC-43 remains open; this is Codex's image review.

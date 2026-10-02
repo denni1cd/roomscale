@@ -304,8 +304,9 @@ func _build_figure() -> void:
 	_role_tool.name = "BuilderHammer"
 	_role_tool.position = Vector3(0.12, 0.22, 0.035)
 	model.add_child(_role_tool)
-	_box(_role_tool, "Handle", Vector3(0.018, 0.15, 0.018), Vector3(0, 0.035, 0), leather)
-	_box(_role_tool, "HammerHead", Vector3(0.10, 0.05, 0.045), Vector3(0, 0.115, 0), Materials.get_material("iron", Color("667b84")))
+	_box(_role_tool, "Handle", Vector3(0.023, 0.15, 0.023), Vector3(0, 0.035, 0), leather)
+	_box(_role_tool, "HammerHead", Vector3(0.13, 0.055, 0.055), Vector3(0, 0.115, 0), Materials.get_material("iron", Color("81969a")))
+	_box(_role_tool, "HammerFace", Vector3(0.025, 0.065, 0.065), Vector3(0.058, 0.115, 0), brass)
 	_cargo = _box(model, "Parcel", Vector3(0.16, 0.12, 0.14), Vector3(0.0, 0.26, 0.14), _material(Color("e0ad4e"), 0.68))
 	_cargo.visible = false
 	# Keep references alive and make intended scale explicit to the debugger.
@@ -317,6 +318,8 @@ func _build_figure() -> void:
 
 
 func _update_animation() -> void:
+	_left_arm.rotation = Vector3.ZERO
+	_right_arm.rotation = Vector3.ZERO
 	if state != "WORK":
 		_body.rotation.z = 0.0
 	_role_tool.visible = _detail_visible and task_type == "CONSTRUCTION_BUILD"
@@ -329,7 +332,7 @@ func _update_animation() -> void:
 		var construction := get_parent().get_node_or_null("ConstructionSystem")
 		if construction != null:
 			var work_at: Vector3 = construction.status().site
-			var toward := work_at + Vector3(0, 0, -0.4) - global_position
+			var toward := work_at + Vector3(0.1, 0, -0.38) - global_position
 			if Vector2(toward.x, toward.z).length() > 0.02:
 				rotation.y = atan2(toward.x, toward.z)
 	var walking := state == "TRAVEL" or state == "CARRY"
@@ -360,6 +363,40 @@ func _update_animation() -> void:
 			_right_arm.rotation.x = 0.0
 	_role_tool.rotation.x = _right_arm.rotation.x
 	_role_tool.position = _right_arm.position + Vector3(0.025, -cos(_right_arm.rotation.x) * 0.075, -sin(_right_arm.rotation.x) * 0.075)
+	if builder and state == "WORK":
+		_pose_builder()
+	else:
+		_left_arm.scale.y = 1.0
+		_right_arm.scale.y = 1.0
+		_left_arm.position = Vector3(-0.105, 0.235, 0)
+		_right_arm.position = Vector3(0.105, 0.235, 0)
+		_body.rotation.x = 0.0
+
+
+func _pose_builder() -> void:
+	# Fit the presentation to the real assembly pin without moving the agent or
+	# changing task progress. The hammer head rises and returns to the workpiece.
+	var construction := get_parent().get_node_or_null("ConstructionSystem")
+	if construction == null:
+		return
+	var site: Vector3 = construction.status().site
+	var stroke := pow((sin(_animation_time * 9.0) + 1.0) * 0.5, 2.0)
+	var head_at := site + Vector3(0.1, 0.28 + stroke * 0.22, -0.38)
+	_role_tool.global_basis = global_basis * Basis(Vector3.RIGHT, PI * 0.5 - stroke * 0.45)
+	_role_tool.global_position = head_at - _role_tool.global_basis * Vector3(0, 0.115, 0)
+	var model := _body.get_parent() as Node3D
+	var right_hand := model.to_local(_role_tool.global_position)
+	var left_hand := model.to_local(site + Vector3(-0.08, 0.24, -0.32))
+	_fit_work_arm(_right_arm, Vector3(0.105, 0.30, 0), right_hand)
+	_fit_work_arm(_left_arm, Vector3(-0.105, 0.30, 0), left_hand)
+	_body.rotation.x = 0.12 + stroke * 0.08
+
+
+func _fit_work_arm(arm: Node3D, shoulder: Vector3, hand: Vector3) -> void:
+	var reach := hand - shoulder
+	arm.position = (shoulder + hand) * 0.5
+	arm.quaternion = Quaternion(Vector3.DOWN, reach.normalized())
+	arm.scale = Vector3(1, reach.length() / 0.17, 1)
 
 
 func _animate_work() -> void:

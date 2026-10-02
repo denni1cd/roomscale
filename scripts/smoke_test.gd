@@ -280,7 +280,7 @@ func _run() -> void:
 					construction_visual_saved = true
 					if not await _capture_visual(scene, "construction", site + Vector3(0.0, 8.0, 0.0), 74.0, 68.0, 0.6):
 						return
-					if not await _capture_visual(scene, "builder-close", citizen.global_position + Vector3.UP * 0.25, 2.0, 8.0, 0.6, true, true, citizen):
+					if not await _capture_visual(scene, "builder-close", citizen.global_position + Vector3.UP * 0.25, 1.65, 16.0, 0.85, true, true, citizen):
 						return
 		for task in coordinator.tasks:
 			if task.task_type == "CONSTRUCTION_BUILD" and float(task.get("work_seconds", 0.0)) > 0.0:
@@ -670,6 +670,15 @@ func _capture_visual(scene: Node3D, phase: String, focus: Vector3, distance: flo
 	if hide_project_label and project_label != null:
 		project_label.visible = false
 	await create_timer(0.5 if is_instance_valid(subject) else 0.3).timeout
+	if phase == "builder-close" and is_instance_valid(subject):
+		# Observe a natural contact phase of the running animation. Do not pause,
+		# teleport, or set an actor pose just for evidence.
+		var contact_wait_start := Time.get_ticks_msec()
+		while subject.get("state") == "WORK" and Time.get_ticks_msec() - contact_wait_start < 700:
+			var phase_time := float(subject.get("_animation_time"))
+			if sin(phase_time * 9.0) < -0.6:
+				break
+			await process_frame
 	# Capture-only camera fitting: keep the live subject centered without pausing
 	# or changing any simulation state, including the production zoom limits.
 	if is_instance_valid(subject):

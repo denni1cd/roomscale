@@ -394,7 +394,9 @@ func _create_visible_project() -> void:
 	work_light.light_energy = 0.65
 	work_light.omni_range = 12
 	_site_root.add_child(work_light)
-	var blueprint := _add_box(_site_root, "BlueprintFootprint", Vector3(12.0, 0.08, 9.0), Vector3(0.0, 0.08, 0.0), Color("56aac1", 0.55))
+	# Paper presentation sits above the .12in rug instead of sharing its face.
+	# Keep the authoritative site and all physical construction coordinates fixed.
+	var blueprint := _add_box(_site_root, "BlueprintFootprint", Vector3(12.0, 0.02, 9.0), Vector3(0.0, 0.16, 0.0), Color("56aac1", 0.55))
 	var blueprint_material := blueprint.material_override as StandardMaterial3D
 	blueprint_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	blueprint_material.albedo_color.a = 0.38
