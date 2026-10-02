@@ -7,6 +7,7 @@ const HUD := preload("res://scripts/civilization_ui.gd")
 const Planner := preload("res://scripts/civilization_planner.gd")
 const Resources := preload("res://scripts/resource_system.gd")
 const Salvage := preload("res://scripts/salvage_system.gd")
+const FloorNavigation := preload("res://scripts/floor_navigation.gd")
 const G := preload("res://scripts/visuals/visual_geometry.gd")
 const STEP := 0.1
 var needs := Needs.new()
@@ -263,8 +264,11 @@ func authorize_salvage(object_id: String) -> bool:
 		if coordinator.surface_navigation.has_connection("FLOOR", region): return false
 		for source in resources.sources.values():
 			if source.region == region: return false
-	if not salvage.authorize(object_id): return false
-	coordinator.navigation.allow_object_edge_access(object_id)
+	# Validate the proposed padding change off the live grid. Rejection must leave
+	# protection, obstacle geometry and every live grid cell untouched.
+	var proposed_navigation := FloorNavigation.new()
+	proposed_navigation.configure(coordinator.navigation.room_definition)
+	proposed_navigation.allow_object_edge_access(object_id)
 	var dims: Array = object.dimensions
 	var origin := Vector3(float(object.position[0]), float(object.position[1]), float(object.position[2]))
 	var angle := deg_to_rad(float(object.get("rotation_degrees", 0)))
@@ -272,10 +276,10 @@ func authorize_salvage(object_id: String) -> bool:
 	var candidates: Array[Vector3] = []
 	for point in local_points:
 		var at := origin + point.rotated(Vector3.UP, angle)
-		if coordinator.navigation.room_bounds().has_point(Vector2(at.x, at.z)) and not coordinator.navigation.is_obstacle_position(at) and not coordinator.navigation.path_between(coordinator.depot_station, at).is_empty(): candidates.append(at)
-	if candidates.is_empty():
-		salvage.objects[object_id].authorized = false
-		return false
+		if proposed_navigation.room_bounds().has_point(Vector2(at.x, at.z)) and not proposed_navigation.is_obstacle_position(at) and not proposed_navigation.path_between(coordinator.depot_station, at).is_empty(): candidates.append(at)
+	proposed_navigation.free()
+	if candidates.is_empty() or not salvage.authorize(object_id): return false
+	coordinator.navigation.allow_object_edge_access(object_id)
 	candidates.sort_custom(func(a: Vector3, b: Vector3) -> bool: return a.distance_to(coordinator.depot_station) < b.distance_to(coordinator.depot_station))
 	salvage_targets[object_id] = candidates[0]
 	planner.authorized[object_id] = true

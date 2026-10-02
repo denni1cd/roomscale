@@ -1,0 +1,31 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+POC4_CLEANUP_CHECK_PASS inferred wood derives wood stages
+POC4_CLEANUP_CHECK_PASS appearance metal derives metal stages
+POC4_CLEANUP_CHECK_PASS explicit material override influences automatic stages
+POC4_CLEANUP_CHECK_PASS explicit custom stages retain precedence
+POC4_CLEANUP_CHECK_PASS invalid material rejected by profile validator
+POC4_CLEANUP_CHECK_PASS unknown nonmaterial objects remain conservative
+POC4_CLEANUP_CHECK_PASS canonical RoomDefinition remains valid
+POC4_CLEANUP_CHECK_PASS canonical stages and total yields unchanged
+POC4_CLEANUP_CHECK_PASS invalid material rejected by RoomDefinition validator
+ROOMSCALE_FLOOR_NAV_READY room=authorization_fixture grid=30x30 cell=4in obstacles=5
+POC4_CLEANUP_CHECK_PASS object starts protected and unauthorized
+POC4_CLEANUP_CHECK_PASS protected padding blocks citizen access before attempt
+ROOMSCALE_FLOOR_NAV_READY room=authorization_fixture grid=30x30 cell=4in obstacles=5
+POC4_CLEANUP_CHECK_PASS authorization fails with all physical approaches obstructed
+POC4_CLEANUP_CHECK_PASS rejection preserves authorization and planner targets
+POC4_CLEANUP_CHECK_PASS rejection leaves definition obstacles and every grid cell unchanged
+POC4_CLEANUP_CHECK_PASS citizens still cannot gain rejected padding access
+POC4_CLEANUP_CHECK_PASS rejected salvage approach remains obstructed at (0.0, 0.0, 5.22)
+POC4_CLEANUP_CHECK_PASS rejected salvage approach remains obstructed at (0.0, 0.0, -5.22)
+POC4_CLEANUP_CHECK_PASS rejected salvage approach remains obstructed at (5.22, 0.0, 0.0)
+POC4_CLEANUP_CHECK_PASS rejected salvage approach remains obstructed at (-5.22, 0.0, 0.0)
+ROOMSCALE_FLOOR_NAV_READY room=authorization_fixture grid=30x30 cell=4in obstacles=1
+ROOMSCALE_FLOOR_NAV_READY room=authorization_fixture grid=30x30 cell=4in obstacles=1
+ROOMSCALE_FLOOR_NAV_READY room=authorization_fixture grid=30x30 cell=4in obstacles=1
+POC4_CLEANUP_CHECK_PASS valid reachable authorization still succeeds
+ERROR: POC4_CLEANUP_FAIL: ["successful authorization opens padding while retaining physical obstacle"]
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://scripts/poc4_cleanup_test.gd:89)

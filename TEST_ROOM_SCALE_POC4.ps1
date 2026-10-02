@@ -13,6 +13,7 @@ New-Item -ItemType Directory -Force -Path $OutputDirectory | Out-Null
 $runs = [Collections.Generic.List[object]]::new()
 if ($Mode -in @('Fast','All')) { $runs.Add(@{Name='fast'; Script='res://scripts/poc4_fast_test.gd'; Days=0; Marker='POC4_FAST_PASS'}) }
 if ($Mode -in @('Fast','All')) { $runs.Add(@{Name='contract'; Script='res://scripts/poc4_contract_test.gd'; Days=0; Marker='POC4_CONTRACT_PASS'}) }
+if ($Mode -in @('Fast','All')) { $runs.Add(@{Name='cleanup'; Script='res://scripts/poc4_cleanup_test.gd'; Days=0; Marker='POC4_CLEANUP_PASS'}) }
 if ($Mode -eq 'Scenario') { $runs.Add(@{Name='scenario'; Script='res://scripts/poc4_scenario_test.gd'; Days=0; Marker='POC4_SCENARIO_PASS'}) }
 if ($Mode -eq 'Sustained') { $runs.Add(@{Name='sustained-7days'; Script='res://scripts/poc4_scenario_test.gd'; Days=7; Marker='POC4_SUSTAINED_PASS days_after_recovery=7'}) }
 if ($Mode -in @('Repeatability','All')) {

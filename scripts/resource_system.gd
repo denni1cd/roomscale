@@ -14,6 +14,9 @@ static func derive(object: Dictionary) -> Dictionary:
 	var material := String(object.get("appearance", {}).get("material", ""))
 	if material.is_empty() and semantic in ["chair", "table", "desk", "bookcase", "box", "crate", "workbench"]: material = "wood"
 	var explicit: Dictionary = object.get("resource_profile", {})
+	# Automatic stages must use the final material; explicit stages still win
+	# when the profile is merged below. Invalid overrides remain validator errors.
+	if explicit.has("material"): material = String(explicit.material)
 	var profile := {"material": material, "harvestable": false, "protected": true, "contents": {}, "region_id": "FLOOR", "work_seconds": 2.0, "stages": []}
 	if semantic != "settlement" and material in ["wood", "metal"]:
 		var dims: Array = object.get("dimensions", [1, 1, 1])
