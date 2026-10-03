@@ -9,6 +9,16 @@ const Resources := preload("res://scripts/resource_system.gd")
 const Salvage := preload("res://scripts/salvage_system.gd")
 const FloorNavigation := preload("res://scripts/floor_navigation.gd")
 const G := preload("res://scripts/visuals/visual_geometry.gd")
+const Journal := preload("res://scripts/event_journal.gd")
+const Governor := preload("res://scripts/autonomous_governor.gd")
+const Development := preload("res://scripts/settlement_development_system.gd")
+const Population := preload("res://scripts/population_system.gd")
+const CameraDirector := preload("res://scripts/fishbowl_camera_director.gd")
+var camera_director: Node
+var journal := Journal.new()
+var governor := Governor.new()
+var development: RefCounted
+var population: RefCounted
 const STEP := 0.1
 var needs := Needs.new()
 var economy := Economy.new()
@@ -42,6 +52,13 @@ func configure(world: Node3D, config: Dictionary) -> void:
 	economy.configure(config.get("stock", {"food": 5000, "water": 5000, "wood": 0, "metal": 0}))
 	if bool(config.get("economy_construction", false)): construction.economy = economy
 	coordinator.civilization = self
+	governor.enabled = OS.get_environment("ROOMSCALE_FISHBOWL") == "1"
+	if governor.enabled:
+		governor.mode = "OBSERVING"
+		governor.reason = "Evaluating civilization state every five simulation seconds"
+	development = Development.new()
+	development.configure(self)
+	population = Population.new()
 	resources.configure(scene.get("_room_definition"))
 	salvage.configure(resources.objects)
 	for object_id in salvage.objects:
@@ -58,6 +75,13 @@ func configure(world: Node3D, config: Dictionary) -> void:
 	hud = HUD.new()
 	scene.get_node("Overlay").add_child(hud)
 	hud.configure(self)
+	if governor.enabled:
+		camera_director = CameraDirector.new()
+		camera_director.name = "FishbowlCameraDirector"
+		scene.add_child(camera_director)
+		camera_director.configure(self)
+		hud.configure_fishbowl()
+		print("ROOMSCALE_FISHBOWL_READY governor=true population=%d camera=%s room=%s" % [citizens.size(), camera_director.enabled, scene.get("_room_definition").id])
 	scene.get_node("Overlay/PresentationPanel").hide()
 	scene.get_node("Overlay/PresentationStatus").hide()
 
@@ -72,6 +96,7 @@ func advance(delta: float) -> void:
 
 func step() -> void:
 	seconds += STEP
+	governor.tick(self)
 	_planner_timer += STEP
 	if _planner_timer >= 1:
 		_planner_timer = 0
@@ -110,7 +135,7 @@ func claim(citizen: Node3D) -> Dictionary:
 	if not best.is_empty():
 		if best.task_type == "BUNDLE_HAUL" and not resources.reserve_bundle(int(best.bundle_id), citizen.citizen_id): return {}
 		if best.task_type == "CONSTRUCTION_DELIVERY":
-			var ticket := economy.reserve(String(best.resource), float(best.amount), "traversal")
+			var ticket := economy.reserve(String(best.resource), float(best.amount), String(best.get("project_id", "traversal")))
 			if ticket < 0: return {}
 			best.ticket = ticket
 		if best.task_type == "RESOURCE_COLLECT" and not resources.reserve_source(String(best.source_id), String(best.resource), float(best.amount)): return {}
@@ -120,6 +145,7 @@ func claim(citizen: Node3D) -> Dictionary:
 
 func work_options(citizen: Node3D) -> Array[Dictionary]:
 	var options: Array[Dictionary] = []
+	options.append_array(development.options())
 	if construction.economy != null and construction.project_created and not construction.traversal_deployed:
 		for resource in ["wood", "metal"]:
 			var outstanding := 0.0
@@ -257,13 +283,22 @@ func secure_resource(resource: String) -> bool:
 	return planner.secure(resource)
 
 func authorize_salvage(object_id: String) -> bool:
-	if not resources.objects.has(object_id) or not resources.objects[object_id].profile.harvestable: return false
+	var candidates := salvage_approaches(object_id)
+	if candidates.is_empty() or not salvage.authorize(object_id): return false
+	coordinator.navigation.allow_object_edge_access(object_id)
+	candidates.sort_custom(func(a: Vector3, b: Vector3) -> bool: return a.distance_to(coordinator.depot_station) < b.distance_to(coordinator.depot_station))
+	salvage_targets[object_id] = candidates[0]
+	planner.authorized[object_id] = true
+	return true
+
+func salvage_approaches(object_id: String) -> Array[Vector3]:
+	if not resources.objects.has(object_id) or not resources.objects[object_id].profile.harvestable: return []
 	var object: Dictionary = resources.objects[object_id].data
 	if object.has("surface"):
 		var region := String(object.surface.region_id)
-		if coordinator.surface_navigation.has_connection("FLOOR", region): return false
+		if coordinator.surface_navigation.has_connection("FLOOR", region): return []
 		for source in resources.sources.values():
-			if source.region == region: return false
+			if source.region == region: return []
 	# Validate the proposed padding change off the live grid. Rejection must leave
 	# protection, obstacle geometry and every live grid cell untouched.
 	var proposed_navigation := FloorNavigation.new()
@@ -278,12 +313,7 @@ func authorize_salvage(object_id: String) -> bool:
 		var at := origin + point.rotated(Vector3.UP, angle)
 		if proposed_navigation.room_bounds().has_point(Vector2(at.x, at.z)) and not proposed_navigation.is_obstacle_position(at) and not proposed_navigation.path_between(coordinator.depot_station, at).is_empty(): candidates.append(at)
 	proposed_navigation.free()
-	if candidates.is_empty() or not salvage.authorize(object_id): return false
-	coordinator.navigation.allow_object_edge_access(object_id)
-	candidates.sort_custom(func(a: Vector3, b: Vector3) -> bool: return a.distance_to(coordinator.depot_station) < b.distance_to(coordinator.depot_station))
-	salvage_targets[object_id] = candidates[0]
-	planner.authorized[object_id] = true
-	return true
+	return candidates
 
 func distance_to_object(id: String, position: Vector3) -> float:
 	var object: Dictionary = resources.objects[id].data
@@ -333,6 +363,7 @@ func apply_salvage_stage(id: String) -> void:
 	var state: Dictionary = salvage.objects[id]
 	root.set_meta("salvage_state", state.state)
 	if salvage.depleted(id):
+		if governor.enabled: journal.record(seconds, "object_depleted", "Object depleted: " + id, state, root.global_position, "depleted:" + id)
 		coordinator.navigation.remove_object_obstacle(id)
 		coordinator.surface_navigation.remove_object_surface(id)
 		root.hide()

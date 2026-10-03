@@ -13,6 +13,42 @@ var citizen_panel: PanelContainer
 var citizen_label: Label
 var action_feedback := ""
 var authorize: Button
+var fishbowl_events: Label
+var fishbowl_development: Label
+
+func configure_fishbowl() -> void:
+	get_child(0).custom_minimum_size = Vector2(395, 672)
+	for child in get_children():
+		if child is Control and child.position.y >= 225 and child.position.y < 500 and child.name != "Directives": child.hide()
+	resources.add_theme_font_size_override("font_size", 13)
+	resources.size.x = 370
+	strategy.position.y = 128
+	strategy.size = Vector2(370, 100)
+	strategy.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	get_node("Directives").position = Vector2(14, 245)
+	get_node("Directives").add_theme_font_size_override("font_size", 12)
+	fishbowl_development = Label.new()
+	fishbowl_development.position = Vector2(14, 300)
+	fishbowl_development.size = Vector2(370, 70)
+	fishbowl_development.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	fishbowl_development.add_theme_font_size_override("font_size", 13)
+	add_child(fishbowl_development)
+	fishbowl_events = Label.new()
+	fishbowl_events.position = Vector2(14, 378)
+	fishbowl_events.size = Vector2(370, 210)
+	fishbowl_events.add_theme_font_size_override("font_size", 12)
+	fishbowl_events.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	add_child(fishbowl_events)
+	for child in get_children():
+		if child is HBoxContainer:
+			child.position.y = 626
+			for button in child.get_children(): button.custom_minimum_size.x = 87
+	var camera := CheckButton.new()
+	camera.text = "Automatic camera"
+	camera.position = Vector2(14, 587)
+	camera.button_pressed = simulation.camera_director.enabled
+	camera.toggled.connect(func(active: bool) -> void: simulation.camera_director.enabled = active)
+	add_child(camera)
 
 func configure(controller: Node) -> void:
 	simulation = controller
@@ -147,6 +183,16 @@ func refresh() -> void:
 		inspection.text = "%s · %s · %s\n%s · stage %d/%d · work %.1fs\nRemaining yield: %s" % [String(object.data.get("name", id)), object.profile.material, "AUTHORIZED" if salvage.authorized else "PROTECTED — authorization required", salvage.state, salvage.stage, salvage.stages.size(), salvage.progress, remaining]
 		authorize.disabled = simulation.salvage.depleted(id) or bool(salvage.authorized)
 		if not action_feedback.is_empty(): inspection.text += "\n" + action_feedback
+	if fishbowl_events != null:
+		strategy.text = "Governor %s · %s\n%s\nGrowth: %s" % ["ON" if simulation.governor.enabled else "OFF", simulation.governor.mode, simulation.governor.reason, simulation.population.reason]
+		var project_state := "No active development"
+		if not simulation.development.active.is_empty():
+			var active: Dictionary = simulation.development.active
+			project_state = "%s · %s · %s · %.0f%%" % [String(active.kind).capitalize(), active.state, active.stage, active.work / active.required_work * 100]
+		fishbowl_development.text = "Development: " + project_state + "\nCompleted: %d housing / %d workshop" % [simulation.development.count("housing"), simulation.development.count("workshop")]
+		var lines: Array[String] = ["Recent civilization events"]
+		for event in simulation.journal.events.slice(-6): lines.append("Day %.2f · %s" % [event.day, event.message])
+		fishbowl_events.text = "\n".join(lines)
 
 func select_object(object_id: String) -> bool:
 	var index := object_ids.find(object_id)

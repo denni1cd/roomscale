@@ -158,7 +158,7 @@ func cancel_task(task_id: int, reason: String) -> bool:
 func cancel_construction_stage(stage_index: int, keep_task_id: int = -1) -> void:
 	var release_ids: Array[int] = []
 	for task in tasks:
-		if task.task_type == "CONSTRUCTION_BUILD" and int(task.get("stage", -1)) == stage_index and int(task.id) != keep_task_id and task.state in ["active", "reserved"]:
+		if task.task_type == "CONSTRUCTION_BUILD" and not task.has("project_id") and int(task.get("stage", -1)) == stage_index and int(task.id) != keep_task_id and task.state in ["active", "reserved"]:
 			release_ids.append(int(task.id))
 	for task_id in release_ids:
 		var task := _find_task(task_id)
@@ -193,7 +193,9 @@ func confirm_project_pickup(task_id: int, citizen: Node3D, resource: String) -> 
 		return false
 	if int(task.citizen_id) != int(citizen.citizen_id) or String(task.resource) != resource or bool(task.picked_up):
 		return false
-	if citizen.global_position.distance_to(task.source) > 1.6 or not construction_system.take_stock(resource, int(task.amount), int(task.get("ticket", -1))):
+	if citizen.global_position.distance_to(task.source) > 1.6: return false
+	var accepted: bool = civilization.development.pickup(task) if task.has("project_id") else construction_system.take_stock(resource, int(task.amount), int(task.get("ticket", -1)))
+	if not accepted:
 		return false
 	task.picked_up = true
 	task.picked_up_at = Time.get_ticks_msec()
@@ -215,7 +217,8 @@ func confirm_project_delivery(task_id: int, citizen: Node3D, resource: String, c
 	var required_travel := _path_length(route) * 0.9
 	if route.is_empty() or citizen.travelled_distance - float(task.pickup_travelled_distance) < required_travel:
 		return false
-	if not construction_system.accept_delivery(resource, int(task.amount), citizen.global_position, int(task.get("ticket", -1))):
+	var accepted: bool = civilization.development.deliver(task, citizen) if task.has("project_id") else construction_system.accept_delivery(resource, int(task.amount), citizen.global_position, int(task.get("ticket", -1)))
+	if not accepted:
 		return false
 	task.delivered = true
 	task.delivered_at = Time.get_ticks_msec()
@@ -232,7 +235,7 @@ func advance_construction_work(task_id: int, citizen_id: int, delta: float) -> b
 	var worker := get_parent().get_node_or_null("Citizen%02d" % (citizen_id + 1)) as Node3D
 	if not is_instance_valid(worker) or worker.state != "WORK" or worker.global_position.distance_to(task.target) > 1.6:
 		return false
-	var result: bool = construction_system.perform_builder_work(int(task.stage), delta, task_id)
+	var result: bool = civilization.development.work(task, worker, delta) if task.has("project_id") else construction_system.perform_builder_work(int(task.stage), delta, task_id)
 	task.work_seconds = float(task.get("work_seconds", 0.0)) + delta
 	if result:
 		task.progress = 1.0

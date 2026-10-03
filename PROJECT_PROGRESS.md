@@ -1,5 +1,23 @@
 # RoomScale Progress
 
+## POC 4.5 autonomous colony
+
+**PASS** on `codex/roomscale-poc45-fishbowl`, extending verified POC 4.
+M0–M8 and all 55 criteria pass. Fresh full runs reach 80 citizens and four housing
+blocks plus a workshop; sixty-day production reaches 120 citizens, seven housing
+blocks and one workshop before stabilizing at finite material capacity. Final fresh
+repeatability is 3/3; POC 4/manual and Room A→B→A regressions remain green.
+The governor acts through civilization priorities/directives/authorization;
+citizens retain ordinary needs, movement, hauling, salvage, traversal and work.
+Housing/workshop modules use conserved delivery tickets and physical builders;
+five-node cohorts require sustained reserves and capacity. Manual mode is preserved.
+
+The [milestone record](verification/poc45/milestones.md),
+[55-criterion matrix](verification/poc45/acceptance.md), and
+[final report](verification/poc45/final-report.md) record the actual gate results,
+population/material limits, regressions, long-run metrics and inspected captures.
+Use [the gameplay guide](docs/POC45_FISHBOWL.md) to continue without chat context.
+
 ## POC 4 completion
 
 **PASS** on 2026-10-02. Milestones 0–9 and all 45 acceptance criteria are

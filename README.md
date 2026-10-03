@@ -4,6 +4,13 @@ RoomScale is a small 3D civilization simulation where half-inch citizens treat a
 
 ## Current status
 
+POC 4.5 is **PASS** on `codex/roomscale-poc45-fishbowl`: all 55 criteria,
+three consecutive fresh full runs, sixty-day stability and 120 real citizens.
+Launch `./RUN_ROOM_SCALE_FISHBOWL.ps1` and watch the governor, real salvage,
+traversal, settlement construction and five-citizen cohorts operate without input.
+See [the fishbowl guide](docs/POC45_FISHBOWL.md) and
+[verification](verification/poc45/final-report.md). Ordinary launch remains manual.
+
 POC 4 is **PASS**: 50 citizens maintain food, water and rest needs; civilization
 priorities and salvage authorization drive real resource hauling, construction,
 and access to elevated water. All 45 criteria, five consecutive complete scenarios,
@@ -39,6 +46,8 @@ The PowerShell setup script checks for Godot 4.7.2 standard Windows x86-64 and d
 ```powershell
 ./SETUP_ROOM_SCALE.ps1
 ./RUN_ROOM_SCALE.ps1 # Default: POC 4 living economy
+./RUN_ROOM_SCALE_FISHBOWL.ps1 # Autonomous POC 4.5; no gameplay input needed
+./RUN_ROOM_SCALE_FISHBOWL.ps1 -ManualCamera
 ./RUN_ROOM_SCALE.ps1 -Room room_a
 ./RUN_ROOM_SCALE.ps1 -Room room_b
 # Any safe room ID in rooms/, or a project-local RoomDefinition JSON file
@@ -85,6 +94,8 @@ Room placement data has a one-inch interior floor-edge clearance. Optional objec
 # Fast deterministic room, navigation, geometry, and task-cleanup checks
 # POC 4 full gates; add -CaptureVisuals to a Sustained run for screenshots
 ./TEST_ROOM_SCALE_POC4.ps1 -Mode All
+./TEST_ROOM_SCALE_POC45.ps1 -Mode All
+./TEST_ROOM_SCALE_POC45.ps1 -Mode Stability -CaptureVisuals
 ./TEST_ROOM_SCALE_POC4.ps1 -Mode Sustained -CaptureVisuals
 
 ./TEST_ROOM_SCALE_FAST.ps1 -TimeoutSeconds 30

@@ -1,0 +1,505 @@
+{
+  "schema_version": 1,
+  "id": "room_poc45",
+  "display_name": "Autonomous Colony / Fishbowl",
+  "dimensions": [
+    240,
+    180
+  ],
+  "floor": {
+    "center": [
+      0,
+      0,
+      0
+    ],
+    "dimensions": [
+      240,
+      180
+    ],
+    "height": 0
+  },
+  "wall_height": 72,
+  "target_surface_id": "STUDY_SURFACE",
+  "floor_color": "795b43",
+  "objects": [
+    {
+      "id": "desk",
+      "name": "Desk",
+      "kind": "table",
+      "position": [
+        -58,
+        0,
+        -52
+      ],
+      "dimensions": [
+        68,
+        30,
+        34
+      ],
+      "blocks_navigation": true,
+      "navigation_padding": [
+        8,
+        0,
+        7
+      ],
+      "color": "81593e",
+      "surface": {
+        "region_id": "STUDY_SURFACE",
+        "height": 30,
+        "anchor": [
+          -58,
+          30,
+          -52
+        ]
+      }
+    },
+    {
+      "id": "chair",
+      "name": "Chair",
+      "kind": "chair",
+      "position": [
+        -58,
+        0,
+        -20
+      ],
+      "dimensions": [
+        25,
+        19,
+        23
+      ],
+      "blocks_navigation": true,
+      "navigation_padding": [
+        3,
+        0,
+        3
+      ],
+      "color": "546d68"
+    },
+    {
+      "id": "bookcase",
+      "name": "Bookcase",
+      "kind": "bookcase",
+      "position": [
+        91,
+        0,
+        -63
+      ],
+      "dimensions": [
+        32,
+        63,
+        17
+      ],
+      "blocks_navigation": true,
+      "navigation_padding": [
+        3,
+        0,
+        2
+      ],
+      "color": "74503a"
+    },
+    {
+      "id": "rug",
+      "name": "Rug",
+      "kind": "rug",
+      "position": [
+        50,
+        0,
+        -22
+      ],
+      "dimensions": [
+        92,
+        0.12,
+        68
+      ],
+      "blocks_navigation": false,
+      "color": "a66e4e"
+    },
+    {
+      "id": "side_table",
+      "name": "Side Table",
+      "kind": "table",
+      "position": [
+        44,
+        0,
+        -15
+      ],
+      "dimensions": [
+        20,
+        20,
+        17
+      ],
+      "blocks_navigation": true,
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "color": "80583d"
+    },
+    {
+      "id": "storage_box",
+      "name": "Storage Box",
+      "kind": "box",
+      "position": [
+        75,
+        0,
+        43
+      ],
+      "dimensions": [
+        17,
+        15,
+        14
+      ],
+      "blocks_navigation": true,
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "color": "a98254"
+    },
+    {
+      "id": "waste_bin",
+      "name": "Waste Bin",
+      "kind": "cylinder",
+      "position": [
+        -99,
+        0,
+        12
+      ],
+      "dimensions": [
+        16,
+        14,
+        16
+      ],
+      "blocks_navigation": true,
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "color": "637674"
+    },
+    {
+      "id": "plant",
+      "name": "Room Plant",
+      "kind": "plant",
+      "position": [
+        -91,
+        0,
+        -46
+      ],
+      "dimensions": [
+        13,
+        42,
+        12
+      ],
+      "blocks_navigation": true,
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "color": "789166"
+    },
+    {
+      "id": "workshop",
+      "name": "Workshop",
+      "kind": "settlement",
+      "position": [
+        -20,
+        0,
+        42
+      ],
+      "dimensions": [
+        26,
+        10,
+        18
+      ],
+      "blocks_navigation": true,
+      "navigation_padding": [
+        3,
+        0,
+        3
+      ],
+      "color": "594b3a"
+    },
+    {
+      "id": "depot",
+      "name": "Depot",
+      "kind": "settlement",
+      "position": [
+        18,
+        0,
+        42
+      ],
+      "dimensions": [
+        24,
+        9,
+        18
+      ],
+      "blocks_navigation": true,
+      "navigation_padding": [
+        3,
+        0,
+        3
+      ],
+      "color": "654a37"
+    },
+    {
+      "id": "housing",
+      "name": "Housing",
+      "kind": "settlement",
+      "position": [
+        -25,
+        0,
+        66
+      ],
+      "dimensions": [
+        28,
+        7,
+        17
+      ],
+      "blocks_navigation": true,
+      "navigation_padding": [
+        3,
+        0,
+        3
+      ],
+      "color": "745338"
+    },
+    {
+      "id": "work_area",
+      "name": "Work Area",
+      "kind": "settlement",
+      "position": [
+        11,
+        0,
+        66
+      ],
+      "dimensions": [
+        23,
+        5,
+        12
+      ],
+      "blocks_navigation": true,
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "color": "80664b"
+    },
+    {
+      "kind": "water_container",
+      "id": "water_cup",
+      "position": [
+        -58,
+        30,
+        -50
+      ],
+      "resource_profile": {
+        "work_seconds": 2,
+        "contents": {
+          "water": 60000
+        },
+        "region_id": "STUDY_SURFACE"
+      },
+      "dimensions": [
+        3,
+        5,
+        3
+      ],
+      "blocks_navigation": false,
+      "color": "6ea6b8",
+      "name": "Water Container"
+    },
+    {
+      "kind": "food_cache",
+      "id": "food_cache",
+      "position": [
+        -44,
+        0,
+        20
+      ],
+      "resource_profile": {
+        "contents": {
+          "food": 40000
+        },
+        "work_seconds": 2
+      },
+      "dimensions": [
+        2,
+        1,
+        2
+      ],
+      "blocks_navigation": false,
+      "color": "d0a864",
+      "name": "Food Cache"
+    },
+    {
+      "id": "packing_crate",
+      "name": "Packing Crate",
+      "kind": "box",
+      "position": [
+        101,
+        0,
+        9
+      ],
+      "dimensions": [
+        20,
+        20,
+        20
+      ],
+      "blocks_navigation": true,
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "color": "92754e"
+    },
+    {
+      "id": "spare_crate",
+      "name": "Spare Crate",
+      "kind": "box",
+      "position": [
+        103,
+        0,
+        62
+      ],
+      "dimensions": [
+        20,
+        20,
+        20
+      ],
+      "blocks_navigation": true,
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "color": "88704f"
+    }
+  ],
+  "construction": {
+    "depot_pickup": [
+      18,
+      0,
+      55
+    ]
+  },
+  "landmarks": {
+    "workshop": [
+      -20,
+      0,
+      42
+    ],
+    "depot": [
+      18,
+      0,
+      42
+    ],
+    "housing": [
+      -25,
+      0,
+      66
+    ],
+    "work_area": [
+      11,
+      0,
+      66
+    ]
+  },
+  "activity_stations": {
+    "workshop": [
+      [
+        -20,
+        0,
+        55
+      ],
+      [
+        -8,
+        0,
+        55
+      ],
+      [
+        -14,
+        0,
+        57
+      ]
+    ],
+    "housing": [
+      -14,
+      0,
+      66
+    ],
+    "work_area": [
+      -3,
+      0,
+      77
+    ],
+    "patrol": [
+      [
+        -44,
+        0,
+        20
+      ],
+      [
+        42,
+        0,
+        22
+      ],
+      [
+        42,
+        0,
+        78
+      ],
+      [
+        -45,
+        0,
+        79
+      ]
+    ]
+  },
+  "spawn": {
+    "center": [
+      0,
+      0,
+      46
+    ],
+    "dimensions": [
+      96,
+      0,
+      56
+    ]
+  },
+  "camera": {
+    "focus": [
+      0,
+      0,
+      0
+    ],
+    "fill_position": [
+      5,
+      68,
+      24
+    ],
+    "lantern_position": [
+      -25,
+      10,
+      60
+    ]
+  },
+  "civilization": {
+    "shelter_capacity": 50,
+    "economy_construction": true,
+    "stock": {
+      "food": 300,
+      "water": 100,
+      "wood": 0,
+      "metal": 0
+    },
+    "rest_capacity": 12
+  }
+}

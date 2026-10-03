@@ -51,6 +51,7 @@ func _rebuild_grid() -> void:
 	_origin = Vector2(_floor_center.x - width * 0.5 + CELL_INCHES * 0.5, _floor_center.z - depth * 0.5 + CELL_INCHES * 0.5)
 	var cells_x := maxi(1, floori((width - CELL_INCHES) / CELL_INCHES) + 1)
 	var cells_z := maxi(1, floori((depth - CELL_INCHES) / CELL_INCHES) + 1)
+	grid.clear()
 	grid.region = Rect2i(0, 0, cells_x, cells_z)
 	grid.cell_size = Vector2(CELL_INCHES, CELL_INCHES)
 	grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_AT_LEAST_ONE_WALKABLE

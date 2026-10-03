@@ -56,10 +56,7 @@ func _process(delta: float) -> void:
 	_lod_timer += delta
 	if _lod_timer >= 0.4:
 		_lod_timer = 0.0
-		var camera := get_viewport().get_camera_3d()
-		_detail_visible = camera == null or camera.global_position.distance_squared_to(global_position) < 144.0
-		for detail in _fine_details:
-			detail.visible = _detail_visible
+		refresh_visual_lod()
 	simulation_elapsed += delta
 	_animation_time += delta
 	if not needs.is_empty():
@@ -99,6 +96,15 @@ func _process(delta: float) -> void:
 
 func get_travelled_distance() -> float:
 	return travelled_distance
+
+func refresh_visual_lod() -> void:
+	# Camera-dependent rendering can refresh while simulation is paused.
+	var camera := get_viewport().get_camera_3d()
+	_detail_visible = camera == null or camera.global_position.distance_squared_to(global_position) < 144.0
+	for detail in _fine_details: detail.visible = _detail_visible
+	_role_tool.visible = _detail_visible and task_type in ["CONSTRUCTION_BUILD", "SALVAGE"]
+	_role_pack.visible = _detail_visible and task_type in ["SURFACE_INVESTIGATION", "SURFACE_TRAVERSAL", "SURFACE_EXPLORATION"]
+	_traversal_clip.visible = _detail_visible and task_type in ["SURFACE_TRAVERSAL", "RESOURCE_COLLECT"] and _path_cursor < _path.size() and absf(_path[_path_cursor].y - global_position.y) > 0.01
 
 
 func assign_player_goal_task(task: Dictionary) -> void:
@@ -373,7 +379,8 @@ func _update_animation() -> void:
 	if task_type == "CONSTRUCTION_BUILD" and state == "WORK":
 		var construction := get_parent().get_node_or_null("ConstructionSystem")
 		if construction != null:
-			var work_at: Vector3 = construction.status().site
+			var work_task: Dictionary = coordinator.get_task(task_id)
+			var work_at: Vector3 = work_task.target if work_task.has("project_id") else construction.status().site
 			var toward := work_at + Vector3(0.1, 0, -0.38) - global_position
 			if Vector2(toward.x, toward.z).length() > 0.02:
 				rotation.y = atan2(toward.x, toward.z)
@@ -433,7 +440,8 @@ func _pose_builder() -> void:
 	var construction := get_parent().get_node_or_null("ConstructionSystem")
 	if construction == null:
 		return
-	var site: Vector3 = construction.status().site
+	var work_task: Dictionary = coordinator.get_task(task_id)
+	var site: Vector3 = work_task.target if work_task.has("project_id") else construction.status().site
 	var stroke := pow((sin(_animation_time * 9.0) + 1.0) * 0.5, 2.0)
 	var head_at := site + Vector3(0.1, 0.28 + stroke * 0.22, -0.38)
 	_role_tool.global_basis = global_basis * Basis(Vector3.RIGHT, PI * 0.5 - stroke * 0.45)

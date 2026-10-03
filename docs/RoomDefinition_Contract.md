@@ -157,3 +157,13 @@ Furniture salvage derives conservative stages from semantic/material data. Woode
 ```
 
 Every destructive object still requires explicit civilization-level authorization. Stages are finite, work-driven, once-only and session-persistent; presentation uses predetermined geometry. No object ID or canonical coordinates select a resource rule. Active infrastructure/source-support surfaces are protected against unsafe dismantling. See [POC 4 gameplay](POC4_GAMEPLAY.md) for scoring, consumption and verification commands.
+# POC 4.5 canonical configuration note
+
+`rooms/room_poc45.json` derives from the POC 4 definition without a schema change.
+It keeps the elevated water source and zero starting construction material, adjusts
+finite food/water contents, and adds two ordinary crates. Fishbowl activation is an
+explicit launch setting (`ROOMSCALE_FISHBOWL=1`), not inferred from a room ID.
+Explicit `resource_profile.protected: true` prevents autonomous salvage; inferred
+default protection retains the ordinary manual-authorization rule. Runtime settlement
+obstacles are derived from development projects, never hand-authored housing sites.
+See `docs/POC45_FISHBOWL.md` for the generalized policy and project contract.
