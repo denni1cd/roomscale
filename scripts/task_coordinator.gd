@@ -239,6 +239,9 @@ func advance_construction_work(task_id: int, citizen_id: int, delta: float) -> b
 	task.work_seconds = float(task.get("work_seconds", 0.0)) + delta
 	if result:
 		task.progress = 1.0
+	elif task.has("project_id"):
+		var active: Dictionary = civilization.development.active
+		task.progress = float(active.work) / float(active.required_work) if not active.is_empty() and active.id == task.project_id else 0.0
 	else:
 		task.progress = float(construction_system.status().stage_progress)
 	task_board_updated.emit(summary())

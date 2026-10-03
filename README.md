@@ -4,6 +4,13 @@ RoomScale is a small 3D civilization simulation where half-inch citizens treat a
 
 ## Current status
 
+POC 4.6 adds a spectator view on `codex/roomscale-poc46-spectator-ui`:
+**10x fishbowl startup**, compact vital signs, real event cards, contextual project
+progress, camera titles/worker close-ups, quiet HUD fading and five distinct
+cohort arrival points. **F3 / Details** opens diagnostics. See the
+[spectator guide](docs/POC46_SPECTATOR.md) and
+[POC 4.6 verification](verification/poc46/final-report.md).
+
 POC 4.5 is **PASS** on `codex/roomscale-poc45-fishbowl`: all 55 criteria,
 three consecutive fresh full runs, sixty-day stability and 120 real citizens.
 Launch `./RUN_ROOM_SCALE_FISHBOWL.ps1` and watch the governor, real salvage,
@@ -46,7 +53,7 @@ The PowerShell setup script checks for Godot 4.7.2 standard Windows x86-64 and d
 ```powershell
 ./SETUP_ROOM_SCALE.ps1
 ./RUN_ROOM_SCALE.ps1 # Default: POC 4 living economy
-./RUN_ROOM_SCALE_FISHBOWL.ps1 # Autonomous POC 4.5; no gameplay input needed
+./RUN_ROOM_SCALE_FISHBOWL.ps1 # Spectator mode at 10x; no gameplay input needed
 ./RUN_ROOM_SCALE_FISHBOWL.ps1 -ManualCamera
 ./RUN_ROOM_SCALE.ps1 -Room room_a
 ./RUN_ROOM_SCALE.ps1 -Room room_b

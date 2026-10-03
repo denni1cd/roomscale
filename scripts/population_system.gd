@@ -10,6 +10,28 @@ var last_growth := -1000.0
 var cohorts: Array[Dictionary] = []
 var reason := "Waiting for sustained reserves and shelter"
 
+# Four-inch navigation cells: choose actual cell centers in a bounded local area.
+# Validate the whole group before creating any entity.
+func arrival_positions(sim: Node) -> Array[Vector3]:
+	var nav: Node = sim.coordinator.navigation
+	var origin: Vector3 = nav.nearest_walkable_position(sim.coordinator.housing_station + Vector3(0, 0, 20))
+	var points: Array[Vector3] = []
+	if not origin.is_finite(): return points
+	var candidates: Array[Vector3] = []
+	for x in range(-4, 5):
+		for z in range(-4, 5): candidates.append(origin + Vector3(x * 4, 0, z * 4))
+	candidates.sort_custom(func(a: Vector3, b: Vector3) -> bool:
+		var da := a.distance_squared_to(origin)
+		var db := b.distance_squared_to(origin)
+		return da < db if da != db else (a.z < b.z if a.z != b.z else a.x < b.x))
+	for at in candidates:
+		if not nav.room_bounds().has_point(Vector2(at.x, at.z)) or not nav.is_walkable(at) or nav.is_obstacle_position(at): continue
+		if nav.path_between(at, sim.coordinator.depot_station).is_empty(): continue
+		if points.any(func(p: Vector3) -> bool: return p.distance_to(at) < 3.99): continue
+		points.append(at)
+		if points.size() == COHORT: return points
+	return []
+
 func eligibility(state: Dictionary, emergency: bool, blocked: bool) -> String:
 	if int(state.population) + COHORT > CAP: return "Population cap reached"
 	if int(state.shelter) - int(state.population) < COHORT: return "Insufficient shelter for entire cohort"
@@ -33,9 +55,10 @@ func evaluate(sim: Node, state: Dictionary, emergency: bool, blocked: bool) -> v
 	if sim.seconds - last_growth < COOLDOWN:
 		reason = "Cohort cooldown"
 		return
-	var spawn: Vector3 = sim.coordinator.navigation.nearest_walkable_position(sim.coordinator.housing_station + Vector3(0, 0, 20))
-	if not is_finite(spawn.x) or sim.coordinator.navigation.is_obstacle_position(spawn) or sim.coordinator.navigation.path_between(spawn, sim.coordinator.depot_station).is_empty():
-		reason = "No valid settlement arrival location"
+	var positions := arrival_positions(sim)
+	if positions.size() != COHORT:
+		reason = "No five safe connected arrival positions; entire cohort waiting"
+		sim.journal.record(sim.seconds, "growth_paused", reason, state, sim.coordinator.housing_station, "arrival_blocked")
 		return
 	# Ensure forecasts remain healthy immediately after the whole cohort joins.
 	for resource in ["food", "water"]:
@@ -48,11 +71,15 @@ func evaluate(sim: Node, state: Dictionary, emergency: bool, blocked: bool) -> v
 		sim.citizens.append(citizen)
 		sim.scene.add_child(citizen)
 		sim.coordinator._enqueue_for(id, 0)
-		citizen.initialize(id, spawn, sim.coordinator.navigation, sim.coordinator)
+		citizen.initialize(id, positions[offset], sim.coordinator.navigation, sim.coordinator)
 		citizen.set_process(false)
 	last_growth = sim.seconds
 	stable_since = sim.seconds
 	reason = "Cohort joined after sustained stability"
 	var cohort := {"seconds": sim.seconds, "before": before, "after": sim.citizens.size(), "food_days_before": state.food_days, "water_days_before": state.water_days, "shelter": state.shelter}
+	cohort.positions = positions.duplicate()
+	var centroid := Vector3.ZERO
+	for at in positions: centroid += at / COHORT
+	cohort.centroid = centroid
 	cohorts.append(cohort)
-	sim.journal.record(sim.seconds, "cohort_joined", "New cohort joined: %d real citizens" % sim.citizens.size(), cohort, spawn, "cohort:%d" % cohorts.size())
+	sim.journal.record(sim.seconds, "cohort_joined", "New cohort joined: %d real citizens" % sim.citizens.size(), cohort, centroid, "cohort:%d" % cohorts.size())

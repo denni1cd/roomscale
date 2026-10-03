@@ -48,3 +48,21 @@ verification/**/*.uid
 !verification/poc45/
 !verification/poc45/**
 verification/poc45/**/*.tmp
+
+!verification/poc46/
+!verification/poc46/**
+verification/poc46/**/*.tmp
+verification/poc46/**/*.import
+
+# Godot-generated evidence imports are never source evidence.
+verification/**/*.import
+verification/**/*.uid
+verification/**/*.translation
+# Keep intermediate POC46 render iterations locally; publish final evidence.
+verification/poc46/visuals/
+verification/poc46/visuals-final/
+verification/poc46/scale-visuals/
+verification/poc46/visuals-release/scenario-visuals/*
+!verification/poc46/visuals-release/scenario-visuals/automatic-worker-detail.png
+!verification/poc46/visuals-release/scenario-visuals/automatic-worker-detail.json
+verification/poc46/visuals-release/review/

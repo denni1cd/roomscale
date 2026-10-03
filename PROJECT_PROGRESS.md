@@ -1,5 +1,18 @@
 # RoomScale Progress
 
+## POC 4.6 spectator experience
+
+Implemented on `codex/roomscale-poc46-spectator-ui` from verified POC 4.5
+`c0b93c5dd74081bc20068b7455ec9805dc5fb71d`. Compact HUD, real-time event cards,
+context projects, automatic shot titles/close-ups, F3 details, quiet fade and 10x
+fishbowl startup are in place. Cohorts now validate five distinct navigation points
+before any spawn, and task-board development progress uses development work.
+Three consecutive fresh eight-day runs passed at 80 real citizens, with zero failed
+tasks and conserved economy. POC 4.5 fast and POC 4 fast/contract/cleanup remain green.
+Rendered 1080p/1440p captures and each acceptance item are reviewed in the
+[POC 4.6 report](verification/poc46/final-report.md). Historical POC 4.5 evidence
+remains intact; no merge into main.
+
 ## POC 4.5 autonomous colony
 
 **PASS** on `codex/roomscale-poc45-fishbowl`, extending verified POC 4.

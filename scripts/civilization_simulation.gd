@@ -41,6 +41,7 @@ var speed := 1.0
 var _accumulator := 0.0
 var self_care_completed := {}
 var hud: Control
+var spectator: Control
 
 func configure(world: Node3D, config: Dictionary) -> void:
 	scene = world
@@ -53,6 +54,7 @@ func configure(world: Node3D, config: Dictionary) -> void:
 	if bool(config.get("economy_construction", false)): construction.economy = economy
 	coordinator.civilization = self
 	governor.enabled = OS.get_environment("ROOMSCALE_FISHBOWL") == "1"
+	speed = float(config.get("initial_speed", 10.0 if governor.enabled else 1.0))
 	if governor.enabled:
 		governor.mode = "OBSERVING"
 		governor.reason = "Evaluating civilization state every five simulation seconds"
@@ -81,7 +83,12 @@ func configure(world: Node3D, config: Dictionary) -> void:
 		scene.add_child(camera_director)
 		camera_director.configure(self)
 		hud.configure_fishbowl()
-		print("ROOMSCALE_FISHBOWL_READY governor=true population=%d camera=%s room=%s" % [citizens.size(), camera_director.enabled, scene.get("_room_definition").id])
+		hud.hide()
+		spectator = preload("res://scripts/fishbowl_hud.gd").new()
+		scene.get_node("Overlay").add_child(spectator)
+		spectator.configure(self)
+		print("ROOMSCALE_FISHBOWL_READY governor=true population=%d camera=%s room=%s speed=%s" % [citizens.size(), camera_director.enabled, scene.get("_room_definition").id, speed])
+	print("ROOMSCALE_CIVILIZATION_READY speed=%s governor=%s spectator=%s" % [speed, governor.enabled, spectator != null])
 	scene.get_node("Overlay/PresentationPanel").hide()
 	scene.get_node("Overlay/PresentationStatus").hide()
 

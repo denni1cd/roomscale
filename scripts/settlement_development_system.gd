@@ -225,20 +225,42 @@ func render(project: Dictionary) -> void:
 	root.set_meta("module", project.kind)
 	root.set_meta("stage", project.stage)
 	visuals[id] = root
-	G.box(root, "Foundation", Vector3(12, 0.45, 10), Vector3(0, 0.225, 0), "stone", Color("83715c"), 0.1)
+	# The 12x10-inch reserved site is a yard, not a seven-inch-tall dollhouse.
+	# Human-facing openings are sized for the actual half-inch citizen mesh.
+	var person: float = preload("res://scripts/citizen_agent.gd").BODY_HEIGHT
+	var floor_height := person * 1.8
+	var floors := 2 if project.kind == "housing" else 1
+	var wall_height := floor_height * floors
+	var base := 0.08
+	var front := 1.0
+	var back := -3.0
+	G.box(root, "Foundation", Vector3(12, base, 10), Vector3(0, base / 2, 0), "stone", Color("83715c"), 0.02)
 	G.box(root, "AssemblyWorkpiece", Vector3(0.6, 0.2, 0.6), project.target - project.site + Vector3(0, 0.1, -0.35), "wood", Color("ac8053"), 0.04)
+	# Edge strips show the real reserved footprint while the small building sits inside.
+	for x in [-5.85, 5.85]: G.box(root, "YardEdge", Vector3(0.12, 0.10, 9.7), Vector3(x, 0.08, 0), "stone", Color("a39178"), 0.01)
+	for z in [-4.85, 4.85]: G.box(root, "YardEdge", Vector3(11.7, 0.10, 0.12), Vector3(0, 0.08, z), "stone", Color("a39178"), 0.01)
 	if project.stage == "FOUNDATION": return
-	for x in [-5.5, 5.5]:
-		for z in [-4.5, 4.5]: G.box(root, "Post", Vector3(0.55, 6, 0.55), Vector3(x, 3.4, z), "wood", Color("b18956"), 0.04)
-	for z in [-4.5, 4.5]: G.box(root, "Beam", Vector3(12, 0.5, 0.6), Vector3(0, 6.4, z), "wood", Color("9b774d"), 0.05)
+	for x in [-3.9, -1.3, 1.3, 3.9]:
+		for z in [back, front]: G.box(root, "Post", Vector3(0.10, wall_height, 0.10), Vector3(x, base + wall_height / 2, z), "wood", Color("b18956"), 0.01)
+	for level in range(1, floors + 1):
+		for z in [back, front]: G.box(root, "Beam", Vector3(8, 0.10, 0.12), Vector3(0, base + floor_height * level, z), "wood", Color("9b774d"), 0.01)
 	if project.stage == "FRAME": return
 	var paint := Color("8d694b") if project.kind == "housing" else Color("507278")
-	G.box(root, "Back", Vector3(11.6, 5.8, 0.45), Vector3(0, 3.5, -4.5), "wood", paint, 0.08)
-	for x in [-5.5, 5.5]: G.box(root, "Side", Vector3(0.45, 5.8, 9), Vector3(x, 3.5, 0), "wood", paint, 0.08)
+	G.box(root, "Back", Vector3(8, wall_height, 0.10), Vector3(0, base + wall_height / 2, back), "wood", paint, 0.01)
+	for x in [-3.95, 3.95]: G.box(root, "Side", Vector3(0.10, wall_height, 4), Vector3(x, base + wall_height / 2, -1), "wood", paint, 0.01)
+	if floors == 2: G.box(root, "UpperFloor", Vector3(8, 0.06, 4), Vector3(0, base + floor_height, -1), "wood", Color("9b774d"), 0.01)
 	if project.stage == "SHELL": return
-	G.box(root, "Roof", Vector3(13, 0.8, 11), Vector3(0, 7, 0), "metal", Color("47646a"), 0.08)
-	for x in [-3.6, 3.6]:
-		G.box(root, "FrontPanel", Vector3(4.3, 5.8, 0.45), Vector3(x, 3.5, 4.5), "wood", paint, 0.05)
-		G.box(root, "Window", Vector3(1.7, 1.8, 0.12), Vector3(x, 4.1, 4.8), "glass", Color("e0ba6a"), 0.05)
-	G.box(root, "Door", Vector3(2, 4.4, 0.4), Vector3(0, 2.7, 4.5), "wood", Color("443c32"), 0.05)
-	if project.kind == "workshop": G.box(root, "Chimney", Vector3(1.5, 3, 1.5), Vector3(3, 8.5, -2), "metal", Color("697d7f"), 0.08)
+	G.box(root, "FrontPanel", Vector3(8, wall_height, 0.10), Vector3(0, base + wall_height / 2, front), "wood", paint, 0.01)
+	# 0.70-inch doors are 1.4 citizen heights; floor-to-floor is 1.8 heights.
+	for x in [-2.8, 0.0, 2.8]:
+		G.box(root, "Door", Vector3(person * 0.72, person * 1.4, 0.04), Vector3(x, base + person * 0.7, front + 0.07), "wood", Color("443c32"), 0.006)
+		G.box(root, "DoorLintel", Vector3(0.44, 0.045, 0.07), Vector3(x, base + person * 1.4, front + 0.08), "wood", Color("c7a46e"), 0.005)
+		G.box(root, "Threshold", Vector3(0.48, 0.045, 0.24), Vector3(x, base, front + 0.18), "stone", Color("ac9979"), 0.008)
+	for level in range(floors):
+		for x in [-3.5, -2.1, -0.7, 0.7, 2.1, 3.5]:
+			G.box(root, "Window", Vector3(0.32, 0.30, 0.025), Vector3(x, base + floor_height * level + 0.53, front + 0.065), "glass", Color("e0ba6a"), 0.008)
+	var roof_y := base + wall_height + 0.14
+	for side in [-1, 1]:
+		var roof := G.box(root, "Roof", Vector3(8.4, 0.10, 2.25), Vector3(0, roof_y, -1 + side * 1.02), "metal", Color("47646a"), 0.01)
+		roof.rotation.x = side * deg_to_rad(12)
+	if project.kind == "workshop": G.box(root, "Chimney", Vector3(0.30, 0.65, 0.30), Vector3(2.8, roof_y + 0.3, -1.8), "metal", Color("697d7f"), 0.01)

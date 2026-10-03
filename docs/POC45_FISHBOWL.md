@@ -1,5 +1,9 @@
 # Autonomous Colony / Fishbowl mode
 
+POC 4.6 adds the current spectator presentation and 10x startup. See the
+[spectator guide](POC46_SPECTATOR.md) for F3 details, cards, camera titles and
+distinct arrivals. The production systems described below remain authoritative.
+
 Run `./RUN_ROOM_SCALE_FISHBOWL.ps1`. The canonical room starts with 50 real citizens,
 the original POC 4 water problem, zero construction stock, and the governor enabled.
 No gameplay input is required. Pause / 1x / 4x / 10x remain authoritative fixed-tick

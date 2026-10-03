@@ -1,3 +1,4 @@
+# Spectator mode: autonomous 10x, automatic camera, F3 details.
 param([string]$Room = 'room_poc45', [switch]$ManualCamera)
 $ErrorActionPreference = 'Stop'
 $fishbowlRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
