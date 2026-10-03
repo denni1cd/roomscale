@@ -8,7 +8,9 @@ cohort arrivals. All 60 acceptance criteria are mapped in [acceptance.md](accept
 
 Branch: `codex/roomscale-poc46-spectator-ui`.
 Baseline: `c0b93c5dd74081bc20068b7455ec9805dc5fb71d`.
-Implementation commit: recorded in the release commit receipt below after code commit.
+Implementation commit: `0c53dbc0c44ca02ba029e032e178f5eb45f65999`.
+The following documentation-only commit records this immutable implementation SHA;
+its branch tip is the release receipt commit reported to the user.
 Main was not merged. User explicitly waived Aphrael for this work.
 
 ## Changes
@@ -79,3 +81,6 @@ editor work is required.
 
 See [spectator guide](../../docs/POC46_SPECTATOR.md) for controls and verification
 commands, and [visual-review.md](visual-review.md) for capture methods and coverage.
+
+Source/documentation diff checks pass. The supplied project plan preserves its
+intentional Markdown line-break spaces, and raw test logs preserve trailing blank lines.
