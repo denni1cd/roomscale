@@ -199,6 +199,7 @@ func active_builder_count() -> int:
 
 
 func _create_project() -> void:
+	if is_instance_valid(coordinator.civilization) and not coordinator.civilization.has_capability("advanced_construction"): return
 	project_created = true
 	project_state = "DELIVERING"
 	_create_visible_project()
@@ -467,6 +468,8 @@ func _create_visible_project() -> void:
 
 
 func _add_stockpile_visuals() -> void:
+	# Economy-backed projects use actual carried parcels, never decorative stock.
+	if economy != null: return
 	var depot := scene_root.get_node("Settlement/Depot") as Node3D
 	var stock := Node3D.new()
 	stock.name = "ConstructionStockpile"

@@ -249,6 +249,8 @@ func advance_construction_work(task_id: int, citizen_id: int, delta: float) -> b
 
 
 func issue_reach_explore(surface_id: String, citizens: Array) -> Dictionary:
+	if is_instance_valid(civilization) and not civilization.has_capability("advanced_construction"):
+		return {"accepted": false, "reason": "A completed workshop is required for advanced traversal"}
 	if not surface_navigation.regions.has(surface_id) or surface_id == FLOOR_REGION:
 		return {"accepted": false, "state": "REJECTED", "message": "Select an elevated surface first."}
 	_goal_region = surface_id
@@ -589,6 +591,14 @@ func _find_task(task_id: int) -> Dictionary:
 
 
 func _enqueue_for(citizen_id: int, cycle: int) -> void:
+	# An empty start has no buildings to maintain. Production resource/build tasks
+	# still come through claim(); harmless patrols provide fallback activity.
+	if room_definition.has("start") and room_definition.start.infrastructure.is_empty():
+		for pending in tasks:
+			if pending.state == "available" and int(pending.get("owner_hint", -1)) == citizen_id: return
+		var target: Vector3 = patrol_stations[(citizen_id + cycle) % patrol_stations.size()]
+		_create_task_record({"task_type": "FLOOR_PATROL", "state": "available", "citizen_id": -1, "owner_hint": citizen_id, "cycle": cycle, "source": target, "target": target, "progress": 0.0})
+		return
 	if is_instance_valid(civilization):
 		for pending in tasks:
 			if pending.state == "available" and int(pending.get("owner_hint", -1)) == citizen_id:

@@ -3,6 +3,8 @@ extends RefCounted
 const FloorNavigation := preload("res://scripts/floor_navigation.gd")
 const G := preload("res://scripts/visuals/visual_geometry.gd")
 const BLUEPRINTS := {
+	"shelter": {"wood": 4, "metal": 0, "work": 60.0, "shelter": 5},
+	"depot": {"wood": 4, "metal": 1, "work": 70.0, "shelter": 0},
 	"housing": {"wood": 10, "metal": 2, "work": 90.0, "shelter": 10},
 	"workshop": {"wood": 8, "metal": 4, "work": 100.0, "shelter": 0}
 }
@@ -24,6 +26,9 @@ func count(kind: String) -> int:
 	return total
 
 func consider(state: Dictionary) -> void:
+	if sim.founder_mode:
+		consider_founding(state)
+		return
 	if not active.is_empty() or sim.seconds < _retry_at or minf(state.food_days, state.water_days) < 2 or state.urgent > maxi(3, int(state.population * 0.25)): return
 	if state.population >= 150: return
 	# Finite reserve horizon restrains expansion as sources approach exhaustion.
@@ -33,6 +38,20 @@ func consider(state: Dictionary) -> void:
 	elif state.shelter - state.population <= 5: kind = "housing"
 	if not kind.is_empty() and can_supply(kind): request(kind)
 	elif not kind.is_empty():
+		_retry_at = sim.seconds + 60
+		site_reason = "Finite safe materials cannot fund another " + kind
+		sim.journal.record(sim.seconds, "growth_paused", site_reason, state, center(), "finite_development")
+
+func consider_founding(state: Dictionary) -> void:
+	if not active.is_empty() or sim.seconds < _retry_at or sim.governor.emergency: return
+	var kind := ""
+	if not sim.has_capability("shelter"): kind = "shelter"
+	elif not sim.has_capability("storage"): kind = "depot"
+	elif not sim.has_capability("workshop"): kind = "workshop"
+	elif state.shelter - state.population <= sim.population.cohort_size and minf(state.food_days, state.water_days) >= 2 and carrying_capacity(int(state.population) + 1): kind = "housing"
+	if kind.is_empty(): return
+	if can_supply(kind): request(kind)
+	else:
 		_retry_at = sim.seconds + 60
 		site_reason = "Finite safe materials cannot fund another " + kind
 		sim.journal.record(sim.seconds, "growth_paused", site_reason, state, center(), "finite_development")
@@ -55,6 +74,9 @@ func carrying_capacity(population: int) -> bool:
 	return true
 
 func center() -> Vector3:
+	if sim.founder_mode:
+		var at: Array = sim.scene.get("_room_definition").start.origin
+		return Vector3(float(at[0]), float(at[1]), float(at[2]))
 	var result := Vector3.ZERO
 	var landmarks: Dictionary = sim.scene.get("_room_definition").landmarks
 	for at in landmarks.values(): result += Vector3(float(at[0]), float(at[1]), float(at[2]))
@@ -63,7 +85,7 @@ func center() -> Vector3:
 func obstacle(site: Vector3, id: String) -> Dictionary:
 	return {"id": id, "kind": "settlement", "position": [site.x, site.y, site.z], "dimensions": [SIZE.x, SIZE.y, SIZE.z], "blocks_navigation": true, "navigation_padding": [0, 0, 0]}
 
-func valid_site(site: Vector3) -> bool:
+func valid_site(site: Vector3, work_target: Vector3 = Vector3.INF) -> bool:
 	var nav: Node = sim.coordinator.navigation
 	var footprint := Rect2(Vector2(site.x - SIZE.x / 2 - 4, site.z - SIZE.z / 2 - 4), Vector2(SIZE.x + 8, SIZE.z + 8))
 	if not nav.room_bounds().encloses(footprint): return false
@@ -90,7 +112,7 @@ func valid_site(site: Vector3) -> bool:
 	candidate.configure(proposed)
 	candidate._rebuild_grid()
 	var valid := true
-	var target := site + Vector3(0, 0, SIZE.z / 2 + 4)
+	var target := work_target if work_target.is_finite() else site + Vector3(0, 0, SIZE.z / 2 + 4)
 	if not candidate.is_walkable(target) or candidate.is_obstacle_position(target): valid = false
 	for anchor in anchors:
 		if candidate.path_between(sim.coordinator.depot_station, anchor).is_empty(): valid = false
@@ -100,8 +122,13 @@ func valid_site(site: Vector3) -> bool:
 	candidate.free()
 	return valid
 
-func select_site() -> Dictionary:
+func select_site(kind: String = "") -> Dictionary:
 	var origin := center()
+	# Build storage around the original pickup apron. Existing goods and in-flight
+	# deliveries retain their physical location; no inventory is relocated.
+	var depot_site: Vector3 = sim.coordinator.depot_station - Vector3(0, 0, SIZE.z / 2 + 4)
+	if sim.founder_mode and kind == "depot":
+		return {"valid": true, "position": depot_site} if valid_site(depot_site, depot_site + Vector3(SIZE.x / 2 + 4, 0, 0)) else {"valid": false}
 	var positions: Array[Vector3] = []
 	for x in range(-9, 10):
 		for z in range(-9, 10): positions.append(origin + Vector3(x * 16, 0, z * 16))
@@ -110,14 +137,22 @@ func select_site() -> Dictionary:
 		var db := b.distance_squared_to(origin)
 		return da < db if da != db else (a.z < b.z if a.z != b.z else a.x < b.x))
 	for site in positions:
+		if sim.founder_mode and count("depot") == 0 and site.distance_to(depot_site) < 22: continue
 		if valid_site(site): return {"valid": true, "position": site}
 	return {"valid": false}
 
 func request(kind: String) -> bool:
 	if not BLUEPRINTS.has(kind) or not active.is_empty(): return false
+	if sim.founder_mode:
+		if kind == "depot" and not sim.has_capability("shelter"): return false
+		if kind == "workshop" and not sim.has_capability("storage"): return false
+		if kind == "housing" and not sim.has_capability("workshop"): return false
 	_retry_at = sim.seconds + 60
-	var selected := select_site()
+	var selected := select_site(kind)
 	if not selected.valid:
+		# A passing founder may temporarily occupy the bootstrap footprint. Retry
+		# at the next governor evaluation, without moving citizens or relaxing safety.
+		if sim.founder_mode and kind in ["shelter","depot","workshop"]: _retry_at = sim.seconds + 5
 		site_reason = "No safe connected build site; expansion paused"
 		sim.journal.record(sim.seconds, "growth_paused", site_reason, sim.status())
 		return false
@@ -125,6 +160,9 @@ func request(kind: String) -> bool:
 	var id := "development_%03d" % (projects.size() + 1)
 	active = {"id": id, "kind": kind, "site": selected.position, "target": selected.position + Vector3(0, 0, SIZE.z / 2 + 4), "required": {"wood": blueprint.wood, "metal": blueprint.metal}, "delivered": {"wood": 0.0, "metal": 0.0}, "work": 0.0, "required_work": float(blueprint.work) * (0.85 if workshop_count > 0 else 1.0), "state": "PLANNED", "stage": "FOUNDATION", "effect_applied": false, "created": sim.seconds, "completed": -1.0, "work_by_citizen": {}, "delivery_distance": 0.0}
 	projects.append(active)
+	if sim.founder_mode and kind == "depot":
+		# Stock remains on the front apron; building deliveries go to the side.
+		active.target = active.site + Vector3(SIZE.x / 2 + 4, 0, 0)
 	render(active)
 	sim.journal.record(sim.seconds, "development_started", kind.capitalize() + " project " + id, active, active.site, id + ":started")
 	active.state = "WAITING_FOR_MATERIALS"
@@ -209,11 +247,15 @@ func work(task: Dictionary, citizen: Node3D, effort: float) -> bool:
 func apply_effect(project: Dictionary) -> void:
 	if project.effect_applied or project.state != "COMPLETE": return
 	project.effect_applied = true
-	if project.kind == "housing":
-		sim.needs.shelter_capacity += int(BLUEPRINTS.housing.shelter)
-		sim.needs.rest_capacity += 2
+	if int(BLUEPRINTS[project.kind].shelter) > 0:
+		sim.needs.shelter_capacity += int(BLUEPRINTS[project.kind].shelter)
+		sim.needs.rest_capacity += 5 if project.kind == "shelter" else 2
+		if sim.founder_mode and project.kind == "shelter": sim.coordinator.housing_station = project.target
+		for citizen in sim.citizens: citizen.needs.sheltered = citizen.citizen_id < sim.needs.shelter_capacity
 		sim.journal.record(sim.seconds, "shelter_increased", "Shelter capacity increased to %d" % sim.needs.shelter_capacity, {"project": project.id, "shelter": sim.needs.shelter_capacity}, project.site, String(project.id) + ":shelter")
-	else: workshop_count = mini(workshop_count + 1, 1)
+	elif project.kind == "workshop":
+		workshop_count = mini(workshop_count + 1, 1)
+		if sim.founder_mode: sim.journal.record(sim.seconds, "advanced_available", "Workshop enables advanced construction", {}, project.site, "advanced")
 
 func render(project: Dictionary) -> void:
 	var id := String(project.id)
@@ -225,6 +267,9 @@ func render(project: Dictionary) -> void:
 	root.set_meta("module", project.kind)
 	root.set_meta("stage", project.stage)
 	visuals[id] = root
+	if project.kind in ["shelter", "depot"]:
+		render_primitive(root, project)
+		return
 	# The 12x10-inch reserved site is a yard, not a seven-inch-tall dollhouse.
 	# Human-facing openings are sized for the actual half-inch citizen mesh.
 	var person: float = preload("res://scripts/citizen_agent.gd").BODY_HEIGHT
@@ -264,3 +309,23 @@ func render(project: Dictionary) -> void:
 		var roof := G.box(root, "Roof", Vector3(8.4, 0.10, 2.25), Vector3(0, roof_y, -1 + side * 1.02), "metal", Color("47646a"), 0.01)
 		roof.rotation.x = side * deg_to_rad(12)
 	if project.kind == "workshop": G.box(root, "Chimney", Vector3(0.30, 0.65, 0.30), Vector3(2.8, roof_y + 0.3, -1.8), "metal", Color("697d7f"), 0.01)
+
+func render_primitive(root: Node3D, project: Dictionary) -> void:
+	# The initial outline marks the proposed site; structural geometry appears
+	# only after supplied materials and actual builder effort advance the stage.
+	for x in [-4.0,4.0]: G.box(root, "SiteOutline", Vector3(0.03, 0.02, 4), Vector3(x, 0.02, -1), "paint", Color("c8b88b"), 0.005)
+	for z in [-3.0,1.0]: G.box(root, "SiteOutline", Vector3(8, 0.02, 0.03), Vector3(0, 0.02, z), "paint", Color("c8b88b"), 0.005)
+	G.box(root, "AssemblyWorkpiece", Vector3(0.6, 0.2, 0.6), project.target - project.site + Vector3(0, 0.1, -0.35), "wood", Color("ac8053"), 0.03)
+	if project.stage == "FOUNDATION": return
+	G.box(root, "GroundFrame", Vector3(8, 0.06, 4), Vector3(0, 0.03, -1), "wood", Color("a58154"), 0.01)
+	for x in [-3.9, 3.9]:
+		for z in [-2.9, 0.9]: G.box(root, "HandCutPost", Vector3(0.10, 0.95, 0.10), Vector3(x, 0.5, z), "wood", Color("aa895d"), 0.01)
+	if project.stage == "FRAME": return
+	G.box(root, "Back", Vector3(8, 0.9, 0.08), Vector3(0, 0.5, -2.9), "wood", Color("97714b"), 0.01)
+	if project.stage == "SHELL": return
+	var roof := G.box(root, "LeanToRoof", Vector3(8.3, 0.08, 4.3), Vector3(0, 1.05, -1), "wood", Color("71563d"), 0.01)
+	roof.rotation.x = deg_to_rad(8)
+	if project.kind == "shelter":
+		for index in range(5): G.box(root, "SleepingPlace", Vector3(0.45, 0.07, 0.8), Vector3(-2.8 + index * 1.3, 0.13, -1), "canvas", Color("8a785d"), 0.01)
+	else:
+		for index in range(3): G.box(root, "StorageRack", Vector3(2, 0.6, 1.2), Vector3(-2.7 + index * 2.7, 0.36, -1), "wood", Color("a78550"), 0.02)

@@ -2,6 +2,7 @@ extends RefCounted
 ## Abstract cohorts: normal production entities and needs, never a population counter.
 const Citizen := preload("res://scripts/citizen_agent.gd")
 const COHORT := 5
+var cohort_size := COHORT
 const CAP := 150
 const STABILITY := 300.0
 const COOLDOWN := 600.0
@@ -29,12 +30,12 @@ func arrival_positions(sim: Node) -> Array[Vector3]:
 		if nav.path_between(at, sim.coordinator.depot_station).is_empty(): continue
 		if points.any(func(p: Vector3) -> bool: return p.distance_to(at) < 3.99): continue
 		points.append(at)
-		if points.size() == COHORT: return points
+		if points.size() == cohort_size: return points
 	return []
 
 func eligibility(state: Dictionary, emergency: bool, blocked: bool) -> String:
-	if int(state.population) + COHORT > CAP: return "Population cap reached"
-	if int(state.shelter) - int(state.population) < COHORT: return "Insufficient shelter for entire cohort"
+	if int(state.population) + cohort_size > CAP: return "Population cap reached"
+	if int(state.shelter) - int(state.population) < cohort_size: return "Insufficient shelter for entire cohort"
 	if emergency or minf(float(state.food_days), float(state.water_days)) < 2.0: return "Survival reserves unsafe"
 	if int(state.urgent) > maxi(3, int(state.population * 0.25)): return "Too many urgent citizens"
 	if blocked: return "Critical material project blocked"
@@ -42,7 +43,8 @@ func eligibility(state: Dictionary, emergency: bool, blocked: bool) -> String:
 
 func evaluate(sim: Node, state: Dictionary, emergency: bool, blocked: bool) -> void:
 	var why := eligibility(state, emergency, blocked)
-	if why.is_empty() and not sim.development.carrying_capacity(int(state.population) + COHORT): why = "Finite source horizon below five days"
+	if sim.founder_mode and (not sim.has_capability("workshop") or not sim.has_capability("storage")): why = "Settlement infrastructure not yet established"
+	if why.is_empty() and not sim.development.carrying_capacity(int(state.population) + cohort_size): why = "Finite source horizon below five days"
 	if not why.is_empty():
 		stable_since = -1
 		reason = why
@@ -56,15 +58,18 @@ func evaluate(sim: Node, state: Dictionary, emergency: bool, blocked: bool) -> v
 		reason = "Cohort cooldown"
 		return
 	var positions := arrival_positions(sim)
-	if positions.size() != COHORT:
-		reason = "No five safe connected arrival positions; entire cohort waiting"
+	if positions.size() != cohort_size:
+		reason = "No safe connected arrival position; new citizen waiting" if cohort_size == 1 else "No five safe connected arrival positions; entire cohort waiting"
 		sim.journal.record(sim.seconds, "growth_paused", reason, state, sim.coordinator.housing_station, "arrival_blocked")
 		return
 	# Ensure forecasts remain healthy immediately after the whole cohort joins.
 	for resource in ["food", "water"]:
-		if sim.economy.forecast(resource, sim.citizens.size() + COHORT) < 2: return
+		if sim.economy.forecast(resource, sim.citizens.size() + cohort_size) < 2: return
 	var before: int = sim.citizens.size()
-	for offset in range(COHORT):
+	var water_before: float = sim.economy.forecast("water", before)
+	var food_before: float = sim.economy.forecast("food", before)
+	var stable_seconds: float = sim.seconds - stable_since
+	for offset in range(cohort_size):
 		var id: int = sim.citizens.size()
 		var citizen := Citizen.new()
 		citizen.needs = sim.needs.initial(id)
@@ -77,9 +82,14 @@ func evaluate(sim: Node, state: Dictionary, emergency: bool, blocked: bool) -> v
 	stable_since = sim.seconds
 	reason = "Cohort joined after sustained stability"
 	var cohort := {"seconds": sim.seconds, "before": before, "after": sim.citizens.size(), "food_days_before": state.food_days, "water_days_before": state.water_days, "shelter": state.shelter}
+	cohort.stable_seconds = stable_seconds
+	cohort.food_days_before = food_before
+	cohort.water_days_before = water_before
+	cohort.food_days_after = sim.economy.forecast("food", sim.citizens.size())
+	cohort.water_days_after = sim.economy.forecast("water", sim.citizens.size())
 	cohort.positions = positions.duplicate()
 	var centroid := Vector3.ZERO
-	for at in positions: centroid += at / COHORT
+	for at in positions: centroid += at / cohort_size
 	cohort.centroid = centroid
 	cohorts.append(cohort)
 	sim.journal.record(sim.seconds, "cohort_joined", "New cohort joined: %d real citizens" % sim.citizens.size(), cohort, centroid, "cohort:%d" % cohorts.size())

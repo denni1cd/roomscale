@@ -42,16 +42,27 @@ var _accumulator := 0.0
 var self_care_completed := {}
 var hud: Control
 var spectator: Control
+var founder_mode := false
+
+func has_capability(capability: String) -> bool:
+	var initial: Array = scene.get("_room_definition").get("start", {}).get("infrastructure", ["workshop", "depot", "housing", "work_area"])
+	match capability:
+		"shelter": return "housing" in initial or development.count("shelter") + development.count("housing") > 0
+		"storage": return "depot" in initial or development.count("depot") > 0
+		"workshop", "advanced_construction": return "workshop" in initial or development.count("workshop") > 0
+	return false
 
 func configure(world: Node3D, config: Dictionary) -> void:
 	scene = world
 	coordinator = scene.get_node("TaskCoordinator")
 	construction = scene.get_node("ConstructionSystem")
 	citizens = scene.get("_citizens")
+	founder_mode = scene.get("_room_definition").has("start") and scene.get("_room_definition").start.infrastructure.is_empty()
 	needs.shelter_capacity = int(config.get("shelter_capacity", 50))
 	needs.rest_capacity = mini(needs.shelter_capacity, int(config.get("rest_capacity", 12)))
 	economy.configure(config.get("stock", {"food": 5000, "water": 5000, "wood": 0, "metal": 0}))
 	if bool(config.get("economy_construction", false)): construction.economy = economy
+	if founder_mode: construction.stockpile = {"wood":0,"metal":0,"mechanical_parts":0}
 	coordinator.civilization = self
 	governor.enabled = OS.get_environment("ROOMSCALE_FISHBOWL") == "1"
 	speed = float(config.get("initial_speed", 10.0 if governor.enabled else 1.0))
@@ -61,6 +72,9 @@ func configure(world: Node3D, config: Dictionary) -> void:
 	development = Development.new()
 	development.configure(self)
 	population = Population.new()
+	population.cohort_size = int(config.get("cohort_size", 5))
+	if founder_mode:
+		journal.record(0, "founders_arrived", "Founders arrived", {"population": citizens.size()}, coordinator.depot_station, "founders")
 	resources.configure(scene.get("_room_definition"))
 	salvage.configure(resources.objects)
 	for object_id in salvage.objects:
@@ -197,6 +211,11 @@ func plan() -> void:
 	if economy.forecast("water", citizens.size()) < 1: planner.reasons.append("Water reserve critical")
 	if needs.shelter_capacity < citizens.size(): planner.reasons.append("Shelter shortage: %d citizens" % (citizens.size() - needs.shelter_capacity))
 	for resource in planner.directives:
+		if founder_mode:
+			var accessible := false
+			for available_source in resources.sources.values():
+				if available_source.region == "FLOOR" and float(available_source.remaining.get(resource, 0)) > 0: accessible = true
+			if accessible: continue
 		var found := false
 		for source_id in resources.sources:
 			var source: Dictionary = resources.sources[source_id]
@@ -204,7 +223,7 @@ func plan() -> void:
 			found = true
 			if source.region != "FLOOR" and not coordinator.surface_navigation.has_connection("FLOOR", String(source.region)):
 				planner.reasons.append("Secure %s: source unreachable; traversal required" % String(resource).capitalize())
-				if not reach_requested.has(source.region):
+				if has_capability("advanced_construction") and not reach_requested.has(source.region):
 					var result: Dictionary = coordinator.issue_reach_explore(String(source.region), citizens)
 					if result.get("accepted", false):
 						reach_requested[source.region] = true
@@ -234,6 +253,7 @@ func work(citizen: Node3D, delta: float) -> bool:
 			var bundle := resources.create_bundle(resource, float(yields[resource]), task.target, id)
 			show_bundle(bundle)
 		apply_salvage_stage(id)
+		if founder_mode: journal.record(seconds, "first_salvage", "First material recovered", {"object":id,"yields":yields}, citizen.global_position, "first_salvage")
 		print("POC4_SALVAGE_STAGE object=%s state=%s work=%.1f yields=%s" % [id, salvage.objects[id].state, salvage.objects[id].work, yields])
 		return true
 	if citizen.task_type == "RESOURCE_COLLECT":
@@ -248,6 +268,7 @@ func work(citizen: Node3D, delta: float) -> bool:
 		show_bundle(bundle)
 		if not pickup_bundle(citizen): return false
 		source_visits[task.resource] += 1
+		if founder_mode and String(resources.sources[task.source_id].region) != "FLOOR": journal.record(seconds, "territory_reached", "Elevated resources reached", {"source":task.source_id}, citizen.global_position, "territory_reached")
 		citizen.begin_resource_return(String(task.resource))
 		return false
 	if citizen.task_type == "NEED_REST":

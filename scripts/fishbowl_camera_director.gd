@@ -19,6 +19,14 @@ func configure(sim: Node) -> void:
 	simulation = sim
 	rig = sim.scene.get_node("CameraRig")
 	enabled = OS.get_environment("ROOMSCALE_MANUAL_CAMERA") != "1"
+	if sim.founder_mode and enabled:
+		var focus := Vector3.ZERO
+		for citizen in sim.citizens: focus += citizen.global_position / sim.citizens.size()
+		current_shot = {"key":"founders", "focus":focus, "distance":22.0, "event":0, "headline":"FOUNDERS ARRIVED", "subtitle":"%d citizens · A new home begins here" % sim.citizens.size()}
+		shots = 1
+		rig.focus_at(focus, 22, 40, 0)
+		rig._camera_transition_active = false
+		rig._apply_transform()
 
 func _process(delta: float) -> void: advance(delta)
 
@@ -34,7 +42,7 @@ func choose() -> Dictionary:
 	var priority := 0
 	for event in simulation.journal.events:
 		if event.id <= event_id or not valid_focus(event.focus): continue
-		if event.kind not in ["salvage_authorized", "traversal_complete", "structure_complete", "cohort_joined", "development_started"]: continue
+		if event.kind not in ["salvage_authorized", "traversal_complete", "structure_complete", "cohort_joined", "development_started", "territory_reached"]: continue
 		var card := Adapter.event_card(event)
 		if card.is_empty() or int(card.priority) < 3: continue
 		# Old arrivals have dispersed; current activity provides a truer subject.
@@ -49,6 +57,7 @@ func choose() -> Dictionary:
 			shot.focus = major.focus + Vector3.UP * 0.25
 			shot.distance = 13.0
 			shot.cohort_start = major.evidence.before
+			shot.cohort_size = int(major.evidence.after) - int(major.evidence.before)
 		elif major.kind == "salvage_authorized":
 			shot.headline = "SALVAGE OPERATION"
 			var id := String(major.message).get_slice(": ", 1)
@@ -70,7 +79,7 @@ func choose() -> Dictionary:
 		return {"key": "traversal", "focus": simulation.construction.site_position + Vector3.UP * 3, "distance": 45.0, "event": event_id, "headline": "EXPEDITION TO THE DESK", "subtitle": "Building a grapple route to the water supply"}
 	if not simulation.development.active.is_empty():
 		var p: Dictionary = simulation.development.active
-		return {"key": String(p.id), "focus": p.site + Vector3(0, 2, 3), "distance": 30.0, "event": event_id, "headline": "HOUSING DISTRICT EXPANSION" if p.kind == "housing" else "WORKSHOP EXPANSION", "subtitle": Adapter.module_name(p) + " under construction"}
+		return {"key": String(p.id), "focus": p.site + Vector3(0, 2, 3), "distance": 30.0, "event": event_id, "headline": Adapter.module_name(p).to_upper(), "subtitle": Adapter.module_name(p) + " under construction"}
 	for citizen in simulation.citizens:
 		if citizen.task_type == "RESOURCE_COLLECT" and citizen.global_position.y > 4:
 			return activity(citizen, "EXPEDITION TO THE DESK", "Collecting water for the colony")
@@ -109,8 +118,8 @@ func advance(delta: float) -> void:
 		tracked_citizen = -1
 	if current_shot.has("cohort_start"):
 		focus = Vector3.UP * 0.25
-		for index in range(int(current_shot.cohort_start), int(current_shot.cohort_start) + 5): focus += simulation.citizens[index].global_position / 5
-		for index in range(int(current_shot.cohort_start), int(current_shot.cohort_start) + 5): framing_distance = maxf(framing_distance, focus.distance_to(simulation.citizens[index].global_position) * 2.8)
+		for index in range(int(current_shot.cohort_start), int(current_shot.cohort_start) + int(current_shot.cohort_size)): focus += simulation.citizens[index].global_position / int(current_shot.cohort_size)
+		for index in range(int(current_shot.cohort_start), int(current_shot.cohort_start) + int(current_shot.cohort_size)): framing_distance = maxf(framing_distance, focus.distance_to(simulation.citizens[index].global_position) * 2.8)
 	if not valid_focus(focus):
 		current_shot = overview()
 		focus = current_shot.focus

@@ -113,11 +113,20 @@ func _build_settlement() -> void:
 	var settlement := Node3D.new()
 	settlement.name = "Settlement"
 	add_child(settlement)
-	_build_workshop(settlement)
-	_build_depot(settlement)
-	_build_housing(settlement)
-	_build_work_area(settlement)
-	SettlementDetails.decorate(settlement, _room_definition)
+	if _room_definition.has("start") and _room_definition.start.infrastructure.is_empty():
+		var cache := Node3D.new()
+		cache.name = "PortableSupplies"
+		cache.position = RoomDefinitionLoader.vector3_from(_room_definition.start.origin)
+		settlement.add_child(cache)
+		for index in range(int(_room_definition.start.population)):
+			_add_box(cache, "Pack", Vector3(0.35, 0.3, 0.3), Vector3(index * 0.5 - 1, 0.15, 0), Color("99714a"))
+		return
+	var initial: Array = _room_definition.get("start", {}).get("infrastructure", ["workshop", "depot", "housing", "work_area"])
+	if "workshop" in initial: _build_workshop(settlement)
+	if "depot" in initial: _build_depot(settlement)
+	if "housing" in initial: _build_housing(settlement)
+	if "work_area" in initial: _build_work_area(settlement)
+	if initial.size() == 4: SettlementDetails.decorate(settlement, _room_definition)
 
 
 func _build_workshop(parent: Node3D) -> void:
@@ -1417,13 +1426,14 @@ func _build_population() -> bool:
 	_task_coordinator.surface_navigation = surface_navigation
 	_task_coordinator.configure_room(_room_definition)
 	add_child(_task_coordinator)
-	_task_coordinator.seed_population(50)
+	var initial_population := int(_room_definition.get("start", {}).get("population", 50))
+	_task_coordinator.seed_population(initial_population)
 	var starts: Array[Vector3] = []
 	var spawn: Dictionary = _room_definition.spawn
 	var spawn_center := RoomDefinitionLoader.vector3_from(spawn.center)
 	var spawn_dimensions: Array = spawn.dimensions
 	var floor_height := float(_room_definition.floor.height)
-	for citizen_id in range(50):
+	for citizen_id in range(initial_population):
 		var column := citizen_id % 10
 		var row := floori(float(citizen_id) / 10.0)
 		var proposed := Vector3(spawn_center.x - float(spawn_dimensions[0]) * 0.5 + 4.0 + float(column) * (float(spawn_dimensions[0]) - 8.0) / 9.0, floor_height, spawn_center.z - float(spawn_dimensions[2]) * 0.5 + 4.0 + float(row) * (float(spawn_dimensions[2]) - 8.0) / 4.0)

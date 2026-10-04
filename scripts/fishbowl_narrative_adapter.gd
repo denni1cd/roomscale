@@ -10,13 +10,18 @@ static func governor(sim: Node) -> String:
 	elif sim.needs.shelter_capacity - sim.citizens.size() < 5: intent = "Preparing shelter expansion"
 	elif sim.population.reason.contains("horizon"): intent = "Finite supplies limit further growth"
 	elif sim.development.site_reason.contains("cannot fund"): intent = "Materials limit further expansion"
+	if sim.founder_mode and not sim.governor.emergency:
+		if not sim.has_capability("shelter"): intent = "Establishing the first shelter"
+		elif not sim.has_capability("storage"): intent = "Establishing permanent storage"
+		elif not sim.has_capability("workshop"): intent = "Building the first workshop"
 	return "Governor on · %s — %s" % [modes.get(sim.governor.mode, "Assessing the colony"), intent]
 
 static func status(sim: Node) -> Dictionary:
 	return {"days": sim.seconds / 600.0, "population": sim.citizens.size(), "shelter": sim.needs.shelter_capacity, "food_days": sim.economy.forecast("food", sim.citizens.size()), "water_days": sim.economy.forecast("water", sim.citizens.size()), "wood": sim.economy.available.wood, "metal": sim.economy.available.metal, "speed": sim.speed, "governor": governor(sim)}
 
 static func module_name(project: Dictionary) -> String:
-	return ("Housing Block " if project.get("kind", "") == "housing" else "Workshop Annex ") + String(project.get("id", "")).trim_prefix("development_").trim_prefix("0").trim_prefix("0")
+	var names := {"shelter": "Founder Shelter ", "depot": "Depot ", "housing": "Housing Block ", "workshop": "Workshop "}
+	return names.get(project.get("kind", ""), "Structure ") + String(project.get("id", "")).trim_prefix("development_").trim_prefix("0").trim_prefix("0")
 
 static func project(sim: Node) -> Dictionary:
 	if not sim.development.active.is_empty():
@@ -35,6 +40,22 @@ static func event_card(event: Dictionary) -> Dictionary:
 	var subtitle := ""
 	var priority := 1
 	match kind:
+		"first_salvage":
+			headline = "FIRST SALVAGE"
+			subtitle = "Real room materials are ready to be hauled home."
+			priority = 4
+		"territory_reached":
+			headline = "NEW TERRITORY REACHED"
+			subtitle = "Citizens are collecting supplies from the elevated room."
+			priority = 5
+		"founders_arrived":
+			headline = "FOUNDERS ARRIVED"
+			subtitle = "%d citizens with portable supplies, ready to build a home." % int(evidence.population)
+			priority = 5
+		"advanced_available":
+			headline = "SETTLEMENT ESTABLISHED"
+			subtitle = "The completed workshop enables advanced construction."
+			priority = 4
 		"governor":
 			if event.message.begins_with("SURVIVAL"):
 				headline = "WATER RESERVE LOW" if float(evidence.get("water_days", 3)) < 1 else "SURVIVAL RESPONSE"
@@ -65,7 +86,7 @@ static func event_card(event: Dictionary) -> Dictionary:
 			subtitle = "Work began on " + module_name(evidence) + "."
 			priority = 3
 		"structure_complete":
-			headline = "HOUSING COMPLETE" if evidence.get("kind") == "housing" else "WORKSHOP COMPLETE"
+			headline = {"shelter":"FIRST SHELTER COMPLETE", "depot":"DEPOT ESTABLISHED", "housing":"HOUSING COMPLETE", "workshop":"WORKSHOP COMPLETE"}.get(evidence.get("kind"), "STRUCTURE COMPLETE")
 			subtitle = module_name(evidence) + " is ready for the colony."
 			priority = 4
 		"shelter_increased":
@@ -73,8 +94,9 @@ static func event_card(event: Dictionary) -> Dictionary:
 			subtitle = "Shelter now supports %d citizens." % int(evidence.get("shelter", 0))
 			priority = 3
 		"cohort_joined":
-			headline = "NEW ARRIVALS"
-			subtitle = "Five citizens joined the settlement · Population %d." % int(evidence.get("after", 0))
+			var count := int(evidence.get("after", 0)) - int(evidence.get("before", 0))
+			headline = "NEW CITIZEN" if count == 1 else "NEW ARRIVALS"
+			subtitle = "One citizen joined the settlement · Population %d." % int(evidence.after) if count == 1 else "Five citizens joined the settlement · Population %d." % int(evidence.get("after", 0))
 			priority = 5
 		"source_exhausted":
 			headline = "SOURCE EXHAUSTED"

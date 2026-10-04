@@ -1,6 +1,9 @@
 # POC 4.6 spectator mode
 
-Run `./RUN_ROOM_SCALE_FISHBOWL.ps1`. It starts the production colony at **10x**,
+Historical configuration: use `-Room room_poc45` for this established colony.
+The current default is [POC 4.7's five founders at 1x](POC47_FOUNDERS.md).
+
+Run `./RUN_ROOM_SCALE_FISHBOWL.ps1 -Room room_poc45`. It starts the legacy colony at **10x**,
 with automatic camera enabled and diagnostics hidden. No Godot editor work or
 strategic input is needed. `./RUN_ROOM_SCALE.ps1` remains manual at **1x**.
 

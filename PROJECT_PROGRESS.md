@@ -1,5 +1,15 @@
 # RoomScale Progress
 
+## POC 4.7 founder start
+
+Five founders now build the settlement through production salvage, hauling and
+construction. Canonical Fishbowl starts at 1x with no completed infrastructure.
+Shelter, storage and workshop capabilities activate on completion; growth adds
+one CitizenAgent after sustained healthy conditions. Workshop capability gates
+advanced traversal. The existing established colony remains a legacy fixture.
+See the [founder guide](docs/POC47_FOUNDERS.md) and
+[verification report](verification/poc47/final-report.md) for final gate evidence.
+
 ## POC 4.6 spectator experience
 
 Implemented on `codex/roomscale-poc46-spectator-ui` from verified POC 4.5

@@ -17,8 +17,43 @@ static func load_file(path: String) -> Dictionary:
 	if not parsed is Dictionary:
 		return {"ok": false, "definition": {}, "errors": ["root must be a JSON object"]}
 	var definition: Dictionary = parsed
+	var start_errors := prepare_start(definition)
+	if not start_errors.is_empty(): return {"ok": false, "definition": definition, "errors": start_errors}
 	var errors := validate(definition)
 	return {"ok": errors.is_empty(), "definition": definition, "errors": errors}
+
+
+static func prepare_start(definition: Dictionary) -> Array[String]:
+	if not definition.has("start"): return []
+	var start: Variant = definition.start
+	if not start is Dictionary: return ["start must be an object"]
+	if not _number_vector(start.get("origin"), 3): return ["start.origin requires three finite numbers"]
+	if not _positive_number(start.get("population")) or float(start.population) != floorf(float(start.population)) or float(start.population) > 150: return ["start.population must be an integer from 1 to 150"]
+	if not start.get("infrastructure") is Array: return ["start.infrastructure must be an array"]
+	if not definition.get("objects") is Array: return ["objects must be an array"]
+	var initial_ids := {}
+	for kind in start.infrastructure:
+		if kind not in ["workshop", "depot", "housing", "work_area"]: return ["Unknown starting infrastructure"]
+		if initial_ids.has(kind): return ["Duplicate starting infrastructure"]
+		initial_ids[kind] = true
+	for object in definition.objects:
+		if object is Dictionary and object.get("kind") == "settlement" and not initial_ids.has(object.get("id")): return ["Starting settlement objects must match start.infrastructure"]
+	if not start.infrastructure.is_empty(): return []
+	for object in definition.get("objects", []):
+		if object is Dictionary and object.get("kind") == "settlement": return ["Empty start cannot include completed settlement objects"]
+	# Compatibility anchors are places on the floor, not buildings or capabilities.
+	# All coordinates are derived here, so gameplay does not depend on room IDs.
+	var origin: Array = start.origin
+	definition.landmarks = {}
+	for kind in ["workshop", "depot", "housing", "work_area"]: definition.landmarks[kind] = origin.duplicate()
+	definition.construction = {"depot_pickup": origin.duplicate()}
+	definition.activity_stations = {"workshop": [origin.duplicate()], "housing": origin.duplicate(), "work_area": origin.duplicate(), "patrol": []}
+	for offset in [Vector3(-12, 0, -12), Vector3(12, 0, -12), Vector3(12, 0, 12), Vector3(-12, 0, 12)]:
+		definition.activity_stations.patrol.append([float(origin[0]) + offset.x, float(origin[1]), float(origin[2]) + offset.z])
+	if not definition.get("civilization") is Dictionary: return ["start requires civilization configuration"]
+	definition.civilization.shelter_capacity = 0
+	definition.civilization.rest_capacity = 0
+	return []
 
 
 static func load_requested() -> Dictionary:
@@ -255,6 +290,8 @@ static func validate(definition: Dictionary) -> Array[String]:
 		else:
 			var config: Dictionary = definition.civilization
 			if config.has("economy_construction") and not config.economy_construction is bool: errors.append("civilization.economy_construction must be boolean")
+			if config.has("cohort_size") and (not _positive_number(config.cohort_size) or float(config.cohort_size) != floorf(float(config.cohort_size)) or float(config.cohort_size) > 150): errors.append("civilization.cohort_size must be an integer from 1 to 150")
+			if config.has("initial_speed") and (not _finite_number(config.initial_speed) or float(config.initial_speed) < 0): errors.append("civilization.initial_speed must be finite and nonnegative")
 			for field in ["shelter_capacity", "rest_capacity"]:
 				if config.has(field) and (not _finite_number(config[field]) or float(config[field]) < 0 or float(config[field]) != floorf(float(config[field]))): errors.append("civilization.%s must be a nonnegative integer" % field)
 			if config.has("stock"):
