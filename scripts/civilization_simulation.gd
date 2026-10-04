@@ -214,7 +214,8 @@ func plan() -> void:
 		if founder_mode:
 			var accessible := false
 			for available_source in resources.sources.values():
-				if available_source.region == "FLOOR" and float(available_source.remaining.get(resource, 0)) > 0: accessible = true
+				# Fractional remnants below one unit cannot be collected by work_options.
+				if available_source.region == "FLOOR" and float(available_source.remaining.get(resource, 0)) >= 1: accessible = true
 			if accessible: continue
 		var found := false
 		for source_id in resources.sources:

@@ -54,7 +54,7 @@ func _rebuild_grid() -> void:
 	grid.clear()
 	grid.region = Rect2i(0, 0, cells_x, cells_z)
 	grid.cell_size = Vector2(CELL_INCHES, CELL_INCHES)
-	grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_AT_LEAST_ONE_WALKABLE
+	grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
 	grid.update()
 	obstacle_rects.clear()
 	for object_variant in room_definition.objects:
@@ -98,20 +98,45 @@ func path_between(start: Vector3, finish: Vector3) -> Array[Vector3]:
 	# Legacy established rooms have activity anchors inside prebuilt modules.
 	# Keep that existing endpoint contract; legal exterior endpoints must use
 	# a visible connector and must never cut a newly completed footprint.
-	var from_cell := _nearest_walkable_cell(_world_to_cell(Vector2(start.x, start.z))) if is_obstacle_position(start) else _visible_walkable_cell(Vector2(start.x, start.z))
-	var to_cell := _nearest_walkable_cell(_world_to_cell(Vector2(finish.x, finish.z))) if is_obstacle_position(finish) else _visible_walkable_cell(Vector2(finish.x, finish.z))
+	var from_connector := _endpoint_connector(start)
+	var to_connector := _endpoint_connector(finish)
+	var from_cell: Vector2i = from_connector.cell
+	var to_cell: Vector2i = to_connector.cell
 	if from_cell.x < 0 or to_cell.x < 0:
 		return []
 	var ids: Array[Vector2i] = grid.get_id_path(from_cell, to_cell)
 	if ids.is_empty():
 		return []
 	var result: Array[Vector3] = []
+	result.append_array(from_connector.corners)
 	for id in ids:
 		var position := _cell_to_world(id)
 		result.append(Vector3(position.x, _floor_height, position.y))
+	var end_corners: Array[Vector3] = to_connector.corners.duplicate()
+	end_corners.reverse()
+	result.append_array(end_corners)
 	if not result[-1].is_equal_approx(Vector3(finish.x, _floor_height, finish.z)):
 		result.append(Vector3(finish.x, _floor_height, finish.z))
 	return result
+
+
+func _endpoint_connector(position: Vector3) -> Dictionary:
+	var at := Vector2(position.x, position.z)
+	var cell := _nearest_walkable_cell(_world_to_cell(at)) if is_obstacle_position(position) else _visible_walkable_cell(at)
+	var corners: Array[Vector3] = []
+	if cell.x >= 0 or is_obstacle_position(position): return {"cell":cell,"corners":corners}
+	# A legal narrow aisle may contain no grid centers. Connect through a visible
+	# physical corner before entering A*, without snapping through either obstacle.
+	for rect in obstacle_rects:
+		for x_sign in [-1, 1]:
+			for z_sign in [-1, 1]:
+				var corner := Vector2(rect.center.x + x_sign * (rect.half.x + .01), rect.center.y + z_sign * (rect.half.y + .01))
+				if not _segment_is_clear(at, corner): continue
+				var corner_cell := _visible_walkable_cell(corner)
+				if corner_cell.x < 0: continue
+				corners.append(Vector3(corner.x, _floor_height, corner.y))
+				return {"cell":corner_cell,"corners":corners}
+	return {"cell":cell,"corners":corners}
 
 
 func _visible_walkable_cell(position: Vector2) -> Vector2i:

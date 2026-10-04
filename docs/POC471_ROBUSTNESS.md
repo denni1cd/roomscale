@@ -106,7 +106,8 @@ if a test printed PASS earlier.
 # Ten named positives plus five negatives; useful during development
 ./TEST_ROOM_SCALE_POC471.ps1 -Mode Short -OutputDirectory verification/poc471/short
 
-# Final campaign: 60 generated candidates, five negatives, six repeats,
+# Final campaign: 60 generated candidates plus fractional-residual regression,
+# five negatives, six repeats,
 # and three fresh founder soaks (90/60/60 days)
 ./TEST_ROOM_SCALE_POC471.ps1 -Mode Full -Count 60 -OutputDirectory verification/poc471/final -Workers 2
 
@@ -150,3 +151,22 @@ worlds or multiple civilizations. The fixed depot apron, generated activity anch
 finite transport throughput and initial-infrastructure legacy behavior remain
 important boundaries. The audit explicitly covers shared-world resource ownership
 and namespaces without implementing a second civilization.
+
+## Additional hardening regressions
+
+Full always includes `EDGE-FRACTION-01`, the exact half-unit puddle regression.
+Uncollectable remnants no longer suppress advanced traversal. Explore includes
+small obstacle increments that overlap a derived patrol anchor; empty founder
+configuration resolves such blocked anchors to a legal navigation cell. All
+ordinary citizens, costs and governor choices still execute in production.
+
+Coordinator simulation claim/start timestamps distinguish queue waiting from live
+execution. The POC 4 sustained test uses those timestamps with its existing 600s
+limit. Saved reproduction bundles prefer the definition beside their config,
+so archived investigations remain replayable.
+
+Exterior points in a narrow aisle can connect through one physically clear
+obstacle corner when no grid center is directly visible. Grid diagonals require
+both neighboring cells clear. The focused navigation regression samples both
+directions of a completed-building corner and the exact POC4 half-inch aisle.
+These geometry fixes can change legitimate route lengths and milestone timings.

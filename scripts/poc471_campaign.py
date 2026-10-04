@@ -157,6 +157,16 @@ def generate(index, seed, negative=False):
                 mutations=changes, definition=room, days=8, generator_version=2)
 
 
+def fractional_case(seed):
+    c = generate(1, seed + 1)
+    c.update(id="EDGE-FRACTION-01", name="Sub-unit bootstrap water residual")
+    c["definition"]["objects"].append(dict(id="micro_puddle", name="Micro Puddle", kind="water_container",
+        position=[12,0,72], dimensions=[1,.1,1], blocks_navigation=False,
+        resource_profile=dict(contents=dict(water=.5), work_seconds=2)))
+    c["mutations"]["extra_sub_unit_water"] = .5
+    return c
+
+
 def execute(config, output, godot):
     case_dir = output / config["id"]
     definition_path = case_dir / (config["definition"]["id"] + ".json")
@@ -284,8 +294,11 @@ def main():
         print(json.dumps({k:summary[k] for k in ["total_scenarios","valid_passes","valid_failures","generator_rejections"]}))
         return 0
     if args.mode == "reproduce":
-        saved = json.loads((ROOT / args.scenario).read_text())
-        saved["definition"] = json.loads(Path(saved["room_file"]).read_text())
+        config_path = ROOT / args.scenario
+        saved = json.loads(config_path.read_text())
+        # Retained bundles remain replayable after an investigation is archived.
+        retained = config_path.parent / Path(saved["room_file"]).name
+        saved["definition"] = json.loads((retained if retained.exists() else Path(saved["room_file"])).read_text())
         configs = [saved]
     else:
         count = 10 if args.mode == "short" else args.count
@@ -303,6 +316,9 @@ def main():
             if args.mode == "soak":
                 configs = soaks
             else:
+                fraction = fractional_case(args.seed)
+                fraction["days"] = args.days
+                configs.append(fraction)
                 configs += soaks
                 for index in [0, 5, 8]:
                     for n in [1, 2]:
@@ -349,6 +365,7 @@ def main():
     # Prove same generation call produces identical bytes before executing anything.
     for i in range(40):
         assert generate(i, args.seed + i) == generate(i, args.seed + i)
+    assert fractional_case(args.seed) == fractional_case(args.seed)
     if args.mode == "generate":
         for c in configs:
             write(output / c["id"] / "generated.json", c)

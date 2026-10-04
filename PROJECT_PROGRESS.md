@@ -6,7 +6,11 @@ A deterministic production-observer campaign covers founder origins, legal spawn
 resource placement/quantities, salvage yields, obstacles, traversal approaches,
 impossible inputs, replay and long soaks. Narrow fixes reserve the future depot
 rest apron, keep exterior grid connectors clear of completed footprints, and
-defer failed-path task retries through the existing idle timer. No gameplay
+defer failed-path task retries through the existing idle timer, ignore uncollectable
+fractional bootstrap remnants, and resolve blocked founder patrol anchors.
+Physical corner connectors recover sub-grid aisles, and A* diagonals require
+both neighboring cells clear. Simulation claim/start timestamps correct the
+earlier task-age test. No gameplay
 systems or second civilization are added. See the
 [harness guide](docs/POC471_ROBUSTNESS.md),
 [campaign report](verification/poc471/final-report.md) and

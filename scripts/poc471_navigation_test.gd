@@ -13,6 +13,20 @@ func run() -> void:
 	var finish = Vector3(16,0,20)
 	var paths = [nav.path_between(start,finish),nav.path_between(finish,start)]
 	var failures = []
+	check_paths(nav,start,finish,paths,failures)
+	nav.configure({"id":"narrow_aisle_regression","dimensions":[240,180],"floor":{"center":[0,0,0],"height":0},"objects":[
+		{"id":"workshop","position":[-20,0,42],"dimensions":[26,10,18],"navigation_padding":[3,0,3],"blocks_navigation":true},
+		{"id":"housing","position":[-25,0,66],"dimensions":[28,7,17],"navigation_padding":[3,0,3],"blocks_navigation":true}]})
+	nav._rebuild_grid()
+	start = Vector3(-16.84314,0,54.03841)
+	finish = Vector3(18,0,55)
+	var aisle_paths = [nav.path_between(start,finish),nav.path_between(finish,start)]
+	check_paths(nav,start,finish,aisle_paths,failures)
+	nav.free()
+	print("POC471_NAVIGATION_" + ("PASS" if failures.is_empty() else "FAIL") + " " + JSON.stringify({"corner_paths":paths,"aisle_paths":aisle_paths,"failures":failures}))
+	quit(0 if failures.is_empty() else 1)
+
+func check_paths(nav: Node, start: Vector3, finish: Vector3, paths: Array, failures: Array) -> void:
 	for i in range(paths.size()):
 		if paths[i].is_empty():
 			failures.append("Legal route rejected")
@@ -23,6 +37,3 @@ func run() -> void:
 				if nav.is_obstacle_position(at.lerp(next,sample/100.0)):
 					failures.append("Floor path cuts completed shelter corner")
 			at = next
-	nav.free()
-	print("POC471_NAVIGATION_" + ("PASS" if failures.is_empty() else "FAIL") + " " + JSON.stringify({"paths":paths,"failures":failures}))
-	quit(0 if failures.is_empty() else 1)

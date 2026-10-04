@@ -47,6 +47,11 @@ func configure_room(definition: Dictionary) -> void:
 	housing_station = RoomDefinitionLoader.vector3_from(activities.housing)
 	work_area_station = RoomDefinitionLoader.vector3_from(activities.work_area)
 	patrol_stations = _vectors(activities.patrol)
+	if definition.has("start") and definition.start.infrastructure.is_empty():
+		for index in range(patrol_stations.size()):
+			var at: Vector3 = patrol_stations[index]
+			if navigation.is_obstacle_position(at) or not navigation.room_bounds().has_point(Vector2(at.x, at.z)):
+				patrol_stations[index] = navigation.nearest_walkable_position(at)
 	if is_instance_valid(surface_navigation):
 		_set_goal_from_surface()
 	var derived: Dictionary = surface_navigation.derive_construction_site(navigation) if is_instance_valid(surface_navigation) else {}
@@ -95,6 +100,7 @@ func claim_for(citizen_id: int) -> Dictionary:
 	if not selected.is_empty():
 		selected.state = "reserved"
 		selected.citizen_id = citizen_id
+		selected.claimed_sim = float(civilization.seconds) if is_instance_valid(civilization) else 0.0
 		if is_instance_valid(civilization): civilization.planner.record(String(selected.task_type))
 		return selected.duplicate(true)
 	return {}
@@ -105,6 +111,7 @@ func activate_task(task_id: int) -> void:
 	if not task.is_empty() and task.state == "reserved":
 		task.state = "active"
 		task.started_at = Time.get_ticks_msec()
+		task.started_sim = float(civilization.seconds) if is_instance_valid(civilization) else 0.0
 
 
 func complete_task(task_id: int) -> void:
@@ -182,6 +189,7 @@ func create_construction_task(specification: Dictionary, citizen_id: int) -> Dic
 	task["progress"] = 0.0
 	task["created_at"] = Time.get_ticks_msec()
 	task["created_sim"] = float(civilization.seconds) if is_instance_valid(civilization) else 0.0
+	task["claimed_sim"] = task.created_sim
 	tasks.append(task)
 	_trim_history()
 	return task.duplicate(true)

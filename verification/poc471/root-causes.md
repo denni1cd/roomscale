@@ -109,3 +109,91 @@ teleport, relax path safety or change task selection priorities.
 & ./.tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe --headless --path . --script res://scripts/poc471_unreachable_task_test.gd
 ./TEST_ROOM_SCALE_POC45.ps1 -Mode Fast -OutputDirectory verification/poc471/regressions-complete/poc45-fast
 ```
+
+## BUG-471-04 — Uncollectable fractional floor reserve blocks traversal (High)
+
+Classification C. EDGE-FRACTION-01 adds a valid finite 0.5-unit floor puddle to a
+passing Long Water Haul input. The main floor source contains 69 water and the
+elevated source 60000, with enough reachable finite salvage and building space.
+The complete founder infrastructure and growth occur legitimately. Main bootstrap
+water is fully extracted, but the extra 0.5 water remains forever: production work
+options require at least one available unit. `plan` nevertheless treats *any*
+positive floor remaining amount as usable bootstrap supply and never requests
+advanced traversal. The final state is a survival crisis despite reachable-by-
+legitimate-technology elevated water. This is not finite-resource scarcity: a
+completed workshop and sufficient finite salvage can construct the route.
+
+Minimal repair: floor-bootstrap suppression uses the same minimum one-unit
+collection condition, preserving already reserved collectable water until actual
+extraction. The fractional source is neither refilled nor magically extracted.
+Add this exact input to the reusable full matrix and re-run the complete campaign.
+
+```powershell
+./TEST_ROOM_SCALE_POC471.ps1 -Mode Reproduce -Scenario verification/poc471/fraction-prefix/EDGE-FRACTION-01/config.json -OutputDirectory verification/poc471/fraction-postfix -Workers 1
+```
+
+## BUG-471-05 — Derived founder patrol anchors can be inside furniture (High)
+
+Classification D, unsupported origin-neighborhood assumption with a narrow
+configuration repair. EXP-ROUTING-03/04/05 retain legal, connected founder spawns,
+sources, enough safe salvage and shelter/depot sites. An ordinary protected box
+at `(-12,0,60)` covers the compatibility patrol anchor `(-12,0,58)`, which is derived
+from the founder origin. The first patron reaches that illegal target at 2.2s;
+the observer detects entry into its footprint before construction even starts.
+
+This is not a sealed-off or resource-impossible room. The production task initializer
+should choose a legal floor patrol point when deriving activity targets from an
+arbitrary safe origin. Minimal repair: only obstructed/out-of-bounds founder patrol
+anchors are resolved to the production navigator's nearest walkable position during
+coordinator configuration. Inventory, depot pickup, citizens and completed structures
+are untouched. Clear existing patrol anchors retain exact coordinates.
+
+```powershell
+./TEST_ROOM_SCALE_POC471.ps1 -Mode Reproduce -Scenario verification/poc471/exploration-before-fraction/EXP-ROUTING-03/config.json -OutputDirectory verification/poc471/patrol-postfix -Workers 1
+```
+
+## ASSUMPTION-471-01 — Available-queue age counted as live execution age
+
+Classification B, incorrect earlier regression assumption. POC4 sustained reaches
+4997.1s with conserved food/water/materials. An ordinary patrol task was *created*
+at 4371.2s but waited available while survival work took precedence. It was claimed
+and activated only immediately before the final sample (`started_at=58989` versus
+end around `59034` wall milliseconds). The test measures 625.9s from creation as
+if this were 625.9s of active/reserved work and fails its unchanged 600s limit. The
+citizen is physically moving and the case is not stuck.
+
+Repair observability, not the threshold: record simulation-time claim/activation
+timestamps in the production coordinator. The earlier regression uses live age
+from these timestamps, retaining the 600s limit, movement limit, history bounds,
+conservation and zero-failed-task assertions. The robustness observer continues
+to report total creation age as a separate diagnostic and detects attributable
+progress. Fix the earlier failure-message formatting so an empty audit error array
+does not hide the actual limit that failed.
+
+## BUG-471-06 — Legal narrow aisle has no directly visible grid cell (High)
+
+Classification C; a regression introduced by the first connector repair, exposed
+by the complete POC 4 sustained run after correcting its live-age assumption.
+One citizen interrupts routine work at `(-16.84314,0,54.03841)` between the
+workshop upper padded edge (z54) and housing lower padded edge (z54.5).
+This half-inch legal aisle has no 4-inch grid centers. Every direct connector
+crosses one footprint, so the new physical check correctly refuses the old unsafe
+snap but leaves the citizen unable to move. Retained history records 1,310 failed
+NEED_EAT retries for citizen29 starting4382.4s; accounting remains conserved.
+
+`task-failure-position-valid/sustained-7days.log` retains the exact position, task
+and reason. The focused navigation test adds these two production-sized obstacles,
+checks forward and reverse routes, and samples each segment for intersection.
+
+Narrow repair: only if an exterior endpoint cannot directly see any grid cell,
+try a physically clear obstacle corner and then a clear connector to A*. The same focused fixture also exposed an internal diagonal cutting the padded
+workshop corner. A* now permits diagonals only when both adjacent cells are
+clear; the previous at-least-one-clear policy allowed corner clipping. No
+teleport, grid-size change, obstacle exception, movement-speed change or task
+assertion relaxation is used. The ordinary direct connectors remain unchanged.
+This one-corner fallback is bounded and does not promise general sub-grid mazes.
+
+```powershell
+./TEST_ROOM_SCALE_POC4.ps1 -Mode Sustained -OutputDirectory verification/poc471/narrow-aisle-postfix -TimeoutSeconds 400
+& ./.tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe --headless --path . --script res://scripts/poc471_navigation_test.gd
+```

@@ -17,6 +17,7 @@ var max_step := 0.0
 var captures: Array[String] = []
 var recovered_at := 0.0
 var wall_start := 0
+var failed_tasks: Dictionary = {}
 
 func _initialize() -> void:
 	call_deferred("_run")
@@ -28,6 +29,7 @@ func check(condition: bool, label: String) -> bool:
 		print("POC4_FAILURE_STATE " + JSON.stringify(sim.status() if sim != null else {}))
 		if sim != null:
 			print("POC4_FAILURE_TASKS " + JSON.stringify(sim.coordinator.tasks.filter(func(t: Dictionary) -> bool: return t.state in ["active", "reserved"])))
+			print("POC4_FAILED_HISTORY " + JSON.stringify(failed_tasks))
 		quit(1)
 		return false
 	checks.append(label)
@@ -55,11 +57,17 @@ func ticks(count: int) -> bool:
 			if sim.economy.state_total("wood", state) + sim.economy.state_total("metal", state) > 0: observations[state] = true
 		if index % 100 == 0:
 			for task in sim.coordinator.tasks:
-				if task.state in ["active", "reserved"]: longest_task = maxf(longest_task, sim.seconds - float(task.get("created_sim", 0)))
+				if task.state == "failed" and not failed_tasks.has(task.id):
+					var failure: Dictionary = task.duplicate(true)
+					var owner: Node3D = sim.citizens[int(task.citizen_id)]
+					failure.observed_position = owner.global_position
+					failure.observed_region = sim.region_of(owner.global_position)
+					failed_tasks[task.id] = failure
+				if task.state in ["active", "reserved"]: longest_task = maxf(longest_task, sim.seconds - float(task.get("started_sim", task.get("claimed_sim", task.get("created_sim", 0)))))
 			var errors: Array[String] = sim.economy.audit()
 			errors.append_array(sim.resources.audit())
 			if not errors.is_empty() or max_tasks > 600 or max_tickets > 80 or max_bundles > 80 or longest_task > 600 or max_step > 0.651:
-				return check(false, "accounting/task health: %s" % errors)
+				return check(false, "accounting/task health: " + JSON.stringify({"audit":errors,"tasks":max_tasks,"tickets":max_tickets,"bundles":max_bundles,"oldest_live_seconds":longest_task,"movement":max_step}))
 	return true
 
 func _run() -> void:
