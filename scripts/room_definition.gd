@@ -49,7 +49,16 @@ static func prepare_start(definition: Dictionary) -> Array[String]:
 	definition.construction = {"depot_pickup": origin.duplicate()}
 	definition.activity_stations = {"workshop": [origin.duplicate()], "housing": origin.duplicate(), "work_area": origin.duplicate(), "patrol": []}
 	for offset in [Vector3(-12, 0, -12), Vector3(12, 0, -12), Vector3(12, 0, 12), Vector3(-12, 0, 12)]:
-		definition.activity_stations.patrol.append([float(origin[0]) + offset.x, float(origin[1]), float(origin[2]) + offset.z])
+		var at := Vector3(float(origin[0]) + offset.x, float(origin[1]), float(origin[2]) + offset.z)
+		# Derived compatibility activities must validate before runtime navigation
+		# can select clear connected cells. Wall-adjacent founders cannot emit
+		# out-of-room anchors merely because the nominal patrol offset is twelve.
+		if _positive_vector(definition.get("dimensions"), 2) and definition.get("floor") is Dictionary and _number_vector(definition.floor.get("center"), 3):
+			var floor_center := vector3_from(definition.floor.center)
+			var half := Vector2(float(definition.dimensions[0]), float(definition.dimensions[1])) / 2
+			at.x = clampf(at.x, floor_center.x - half.x + 2, floor_center.x + half.x - 2)
+			at.z = clampf(at.z, floor_center.z - half.y + 2, floor_center.z + half.y - 2)
+		definition.activity_stations.patrol.append([at.x, at.y, at.z])
 	if not definition.get("civilization") is Dictionary: return ["start requires civilization configuration"]
 	definition.civilization.shelter_capacity = 0
 	definition.civilization.rest_capacity = 0

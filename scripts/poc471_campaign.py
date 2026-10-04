@@ -167,14 +167,15 @@ def fractional_case(seed):
     return c
 
 
-def execute(config, output, godot):
+def execute(config, output, godot, observer="res://scripts/poc471_observer.gd", extra_harness=()):
     case_dir = output / config["id"]
     definition_path = case_dir / (config["definition"]["id"] + ".json")
     write(definition_path, config["definition"])
     config_path = case_dir / "config.json"
     saved = {k: v for k, v in config.items() if k != "definition"}
     saved["room_file"] = str(definition_path.resolve())
-    saved["reproduction"] = f'./TEST_ROOM_SCALE_POC471.ps1 -Mode Reproduce -Scenario "{config_path.relative_to(ROOT).as_posix()}" -OutputDirectory verification/poc471/reproduced'
+    entry = "TEST_ROOM_SCALE_POC472.ps1" if extra_harness else "TEST_ROOM_SCALE_POC471.ps1"
+    saved["reproduction"] = f'./{entry} -Mode Reproduce -Scenario "{config_path.relative_to(ROOT).as_posix()}" -OutputDirectory verification/{"poc472" if extra_harness else "poc471"}/reproduced'
     write(config_path, saved)
     env = os.environ.copy()
     env.update(ROOMSCALE_ROOM_FILE=str(definition_path.resolve()), ROOMSCALE_POC471_CONFIG=str(config_path.resolve()),
@@ -184,9 +185,9 @@ def execute(config, output, godot):
                    source_hashes={str(p.relative_to(ROOT)).replace("\\","/"):hashlib.sha256(p.read_bytes().replace(b"\r\n",b"\n")).hexdigest()
                                   for p in sorted((ROOT/"scripts").rglob("*.gd"))},
                    harness_hashes={name:hashlib.sha256((ROOT/name).read_bytes().replace(b"\r\n",b"\n")).hexdigest()
-                                   for name in ["scripts/poc471_campaign.py","scripts/poc471_observer.gd","scripts/poc471_evidence.py","TEST_ROOM_SCALE_POC471.ps1"]})
+                                   for name in ["scripts/poc471_campaign.py","scripts/poc471_observer.gd","scripts/poc471_evidence.py","TEST_ROOM_SCALE_POC471.ps1", *extra_harness]})
     started = time.perf_counter()
-    cmd = [godot, "--headless", "--path", str(ROOT), "--script", "res://scripts/poc471_observer.gd"]
+    cmd = [godot, "--headless", "--path", str(ROOT), "--script", observer]
     error = ""
     with (case_dir / "run.log").open("w", encoding="utf-8") as log:
         try:

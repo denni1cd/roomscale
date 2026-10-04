@@ -1,6 +1,7 @@
 extends RefCounted
 ## Real settlement projects reuse production delivery/build tasks and economy tickets.
 const FloorNavigation := preload("res://scripts/floor_navigation.gd")
+const SitePlanner := preload("res://scripts/settlement_site_planner.gd")
 const G := preload("res://scripts/visuals/visual_geometry.gd")
 const BLUEPRINTS := {
 	"shelter": {"wood": 4, "metal": 0, "work": 60.0, "shelter": 5},
@@ -16,8 +17,11 @@ var visuals: Dictionary = {}
 var workshop_count := 0
 var _retry_at := 0.0
 var site_reason := ""
+var site_planner := SitePlanner.new()
 
-func configure(controller: Node) -> void: sim = controller
+func configure(controller: Node) -> void:
+	sim = controller
+	site_planner.configure(controller)
 
 func count(kind: String) -> int:
 	var total := 0
@@ -123,12 +127,8 @@ func valid_site(site: Vector3, work_target: Vector3 = Vector3.INF) -> bool:
 	return valid
 
 func select_site(kind: String = "") -> Dictionary:
+	if sim.founder_mode: return site_planner.preview(kind)
 	var origin := center()
-	# Build storage around the original pickup apron. Existing goods and in-flight
-	# deliveries retain their physical location; no inventory is relocated.
-	var depot_site: Vector3 = sim.coordinator.depot_station - Vector3(0, 0, SIZE.z / 2 + 4)
-	if sim.founder_mode and kind == "depot":
-		return {"valid": true, "position": depot_site} if valid_site(depot_site, depot_site + Vector3(SIZE.x / 2 + 4, 0, 0)) else {"valid": false}
 	var positions: Array[Vector3] = []
 	for x in range(-9, 10):
 		for z in range(-9, 10): positions.append(origin + Vector3(x * 16, 0, z * 16))
@@ -137,19 +137,6 @@ func select_site(kind: String = "") -> Dictionary:
 		var db := b.distance_squared_to(origin)
 		return da < db if da != db else (a.z < b.z if a.z != b.z else a.x < b.x))
 	for site in positions:
-		if sim.founder_mode and count("depot") == 0 and site.distance_to(depot_site) < 22: continue
-		if sim.founder_mode and kind == "shelter" and count("depot") == 0:
-			# The first shelter creates housing/rest anchors. Reserve the depot's
-			# future clear apron for these anchors as well as for building footprints;
-			# otherwise a completed shelter can make the fixed bootstrap depot
-			# permanently invalid even though both sites were initially legal.
-			var depot_apron := Rect2(Vector2(depot_site.x - SIZE.x / 2 - 4, depot_site.z - SIZE.z / 2 - 4), Vector2(SIZE.x + 8, SIZE.z + 8))
-			var housing_target := site + Vector3(0, 0, SIZE.z / 2 + 4)
-			var blocks_depot := depot_apron.has_point(Vector2(housing_target.x, housing_target.z))
-			for slot in range(5):
-				var rest_target: Vector3 = sim.coordinator.navigation.nearest_walkable_position(housing_target + Vector3(-16 + (slot % 6) * 4, 0, 16 + (slot / 6) * 4))
-				if depot_apron.has_point(Vector2(rest_target.x, rest_target.z)): blocks_depot = true
-			if blocks_depot: continue
 		if valid_site(site): return {"valid": true, "position": site}
 	return {"valid": false}
 
@@ -160,7 +147,7 @@ func request(kind: String) -> bool:
 		if kind == "workshop" and not sim.has_capability("storage"): return false
 		if kind == "housing" and not sim.has_capability("workshop"): return false
 	_retry_at = sim.seconds + 60
-	var selected := select_site(kind)
+	var selected: Dictionary = site_planner.select(kind) if sim.founder_mode else select_site(kind)
 	if not selected.valid:
 		# A passing founder may temporarily occupy the bootstrap footprint. Retry
 		# at the next governor evaluation, without moving citizens or relaxing safety.
@@ -170,11 +157,8 @@ func request(kind: String) -> bool:
 		return false
 	var blueprint: Dictionary = BLUEPRINTS[kind]
 	var id := "development_%03d" % (projects.size() + 1)
-	active = {"id": id, "kind": kind, "site": selected.position, "target": selected.position + Vector3(0, 0, SIZE.z / 2 + 4), "required": {"wood": blueprint.wood, "metal": blueprint.metal}, "delivered": {"wood": 0.0, "metal": 0.0}, "work": 0.0, "required_work": float(blueprint.work) * (0.85 if workshop_count > 0 else 1.0), "state": "PLANNED", "stage": "FOUNDATION", "effect_applied": false, "created": sim.seconds, "completed": -1.0, "work_by_citizen": {}, "delivery_distance": 0.0}
+	active = {"id": id, "kind": kind, "site": selected.position, "target": selected.get("target", selected.position + Vector3(0, 0, SIZE.z / 2 + 4)), "required": {"wood": blueprint.wood, "metal": blueprint.metal}, "delivered": {"wood": 0.0, "metal": 0.0}, "work": 0.0, "required_work": float(blueprint.work) * (0.85 if workshop_count > 0 else 1.0), "state": "PLANNED", "stage": "FOUNDATION", "effect_applied": false, "created": sim.seconds, "completed": -1.0, "work_by_citizen": {}, "delivery_distance": 0.0}
 	projects.append(active)
-	if sim.founder_mode and kind == "depot":
-		# Stock remains on the front apron; building deliveries go to the side.
-		active.target = active.site + Vector3(SIZE.x / 2 + 4, 0, 0)
 	render(active)
 	sim.journal.record(sim.seconds, "development_started", kind.capitalize() + " project " + id, active, active.site, id + ":started")
 	active.state = "WAITING_FOR_MATERIALS"
@@ -240,6 +224,7 @@ func work(task: Dictionary, citizen: Node3D, effort: float) -> bool:
 	# Citizens are never displaced to make room for a completed footprint.
 	for worker in sim.citizens:
 		if worker.global_position.y < active.site.y + 2 and absf(worker.global_position.x - active.site.x) < SIZE.x / 2 + 0.5 and absf(worker.global_position.z - active.site.z) < SIZE.z / 2 + 0.5: return false
+	if sim.founder_mode and not site_planner.can_complete(active): return false
 	active.state = "COMPLETE"
 	active.stage = "COMPLETE"
 	active.completed = sim.seconds
