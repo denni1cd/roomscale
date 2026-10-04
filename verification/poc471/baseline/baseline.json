@@ -1,0 +1,87 @@
+{
+  "starting_sha": "26dfe0812fcf592e047412078cec2552e2e62b36",
+  "starting_branch": "codex/roomscale-poc47-founder-start",
+  "branch": "codex/roomscale-poc471-founder-stress",
+  "commands": [
+    "./TEST_ROOM_SCALE_POC47.ps1 -Mode Fast -OutputDirectory verification/poc471/baseline/fast",
+    "./TEST_ROOM_SCALE_POC47.ps1 -Mode Scenario -OutputDirectory verification/poc471/baseline/canonical"
+  ],
+  "canonical_startup": {
+    "days": 0.0,
+    "drinks": 0,
+    "economy": {
+      "food": {
+        "available": 20.0,
+        "consumed": 0.0,
+        "delivered": 0.0,
+        "in_transit": 0.0,
+        "received": 0.0,
+        "reserved": 0.0
+      },
+      "metal": {
+        "available": 0.0,
+        "consumed": 0.0,
+        "delivered": 0.0,
+        "in_transit": 0.0,
+        "received": 0.0,
+        "reserved": 0.0
+      },
+      "water": {
+        "available": 30.0,
+        "consumed": 0.0,
+        "delivered": 0.0,
+        "in_transit": 0.0,
+        "received": 0.0,
+        "reserved": 0.0
+      },
+      "wood": {
+        "available": 0.0,
+        "consumed": 0.0,
+        "delivered": 0.0,
+        "in_transit": 0.0,
+        "received": 0.0,
+        "reserved": 0.0
+      }
+    },
+    "food_days": 2.0,
+    "meals": 0,
+    "population": 5,
+    "resting": 0,
+    "rests": 0,
+    "shelter": 0,
+    "urgent": 0,
+    "water_days": 2.0
+  },
+  "milestones": {
+    "depot_complete": 223.799999999992,
+    "depot_foundation": 169.999999999995,
+    "depot_frame": 197.599999999993,
+    "depot_shell": 211.899999999992,
+    "depot_started": 169.999999999995,
+    "elevated_territory": 1482.49999999975,
+    "first_haul": 14.0,
+    "first_salvage": 39.0000000000003,
+    "housing_complete": 480.000000000041,
+    "housing_foundation": 375.000000000017,
+    "housing_frame": 451.300000000034,
+    "housing_shell": 467.000000000038,
+    "housing_started": 375.000000000017,
+    "material_haul": 49.3000000000004,
+    "meaningful_work": 12.0,
+    "physical_climb": 1467.99999999976,
+    "shelter_complete": 156.299999999995,
+    "shelter_foundation": 5.0,
+    "shelter_frame": 129.499999999997,
+    "shelter_shell": 145.899999999996,
+    "shelter_started": 5.0,
+    "sixth_citizen": 785.00000000011,
+    "traversal_complete": 1447.49999999978,
+    "traversal_started": 1319.7999999999,
+    "workshop_complete": 374.500000000017,
+    "workshop_foundation": 234.999999999991,
+    "workshop_frame": 329.700000000006,
+    "workshop_shell": 352.700000000012,
+    "workshop_started": 234.999999999991
+  },
+  "result": "PASS"
+}

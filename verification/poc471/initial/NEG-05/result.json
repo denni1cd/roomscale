@@ -1,0 +1,47 @@
+{
+  "classification": "negative",
+  "config_sha256": "d6434032448be0500ec87ac6685a43234708db8d59af8fedba0b540b075ee378",
+  "connectivity": [],
+  "deadlock": false,
+  "definition_sha256": "50580493f864c0c43cbb24bbe66e33faee57520d33616c1f20ded9899fbf71e8",
+  "execution_seconds": 0.286,
+  "failure": "",
+  "id": "NEG-05",
+  "initial": {},
+  "maxima": {
+    "bundles": 0,
+    "journal": 0,
+    "live_tasks": 0,
+    "movement": 0.0,
+    "oldest_live_task": 0.0,
+    "population": 5,
+    "projects": 0,
+    "tasks": 0,
+    "tickets": 0
+  },
+  "milestones": {},
+  "name": "Disconnected Spawn",
+  "observer_seconds": 0.013,
+  "reproduction": "./TEST_ROOM_SCALE_POC471.ps1 -Mode Reproduce -Scenario \"verification/poc471/initial/NEG-05/config.json\" -OutputDirectory verification/poc471/reproduced",
+  "result": "PASS",
+  "seed": 472004,
+  "stage_history": {},
+  "stall_windows": [],
+  "timeline": [],
+  "validation": {
+    "expected_rejection": true,
+    "navigation_errors": [
+      "surface STUDY_SURFACE has fewer than two walkable, reachable approach points",
+      "no reachable traversal construction site can be derived: no clear, reachable construction point could be derived near the target",
+      "resource source food_cache must have a clear reachable floor extraction point",
+      "resource source spilled_water must have a clear reachable floor extraction point"
+    ],
+    "schema_errors": [],
+    "solvability_errors": [
+      "Spawn disconnected from settlement"
+    ],
+    "solvable": false,
+    "structural": true
+  },
+  "violations": []
+}
