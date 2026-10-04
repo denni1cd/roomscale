@@ -1,0 +1,6462 @@
+{
+  "deadlock_count": 0,
+  "determinism_results": [],
+  "execution_durations": {
+    "PLACE-031": 39.894
+  },
+  "expected_negative_outcomes": 0,
+  "former_fixed_apron_negative": null,
+  "formerly_rejected": {},
+  "generator_rejections": 0,
+  "invariant_violation_count": 0,
+  "long_soak_results": [],
+  "milestone_timing_distributions": {
+    "depot_complete": {
+      "max": 216.299999999992,
+      "mean": 216.299999999992,
+      "median": 216.299999999992,
+      "min": 216.299999999992,
+      "p90": 216.299999999992
+    },
+    "depot_started": {
+      "max": 154.999999999995,
+      "mean": 154.999999999995,
+      "median": 154.999999999995,
+      "min": 154.999999999995,
+      "p90": 154.999999999995
+    },
+    "elevated_territory": {
+      "max": 1499.79999999973,
+      "mean": 1499.79999999973,
+      "median": 1499.79999999973,
+      "min": 1499.79999999973,
+      "p90": 1499.79999999973
+    },
+    "first_haul": {
+      "max": 13.4,
+      "mean": 13.4,
+      "median": 13.4,
+      "min": 13.4,
+      "p90": 13.4
+    },
+    "first_salvage": {
+      "max": 37.9000000000003,
+      "mean": 37.9000000000003,
+      "median": 37.9000000000003,
+      "min": 37.9000000000003,
+      "p90": 37.9000000000003
+    },
+    "housing_complete": {
+      "max": 605.200000000069,
+      "mean": 605.200000000069,
+      "median": 605.200000000069,
+      "min": 605.200000000069,
+      "p90": 605.200000000069
+    },
+    "housing_started": {
+      "max": 425.000000000028,
+      "mean": 425.000000000028,
+      "median": 425.000000000028,
+      "min": 425.000000000028,
+      "p90": 425.000000000028
+    },
+    "material_haul": {
+      "max": 48.1000000000004,
+      "mean": 48.1000000000004,
+      "median": 48.1000000000004,
+      "min": 48.1000000000004,
+      "p90": 48.1000000000004
+    },
+    "meaningful_work": {
+      "max": 11.4,
+      "mean": 11.4,
+      "median": 11.4,
+      "min": 11.4,
+      "p90": 11.4
+    },
+    "physical_climb": {
+      "max": 1483.69999999975,
+      "mean": 1483.69999999975,
+      "median": 1483.69999999975,
+      "min": 1483.69999999975,
+      "p90": 1483.69999999975
+    },
+    "shelter_complete": {
+      "max": 151.699999999996,
+      "mean": 151.699999999996,
+      "median": 151.699999999996,
+      "min": 151.699999999996,
+      "p90": 151.699999999996
+    },
+    "shelter_started": {
+      "max": 5.0,
+      "mean": 5.0,
+      "median": 5.0,
+      "min": 5.0,
+      "p90": 5.0
+    },
+    "sixth_citizen": {
+      "max": 910.000000000138,
+      "mean": 910.000000000138,
+      "median": 910.000000000138,
+      "min": 910.000000000138,
+      "p90": 910.000000000138
+    },
+    "traversal_complete": {
+      "max": 1465.99999999976,
+      "mean": 1465.99999999976,
+      "median": 1465.99999999976,
+      "min": 1465.99999999976,
+      "p90": 1465.99999999976
+    },
+    "traversal_started": {
+      "max": 1352.79999999987,
+      "mean": 1352.79999999987,
+      "median": 1352.79999999987,
+      "min": 1352.79999999987,
+      "p90": 1352.79999999987
+    },
+    "workshop_complete": {
+      "max": 420.200000000027,
+      "mean": 420.200000000027,
+      "median": 420.200000000027,
+      "min": 420.200000000027,
+      "p90": 420.200000000027
+    },
+    "workshop_started": {
+      "max": 219.999999999992,
+      "mean": 219.999999999992,
+      "median": 219.999999999992,
+      "min": 219.999999999992,
+      "p90": 219.999999999992
+    }
+  },
+  "named_adversarial_passes": [],
+  "negative_scenarios": 0,
+  "placement_positive_passes": 1,
+  "population": {
+    "max": 12,
+    "mean": 12,
+    "median": 12,
+    "min": 12,
+    "p90": 12
+  },
+  "previous_79_positive_passes": 0,
+  "production_bugs_discovered": [],
+  "production_bugs_fixed": [],
+  "regression_results": {},
+  "results": [
+    {
+      "classification": "positive",
+      "execution_seconds": 39.894,
+      "failure": "",
+      "final": {
+        "active_development": {},
+        "bundles": {},
+        "citizens": [
+          {
+            "destination": "(12.0, 0.0, -4.0)",
+            "id": 0,
+            "needs": {
+              "fatigue": 0.238110000000212,
+              "food": 0.474499999999978,
+              "rest_slot": -1,
+              "sheltered": true,
+              "water": 0.475475000000012
+            },
+            "path": [
+              "(-10.0, 0.0, -4.0)",
+              "(-6.0, 0.0, -4.0)",
+              "(-2.0, 0.0, -4.0)",
+              "(2.0, 0.0, -4.0)",
+              "(6.0, 0.0, -4.0)",
+              "(10.0, 0.0, -4.0)",
+              "(14.0, 0.0, -4.0)",
+              "(12.0, 0.0, -4.0)"
+            ],
+            "path_cursor": 4,
+            "position": "(3.95, 0.0, -4.0)",
+            "state": "TRAVEL",
+            "task": "FLOOR_PATROL",
+            "task_id": 5209,
+            "travelled": 19341.9489307554
+          },
+          {
+            "destination": "(-12.0, 0.0, 20.0)",
+            "id": 1,
+            "needs": {
+              "fatigue": 0.202330000000214,
+              "food": 0.516533333333307,
+              "rest_slot": -1,
+              "sheltered": true,
+              "water": 0.400725000000007
+            },
+            "path": [
+              "(14.0, 0.0, 20.0)",
+              "(10.0, 0.0, 20.0)",
+              "(6.0, 0.0, 20.0)",
+              "(2.0, 0.0, 20.0)",
+              "(-2.0, 0.0, 20.0)",
+              "(-6.0, 0.0, 20.0)",
+              "(-10.0, 0.0, 20.0)",
+              "(-12.0, 0.0, 20.0)"
+            ],
+            "path_cursor": 1,
+            "position": "(11.4, 0.0, 20.0)",
+            "state": "TRAVEL",
+            "task": "FLOOR_PATROL",
+            "task_id": 5213,
+            "travelled": 18858.8703707612
+          },
+          {
+            "destination": "(12.0, 0.0, 20.0)",
+            "id": 2,
+            "needs": {
+              "fatigue": 0.270680000000214,
+              "food": 0.448933333333314,
+              "rest_slot": -1,
+              "sheltered": true,
+              "water": 0.433875000000009
+            },
+            "path": [
+              "(14.0, 0.0, -4.0)",
+              "(18.0, 0.0, -4.0)",
+              "(22.0, 0.0, -4.0)",
+              "(22.0, 0.0, 0.0)",
+              "(22.0, 0.0, 4.0)",
+              "(22.0, 0.0, 8.0)",
+              "(22.0, 0.0, 12.0)",
+              "(22.0, 0.0, 16.0)",
+              "(18.0, 0.0, 20.0)",
+              "(14.0, 0.0, 20.0)",
+              "(12.0, 0.0, 20.0)"
+            ],
+            "path_cursor": 9,
+            "position": "(15.4, 0.0, 20.0)",
+            "state": "TRAVEL",
+            "task": "FLOOR_PATROL",
+            "task_id": 5198,
+            "travelled": 18821.1202091237
+          },
+          {
+            "destination": "(-12.0, 0.0, -4.0)",
+            "id": 3,
+            "needs": {
+              "fatigue": 0.365730000000213,
+              "food": 0.516533333333307,
+              "rest_slot": -1,
+              "sheltered": true,
+              "water": 0.550550000000041
+            },
+            "path": [
+              "(-10.0, 0.0, 20.0)",
+              "(-6.0, 0.0, 16.0)",
+              "(-2.0, 0.0, 16.0)",
+              "(-2.0, 0.0, 12.0)",
+              "(-2.0, 0.0, 8.0)",
+              "(-2.0, 0.0, 4.0)",
+              "(-2.0, 0.0, 0.0)",
+              "(-2.0, 0.0, -4.0)",
+              "(-6.0, 0.0, -4.0)",
+              "(-10.0, 0.0, -4.0)",
+              "(-12.0, 0.0, -4.0)"
+            ],
+            "path_cursor": 0,
+            "position": "(-12.0, 0.0, 20.0)",
+            "state": "TRAVEL",
+            "task": "FLOOR_PATROL",
+            "task_id": 5216,
+            "travelled": 18432.8880103808
+          },
+          {
+            "destination": "(12.0, 0.0, 20.0)",
+            "id": 4,
+            "needs": {
+              "fatigue": 0.399370000000214,
+              "food": 0.607099999999964,
+              "rest_slot": -1,
+              "sheltered": true,
+              "water": 0.01495
+            },
+            "path": [
+              "(2.0, 0.0, 8.0)",
+              "(2.0, 0.0, 12.0)",
+              "(2.0, 0.0, 16.0)",
+              "(6.0, 0.0, 16.0)",
+              "(10.0, 0.0, 20.0)",
+              "(14.0, 0.0, 20.0)",
+              "(12.0, 0.0, 20.0)"
+            ],
+            "path_cursor": 5,
+            "position": "(14.0, 0.0, 20.0)",
+            "state": "TRAVEL",
+            "task": "FLOOR_PATROL",
+            "task_id": 5206,
+            "travelled": 18930.9641176619
+          },
+          {
+            "destination": "(2.0, 0.0, 32.0)",
+            "id": 5,
+            "needs": {
+              "fatigue": 0.448130000000176,
+              "food": 0.459116666666647,
+              "rest_slot": 1,
+              "sheltered": true,
+              "water": 0.242449999999998
+            },
+            "path": [
+              "(14.0, 0.0, 20.0)",
+              "(10.0, 0.0, 20.0)",
+              "(6.0, 0.0, 20.0)",
+              "(2.0, 0.0, 20.0)",
+              "(2.0, 0.0, 24.0)",
+              "(2.0, 0.0, 28.0)",
+              "(2.0, 0.0, 32.0)"
+            ],
+            "path_cursor": 7,
+            "position": "(2.0, 0.0, 32.0)",
+            "state": "WORK",
+            "task": "NEED_REST",
+            "task_id": 5175,
+            "travelled": 15595.837712592
+          },
+          {
+            "destination": "(-12.0, 0.0, -4.0)",
+            "id": 6,
+            "needs": {
+              "fatigue": 0.559650000000136,
+              "food": 0.61121666666663,
+              "rest_slot": -1,
+              "sheltered": true,
+              "water": 0.0926250000000004
+            },
+            "path": [
+              "(14.0, 0.0, -4.0)",
+              "(10.0, 0.0, -4.0)",
+              "(6.0, 0.0, -4.0)",
+              "(2.0, 0.0, -4.0)",
+              "(-2.0, 0.0, -4.0)",
+              "(-6.0, 0.0, -4.0)",
+              "(-10.0, 0.0, -4.0)",
+              "(-12.0, 0.0, -4.0)"
+            ],
+            "path_cursor": 8,
+            "position": "(-12.0, 0.0, -4.0)",
+            "state": "WORK",
+            "task": "FLOOR_PATROL",
+            "task_id": 5202,
+            "travelled": 11782.1007727228
+          },
+          {
+            "destination": "(12.0, 0.0, -4.0)",
+            "id": 7,
+            "needs": {
+              "fatigue": 0.493430000000106,
+              "food": 0.564633333333302,
+              "rest_slot": -1,
+              "sheltered": true,
+              "water": 0.02535
+            },
+            "path": [
+              "(14.0, 0.0, 20.0)",
+              "(18.0, 0.0, 16.0)",
+              "(22.0, 0.0, 16.0)",
+              "(22.0, 0.0, 12.0)",
+              "(22.0, 0.0, 8.0)",
+              "(22.0, 0.0, 4.0)",
+              "(22.0, 0.0, 0.0)",
+              "(22.0, 0.0, -4.0)",
+              "(18.0, 0.0, -4.0)",
+              "(14.0, 0.0, -4.0)",
+              "(12.0, 0.0, -4.0)"
+            ],
+            "path_cursor": 2,
+            "position": "(18.0, 0.0, 16.0)",
+            "state": "TRAVEL",
+            "task": "FLOOR_PATROL",
+            "task_id": 5212,
+            "travelled": 9295.41653478499
+          },
+          {
+            "destination": "(-2.0, 0.0, 32.0)",
+            "id": 8,
+            "needs": {
+              "fatigue": 0.299570000000082,
+              "food": 0.55314999999997,
+              "rest_slot": 0,
+              "sheltered": true,
+              "water": 0.0728
+            },
+            "path": [
+              "(2.0, 0.0, 8.0)",
+              "(2.0, 0.0, 12.0)",
+              "(2.0, 0.0, 16.0)",
+              "(2.0, 0.0, 20.0)",
+              "(2.0, 0.0, 24.0)",
+              "(-2.0, 0.0, 28.0)",
+              "(-2.0, 0.0, 32.0)"
+            ],
+            "path_cursor": 7,
+            "position": "(-2.0, 0.0, 32.0)",
+            "state": "WORK",
+            "task": "NEED_REST",
+            "task_id": 5170,
+            "travelled": 7402.35043309191
+          },
+          {
+            "destination": "(-12.0, 0.0, -4.0)",
+            "id": 9,
+            "needs": {
+              "fatigue": 0.404750000000053,
+              "food": 0.466049999999979,
+              "rest_slot": -1,
+              "sheltered": true,
+              "water": 0.0545999999999999
+            },
+            "path": [
+              "(-10.0, 0.0, -4.0)",
+              "(-12.0, 0.0, -4.0)"
+            ],
+            "path_cursor": 0,
+            "position": "(-12.0, 0.0, -4.0)",
+            "state": "TRAVEL",
+            "task": "FLOOR_PATROL",
+            "task_id": 5217,
+            "travelled": 4933.79150153988
+          },
+          {
+            "destination": "(-12.0, 0.0, -4.0)",
+            "id": 10,
+            "needs": {
+              "fatigue": 0.638090000000025,
+              "food": 0.209300000000002,
+              "rest_slot": -1,
+              "sheltered": true,
+              "water": 0.269424999999999
+            },
+            "path": [
+              "(-10.0, 0.0, 20.0)",
+              "(-6.0, 0.0, 16.0)",
+              "(-2.0, 0.0, 16.0)",
+              "(-2.0, 0.0, 12.0)",
+              "(-2.0, 0.0, 8.0)",
+              "(-2.0, 0.0, 4.0)",
+              "(-2.0, 0.0, 0.0)",
+              "(-2.0, 0.0, -4.0)",
+              "(-6.0, 0.0, -4.0)",
+              "(-10.0, 0.0, -4.0)",
+              "(-12.0, 0.0, -4.0)"
+            ],
+            "path_cursor": 1,
+            "position": "(-10.0, 0.0, 20.0)",
+            "state": "TRAVEL",
+            "task": "FLOOR_PATROL",
+            "task_id": 5214,
+            "travelled": 2438.74316004531
+          },
+          {
+            "destination": "(-58.0, 30.0, -50.0)",
+            "id": 11,
+            "needs": {
+              "fatigue": 0.271170000000001,
+              "food": 0.170216666666668,
+              "rest_slot": -1,
+              "sheltered": true,
+              "water": 0.252824999999998
+            },
+            "path": [
+              "(-2.0, 0.0, 52.0)",
+              "(-6.0, 0.0, 52.0)",
+              "(-10.0, 0.0, 52.0)",
+              "(-10.0, 0.0, 48.0)",
+              "(-14.0, 0.0, 44.0)",
+              "(-18.0, 0.0, 40.0)",
+              "(-22.0, 0.0, 36.0)",
+              "(-22.0, 0.0, 32.0)",
+              "(-22.0, 0.0, 28.0)",
+              "(-22.0, 0.0, 24.0)",
+              "(-22.0, 0.0, 20.0)",
+              "(-22.0, 0.0, 16.0)",
+              "(-22.0, 0.0, 12.0)",
+              "(-22.0, 0.0, 8.0)",
+              "(-22.0, 0.0, 4.0)",
+              "(-22.0, 0.0, 0.0)",
+              "(-22.0, 0.0, -4.0)",
+              "(-18.0, 0.0, -8.0)",
+              "(-14.0, 0.0, -8.0)",
+              "(-10.0, 0.0, -8.0)",
+              "(-6.0, 0.0, -8.0)",
+              "(-2.0, 0.0, -8.0)",
+              "(-2.0, 0.0, -12.0)",
+              "(-2.0, 0.0, -16.0)",
+              "(-2.0, 0.0, -20.0)",
+              "(-2.0, 0.0, -24.0)",
+              "(-2.0, 0.0, -28.0)",
+              "(-2.0, 0.0, -32.0)",
+              "(-2.0, 0.0, -36.0)",
+              "(-2.0, 0.0, -40.0)",
+              "(-2.0, 0.0, -44.0)",
+              "(2.0, 0.0, -48.0)",
+              "(2.0, 0.0, -52.0)",
+              "(2.0, 0.6, -53.6)",
+              "(2.0, 3.2, -53.6)",
+              "(2.0, 5.8, -53.6)",
+              "(2.0, 8.4, -53.6)",
+              "(2.0, 11.0, -53.6)",
+              "(0.125, 11.44317, -53.55)",
+              "(-1.75, 11.88634, -53.5)",
+              "(-3.625, 12.32952, -53.45)",
+              "(-5.5, 12.77269, -53.4)",
+              "(-7.375, 13.23878, -53.35)",
+              "(-9.25, 13.70488, -53.3)",
+              "(-11.125, 14.17097, -53.25)",
+              "(-13.0, 14.63707, -53.2)",
+              "(-14.875, 15.14552, -53.15)",
+              "(-16.75, 15.65398, -53.1)",
+              "(-18.625, 16.16243, -53.05)",
+              "(-20.5, 16.67089, -53.0)",
+              "(-22.375, 17.23468, -52.95)",
+              "(-24.25, 17.79848, -52.9)",
+              "(-26.125, 18.36228, -52.85)",
+              "(-28.0, 18.92608, -52.8)",
+              "(-29.875, 19.54978, -52.75)",
+              "(-31.75, 20.17348, -52.7)",
+              "(-33.625, 20.79718, -52.65)",
+              "(-35.5, 21.42089, -52.6)",
+              "(-37.375, 22.09993, -52.55)",
+              "(-39.25, 22.77898, -52.5)",
+              "(-41.125, 23.45802, -52.45)",
+              "(-43.0, 24.13707, -52.4)",
+              "(-44.875, 24.85847, -52.35)",
+              "(-46.75, 25.57988, -52.3)",
+              "(-48.625, 26.30128, -52.25)",
+              "(-50.5, 27.02269, -52.2)",
+              "(-52.375, 27.76701, -52.15)",
+              "(-54.25, 28.51134, -52.1)",
+              "(-56.125, 29.25567, -52.05)",
+              "(-58.0, 30.0, -52.0)",
+              "(-58.0, 30.0, -50.0)"
+            ],
+            "path_cursor": 40,
+            "position": "(-3.014716, 12.18527, -53.46627)",
+            "state": "TRAVEL",
+            "task": "RESOURCE_COLLECT",
+            "task_id": 5152,
+            "travelled": 153.547669631243
+          }
+        ],
+        "connections": [
+          {
+            "from": "FLOOR",
+            "path": [
+              "(2.0, 0.0, -52.0)",
+              "(2.0, 0.6, -53.6)",
+              "(2.0, 3.2, -53.6)",
+              "(2.0, 5.8, -53.6)",
+              "(2.0, 8.4, -53.6)",
+              "(2.0, 11.0, -53.6)",
+              "(0.125, 11.44317, -53.55)",
+              "(-1.75, 11.88634, -53.5)",
+              "(-3.625, 12.32952, -53.45)",
+              "(-5.5, 12.77269, -53.4)",
+              "(-7.375, 13.23878, -53.35)",
+              "(-9.25, 13.70488, -53.3)",
+              "(-11.125, 14.17097, -53.25)",
+              "(-13.0, 14.63707, -53.2)",
+              "(-14.875, 15.14552, -53.15)",
+              "(-16.75, 15.65398, -53.1)",
+              "(-18.625, 16.16243, -53.05)",
+              "(-20.5, 16.67089, -53.0)",
+              "(-22.375, 17.23468, -52.95)",
+              "(-24.25, 17.79848, -52.9)",
+              "(-26.125, 18.36228, -52.85)",
+              "(-28.0, 18.92608, -52.8)",
+              "(-29.875, 19.54978, -52.75)",
+              "(-31.75, 20.17348, -52.7)",
+              "(-33.625, 20.79718, -52.65)",
+              "(-35.5, 21.42089, -52.6)",
+              "(-37.375, 22.09993, -52.55)",
+              "(-39.25, 22.77898, -52.5)",
+              "(-41.125, 23.45802, -52.45)",
+              "(-43.0, 24.13707, -52.4)",
+              "(-44.875, 24.85847, -52.35)",
+              "(-46.75, 25.57988, -52.3)",
+              "(-48.625, 26.30128, -52.25)",
+              "(-50.5, 27.02269, -52.2)",
+              "(-52.375, 27.76701, -52.15)",
+              "(-54.25, 28.51134, -52.1)",
+              "(-56.125, 29.25567, -52.05)",
+              "(-58.0, 30.0, -52.0)"
+            ],
+            "to": "STUDY_SURFACE"
+          }
+        ],
+        "governor": {
+          "emergency": false,
+          "mode": "STABLE",
+          "reason": "Reserves recovered; assess shelter and finite carrying capacity",
+          "rejections": {
+            "bookcase": "depleted",
+            "desk": "resource source support",
+            "pocket_tile_-108_-20_0": "explicitly protected",
+            "pocket_tile_-108_-44_0": "explicitly protected",
+            "pocket_tile_-108_-68_0": "explicitly protected",
+            "pocket_tile_-108_28_0": "explicitly protected",
+            "pocket_tile_-108_4_0": "explicitly protected",
+            "pocket_tile_-108_52_0": "explicitly protected",
+            "pocket_tile_-108_76_0": "explicitly protected",
+            "pocket_tile_-12_-20_0": "explicitly protected",
+            "pocket_tile_-12_-44_0": "explicitly protected",
+            "pocket_tile_-12_-68_0": "explicitly protected",
+            "pocket_tile_-12_28_2": "explicitly protected",
+            "pocket_tile_-12_4_0": "explicitly protected",
+            "pocket_tile_-12_76_0": "explicitly protected",
+            "pocket_tile_-36_-20_0": "explicitly protected",
+            "pocket_tile_-36_-44_0": "explicitly protected",
+            "pocket_tile_-36_-68_0": "explicitly protected",
+            "pocket_tile_-36_28_0": "explicitly protected",
+            "pocket_tile_-36_4_0": "explicitly protected",
+            "pocket_tile_-36_52_0": "explicitly protected",
+            "pocket_tile_-36_76_0": "explicitly protected",
+            "pocket_tile_-60_-20_0": "explicitly protected",
+            "pocket_tile_-60_-44_0": "explicitly protected",
+            "pocket_tile_-60_-68_0": "explicitly protected",
+            "pocket_tile_-60_28_0": "explicitly protected",
+            "pocket_tile_-60_4_0": "explicitly protected",
+            "pocket_tile_-60_52_0": "explicitly protected",
+            "pocket_tile_-60_76_0": "explicitly protected",
+            "pocket_tile_-84_-20_0": "explicitly protected",
+            "pocket_tile_-84_-44_0": "explicitly protected",
+            "pocket_tile_-84_-68_0": "explicitly protected",
+            "pocket_tile_-84_28_0": "explicitly protected",
+            "pocket_tile_-84_4_0": "explicitly protected",
+            "pocket_tile_-84_52_0": "explicitly protected",
+            "pocket_tile_-84_76_0": "explicitly protected",
+            "pocket_tile_108_-20_0": "explicitly protected",
+            "pocket_tile_108_-44_0": "explicitly protected",
+            "pocket_tile_108_-68_0": "explicitly protected",
+            "pocket_tile_108_28_0": "explicitly protected",
+            "pocket_tile_108_4_0": "explicitly protected",
+            "pocket_tile_108_52_0": "explicitly protected",
+            "pocket_tile_108_76_0": "explicitly protected",
+            "pocket_tile_12_-20_0": "explicitly protected",
+            "pocket_tile_12_-44_0": "explicitly protected",
+            "pocket_tile_12_-68_0": "explicitly protected",
+            "pocket_tile_12_28_2": "explicitly protected",
+            "pocket_tile_12_4_0": "explicitly protected",
+            "pocket_tile_12_76_0": "explicitly protected",
+            "pocket_tile_36_-20_0": "explicitly protected",
+            "pocket_tile_36_-44_0": "explicitly protected",
+            "pocket_tile_36_-68_0": "explicitly protected",
+            "pocket_tile_36_28_0": "explicitly protected",
+            "pocket_tile_36_4_0": "explicitly protected",
+            "pocket_tile_36_52_0": "explicitly protected",
+            "pocket_tile_36_76_0": "explicitly protected",
+            "pocket_tile_60_-20_0": "explicitly protected",
+            "pocket_tile_60_-44_0": "explicitly protected",
+            "pocket_tile_60_-68_0": "explicitly protected",
+            "pocket_tile_60_28_0": "explicitly protected",
+            "pocket_tile_60_4_0": "explicitly protected",
+            "pocket_tile_60_52_0": "explicitly protected",
+            "pocket_tile_60_76_0": "explicitly protected",
+            "pocket_tile_84_-20_0": "explicitly protected",
+            "pocket_tile_84_-44_0": "explicitly protected",
+            "pocket_tile_84_-68_0": "explicitly protected",
+            "pocket_tile_84_28_0": "explicitly protected",
+            "pocket_tile_84_4_0": "explicitly protected",
+            "pocket_tile_84_52_0": "explicitly protected",
+            "pocket_tile_84_76_0": "explicitly protected",
+            "side_table": "depleted"
+          }
+        },
+        "growth_events": [
+          {
+            "after": 6,
+            "before": 5,
+            "centroid": "(-2.0, 0.0, 52.0)",
+            "food_days_after": 3.08333333333333,
+            "food_days_before": 3.7,
+            "positions": [
+              "(-2.0, 0.0, 52.0)"
+            ],
+            "seconds": 910.000000000138,
+            "shelter": 15,
+            "stable_seconds": 300.000000000068,
+            "water_days_after": 2.66666666666667,
+            "water_days_before": 3.2
+          },
+          {
+            "after": 7,
+            "before": 6,
+            "centroid": "(-2.0, 0.0, 52.0)",
+            "food_days_after": 2.5,
+            "food_days_before": 2.91666666666667,
+            "positions": [
+              "(-2.0, 0.0, 52.0)"
+            ],
+            "seconds": 1749.9999999995,
+            "shelter": 15,
+            "stable_seconds": 304.999999999723,
+            "water_days_after": 2.71428571428571,
+            "water_days_before": 3.16666666666667
+          },
+          {
+            "after": 8,
+            "before": 7,
+            "centroid": "(-2.0, 0.0, 52.0)",
+            "food_days_after": 2.8125,
+            "food_days_before": 3.21428571428571,
+            "positions": [
+              "(-2.0, 0.0, 52.0)"
+            ],
+            "seconds": 2354.99999999895,
+            "shelter": 15,
+            "stable_seconds": 604.99999999945,
+            "water_days_after": 2.5,
+            "water_days_before": 2.85714285714286
+          },
+          {
+            "after": 9,
+            "before": 8,
+            "centroid": "(-2.0, 0.0, 52.0)",
+            "food_days_after": 2.94444444444444,
+            "food_days_before": 3.3125,
+            "positions": [
+              "(-2.0, 0.0, 52.0)"
+            ],
+            "seconds": 2959.9999999984,
+            "shelter": 15,
+            "stable_seconds": 604.99999999945,
+            "water_days_after": 2.81481481481481,
+            "water_days_before": 3.16666666666667
+          },
+          {
+            "after": 10,
+            "before": 9,
+            "centroid": "(-2.0, 0.0, 52.0)",
+            "food_days_after": 2.95,
+            "food_days_before": 3.27777777777778,
+            "positions": [
+              "(-2.0, 0.0, 52.0)"
+            ],
+            "seconds": 3564.99999999785,
+            "shelter": 15,
+            "stable_seconds": 604.99999999945,
+            "water_days_after": 2.66666666666667,
+            "water_days_before": 2.96296296296296
+          },
+          {
+            "after": 11,
+            "before": 10,
+            "centroid": "(-2.0, 0.0, 52.0)",
+            "food_days_after": 2.86363636363636,
+            "food_days_before": 3.15,
+            "positions": [
+              "(-2.0, 0.0, 52.0)"
+            ],
+            "seconds": 4169.99999999764,
+            "shelter": 15,
+            "stable_seconds": 604.999999999786,
+            "water_days_after": 2.72727272727273,
+            "water_days_before": 3.0
+          },
+          {
+            "after": 12,
+            "before": 11,
+            "centroid": "(-2.0, 0.0, 52.0)",
+            "food_days_after": 3.04166666666667,
+            "food_days_before": 3.31818181818182,
+            "positions": [
+              "(-2.0, 0.0, 52.0)"
+            ],
+            "seconds": 4769.99999999982,
+            "shelter": 15,
+            "stable_seconds": 600.000000002183,
+            "water_days_after": 2.66666666666667,
+            "water_days_before": 2.90909090909091
+          }
+        ],
+        "growth_reason": "Healthy stability window 30/300 seconds",
+        "journal": [
+          {
+            "day": 0.0,
+            "evidence": {
+              "population": 5
+            },
+            "focus": "(0.0, 0.0, 8.0)",
+            "id": 1,
+            "kind": "founders_arrived",
+            "major": false,
+            "message": "Founders arrived",
+            "seconds": 0.0
+          },
+          {
+            "day": 0.00833333333333333,
+            "evidence": {
+              "days": 0.00833333333333333,
+              "drinks": 0,
+              "economy": {
+                "food": {
+                  "available": 20.0,
+                  "consumed": 0.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 0.0,
+                  "reserved": 0.0
+                },
+                "metal": {
+                  "available": 0.0,
+                  "consumed": 0.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 0.0,
+                  "reserved": 0.0
+                },
+                "water": {
+                  "available": 30.0,
+                  "consumed": 0.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 0.0,
+                  "reserved": 0.0
+                },
+                "wood": {
+                  "available": 0.0,
+                  "consumed": 0.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 0.0,
+                  "reserved": 0.0
+                }
+              },
+              "food_days": 2.0,
+              "meals": 0,
+              "population": 5,
+              "resting": 0,
+              "rests": 0,
+              "shelter": 0,
+              "urgent": 0,
+              "water_days": 2.0
+            },
+            "focus": "(0.0, 0.0, 0.0)",
+            "id": 2,
+            "kind": "governor",
+            "major": false,
+            "message": "STABLE: Reserves recovered; assess shelter and finite carrying capacity",
+            "seconds": 5.0
+          },
+          {
+            "day": 0.00833333333333333,
+            "evidence": {
+              "completed": -1.0,
+              "created": 5.0,
+              "delivered": {
+                "metal": 0.0,
+                "wood": 0.0
+              },
+              "delivery_distance": 0.0,
+              "effect_applied": false,
+              "id": "development_001",
+              "kind": "shelter",
+              "required": {
+                "metal": 0,
+                "wood": 4
+              },
+              "required_work": 60.0,
+              "site": "(-2.0, 0.0, 41.01)",
+              "stage": "FOUNDATION",
+              "state": "PLANNED",
+              "target": "(-2.0, 0.0, 32.01)",
+              "work": 0.0,
+              "work_by_citizen": {}
+            },
+            "focus": "(-2.0, 0.0, 41.01)",
+            "id": 3,
+            "kind": "development_started",
+            "major": false,
+            "message": "Shelter project development_001",
+            "seconds": 5.0
+          },
+          {
+            "day": 0.00833333333333333,
+            "evidence": {
+              "days": 0.00833333333333333,
+              "drinks": 0,
+              "economy": {
+                "food": {
+                  "available": 20.0,
+                  "consumed": 0.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 0.0,
+                  "reserved": 0.0
+                },
+                "metal": {
+                  "available": 0.0,
+                  "consumed": 0.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 0.0,
+                  "reserved": 0.0
+                },
+                "water": {
+                  "available": 30.0,
+                  "consumed": 0.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 0.0,
+                  "reserved": 0.0
+                },
+                "wood": {
+                  "available": 0.0,
+                  "consumed": 0.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 0.0,
+                  "reserved": 0.0
+                }
+              },
+              "food_days": 2.0,
+              "meals": 0,
+              "population": 5,
+              "resting": 0,
+              "rests": 0,
+              "shelter": 0,
+              "urgent": 0,
+              "water_days": 2.0
+            },
+            "focus": "(0.0, 0.0, 8.0)",
+            "id": 4,
+            "kind": "growth_paused",
+            "major": false,
+            "message": "Settlement infrastructure not yet established",
+            "seconds": 5.0
+          },
+          {
+            "day": 0.0166666666666666,
+            "evidence": {
+              "days": 0.0166666666666666,
+              "drinks": 0,
+              "economy": {
+                "food": {
+                  "available": 20.0,
+                  "consumed": 0.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 0.0,
+                  "reserved": 0.0
+                },
+                "metal": {
+                  "available": 0.0,
+                  "consumed": 0.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 0.0,
+                  "reserved": 0.0
+                },
+                "water": {
+                  "available": 30.0,
+                  "consumed": 0.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 0.0,
+                  "reserved": 0.0
+                },
+                "wood": {
+                  "available": 0.0,
+                  "consumed": 0.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 0.0,
+                  "reserved": 0.0
+                }
+              },
+              "food_days": 2.0,
+              "meals": 0,
+              "population": 5,
+              "resting": 0,
+              "rests": 0,
+              "shelter": 0,
+              "urgent": 0,
+              "water_days": 2.0
+            },
+            "focus": "(0.0, 0.0, 0.0)",
+            "id": 5,
+            "kind": "governor",
+            "major": false,
+            "message": "MATERIALS: Approved project needs wood/metal: { \"wood\": 4.0, \"metal\": 0.0 }",
+            "seconds": 9.99999999999998
+          },
+          {
+            "day": 0.0166666666666666,
+            "evidence": {
+              "rejections": {
+                "desk": "resource source support",
+                "pocket_tile_-108_-20_0": "explicitly protected",
+                "pocket_tile_-108_-44_0": "explicitly protected",
+                "pocket_tile_-108_-68_0": "explicitly protected",
+                "pocket_tile_-108_28_0": "explicitly protected",
+                "pocket_tile_-108_4_0": "explicitly protected",
+                "pocket_tile_-108_52_0": "explicitly protected",
+                "pocket_tile_-108_76_0": "explicitly protected",
+                "pocket_tile_-12_-20_0": "explicitly protected",
+                "pocket_tile_-12_-44_0": "explicitly protected",
+                "pocket_tile_-12_-68_0": "explicitly protected",
+                "pocket_tile_-12_28_2": "explicitly protected",
+                "pocket_tile_-12_4_0": "explicitly protected",
+                "pocket_tile_-12_76_0": "explicitly protected",
+                "pocket_tile_-36_-20_0": "explicitly protected",
+                "pocket_tile_-36_-44_0": "explicitly protected",
+                "pocket_tile_-36_-68_0": "explicitly protected",
+                "pocket_tile_-36_28_0": "explicitly protected",
+                "pocket_tile_-36_4_0": "explicitly protected",
+                "pocket_tile_-36_52_0": "explicitly protected",
+                "pocket_tile_-36_76_0": "explicitly protected",
+                "pocket_tile_-60_-20_0": "explicitly protected",
+                "pocket_tile_-60_-44_0": "explicitly protected",
+                "pocket_tile_-60_-68_0": "explicitly protected",
+                "pocket_tile_-60_28_0": "explicitly protected",
+                "pocket_tile_-60_4_0": "explicitly protected",
+                "pocket_tile_-60_52_0": "explicitly protected",
+                "pocket_tile_-60_76_0": "explicitly protected",
+                "pocket_tile_-84_-20_0": "explicitly protected",
+                "pocket_tile_-84_-44_0": "explicitly protected",
+                "pocket_tile_-84_-68_0": "explicitly protected",
+                "pocket_tile_-84_28_0": "explicitly protected",
+                "pocket_tile_-84_4_0": "explicitly protected",
+                "pocket_tile_-84_52_0": "explicitly protected",
+                "pocket_tile_-84_76_0": "explicitly protected",
+                "pocket_tile_108_-20_0": "explicitly protected",
+                "pocket_tile_108_-44_0": "explicitly protected",
+                "pocket_tile_108_-68_0": "explicitly protected",
+                "pocket_tile_108_28_0": "explicitly protected",
+                "pocket_tile_108_4_0": "explicitly protected",
+                "pocket_tile_108_52_0": "explicitly protected",
+                "pocket_tile_108_76_0": "explicitly protected",
+                "pocket_tile_12_-20_0": "explicitly protected",
+                "pocket_tile_12_-44_0": "explicitly protected",
+                "pocket_tile_12_-68_0": "explicitly protected",
+                "pocket_tile_12_28_2": "explicitly protected",
+                "pocket_tile_12_4_0": "explicitly protected",
+                "pocket_tile_12_76_0": "explicitly protected",
+                "pocket_tile_36_-20_0": "explicitly protected",
+                "pocket_tile_36_-44_0": "explicitly protected",
+                "pocket_tile_36_-68_0": "explicitly protected",
+                "pocket_tile_36_28_0": "explicitly protected",
+                "pocket_tile_36_4_0": "explicitly protected",
+                "pocket_tile_36_52_0": "explicitly protected",
+                "pocket_tile_36_76_0": "explicitly protected",
+                "pocket_tile_60_-20_0": "explicitly protected",
+                "pocket_tile_60_-44_0": "explicitly protected",
+                "pocket_tile_60_-68_0": "explicitly protected",
+                "pocket_tile_60_28_0": "explicitly protected",
+                "pocket_tile_60_4_0": "explicitly protected",
+                "pocket_tile_60_52_0": "explicitly protected",
+                "pocket_tile_60_76_0": "explicitly protected",
+                "pocket_tile_84_-20_0": "explicitly protected",
+                "pocket_tile_84_-44_0": "explicitly protected",
+                "pocket_tile_84_-68_0": "explicitly protected",
+                "pocket_tile_84_28_0": "explicitly protected",
+                "pocket_tile_84_4_0": "explicitly protected",
+                "pocket_tile_84_52_0": "explicitly protected",
+                "pocket_tile_84_76_0": "explicitly protected"
+              },
+              "score": 1180.05790328979,
+              "shortage": {
+                "metal": 0.0,
+                "wood": 4.0
+              }
+            },
+            "focus": "(91.0, 0.0, -63.0)",
+            "id": 6,
+            "kind": "salvage_authorized",
+            "major": true,
+            "message": "Safe salvage authorized: bookcase",
+            "seconds": 9.99999999999998
+          },
+          {
+            "day": 0.0761666666666673,
+            "evidence": {
+              "object": "bookcase",
+              "yields": {
+                "metal": 2.0
+              }
+            },
+            "focus": "(74.78, 0.0, -63.0)",
+            "id": 7,
+            "kind": "first_salvage",
+            "major": false,
+            "message": "First material recovered",
+            "seconds": 45.7000000000004
+          },
+          {
+            "day": 0.149999999999999,
+            "evidence": {
+              "days": 0.149999999999999,
+              "drinks": 0,
+              "economy": {
+                "food": {
+                  "available": 36.0,
+                  "consumed": 0.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 16.0,
+                  "reserved": 0.0
+                },
+                "metal": {
+                  "available": 4.0,
+                  "consumed": 0.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 4.0,
+                  "reserved": 0.0
+                },
+                "water": {
+                  "available": 30.0,
+                  "consumed": 0.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 0.0,
+                  "reserved": 0.0
+                },
+                "wood": {
+                  "available": 14.0,
+                  "consumed": 0.0,
+                  "delivered": 0.0,
+                  "in_transit": 2.0,
+                  "received": 16.0,
+                  "reserved": 0.0
+                }
+              },
+              "food_days": 3.6,
+              "meals": 0,
+              "population": 5,
+              "resting": 0,
+              "rests": 0,
+              "shelter": 0,
+              "urgent": 0,
+              "water_days": 2.0
+            },
+            "focus": "(0.0, 0.0, 0.0)",
+            "id": 8,
+            "kind": "governor",
+            "major": false,
+            "message": "STABLE: Reserves recovered; assess shelter and finite carrying capacity",
+            "seconds": 89.9999999999992
+          },
+          {
+            "day": 0.159499999999998,
+            "evidence": {
+              "authorized": true,
+              "progress": 0.0,
+              "stage": 4,
+              "stages": [
+                {
+                  "name": "STRIPPED",
+                  "work": 8.0,
+                  "yields": {
+                    "metal": 2.0
+                  }
+                },
+                {
+                  "name": "PARTIAL",
+                  "work": 12.0,
+                  "yields": {
+                    "metal": 2.0,
+                    "wood": 16.0
+                  }
+                },
+                {
+                  "name": "FRAME",
+                  "work": 12.0,
+                  "yields": {
+                    "wood": 12.0
+                  }
+                },
+                {
+                  "name": "DEPLETED",
+                  "work": 10.0,
+                  "yields": {
+                    "wood": 14.0
+                  }
+                }
+              ],
+              "state": "DEPLETED",
+              "work": 42.0000000000003,
+              "yielded": {
+                "metal": 4.0,
+                "wood": 42.0
+              }
+            },
+            "focus": "(91.0, 0.0, -63.0)",
+            "id": 9,
+            "kind": "object_depleted",
+            "major": false,
+            "message": "Object depleted: bookcase",
+            "seconds": 95.6999999999988
+          },
+          {
+            "day": 0.171333333333331,
+            "evidence": {
+              "completed": -1.0,
+              "created": 5.0,
+              "delivered": {
+                "metal": 0.0,
+                "wood": 4.0
+              },
+              "delivery_distance": 110.627459621426,
+              "effect_applied": false,
+              "id": "development_001",
+              "kind": "shelter",
+              "required": {
+                "metal": 0,
+                "wood": 4
+              },
+              "required_work": 60.0,
+              "site": "(-2.0, 0.0, 41.01)",
+              "stage": "FOUNDATION",
+              "state": "SUPPLIED",
+              "target": "(-2.0, 0.0, 32.01)",
+              "work": 0.0,
+              "work_by_citizen": {}
+            },
+            "focus": "(-2.0, 0.0, 41.01)",
+            "id": 10,
+            "kind": "materials_supplied",
+            "major": false,
+            "message": "Materials supplied: development_001",
+            "seconds": 102.799999999998
+          },
+          {
+            "day": 0.208333333333329,
+            "evidence": {
+              "days": 0.208333333333329,
+              "drinks": 1,
+              "economy": {
+                "food": {
+                  "available": 36.0,
+                  "consumed": 0.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 16.0,
+                  "reserved": 0.0
+                },
+                "metal": {
+                  "available": 4.0,
+                  "consumed": 0.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 4.0,
+                  "reserved": 0.0
+                },
+                "water": {
+                  "available": 29.0,
+                  "consumed": 1.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 0.0,
+                  "reserved": 0.0
+                },
+                "wood": {
+                  "available": 38.0,
+                  "consumed": 0.0,
+                  "delivered": 4.0,
+                  "in_transit": 0.0,
+                  "received": 42.0,
+                  "reserved": 0.0
+                }
+              },
+              "food_days": 3.6,
+              "meals": 0,
+              "population": 5,
+              "resting": 0,
+              "rests": 0,
+              "shelter": 0,
+              "urgent": 0,
+              "water_days": 1.93333333333333
+            },
+            "focus": "(0.0, 0.0, 8.0)",
+            "id": 11,
+            "kind": "directive",
+            "major": false,
+            "message": "Secure Water",
+            "seconds": 124.999999999997
+          },
+          {
+            "day": 0.252833333333326,
+            "evidence": {
+              "project": "development_001",
+              "shelter": 5
+            },
+            "focus": "(-2.0, 0.0, 41.01)",
+            "id": 12,
+            "kind": "shelter_increased",
+            "major": false,
+            "message": "Shelter capacity increased to 5",
+            "seconds": 151.699999999996
+          },
+          {
+            "day": 0.252833333333326,
+            "evidence": {
+              "completed": 151.699999999996,
+              "created": 5.0,
+              "delivered": {
+                "metal": 0.0,
+                "wood": 4.0
+              },
+              "delivery_distance": 110.627459621426,
+              "effect_applied": true,
+              "id": "development_001",
+              "kind": "shelter",
+              "required": {
+                "metal": 0,
+                "wood": 4
+              },
+              "required_work": 60.0,
+              "site": "(-2.0, 0.0, 41.01)",
+              "stage": "COMPLETE",
+              "state": "COMPLETE",
+              "target": "(-2.0, 0.0, 32.01)",
+              "work": 60.0400000000008,
+              "work_by_citizen": {
+                "1": 48.7000000000004,
+                "4": 11.34
+              }
+            },
+            "focus": "(-2.0, 0.0, 41.01)",
+            "id": 13,
+            "kind": "structure_complete",
+            "major": true,
+            "message": "Shelter complete: development_001",
+            "seconds": 151.699999999996
+          },
+          {
+            "day": 0.258333333333326,
+            "evidence": {
+              "completed": -1.0,
+              "created": 154.999999999995,
+              "delivered": {
+                "metal": 0.0,
+                "wood": 0.0
+              },
+              "delivery_distance": 0.0,
+              "effect_applied": false,
+              "id": "development_002",
+              "kind": "depot",
+              "required": {
+                "metal": 1,
+                "wood": 4
+              },
+              "required_work": 70.0,
+              "site": "(18.0, 0.0, 41.01)",
+              "stage": "FOUNDATION",
+              "state": "PLANNED",
+              "target": "(18.0, 0.0, 32.01)",
+              "work": 0.0,
+              "work_by_citizen": {}
+            },
+            "focus": "(18.0, 0.0, 41.01)",
+            "id": 14,
+            "kind": "development_started",
+            "major": false,
+            "message": "Depot project development_002",
+            "seconds": 154.999999999995
+          },
+          {
+            "day": 0.29299999999999,
+            "evidence": {
+              "completed": -1.0,
+              "created": 154.999999999995,
+              "delivered": {
+                "metal": 1.0,
+                "wood": 4.0
+              },
+              "delivery_distance": 306.533254653205,
+              "effect_applied": false,
+              "id": "development_002",
+              "kind": "depot",
+              "required": {
+                "metal": 1,
+                "wood": 4
+              },
+              "required_work": 70.0,
+              "site": "(18.0, 0.0, 41.01)",
+              "stage": "FOUNDATION",
+              "state": "SUPPLIED",
+              "target": "(18.0, 0.0, 32.01)",
+              "work": 0.0,
+              "work_by_citizen": {}
+            },
+            "focus": "(18.0, 0.0, 41.01)",
+            "id": 15,
+            "kind": "materials_supplied",
+            "major": false,
+            "message": "Materials supplied: development_002",
+            "seconds": 175.799999999994
+          },
+          {
+            "day": 0.360499999999987,
+            "evidence": {
+              "completed": 216.299999999992,
+              "created": 154.999999999995,
+              "delivered": {
+                "metal": 1.0,
+                "wood": 4.0
+              },
+              "delivery_distance": 306.533254653205,
+              "effect_applied": true,
+              "id": "development_002",
+              "kind": "depot",
+              "required": {
+                "metal": 1,
+                "wood": 4
+              },
+              "required_work": 70.0,
+              "site": "(18.0, 0.0, 41.01)",
+              "stage": "COMPLETE",
+              "state": "COMPLETE",
+              "target": "(18.0, 0.0, 32.01)",
+              "work": 70.0000000000003,
+              "work_by_citizen": {
+                "0": 31.5000000000002,
+                "2": 38.5000000000003
+              }
+            },
+            "focus": "(18.0, 0.0, 41.01)",
+            "id": 16,
+            "kind": "structure_complete",
+            "major": true,
+            "message": "Depot complete: development_002",
+            "seconds": 216.299999999992
+          },
+          {
+            "day": 0.366666666666653,
+            "evidence": {
+              "completed": -1.0,
+              "created": 219.999999999992,
+              "delivered": {
+                "metal": 0.0,
+                "wood": 0.0
+              },
+              "delivery_distance": 0.0,
+              "effect_applied": false,
+              "id": "development_003",
+              "kind": "workshop",
+              "required": {
+                "metal": 4,
+                "wood": 8
+              },
+              "required_work": 100.0,
+              "site": "(-2.0, 0.0, 60.0)",
+              "stage": "FOUNDATION",
+              "state": "PLANNED",
+              "target": "(-2.0, 0.0, 51.0)",
+              "work": 0.0,
+              "work_by_citizen": {}
+            },
+            "focus": "(-2.0, 0.0, 60.0)",
+            "id": 17,
+            "kind": "development_started",
+            "major": false,
+            "message": "Workshop project development_003",
+            "seconds": 219.999999999992
+          },
+          {
+            "day": 0.374999999999986,
+            "evidence": {
+              "days": 0.374999999999986,
+              "drinks": 5,
+              "economy": {
+                "food": {
+                  "available": 33.0,
+                  "consumed": 2.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 16.0,
+                  "reserved": 1.0
+                },
+                "metal": {
+                  "available": 3.0,
+                  "consumed": 1.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 4.0,
+                  "reserved": 0.0
+                },
+                "water": {
+                  "available": 49.0,
+                  "consumed": 5.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 24.0,
+                  "reserved": 0.0
+                },
+                "wood": {
+                  "available": 32.0,
+                  "consumed": 8.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 42.0,
+                  "reserved": 2.0
+                }
+              },
+              "food_days": 3.3,
+              "meals": 2,
+              "population": 5,
+              "resting": 0,
+              "rests": 0,
+              "shelter": 5,
+              "urgent": 0,
+              "water_days": 3.26666666666667
+            },
+            "focus": "(0.0, 0.0, 0.0)",
+            "id": 18,
+            "kind": "governor",
+            "major": false,
+            "message": "MATERIALS: Approved project needs wood/metal: { \"wood\": 0.0, \"metal\": 1.0 }",
+            "seconds": 224.999999999992
+          },
+          {
+            "day": 0.374999999999986,
+            "evidence": {
+              "rejections": {
+                "bookcase": "depleted",
+                "desk": "resource source support",
+                "pocket_tile_-108_-20_0": "explicitly protected",
+                "pocket_tile_-108_-44_0": "explicitly protected",
+                "pocket_tile_-108_-68_0": "explicitly protected",
+                "pocket_tile_-108_28_0": "explicitly protected",
+                "pocket_tile_-108_4_0": "explicitly protected",
+                "pocket_tile_-108_52_0": "explicitly protected",
+                "pocket_tile_-108_76_0": "explicitly protected",
+                "pocket_tile_-12_-20_0": "explicitly protected",
+                "pocket_tile_-12_-44_0": "explicitly protected",
+                "pocket_tile_-12_-68_0": "explicitly protected",
+                "pocket_tile_-12_28_2": "explicitly protected",
+                "pocket_tile_-12_4_0": "explicitly protected",
+                "pocket_tile_-12_76_0": "explicitly protected",
+                "pocket_tile_-36_-20_0": "explicitly protected",
+                "pocket_tile_-36_-44_0": "explicitly protected",
+                "pocket_tile_-36_-68_0": "explicitly protected",
+                "pocket_tile_-36_28_0": "explicitly protected",
+                "pocket_tile_-36_4_0": "explicitly protected",
+                "pocket_tile_-36_52_0": "explicitly protected",
+                "pocket_tile_-36_76_0": "explicitly protected",
+                "pocket_tile_-60_-20_0": "explicitly protected",
+                "pocket_tile_-60_-44_0": "explicitly protected",
+                "pocket_tile_-60_-68_0": "explicitly protected",
+                "pocket_tile_-60_28_0": "explicitly protected",
+                "pocket_tile_-60_4_0": "explicitly protected",
+                "pocket_tile_-60_52_0": "explicitly protected",
+                "pocket_tile_-60_76_0": "explicitly protected",
+                "pocket_tile_-84_-20_0": "explicitly protected",
+                "pocket_tile_-84_-44_0": "explicitly protected",
+                "pocket_tile_-84_-68_0": "explicitly protected",
+                "pocket_tile_-84_28_0": "explicitly protected",
+                "pocket_tile_-84_4_0": "explicitly protected",
+                "pocket_tile_-84_52_0": "explicitly protected",
+                "pocket_tile_-84_76_0": "explicitly protected",
+                "pocket_tile_108_-20_0": "explicitly protected",
+                "pocket_tile_108_-44_0": "explicitly protected",
+                "pocket_tile_108_-68_0": "explicitly protected",
+                "pocket_tile_108_28_0": "explicitly protected",
+                "pocket_tile_108_4_0": "explicitly protected",
+                "pocket_tile_108_52_0": "explicitly protected",
+                "pocket_tile_108_76_0": "explicitly protected",
+                "pocket_tile_12_-20_0": "explicitly protected",
+                "pocket_tile_12_-44_0": "explicitly protected",
+                "pocket_tile_12_-68_0": "explicitly protected",
+                "pocket_tile_12_28_2": "explicitly protected",
+                "pocket_tile_12_4_0": "explicitly protected",
+                "pocket_tile_12_76_0": "explicitly protected",
+                "pocket_tile_36_-20_0": "explicitly protected",
+                "pocket_tile_36_-44_0": "explicitly protected",
+                "pocket_tile_36_-68_0": "explicitly protected",
+                "pocket_tile_36_28_0": "explicitly protected",
+                "pocket_tile_36_4_0": "explicitly protected",
+                "pocket_tile_36_52_0": "explicitly protected",
+                "pocket_tile_36_76_0": "explicitly protected",
+                "pocket_tile_60_-20_0": "explicitly protected",
+                "pocket_tile_60_-44_0": "explicitly protected",
+                "pocket_tile_60_-68_0": "explicitly protected",
+                "pocket_tile_60_28_0": "explicitly protected",
+                "pocket_tile_60_4_0": "explicitly protected",
+                "pocket_tile_60_52_0": "explicitly protected",
+                "pocket_tile_60_76_0": "explicitly protected",
+                "pocket_tile_84_-20_0": "explicitly protected",
+                "pocket_tile_84_-44_0": "explicitly protected",
+                "pocket_tile_84_-68_0": "explicitly protected",
+                "pocket_tile_84_28_0": "explicitly protected",
+                "pocket_tile_84_4_0": "explicitly protected",
+                "pocket_tile_84_52_0": "explicitly protected",
+                "pocket_tile_84_76_0": "explicitly protected"
+              },
+              "score": 186.635123443604,
+              "shortage": {
+                "metal": 1.0,
+                "wood": 0.0
+              }
+            },
+            "focus": "(44.0, 0.0, -15.0)",
+            "id": 19,
+            "kind": "salvage_authorized",
+            "major": true,
+            "message": "Safe salvage authorized: side_table",
+            "seconds": 224.999999999992
+          },
+          {
+            "day": 0.53333333333334,
+            "evidence": {
+              "days": 0.53333333333334,
+              "drinks": 6,
+              "economy": {
+                "food": {
+                  "available": 31.0,
+                  "consumed": 5.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 16.0,
+                  "reserved": 0.0
+                },
+                "metal": {
+                  "available": 1.0,
+                  "consumed": 1.0,
+                  "delivered": 3.0,
+                  "in_transit": 1.0,
+                  "received": 6.0,
+                  "reserved": 0.0
+                },
+                "water": {
+                  "available": 48.0,
+                  "consumed": 6.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 24.0,
+                  "reserved": 0.0
+                },
+                "wood": {
+                  "available": 26.0,
+                  "consumed": 8.0,
+                  "delivered": 8.0,
+                  "in_transit": 0.0,
+                  "received": 42.0,
+                  "reserved": 0.0
+                }
+              },
+              "food_days": 3.1,
+              "meals": 5,
+              "population": 5,
+              "resting": 1,
+              "rests": 0,
+              "shelter": 5,
+              "urgent": 0,
+              "water_days": 3.2
+            },
+            "focus": "(0.0, 0.0, 0.0)",
+            "id": 20,
+            "kind": "governor",
+            "major": false,
+            "message": "STABLE: Reserves recovered; assess shelter and finite carrying capacity",
+            "seconds": 320.000000000004
+          },
+          {
+            "day": 0.556666666666679,
+            "evidence": {
+              "completed": -1.0,
+              "created": 219.999999999992,
+              "delivered": {
+                "metal": 4.0,
+                "wood": 8.0
+              },
+              "delivery_distance": 951.411165762009,
+              "effect_applied": false,
+              "id": "development_003",
+              "kind": "workshop",
+              "required": {
+                "metal": 4,
+                "wood": 8
+              },
+              "required_work": 100.0,
+              "site": "(-2.0, 0.0, 60.0)",
+              "stage": "FOUNDATION",
+              "state": "SUPPLIED",
+              "target": "(-2.0, 0.0, 51.0)",
+              "work": 0.0,
+              "work_by_citizen": {}
+            },
+            "focus": "(-2.0, 0.0, 60.0)",
+            "id": 21,
+            "kind": "materials_supplied",
+            "major": false,
+            "message": "Materials supplied: development_003",
+            "seconds": 334.000000000007
+          },
+          {
+            "day": 0.640333333333365,
+            "evidence": {
+              "authorized": true,
+              "progress": 0.0,
+              "stage": 4,
+              "stages": [
+                {
+                  "name": "STRIPPED",
+                  "work": 8.0,
+                  "yields": {
+                    "metal": 2.0
+                  }
+                },
+                {
+                  "name": "PARTIAL",
+                  "work": 12.0,
+                  "yields": {
+                    "metal": 2.0,
+                    "wood": 3.0
+                  }
+                },
+                {
+                  "name": "FRAME",
+                  "work": 12.0,
+                  "yields": {
+                    "wood": 2.0
+                  }
+                },
+                {
+                  "name": "DEPLETED",
+                  "work": 10.0,
+                  "yields": {
+                    "wood": 3.0
+                  }
+                }
+              ],
+              "state": "DEPLETED",
+              "work": 42.0000000000003,
+              "yielded": {
+                "metal": 4.0,
+                "wood": 8.0
+              }
+            },
+            "focus": "(44.0, 0.0, -15.0)",
+            "id": 22,
+            "kind": "object_depleted",
+            "major": false,
+            "message": "Object depleted: side_table",
+            "seconds": 384.200000000019
+          },
+          {
+            "day": 0.700333333333378,
+            "evidence": {},
+            "focus": "(-2.0, 0.0, 60.0)",
+            "id": 23,
+            "kind": "advanced_available",
+            "major": false,
+            "message": "Workshop enables advanced construction",
+            "seconds": 420.200000000027
+          },
+          {
+            "day": 0.700333333333378,
+            "evidence": {
+              "completed": 420.200000000027,
+              "created": 219.999999999992,
+              "delivered": {
+                "metal": 4.0,
+                "wood": 8.0
+              },
+              "delivery_distance": 951.411165762009,
+              "effect_applied": true,
+              "id": "development_003",
+              "kind": "workshop",
+              "required": {
+                "metal": 4,
+                "wood": 8
+              },
+              "required_work": 100.0,
+              "site": "(-2.0, 0.0, 60.0)",
+              "stage": "COMPLETE",
+              "state": "COMPLETE",
+              "target": "(-2.0, 0.0, 51.0)",
+              "work": 100.099999999999,
+              "work_by_citizen": {
+                "1": 43.1000000000003,
+                "4": 57.0000000000005
+              }
+            },
+            "focus": "(-2.0, 0.0, 60.0)",
+            "id": 24,
+            "kind": "structure_complete",
+            "major": true,
+            "message": "Workshop complete: development_003",
+            "seconds": 420.200000000027
+          },
+          {
+            "day": 0.70833333333338,
+            "evidence": {
+              "completed": -1.0,
+              "created": 425.000000000028,
+              "delivered": {
+                "metal": 0.0,
+                "wood": 0.0
+              },
+              "delivery_distance": 0.0,
+              "effect_applied": false,
+              "id": "development_004",
+              "kind": "housing",
+              "required": {
+                "metal": 2,
+                "wood": 10
+              },
+              "required_work": 76.5,
+              "site": "(18.0, 0.0, 60.0)",
+              "stage": "FOUNDATION",
+              "state": "PLANNED",
+              "target": "(18.0, 0.0, 51.0)",
+              "work": 0.0,
+              "work_by_citizen": {}
+            },
+            "focus": "(18.0, 0.0, 60.0)",
+            "id": 25,
+            "kind": "development_started",
+            "major": false,
+            "message": "Housing project development_004",
+            "seconds": 425.000000000028
+          },
+          {
+            "day": 0.70833333333338,
+            "evidence": {
+              "days": 0.70833333333338,
+              "drinks": 10,
+              "economy": {
+                "food": {
+                  "available": 31.0,
+                  "consumed": 5.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 16.0,
+                  "reserved": 0.0
+                },
+                "metal": {
+                  "available": 3.0,
+                  "consumed": 5.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 8.0,
+                  "reserved": 0.0
+                },
+                "water": {
+                  "available": 52.0,
+                  "consumed": 10.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 32.0,
+                  "reserved": 0.0
+                },
+                "wood": {
+                  "available": 34.0,
+                  "consumed": 16.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 50.0,
+                  "reserved": 0.0
+                }
+              },
+              "food_days": 3.1,
+              "meals": 5,
+              "population": 5,
+              "resting": 2,
+              "rests": 3,
+              "shelter": 5,
+              "urgent": 0,
+              "water_days": 3.46666666666667
+            },
+            "focus": "(-2.0, 0.0, 32.01)",
+            "id": 26,
+            "kind": "growth_paused",
+            "major": false,
+            "message": "Insufficient shelter for entire cohort",
+            "seconds": 425.000000000028
+          },
+          {
+            "day": 0.903500000000091,
+            "evidence": {
+              "completed": -1.0,
+              "created": 425.000000000028,
+              "delivered": {
+                "metal": 2.0,
+                "wood": 10.0
+              },
+              "delivery_distance": 1191.41122012154,
+              "effect_applied": false,
+              "id": "development_004",
+              "kind": "housing",
+              "required": {
+                "metal": 2,
+                "wood": 10
+              },
+              "required_work": 76.5,
+              "site": "(18.0, 0.0, 60.0)",
+              "stage": "FOUNDATION",
+              "state": "SUPPLIED",
+              "target": "(18.0, 0.0, 51.0)",
+              "work": 0.0,
+              "work_by_citizen": {}
+            },
+            "focus": "(18.0, 0.0, 60.0)",
+            "id": 27,
+            "kind": "materials_supplied",
+            "major": false,
+            "message": "Materials supplied: development_004",
+            "seconds": 542.100000000055
+          },
+          {
+            "day": 1.00866666666678,
+            "evidence": {
+              "project": "development_004",
+              "shelter": 15
+            },
+            "focus": "(18.0, 0.0, 60.0)",
+            "id": 28,
+            "kind": "shelter_increased",
+            "major": false,
+            "message": "Shelter capacity increased to 15",
+            "seconds": 605.200000000069
+          },
+          {
+            "day": 1.00866666666678,
+            "evidence": {
+              "completed": 605.200000000069,
+              "created": 425.000000000028,
+              "delivered": {
+                "metal": 2.0,
+                "wood": 10.0
+              },
+              "delivery_distance": 1191.41122012154,
+              "effect_applied": true,
+              "id": "development_004",
+              "kind": "housing",
+              "required": {
+                "metal": 2,
+                "wood": 10
+              },
+              "required_work": 76.5,
+              "site": "(18.0, 0.0, 60.0)",
+              "stage": "COMPLETE",
+              "state": "COMPLETE",
+              "target": "(18.0, 0.0, 51.0)",
+              "work": 76.5999999999999,
+              "work_by_citizen": {
+                "3": 35.1000000000002,
+                "4": 41.5000000000003
+              }
+            },
+            "focus": "(18.0, 0.0, 60.0)",
+            "id": 29,
+            "kind": "structure_complete",
+            "major": true,
+            "message": "Housing complete: development_004",
+            "seconds": 605.200000000069
+          },
+          {
+            "day": 1.5166666666669,
+            "evidence": {
+              "after": 6,
+              "before": 5,
+              "centroid": "(-2.0, 0.0, 52.0)",
+              "food_days_after": 3.08333333333333,
+              "food_days_before": 3.7,
+              "positions": [
+                "(-2.0, 0.0, 52.0)"
+              ],
+              "seconds": 910.000000000138,
+              "shelter": 15,
+              "stable_seconds": 300.000000000068,
+              "water_days_after": 2.66666666666667,
+              "water_days_before": 3.2
+            },
+            "focus": "(-2.0, 0.0, 52.0)",
+            "id": 30,
+            "kind": "cohort_joined",
+            "major": true,
+            "message": "New cohort joined: 6 real citizens",
+            "seconds": 910.000000000138
+          },
+          {
+            "day": 2.18333333333317,
+            "evidence": {
+              "extracted": {
+                "water": 60.0
+              },
+              "initial": {
+                "water": 60.0
+              },
+              "position": "(-24.0, 0.0, 20.0)",
+              "region": "FLOOR",
+              "remaining": {
+                "water": 0.0
+              },
+              "reserved": {
+                "water": 0.0
+              },
+              "work": 2.0
+            },
+            "focus": "(-24.0, 0.0, 20.0)",
+            "id": 31,
+            "kind": "source_exhausted",
+            "major": true,
+            "message": "Finite source exhausted: spilled_water / water",
+            "seconds": 1309.9999999999
+          },
+          {
+            "day": 2.25833333333311,
+            "evidence": {
+              "active_stage": "locked",
+              "cable_deployed": false,
+              "completed_stages": 0,
+              "created": true,
+              "delivered": {
+                "mechanical_parts": 0,
+                "metal": 0,
+                "wood": 0
+              },
+              "floor_target_connected": false,
+              "picked_up": {
+                "mechanical_parts": 0,
+                "metal": 0,
+                "wood": 0
+              },
+              "progress_percent": 0.0,
+              "required": {
+                "mechanical_parts": 0,
+                "metal": 4,
+                "wood": 4
+              },
+              "site": "(2.0, 0.0, -52.0)",
+              "stage_gates": [],
+              "stage_progress": 0.0,
+              "state": "WAITING_FOR_MATERIALS",
+              "stockpile": {
+                "mechanical_parts": 0,
+                "metal": 1.0,
+                "wood": 24.0
+              },
+              "traversal": {}
+            },
+            "focus": "(2.0, 0.0, -52.0)",
+            "id": 32,
+            "kind": "traversal_started",
+            "major": false,
+            "message": "Traversal project started",
+            "seconds": 1354.99999999986
+          },
+          {
+            "day": 2.25833333333311,
+            "evidence": {
+              "days": 2.25833333333311,
+              "drinks": 36,
+              "economy": {
+                "food": {
+                  "available": 39.0,
+                  "consumed": 21.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 40.0,
+                  "reserved": 0.0
+                },
+                "metal": {
+                  "available": 1.0,
+                  "consumed": 7.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 8.0,
+                  "reserved": 0.0
+                },
+                "water": {
+                  "available": 53.0,
+                  "consumed": 36.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 60.0,
+                  "reserved": 1.0
+                },
+                "wood": {
+                  "available": 24.0,
+                  "consumed": 26.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 50.0,
+                  "reserved": 0.0
+                }
+              },
+              "food_days": 3.25,
+              "meals": 21,
+              "population": 6,
+              "resting": 0,
+              "rests": 16,
+              "shelter": 15,
+              "urgent": 1,
+              "water_days": 2.94444444444444
+            },
+            "focus": "(0.0, 0.0, 0.0)",
+            "id": 33,
+            "kind": "governor",
+            "major": false,
+            "message": "MATERIALS: Approved project needs wood/metal: { \"wood\": 0.0, \"metal\": 3.0 }",
+            "seconds": 1354.99999999986
+          },
+          {
+            "day": 2.25833333333311,
+            "evidence": {
+              "rejections": {
+                "bookcase": "depleted",
+                "desk": "resource source support",
+                "pocket_tile_-108_-20_0": "explicitly protected",
+                "pocket_tile_-108_-44_0": "explicitly protected",
+                "pocket_tile_-108_-68_0": "explicitly protected",
+                "pocket_tile_-108_28_0": "explicitly protected",
+                "pocket_tile_-108_4_0": "explicitly protected",
+                "pocket_tile_-108_52_0": "explicitly protected",
+                "pocket_tile_-108_76_0": "explicitly protected",
+                "pocket_tile_-12_-20_0": "explicitly protected",
+                "pocket_tile_-12_-44_0": "explicitly protected",
+                "pocket_tile_-12_-68_0": "explicitly protected",
+                "pocket_tile_-12_28_2": "explicitly protected",
+                "pocket_tile_-12_4_0": "explicitly protected",
+                "pocket_tile_-12_76_0": "explicitly protected",
+                "pocket_tile_-36_-20_0": "explicitly protected",
+                "pocket_tile_-36_-44_0": "explicitly protected",
+                "pocket_tile_-36_-68_0": "explicitly protected",
+                "pocket_tile_-36_28_0": "explicitly protected",
+                "pocket_tile_-36_4_0": "explicitly protected",
+                "pocket_tile_-36_52_0": "explicitly protected",
+                "pocket_tile_-36_76_0": "explicitly protected",
+                "pocket_tile_-60_-20_0": "explicitly protected",
+                "pocket_tile_-60_-44_0": "explicitly protected",
+                "pocket_tile_-60_-68_0": "explicitly protected",
+                "pocket_tile_-60_28_0": "explicitly protected",
+                "pocket_tile_-60_4_0": "explicitly protected",
+                "pocket_tile_-60_52_0": "explicitly protected",
+                "pocket_tile_-60_76_0": "explicitly protected",
+                "pocket_tile_-84_-20_0": "explicitly protected",
+                "pocket_tile_-84_-44_0": "explicitly protected",
+                "pocket_tile_-84_-68_0": "explicitly protected",
+                "pocket_tile_-84_28_0": "explicitly protected",
+                "pocket_tile_-84_4_0": "explicitly protected",
+                "pocket_tile_-84_52_0": "explicitly protected",
+                "pocket_tile_-84_76_0": "explicitly protected",
+                "pocket_tile_108_-20_0": "explicitly protected",
+                "pocket_tile_108_-44_0": "explicitly protected",
+                "pocket_tile_108_-68_0": "explicitly protected",
+                "pocket_tile_108_28_0": "explicitly protected",
+                "pocket_tile_108_4_0": "explicitly protected",
+                "pocket_tile_108_52_0": "explicitly protected",
+                "pocket_tile_108_76_0": "explicitly protected",
+                "pocket_tile_12_-20_0": "explicitly protected",
+                "pocket_tile_12_-44_0": "explicitly protected",
+                "pocket_tile_12_-68_0": "explicitly protected",
+                "pocket_tile_12_28_2": "explicitly protected",
+                "pocket_tile_12_4_0": "explicitly protected",
+                "pocket_tile_12_76_0": "explicitly protected",
+                "pocket_tile_36_-20_0": "explicitly protected",
+                "pocket_tile_36_-44_0": "explicitly protected",
+                "pocket_tile_36_-68_0": "explicitly protected",
+                "pocket_tile_36_28_0": "explicitly protected",
+                "pocket_tile_36_4_0": "explicitly protected",
+                "pocket_tile_36_52_0": "explicitly protected",
+                "pocket_tile_36_76_0": "explicitly protected",
+                "pocket_tile_60_-20_0": "explicitly protected",
+                "pocket_tile_60_-44_0": "explicitly protected",
+                "pocket_tile_60_-68_0": "explicitly protected",
+                "pocket_tile_60_28_0": "explicitly protected",
+                "pocket_tile_60_4_0": "explicitly protected",
+                "pocket_tile_60_52_0": "explicitly protected",
+                "pocket_tile_60_76_0": "explicitly protected",
+                "pocket_tile_84_-20_0": "explicitly protected",
+                "pocket_tile_84_-44_0": "explicitly protected",
+                "pocket_tile_84_-68_0": "explicitly protected",
+                "pocket_tile_84_28_0": "explicitly protected",
+                "pocket_tile_84_4_0": "explicitly protected",
+                "pocket_tile_84_52_0": "explicitly protected",
+                "pocket_tile_84_76_0": "explicitly protected",
+                "side_table": "depleted"
+              },
+              "score": 385.159503173828,
+              "shortage": {
+                "metal": 3.0,
+                "wood": 0.0
+              }
+            },
+            "focus": "(-58.0, 0.0, -20.0)",
+            "id": 34,
+            "kind": "salvage_authorized",
+            "major": true,
+            "message": "Safe salvage authorized: chair",
+            "seconds": 1354.99999999986
+          },
+          {
+            "day": 2.25833333333311,
+            "evidence": {
+              "days": 2.25833333333311,
+              "drinks": 36,
+              "economy": {
+                "food": {
+                  "available": 39.0,
+                  "consumed": 21.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 40.0,
+                  "reserved": 0.0
+                },
+                "metal": {
+                  "available": 1.0,
+                  "consumed": 7.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 8.0,
+                  "reserved": 0.0
+                },
+                "water": {
+                  "available": 53.0,
+                  "consumed": 36.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 60.0,
+                  "reserved": 1.0
+                },
+                "wood": {
+                  "available": 24.0,
+                  "consumed": 26.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 50.0,
+                  "reserved": 0.0
+                }
+              },
+              "food_days": 3.25,
+              "meals": 21,
+              "population": 6,
+              "resting": 0,
+              "rests": 16,
+              "shelter": 15,
+              "urgent": 1,
+              "water_days": 2.94444444444444
+            },
+            "focus": "(-2.0, 0.0, 32.01)",
+            "id": 35,
+            "kind": "growth_paused",
+            "major": false,
+            "message": "Critical material project blocked",
+            "seconds": 1354.99999999986
+          },
+          {
+            "day": 2.40833333333297,
+            "evidence": {
+              "days": 2.40833333333297,
+              "drinks": 38,
+              "economy": {
+                "food": {
+                  "available": 33.0,
+                  "consumed": 27.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 40.0,
+                  "reserved": 0.0
+                },
+                "metal": {
+                  "available": 1.0,
+                  "consumed": 7.0,
+                  "delivered": 3.0,
+                  "in_transit": 0.0,
+                  "received": 12.0,
+                  "reserved": 1.0
+                },
+                "water": {
+                  "available": 52.0,
+                  "consumed": 38.0,
+                  "delivered": 0.0,
+                  "in_transit": 0.0,
+                  "received": 60.0,
+                  "reserved": 0.0
+                },
+                "wood": {
+                  "available": 25.0,
+                  "consumed": 26.0,
+                  "delivered": 4.0,
+                  "in_transit": 0.0,
+                  "received": 55.0,
+                  "reserved": 0.0
+                }
+              },
+              "food_days": 2.75,
+              "meals": 27,
+              "population": 6,
+              "resting": 1,
+              "rests": 18,
+              "shelter": 15,
+              "urgent": 0,
+              "water_days": 2.88888888888889
+            },
+            "focus": "(0.0, 0.0, 0.0)",
+            "id": 36,
+            "kind": "governor",
+            "major": false,
+            "message": "STABLE: Reserves recovered; assess shelter and finite carrying capacity",
+            "seconds": 1444.99999999978
+          },
+          {
+            "day": 2.43849999999961,
+            "evidence": {
+              "authorized": true,
+              "progress": 0.0,
+              "stage": 4,
+              "stages": [
+                {
+                  "name": "STRIPPED",
+                  "work": 8.0,
+                  "yields": {
+                    "metal": 2.0
+                  }
+                },
+                {
+                  "name": "PARTIAL",
+                  "work": 12.0,
+                  "yields": {
+                    "metal": 2.0,
+                    "wood": 5.0
+                  }
+                },
+                {
+                  "name": "FRAME",
+                  "work": 12.0,
+                  "yields": {
+                    "wood": 3.0
+                  }
+                },
+                {
+                  "name": "DEPLETED",
+                  "work": 10.0,
+                  "yields": {
+                    "wood": 5.0
+                  }
+                }
+              ],
+              "state": "DEPLETED",
+              "work": 42.0000000000003,
+              "yielded": {
+                "metal": 4.0,
+                "wood": 13.0
+              }
+            },
+            "focus": "(-58.0, 0.0, -20.0)",
+            "id": 37,
+            "kind": "object_depleted",
+            "major": false,
+            "message": "Object depleted: chair",
+            "seconds": 1463.09999999976
+          },
+          {
+            "day": 2.4499999999996,
+            "evidence": {
+              "active_stage": "complete",
+              "cable_deployed": true,
+              "completed_stages": 3,
+              "created": true,
+              "delivered": {
+                "mechanical_parts": 0,
+                "metal": 4,
+                "wood": 4
+              },
+              "floor_target_connected": true,
+              "picked_up": {
+                "mechanical_parts": 0,
+                "metal": 4,
+                "wood": 4
+              },
+              "progress_percent": 100.0,
+              "required": {
+                "mechanical_parts": 0,
+                "metal": 4,
+                "wood": 4
+              },
+              "site": "(2.0, 0.0, -52.0)",
+              "stage_gates": [
+                {
+                  "mechanical_parts": 0,
+                  "metal": 1,
+                  "wood": 4
+                },
+                {
+                  "mechanical_parts": 0,
+                  "metal": 3,
+                  "wood": 4
+                },
+                {
+                  "mechanical_parts": 0,
+                  "metal": 4,
+                  "wood": 4
+                }
+              ],
+              "stage_progress": 0.0,
+              "state": "CABLE_DEPLOYED",
+              "stockpile": {
+                "mechanical_parts": 0,
+                "metal": 1.0,
+                "wood": 28.0
+              },
+              "traversal": {}
+            },
+            "focus": "(2.0, 0.0, -52.0)",
+            "id": 38,
+            "kind": "traversal_complete",
+            "major": true,
+            "message": "Traversal complete",
+            "seconds": 1469.99999999976
+          },
+          {
+            "day": 2.50399999999955,
+            "evidence": {
+              "source": "water_cup"
+            },
+            "focus": "(-58.0, 30.0, -50.05)",
+            "id": 39,
+            "kind": "territory_reached",
+            "major": false,
+            "message": "Elevated resources reached",
+            "seconds": 1502.39999999973
+          },
+          {
+            "day": 2.91666666666584,
+            "evidence": {
+              "after": 7,
+              "before": 6,
+              "centroid": "(-2.0, 0.0, 52.0)",
+              "food_days_after": 2.5,
+              "food_days_before": 2.91666666666667,
+              "positions": [
+                "(-2.0, 0.0, 52.0)"
+              ],
+              "seconds": 1749.9999999995,
+              "shelter": 15,
+              "stable_seconds": 304.999999999723,
+              "water_days_after": 2.71428571428571,
+              "water_days_before": 3.16666666666667
+            },
+            "focus": "(-2.0, 0.0, 52.0)",
+            "id": 40,
+            "kind": "cohort_joined",
+            "major": true,
+            "message": "New cohort joined: 7 real citizens",
+            "seconds": 1749.9999999995
+          },
+          {
+            "day": 3.92499999999826,
+            "evidence": {
+              "after": 8,
+              "before": 7,
+              "centroid": "(-2.0, 0.0, 52.0)",
+              "food_days_after": 2.8125,
+              "food_days_before": 3.21428571428571,
+              "positions": [
+                "(-2.0, 0.0, 52.0)"
+              ],
+              "seconds": 2354.99999999895,
+              "shelter": 15,
+              "stable_seconds": 604.99999999945,
+              "water_days_after": 2.5,
+              "water_days_before": 2.85714285714286
+            },
+            "focus": "(-2.0, 0.0, 52.0)",
+            "id": 41,
+            "kind": "cohort_joined",
+            "major": true,
+            "message": "New cohort joined: 8 real citizens",
+            "seconds": 2354.99999999895
+          },
+          {
+            "day": 4.93333333333067,
+            "evidence": {
+              "after": 9,
+              "before": 8,
+              "centroid": "(-2.0, 0.0, 52.0)",
+              "food_days_after": 2.94444444444444,
+              "food_days_before": 3.3125,
+              "positions": [
+                "(-2.0, 0.0, 52.0)"
+              ],
+              "seconds": 2959.9999999984,
+              "shelter": 15,
+              "stable_seconds": 604.99999999945,
+              "water_days_after": 2.81481481481481,
+              "water_days_before": 3.16666666666667
+            },
+            "focus": "(-2.0, 0.0, 52.0)",
+            "id": 42,
+            "kind": "cohort_joined",
+            "major": true,
+            "message": "New cohort joined: 9 real citizens",
+            "seconds": 2959.9999999984
+          },
+          {
+            "day": 5.94166666666309,
+            "evidence": {
+              "after": 10,
+              "before": 9,
+              "centroid": "(-2.0, 0.0, 52.0)",
+              "food_days_after": 2.95,
+              "food_days_before": 3.27777777777778,
+              "positions": [
+                "(-2.0, 0.0, 52.0)"
+              ],
+              "seconds": 3564.99999999785,
+              "shelter": 15,
+              "stable_seconds": 604.99999999945,
+              "water_days_after": 2.66666666666667,
+              "water_days_before": 2.96296296296296
+            },
+            "focus": "(-2.0, 0.0, 52.0)",
+            "id": 43,
+            "kind": "cohort_joined",
+            "major": true,
+            "message": "New cohort joined: 10 real citizens",
+            "seconds": 3564.99999999785
+          },
+          {
+            "day": 6.94999999999606,
+            "evidence": {
+              "after": 11,
+              "before": 10,
+              "centroid": "(-2.0, 0.0, 52.0)",
+              "food_days_after": 2.86363636363636,
+              "food_days_before": 3.15,
+              "positions": [
+                "(-2.0, 0.0, 52.0)"
+              ],
+              "seconds": 4169.99999999764,
+              "shelter": 15,
+              "stable_seconds": 604.999999999786,
+              "water_days_after": 2.72727272727273,
+              "water_days_before": 3.0
+            },
+            "focus": "(-2.0, 0.0, 52.0)",
+            "id": 44,
+            "kind": "cohort_joined",
+            "major": true,
+            "message": "New cohort joined: 11 real citizens",
+            "seconds": 4169.99999999764
+          },
+          {
+            "day": 7.9499999999997,
+            "evidence": {
+              "after": 12,
+              "before": 11,
+              "centroid": "(-2.0, 0.0, 52.0)",
+              "food_days_after": 3.04166666666667,
+              "food_days_before": 3.31818181818182,
+              "positions": [
+                "(-2.0, 0.0, 52.0)"
+              ],
+              "seconds": 4769.99999999982,
+              "shelter": 15,
+              "stable_seconds": 600.000000002183,
+              "water_days_after": 2.66666666666667,
+              "water_days_before": 2.90909090909091
+            },
+            "focus": "(-2.0, 0.0, 52.0)",
+            "id": 45,
+            "kind": "cohort_joined",
+            "major": true,
+            "message": "New cohort joined: 12 real citizens",
+            "seconds": 4769.99999999982
+          }
+        ],
+        "journal_sequence": 45,
+        "ledger": {
+          "available": {
+            "food": 73.0,
+            "metal": 1.0,
+            "water": 100.0,
+            "wood": 33.0
+          },
+          "consumed": {
+            "food": 123.0,
+            "metal": 11.0,
+            "water": 190.0,
+            "wood": 30.0
+          },
+          "exported": {
+            "food": 0.0,
+            "metal": 0.0,
+            "water": 0.0,
+            "wood": 0.0
+          },
+          "initial": {
+            "food": 20.0,
+            "metal": 0.0,
+            "water": 30.0,
+            "wood": 0.0
+          },
+          "project_consumed": {
+            "food": 0.0,
+            "metal": 11.0,
+            "water": 0.0,
+            "wood": 30.0
+          },
+          "received": {
+            "food": 176.0,
+            "metal": 12.0,
+            "water": 260.0,
+            "wood": 63.0
+          },
+          "tickets": {}
+        },
+        "oldest_live_tasks": [
+          {
+            "amount": 8.0,
+            "citizen_id": 11,
+            "claimed_sim": 4769.99999999982,
+            "created_at": 39433,
+            "created_sim": 4769.99999999982,
+            "cycle": 0,
+            "extracted": false,
+            "id": 5152,
+            "owner_hint": 11,
+            "progress": 0.0,
+            "resource": "water",
+            "source": "(-58.0, 30.0, -50.0)",
+            "source_id": "water_cup",
+            "source_region": "STUDY_SURFACE",
+            "started_at": 39433,
+            "started_sim": 4769.99999999982,
+            "state": "active",
+            "target": "(-58.0, 30.0, -50.0)",
+            "task_type": "RESOURCE_COLLECT",
+            "urgency": 0.35
+          },
+          {
+            "citizen_id": 8,
+            "claimed_sim": 4777.59999999985,
+            "created_at": 39504,
+            "created_sim": 4777.59999999985,
+            "cycle": 0,
+            "id": 5170,
+            "owner_hint": 8,
+            "progress": 0.0,
+            "slot": 0,
+            "source": "(-2.0, 0.0, 32.0)",
+            "started_at": 39504,
+            "started_sim": 4777.59999999985,
+            "state": "active",
+            "target": "(-2.0, 0.0, 32.0)",
+            "task_type": "NEED_REST"
+          },
+          {
+            "citizen_id": 5,
+            "claimed_sim": 4784.19999999987,
+            "created_at": 39560,
+            "created_sim": 4784.19999999987,
+            "cycle": 0,
+            "id": 5175,
+            "owner_hint": 5,
+            "progress": 0.0,
+            "slot": 1,
+            "source": "(2.0, 0.0, 32.0)",
+            "started_at": 39560,
+            "started_sim": 4784.19999999987,
+            "state": "active",
+            "target": "(2.0, 0.0, 32.0)",
+            "task_type": "NEED_REST"
+          },
+          {
+            "citizen_id": 2,
+            "claimed_sim": 4792.4999999999,
+            "created_at": 39638,
+            "created_sim": 4791.6999999999,
+            "cycle": 10,
+            "id": 5198,
+            "owner_hint": 0,
+            "progress": 0.0,
+            "source": "(12.0, 0.0, 20.0)",
+            "started_at": 39648,
+            "started_sim": 4792.4999999999,
+            "state": "active",
+            "target": "(12.0, 0.0, 20.0)",
+            "task_type": "FLOOR_PATROL"
+          },
+          {
+            "citizen_id": 6,
+            "claimed_sim": 4793.49999999991,
+            "created_at": 39650,
+            "created_sim": 4792.6999999999,
+            "cycle": 2,
+            "id": 5202,
+            "owner_hint": 10,
+            "progress": 0.0,
+            "source": "(-12.0, 0.0, -4.0)",
+            "started_at": 39660,
+            "started_sim": 4793.49999999991,
+            "state": "active",
+            "target": "(-12.0, 0.0, -4.0)",
+            "task_type": "FLOOR_PATROL"
+          },
+          {
+            "citizen_id": 4,
+            "claimed_sim": 4795.39999999991,
+            "created_at": 39661,
+            "created_sim": 4793.69999999991,
+            "cycle": 5,
+            "id": 5206,
+            "owner_hint": 1,
+            "progress": 0.0,
+            "source": "(12.0, 0.0, 20.0)",
+            "started_at": 39679,
+            "started_sim": 4795.39999999991,
+            "state": "active",
+            "target": "(12.0, 0.0, 20.0)",
+            "task_type": "FLOOR_PATROL"
+          },
+          {
+            "citizen_id": 0,
+            "claimed_sim": 4796.79999999992,
+            "created_at": 39678,
+            "created_sim": 4795.39999999991,
+            "cycle": 1,
+            "id": 5209,
+            "owner_hint": 4,
+            "progress": 0.0,
+            "source": "(12.0, 0.0, -4.0)",
+            "started_at": 39693,
+            "started_sim": 4796.79999999992,
+            "state": "active",
+            "target": "(12.0, 0.0, -4.0)",
+            "task_type": "FLOOR_PATROL"
+          },
+          {
+            "citizen_id": 7,
+            "claimed_sim": 4798.49999999993,
+            "created_at": 39697,
+            "created_sim": 4797.29999999992,
+            "cycle": 4,
+            "id": 5212,
+            "owner_hint": 1,
+            "progress": 0.0,
+            "source": "(12.0, 0.0, -4.0)",
+            "started_at": 39710,
+            "started_sim": 4798.49999999993,
+            "state": "active",
+            "target": "(12.0, 0.0, -4.0)",
+            "task_type": "FLOOR_PATROL"
+          },
+          {
+            "citizen_id": 1,
+            "claimed_sim": 4799.09999999993,
+            "created_at": 39709,
+            "created_sim": 4798.49999999993,
+            "cycle": 8,
+            "id": 5213,
+            "owner_hint": 7,
+            "progress": 0.0,
+            "source": "(-12.0, 0.0, 20.0)",
+            "started_at": 39716,
+            "started_sim": 4799.09999999993,
+            "state": "active",
+            "target": "(-12.0, 0.0, 20.0)",
+            "task_type": "FLOOR_PATROL"
+          },
+          {
+            "citizen_id": 10,
+            "claimed_sim": 4799.49999999993,
+            "created_at": 39715,
+            "created_sim": 4799.09999999993,
+            "cycle": 3,
+            "id": 5214,
+            "owner_hint": 1,
+            "progress": 0.0,
+            "source": "(-12.0, 0.0, -4.0)",
+            "started_at": 39720,
+            "started_sim": 4799.49999999993,
+            "state": "active",
+            "target": "(-12.0, 0.0, -4.0)",
+            "task_type": "FLOOR_PATROL"
+          },
+          {
+            "citizen_id": 3,
+            "claimed_sim": 4799.99999999993,
+            "created_at": 39724,
+            "created_sim": 4799.99999999993,
+            "cycle": 25,
+            "id": 5216,
+            "owner_hint": 3,
+            "progress": 0.0,
+            "source": "(-12.0, 0.0, -4.0)",
+            "started_at": 39725,
+            "started_sim": 4799.99999999993,
+            "state": "active",
+            "target": "(-12.0, 0.0, -4.0)",
+            "task_type": "FLOOR_PATROL"
+          },
+          {
+            "citizen_id": 9,
+            "claimed_sim": 4799.99999999993,
+            "created_at": 39725,
+            "created_sim": 4799.99999999993,
+            "cycle": 7,
+            "id": 5217,
+            "owner_hint": 9,
+            "progress": 0.0,
+            "source": "(-12.0, 0.0, -4.0)",
+            "started_at": 39726,
+            "started_sim": 4799.99999999993,
+            "state": "active",
+            "target": "(-12.0, 0.0, -4.0)",
+            "task_type": "FLOOR_PATROL"
+          }
+        ],
+        "physical_delivery_segments": 9057,
+        "placement_checks": 19,
+        "planner": [],
+        "population": 12,
+        "projects": [
+          {
+            "completed": 151.699999999996,
+            "created": 5.0,
+            "delivered": {
+              "metal": 0.0,
+              "wood": 4.0
+            },
+            "delivery_distance": 110.627459621426,
+            "effect_applied": true,
+            "id": "development_001",
+            "kind": "shelter",
+            "required": {
+              "metal": 0,
+              "wood": 4
+            },
+            "required_work": 60.0,
+            "site": "(-2.0, 0.0, 41.01)",
+            "stage": "COMPLETE",
+            "state": "COMPLETE",
+            "target": "(-2.0, 0.0, 32.01)",
+            "work": 60.0400000000008,
+            "work_by_citizen": {
+              "1": 48.7000000000004,
+              "4": 11.34
+            }
+          },
+          {
+            "completed": 216.299999999992,
+            "created": 154.999999999995,
+            "delivered": {
+              "metal": 1.0,
+              "wood": 4.0
+            },
+            "delivery_distance": 306.533254653205,
+            "effect_applied": true,
+            "id": "development_002",
+            "kind": "depot",
+            "required": {
+              "metal": 1,
+              "wood": 4
+            },
+            "required_work": 70.0,
+            "site": "(18.0, 0.0, 41.01)",
+            "stage": "COMPLETE",
+            "state": "COMPLETE",
+            "target": "(18.0, 0.0, 32.01)",
+            "work": 70.0000000000003,
+            "work_by_citizen": {
+              "0": 31.5000000000002,
+              "2": 38.5000000000003
+            }
+          },
+          {
+            "completed": 420.200000000027,
+            "created": 219.999999999992,
+            "delivered": {
+              "metal": 4.0,
+              "wood": 8.0
+            },
+            "delivery_distance": 951.411165762009,
+            "effect_applied": true,
+            "id": "development_003",
+            "kind": "workshop",
+            "required": {
+              "metal": 4,
+              "wood": 8
+            },
+            "required_work": 100.0,
+            "site": "(-2.0, 0.0, 60.0)",
+            "stage": "COMPLETE",
+            "state": "COMPLETE",
+            "target": "(-2.0, 0.0, 51.0)",
+            "work": 100.099999999999,
+            "work_by_citizen": {
+              "1": 43.1000000000003,
+              "4": 57.0000000000005
+            }
+          },
+          {
+            "completed": 605.200000000069,
+            "created": 425.000000000028,
+            "delivered": {
+              "metal": 2.0,
+              "wood": 10.0
+            },
+            "delivery_distance": 1191.41122012154,
+            "effect_applied": true,
+            "id": "development_004",
+            "kind": "housing",
+            "required": {
+              "metal": 2,
+              "wood": 10
+            },
+            "required_work": 76.5,
+            "site": "(18.0, 0.0, 60.0)",
+            "stage": "COMPLETE",
+            "state": "COMPLETE",
+            "target": "(18.0, 0.0, 51.0)",
+            "work": 76.5999999999999,
+            "work_by_citizen": {
+              "3": 35.1000000000002,
+              "4": 41.5000000000003
+            }
+          }
+        ],
+        "salvage": {
+          "bookcase": {
+            "authorized": true,
+            "progress": 0.0,
+            "stage": 4,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 16.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 12.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 14.0
+                }
+              }
+            ],
+            "state": "DEPLETED",
+            "work": 42.0000000000003,
+            "yielded": {
+              "metal": 4.0,
+              "wood": 42.0
+            }
+          },
+          "chair": {
+            "authorized": true,
+            "progress": 0.0,
+            "stage": 4,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 5.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 5.0
+                }
+              }
+            ],
+            "state": "DEPLETED",
+            "work": 42.0000000000003,
+            "yielded": {
+              "metal": 4.0,
+              "wood": 13.0
+            }
+          },
+          "desk": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 34.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 25.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 27.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "packing_crate": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 4.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-108_-20_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-108_-44_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-108_-68_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-108_28_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-108_4_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-108_52_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-108_76_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-12_-20_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-12_-44_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-12_-68_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-12_28_2": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-12_4_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-12_76_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-36_-20_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-36_-44_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-36_-68_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-36_28_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-36_4_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-36_52_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-36_76_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-60_-20_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-60_-44_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-60_-68_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-60_28_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-60_4_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-60_52_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-60_76_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-84_-20_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-84_-44_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-84_-68_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-84_28_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-84_4_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-84_52_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_-84_76_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_108_-20_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_108_-44_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_108_-68_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_108_28_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_108_4_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_108_52_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_108_76_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_12_-20_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_12_-44_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_12_-68_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_12_28_2": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_12_4_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_12_76_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_36_-20_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_36_-44_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_36_-68_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_36_28_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_36_4_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_36_52_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_36_76_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_60_-20_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_60_-44_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_60_-68_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_60_28_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_60_4_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_60_52_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_60_76_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_84_-20_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_84_-44_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_84_-68_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_84_28_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_84_4_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_84_52_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "pocket_tile_84_76_0": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "side_table": {
+            "authorized": true,
+            "progress": 0.0,
+            "stage": 4,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "DEPLETED",
+            "work": 42.0000000000003,
+            "yielded": {
+              "metal": 4.0,
+              "wood": 8.0
+            }
+          },
+          "spare_crate": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 4.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          },
+          "storage_box": {
+            "authorized": false,
+            "progress": 0.0,
+            "stage": 0,
+            "stages": [
+              {
+                "name": "STRIPPED",
+                "work": 8.0,
+                "yields": {
+                  "metal": 2.0
+                }
+              },
+              {
+                "name": "PARTIAL",
+                "work": 12.0,
+                "yields": {
+                  "metal": 2.0,
+                  "wood": 3.0
+                }
+              },
+              {
+                "name": "FRAME",
+                "work": 12.0,
+                "yields": {
+                  "wood": 2.0
+                }
+              },
+              {
+                "name": "DEPLETED",
+                "work": 10.0,
+                "yields": {
+                  "wood": 3.0
+                }
+              }
+            ],
+            "state": "INTACT",
+            "work": 0.0,
+            "yielded": {}
+          }
+        },
+        "seconds": 4799.99999999993,
+        "settlement_plan": {
+          "decisions": [
+            {
+              "alternatives": [
+                {
+                  "position": "(-2.0, 0.0, 8.0)",
+                  "reason": "room/completed geometry"
+                },
+                {
+                  "position": "(2.0, 0.0, 8.0)",
+                  "reason": "room/completed geometry"
+                },
+                {
+                  "position": "(-2.0, 0.0, 9.49)",
+                  "reason": "room/completed geometry"
+                },
+                {
+                  "position": "(2.0, 0.0, 9.49)",
+                  "reason": "room/completed geometry"
+                },
+                {
+                  "position": "(-2.0, 0.0, 9.99)",
+                  "reason": "room/completed geometry"
+                },
+                {
+                  "position": "(2.0, 0.0, 9.99)",
+                  "reason": "room/completed geometry"
+                },
+                {
+                  "position": "(-4.01, 0.0, 8.0)",
+                  "reason": "room/completed geometry"
+                },
+                {
+                  "position": "(4.01, 0.0, 8.0)",
+                  "reason": "room/completed geometry"
+                }
+              ],
+              "connectivity": true,
+              "considered": 8785,
+              "downstream_feasible": true,
+              "future_reservations": [
+                {
+                  "kind": "shelter",
+                  "position": "(-2.0, 0.0, 41.01)",
+                  "rank": 0,
+                  "score": 1093.66003417969,
+                  "target": "(-2.0, 0.0, 32.01)",
+                  "valid": true
+                },
+                {
+                  "kind": "depot",
+                  "position": "(18.0, 0.0, 41.01)",
+                  "rank": 32,
+                  "score": 1413.66003417969,
+                  "target": "(18.0, 0.0, 32.01)",
+                  "valid": true
+                },
+                {
+                  "kind": "workshop",
+                  "position": "(-2.0, 0.0, 60.0)",
+                  "rank": 96,
+                  "score": 2708.0,
+                  "target": "(-2.0, 0.0, 51.0)",
+                  "valid": true
+                },
+                {
+                  "kind": "housing",
+                  "position": "(18.0, 0.0, 60.0)",
+                  "rank": 121,
+                  "score": 3028.0,
+                  "target": "(18.0, 0.0, 51.0)",
+                  "valid": true
+                }
+              ],
+              "kind": "shelter",
+              "navigation_trials": 4,
+              "rejected": 8649,
+              "rejection_reasons": {
+                "future reservation overlap": 249,
+                "room boundary": 1739,
+                "room/completed geometry": 6661
+              },
+              "reused": false,
+              "selected": {
+                "kind": "shelter",
+                "position": "(-2.0, 0.0, 41.01)",
+                "rank": 0,
+                "score": 1093.66003417969,
+                "target": "(-2.0, 0.0, 32.01)",
+                "valid": true
+              },
+              "tie_break": "squared origin distance, z, x; work side uses same order"
+            },
+            {
+              "alternatives": [
+                {
+                  "position": "(-2.0, 0.0, 8.0)",
+                  "reason": "room/completed geometry"
+                },
+                {
+                  "position": "(2.0, 0.0, 8.0)",
+                  "reason": "room/completed geometry"
+                },
+                {
+                  "position": "(-2.0, 0.0, 9.49)",
+                  "reason": "room/completed geometry"
+                },
+                {
+                  "position": "(2.0, 0.0, 9.49)",
+                  "reason": "room/completed geometry"
+                },
+                {
+                  "position": "(-2.0, 0.0, 9.99)",
+                  "reason": "room/completed geometry"
+                },
+                {
+                  "position": "(2.0, 0.0, 9.99)",
+                  "reason": "room/completed geometry"
+                },
+                {
+                  "position": "(-4.01, 0.0, 8.0)",
+                  "reason": "room/completed geometry"
+                },
+                {
+                  "position": "(4.01, 0.0, 8.0)",
+                  "reason": "room/completed geometry"
+                }
+              ],
+              "connectivity": true,
+              "considered": 8785,
+              "downstream_feasible": true,
+              "future_reservations": [
+                {
+                  "kind": "depot",
+                  "position": "(18.0, 0.0, 41.01)",
+                  "rank": 32,
+                  "score": 1413.66003417969,
+                  "target": "(18.0, 0.0, 32.01)",
+                  "valid": true
+                },
+                {
+                  "kind": "workshop",
+                  "position": "(-2.0, 0.0, 60.0)",
+                  "rank": 96,
+                  "score": 2708.0,
+                  "target": "(-2.0, 0.0, 51.0)",
+                  "valid": true
+                },
+                {
+                  "kind": "housing",
+                  "position": "(18.0, 0.0, 60.0)",
+                  "rank": 121,
+                  "score": 3028.0,
+                  "target": "(18.0, 0.0, 51.0)",
+                  "valid": true
+                }
+              ],
+              "kind": "depot",
+              "navigation_trials": 4,
+              "rejected": 8649,
+              "rejection_reasons": {
+                "future reservation overlap": 249,
+                "room boundary": 1739,
+                "room/completed geometry": 6661
+              },
+              "reused": true,
+              "selected": {
+                "kind": "depot",
+                "position": "(18.0, 0.0, 41.01)",
+                "rank": 32,
+                "score": 1413.66003417969,
+                "target": "(18.0, 0.0, 32.01)",
+                "valid": true
+              },
+              "tie_break": "squared origin distance, z, x; work side uses same order"
+            },
+            {
+              "alternatives": [
+                {
+                  "position": "(-2.0, 0.0, 8.0)",
+                  "reason": "room/completed geometry"
+                },
+                {
+                  "position": "(2.0, 0.0, 8.0)",
+                  "reason": "room/completed geometry"
+                },
+                {
+                  "position": "(-2.0, 0.0, 9.49)",
+                  "reason": "room/completed geometry"
+                },
+                {
+                  "position": "(2.0, 0.0, 9.49)",
+                  "reason": "room/completed geometry"
+                },
+                {
+                  "position": "(-2.0, 0.0, 9.99)",
+                  "reason": "room/completed geometry"
+                },
+                {
+                  "position": "(2.0, 0.0, 9.99)",
+                  "reason": "room/completed geometry"
+                },
+                {
+                  "position": "(-4.01, 0.0, 8.0)",
+                  "reason": "room/completed geometry"
+                },
+                {
+                  "position": "(4.01, 0.0, 8.0)",
+                  "reason": "room/completed geometry"
+                }
+              ],
+              "connectivity": true,
+              "considered": 8785,
+              "downstream_feasible": true,
+              "future_reservations": [
+                {
+                  "kind": "workshop",
+                  "position": "(-2.0, 0.0, 60.0)",
+                  "rank": 96,
+                  "score": 2708.0,
+                  "target": "(-2.0, 0.0, 51.0)",
+                  "valid": true
+                },
+                {
+                  "kind": "housing",
+                  "position": "(18.0, 0.0, 60.0)",
+                  "rank": 121,
+                  "score": 3028.0,
+                  "target": "(18.0, 0.0, 51.0)",
+                  "valid": true
+                }
+              ],
+              "kind": "workshop",
+              "navigation_trials": 4,
+              "rejected": 8649,
+              "rejection_reasons": {
+                "future reservation overlap": 249,
+                "room boundary": 1739,
+                "room/completed geometry": 6661
+              },
+              "reused": true,
+              "selected": {
+                "kind": "workshop",
+                "position": "(-2.0, 0.0, 60.0)",
+                "rank": 96,
+                "score": 2708.0,
+                "target": "(-2.0, 0.0, 51.0)",
+                "valid": true
+              },
+              "tie_break": "squared origin distance, z, x; work side uses same order"
+            },
+            {
+              "alternatives": [
+                {
+                  "position": "(-2.0, 0.0, 8.0)",
+                  "reason": "room/completed geometry"
+                },
+                {
+                  "position": "(2.0, 0.0, 8.0)",
+                  "reason": "room/completed geometry"
+                },
+                {
+                  "position": "(-2.0, 0.0, 9.49)",
+                  "reason": "room/completed geometry"
+                },
+                {
+                  "position": "(2.0, 0.0, 9.49)",
+                  "reason": "room/completed geometry"
+                },
+                {
+                  "position": "(-2.0, 0.0, 9.99)",
+                  "reason": "room/completed geometry"
+                },
+                {
+                  "position": "(2.0, 0.0, 9.99)",
+                  "reason": "room/completed geometry"
+                },
+                {
+                  "position": "(-4.01, 0.0, 8.0)",
+                  "reason": "room/completed geometry"
+                },
+                {
+                  "position": "(4.01, 0.0, 8.0)",
+                  "reason": "room/completed geometry"
+                }
+              ],
+              "connectivity": true,
+              "considered": 8785,
+              "downstream_feasible": true,
+              "future_reservations": [
+                {
+                  "kind": "housing",
+                  "position": "(18.0, 0.0, 60.0)",
+                  "rank": 121,
+                  "score": 3028.0,
+                  "target": "(18.0, 0.0, 51.0)",
+                  "valid": true
+                }
+              ],
+              "kind": "housing",
+              "navigation_trials": 4,
+              "rejected": 8649,
+              "rejection_reasons": {
+                "future reservation overlap": 249,
+                "room boundary": 1739,
+                "room/completed geometry": 6661
+              },
+              "reused": true,
+              "selected": {
+                "kind": "housing",
+                "position": "(18.0, 0.0, 60.0)",
+                "rank": 121,
+                "score": 3028.0,
+                "target": "(18.0, 0.0, 51.0)",
+                "valid": true
+              },
+              "tie_break": "squared origin distance, z, x; work side uses same order"
+            }
+          ],
+          "reservations": [],
+          "rests": [
+            "(-2.0, 0.0, 32.0)",
+            "(2.0, 0.0, 32.0)",
+            "(-2.0, 0.0, 28.0)",
+            "(2.0, 0.0, 28.0)",
+            "(-2.0, 0.0, 24.0)",
+            "(2.0, 0.0, 24.0)",
+            "(-2.0, 0.0, 20.0)"
+          ]
+        },
+        "shelter": 15,
+        "site_reason": "",
+        "sources": {
+          "food_cache": {
+            "extracted": {
+              "food": 176.0
+            },
+            "initial": {
+              "food": 40000.0
+            },
+            "position": "(-44.0, 0.0, 20.0)",
+            "region": "FLOOR",
+            "remaining": {
+              "food": 39824.0
+            },
+            "reserved": {
+              "food": 0.0
+            },
+            "work": 2.0
+          },
+          "spilled_water": {
+            "extracted": {
+              "water": 60.0
+            },
+            "initial": {
+              "water": 60.0
+            },
+            "position": "(-24.0, 0.0, 20.0)",
+            "region": "FLOOR",
+            "remaining": {
+              "water": 0.0
+            },
+            "reserved": {
+              "water": 0.0
+            },
+            "work": 2.0
+          },
+          "water_cup": {
+            "extracted": {
+              "water": 200.0
+            },
+            "initial": {
+              "water": 60000.0
+            },
+            "position": "(-58.0, 30.0, -50.0)",
+            "region": "STUDY_SURFACE",
+            "remaining": {
+              "water": 59800.0
+            },
+            "reserved": {
+              "water": 8.0
+            },
+            "work": 2.0
+          }
+        },
+        "states": {
+          "TRAVEL": 9,
+          "WORK": 3
+        },
+        "status": {
+          "days": 7.99999999999988,
+          "drinks": 190,
+          "economy": {
+            "food": {
+              "available": 73.0,
+              "consumed": 123.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 176.0,
+              "reserved": 0.0
+            },
+            "metal": {
+              "available": 1.0,
+              "consumed": 11.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 12.0,
+              "reserved": 0.0
+            },
+            "water": {
+              "available": 100.0,
+              "consumed": 190.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 260.0,
+              "reserved": 0.0
+            },
+            "wood": {
+              "available": 33.0,
+              "consumed": 30.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 63.0,
+              "reserved": 0.0
+            }
+          },
+          "food_days": 3.04166666666667,
+          "meals": 123,
+          "population": 12,
+          "resting": 2,
+          "rests": 97,
+          "shelter": 15,
+          "urgent": 0,
+          "water_days": 2.77777777777778
+        },
+        "suppression_keys": 36,
+        "tasks": {
+          "active": 12,
+          "available": 1,
+          "cancelled": 0,
+          "cancelled_total": 4,
+          "complete": 487,
+          "completed_total": 5200,
+          "created_total": 5217,
+          "failed": 0,
+          "failed_total": 0,
+          "reserved": 0,
+          "retained_tasks": 500
+        },
+        "traversal": {
+          "active_stage": "complete",
+          "cable_deployed": true,
+          "completed_stages": 3,
+          "created": true,
+          "delivered": {
+            "mechanical_parts": 0,
+            "metal": 4,
+            "wood": 4
+          },
+          "floor_target_connected": true,
+          "picked_up": {
+            "mechanical_parts": 0,
+            "metal": 4,
+            "wood": 4
+          },
+          "progress_percent": 100.0,
+          "required": {
+            "mechanical_parts": 0,
+            "metal": 4,
+            "wood": 4
+          },
+          "site": "(2.0, 0.0, -52.0)",
+          "stage_gates": [
+            {
+              "mechanical_parts": 0,
+              "metal": 1,
+              "wood": 4
+            },
+            {
+              "mechanical_parts": 0,
+              "metal": 3,
+              "wood": 4
+            },
+            {
+              "mechanical_parts": 0,
+              "metal": 4,
+              "wood": 4
+            }
+          ],
+          "stage_progress": 0.0,
+          "state": "CABLE_DEPLOYED",
+          "stockpile": {
+            "mechanical_parts": 0,
+            "metal": 1.0,
+            "wood": 33.0
+          },
+          "traversal": {}
+        }
+      },
+      "fingerprint": "889d3472beb0e397cbdcb409b5e28748b06d0ddd7f22b6bdcf3e5f576f74e3b6",
+      "id": "PLACE-031",
+      "maxima": {
+        "bundles": 3,
+        "journal": 45,
+        "live_tasks": 12,
+        "movement": 0.650005340576172,
+        "oldest_live_task": 122.799999999888,
+        "population": 12,
+        "projects": 4,
+        "tasks": 500,
+        "tickets": 15
+      },
+      "milestones": {
+        "depot_complete": 216.299999999992,
+        "depot_started": 154.999999999995,
+        "elevated_territory": 1499.79999999973,
+        "first_haul": 13.4,
+        "first_salvage": 37.9000000000003,
+        "housing_complete": 605.200000000069,
+        "housing_started": 425.000000000028,
+        "material_haul": 48.1000000000004,
+        "meaningful_work": 11.4,
+        "physical_climb": 1483.69999999975,
+        "shelter_complete": 151.699999999996,
+        "shelter_started": 5.0,
+        "sixth_citizen": 910.000000000138,
+        "traversal_complete": 1465.99999999976,
+        "traversal_started": 1352.79999999987,
+        "workshop_complete": 420.200000000027,
+        "workshop_started": 219.999999999992
+      },
+      "name": "Only some legal apron combinations fit the founding chain",
+      "reproduction": "./TEST_ROOM_SCALE_POC472.ps1 -Mode Reproduce -Scenario \"verification/poc472/packing-prefix-replay/PLACE-031/config.json\" -OutputDirectory verification/poc472/reproduced",
+      "result": "PASS",
+      "seed": 472030,
+      "stall_windows": [],
+      "validation": {
+        "depot_site": {
+          "kind": "depot",
+          "position": "(18.0, 0.0, 41.01)",
+          "rank": 32,
+          "score": 1413.66003417969,
+          "target": "(18.0, 0.0, 32.01)",
+          "valid": true
+        },
+        "floor_resource_path_lengths": {
+          "food_cache": 53.3137083053589,
+          "spilled_water": 33.3137083053589
+        },
+        "floor_resources": {
+          "food": 40000.0,
+          "water": 60.0
+        },
+        "navigation_errors": [],
+        "safe_salvage_path_lengths": {
+          "bookcase": 139.201523780823,
+          "chair": 65.3493194580078,
+          "packing_crate": 99.2289085388184,
+          "side_table": 74.590781211853,
+          "spare_crate": 133.0099568367,
+          "storage_box": 92.5404081344604
+        },
+        "safe_salvage_totals": {
+          "metal": 24.0,
+          "wood": 91.0
+        },
+        "schema_errors": [],
+        "shelter_site": {
+          "kind": "shelter",
+          "position": "(-2.0, 0.0, 41.01)",
+          "rank": 0,
+          "score": 1093.66003417969,
+          "target": "(-2.0, 0.0, 32.01)",
+          "valid": true
+        },
+        "solvability_errors": [],
+        "solvable": true,
+        "structural": true
+      }
+    }
+  ],
+  "scenario_seeds": {
+    "PLACE-031": 472030
+  },
+  "shelter": {
+    "max": 15,
+    "mean": 15,
+    "median": 15,
+    "min": 15,
+    "p90": 15
+  },
+  "structure_completion_counts": {
+    "depot": 1,
+    "housing": 1,
+    "shelter": 1,
+    "workshop": 1
+  },
+  "total_scenarios": 1,
+  "traversal_success_count": 1,
+  "unexpected_negative_outcomes": 0,
+  "unresolved_bugs": [],
+  "valid_failures": 0,
+  "valid_passes": 1,
+  "valid_scenarios": 1
+}

@@ -1,0 +1,145 @@
+{
+  "classification": "positive",
+  "days": 8,
+  "generator_version": 1,
+  "id": "PLACE-021",
+  "mutations": {
+    "finite_quantities": "unchanged canonical",
+    "origin": [
+      40,
+      0,
+      56
+    ],
+    "protected_obstacles": [
+      {
+        "blocks_navigation": true,
+        "dimensions": [
+          6,
+          6,
+          8
+        ],
+        "id": "irregular_0",
+        "kind": "box",
+        "name": "irregular_0",
+        "navigation_padding": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          -8,
+          0,
+          38
+        ],
+        "resource_profile": {
+          "protected": true
+        },
+        "rotation_degrees": 15
+      },
+      {
+        "blocks_navigation": true,
+        "dimensions": [
+          6,
+          6,
+          8
+        ],
+        "id": "irregular_1",
+        "kind": "box",
+        "name": "irregular_1",
+        "navigation_padding": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          14,
+          0,
+          70
+        ],
+        "resource_profile": {
+          "protected": true
+        },
+        "rotation_degrees": 15
+      },
+      {
+        "blocks_navigation": true,
+        "dimensions": [
+          6,
+          6,
+          8
+        ],
+        "id": "irregular_2",
+        "kind": "box",
+        "name": "irregular_2",
+        "navigation_padding": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          36,
+          0,
+          38
+        ],
+        "resource_profile": {
+          "protected": true
+        },
+        "rotation_degrees": 45
+      },
+      {
+        "blocks_navigation": true,
+        "dimensions": [
+          6,
+          6,
+          8
+        ],
+        "id": "irregular_3",
+        "kind": "box",
+        "name": "irregular_3",
+        "navigation_padding": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          58,
+          0,
+          70
+        ],
+        "resource_profile": {
+          "protected": true
+        },
+        "rotation_degrees": 45
+      },
+      {
+        "blocks_navigation": true,
+        "dimensions": [
+          6,
+          6,
+          8
+        ],
+        "id": "irregular_4",
+        "kind": "box",
+        "name": "irregular_4",
+        "navigation_padding": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          80,
+          0,
+          38
+        ],
+        "resource_profile": {
+          "protected": true
+        },
+        "rotation_degrees": 30
+      }
+    ]
+  },
+  "name": "Irregular obstacle arrangement",
+  "reproduction": "./TEST_ROOM_SCALE_POC472.ps1 -Mode Reproduce -Scenario \"verification/poc472/development-04/PLACE-021/config.json\" -OutputDirectory verification/poc472/reproduced",
+  "room_file": "C:\\Users\\Zero\\python_projects\\ai\\roomscale\\verification\\poc472\\development-04\\PLACE-021\\PLACE-021.json",
+  "seed": 472020
+}

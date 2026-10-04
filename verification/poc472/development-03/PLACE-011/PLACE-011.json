@@ -1,0 +1,419 @@
+{
+  "camera": {
+    "fill_position": [
+      5,
+      68,
+      24
+    ],
+    "focus": [
+      0,
+      0,
+      0
+    ],
+    "lantern_position": [
+      -25,
+      10,
+      60
+    ]
+  },
+  "civilization": {
+    "cohort_size": 1,
+    "economy_construction": true,
+    "initial_speed": 1,
+    "rest_capacity": 0,
+    "shelter_capacity": 0,
+    "stock": {
+      "food": 20,
+      "metal": 0,
+      "water": 30,
+      "wood": 0
+    }
+  },
+  "dimensions": [
+    240,
+    180
+  ],
+  "display_name": "Five Founders / Organic Civilization",
+  "floor": {
+    "center": [
+      0,
+      0,
+      0
+    ],
+    "dimensions": [
+      240,
+      180
+    ],
+    "height": 0
+  },
+  "floor_color": "795b43",
+  "id": "PLACE-011",
+  "objects": [
+    {
+      "blocks_navigation": true,
+      "color": "81593e",
+      "dimensions": [
+        68,
+        30,
+        34
+      ],
+      "id": "desk",
+      "kind": "table",
+      "name": "Desk",
+      "navigation_padding": [
+        8,
+        0,
+        7
+      ],
+      "position": [
+        -58,
+        0,
+        -52
+      ],
+      "surface": {
+        "anchor": [
+          -58,
+          30,
+          -52
+        ],
+        "height": 30,
+        "region_id": "STUDY_SURFACE"
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "color": "546d68",
+      "dimensions": [
+        25,
+        19,
+        23
+      ],
+      "id": "chair",
+      "kind": "chair",
+      "name": "Chair",
+      "navigation_padding": [
+        3,
+        0,
+        3
+      ],
+      "position": [
+        -58,
+        0,
+        -20
+      ]
+    },
+    {
+      "blocks_navigation": true,
+      "color": "74503a",
+      "dimensions": [
+        32,
+        63,
+        17
+      ],
+      "id": "bookcase",
+      "kind": "bookcase",
+      "name": "Bookcase",
+      "navigation_padding": [
+        3,
+        0,
+        2
+      ],
+      "position": [
+        91,
+        0,
+        -63
+      ]
+    },
+    {
+      "blocks_navigation": false,
+      "color": "a66e4e",
+      "dimensions": [
+        92,
+        0.12,
+        68
+      ],
+      "id": "rug",
+      "kind": "rug",
+      "name": "Rug",
+      "position": [
+        50,
+        0,
+        -22
+      ]
+    },
+    {
+      "blocks_navigation": true,
+      "color": "80583d",
+      "dimensions": [
+        20,
+        20,
+        17
+      ],
+      "id": "side_table",
+      "kind": "table",
+      "name": "Side Table",
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "position": [
+        44,
+        0,
+        -15
+      ]
+    },
+    {
+      "blocks_navigation": true,
+      "color": "a98254",
+      "dimensions": [
+        17,
+        15,
+        14
+      ],
+      "id": "storage_box",
+      "kind": "box",
+      "name": "Storage Box",
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "position": [
+        75,
+        0,
+        43
+      ]
+    },
+    {
+      "blocks_navigation": true,
+      "color": "637674",
+      "dimensions": [
+        16,
+        14,
+        16
+      ],
+      "id": "waste_bin",
+      "kind": "cylinder",
+      "name": "Waste Bin",
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "position": [
+        -99,
+        0,
+        12
+      ]
+    },
+    {
+      "blocks_navigation": true,
+      "color": "789166",
+      "dimensions": [
+        13,
+        42,
+        12
+      ],
+      "id": "plant",
+      "kind": "plant",
+      "name": "Room Plant",
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "position": [
+        -91,
+        0,
+        -46
+      ]
+    },
+    {
+      "blocks_navigation": false,
+      "color": "6ea6b8",
+      "dimensions": [
+        3,
+        5,
+        3
+      ],
+      "id": "water_cup",
+      "kind": "water_container",
+      "name": "Water Container",
+      "position": [
+        -58,
+        30,
+        -50
+      ],
+      "resource_profile": {
+        "contents": {
+          "water": 60000
+        },
+        "region_id": "STUDY_SURFACE",
+        "work_seconds": 2
+      }
+    },
+    {
+      "blocks_navigation": false,
+      "color": "d0a864",
+      "dimensions": [
+        2,
+        1,
+        2
+      ],
+      "id": "food_cache",
+      "kind": "food_cache",
+      "name": "Food Cache",
+      "position": [
+        -44,
+        0,
+        20
+      ],
+      "resource_profile": {
+        "contents": {
+          "food": 40000
+        },
+        "work_seconds": 2
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "color": "92754e",
+      "dimensions": [
+        20,
+        20,
+        20
+      ],
+      "id": "packing_crate",
+      "kind": "box",
+      "name": "Packing Crate",
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "position": [
+        101,
+        0,
+        9
+      ]
+    },
+    {
+      "blocks_navigation": true,
+      "color": "88704f",
+      "dimensions": [
+        20,
+        20,
+        20
+      ],
+      "id": "spare_crate",
+      "kind": "box",
+      "name": "Spare Crate",
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "position": [
+        103,
+        0,
+        62
+      ]
+    },
+    {
+      "blocks_navigation": false,
+      "color": "6ea6b8",
+      "dimensions": [
+        3,
+        0.15,
+        3
+      ],
+      "id": "spilled_water",
+      "kind": "water_container",
+      "name": "Spilled Water",
+      "position": [
+        -24,
+        0,
+        20
+      ],
+      "resource_profile": {
+        "contents": {
+          "water": 60
+        },
+        "work_seconds": 2
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        6,
+        6,
+        48
+      ],
+      "id": "corridor_-1",
+      "kind": "box",
+      "name": "corridor_-1",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -25,
+        0,
+        48
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        6,
+        6,
+        48
+      ],
+      "id": "corridor_1",
+      "kind": "box",
+      "name": "corridor_1",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        25,
+        0,
+        48
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    }
+  ],
+  "schema_version": 1,
+  "spawn": {
+    "center": [
+      0,
+      0,
+      44
+    ],
+    "dimensions": [
+      8,
+      0,
+      8
+    ]
+  },
+  "start": {
+    "infrastructure": [],
+    "origin": [
+      0,
+      0,
+      44
+    ],
+    "population": 5
+  },
+  "target_surface_id": "STUDY_SURFACE",
+  "wall_height": 72
+}

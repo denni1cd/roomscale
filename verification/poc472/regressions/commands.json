@@ -1,0 +1,62 @@
+[
+  {
+    "Command": "./TEST_ROOM_SCALE_POC47.ps1 -Mode All -OutputDirectory verification/poc472/regressions/poc47",
+    "Passed": true
+  },
+  {
+    "Command": "./TEST_ROOM_SCALE_POC46.ps1 -Mode Fast -OutputDirectory verification/poc472/regressions/poc46-fast",
+    "Passed": true
+  },
+  {
+    "Command": "./TEST_ROOM_SCALE_POC46.ps1 -Mode Scenario -OutputDirectory verification/poc472/regressions/poc46-scenario",
+    "Passed": true
+  },
+  {
+    "Command": "./TEST_ROOM_SCALE_POC45.ps1 -Mode Fast -OutputDirectory verification/poc472/regressions/poc45-fast",
+    "Passed": true
+  },
+  {
+    "Command": "./TEST_ROOM_SCALE_POC45.ps1 -Mode Survival -OutputDirectory verification/poc472/regressions/poc45-survival",
+    "Passed": true
+  },
+  {
+    "Command": "./TEST_ROOM_SCALE_POC45.ps1 -Mode Scenario -OutputDirectory verification/poc472/regressions/poc45-scenario",
+    "Passed": true
+  },
+  {
+    "Command": "./TEST_ROOM_SCALE_POC4.ps1 -Mode Fast -OutputDirectory verification/poc472/regressions/poc4-fast",
+    "Passed": true
+  },
+  {
+    "Command": "./TEST_ROOM_SCALE_POC4.ps1 -Mode Sustained -TimeoutSeconds 400 -OutputDirectory verification/poc472/regressions/poc4-sustained",
+    "Passed": true
+  },
+  {
+    "Command": "./TEST_ROOM_SCALE_FAST.ps1 -LogPath verification/poc472/regressions/room-definition-fast.log",
+    "Passed": true
+  },
+  {
+    "Command": "$godot --headless --path . --script res://scripts/poc471_navigation_test.gd",
+    "Passed": true
+  },
+  {
+    "Command": "$godot --headless --path . --script res://scripts/poc471_unreachable_task_test.gd",
+    "Passed": true
+  },
+  {
+    "Command": "$godot --headless --path . --script res://scripts/poc471_midlink_test.gd",
+    "Passed": true
+  },
+  {
+    "Command": "$godot --headless --path . --script res://scripts/poc472_planner_test.gd",
+    "Passed": true
+  },
+  {
+    "Command": "python -c \"import sys; from pathlib import Path; sys.path.insert(0,'scripts'); import poc472_campaign as c; c.prior.write(Path(sys.argv[1]),c.packing_layout()['definition'])\" \"C:\\Users\\Zero\\python_projects\\ai\\roomscale\\verification\\poc472\\regressions\\packing-input\\PLACE-031.json\"",
+    "Passed": true
+  },
+  {
+    "Command": "$env:ROOMSCALE_ROOM_FILE = \"C:\\Users\\Zero\\python_projects\\ai\\roomscale\\verification\\poc472\\regressions\\packing-input\\PLACE-031.json\"; $godot --headless --path . --script res://scripts/poc472_packing_test.gd",
+    "Passed": true
+  }
+]
