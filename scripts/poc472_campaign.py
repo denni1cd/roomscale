@@ -131,7 +131,11 @@ def main():
     elif args.mode == "reproduce": configs = [retained(ROOT / args.scenario)]
     elif args.mode == "placement": configs = placements()
     else:
-        configs = [retained(p) for p in sorted((ROOT / "verification/poc471/final").glob("*/config.json"))]
+        core_paths = sorted((ROOT / "verification/poc471/final").glob("*/config.json"))
+        exploration_paths = sorted((ROOT / "verification/poc471/exploration").glob("*/config.json"))
+        assert len(core_paths) == 75 and len(exploration_paths) == 20, "Incomplete retained baseline input set"
+        configs = [retained(p) for p in core_paths + exploration_paths]
+        assert len({c["id"] for c in configs}) == 95, "Duplicate retained baseline input"
         if args.mode == "soak": configs = [c for c in configs if c["classification"] == "soak"]
         if args.mode == "development": configs = [c for c in configs if c["id"] in ["POS-001","POS-006","POS-018","POS-023","POS-029","NEG-03"]] + placements()
         if args.mode == "full": configs += placements() + [impossible_layout()]
