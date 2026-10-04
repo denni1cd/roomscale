@@ -5,7 +5,10 @@ RoomScale is a small 3D civilization simulation where half-inch citizens treat a
 ## Current status
 
 POC 4.7.1 validates and hardens founding with deterministic layout/resource variants,
-continuous production invariants and fresh long soaks on
+79/79 positive worlds, five expected negatives, 90/60/60-day soaks and six
+identical replays. Seven documented defects were narrowly fixed; the assessment
+is **moderately robust** within supported topology. Continuous production invariants
+and final shared regressions are green on
 `codex/roomscale-poc471-founder-stress`. See the
 [robustness harness guide](docs/POC471_ROBUSTNESS.md) and
 [campaign report](verification/poc471/final-report.md).

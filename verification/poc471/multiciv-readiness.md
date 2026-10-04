@@ -126,3 +126,34 @@ Do not start multi-civilization gameplay by duplicating the existing room scene
 services. First separate authoritative world sources/obstacles from civilization
 inventories, permissions, planners and populations. This recommendation introduces
 no new gameplay or production code in this milestone.
+
+## Hardening evidence relevant to future ownership
+
+Seven reproduced defects show that correct economy instance state alone does not
+make physical progression safe. Reserved future depot activity space matters;
+coarse paths need validated physical connectors; failed navigation needs a tick
+boundary; resource availability must agree with collection eligibility; derived
+activity targets need physical placement checks; sub-grid aisles need explicit
+connectors; and obstacle revisions must preserve an agent already on a traversal.
+These are measured single-civilization defects, not speculative multi-civ results.
+
+The midlink defect is especially relevant to shared navigation revisions. Current
+development repaths only its own citizens on completion. The new route continues
+from a physical point on an already deployed link and validates its floor exit;
+it does not add civilization ownership or permission metadata to that link. A
+future shared obstacle revision must notify every affected population and preserve
+its traversal state. A local planner cannot safely assume all affected agents are
+on its own floor.
+
+Safe-salvage authorization is serialized: the governor refuses another object while
+one authorized object's yields are still outstanding. `can_supply` totals remaining
+safe stages; it does not reserve those yields across civilizations. Future shared
+authority must distinguish projected capacity, authorization, actual extraction
+and inventory receipt, and must report inaccessible outstanding work rather than
+pretending another civilization's projection is available local inventory.
+
+Population arrival currently allocates contiguous local IDs and a safe floor cell
+connected to its own depot. That is useful instance behavior, but there is no
+agent collision/reservation model for simultaneous arrivals from other populations.
+The present bounded-movement and unique-ID evidence should not be read as
+inter-agent collision avoidance or multi-civilization fairness.

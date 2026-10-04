@@ -1,6 +1,6 @@
 # POC 4.7.1 acceptance evidence
 
-Final status is confirmed only after the aggregate evidence review succeeds.
+Final aggregate review passed: 79/79 positive worlds, 5/5 expected negatives, 3 full soaks and 6 identical repeats; no source/input/duration/log consistency errors. AC15 has the explicit startup qualification below.
 
 | Criterion | Evidence / interpretation |
 |---|---|

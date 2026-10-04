@@ -2,6 +2,12 @@
 
 ## POC 4.7.1 founding robustness
 
+Final campaign: **79/79 positive worlds**, **5/5 expected negatives**, **3 full
+soaks (90/60/60 days)** and **6/6 identical repeats**. All required shared
+regressions pass after the last production fix. Two infeasible candidates are
+excluded before simulation. Seven defects were fixed; classification is
+**3. moderately robust**, with explicit supported-topology and finite-supply limits.
+
 A deterministic production-observer campaign covers founder origins, legal spawns,
 resource placement/quantities, salvage yields, obstacles, traversal approaches,
 impossible inputs, replay and long soaks. Narrow fixes reserve the future depot

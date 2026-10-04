@@ -1,0 +1,37 @@
+# Outlier investigation
+
+All times are fixed-step production seconds. These are observations, not balance changes.
+
+## shelter_complete
+
+- **EXP-ROUTING-04**, seed 471005: 187.1s. Floor paths: `{'food_cache': 59.9411249160767, 'spilled_water': 39.9411249160767}`; safe salvage paths: `{'bookcase': 151.083773612976, 'chair': 96.8750677108765, 'packing_crate': 109.142648696899, 'side_table': 73.9403610229492, 'spare_crate': 96.3673477172852, 'storage_box': 68.5404081344604}`. Bootstrap source exhaustion: 940.000000000145. Grapple start/deployment: 964.600000000151/1067.80000000012. Oldest live task maximum: 144.8s. Failed/cancelled tasks: 0/4.
+- **EXP-ROUTING-05**, seed 471005: 187.1s. Floor paths: `{'food_cache': 59.9411249160767, 'spilled_water': 39.9411249160767}`; safe salvage paths: `{'bookcase': 151.083773612976, 'chair': 96.8750677108765, 'packing_crate': 109.142648696899, 'side_table': 73.9403610229492, 'spare_crate': 96.3673477172852, 'storage_box': 68.5404081344604}`. Bootstrap source exhaustion: 935.000000000144. Grapple start/deployment: 961.00000000015/1065.00000000013. Oldest live task maximum: 213.1s. Failed/cancelled tasks: 0/4.
+- **POS-046**, seed 471045: 181.5s. Floor paths: `{'food_cache': 139.941124916077, 'spilled_water': 96.6274166107178}`; safe salvage paths: `{'bookcase': 190.966023445129, 'chair': 62.827109336853, 'packing_crate': 169.142648696899, 'side_table': 120.777711868286, 'spare_crate': 161.053639411926, 'storage_box': 135.854116439819}`. Bootstrap source exhaustion: 1519.99999999971. Grapple start/deployment: 1538.8999999997/1654.49999999959. Oldest live task maximum: 158.8s. Failed/cancelled tasks: 0/4.
+
+## workshop_complete
+
+- **POS-001**, seed 471000: 414.1s. Floor paths: `{'food_cache': 57.5979790687561, 'spilled_water': 39.9411249160767}`; safe salvage paths: `{'bookcase': 149.484108924866, 'chair': 94.0527172088623, 'packing_crate': 118.308472633362, 'side_table': 94.6847810745239, 'spare_crate': 96.613100528717, 'storage_box': 97.443995475769}`. Bootstrap source exhaustion: 1299.99999999991. Grapple start/deployment: 1327.19999999989/1485.69999999974. Oldest live task maximum: 193.7s. Failed/cancelled tasks: 0/4.
+- **EXP-ROUTING-04**, seed 471005: 413.4s. Floor paths: `{'food_cache': 59.9411249160767, 'spilled_water': 39.9411249160767}`; safe salvage paths: `{'bookcase': 151.083773612976, 'chair': 96.8750677108765, 'packing_crate': 109.142648696899, 'side_table': 73.9403610229492, 'spare_crate': 96.3673477172852, 'storage_box': 68.5404081344604}`. Bootstrap source exhaustion: 940.000000000145. Grapple start/deployment: 964.600000000151/1067.80000000012. Oldest live task maximum: 144.8s. Failed/cancelled tasks: 0/4.
+- **POS-007**, seed 471006: 406.1s. Floor paths: `{'food_cache': 57.5979790687561, 'spilled_water': 39.9411249160767}`; safe salvage paths: `{'bookcase': 147.140963077545, 'chair': 96.8750677108765, 'packing_crate': 109.142648696899, 'side_table': 71.5972151756287, 'spare_crate': 96.3673477172852, 'storage_box': 68.5404081344604}`. Bootstrap source exhaustion: 840.000000000122. Grapple start/deployment: 860.600000000127/967.000000000151. Oldest live task maximum: 136.1s. Failed/cancelled tasks: 0/4.
+
+## sixth_citizen
+
+- **EXP-WATER-00**, seed 471001: 860.0s. Floor paths: `{'food_cache': 57.5979790687561, 'spilled_water': 109.726969242096}`; safe salvage paths: `{'bookcase': 147.140963077545, 'chair': 96.8750677108765, 'packing_crate': 109.142648696899, 'side_table': 71.5972151756287, 'spare_crate': 96.3673477172852, 'storage_box': 68.5404081344604}`. Bootstrap source exhaustion: 415.000000000026. Grapple start/deployment: 437.400000000031/627.300000000074. Oldest live task maximum: 238.9s. Failed/cancelled tasks: 0/2.
+- **EXP-ROUTING-04**, seed 471005: 840.0s. Floor paths: `{'food_cache': 59.9411249160767, 'spilled_water': 39.9411249160767}`; safe salvage paths: `{'bookcase': 151.083773612976, 'chair': 96.8750677108765, 'packing_crate': 109.142648696899, 'side_table': 73.9403610229492, 'spare_crate': 96.3673477172852, 'storage_box': 68.5404081344604}`. Bootstrap source exhaustion: 940.000000000145. Grapple start/deployment: 964.600000000151/1067.80000000012. Oldest live task maximum: 144.8s. Failed/cancelled tasks: 0/4.
+- **POS-001**, seed 471000: 825.0s. Floor paths: `{'food_cache': 57.5979790687561, 'spilled_water': 39.9411249160767}`; safe salvage paths: `{'bookcase': 149.484108924866, 'chair': 94.0527172088623, 'packing_crate': 118.308472633362, 'side_table': 94.6847810745239, 'spare_crate': 96.613100528717, 'storage_box': 97.443995475769}`. Bootstrap source exhaustion: 1299.99999999991. Grapple start/deployment: 1327.19999999989/1485.69999999974. Oldest live task maximum: 193.7s. Failed/cancelled tasks: 0/4.
+
+## traversal_complete
+
+- **POS-051**, seed 471050: 1715.6s. Floor paths: `{'food_cache': 88.911687374115, 'spilled_water': 119.656854152679}`; safe salvage paths: `{'bookcase': 134.856692314148, 'chair': 118.129900932312, 'packing_crate': 81.8289403915405, 'side_table': 75.9992361068726, 'spare_crate': 65.0536394119263, 'storage_box': 37.5109705924988}`. Bootstrap source exhaustion: 1494.99999999974. Grapple start/deployment: 1515.59999999972/1715.59999999954. Oldest live task maximum: 147.9s. Failed/cancelled tasks: 0/5.
+- **POS-005**, seed 471004: 1707.0s. Floor paths: `{'food_cache': 57.5979790687561, 'spilled_water': 44.6274166107178}`; safe salvage paths: `{'bookcase': 147.140963077545, 'chair': 96.8750677108765, 'packing_crate': 109.142648696899, 'side_table': 73.9403610229492, 'spare_crate': 96.3673477172852, 'storage_box': 68.5404081344604}`. Bootstrap source exhaustion: 1479.99999999975. Grapple start/deployment: 1505.19999999973/1706.99999999954. Oldest live task maximum: 170.9s. Failed/cancelled tasks: 0/5.
+- **EXP-WATER-05**, seed 471001: 1705.7s. Floor paths: `{'food_cache': 57.5979790687561, 'spilled_water': 109.726969242096}`; safe salvage paths: `{'bookcase': 147.140963077545, 'chair': 96.8750677108765, 'packing_crate': 109.142648696899, 'side_table': 71.5972151756287, 'spare_crate': 96.3673477172852, 'storage_box': 68.5404081344604}`. Bootstrap source exhaustion: 1469.99999999976. Grapple start/deployment: 1499.39999999973/1705.69999999954. Oldest live task maximum: 134.7s. Failed/cancelled tasks: 0/5.
+
+## Interpretation
+
+The founder planner deliberately waits while a floor water source has at least one collectable unit remaining. Grapple timing therefore measures both bootstrap depletion and the physical approach/build sequence. Later deployment with a larger floor reserve is often correct policy, not a traversal deadlock. Compare grapple start-to-deployment separately from startup-to-deployment.
+
+Shelter/workshop outliers also reflect salvage choice, delivery routes, needs interruptions and safe-site retries. The reserve and obstacle expansion cases probe small nearby changes; source path lengths provide a reproducible explanation of haul distance. Neither timers, walking speed nor canonical quantities were changed.
+
+Growth requires a 300s continuous stability window after infrastructure plus safe post-arrival forecasts and a 600s cooldown. Delayed first growth must be interpreted through this policy rather than equated with arbitrary inactivity.
+
+Controlled interventions and interpretation: [outlier-investigation-notes.md](outlier-investigation-notes.md). Host time contamination and verified fresh timing replays: [performance-notes.md](performance-notes.md).
