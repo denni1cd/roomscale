@@ -37,6 +37,21 @@ def obstacle(identifier, x, z, width=8, depth=8):
                 navigation_padding=[0, 0, 0], resource_profile={"protected": True})
 
 
+def clear_floor(room, x, z):
+    """Conservative input sampling only; authoritative validation stays in Godot."""
+    origin = room["start"]["origin"]
+    if abs(x-origin[0]) <= 14 and abs(z-(origin[2]-9)) <= 14:
+        return False
+    for o in room["objects"]:
+        if not o.get("blocks_navigation"):
+            continue
+        half_x = o["dimensions"][0]/2 + o.get("navigation_padding", [0, 0, 0])[0] + 4
+        half_z = o["dimensions"][2]/2 + o.get("navigation_padding", [0, 0, 0])[2] + 4
+        if abs(x-o["position"][0]) <= half_x and abs(z-o["position"][2]) <= half_z:
+            return False
+    return True
+
+
 def generate(index, seed, negative=False):
     rng = random.Random(seed)
     room = json.loads((ROOT / "rooms/room_poc47.json").read_text())
@@ -76,8 +91,6 @@ def generate(index, seed, negative=False):
         room["spawn"]["center"] = [origin[0] + rng.choice([-4, 0, 4]), 0, origin[2] + 4]
         room["spawn"]["dimensions"] = [rng.choice([20, 24, 28, 32]), 0, 12]
         if index >= 10:
-            for key in ["food_cache", "spilled_water"]:
-                objects[key]["position"] = [rng.choice([-84, -40, -12, 20, 60, 88]), 0, rng.choice([20, 32, 60, 72])]
             for key in ["storage_box", "packing_crate", "spare_crate", "side_table"]:
                 objects[key]["position"][0] += rng.choice([-8, -4, 0, 4])
                 objects[key]["position"][2] += rng.choice([-8, -4, 0, 4])
@@ -85,6 +98,10 @@ def generate(index, seed, negative=False):
             for key in ["desk", "chair", "water_cup"]:
                 objects[key]["position"][0] += dx
             objects["desk"]["surface"]["anchor"][0] += dx
+            safe_points = [(x,z) for x in [-84,-40,-12,20,60,88] for z in [20,32,60,72] if clear_floor(room,x,z)]
+            for key in ["food_cache", "spilled_water"]:
+                x,z = rng.choice(safe_points)
+                objects[key]["position"] = [x,0,z]
         if index == 0:
             # Make every safe salvage object far away; desk remains protected support.
             for key, at in {"chair": [74, 0, -18], "side_table": [90, 0, 10],
@@ -170,8 +187,13 @@ def execute(config, output, godot):
                   execution_seconds=round(time.perf_counter() - started, 3), reproduction=saved["reproduction"],
                   config_sha256=hashlib.sha256(config_path.read_bytes()).hexdigest(),
                   definition_sha256=hashlib.sha256(definition_path.read_bytes()).hexdigest())
+    result["tested_commit"] = subprocess.check_output(["git","rev-parse","HEAD"],cwd=ROOT,text=True).strip()
+    result["source_hashes"] = {str(p.relative_to(ROOT)).replace("\\","/"):hashlib.sha256(p.read_bytes().replace(b"\r\n",b"\n")).hexdigest()
+                               for p in sorted((ROOT/"scripts").rglob("*.gd"))}
+    if result.get("failure", "").startswith("Generator invalid:"):
+        result.update(result="REJECTED", classification="rejected")
     write(result_path, result)
-    if result["result"] != "PASS":
+    if result["result"] not in ["PASS","REJECTED"]:
         write(case_dir / "failure-package.json", dict(config=saved, definition=config["definition"], diagnostics=result))
     print(f'{config["id"]} {result["result"]} {result.get("failure", "")} wall={result["execution_seconds"]}s', flush=True)
     return result
@@ -198,6 +220,7 @@ def summarize(results, output):
         determinism.append(dict(id=repeat["id"], identical=bool(original and original.get("fingerprint") == repeat.get("fingerprint")),
                                 original=original.get("fingerprint") if original else None, repeat=repeat.get("fingerprint")))
     summary = dict(total_scenarios=len(results), valid_scenarios=len(positives),
+                   generator_rejections=sum(r["classification"] == "rejected" for r in results),
                    valid_passes=sum(r["result"] == "PASS" for r in positives),
                    valid_failures=sum(r["result"] != "PASS" for r in positives), negative_scenarios=len(negatives),
                    expected_negative_outcomes=sum(r["result"] == "PASS" for r in negatives),
@@ -282,7 +305,10 @@ def main():
         results = list(executor.map(lambda c: execute(c, output, args.godot), configs))
     summary = summarize(results, output)
     print(json.dumps({k: summary[k] for k in ["total_scenarios", "valid_passes", "valid_failures", "expected_negative_outcomes", "unexpected_negative_outcomes", "invariant_violation_count", "deadlock_count"]}))
-    return int(any(r["result"] != "PASS" for r in results) or any(not r["identical"] for r in summary["determinism_results"]))
+    required_positive_count = 30 if args.mode == "full" else 10 if args.mode == "short" else 0
+    return int(any(r["result"] not in ["PASS","REJECTED"] for r in results)
+               or summary["valid_scenarios"] < required_positive_count
+               or any(not r["identical"] for r in summary["determinism_results"]))
 
 
 if __name__ == "__main__":

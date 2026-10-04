@@ -138,6 +138,18 @@ func select_site(kind: String = "") -> Dictionary:
 		return da < db if da != db else (a.z < b.z if a.z != b.z else a.x < b.x))
 	for site in positions:
 		if sim.founder_mode and count("depot") == 0 and site.distance_to(depot_site) < 22: continue
+		if sim.founder_mode and kind == "shelter" and count("depot") == 0:
+			# The first shelter creates housing/rest anchors. Reserve the depot's
+			# future clear apron for these anchors as well as for building footprints;
+			# otherwise a completed shelter can make the fixed bootstrap depot
+			# permanently invalid even though both sites were initially legal.
+			var depot_apron := Rect2(Vector2(depot_site.x - SIZE.x / 2 - 4, depot_site.z - SIZE.z / 2 - 4), Vector2(SIZE.x + 8, SIZE.z + 8))
+			var housing_target := site + Vector3(0, 0, SIZE.z / 2 + 4)
+			var blocks_depot := depot_apron.has_point(Vector2(housing_target.x, housing_target.z))
+			for slot in range(5):
+				var rest_target: Vector3 = sim.coordinator.navigation.nearest_walkable_position(housing_target + Vector3(-16 + (slot % 6) * 4, 0, 16 + (slot / 6) * 4))
+				if depot_apron.has_point(Vector2(rest_target.x, rest_target.z)): blocks_depot = true
+			if blocks_depot: continue
 		if valid_site(site): return {"valid": true, "position": site}
 	return {"valid": false}
 

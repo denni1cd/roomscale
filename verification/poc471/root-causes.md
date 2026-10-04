@@ -21,11 +21,17 @@ Final diagnostics show one real completed shelter, no active project, an
 observable site refusal, and eventual water crisis. Conservation remains intact.
 Adding food/water would only delay the same failure.
 
-Planned minimal repair: exclude primitive shelter candidates whose prospective
+Implemented minimal repair: exclude primitive shelter candidates whose prospective
 housing/rest anchors occupy the already reserved bootstrap depot apron. Retain
 the actual depot pickup, inventory, physical delivery, material costs and timers.
-Do not relocate citizens or grant infrastructure. Re-run this seed, canonical
-POC47, shared regressions and the full campaign after the fix.
+No citizens or inventory are relocated and no infrastructure is granted. The
+focused seed now completes the whole founder sequence. POC47 Fast plus three
+fresh complete canonical scenarios pass; POC46 Fast, POC45 Fast, and POC4 Fast,
+contract and cleanup regressions pass. Full campaign results are retained separately.
+
+The enhanced pre-fix observer detects this as actual strategic deadlock at 1820s,
+before reserve exhaustion obscures its cause. Relevant evidence is under
+`prefix-reproduction/` and `postfix-regression/`.
 
 Exact pre-fix reproducer:
 
