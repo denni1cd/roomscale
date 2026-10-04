@@ -5,7 +5,7 @@
 Branch: `codex/roomscale-poc47-founder-start`.
 Baseline: `801060bd3b265e5fcb2d207b36434f9149d31e3a`.
 Verified implementation commit: `792f7d08a9abc254e8011272d80dc5d1ed71d9ea`.
-The following documentation-only receipt commit is the final branch HEAD. Main was
+Documentation receipt: `aa9ddfe8d6c0784e57524b25ba40f78e112dffad`. Main was
 not merged. Pre-existing changes to the historical milestone8 startup log/image were
 left out of this implementation.
 
