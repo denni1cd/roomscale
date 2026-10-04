@@ -197,3 +197,41 @@ This one-corner fallback is bounded and does not promise general sub-grid mazes.
 ./TEST_ROOM_SCALE_POC4.ps1 -Mode Sustained -OutputDirectory verification/poc471/narrow-aisle-postfix -TimeoutSeconds 400
 & ./.tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe --headless --path . --script res://scripts/poc471_navigation_test.gd
 ```
+
+## BUG-471-07 — Building completion routes an active climber through open space (High)
+
+Classification C, existing production defect exposed by longer founder growth.
+Frozen-source soaks fail at12038.5s/24citizens and11689.4s/24citizens (about20days).
+Both had already completed the full founder sequence. A housing completion rebuilds
+the floor grid and calls `_navigate_to` for every TRAVEL/CARRY citizen.
+`region_of` recognizes elevated surfaces but returns FLOOR for points on a grapple.
+The repath consequently goes straight from the citizen's physical cable position
+to a ground grid cell. Movement is bounded but the segment leaves deployed geometry.
+
+SOAK01 citizen16 carries water at `(2,6.465903,-53.4571)` with a new path beginning
+`(2,0,-52)`. SOAK02 citizen15 carries water at `(-44.04006,24.04175,-52.77869)`
+with a new ground path beginning `(-70,0,-80)`. Complete pre-fix definitions,
+positions, paths, project/journal history and failure packages are retained in
+`final-before-link-repath/SOAK-01` and `SOAK-02`. The failed positions are already
+off-link by one tick; the earlier physical position was on the deployed cable.
+
+Repair: SurfaceNavigation detects a physical position on a deployed connection,
+continues the appropriate prefix/suffix of that existing link, and only then
+joins a newly validated floor exit or the actual elevated destination. Destination
+region inference also handles elevated traversal/exploration replans. No link is
+granted, citizen moved, stage completed or speed changed by the fix. The isolated
+midlink fixture registers test geometry separately; production campaigns continue
+to earn every link through materials and citizen labor.
+
+Focused production prefixes reproduce the same saved definitions for21days, beyond
+both failing times; final60/60/90soaks and the whole campaign must be rerun.
+
+```powershell
+./TEST_ROOM_SCALE_POC471.ps1 -Mode Reproduce -Scenario verification/poc471/final-before-link-repath/SOAK-01/config.json -OutputDirectory verification/poc471/reproduce-midlink -Workers 1
+& ./.tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe --headless --path . --script res://scripts/poc471_midlink_test.gd
+```
+
+The isolated fixture also fails against the retained801a497 navigation source in
+`midlink-unit-pre/run.log`, and passes against the repair. Both21-day production
+prefixes pass with no physical or accounting invariant violation. Final world
+counts are reported only from the rerun after this last fix.

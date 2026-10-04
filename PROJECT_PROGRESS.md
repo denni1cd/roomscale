@@ -10,7 +10,8 @@ defer failed-path task retries through the existing idle timer, ignore uncollect
 fractional bootstrap remnants, and resolve blocked founder patrol anchors.
 Physical corner connectors recover sub-grid aisles, and A* diagonals require
 both neighboring cells clear. Simulation claim/start timestamps correct the
-earlier task-age test. No gameplay
+earlier task-age test. Replanning during later building completions preserves
+active climbers on their deployed traversal link. No gameplay
 systems or second civilization are added. See the
 [harness guide](docs/POC471_ROBUSTNESS.md),
 [campaign report](verification/poc471/final-report.md) and

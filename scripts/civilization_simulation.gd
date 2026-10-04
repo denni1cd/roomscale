@@ -434,7 +434,7 @@ func region_of(position: Vector3) -> String:
 
 func route_for(citizen: Node3D, destination: Vector3) -> Array[Vector3]:
 	var task: Dictionary = coordinator.get_task(citizen.task_id)
-	var end_region := "FLOOR"
+	var end_region := region_of(destination)
 	if citizen.task_type == "RESOURCE_COLLECT" and not citizen.carrying: end_region = String(task.source_region)
 	var route: Dictionary = coordinator.surface_navigation.route_between(region_of(citizen.global_position), end_region, citizen.global_position, destination)
 	var path: Array[Vector3] = []

@@ -190,9 +190,9 @@ def execute(config, output, godot):
     error = ""
     with (case_dir / "run.log").open("w", encoding="utf-8") as log:
         try:
-            process = subprocess.run(cmd, env=env, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT, timeout=1200)
+            process = subprocess.run(cmd, env=env, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT, timeout=3600)
         except subprocess.TimeoutExpired:
-            error = "Wall-clock timeout; production process killed after 1200s"
+            error = "Wall-clock timeout; production process killed after 3600s"
             process = None
     result_path = case_dir / "result.json"
     result = json.loads(result_path.read_text()) if result_path.exists() else dict(result="ERROR", failure=error or "Observer produced no result")

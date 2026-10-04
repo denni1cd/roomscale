@@ -26,7 +26,7 @@ not counted as end-to-end founding scenarios.
 Every execution records the complete input, deterministic seed, generator version,
 mutation parameters, input hashes, starting commit and normalized source hashes.
 Reproduction uses the retained complete definition rather than assuming a future
-generator version will produce identical input. Processes have a 1200s timeout;
+generator version will produce identical input. Processes have a 3600s timeout;
 the Windows engine is launched directly so killing it cannot orphan the console
 launcher's child process. Two workers are the default; each world is independent.
 
@@ -170,3 +170,13 @@ obstacle corner when no grid center is directly visible. Grid diagonals require
 both neighboring cells clear. The focused navigation regression samples both
 directions of a completed-building corner and the exact POC4 half-inch aisle.
 These geometry fixes can change legitimate route lengths and milestone timings.
+
+Long founding growth can complete a building while another citizen is mid-grapple.
+Replanning now preserves the remaining deployed link before joining a fresh floor
+route. `poc471_midlink_test.gd` verifies both directions and both possible inferred
+region labels; long-soak prefixes and full final soaks exercise real earned links.
+
+The wall-clock allowance is3600s for larger long-soak populations. It does not
+change fixed steps or simulation duration. Prefix timings demonstrate growing
+observer/agent work as population expands; wall budgets must not truncate the
+required90-day evidence.
