@@ -1,5 +1,17 @@
 # RoomScale Progress
 
+## POC 4.7.1 founding robustness
+
+A deterministic production-observer campaign covers founder origins, legal spawns,
+resource placement/quantities, salvage yields, obstacles, traversal approaches,
+impossible inputs, replay and long soaks. Narrow fixes reserve the future depot
+rest apron, keep exterior grid connectors clear of completed footprints, and
+defer failed-path task retries through the existing idle timer. No gameplay
+systems or second civilization are added. See the
+[harness guide](docs/POC471_ROBUSTNESS.md),
+[campaign report](verification/poc471/final-report.md) and
+[multi-civilization audit](verification/poc471/multiciv-readiness.md).
+
 ## POC 4.7 founder start
 
 Five founders now build the settlement through production salvage, hauling and

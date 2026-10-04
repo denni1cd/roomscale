@@ -1,5 +1,5 @@
 param(
-    [ValidateSet('Short','Full','Soak','Reproduce','Generate')][string]$Mode = 'Full',
+    [ValidateSet('Short','Full','Soak','Reproduce','Generate','Review','Explore')][string]$Mode = 'Full',
     [string]$Scenario = '',
     [string]$OutputDirectory = 'verification/poc471/final',
     [int]$Count = 40,

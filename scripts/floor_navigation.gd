@@ -93,8 +93,13 @@ func _mark_obstacle_cells() -> void:
 
 
 func path_between(start: Vector3, finish: Vector3) -> Array[Vector3]:
-	var from_cell := _nearest_walkable_cell(_world_to_cell(Vector2(start.x, start.z)))
-	var to_cell := _nearest_walkable_cell(_world_to_cell(Vector2(finish.x, finish.z)))
+	# Grid cells alone do not validate the physical connector from an off-grid
+	# citizen. After a new obstacle, the nearest cell can be across its corner.
+	# Legacy established rooms have activity anchors inside prebuilt modules.
+	# Keep that existing endpoint contract; legal exterior endpoints must use
+	# a visible connector and must never cut a newly completed footprint.
+	var from_cell := _nearest_walkable_cell(_world_to_cell(Vector2(start.x, start.z))) if is_obstacle_position(start) else _visible_walkable_cell(Vector2(start.x, start.z))
+	var to_cell := _nearest_walkable_cell(_world_to_cell(Vector2(finish.x, finish.z))) if is_obstacle_position(finish) else _visible_walkable_cell(Vector2(finish.x, finish.z))
 	if from_cell.x < 0 or to_cell.x < 0:
 		return []
 	var ids: Array[Vector2i] = grid.get_id_path(from_cell, to_cell)
@@ -107,6 +112,41 @@ func path_between(start: Vector3, finish: Vector3) -> Array[Vector3]:
 	if not result[-1].is_equal_approx(Vector3(finish.x, _floor_height, finish.z)):
 		result.append(Vector3(finish.x, _floor_height, finish.z))
 	return result
+
+
+func _visible_walkable_cell(position: Vector2) -> Vector2i:
+	var origin := _world_to_cell(position)
+	var nearest := _nearest_walkable_cell(origin)
+	if nearest.x >= 0 and _segment_is_clear(position, _cell_to_world(nearest)): return nearest
+	for radius in range(1, 10):
+		for offset_x in range(-radius, radius + 1):
+			for offset_z in range(-radius, radius + 1):
+				if maxi(absi(offset_x), absi(offset_z)) != radius: continue
+				var candidate := origin + Vector2i(offset_x, offset_z)
+				if grid.region.has_point(candidate) and not grid.is_point_solid(candidate) and _segment_is_clear(position, _cell_to_world(candidate)): return candidate
+	return Vector2i(-1, -1)
+
+
+func _segment_is_clear(start: Vector2, finish: Vector2) -> bool:
+	# Slab intersection includes endpoints and boundaries, matching obstacle tests.
+	for rect in obstacle_rects:
+		var low: Vector2 = rect.center - rect.half
+		var high: Vector2 = rect.center + rect.half
+		var direction := finish - start
+		var first := 0.0
+		var last := 1.0
+		var intersects := true
+		for axis in range(2):
+			if absf(direction[axis]) < 0.000001:
+				if start[axis] < low[axis] or start[axis] > high[axis]: intersects = false
+			else:
+				var entry := (low[axis] - start[axis]) / direction[axis]
+				var exit := (high[axis] - start[axis]) / direction[axis]
+				first = maxf(first, minf(entry, exit))
+				last = minf(last, maxf(entry, exit))
+				if first > last: intersects = false
+		if intersects: return false
+	return true
 
 
 func is_walkable(position: Vector3) -> bool:

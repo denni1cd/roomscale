@@ -25,6 +25,7 @@ var last_progress = ""
 var last_progress_at = 0.0
 var deadlock = false
 var labor_witnesses: Dictionary = {}
+var traversal_labor_witnesses: Dictionary = {}
 var strategic_witnesses: Dictionary = {}
 var started = 0
 
@@ -84,8 +85,22 @@ func run() -> void:
 		if source.region == "FLOOR":
 			for resource in floor_resources: floor_resources[resource] += float(source.remaining.get(resource,0))
 	validation.floor_resources = floor_resources
+	validation.floor_resource_path_lengths = {}
+	for id in sim.resources.sources:
+		var source = sim.resources.sources[id]
+		if source.region == "FLOOR": validation.floor_resource_path_lengths[id] = sim.coordinator._path_length(sim.coordinator.navigation.path_between(origin,source.position))
+	validation.safe_salvage_path_lengths = {}
+	for candidate in sim.governor.candidates(sim,{"wood":30,"metal":11}):
+		var paths = sim.salvage_approaches(candidate.id).map(func(at): return sim.coordinator._path_length(sim.coordinator.navigation.path_between(origin,at)))
+		if not paths.is_empty(): validation.safe_salvage_path_lengths[candidate.id] = paths.min()
 	validation.shelter_site = sim.development.select_site("shelter")
 	validation.depot_site = sim.development.select_site("depot")
+	if config.name in ["Crowded Settlement Origin","Constrained Build Sites"]:
+		var local_sites = 0
+		for x in range(-3,4):
+			for z in range(-3,4):
+				if sim.development.valid_site(origin + Vector3(x*16,0,z*16)): local_sites += 1
+		validation.local_safe_sites_within_48_inches = local_sites
 	if not validation.shelter_site.valid: validation.solvability_errors.append("No legal primitive shelter site")
 	if not validation.depot_site.valid: validation.solvability_errors.append("No legal bootstrap depot site")
 	if material.wood < 30 or material.metal < 11: validation.solvability_errors.append("Insufficient safe reachable full-sequence material budget")
@@ -106,7 +121,7 @@ func run() -> void:
 			observe()
 			check_invariants()
 		if sim.seconds >= next_sample:
-			timeline.append({"seconds":sim.seconds,"status":sim.status(),"tasks":sim.coordinator.summary(),"journal_size":sim.journal.events.size(),"projects":sim.development.projects.size(),"governor":sim.governor.reason,"growth":sim.population.reason,"states":state_distribution()})
+			timeline.append({"seconds":sim.seconds,"status":sim.status(),"tasks":sim.coordinator.summary(),"journal_size":sim.journal.events.size(),"journal_sequence":sim.journal.sequence,"suppression_keys":sim.journal._states.size(),"projects":sim.development.projects.size(),"governor":sim.governor.reason,"growth":sim.population.reason,"states":state_distribution()})
 			check_progress()
 			next_sample += 600.0
 		await process_frame
@@ -129,12 +144,21 @@ func observe() -> void:
 		if c.task_type == "SALVAGE" and c.state == "WORK": mark("first_salvage")
 		if c.carrying: mark("first_haul")
 		if c.carrying and c.task_type == "BUNDLE_HAUL" and c._delivery_resource in ["wood","metal"]: mark("material_haul")
-		if c.state == "WORK" and c.task_type == "CONSTRUCTION_BUILD": labor_witnesses[c.citizen_id] = true
+		if c.state == "WORK" and c.task_type == "CONSTRUCTION_BUILD":
+			labor_witnesses[c.citizen_id] = true
+			var task = sim.coordinator.get_task(c.task_id)
+			if not task.has("project_id") and task.has("stage"):
+				if not traversal_labor_witnesses.has(task.stage): traversal_labor_witnesses[task.stage] = {}
+				traversal_labor_witnesses[task.stage][c.citizen_id] = true
 		if c.global_position.y > 0.1 and c.global_position.y < sim.construction.target_anchor.y - 0.1: mark("physical_climb")
 		if c.global_position.y >= sim.construction.target_anchor.y - 0.1: mark("elevated_territory")
 	for p in sim.development.projects:
 		mark(p.kind + "_started", p.created)
-		if not stage_history.has(p.id): stage_history[p.id] = {"states":["PLANNED"],"stages":[]}
+		if not stage_history.has(p.id):
+			stage_history[p.id] = {"states":[],"stages":[]}
+			# PLANNED is transient inside request(); use its real journal snapshot.
+			for event in sim.journal.events:
+				if event.kind == "development_started" and event.evidence.get("id","") == p.id and event.evidence.get("state","") == "PLANNED": stage_history[p.id].states.append("PLANNED")
 		if not p.state in stage_history[p.id].states: stage_history[p.id].states.append(p.state)
 		if not p.stage in stage_history[p.id].stages: stage_history[p.id].stages.append(p.stage)
 		if p.state == "COMPLETE": mark(p.kind + "_complete", p.completed)
@@ -197,7 +221,7 @@ func check_invariants() -> void:
 		var kind = "depot" if capability == "storage" else "workshop"
 		if sim.has_capability(capability) != (sim.development.count(kind) > 0): violate("Unearned capability " + capability)
 	if sim.construction.project_created and not sim.has_capability("workshop"): violate("Traversal before completed workshop")
-	if sim.construction.traversal_deployed and (sim.construction._completed_stages != 3 or labor_witnesses.is_empty()): violate("Traversal deployed without real build stages/labor")
+	if sim.construction.traversal_deployed and (sim.construction._completed_stages != 3 or traversal_labor_witnesses.size() != 3): violate("Traversal deployed without real build stages/labor")
 	for gate_index in range(sim.construction._stage_gate_snapshots.size()):
 		var gate = sim.construction._stage_gate_snapshots[gate_index]
 		var required = sim.construction.stage_requirements(gate_index)
@@ -310,10 +334,10 @@ func snapshot() -> Dictionary:
 	for c in sim.citizens: citizens.append({"id":c.citizen_id,"position":c.global_position,"state":c.state,"task_id":c.task_id,"task":c.task_type,"destination":c._destination,"needs":c.needs,"path":c._path,"path_cursor":c._path_cursor,"travelled":c.travelled_distance})
 	var live_tasks = sim.coordinator.tasks.filter(func(t): return t.state in ["active","reserved"])
 	live_tasks.sort_custom(func(a,b): return a.created_sim < b.created_sim)
-	return {"seconds":sim.seconds,"status":sim.status(),"population":sim.citizens.size(),"shelter":sim.needs.shelter_capacity,"citizens":citizens,"states":state_distribution(),"active_development":sim.development.active,"projects":sim.development.projects,"site_reason":sim.development.site_reason,"governor":{"mode":sim.governor.mode,"reason":sim.governor.reason,"emergency":sim.governor.emergency,"rejections":sim.governor.rejections},"planner":sim.planner.reasons,"growth_reason":sim.population.reason,"growth_events":sim.population.cohorts,"tasks":sim.coordinator.summary(),"oldest_live_tasks":live_tasks.slice(0,20),"ledger":{"initial":sim.economy.initial,"available":sim.economy.available,"received":sim.economy.received,"consumed":sim.economy.consumed,"project_consumed":sim.economy.project_consumed,"exported":sim.economy.exported,"tickets":sim.economy.tickets},"sources":sim.resources.sources,"salvage":sim.salvage.objects,"bundles":sim.resources.bundles,"traversal":sim.construction.status(),"connections":sim.coordinator.surface_navigation.connections,"journal":sim.journal.events}.duplicate(true)
+	return {"seconds":sim.seconds,"status":sim.status(),"population":sim.citizens.size(),"shelter":sim.needs.shelter_capacity,"citizens":citizens,"states":state_distribution(),"active_development":sim.development.active,"projects":sim.development.projects,"site_reason":sim.development.site_reason,"governor":{"mode":sim.governor.mode,"reason":sim.governor.reason,"emergency":sim.governor.emergency,"rejections":sim.governor.rejections},"planner":sim.planner.reasons,"growth_reason":sim.population.reason,"growth_events":sim.population.cohorts,"tasks":sim.coordinator.summary(),"oldest_live_tasks":live_tasks.slice(0,20),"ledger":{"initial":sim.economy.initial,"available":sim.economy.available,"received":sim.economy.received,"consumed":sim.economy.consumed,"project_consumed":sim.economy.project_consumed,"exported":sim.economy.exported,"tickets":sim.economy.tickets},"sources":sim.resources.sources,"salvage":sim.salvage.objects,"bundles":sim.resources.bundles,"traversal":sim.construction.status(),"connections":sim.coordinator.surface_navigation.connections,"journal":sim.journal.events,"journal_sequence":sim.journal.sequence,"suppression_keys":sim.journal._states.size()}.duplicate(true)
 
 func finish() -> void:
-	var result = {"result":"PASS" if failure.is_empty() else "FAIL","failure":failure,"validation":validation,"initial":initial,"milestones":milestones,"violations":violations,"deadlock":deadlock,"maxima":maxima,"timeline":timeline,"connectivity":connectivity,"stage_history":stage_history,"stall_windows":stall_windows,"observer_seconds":(Time.get_ticks_msec()-started)/1000.0}
+	var result = {"result":"PASS" if failure.is_empty() else "FAIL","failure":failure,"validation":validation,"initial":initial,"milestones":milestones,"violations":violations,"deadlock":deadlock,"maxima":maxima,"timeline":timeline,"connectivity":connectivity,"stage_history":stage_history,"traversal_labor_witnesses":traversal_labor_witnesses,"stall_windows":stall_windows,"observer_seconds":(Time.get_ticks_msec()-started)/1000.0}
 	if sim != null:
 		result.final = snapshot()
 		result.structures = {}

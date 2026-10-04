@@ -4,6 +4,12 @@ RoomScale is a small 3D civilization simulation where half-inch citizens treat a
 
 ## Current status
 
+POC 4.7.1 validates and hardens founding with deterministic layout/resource variants,
+continuous production invariants and fresh long soaks on
+`codex/roomscale-poc471-founder-stress`. See the
+[robustness harness guide](docs/POC471_ROBUSTNESS.md) and
+[campaign report](verification/poc471/final-report.md).
+
 POC 4.7 adds **five founders, no prebuilt settlement and 1x startup** on
 `codex/roomscale-poc47-founder-start`. Citizens autonomously salvage, haul and build
 shelter, storage, a workshop and housing; supported growth adds one real citizen at
@@ -109,6 +115,8 @@ Room placement data has a one-inch interior floor-edge clearance. Optional objec
 # Fast deterministic room, navigation, geometry, and task-cleanup checks
 # POC 4 full gates; add -CaptureVisuals to a Sustained run for screenshots
 ./TEST_ROOM_SCALE_POC4.ps1 -Mode All
+./TEST_ROOM_SCALE_POC471.ps1 -Mode Short
+./TEST_ROOM_SCALE_POC471.ps1 -Mode Full -Count 60
 ./TEST_ROOM_SCALE_POC45.ps1 -Mode All
 ./TEST_ROOM_SCALE_POC45.ps1 -Mode Stability -CaptureVisuals
 ./TEST_ROOM_SCALE_POC4.ps1 -Mode Sustained -CaptureVisuals

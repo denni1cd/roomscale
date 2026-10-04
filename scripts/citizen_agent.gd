@@ -219,7 +219,16 @@ func _navigate_to(destination: Vector3) -> void:
 	_work_timer = 0.0
 	if _path.is_empty():
 		coordinator.fail_task(task_id, "floor path unavailable")
-		_assign_next_task()
+		# Failure may enqueue another unreachable routine task. Retry through the
+		# existing idle timer on a later tick instead of recursively claiming work
+		# until the call stack overflows. Release already ran through fail_task.
+		task_id = -1
+		task_type = "IDLE"
+		state = "IDLE"
+		_idle_timer = 0.0
+		_needs_second_leg = false
+		carrying = false
+		_cargo.visible = false
 		return
 	coordinator.activate_task(task_id)
 	state = "CARRY" if carrying else "TRAVEL"

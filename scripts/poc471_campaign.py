@@ -70,6 +70,7 @@ def generate(index, seed, negative=False):
             name = "Insufficient Shelter Materials"
             for o in room["objects"]:
                 o.setdefault("resource_profile", {})["protected"] = True
+            objects["chair"]["resource_profile"].update(protected=False, stages=[dict(name="DEPLETED", work=8, yields={"wood":3})])
         elif index == 2:
             name = "No Valid Depot Site"
             room["objects"].append(obstacle("depot_blocker", 0, 37, 4, 4))
@@ -153,7 +154,7 @@ def generate(index, seed, negative=False):
                        quantities={o["id"]: o.get("resource_profile", {}) for o in room["objects"]},
                        initial_stock=room["civilization"]["stock"])
     return dict(id=sid, seed=seed, name=name, classification="negative" if negative else "positive",
-                mutations=changes, definition=room, days=8, generator_version=1)
+                mutations=changes, definition=room, days=8, generator_version=2)
 
 
 def execute(config, output, godot):
@@ -169,6 +170,11 @@ def execute(config, output, godot):
     env.update(ROOMSCALE_ROOM_FILE=str(definition_path.resolve()), ROOMSCALE_POC471_CONFIG=str(config_path.resolve()),
                ROOMSCALE_POC471_RESULT=str((case_dir / "result.json").resolve()), ROOMSCALE_FISHBOWL="1",
                ROOMSCALE_DISABLE_STARTUP_CAPTURE="1", ROOMSCALE_VISUAL_DIR="")
+    receipt = dict(tested_commit=subprocess.check_output(["git","rev-parse","HEAD"],cwd=ROOT,text=True).strip(),
+                   source_hashes={str(p.relative_to(ROOT)).replace("\\","/"):hashlib.sha256(p.read_bytes().replace(b"\r\n",b"\n")).hexdigest()
+                                  for p in sorted((ROOT/"scripts").rglob("*.gd"))},
+                   harness_hashes={name:hashlib.sha256((ROOT/name).read_bytes().replace(b"\r\n",b"\n")).hexdigest()
+                                   for name in ["scripts/poc471_campaign.py","scripts/poc471_observer.gd","scripts/poc471_evidence.py","TEST_ROOM_SCALE_POC471.ps1"]})
     started = time.perf_counter()
     cmd = [godot, "--headless", "--path", str(ROOT), "--script", "res://scripts/poc471_observer.gd"]
     error = ""
@@ -187,9 +193,7 @@ def execute(config, output, godot):
                   execution_seconds=round(time.perf_counter() - started, 3), reproduction=saved["reproduction"],
                   config_sha256=hashlib.sha256(config_path.read_bytes()).hexdigest(),
                   definition_sha256=hashlib.sha256(definition_path.read_bytes()).hexdigest())
-    result["tested_commit"] = subprocess.check_output(["git","rev-parse","HEAD"],cwd=ROOT,text=True).strip()
-    result["source_hashes"] = {str(p.relative_to(ROOT)).replace("\\","/"):hashlib.sha256(p.read_bytes().replace(b"\r\n",b"\n")).hexdigest()
-                               for p in sorted((ROOT/"scripts").rglob("*.gd"))}
+    result.update(receipt)
     if result.get("failure", "").startswith("Generator invalid:"):
         result.update(result="REJECTED", classification="rejected")
     write(result_path, result)
@@ -221,6 +225,7 @@ def summarize(results, output):
                                 original=original.get("fingerprint") if original else None, repeat=repeat.get("fingerprint")))
     summary = dict(total_scenarios=len(results), valid_scenarios=len(positives),
                    generator_rejections=sum(r["classification"] == "rejected" for r in results),
+                   named_adversarial_passes=[r["name"] for r in positives if r["name"] in NAMES and r["result"] == "PASS"],
                    valid_passes=sum(r["result"] == "PASS" for r in positives),
                    valid_failures=sum(r["result"] != "PASS" for r in positives), negative_scenarios=len(negatives),
                    expected_negative_outcomes=sum(r["result"] == "PASS" for r in negatives),
@@ -257,7 +262,7 @@ def summarize(results, output):
 
 def main():
     parser = argparse.ArgumentParser(__doc__)
-    parser.add_argument("--mode", choices=["short", "full", "soak", "reproduce", "generate"], default="full")
+    parser.add_argument("--mode", choices=["short", "full", "soak", "reproduce", "generate", "review", "explore"], default="full")
     parser.add_argument("--godot", required=True)
     parser.add_argument("--output", default="verification/poc471/final")
     parser.add_argument("--count", type=int, default=40)
@@ -266,8 +271,18 @@ def main():
     parser.add_argument("--workers", type=int, default=2)
     parser.add_argument("--scenario")
     args = parser.parse_args()
+    # The Windows console launcher starts a child engine. Run the engine itself
+    # so subprocess timeout cleanup cannot leave an orphan simulation running.
+    engine_path = Path(args.godot.replace("_console.exe",".exe"))
+    if engine_path.exists():
+        args.godot = str(engine_path)
     output = (ROOT / args.output).resolve()
     output.relative_to(ROOT)
+    if args.mode == "review":
+        results = [json.loads(p.read_text()) for p in sorted(output.glob("*/result.json"))]
+        summary = summarize(results,output)
+        print(json.dumps({k:summary[k] for k in ["total_scenarios","valid_passes","valid_failures","generator_rejections"]}))
+        return 0
     if args.mode == "reproduce":
         saved = json.loads((ROOT / args.scenario).read_text())
         saved["definition"] = json.loads(Path(saved["room_file"]).read_text())
@@ -294,6 +309,43 @@ def main():
                         c = generate(index, args.seed + index)
                         c.update(id=f'{c["id"]}-REPEAT-{n}', classification="repeat", days=args.days)
                         configs.append(c)
+        if args.mode == "explore":
+            # Small increments around observed placement and supply weak points.
+            configs = []
+            for n, extra in enumerate([0,1,2,3,4,5]):
+                c = generate(5,args.seed+5)
+                c.update(id=f"EXP-ROUTING-{n:02}")
+                for j in range(extra):
+                    c["definition"]["objects"].append(obstacle(f"additional_detour_{j}", -44+j*16, 60,6,6))
+                c["mutations"]["additional_detours"] = extra
+                configs.append(c)
+            for n, amount in enumerate([30,37.5,45,52.5,60,75]):
+                c = generate(1,args.seed+1)
+                c.update(id=f"EXP-WATER-{n:02}")
+                next(o for o in c["definition"]["objects"] if o["id"] == "spilled_water")["resource_profile"]["contents"]["water"] = amount
+                c["mutations"]["bootstrap_water"] = amount
+                configs.append(c)
+            for n, origin in enumerate([[0,0,8],[4,0,8],[8,0,8],[4,0,12],[4,0,16],[4,0,20]]):
+                c = generate(17,args.seed+17)
+                c.update(id=f"EXP-ORIGIN-{n:02}")
+                c["definition"]["start"]["origin"] = origin
+                c["definition"]["spawn"]["center"] = [origin[0]+4,0,origin[2]+4]
+                c["mutations"]["origin_probe"] = origin
+                configs.append(c)
+            for n in range(2):
+                c = generate(8,args.seed+8)
+                c.update(id=f"EXP-IDENTITY-{n:02}")
+                for o in c["definition"]["objects"]:
+                    o["id"] = "alternative_" + o["id"]
+                    if o.get("surface"):
+                        o["surface"]["region_id"] = "ALTERNATIVE_TARGET"
+                    if o.get("resource_profile",{}).get("region_id"):
+                        o["resource_profile"]["region_id"] = "ALTERNATIVE_TARGET"
+                c["definition"]["target_surface_id"] = "ALTERNATIVE_TARGET"
+                if n == 1:
+                    c["definition"]["objects"].reverse()
+                c["mutations"]["identity_probe"] = "all object IDs and target region renamed; reversed order" if n else "all object IDs and target region renamed"
+                configs.append(c)
     # Prove same generation call produces identical bytes before executing anything.
     for i in range(40):
         assert generate(i, args.seed + i) == generate(i, args.seed + i)
@@ -308,6 +360,7 @@ def main():
     required_positive_count = 30 if args.mode == "full" else 10 if args.mode == "short" else 0
     return int(any(r["result"] not in ["PASS","REJECTED"] for r in results)
                or summary["valid_scenarios"] < required_positive_count
+               or args.mode in ["short","full"] and set(summary["named_adversarial_passes"]) != set(NAMES)
                or any(not r["identical"] for r in summary["determinism_results"]))
 
 
