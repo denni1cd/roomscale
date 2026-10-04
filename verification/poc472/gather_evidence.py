@@ -54,6 +54,8 @@ def main():
             assert abs(r["final"]["seconds"]-float(config["days"])*600) < .001
             assert r["final"]["placement_checks"] > 0
     summary = campaign.review(results,FINAL)
+    matrix_path = FINAL / "scenario-matrix.md"
+    matrix_path.write_text(matrix_path.read_text().replace("# POC 4.7.1 scenario matrix", "# POC 4.7.2 scenario matrix", 1))
     assert summary["previous_79_positive_passes"] == 79
     assert summary["placement_positive_passes"] == 31
     assert summary["generator_rejections"] == 0
