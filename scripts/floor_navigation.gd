@@ -18,7 +18,7 @@ func configure(definition: Dictionary) -> void:
 func remove_object_obstacle(object_id: String) -> void:
 	for object in room_definition.objects:
 		if String(object.id) == object_id: object.blocks_navigation = false
-	_rebuild_grid()
+	refresh_navigation()
 
 
 func update_object_footprint(object_id: String, world_center: Vector3, dimensions: Vector3) -> void:
@@ -26,20 +26,20 @@ func update_object_footprint(object_id: String, world_center: Vector3, dimension
 		if String(object.id) != object_id: continue
 		object.position = [world_center.x, world_center.y, world_center.z]
 		object.dimensions = [dimensions.x, dimensions.y, dimensions.z]
-	_rebuild_grid()
+	refresh_navigation()
 
 
 func allow_object_edge_access(object_id: String) -> void:
 	for object in room_definition.objects:
 		if String(object.id) == object_id: object.navigation_padding = [0, 0, 0]
-	_rebuild_grid()
+	refresh_navigation()
 
 
 func _ready() -> void:
-	_rebuild_grid()
+	refresh_navigation()
 
 
-func _rebuild_grid() -> void:
+func refresh_navigation() -> void:
 	if room_definition.is_empty():
 		push_error("Floor navigation requires a RoomDefinition before entering the scene tree.")
 		return

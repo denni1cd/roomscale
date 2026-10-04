@@ -43,7 +43,7 @@ func run() -> void:
 		return
 	var floor_nav = Floor.new()
 	floor_nav.configure(loaded.definition)
-	floor_nav._rebuild_grid()
+	floor_nav.refresh_navigation()
 	var surface_nav = Surface.new()
 	surface_nav.configure(loaded.definition, floor_nav)
 	# Surface _ready does not change simulation rules; it registers definition regions.

@@ -1,167 +1,115 @@
 # RoomScale
 
-RoomScale is a small 3D civilization simulation where half-inch citizens treat a human room as a landscape. Furniture blocks floor movement; citizens investigate elevated surfaces, carry materials, build a grappling route, climb it, and explore the newly reachable area.
+RoomScale is a 3D civilization simulation in which half-inch citizens treat a human
+room as a landscape. Authored RoomDefinition JSON supplies furniture, finite resources,
+spawn geometry and elevated surfaces. Citizens physically salvage, haul, build, rest,
+climb and explore. One civilization operates in one room.
 
-## Current status
+The accepted production baseline for this stabilization branch is **POC 4.7.1**.
+POC 4.7.2 settlement planning was still being verified at the startup gate and is
+excluded here. This branch must be rebased and verified against that completed milestone
+before it can become `main`; see [baseline decision](verification/stabilization/baseline.md).
 
-POC 4.7.1 validates and hardens founding with deterministic layout/resource variants,
-79/79 positive worlds, five expected negatives, 90/60/60-day soaks and six
-identical replays. Seven documented defects were narrowly fixed; the assessment
-is **moderately robust** within supported topology. Continuous production invariants
-and final shared regressions are green on
-`codex/roomscale-poc471-founder-stress`. See the
-[robustness harness guide](docs/POC471_ROBUSTNESS.md) and
-[campaign report](verification/poc471/final-report.md).
+## Current gameplay
 
-POC 4.7 adds **five founders, no prebuilt settlement and 1x startup** on
-`codex/roomscale-poc47-founder-start`. Citizens autonomously salvage, haul and build
-shelter, storage, a workshop and housing; supported growth adds one real citizen at
-a time. A completed workshop gates advanced traversal. See the
-[founder guide](docs/POC47_FOUNDERS.md) and
-[verification report](verification/poc47/final-report.md).
+The canonical autonomous start is `room_poc47`: **five founders at 1x**, 20 food,
+30 water, no construction materials and no prebuilt shelter, depot, workshop or housing.
+The governor evaluates survival and development using ordinary production interfaces.
+Citizens earn shelter, storage, workshop and housing through finite salvage, deliveries
+and labor. Completed workshop capability gates advanced traversal. Growth adds one real
+citizen at a time after shelter, reserves, stability and cooldown checks.
 
-Historical POC 4.6 added a spectator view on `codex/roomscale-poc46-spectator-ui`:
-**10x fishbowl startup**, compact vital signs, real event cards, contextual project
-progress, camera titles/worker close-ups, quiet HUD fading and five distinct
-cohort arrival points. **F3 / Details** opens diagnostics. See the
-[spectator guide](docs/POC46_SPECTATOR.md) and
-[POC 4.6 verification](verification/poc46/final-report.md).
-
-POC 4.5 is **PASS** on `codex/roomscale-poc45-fishbowl`: all 55 criteria,
-three consecutive fresh full runs, sixty-day stability and 120 real citizens.
-Launch `./RUN_ROOM_SCALE_FISHBOWL.ps1 -Room room_poc45` and watch the governor, real salvage,
-traversal, settlement construction and five-citizen cohorts operate without input.
-See [the fishbowl guide](docs/POC45_FISHBOWL.md) and
-[verification](verification/poc45/final-report.md). Ordinary launch remains manual.
-
-POC 4 is **PASS**: 50 citizens maintain food, water and rest needs; civilization
-priorities and salvage authorization drive real resource hauling, construction,
-and access to elevated water. All 45 criteria, five consecutive complete scenarios,
-seven days after recovery, and thirty days of stability passed. See the
-[final report](verification/poc4/final-report.md),
-[acceptance matrix](verification/poc4/acceptance.md), and
-[gameplay guide](docs/POC4_GAMEPLAY.md).
-
-POC 3 visual work is on `codex/roomscale-poc3-visual-fidelity`: semantic visual
-resolution, generated GLB desk, detailed furniture, shared materials, clockwork
-citizens/settlement, task-driven resource props, staged grapple machinery, and
-attachment-before-navigation deployment. See [the visual workflow](docs/POC3_VISUALS.md)
-and [current acceptance status](verification/poc3/acceptance.md). POC 3 visual
-completion still requires the plan's human review; functional results alone
-do not satisfy its presentation gate.
-
-The refinement pass connects settlement districts with plank streets, utilities,
-lanterns and working yards; adds mundane scale references; softens the floor;
-and improves task poses and capture framing. Normal viewing now uses a compact
-HUD; **F3** toggles the retained diagnostics. See the [refinement review](verification/poc3/refinement/review.md).
-
-The [final polish review](verification/poc3/refinement/final-polish/review.md)
-covers builder contact, utility routing, subtle floor wear and the latest captures.
-
-POC 1.5 is complete and verified. Room A and Room B each pass the complete production scenario through the same gameplay systems; the required A → B → A sequence and five-run-per-room stability gates are recorded in [the acceptance matrix](docs/POC_1.5_ACCEPTANCE.md).
-
-POC 2 adds a portable photo-to-RoomDefinition workflow. The packaged reconstruction skill is in `skills/roomscale-room-reconstruction/`; the current canonical photo candidate, attempt history, logs, captures, and per-criterion status are under `verification/poc2/`. The user accepts primary attempt 7 for current tests; closer visual resemblance is deferred graphics work. See [the POC 2 acceptance matrix](verification/poc2/acceptance-matrix.md) for the remaining fresh-AI different-room authoring evidence.
+Resources never replenish. Exhaustion can legitimately pause growth or leave a colony
+in crisis. There is no mortality, farming, combat, second civilization, save/load or
+multiplayer. Existing established-colony and manual room scenarios remain regression
+coverage. Photo reconstruction behavior and visual features are unchanged.
 
 ## Setup and launch
 
-The PowerShell setup script checks for Godot 4.7.2 standard Windows x86-64 and downloads it into the ignored `.tools/` folder when needed. No API key or Godot editor authoring is required.
+Use **PowerShell 7** (`pwsh`) on Windows. Setup downloads the repository-pinned Godot
+4.7.2 standard x86-64 runtime into ignored `.tools/` if absent. Python 3.13+ is needed
+for developer campaign tooling, not for normal gameplay. No API key is required.
 
 ```powershell
 ./SETUP_ROOM_SCALE.ps1
-./RUN_ROOM_SCALE.ps1 # Default: POC 4 living economy
-./RUN_ROOM_SCALE_FISHBOWL.ps1 # Five founders at 1x; no gameplay input needed
-./RUN_ROOM_SCALE_FISHBOWL.ps1 -Room room_poc45 # Legacy established colony
+./RUN_ROOM_SCALE_FISHBOWL.ps1                  # Canonical five-founder start
 ./RUN_ROOM_SCALE_FISHBOWL.ps1 -ManualCamera
+./RUN_ROOM_SCALE.ps1                         # Manual established POC4 economy
+./RUN_ROOM_SCALE_FISHBOWL.ps1 -Room room_poc45 # Historical established colony
 ./RUN_ROOM_SCALE.ps1 -Room room_a
 ./RUN_ROOM_SCALE.ps1 -Room room_b
-# Any safe room ID in rooms/, or a project-local RoomDefinition JSON file
-./RUN_ROOM_SCALE.ps1 -Room verification/poc2/candidates/candidate_room.json
 ```
 
-Room selection is a launch parameter; gameplay source files do not need edits between rooms. An explicit JSON path must be inside the project directory, and its filename without `.json` must match the definition's `id`.
+Room parameters accept a safe ID in `rooms/` or a project-local JSON file. The file's
+stem must match its `id`. See [RoomDefinition contract](docs/RoomDefinition_Contract.md)
+and [reconstruction workflow](skills/roomscale-room-reconstruction/SKILL.md).
 
-## Reconstruct a room from photos
+Pause/1x/4x/10x control time; F3/Details opens diagnostics. Click a citizen to inspect
+its work. Keys 1/2/3 select room/settlement/citizen views. WASD/arrows pan, right drag
+orbits, middle drag pans, wheel zooms and Q/E change height. In manual mode select an
+elevated surface and choose Reach/Explore; POC4 also exposes priorities, Secure Water
+and explicit salvage authorization. F12 saves a local capture under `verification/`.
 
-1. Give the ordinary room photographs to an AI session with `skills/roomscale-room-reconstruction/SKILL.md` and its referenced contract, evidence, and validation guides. No fixed photo count or known measurement is required.
-2. Have the AI save a complete RoomDefinition JSON and a short evidence/uncertainty note as a new numbered candidate under `verification/poc2/candidates/`. Preserve each failed candidate and its validator log unchanged.
-3. Validate the exact candidate file, then return any diagnostics to the same reconstruction AI for a minimal repair in a new attempt:
-
-   ```powershell
-   ./VALIDATE_ROOM_SCALE.ps1 -Room verification/poc2/candidates/candidate_room.json -LogPath verification/poc2/candidates/candidate_room-validation.log
-   ```
-
-4. After structural and runtime-navigation validation passes, run the full production scenario with that same JSON file:
-
-   ```powershell
-   ./TEST_ROOM_SCALE.ps1 -Room verification/poc2/candidates/candidate_room.json -TimeoutSeconds 360 -LogPath verification/poc2/candidates/candidate_room-gameplay.log
-   ```
-
-   The path must stay inside the repository, and the filename stem must match the RoomDefinition `id`. A successful gameplay log includes M2–M6 and M8 markers; screenshots require the optional `-CaptureVisuals` flag.
-
-Room placement data has a one-inch interior floor-edge clearance. Optional object `navigation_padding` is a nonnegative `[x,y,z]` vector, default `[0,0,0]`; X/Z expand the local horizontal footprint before rotation, while Y is ignored by 2D navigation. Spawn data has a 3D `center` and a three-number `dimensions` value with positive X/Z footprint sizes, conventionally `[width,0,depth]`.
-
-## Controls
-
-- In POC 4, set Survival/Resources/Construction priorities, issue **Secure Water**,
-  select **Chair**, and choose **Authorize Salvage** when materials are missing.
-  Citizens choose their own tasks. Watch reserves and project supply in the HUD.
-- **Pause / 1x / 4x / 10x** control simulation time; **F3** toggles diagnostics.
-- Click the highlighted elevated surface, then choose **Reach / Explore** or press Enter.
-- Click a citizen to inspect its identifier, state, current task, and destination/target.
-- `1`, `2`, `3` switch between room, settlement, and citizen views.
-- `WASD` or arrow keys pan; right mouse drag orbits; middle mouse drag pans; the wheel zooms; `Q`/`E` changes camera height.
-- `F12` captures the current view into `verification/`.
-
-## Verification
+## Development and quality gates
 
 ```powershell
-# Fast deterministic room, navigation, geometry, and task-cleanup checks
-# POC 4 full gates; add -CaptureVisuals to a Sustained run for screenshots
-./TEST_ROOM_SCALE_POC4.ps1 -Mode All
-./TEST_ROOM_SCALE_POC471.ps1 -Mode Short
-./TEST_ROOM_SCALE_POC471.ps1 -Mode Full -Count 60
-./TEST_ROOM_SCALE_POC45.ps1 -Mode All
-./TEST_ROOM_SCALE_POC45.ps1 -Mode Stability -CaptureVisuals
-./TEST_ROOM_SCALE_POC4.ps1 -Mode Sustained -CaptureVisuals
-
-./TEST_ROOM_SCALE_FAST.ps1 -TimeoutSeconds 30
-
-# Structural plus derived-navigation validation before a candidate is integrated
-./VALIDATE_ROOM_SCALE.ps1 -Room verification/poc2/candidates/candidate_room.json
-
-# Complete fresh-process integration scenario for either room
-./TEST_ROOM_SCALE.ps1 -Room room_a -TimeoutSeconds 360
-./TEST_ROOM_SCALE.ps1 -Room room_b -TimeoutSeconds 360
-# Production gameplay for an arbitrary project-local candidate
-./TEST_ROOM_SCALE.ps1 -Room verification/poc2/candidates/candidate_room.json -TimeoutSeconds 360
-
-# Current canonical photo-based candidate (validation and gameplay evidence)
-./VALIDATE_ROOM_SCALE.ps1 -Room verification/poc2/candidates/primary/attempt-7/room_photo_luna.json
-./TEST_ROOM_SCALE.ps1 -Room verification/poc2/candidates/primary/attempt-7/room_photo_luna.json -TimeoutSeconds 360
-
-# Required no-source-change cross-room sequence
-./TEST_ROOM_SCALE_CROSSROOM.ps1 -PerRunTimeoutSeconds 360 -OverallTimeoutMinutes 18
-
-# Five consecutive full runs for each definition (at most 40 minutes per batch)
-./TEST_ROOM_SCALE_REPEATABILITY.ps1 -Room room_a -RunCount 5 -PerRunTimeoutSeconds 360 -OverallTimeoutMinutes 40
-./TEST_ROOM_SCALE_REPEATABILITY.ps1 -Room room_b -RunCount 5 -PerRunTimeoutSeconds 360 -OverallTimeoutMinutes 40
-
-# Capture production viewport images at scenario milestones
-./TEST_ROOM_SCALE.ps1 -Room room_a -CaptureVisuals -VisualDirectory verification/poc15/visual/room_a
+python -m venv .venv
+./.venv/Scripts/Activate.ps1
+python -m pip install -r requirements-dev.txt
+python -m ruff check .
+python -m ruff format --check .
+./TEST_ROOM_SCALE.ps1 -Mode Fast
+./TEST_ROOM_SCALE.ps1 -Mode Canonical
+./TEST_ROOM_SCALE.ps1 -Mode Regression
 ```
 
-The integration runner rejects missing M2–M6/M8 pass markers, script errors, assertion failures, and timeouts. Each POC 1.5 run has its own log under `verification/poc15/`; POC 2 candidate and regression evidence is kept under `verification/poc2/`.
+Fast contains focused fixtures, schema/navigation checks and milestone fast gates.
+Canonical runs three fresh current founder scenarios with repeatability checks.
+Regression runs meaningful historical POC4/45/46/47 integration and sustained gates.
+Robustness and Soak are explicit expensive modes; All includes them and is unsuitable
+for every edit. Full mode definitions, environment isolation and replay commands are
+in [testing guide](docs/TESTING.md). The legacy `TEST_ROOM_SCALE.ps1 -Room room_a`
+command remains a full M2-M6/M8 room smoke test.
 
-## Architecture
+Headless CI checks Python quality and Fast on Windows. CI deliberately excludes
+campaigns, soaks and subjective visual acceptance. Raw runs are ignored; publish compact
+receipts and deliberately selected evidence, following [artifact policy](verification/stabilization/artifact-review.md).
 
-Each `rooms/*.json` file is the room-specific input. `RoomDefinition` parses and validates the file before the population starts. The production scene generates room objects and floor geometry from that definition; floor navigation builds obstacle footprints from blocking objects; surface navigation registers generic navigable regions and derives investigation points and a construction site. The same task, citizen, delivery, construction, traversal, and exploration systems consume either room.
+## Architecture and repository
 
-Room-specific coordinates belong in the selected data file. Gameplay code uses surface and region identifiers such as `STUDY_SURFACE` and `BENCH_SURFACE`; semantic names such as Desk and Workbench are presentation labels. See [the RoomDefinition contract](docs/RoomDefinition_Contract.md) before adding a room, and the copied [POC 1 plan](docs/RoomScale_POC_1_Project_Plan.md) and [POC 1.5 plan](docs/RoomScale_POC_1.5_Project_Plan.md) for scope and acceptance requirements.
+`CivilizationSimulation` owns a 0.1-second deterministic tick. Need decay, citizen work,
+construction, governor/planner decisions and population admission use that clock.
+`TaskCoordinator` owns tasks; `CitizenAgent` owns motion and work. `EconomySystem`
+tracks inventory transactions; `ResourceSystem` and `SalvageSystem` own finite world
+supplies. Development owns earned structures/capabilities, and floor/surface navigation
+owns legal routes and completed traversal links. Presentation consumes state/events.
+See [architecture and authority](docs/ARCHITECTURE.md) for contracts and current debt.
 
-## Repository map
+- `rooms/`: authoritative authored inputs.
+- `scripts/`: production services, presentation and specialized verification drivers.
+- `scripts/visuals/`, `scripts/asset_pipeline/`, `visual/`, `assets/`: procedural appearance/catalog/desk assets.
+- `scenes/`: code-built production scene entry point.
+- `docs/`: current architecture/testing/RoomDefinition guides and milestone guides.
+- `skills/roomscale-room-reconstruction/`: existing portable room-authoring workflow.
+- `verification/`: historical reports, reproduction fixtures and selected evidence; local runs ignored.
+- `screenshots/`, `photo_holder/`: historical canonical captures/reference photos.
+- `.tools/`, `.godot/`, `.venv/`: ignored local tooling/cache state.
 
-- `rooms/` — authoritative room inputs.
-- `scripts/` — runtime systems and deterministic integration/fast tests.
-- `docs/` — project plans, RoomDefinition/photo-pipeline contract, and acceptance evidence.
-- `screenshots/` — final Room A and Room B production captures, indexed by scenario phase.
-- `verification/` — retained POC 1/1.5 evidence plus POC 2 candidates, validation logs, full gameplay runs, acceptance status, and visual captures.
+## Limits and historical evidence
+
+Current supported worlds use rectangular floor bounds, conservative furniture footprints,
+one initial elevated target and deterministic single-civilization ordering. POC471 founding
+uses a bounded local site search and fixed depot apron; it does not prove arbitrary layouts.
+Legacy established-room interior activity anchors are a documented compatibility contract.
+Citizen IDs are contiguous and append-only. No lifetime/deletion or shared-world authority
+model is claimed. Large scene composition, raw task dictionaries and some camera internals
+remain documented maintainability debt.
+
+[POC471 report](verification/poc471/final-report.md) records 79/79 admitted positive
+worlds, five expected negatives, six identical repeats and 90/60/60-day soaks on its
+accepted source. Those receipts are historical source-specific evidence; new cleanup
+verification is in [stabilization report](verification/stabilization/final-report.md).
+[POC47 founders](docs/POC47_FOUNDERS.md), [POC46 spectator](docs/POC46_SPECTATOR.md),
+[POC45 fishbowl](docs/POC45_FISHBOWL.md), [POC4 economy](docs/POC4_GAMEPLAY.md) and
+older plan files preserve milestone scope/history. They do not override current guides.
+POC3's historical subjective visual-review requirement is not silently accepted here.

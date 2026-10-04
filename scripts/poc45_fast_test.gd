@@ -116,10 +116,10 @@ func run() -> void:
 	var nav: Node = sim.coordinator.navigation
 	var reachable_definition: Dictionary = nav.room_definition.duplicate(true)
 	nav.room_definition.objects.append({"id": "test_access_blocker", "position": [0, 0, 0], "dimensions": [240, 10, 180], "blocks_navigation": true})
-	nav._rebuild_grid()
+	nav.refresh_navigation()
 	check(sim.governor.candidates(sim, {"wood": 10, "metal": 4}).is_empty() and sim.governor.rejections.values().has("inaccessible to real workers"), "unsafe unreachable salvage rejected")
 	nav.room_definition = reachable_definition
-	nav._rebuild_grid()
+	nav.refresh_navigation()
 	var nav_before: Dictionary = nav.room_definition.duplicate(true)
 	var obstacles: Array = nav.obstacle_rects.duplicate(true)
 	var solid := []
@@ -203,7 +203,7 @@ func run() -> void:
 	for index in range(speeds.size()):
 		speed_buttons[index].pressed.emit()
 		var before_seconds: float = sim.seconds
-		sim._process(0.5)
+		sim.advance_elapsed_time(0.5)
 		check(sim.speed == speeds[index] and absf(sim.seconds - before_seconds - speeds[index] * 0.5) < 0.001, "Pause/1x/4x/10x authoritative fixed-step speed %s" % speeds[index])
 	print("POC45_FAST_" + ("PASS" if failures.is_empty() else "FAIL") + " checks=" + JSON.stringify(checks) + " failures=" + str(failures))
 	scene.queue_free()

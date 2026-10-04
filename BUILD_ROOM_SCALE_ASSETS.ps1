@@ -1,6 +1,8 @@
 param([string]$LogDirectory = 'verification/poc3/logs')
 $ErrorActionPreference = 'Stop'
 $ProjectRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
+. (Join-Path $ProjectRoot 'scripts/Invoke-RoomScaleProcess.ps1')
+$LogDirectory = Resolve-RoomScaleOutputPath -Value $LogDirectory -ProjectRoot $ProjectRoot
 $GodotExecutable = & (Join-Path $ProjectRoot 'SETUP_ROOM_SCALE.ps1') | Select-Object -Last 1
 New-Item -ItemType Directory -Force -Path $LogDirectory | Out-Null
 & $GodotExecutable --headless --path $ProjectRoot --script res://scripts/asset_pipeline/generate_desk.gd 2>&1 | Tee-Object -FilePath (Join-Path $LogDirectory 'asset-generation.log')

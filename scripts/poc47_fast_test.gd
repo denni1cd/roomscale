@@ -59,7 +59,7 @@ func run() -> void:
 	for multiplier in [0.0,1.0,4.0,10.0]:
 		hud.speed_buttons[multiplier].pressed.emit()
 		var seconds: float = sim.seconds
-		sim._process(0.2)
+		sim.advance_elapsed_time(0.2)
 		check(absf(sim.seconds - seconds - 0.2 * multiplier) < 0.001, "speed button advances ordinary production ticks %s" % multiplier)
 	check(Adapter.event_card({"id":1,"kind":"cohort_joined","day":0,"message":"","evidence":{"before":5,"after":6}}).headline == "NEW CITIZEN", "single citizen narrative")
 	check(Adapter.module_name({"kind":"shelter","id":"development_001"}).begins_with("Founder Shelter"), "primitive project narrative")

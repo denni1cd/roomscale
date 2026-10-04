@@ -1,3 +1,5 @@
+> Historical milestone ledger. See README.md for the current accepted baseline and verification/stabilization/final-report.md for this cleanup.
+
 # RoomScale Progress
 
 ## POC 4.7.1 founding robustness

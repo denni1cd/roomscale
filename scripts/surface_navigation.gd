@@ -99,6 +99,8 @@ func route_between(start_region: String, end_region: String, start: Vector3, fin
 			for index in range(link_path.size() - 1, -1, -1):
 				route.append(link_path[index])
 			var floor_exit: Array[Vector3] = floor_navigation.path_between(link_path[0], finish)
+			if floor_exit.is_empty():
+				return {"reachable": false, "path": [], "reason": "no floor exit from deployed traversal"}
 			for index in range(1, floor_exit.size()):
 				route.append(floor_exit[index])
 		else:
@@ -238,13 +240,6 @@ func _append_distinct(candidates: Array[Vector3], candidate: Vector3) -> bool:
 			return false
 	candidates.append(candidate)
 	return true
-
-
-func investigation_route(start: Vector3, candidate_index: int) -> Array[Vector3]:
-	var candidates := investigation_candidates()
-	if candidate_index < 0 or candidate_index >= candidates.size():
-		return []
-	return floor_navigation.path_between(start, candidates[candidate_index])
 
 
 func exploration_route(start: Vector3, region_id: String) -> Array[Vector3]:

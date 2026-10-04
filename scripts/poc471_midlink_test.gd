@@ -19,7 +19,7 @@ func run() -> void:
 		{"id":"platform","position":[10,0,0],"dimensions":[10,20,10],"blocks_navigation":false,"surface":{"region_id":"TARGET","height":20,"anchor":[10,20,0]}}]}
 	var nav = Floor.new()
 	nav.configure(definition)
-	nav._rebuild_grid()
+	nav.refresh_navigation()
 	var surfaces = Surface.new()
 	surfaces.configure(definition,nav)
 	var link: Array[Vector3] = [Vector3.ZERO,Vector3(0,10,0),Vector3(10,20,0)]

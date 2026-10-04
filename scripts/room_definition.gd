@@ -214,7 +214,13 @@ static func validate(definition: Dictionary) -> Array[String]:
 		if object.has("appearance"):
 			_validate_appearance(object.get("appearance"), "object %s appearance" % object_id, errors)
 		if object.has("resource_profile"):
-			for diagnostic in ResourceProfiles.validate_profile(object.resource_profile): errors.append("object %s %s" % [object_id, diagnostic])
+			var profile_errors := ResourceProfiles.validate_profile(object.resource_profile)
+			for diagnostic in profile_errors: errors.append("object %s %s" % [object_id, diagnostic])
+			var derivable_appearance: bool = not object.has("appearance") or (object.appearance is Dictionary and (not object.appearance.has("material") or object.appearance.material is String))
+			if profile_errors.is_empty() and kind_value is String and _positive_vector(dimensions_value, 3) and derivable_appearance:
+				var effective_profile := ResourceProfiles.derive(object)
+				if effective_profile.harvestable and effective_profile.stages.is_empty():
+					errors.append("object %s harvestable resource profile requires salvage stages" % object_id)
 		if object.has("surface"):
 			var surface_value: Variant = object.get("surface")
 			if not surface_value is Dictionary:

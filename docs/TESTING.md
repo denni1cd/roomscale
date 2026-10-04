@@ -1,0 +1,93 @@
+# RoomScale verification
+
+Use PowerShell 7 and Python 3.13 with requirements-dev installed. Commands resolve
+output paths against the repository root; absolute output paths are accepted by the
+PowerShell wrappers. Python campaign output must remain project-local for RoomDefinition
+safety. Set up/import Godot once for a fresh checkout, then run repeatable gates:
+
+```powershell
+./SETUP_ROOM_SCALE.ps1
+python -m ruff check .
+python -m ruff format --check .
+./TEST_ROOM_SCALE.ps1 -Mode Fast
+./TEST_ROOM_SCALE.ps1 -Mode Canonical
+./TEST_ROOM_SCALE.ps1 -Mode Regression
+```
+
+| Mode | Coverage | Intended use |
+|---|---|---|
+| Fast (default) | Ruff check/format; Python provenance/process tests; PowerShell quoting/encoding/env/exit/timeout; RoomDefinition; founder fast; corner/narrow-aisle, unreachable retry, midlink route; new core and artifact-write fixtures | Every meaningful local change; no long simulation soaks |
+| Canonical | Three fresh eight-day five-founder production scenarios with deterministic state/checkpoint comparison | Behavior/timing confirmation |
+| Regression | POC46 Fast/scenario; POC45 Fast/survival/scenario; POC4 Fast/contract/cleanup and seven-day sustained; complete Room A and B M2-M6/M8 smoke | Before accepting runtime or harness changes |
+| Robustness | POC471 Short: ten named admitted positive worlds and five intentional negatives | A practical generated-world spot campaign |
+| Soak | Existing founder 90/60/60-day scenarios | Explicit expensive retention/exhaustion gate |
+| All | All five categories above | Full local acceptance; expensive, not per-commit CI |
+| Smoke | Original arbitrary-room production M2-M6/M8 scenario | Room reconstruction and legacy compatibility |
+
+```powershell
+./TEST_ROOM_SCALE.ps1 -Mode Robustness -Workers 2
+./TEST_ROOM_SCALE.ps1 -Mode Soak -Workers 2
+./TEST_ROOM_SCALE.ps1 -Mode All
+./TEST_ROOM_SCALE.ps1 -Mode Smoke -Room room_b
+# Omitted Mode with explicit legacy room/capture/log arguments retains smoke behavior.
+./TEST_ROOM_SCALE.ps1 -Room room_a -TimeoutSeconds 360
+./VALIDATE_ROOM_SCALE.ps1 -Room rooms/room_poc47.json
+```
+
+Activate .venv so `python` resolves to its installed tooling. `-PythonExecutable` can
+select an explicit Python executable for top-level/campaign/tooling checks. Default
+outputs live in ignored `verification/stabilization/runs/<category>/`. Fast duration
+is measured in stabilization final-report; it excludes expensive founder campaigns.
+
+## Specialized and replay commands
+
+Specialized scripts keep their existing modes and assertions; the top runner delegates
+rather than duplicating scenario implementation. Historical `All` semantics differ:
+POC46 excludes Stability, POC47 runs fast plus repeats, while POC4/45 include more gates.
+Use the top-level categories for a clear current hierarchy. No historical coverage is
+deleted or silently weakened.
+
+```powershell
+# Broad production campaign including fractional water, six repeats and three soaks
+./TEST_ROOM_SCALE_POC471.ps1 -Mode Full -Count 60 -Workers 2 -OutputDirectory verification/stabilization/runs/full
+# Separate retained probes, including resource/origin/identifier/order boundaries
+./TEST_ROOM_SCALE_POC471.ps1 -Mode Explore -Workers 2 -OutputDirectory verification/stabilization/runs/exploration
+# Exact retained definition/config replay; no regeneration or resource edits
+./TEST_ROOM_SCALE_POC471.ps1 -Mode Reproduce -Scenario verification/poc471/final/POS-001/config.json -OutputDirectory verification/stabilization/runs/replay
+# RoomDefinition structural + runtime navigation gate
+./VALIDATE_ROOM_SCALE.ps1 -Room verification/poc2/candidates/primary/attempt-7/room_photo_luna.json
+```
+
+Bulk campaigns observe real fixed production ticks. They report rejected generator
+inputs separately from admitted positives, expected negatives separately from success,
+and finite exhaustion honestly. They use real extraction, salvage, deliveries, labor,
+construction, capability and admission. Focused fixtures may directly configure local
+objects/links/inventory to isolate a boundary; their markers do not claim earned gameplay.
+
+## Failure handling and evidence
+
+The shared PowerShell process helper uses ArgumentList, asynchronous UTF-8 stdout/stderr
+capture, bounded timeout/kill waits, root-relative paths and child-only environment.
+It strips inherited ROOMSCALE overrides before setting the explicit scenario values;
+parent configuration is preserved. Wrappers require nonzero failure propagation, expected
+PASS markers, JSON success where relevant, and no script/engine errors. Campaign reruns
+remove prior result/failure files. Timeout/nonzero exit/error logs override a JSON PASS;
+a failed provenance audit preserves previously accepted reports and publishes diagnostics.
+
+Python unittest fixtures verify stale PASS rejection, process/engine failure, UTF-8/env
+isolation and audit publication. PowerShell tooling tests verify real child quoting,
+Unicode, error exit and captured partial timeout output. New Godot core fixtures verify
+startup roster integrity, original canonical placements, invalid resource profiles,
+raw-ID room lookup and disconnected floor exits. The evidence I/O fixture checks actual
+PNG/JSON round trips and rejected unwritable destinations.
+
+Windows CI installs pinned Ruff, imports the existing pinned Godot engine/assets and
+runs Fast. It excludes multi-hour campaigns/soaks and subjective visual review. The
+workflow itself is locally inspected; only an actual GitHub Actions run can confirm
+remote CI execution. Functional headless gates do not claim new visual acceptance.
+
+Keep compact final reports/manifests and required fixtures. Raw local logs/results and
+screenshots remain ignored unless deliberately reviewed for publication. Historical
+receipt hashes describe their historical source, not the cleanup source. Final cleanup
+receipts record the frozen tested SHA and normalized production/harness hashes. If any
+executable source changes after verification, invalidate that freeze and rerun its gates.

@@ -55,7 +55,7 @@ func _run() -> void:
 		definition.objects.append({"id": "blocker_%d" % i, "position": [at.x, at.y, at.z], "dimensions": [2, 1, 2], "blocks_navigation": true})
 	var nav := Navigation.new()
 	nav.configure(definition)
-	nav._rebuild_grid()
+	nav.refresh_navigation()
 	var coordinator := Coordinator.new()
 	coordinator.navigation = nav
 	coordinator.depot_station = Vector3(-40, 0, -40)
@@ -79,7 +79,7 @@ func _run() -> void:
 	# the edge-access change and authorization through production code.
 	definition.objects = [item]
 	nav.configure(definition)
-	nav._rebuild_grid()
+	nav.refresh_navigation()
 	check(sim.authorize_salvage("rejected_item") and sim.salvage.objects.rejected_item.authorized and sim.planner.authorized.has("rejected_item"), "valid reachable authorization still succeeds")
 	check(not nav.is_obstacle_position(padding_point) and nav.is_obstacle_position(Vector3.ZERO), "successful authorization opens edge access while retaining physical obstacle")
 	sim.free()

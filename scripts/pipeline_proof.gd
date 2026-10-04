@@ -13,6 +13,7 @@ const RoomDefinitionLoader := preload("res://scripts/room_definition.gd")
 const VisualResolver := preload("res://scripts/visuals/visual_resolver.gd")
 const MaterialLibrary := preload("res://scripts/visuals/material_library.gd")
 const SettlementDetails := preload("res://scripts/visuals/settlement_details.gd")
+const Evidence := preload("res://scripts/verification/evidence_io.gd")
 const CITIZEN_HEIGHT_INCHES := 0.5
 const CROWN_INTERIOR_PROJECTION := 0.75
 
@@ -38,6 +39,7 @@ var _population_label: Label
 var _activity_label: Label
 var _focus_label: Label
 var _surface_outlines: Dictionary = {}
+var _room_object_roots: Dictionary = {}
 var _cutaway_wall_group: Node3D
 var _cutaway_wall_side := ""
 var _reach_button: Button
@@ -567,6 +569,7 @@ func _build_room_object(parent: Node3D, object: Dictionary) -> void:
 	root.rotation_degrees.y = float(object.get("rotation_degrees", 0.0))
 	root.set_meta("semantic_name", String(object.get("name", object.id)))
 	parent.add_child(root)
+	_room_object_roots[String(object.id)] = root
 	_visual_resolver.render(root, object, _render_object_fallback)
 	if ResourceProfiles.derive(object).harvestable:
 		var object_body := StaticBody3D.new()
@@ -605,6 +608,10 @@ func _build_room_object(parent: Node3D, object: Dictionary) -> void:
 		outline_material.albedo_color.a = 0.36
 		outline.visible = false
 		_surface_outlines[region_id] = outline
+
+
+func get_room_object(object_id: String) -> Node3D:
+	return _room_object_roots.get(object_id) as Node3D
 
 
 func _render_object_fallback(root: Node3D, object: Dictionary) -> void:
@@ -1427,28 +1434,15 @@ func _build_population() -> bool:
 	_task_coordinator.configure_room(_room_definition)
 	add_child(_task_coordinator)
 	var initial_population := int(_room_definition.get("start", {}).get("population", 50))
+	var starts: Array[Vector3] = preload("res://scripts/population_system.gd").initial_positions(_room_definition, navigation, initial_population)
+	if starts.size() != initial_population:
+		push_error("ROOMSCALE_SPAWN_INVALID: insufficient safe connected positions for all %d citizens" % initial_population)
+		get_tree().quit(1)
+		return false
 	_task_coordinator.seed_population(initial_population)
-	var starts: Array[Vector3] = []
-	var spawn: Dictionary = _room_definition.spawn
-	var spawn_center := RoomDefinitionLoader.vector3_from(spawn.center)
-	var spawn_dimensions: Array = spawn.dimensions
-	var floor_height := float(_room_definition.floor.height)
 	for citizen_id in range(initial_population):
-		var column := citizen_id % 10
-		var row := floori(float(citizen_id) / 10.0)
-		var proposed := Vector3(spawn_center.x - float(spawn_dimensions[0]) * 0.5 + 4.0 + float(column) * (float(spawn_dimensions[0]) - 8.0) / 9.0, floor_height, spawn_center.z - float(spawn_dimensions[2]) * 0.5 + 4.0 + float(row) * (float(spawn_dimensions[2]) - 8.0) / 4.0)
-		var spawn_position: Vector3 = navigation.nearest_walkable_position(proposed)
-		if not is_finite(spawn_position.x):
-			push_error("No walkable spawn position for citizen %d" % citizen_id)
-			continue
-		var attempts := 0
-		while _overlaps_spawn(spawn_position, starts) and attempts < 8:
-			attempts += 1
-			proposed += Vector3(0.0, 0.0, 4.0)
-			spawn_position = navigation.nearest_walkable_position(proposed)
-		starts.append(spawn_position)
 		var citizen: Node3D = CitizenAgentController.new()
-		citizen.initialize(citizen_id, spawn_position, navigation, _task_coordinator)
+		citizen.initialize(citizen_id, starts[citizen_id], navigation, _task_coordinator)
 		add_child(citizen)
 		_citizens.append(citizen)
 	_construction_system = ConstructionSystemController.new()
@@ -1464,13 +1458,6 @@ func _build_population() -> bool:
 		get_node("CameraRig").set_citizen_focus(_citizens[0])
 	print("ROOMSCALE_CITIZEN_SPAWN count=%d separate_nodes=true height=%.1fin" % [_citizens.size(), CITIZEN_HEIGHT_INCHES])
 	return true
-
-
-func _overlaps_spawn(candidate: Vector3, existing: Array[Vector3]) -> bool:
-	for position in existing:
-		if Vector2(candidate.x - position.x, candidate.z - position.z).length() < 2.0:
-			return true
-	return false
 
 
 func _build_ui() -> void:
@@ -1651,10 +1638,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			elif key.keycode == KEY_ENTER and _selected_surface == surface_navigation_goal_id():
 				issue_reach_explore()
 				get_viewport().set_input_as_handled()
-
-
-func _select_surface_under_cursor(screen_position: Vector2) -> void:
-	select_surface_at_screen_position(screen_position)
 
 
 func select_surface_at_screen_position(screen_position: Vector2) -> bool:
@@ -1866,13 +1849,6 @@ func _add_sphere(parent: Node3D, node_name: String, size: Vector3, at: Vector3, 
 	return item
 
 
-func _add_book_stack(parent: Node3D, node_name: String, at: Vector3, count: int) -> void:
-	var colors := [Color("97574a"), Color("52717b"), Color("c39b5a"), Color("596950")]
-	for index in range(count):
-		var width := 12.0 - float(index % 2) * 2.0
-		_add_box(parent, "%s%d" % [node_name, index], Vector3(width, 1.8, 9.0), at + Vector3(0.0, float(index) * 2.0, 0.0), colors[index % colors.size()], 0.76)
-
-
 func _material(color: Color, roughness: float) -> StandardMaterial3D:
 	var key := "%s_%.2f" % [color.to_html(), roughness]
 	if _materials.has(key):
@@ -1895,11 +1871,15 @@ func _capture_frame() -> void:
 func _capture_frame_named(tag: String) -> void:
 	var image := get_viewport().get_texture().get_image()
 	var artifact_directory := ProjectSettings.globalize_path("res://verification")
-	DirAccess.make_dir_recursive_absolute(artifact_directory)
 	var image_path := "%s/%s.png" % [artifact_directory, tag]
-	var result := image.save_png(image_path)
+	var result := Evidence.save_png(image, image_path)
+	if result != OK:
+		push_error("ROOMSCALE_VISIBLE_CAPTURE_FAIL: screenshot write failed: %s (error=%d)" % [image_path, result])
+		return
 	var proof := FileAccess.open("%s/%s.log" % [artifact_directory, tag], FileAccess.WRITE)
-	proof.store_line("ROOMSCALE_M3_VISIBLE_PASS")
+	if proof == null:
+		push_error("ROOMSCALE_VISIBLE_CAPTURE_FAIL: receipt write failed (error=%d)" % FileAccess.get_open_error())
+		return
 	proof.store_line("Godot=%s" % Engine.get_version_info().string)
 	proof.store_line("Room=%.0fx%.0f in; walls=%.0f in" % [ROOM_WIDTH, ROOM_DEPTH, WALL_HEIGHT])
 	var room_object_names := PackedStringArray()
@@ -1915,4 +1895,9 @@ func _capture_frame_named(tag: String) -> void:
 	proof.store_line("Goal=%s" % JSON.stringify(_task_coordinator.get_reach_goal_status()))
 	proof.store_line("Screenshot=%s" % image_path)
 	proof.store_line("ImageSaveResult=%d" % result)
+	proof.store_line("ROOMSCALE_M3_VISIBLE_PASS")
+	proof.flush()
+	if proof.get_error() != OK:
+		push_error("ROOMSCALE_VISIBLE_CAPTURE_FAIL: receipt flush failed (error=%d)" % proof.get_error())
+		return
 	print("ROOMSCALE_VISIBLE_CAPTURE path=%s result=%d" % [image_path, result])

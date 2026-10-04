@@ -110,7 +110,7 @@ func valid_site(site: Vector3, work_target: Vector3 = Vector3.INF) -> bool:
 	proposed.objects.append(obstacle(site, "proposed_development"))
 	var candidate := FloorNavigation.new()
 	candidate.configure(proposed)
-	candidate._rebuild_grid()
+	candidate.refresh_navigation()
 	var valid := true
 	var target := work_target if work_target.is_finite() else site + Vector3(0, 0, SIZE.z / 2 + 4)
 	if not candidate.is_walkable(target) or candidate.is_obstacle_position(target): valid = false
@@ -247,10 +247,10 @@ func work(task: Dictionary, citizen: Node3D, effort: float) -> bool:
 		if sim.economy.tickets[id].owner == active.id: sim.economy.consume(id, true)
 	apply_effect(active)
 	sim.coordinator.navigation.room_definition.objects.append(obstacle(active.site, active.id))
-	sim.coordinator.navigation._rebuild_grid()
+	sim.coordinator.navigation.refresh_navigation()
 	# All existing routes must adapt to the new physical footprint.
 	for worker in sim.citizens:
-		if worker.state in ["TRAVEL", "CARRY"]: worker._navigate_to(worker._destination)
+		if worker.state in ["TRAVEL", "CARRY"]: worker.replan_current_route()
 	render(active)
 	sim.journal.record(sim.seconds, "structure_complete", active.kind.capitalize() + " complete: " + String(active.id), active, active.site, String(active.id) + ":complete")
 	active = {}

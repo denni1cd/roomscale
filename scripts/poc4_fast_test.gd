@@ -103,13 +103,13 @@ func _run() -> void:
 	check(simulation.resources.audit().is_empty() and simulation.economy.audit().is_empty(), "salvage/haul conservation")
 	var clock_before: float = simulation.seconds
 	simulation.speed = 0
-	simulation._process(10)
+	simulation.advance_elapsed_time(10)
 	check(simulation.seconds == clock_before, "pause freezes production state")
 	simulation.speed = 4
-	simulation._process(0.25)
+	simulation.advance_elapsed_time(0.25)
 	check(is_equal_approx(simulation.seconds, clock_before + 1), "4x advances fixed simulation seconds")
 	simulation.speed = 10
-	simulation._process(0.1)
+	simulation.advance_elapsed_time(0.1)
 	check(is_equal_approx(simulation.seconds, clock_before + 2), "10x advances fixed simulation seconds")
 	if failed: return
 	print("POC4_M1_PASS " + JSON.stringify(status))

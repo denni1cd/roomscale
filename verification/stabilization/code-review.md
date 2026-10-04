@@ -7,7 +7,7 @@ No gameplay additions or rebalancing are proposed.
 
 ## Scope and method
 
-All active Python (2), PowerShell (16) and GDScript sources (61; all active bodies, including pipeline_proof) were inventoried.
+All active Python (2), PowerShell (16) and GDScript sources (60; all active bodies, including pipeline_proof) were inventoried.
 Independent reviews read runtime systems, presentation/visual/asset systems and every
 active test/evidence driver. The scene, project settings, visual catalogs/materials,
 shader, generated desk provenance/import settings and five room configurations were
@@ -71,7 +71,7 @@ None identified.
 
 | L08 | pipeline_proof.gd | Large rendering/input/simulation composition class; two unused wrapper/build methods. | Remove proven dead methods; defer class decomposition to avoid broad visual/scene churn. |
 
-Counts: **0 Critical, 2 High, 17 Medium, 8 Low**. Proposed dispositions are not proof
+Counts: **0 Critical, 2 High, 18 Medium, 8 Low**. Proposed dispositions are not proof
 of completed fixes; final report maps each finding to its implemented/deferred result.
 
 ## Authority and test legitimacy
@@ -97,3 +97,7 @@ scenarios and POC471 observers use earned production progression, physical extra
 hauling, labor, population admission and continuously checked ledgers/navigation. No
 cleanup integration test may inject resources, teleport entities or grant completion.
 Historical compatibility M2-M6 and legacy non-economy construction remain covered.
+
+## Additional finding from cleanup review
+
+M18 (Medium): POC47 Repeatability formerly checked independent PASS results without comparing their deterministic state. The cleanup adds comparison of production checkpoints/state across fresh runs, preserving existing scenario assertions. This was discovered during the second review, before source freeze.

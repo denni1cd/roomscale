@@ -53,6 +53,10 @@ func initialize(id: int, start: Vector3, floor_navigation: Node, task_system: No
 
 
 func _process(delta: float) -> void:
+	advance_simulation(delta)
+
+
+func advance_simulation(delta: float) -> void:
 	_lod_timer += delta
 	if _lod_timer >= 0.4:
 		_lod_timer = 0.0
@@ -93,9 +97,6 @@ func _process(delta: float) -> void:
 			_assign_next_task()
 	_update_animation()
 
-
-func get_travelled_distance() -> float:
-	return travelled_distance
 
 func refresh_visual_lod() -> void:
 	# Camera-dependent rendering can refresh while simulation is paused.
@@ -232,6 +233,10 @@ func _navigate_to(destination: Vector3) -> void:
 		return
 	coordinator.activate_task(task_id)
 	state = "CARRY" if carrying else "TRAVEL"
+
+
+func replan_current_route() -> void:
+	_navigate_to(_destination)
 
 
 func _advance_path(delta: float) -> void:

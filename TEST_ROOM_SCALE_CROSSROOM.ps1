@@ -7,9 +7,11 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $ProjectRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
+. (Join-Path $ProjectRoot 'scripts/Invoke-RoomScaleProcess.ps1')
 if (-not $OutputDirectory) {
 	$OutputDirectory = Join-Path $ProjectRoot 'verification/poc15/cross-room'
 }
+$OutputDirectory = Resolve-RoomScaleOutputPath -Value $OutputDirectory -ProjectRoot $ProjectRoot
 New-Item -ItemType Directory -Force -Path $OutputDirectory | Out-Null
 $sequence = @('room_a','room_b','room_a')
 $overall = [System.Diagnostics.Stopwatch]::StartNew()
@@ -67,4 +69,4 @@ $summary = @(
 $summaryPath = Join-Path $OutputDirectory 'summary.md'
 [System.IO.File]::WriteAllText($summaryPath, $summary + [Environment]::NewLine, [System.Text.UTF8Encoding]::new($false))
 Write-Output "SUMMARY: $summaryPath ($state, $passCount/3)"
-if ($state -ne 'PASS') { exit 1 }
+if ($state -ne 'PASS') { throw $failure }

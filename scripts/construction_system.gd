@@ -32,7 +32,6 @@ var picked_up := {"wood": 0, "metal": 0, "mechanical_parts": 0}
 var project_state := "AWAITING_BARRIER"
 var project_created := false
 var traversal_deployed := false
-var traversal_arrival: Dictionary = {}
 var _active_stage := -1
 var _completed_stages := 0
 var _stage_work := 0.0
@@ -77,6 +76,10 @@ func configure(task_coordinator: Node, floor_navigation: Node, population: Array
 
 
 func _process(delta: float) -> void:
+	advance_simulation(delta)
+
+
+func advance_simulation(delta: float) -> void:
 	if not _detail_groups.is_empty():
 		var progress := _stage_work / float(STAGES[_active_stage].work_seconds) if _active_stage >= 0 else 0.0
 		GrappleDetails.animate(_detail_groups, _completed_stages, _active_stage, progress, project_state == "DEPLOYING_TRAVERSAL", delta)

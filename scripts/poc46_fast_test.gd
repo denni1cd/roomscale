@@ -63,7 +63,7 @@ func run() -> void:
 	for speed in [0.0, 1.0, 4.0, 10.0]:
 		hud.speed_buttons[speed].pressed.emit()
 		var seconds: float = sim.seconds
-		sim._process(0.2)
+		sim.advance_elapsed_time(0.2)
 		check(sim.speed == speed and absf(sim.seconds - seconds - 0.2 * speed) < 0.001, "authoritative speed control %s" % speed)
 	var presenter := Presenter.new()
 	var events := []
@@ -133,11 +133,11 @@ func run() -> void:
 	sim.population.stable_since = 600
 	var definition: Dictionary = nav.room_definition.duplicate(true)
 	nav.room_definition.objects.append({"id": "blocked_fixture", "position": [0,0,0], "dimensions": [240,10,180], "blocks_navigation": true})
-	nav._rebuild_grid()
+	nav.refresh_navigation()
 	sim.population.evaluate(sim, sim.status(), false, false)
 	check(sim.citizens.size() == 50 and sim.population.cohorts.is_empty() and sim.population.reason.contains("five safe"), "blocked fixture creates zero citizens and explains whole-cohort refusal")
 	nav.room_definition = definition
-	nav._rebuild_grid()
+	nav.refresh_navigation()
 	sim.population.evaluate(sim, sim.status(), false, false)
 	check(sim.citizens.size() == 55 and sim.population.cohorts.size() == 1, "valid fixture spawns entire cohort")
 	for i in range(5): check(sim.citizens[50+i].get_script() == preload("res://scripts/citizen_agent.gd") and sim.citizens[50+i].position == points[i] and not sim.citizens[50+i].needs.is_empty(), "real ordinary citizen initialized at distinct point %d" % i)

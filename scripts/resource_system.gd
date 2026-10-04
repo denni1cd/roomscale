@@ -11,7 +11,7 @@ var delivered := {"food": 0.0, "water": 0.0, "wood": 0.0, "metal": 0.0}
 
 static func derive(object: Dictionary) -> Dictionary:
 	var semantic := String(object.get("kind", "unknown")).to_lower()
-	var material := String(object.get("appearance", {}).get("material", ""))
+	var material := String(object.get("appearance", {}).get("material", "")).to_lower()
 	if material.is_empty() and semantic in ["chair", "table", "desk", "bookcase", "box", "crate", "workbench"]: material = "wood"
 	var explicit: Dictionary = object.get("resource_profile", {})
 	# Automatic stages must use the final material; explicit stages still win

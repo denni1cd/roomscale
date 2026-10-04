@@ -27,7 +27,7 @@ func run() -> void:
 	if citizen.state != "IDLE" or coordinator.summary().failed_total != 1 or coordinator.summary().created_total != 2: failures.append("Unreachable route recursively claims replacement tasks")
 	citizen.needs = preload("res://scripts/need_system.gd").new().initial(0)
 	if failures.is_empty():
-		for tick in range(10): citizen._process(0.5)
+		for tick in range(10): citizen.advance_simulation(0.5)
 	if citizen.position != Vector3.ZERO or citizen.state != "IDLE" or coordinator.summary().created_total != 12 or coordinator.summary().failed_total != 11 or coordinator.tasks.size() > 12: failures.append("Unreachable retry is unbounded or moves citizen")
 	print("POC471_UNREACHABLE_" + ("PASS" if failures.is_empty() else "FAIL") + " " + JSON.stringify({"failures":failures,"tasks":coordinator.summary(),"state":citizen.state}))
 	fixture.free()

@@ -8,7 +8,7 @@ func _initialize() -> void:
 func run() -> void:
 	var nav = Floor.new()
 	nav.configure({"id":"corner_regression","dimensions":[240,180],"floor":{"center":[0,0,0],"height":0},"objects":[{"id":"completed_shelter","position":[4,0,24],"dimensions":[12,7,10],"blocks_navigation":true}]})
-	nav._rebuild_grid()
+	nav.refresh_navigation()
 	var start = Vector3(10.16,0,19.58)
 	var finish = Vector3(16,0,20)
 	var paths = [nav.path_between(start,finish),nav.path_between(finish,start)]
@@ -17,7 +17,7 @@ func run() -> void:
 	nav.configure({"id":"narrow_aisle_regression","dimensions":[240,180],"floor":{"center":[0,0,0],"height":0},"objects":[
 		{"id":"workshop","position":[-20,0,42],"dimensions":[26,10,18],"navigation_padding":[3,0,3],"blocks_navigation":true},
 		{"id":"housing","position":[-25,0,66],"dimensions":[28,7,17],"navigation_padding":[3,0,3],"blocks_navigation":true}]})
-	nav._rebuild_grid()
+	nav.refresh_navigation()
 	start = Vector3(-16.84314,0,54.03841)
 	finish = Vector3(18,0,55)
 	var aisle_paths = [nav.path_between(start,finish),nav.path_between(finish,start)]

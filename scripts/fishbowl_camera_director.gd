@@ -65,9 +65,6 @@ func choose() -> Dictionary:
 				var object: Dictionary = simulation.resources.objects[id].data
 				shot.focus = major.focus + Vector3.UP * float(object.dimensions[1]) * 0.35
 				shot.distance = maxf(35, float(object.dimensions[1]) * 2.1)
-		elif major.kind in ["governor", "directive"]:
-			shot.focus = simulation.development.center() + Vector3.UP * 2
-			shot.distance = 110.0
 		return shot
 	# Alternate a contextual view with actual worker detail, never move the worker.
 	if not String(current_shot.get("key", "")).begins_with("citizen:"):

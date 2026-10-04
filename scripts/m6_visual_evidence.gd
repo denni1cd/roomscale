@@ -1,4 +1,5 @@
 extends SceneTree
+const Evidence := preload("res://scripts/verification/evidence_io.gd")
 ## Visible evidence for autonomous elevated-surface exploration and route reuse.
 
 func _initialize() -> void:
@@ -68,7 +69,7 @@ func _run() -> void:
 	rig._apply_transform()
 	await process_frame
 	await process_frame
-	_save_capture("milestone6-surface-exploration")
+	if not _save_capture("milestone6-surface-exploration"): return
 	var reuse_citizen: Node3D
 	elapsed = 0.0
 	while elapsed < 50.0:
@@ -94,7 +95,7 @@ func _run() -> void:
 	await create_timer(0.3).timeout
 	scene._update_population_ui()
 	await process_frame
-	_save_capture("milestone6-autonomous-route-reuse")
+	if not _save_capture("milestone6-autonomous-route-reuse"): return
 	var m6: Dictionary = coordinator.get_m6_status()
 	var proof := FileAccess.open("res://verification/milestone6-visual.log", FileAccess.WRITE)
 	proof.store_line("Surface exploration capture: citizen=%s position=%s state=%s work_seconds=%.2f route=%.1fin walked=%.1fin" % [first_explorer.name, first_explorer.global_position, first_explorer.state, explore_task.get("work_seconds", 0.0), explore_task.get("route_length", 0.0), explore_task.get("actual_travelled_distance", 0.0)])
@@ -108,9 +109,12 @@ func _fail(message: String) -> void:
 	quit(1)
 
 
-func _save_capture(name: String) -> void:
-	var directory := ProjectSettings.globalize_path("res://verification")
-	DirAccess.make_dir_recursive_absolute(directory)
-	var path := "%s/%s.png" % [directory, name]
-	var result := get_root().get_viewport().get_texture().get_image().save_png(path)
+func _save_capture(name: String) -> bool:
+	var path := "res://verification".path_join(name + ".png")
+	var result := Evidence.save_png(root.get_texture().get_image(), path)
 	print("ROOMSCALE_M6_CAPTURE path=%s result=%d" % [path, result])
+	if result != OK:
+		push_error("M6_EVIDENCE_FAIL: screenshot write failed: %s (error=%d)" % [path, result])
+		quit(1)
+		return false
+	return true

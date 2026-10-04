@@ -107,6 +107,9 @@ func configure(world: Node3D, config: Dictionary) -> void:
 	scene.get_node("Overlay/PresentationStatus").hide()
 
 func _process(delta: float) -> void:
+	advance_elapsed_time(delta)
+
+func advance_elapsed_time(delta: float) -> void:
 	advance(delta * speed)
 
 func advance(delta: float) -> void:
@@ -124,8 +127,8 @@ func step() -> void:
 		plan()
 	for citizen in citizens:
 		needs.decay(citizen.needs, STEP, citizen.task_type == "NEED_REST" and citizen.state == "WORK")
-		citizen._process(STEP)
-	construction._process(STEP)
+		citizen.advance_simulation(STEP)
+	construction.advance_simulation(STEP)
 
 func claim(citizen: Node3D) -> Dictionary:
 	var ordinary_score := -INF
@@ -384,7 +387,7 @@ func show_bundle(id: int) -> void:
 	bundle_visuals[id].show()
 
 func apply_salvage_stage(id: String) -> void:
-	var root := scene.get_node_or_null("RoomObjects/" + id) as Node3D
+	var root := scene.get_room_object(id) as Node3D
 	if root == null: return
 	for child in root.get_children():
 		if child is Node3D: child.hide()
