@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import os
+import runpy
 import subprocess
 import tempfile
 import unittest
@@ -14,6 +15,7 @@ from unittest.mock import patch
 import canonical_results
 import poc471_campaign as campaign
 import poc471_evidence as evidence
+import poc472_campaign as placement
 
 
 class CampaignExecutionTests(unittest.TestCase):
@@ -187,6 +189,72 @@ class CanonicalComparisonTests(unittest.TestCase):
             canonical_results.fingerprint({"result": "PASS"})
         with self.assertRaises(ValueError):
             canonical_results.fingerprint(dict.fromkeys(canonical_results.FIELDS, "FAIL"))
+
+
+class PlacementPublicationTests(unittest.TestCase):
+    def test_failed_audit_does_not_publish_acceptance(self) -> None:
+        audit = runpy.run_path(str(placement.ROOT / "verification/poc472/gather_evidence.py"))
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            output = root / "verification/poc472"
+            output.mkdir(parents=True)
+            accepted = output / "audit.json"
+            accepted.write_text("accepted evidence", encoding="utf-8")
+            frozen = output / "freeze-manifest.json"
+            frozen.write_text("{}", encoding="utf-8")
+            audit["main"].__globals__["ROOT"] = root
+            with (
+                patch("sys.argv", ["audit"]),
+                self.assertRaisesRegex(AssertionError, "Incomplete final campaign"),
+            ):
+                audit["main"]()
+            self.assertEqual(accepted.read_text(encoding="utf-8"), "accepted evidence")
+            self.assertFalse((output / "final/campaign-summary.json").exists())
+
+
+class PlacementAcceptanceTests(unittest.TestCase):
+    @staticmethod
+    def full_cases() -> list[dict]:
+        paths = sorted((placement.ROOT / "verification/poc471/final").glob("*/config.json"))
+        paths += sorted((placement.ROOT / "verification/poc471/exploration").glob("*/config.json"))
+        configs = [placement.retained(path) for path in paths]
+        configs += placement.placements() + [placement.impossible_layout()]
+        cases = [
+            {
+                "id": c["id"],
+                "classification": c["classification"],
+                "result": "PASS",
+                "fingerprint": c["id"].split("-REPEAT-")[0],
+                "violations": [],
+                "deadlock": False,
+                "final": {"seconds": c["days"] * 600},
+                "validation": {"expected_rejection": c["id"] == "NEG-05"},
+            }
+            for c in configs
+        ]
+        return cases
+
+    def test_complete_corpus_is_required(self) -> None:
+        cases = self.full_cases()
+        self.assertEqual(placement.acceptance_errors(cases, "full"), [])
+        for sid in ("POS-023", "PLACE-031", "SOAK-01", "POS-001-REPEAT-1"):
+            with self.subTest(sid=sid):
+                self.assertTrue(
+                    placement.acceptance_errors([c for c in cases if c["id"] != sid], "full")
+                )
+        self.assertTrue(placement.acceptance_errors([], "full"))
+
+    def test_invariants_repeat_and_negative_semantics_cannot_be_hidden(self) -> None:
+        for sid, key, value in (
+            ("POS-001", "violations", ["conservation"]),
+            ("POS-001-REPEAT-1", "fingerprint", "different"),
+            ("NEG-05", "validation", {}),
+            ("NEG-03", "final", {"seconds": 0}),
+        ):
+            with self.subTest(sid=sid, key=key):
+                cases = self.full_cases()
+                next(c for c in cases if c["id"] == sid)[key] = value
+                self.assertTrue(placement.acceptance_errors(cases, "full"))
 
 
 if __name__ == "__main__":

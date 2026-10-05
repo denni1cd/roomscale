@@ -686,6 +686,17 @@ func _verify_v2_geometry_and_renderer(fixture: Dictionary) -> bool:
 	if art_visual == null or art_visual.get_node_or_null("TriptychTriangle_0") == null or art_visual.get_node_or_null("ArtPanel_2") == null:
 		_fail("generic triptych renderer omitted its panel composition or abstract shapes")
 		return false
+	for index in range(3):
+		var triangle := art_visual.get_node("TriptychTriangle_%d" % index) as MeshInstance3D
+		var bounds := triangle.mesh.get_aabb()
+		if bounds.position.x < -32.5 or bounds.end.x > 32.5:
+			_fail("triptych motif extends beyond the authored frame bounds")
+			return false
+		var circle := art_visual.get_node("TriptychCircle_%d" % index) as MeshInstance3D
+		var panel := art_visual.get_node("ArtPanel_%d" % index) as MeshInstance3D
+		if absf(circle.position.x - panel.position.x) > 65.0 / 6.0:
+			_fail("triptych motif is not within its corresponding panel")
+			return false
 	var emblem_fixture := {"id":"visual_wall_emblem_test", "kind":"wall_decoration", "position":[0, 0, 0], "dimensions":[14, 14, 1], "appearance":{"archetype":"wall_emblem", "base_color":"bec5bd", "accent_color":"666a66", "material":"metal"}}
 	object_renderer.call("_build_room_object", object_parent, emblem_fixture)
 	var emblem_visual := object_parent.get_node_or_null("visual_wall_emblem_test")

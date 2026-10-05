@@ -3,7 +3,7 @@ Current verification entry point (PowerShell 7).
 Fast: Python quality/tooling, schema, founder fast, navigation focused tests.
 Canonical: three fresh eight-day founder runs.
 Regression: meaningful POC4/4.5/4.6 checks and legacy Room A/B smoke.
-Robustness: ten named positive worlds plus five intentional negatives.
+Robustness:37 POC472 development worlds, including31 placements and feasible NEG-03.
 Soak: existing 90/60/60-day founder runs. All includes every category.
 Legacy -Room calls, with Mode omitted, retain the historical smoke contract.
 Outputs default to ignored verification/stabilization/runs; accepted evidence is curated separately.
@@ -50,11 +50,12 @@ foreach ($category in $categories) {
             & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_FAST.ps1') -LogPath (Join-Path $out 'room-definition.log')
             & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_POC47.ps1') -Mode Fast -OutputDirectory (Join-Path $out 'founder') -TimeoutSeconds $TimeoutSeconds
             $godot = & (Join-Path $ProjectRoot 'SETUP_ROOM_SCALE.ps1') | Select-Object -Last 1
-            foreach ($check in @(@{Script='poc471_navigation_test'; Marker='POC471_NAVIGATION_PASS'}, @{Script='poc471_unreachable_task_test'; Marker='POC471_UNREACHABLE_PASS'}, @{Script='poc471_midlink_test'; Marker='POC471_MIDLINK_PASS'}, @{Script='verification/evidence_io_test'; Marker='ROOMSCALE_EVIDENCE_IO_PASS'}, @{Script='stabilization_core_test'; Marker='STABILIZATION_CORE_PASS'})) {
+            foreach ($check in @(@{Script='verification/evidence_io_test'; Marker='ROOMSCALE_EVIDENCE_IO_PASS'}, @{Script='stabilization_core_test'; Marker='STABILIZATION_CORE_PASS'})) {
                 $run = Invoke-RoomScaleProcess -FilePath $godot -ArgumentList @('--headless','--path',$ProjectRoot,'--script',("res://scripts/" + $check.Script + '.gd')) -ProjectRoot $ProjectRoot -LogPath (Join-Path $out ($check.Script + '.log')) -TimeoutSeconds $TimeoutSeconds
                 if ($run.TimedOut -or $run.ExitCode -ne 0 -or $run.Content -notmatch $check.Marker -or $run.Content -match 'ERROR:|SCRIPT ERROR:') { throw "Focused regression failed: $($check.Script). See $($run.LogPath)" }
                 Write-Output "$($check.Marker) log=$($run.LogPath)"
             }
+            & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_POC472_REGRESSIONS.ps1') -Mode Focused -OutputDirectory (Join-Path $out 'placement') -PythonExecutable $PythonExecutable -TimeoutSeconds $TimeoutSeconds
         }
         'Canonical' { & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_POC47.ps1') -Mode Repeatability -RunCount 3 -OutputDirectory $out -TimeoutSeconds $TimeoutSeconds -CaptureVisuals:$CaptureVisuals -PythonExecutable $PythonExecutable }
         'Regression' {
@@ -68,9 +69,11 @@ foreach ($category in $categories) {
             foreach ($legacyRoom in @('room_a','room_b')) {
                 & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_SMOKE.ps1') -Room $legacyRoom -LogPath (Join-Path $out ($legacyRoom + '.log')) -TimeoutSeconds $TimeoutSeconds
             }
+            & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_POC472_REGRESSIONS.ps1') -Mode Focused -OutputDirectory (Join-Path $out 'placement') -PythonExecutable $PythonExecutable -TimeoutSeconds $TimeoutSeconds
+            & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_POC471.ps1') -Mode Explore -OutputDirectory (Join-Path $out 'poc471-positive-exploration') -PythonExecutable $PythonExecutable -Workers $Workers
         }
-        'Robustness' { & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_POC471.ps1') -Mode Short -OutputDirectory $out -Workers $Workers -PythonExecutable $PythonExecutable }
-        'Soak' { & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_POC471.ps1') -Mode Soak -OutputDirectory $out -Workers $Workers -PythonExecutable $PythonExecutable }
+        'Robustness' { & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_POC472.ps1') -Mode Development -OutputDirectory $out -Workers $Workers -PythonExecutable $PythonExecutable }
+        'Soak' { & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_POC472.ps1') -Mode Soak -OutputDirectory $out -Workers $Workers -PythonExecutable $PythonExecutable }
     }
     Write-Output "ROOMSCALE_CATEGORY_PASS category=$category output=$out"
 }
