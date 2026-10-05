@@ -1,9 +1,10 @@
 # RoomScale stabilization final report
 
-**Merge-ready: all required verification gates passed.** Commit the documentation/evidence
-and require a clean tree and unchanged frozen source before the authorized normal merge.
-Main merge, remote verification, CI and post-merge smoke are recorded separately in
-`main-merge.md` after delivery; this report does not claim they have already happened.
+**Merged and pushed to main after all required local gates passed.** Normal merge
+`167e80b13396bae6830460819158a22de443a074` was verified remotely; Fast and import
+passed from that main revision. The primary checkout is on main and frozen source
+remains unchanged. `main-merge.md` records delivery. Remote GitHub CI remains queued,
+so its execution is unverified; no CI PASS is claimed.
 
 - Selected baseline: completed POC 4.7.2, `efa5950e4a03a318bf030eb0217e6cb184714053`.
 - POC 4.7.2 is included, with its complete accepted history and evidence.
@@ -181,11 +182,11 @@ mutation boundaries, large scene composition, trivial geometry/constants duplica
 and asset readiness delay. These are explicit scoped follow-ups, not unresolved
 Critical/High correctness blockers.
 
-AC01–AC29 pass with the evidence linked above. AC30 requires the clean documentation/
-evidence commit before merge; AC31 enforces the normal merge only after all gates;
-AC32 requires verified remote main and Fast from main. Their executed results will be
-recorded in `main-merge.md`. Only documentation/evidence commits are allowed after
-frozen ef5ebd3; manifests are checked again at main delivery.
+AC01–AC32 pass locally with the evidence linked above and in `main-merge.md`. The
+clean documentation/evidence commit preceded the conditional normal merge; remote
+main was verified and its Fast smoke passed. Only documentation/evidence commits
+follow frozen ef5ebd3; all 188 manifest hashes are verified at main delivery. Remote
+CI is explicitly pending hosted-runner execution, rather than an asserted pass.
 
 No release tag or historical branch deletion is performed. Recommend the user-selected
 future tag `roomscale-founder-stable` (or `v0.1.0` if adopting versioned releases).
