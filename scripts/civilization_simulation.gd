@@ -146,7 +146,7 @@ func claim(citizen: Node3D) -> Dictionary:
 		if slot >= 0:
 			citizen.needs.rest_slot = slot
 			planner.record("NEED_REST")
-			var target: Vector3 = coordinator.navigation.nearest_walkable_position(coordinator.housing_station + Vector3(-16 + (slot % 6) * 4, 0, 16 + (slot / 6) * 4))
+			var target: Vector3 = development.site_planner.rest_target(slot)
 			return coordinator.create_construction_task({"task_type": "NEED_REST", "source": target, "target": target, "slot": slot}, citizen.citizen_id)
 	var choices := work_options(citizen)
 	var best: Dictionary = {}

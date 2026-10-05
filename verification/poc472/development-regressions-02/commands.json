@@ -1,0 +1,54 @@
+[
+  {
+    "Command": "./TEST_ROOM_SCALE_POC47.ps1 -Mode All -OutputDirectory verification/poc472/development-regressions-02/poc47",
+    "Passed": true
+  },
+  {
+    "Command": "./TEST_ROOM_SCALE_POC46.ps1 -Mode Fast -OutputDirectory verification/poc472/development-regressions-02/poc46-fast",
+    "Passed": true
+  },
+  {
+    "Command": "./TEST_ROOM_SCALE_POC46.ps1 -Mode Scenario -OutputDirectory verification/poc472/development-regressions-02/poc46-scenario",
+    "Passed": true
+  },
+  {
+    "Command": "./TEST_ROOM_SCALE_POC45.ps1 -Mode Fast -OutputDirectory verification/poc472/development-regressions-02/poc45-fast",
+    "Passed": true
+  },
+  {
+    "Command": "./TEST_ROOM_SCALE_POC45.ps1 -Mode Survival -OutputDirectory verification/poc472/development-regressions-02/poc45-survival",
+    "Passed": true
+  },
+  {
+    "Command": "./TEST_ROOM_SCALE_POC45.ps1 -Mode Scenario -OutputDirectory verification/poc472/development-regressions-02/poc45-scenario",
+    "Passed": true
+  },
+  {
+    "Command": "./TEST_ROOM_SCALE_POC4.ps1 -Mode Fast -OutputDirectory verification/poc472/development-regressions-02/poc4-fast",
+    "Passed": true
+  },
+  {
+    "Command": "./TEST_ROOM_SCALE_POC4.ps1 -Mode Sustained -TimeoutSeconds 400 -OutputDirectory verification/poc472/development-regressions-02/poc4-sustained",
+    "Passed": true
+  },
+  {
+    "Command": "./TEST_ROOM_SCALE_FAST.ps1 -LogPath verification/poc472/development-regressions-02/room-definition-fast.log",
+    "Passed": true
+  },
+  {
+    "Command": "$godot --headless --path . --script res://scripts/poc471_navigation_test.gd",
+    "Passed": true
+  },
+  {
+    "Command": "$godot --headless --path . --script res://scripts/poc471_unreachable_task_test.gd",
+    "Passed": true
+  },
+  {
+    "Command": "$godot --headless --path . --script res://scripts/poc471_midlink_test.gd",
+    "Passed": true
+  },
+  {
+    "Command": "$godot --headless --path . --script res://scripts/poc472_planner_test.gd",
+    "Passed": true
+  }
+]

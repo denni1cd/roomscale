@@ -5,10 +5,10 @@ room as a landscape. Authored RoomDefinition JSON supplies furniture, finite res
 spawn geometry and elevated surfaces. Citizens physically salvage, haul, build, rest,
 climb and explore. One civilization operates in one room.
 
-The accepted production baseline for this stabilization branch is **POC 4.7.1**.
-POC 4.7.2 settlement planning was still being verified at the startup gate and is
-excluded here. This branch must be rebased and verified against that completed milestone
-before it can become `main`; see [baseline decision](verification/stabilization/baseline.md).
+The accepted production baseline is **POC 4.7.2**, completed at
+`efa5950e4a03a318bf030eb0217e6cb184714053`. Stabilization includes that verified
+settlement planner and preserves its earned production progression; see the
+[baseline decision](verification/stabilization/baseline.md).
 
 ## Current gameplay
 
@@ -98,17 +98,19 @@ See [architecture and authority](docs/ARCHITECTURE.md) for contracts and current
 ## Limits and historical evidence
 
 Current supported worlds use rectangular floor bounds, conservative furniture footprints,
-one initial elevated target and deterministic single-civilization ordering. POC471 founding
-uses a bounded local site search and fixed depot apron; it does not prove arbitrary layouts.
+one initial elevated target and deterministic single-civilization ordering. POC472 founding
+uses bounded connected layout search, downstream site reservations and planned rest
+positions; it does not prove arbitrary layouts.
 Legacy established-room interior activity anchors are a documented compatibility contract.
 Citizen IDs are contiguous and append-only. No lifetime/deletion or shared-world authority
 model is claimed. Large scene composition, raw task dictionaries and some camera internals
 remain documented maintainability debt.
 
-[POC471 report](verification/poc471/final-report.md) records 79/79 admitted positive
-worlds, five expected negatives, six identical repeats and 90/60/60-day soaks on its
-accepted source. Those receipts are historical source-specific evidence; new cleanup
-verification is in [stabilization report](verification/stabilization/final-report.md).
+[POC472 report](verification/poc472/final-report.md) records 127 main expected
+outcomes plus a supplemental layout, all 79 previous positives, both recovered
+exclusions, six identical repeats and 90/60/60-day soaks. Those receipts are historical
+source-specific evidence; fresh cleanup verification is in the
+[stabilization report](verification/stabilization/final-report.md).
 [POC47 founders](docs/POC47_FOUNDERS.md), [POC46 spectator](docs/POC46_SPECTATOR.md),
 [POC45 fishbowl](docs/POC45_FISHBOWL.md), [POC4 economy](docs/POC4_GAMEPLAY.md) and
 older plan files preserve milestone scope/history. They do not override current guides.

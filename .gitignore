@@ -42,8 +42,12 @@ verification/stabilization/runs/
 verification/**/*.import
 verification/**/*.uid
 verification/**/*.translation
+
 verification/**/*.tmp
 photo_holder/**/*.import
 screenshots/**/*.import
 *.stdout.tmp
 *.stderr.tmp
+
+# Active evidence-audit code is source, even under verification.
+!verification/poc472/gather_evidence.py

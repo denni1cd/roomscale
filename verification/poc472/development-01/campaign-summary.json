@@ -1,0 +1,65 @@
+{
+  "deadlock_count": 0,
+  "determinism_results": [],
+  "execution_durations": {
+    "POS-023": 74.683
+  },
+  "expected_negative_outcomes": 0,
+  "generator_rejections": 0,
+  "invariant_violation_count": 0,
+  "long_soak_results": [],
+  "milestone_timing_distributions": {},
+  "named_adversarial_passes": [],
+  "negative_scenarios": 0,
+  "population": {
+    "max": 5,
+    "mean": 5,
+    "median": 5,
+    "min": 5,
+    "p90": 5
+  },
+  "production_bugs_discovered": [],
+  "production_bugs_fixed": [],
+  "regression_results": {},
+  "results": [
+    {
+      "classification": "positive",
+      "execution_seconds": 74.683,
+      "failure": "Engine/script/process error; inspect run.log",
+      "final": null,
+      "fingerprint": null,
+      "id": "POS-023",
+      "maxima": null,
+      "milestones": null,
+      "name": "Combined layout variation",
+      "reproduction": "./TEST_ROOM_SCALE_POC471.ps1 -Mode Reproduce -Scenario \"verification/poc472/development-01/POS-023/config.json\" -OutputDirectory verification/poc471/reproduced",
+      "result": "ERROR",
+      "seed": 471022,
+      "stall_windows": null,
+      "validation": null
+    }
+  ],
+  "scenario_seeds": {
+    "POS-023": 471022
+  },
+  "shelter": {
+    "max": 0,
+    "mean": 0,
+    "median": 0,
+    "min": 0,
+    "p90": 0
+  },
+  "structure_completion_counts": {
+    "depot": 0,
+    "housing": 0,
+    "shelter": 0,
+    "workshop": 0
+  },
+  "total_scenarios": 1,
+  "traversal_success_count": 0,
+  "unexpected_negative_outcomes": 0,
+  "unresolved_bugs": [],
+  "valid_failures": 1,
+  "valid_passes": 0,
+  "valid_scenarios": 1
+}

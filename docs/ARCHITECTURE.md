@@ -1,7 +1,6 @@
 # RoomScale architecture
 
-This describes stabilization based on accepted POC4.7.1 (`923e8e6`), excluding the
-pending POC4.7.2 settlement planner. Current launch/test commands are in README and TESTING.
+This describes stabilization based on completed POC4.7.2 (`efa5950`). Current launch/test commands are in README and TESTING.
 There is one room, one civilization, append-only citizen IDs and finite resources.
 
 ## Composition and configuration
@@ -47,6 +46,7 @@ possible. Changing insertion order, tick order or timers can change deterministi
 | World source contents/bundles | ResourceSystem | Finite remaining/reserved/extracted/delivered ledgers; physical work creates bundles, return trip receives stock. |
 | Furniture salvage | SalvageSystem | Authorization, finite stage work/yields, once-only progression and depletion; production applies visual/navigation consequences. |
 | Traversal project | ConstructionSystem | Material tickets, worker effort, stages, deployment and actual link creation. Legacy non-economy path retained. |
+| Founding layout/reservations | SettlementSitePlanner | Bounded deterministic candidates and cloned-navigation checks; chooses sites/rest targets, never consumes inventory or completes construction. |
 | Settlement projects/capabilities | SettlementDevelopmentSystem | Site checks, real deliveries/labor, once-only completed benefits and navigation obstacles. |
 | Admission of citizens | PopulationSystem | Reserves/shelter/stability/cooldown/cap checks, then normal entities at safe connected positions. |
 | Intent and priorities | Governor / CivilizationPlanner | Policies choose production requests/tasks, never grant materials/completion/citizens/links. |
@@ -80,8 +80,10 @@ once. Failed/canceled work releases or drops inventory using production accounti
 Stock and source audits are checked continuously in integration observers.
 
 Primitive shelter, depot, workshop and housing earn their recorded benefits only at
-completion. The current site algorithm is bounded and reserves the founder depot apron;
-future connected settlement layout planning belongs to pending POC472. Workshop completion
+completion. The bounded site planner reserves a connected shelter/depot/workshop/first-housing
+layout and permanent rest targets before founding. Completion revalidates current
+occupants and activity access. Failure caching must include transient planning state;
+cloned navigation validation does not mutate the live world. Workshop completion
 gates advanced traversal. Grapple construction uses ordinary costs, stages, work and
 physical attachment/deployment before SurfaceNavigation receives its link.
 No cleanup changes costs, durations, speed, need decay, founder count, housing/growth

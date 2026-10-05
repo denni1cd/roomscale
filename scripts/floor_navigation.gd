@@ -9,6 +9,7 @@ var room_definition: Dictionary = {}
 var _origin := Vector2.ZERO
 var _floor_center := Vector3.ZERO
 var _floor_height := 0.0
+var report_ready := true
 
 
 func configure(definition: Dictionary) -> void:
@@ -74,7 +75,7 @@ func refresh_navigation() -> void:
 		)
 		_add_blocked_rect(Vector2(position.x, position.z), rotated_half, String(object.id))
 	_mark_obstacle_cells()
-	print("ROOMSCALE_FLOOR_NAV_READY room=%s grid=%dx%d cell=%.0fin obstacles=%d" % [room_definition.id, cells_x, cells_z, CELL_INCHES, obstacle_rects.size()])
+	if report_ready: print("ROOMSCALE_FLOOR_NAV_READY room=%s grid=%dx%d cell=%.0fin obstacles=%d" % [room_definition.id, cells_x, cells_z, CELL_INCHES, obstacle_rects.size()])
 
 
 func _add_blocked_rect(center: Vector2, half: Vector2, reason: String) -> void:

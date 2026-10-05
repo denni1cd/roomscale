@@ -290,15 +290,23 @@ def is_admission_rejection(result: dict, returncode: int | None, log_text: str) 
     return True
 
 
-def execute(config: dict, output: Path, godot: str) -> dict:
+def execute(
+    config: dict,
+    output: Path,
+    godot: str,
+    observer: str = "res://scripts/poc471_observer.gd",
+    extra_harness: tuple[str, ...] = (),
+) -> dict:
     case_dir = output / config["id"]
     definition_path = case_dir / (config["definition"]["id"] + ".json")
     write(definition_path, config["definition"])
     config_path = case_dir / "config.json"
     saved = {k: v for k, v in config.items() if k != "definition"}
     saved["room_file"] = str(definition_path.resolve())
+    entry = "TEST_ROOM_SCALE_POC472.ps1" if extra_harness else "TEST_ROOM_SCALE_POC471.ps1"
+    milestone = "poc472" if extra_harness else "poc471"
     saved["reproduction"] = (
-        f'./TEST_ROOM_SCALE_POC471.ps1 -Mode Reproduce -Scenario "{config_path.relative_to(ROOT).as_posix()}" -OutputDirectory verification/poc471/reproduced'
+        f'./{entry} -Mode Reproduce -Scenario "{config_path.relative_to(ROOT).as_posix()}" -OutputDirectory verification/{milestone}/reproduced'
     )
     write(config_path, saved)
     result_path = case_dir / "result.json"
@@ -331,11 +339,12 @@ def execute(config: dict, output: Path, godot: str) -> dict:
                 "scripts/poc471_observer.gd",
                 "scripts/poc471_evidence.py",
                 "TEST_ROOM_SCALE_POC471.ps1",
+                *extra_harness,
             ]
         },
     )
     started = time.perf_counter()
-    cmd = [godot, "--headless", "--path", str(ROOT), "--script", "res://scripts/poc471_observer.gd"]
+    cmd = [godot, "--headless", "--path", str(ROOT), "--script", observer]
     error = ""
     with (case_dir / "run.log").open("w", encoding="utf-8") as log:
         try:

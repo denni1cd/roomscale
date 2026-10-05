@@ -1,0 +1,92 @@
+{
+  "classification": "positive",
+  "days": 8,
+  "generator_version": 1,
+  "id": "PLACE-030",
+  "mutations": {
+    "finite_quantities": "unchanged canonical",
+    "origin": [
+      0,
+      0,
+      54
+    ],
+    "protected_obstacles": [
+      {
+        "blocks_navigation": true,
+        "dimensions": [
+          4,
+          6,
+          40
+        ],
+        "id": "pocket_side_-1",
+        "kind": "box",
+        "name": "pocket_side_-1",
+        "navigation_padding": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          -28,
+          0,
+          58
+        ],
+        "resource_profile": {
+          "protected": true
+        }
+      },
+      {
+        "blocks_navigation": true,
+        "dimensions": [
+          4,
+          6,
+          40
+        ],
+        "id": "pocket_side_1",
+        "kind": "box",
+        "name": "pocket_side_1",
+        "navigation_padding": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          28,
+          0,
+          58
+        ],
+        "resource_profile": {
+          "protected": true
+        }
+      },
+      {
+        "blocks_navigation": true,
+        "dimensions": [
+          60,
+          6,
+          4
+        ],
+        "id": "pocket_cap",
+        "kind": "box",
+        "name": "pocket_cap",
+        "navigation_padding": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          0,
+          0,
+          80
+        ],
+        "resource_profile": {
+          "protected": true
+        }
+      }
+    ]
+  },
+  "name": "Nearest legal site threatens downstream combinations",
+  "reproduction": "./TEST_ROOM_SCALE_POC472.ps1 -Mode Reproduce -Scenario \"verification/poc472/development-04/PLACE-030/config.json\" -OutputDirectory verification/poc472/reproduced",
+  "room_file": "C:\\Users\\Zero\\python_projects\\ai\\roomscale\\verification\\poc472\\development-04\\PLACE-030\\PLACE-030.json",
+  "seed": 472029
+}
