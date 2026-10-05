@@ -41,7 +41,10 @@ static func initial_positions(definition: Dictionary, nav: Node, population: int
 				for x in range(floori(room_bounds.size.x / cell)):
 					for z in range(floori(room_bounds.size.y / cell)):
 						var point := Vector3(room_bounds.position.x + cell * (x + 0.5), floor_height, room_bounds.position.y + cell * (z + 0.5))
-						if spawn_bounds.has_point(Vector2(point.x, point.z)) and _valid_initial_position(point, [], nav, depot): fallback.append(point)
+						# Existing small rosters can extend beyond a compact spawn seed area,
+						# matching the legacy initial lattice/shift contract. Larger rosters
+						# remain constrained to their explicitly sized spawn footprint.
+						if (population <= 50 or spawn_bounds.has_point(Vector2(point.x, point.z))) and _valid_initial_position(point, [], nav, depot): fallback.append(point)
 			fallback.sort_custom(func(a: Vector3, b: Vector3) -> bool:
 				var da := a.distance_squared_to(proposed)
 				var db := b.distance_squared_to(proposed)

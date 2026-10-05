@@ -27,6 +27,7 @@ func run() -> void:
 	test_profiles()
 	test_return_route()
 	test_initial_population()
+	test_photo_population()
 	test_object_identity()
 	print("STABILIZATION_CORE_" + ("PASS" if failures.is_empty() else "FAIL") + " " + JSON.stringify(failures))
 	quit(0 if failures.is_empty() else 1)
@@ -125,6 +126,29 @@ func test_initial_population() -> void:
 	for id in range(world._citizens.size()): contiguous = contiguous and world._citizens[id].citizen_id == id
 	check(contiguous, "production initial population IDs are contiguous")
 	world.free()
+
+func test_photo_population() -> void:
+	# Authored legacy photo rooms use small spawn seed regions for 50 citizens.
+	# Create all production entities atomically at distinct connected room cells.
+	for path in ["res://verification/poc2/candidates/primary/attempt-7/room_photo_luna.json", "res://verification/poc2/candidates/secondary-room/fresh-context/room_hearth_living_room_fresh.json"]:
+		var definition: Dictionary = Room.load_file(path).definition
+		var world := WorldFixture.new()
+		world._room_definition = definition
+		var focus := FocusFixture.new()
+		focus.name = "CameraRig"
+		world.add_child(focus)
+		root.add_child(world)
+		var complete: bool = world._build_population() and world._citizens.size() == 50
+		var positions: Array[Vector3] = []
+		var nav: Node = world.get_node("FloorNavigation")
+		var depot := Room.vector3_from(definition.construction.depot_pickup)
+		for id in range(world._citizens.size()):
+			var citizen: Node3D = world._citizens[id]
+			var at: Vector3 = citizen.global_position
+			complete = complete and citizen.citizen_id == id and Population._valid_initial_position(at, positions, nav, depot)
+			positions.append(at)
+		check(complete, String(definition.id) + " compact legacy spawn creates all50 distinct connected production citizens")
+		world.free()
 
 func test_object_identity() -> void:
 	var object := {"id":"raw/object:name", "kind":"unknown", "position":[0,0,0], "dimensions":[2,2,2], "blocks_navigation":true, "resource_profile":{"harvestable":true,"stages":[{"name":"DEPLETED","work":1,"yields":{"wood":1}}]}}

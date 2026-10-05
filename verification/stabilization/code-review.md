@@ -144,3 +144,18 @@ not introduce a new photo feature. Navigation/economy contracts remain independe
 
 Final combined review inventory: **0 Critical,2 High,25 Medium,10 Low** (37 findings).
 Both additional findings are fixed now before source freeze, with current Fast coverage.
+
+## H02 compatibility correction before replacement freeze
+
+Fresh full photo-room smoke on candidate def2515 exposed an inconsistent fallback
+boundary in the cleanup helper: the preserved <=50-citizen initial lattice can leave
+a compact spawn seed region, but its new fallback scanned only that region. Accepted
+mainline photo input has50citizens and a10x10seed area, so the full roster rejected.
+The initial focused fixtures omitted both photo inputs; schema validation alone did
+not expose the regression. This is an H02 implementation correction, not a new feature.
+Before replacement acceptance, fallback uses the same <=50legacy room-bound contract
+as the primary lattice, still requiring every position finite, distinct, unobstructed
+and connected to the depot. Larger rosters retain explicit spawn bounds and atomic
+rejection. Both authored photo inputs now receive actual50-entity production-loop
+fixtures; full photo gameplay must also pass. Old candidate receipts are preliminary,
+not restamped as acceptance for changed source. A new freeze and full rerun are required.
