@@ -180,3 +180,16 @@ No known blocking defect. Construction progress is bounded at 100%; the floor-to
 POC 4 implementation and verification are complete. Play with
 `./RUN_ROOM_SCALE.ps1`; no Godot editing is needed. Earlier plans and evidence
 remain preserved.
+
+All planned milestones M0–M8 are complete and verified. Preserve the user-owned `poc_project_plan.md`; no further milestone work is in scope.
+
+## RoomScale POC 2 completion
+
+**Status: PASS. All 48 POC 2 acceptance criteria are PASS, including the final architectural cleanup and its required regressions.** Detailed evidence and scoped visual acceptance are recorded in the [POC 2 acceptance matrix](verification/poc2/acceptance-matrix.md) and [Milestone 9 status](verification/poc2/m9-status.md).
+
+- The portable [room reconstruction skill](skills/roomscale-room-reconstruction/SKILL.md) turns ordinary photos into inspectable RoomDefinitions, records evidence and estimates separately, and uses validator-directed new attempts for repair.
+- The canonical attempt-7 photo reconstruction validates and completes the full production gameplay loop: `verification/poc2/candidates/primary/attempt-7/room_photo_luna.json` and its saved validation/gameplay logs.
+- Fresh-context Luna and secondary-AI reconstruction checks are preserved under `verification/poc2/fresh-luna-final/` and `verification/poc2/secondary-astra/`.
+- AC-48's independent different-room candidate was authored from a clean clone and four living-room photos, then passed validation and full gameplay. Its candidate, note, clone commit, and logs remain under `verification/poc2/candidates/secondary-room/fresh-context/`.
+- The final renderer cleanup removes automatic outdoor scenery from ordinary windows. An optional validated `exterior_scene` holds only generic opening-relative shapes explicitly supplied in room data; attempt 7 stores its visible deck, rail, and foliage there. The fast suite proves absent data adds no scenery and explicit data renders only its declared primitives. The triptych and emblem are generic shapes now, and display cabinets no longer add undeclared contents.
+- Final closure regressions pass: fast suite, canonical validation/gameplay, Room A, Room B, and fresh-context second-room validation/gameplay. Fresh 1280×720 captures for both photo rooms are saved and inspected under `verification/poc2/architecture-cleanup-visual/`.

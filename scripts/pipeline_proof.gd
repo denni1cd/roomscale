@@ -432,6 +432,7 @@ func _build_shell_opening(parent: Node3D, side: String, floor_center: Vector3, r
 	_add_shell_segment(parent, "OpeningFrameHead_%s" % opening.id, side, floor_center, room_dimensions, offset + frame, trimmed_width, bottom + height - frame, frame, wall_thickness + 0.4, frame_color, frame_appearance)
 	if bottom > 0.0:
 		_add_shell_segment(parent, "OpeningFrameSill_%s" % opening.id, side, floor_center, room_dimensions, offset + frame, trimmed_width, bottom, frame, wall_thickness + 0.4, frame_color, frame_appearance)
+	_build_opening_exterior_scene(parent, side, floor_center, room_dimensions, offset, width, bottom, height, wall_thickness, opening)
 	if kind == "opening":
 		return
 	var panel_position := Vector3.ZERO
@@ -450,7 +451,6 @@ func _build_shell_opening(parent: Node3D, side: String, floor_center: Vector3, r
 		var glass_appearance := appearance.duplicate(true)
 		glass_appearance["material"] = "glass"
 		glass_appearance["transparency"] = float(appearance.get("transparency", 0.36))
-		_build_window_backdrop(parent, side, floor_center, room_dimensions, offset, width, bottom, height, wall_thickness, String(opening.id))
 		var pane := _add_box(parent, "WindowPane_%s" % opening.id, panel_size, panel_position, panel_color, 0.22)
 		pane.material_override = _appearance_material(glass_appearance, panel_color, 0.22)
 		if archetype == "transomed_window":
@@ -493,60 +493,55 @@ func _build_shell_opening(parent: Node3D, side: String, floor_center: Vector3, r
 		door.material_override = _appearance_material(appearance, panel_color, 0.72)
 
 
-func _build_window_backdrop(parent: Node3D, side: String, floor_center: Vector3, room_dimensions: Array, offset: float, width: float, bottom: float, height: float, wall_thickness: float, opening_id: String) -> void:
-	var floor_height := float(_room_definition.floor.height)
+func _build_opening_exterior_scene(parent: Node3D, side: String, floor_center: Vector3, room_dimensions: Array, offset: float, width: float, bottom: float, height: float, wall_thickness: float, opening: Dictionary) -> void:
+	var scene_value: Variant = opening.get("exterior_scene", null)
+	if not scene_value is Dictionary:
+		return
+	var elements_value: Variant = scene_value.get("elements", [])
+	if not elements_value is Array:
+		return
 	var horizontal := side in ["north", "south"]
 	var outside_sign := -1.0 if side in ["north", "west"] else 1.0
-	var center_x := floor_center.x
-	var center_z := floor_center.z
+	var origin := Vector3.ZERO
+	var along_axis := Vector3.RIGHT if horizontal else Vector3(0.0, 0.0, 1.0)
+	var outward_axis := Vector3(0.0, 0.0, outside_sign) if horizontal else Vector3(outside_sign, 0.0, 0.0)
 	if horizontal:
-		center_x = floor_center.x - float(room_dimensions[0]) * 0.5 + offset + width * 0.5
-		center_z = floor_center.z + (outside_sign * (float(room_dimensions[1]) * 0.5 + wall_thickness * 0.5 + 1.0))
+		origin.x = floor_center.x - float(room_dimensions[0]) * 0.5 + offset + width * 0.5
+		origin.y = float(_room_definition.floor.height) + bottom + height * 0.5
+		origin.z = floor_center.z + (outside_sign * (float(room_dimensions[1]) * 0.5 + wall_thickness * 0.5))
 	else:
-		center_x = floor_center.x + (outside_sign * (float(room_dimensions[0]) * 0.5 + wall_thickness * 0.5 + 1.0))
-		center_z = floor_center.z - float(room_dimensions[1]) * 0.5 + offset + width * 0.5
-	var outward := Vector3(0.0, 0.0, outside_sign) if horizontal else Vector3(outside_sign, 0.0, 0.0)
-	var background_depth := maxf(140.0, maxf(float(room_dimensions[0]), float(room_dimensions[1])) * 0.75)
-	var sky_size := Vector3(width * 1.8, height * 1.5, 0.5) if horizontal else Vector3(0.5, height * 1.5, width * 1.8)
-	var sky_center := Vector3(center_x, floor_height + bottom + height * 0.5, center_z) + outward * background_depth
-	_add_box(parent, "ExteriorSky_%s" % opening_id, sky_size, sky_center, Color("7eaeb2"), 1.0)
-	var ground_size := Vector3(width * 1.8, height * 0.56, 0.4) if horizontal else Vector3(0.4, height * 0.56, width * 1.8)
-	var ground_center := sky_center + Vector3(0.0, -height * 0.22, 0.0)
-	_add_box(parent, "ExteriorGreenery_%s" % opening_id, ground_size, ground_center, Color("59784d"), 1.0)
-	var deck_center := Vector3(center_x, floor_height + bottom + height * 0.10, center_z) + outward * 28.0
-	var deck_size := Vector3(width * 1.15, 1.4, 38.0) if horizontal else Vector3(38.0, 1.4, width * 1.15)
-	_add_box(parent, "ExteriorDeck_%s" % opening_id, deck_size, deck_center, Color("8c6947"), 0.88)
-	var rail_y := floor_height + bottom + height * 0.42
-	var rail_center := Vector3(center_x, rail_y, center_z) + outward * 40.0
-	var top_rail_size := Vector3(width, 2.0, 0.9) if horizontal else Vector3(0.9, 2.0, width)
-	var lower_rail_size := Vector3(width, 1.4, 0.7) if horizontal else Vector3(0.7, 1.4, width)
-	_add_box(parent, "PorchRailTop_%s" % opening_id, top_rail_size, rail_center, Color("947651"), 0.82)
-	_add_box(parent, "PorchRailLower_%s" % opening_id, lower_rail_size, rail_center + Vector3(0.0, -height * 0.17, 0.0), Color("806443"), 0.84)
-	var post_count := maxi(3, roundi(width / 12.0))
-	var post_height := height * 0.24
-	for post_index in range(post_count + 1):
-		var fraction := float(post_index) / float(post_count)
-		var along := lerpf(-width * 0.5, width * 0.5, fraction)
-		var post_center := rail_center + Vector3(along, -height * 0.12, 0.0) if horizontal else rail_center + Vector3(0.0, -height * 0.12, along)
-		var post_size := Vector3(1.0, post_height, 0.8) if horizontal else Vector3(0.8, post_height, 1.0)
-		_add_box(parent, "PorchRailPost_%s_%d" % [opening_id, post_index], post_size, post_center, Color("a08763"), 0.84)
-	var foliage_colors := [Color("294b36"), Color("3b6240"), Color("4d7046")]
-	for tree_index in range(4):
-		var tree_fraction := float(tree_index + 1) / 5.0
-		var tree_along := (tree_fraction - 0.5) * width * 0.9
-		var tree_distance := 66.0 + float(tree_index % 2) * 22.0
-		var tree_base := Vector3(center_x, floor_height + bottom + height * 0.06, center_z) + outward * tree_distance
-		if horizontal:
-			tree_base.x += tree_along
-		else:
-			tree_base.z += tree_along
-		var trunk_height := height * (0.34 + float(tree_index % 3) * 0.035)
-		_add_cylinder(parent, "ExteriorTreeTrunk_%s_%d" % [opening_id, tree_index], 1.1, trunk_height, tree_base + Vector3(0.0, trunk_height * 0.5, 0.0), Color("66503a"))
-		var canopy_center := tree_base + Vector3(0.0, trunk_height + height * 0.16, 0.0)
-		var canopy_size := Vector3(15.0, 16.0, 12.0) if horizontal else Vector3(12.0, 16.0, 15.0)
-		_add_sphere(parent, "ExteriorTreeCanopy_%s_%d" % [opening_id, tree_index], canopy_size, canopy_center, foliage_colors[tree_index % foliage_colors.size()])
-		var side_shift := Vector3(7.0, -3.0, 0.0) if horizontal else Vector3(0.0, -3.0, 7.0)
-		_add_sphere(parent, "ExteriorTreeCanopyLobe_%s_%d" % [opening_id, tree_index], canopy_size * 0.62, canopy_center + side_shift, foliage_colors[(tree_index + 1) % foliage_colors.size()])
+		origin.x = floor_center.x + (outside_sign * (float(room_dimensions[0]) * 0.5 + wall_thickness * 0.5))
+		origin.y = float(_room_definition.floor.height) + bottom + height * 0.5
+		origin.z = floor_center.z - float(room_dimensions[1]) * 0.5 + offset + width * 0.5
+	var elements: Array = elements_value
+	for index in range(elements.size()):
+		var element_value: Variant = elements[index]
+		if not element_value is Dictionary:
+			continue
+		var element: Dictionary = element_value
+		var position_value: Variant = element.get("position", [0.0, 0.0, 0.0])
+		var dimensions_value: Variant = element.get("dimensions", [1.0, 1.0, 1.0])
+		if not position_value is Array or position_value.size() != 3 or not dimensions_value is Array or dimensions_value.size() != 3:
+			continue
+		var local_position := Vector3(float(position_value[0]), float(position_value[1]), float(position_value[2]))
+		var local_dimensions := Vector3(float(dimensions_value[0]), float(dimensions_value[1]), float(dimensions_value[2]))
+		var element_position := origin + along_axis * local_position.x + Vector3.UP * local_position.y + outward_axis * local_position.z
+		var element_size := Vector3(local_dimensions.z, local_dimensions.y, local_dimensions.x) if not horizontal else local_dimensions
+		var appearance_value: Variant = element.get("appearance", {})
+		var appearance: Dictionary = appearance_value if appearance_value is Dictionary else {}
+		var color := _appearance_color(appearance, "base_color", Color("a6a091"))
+		var shape := String(element.get("shape", "box"))
+		var node_name := "ExteriorSceneElement_%d" % parent.get_child_count()
+		var mesh: MeshInstance3D
+		match shape:
+			"sphere":
+				mesh = _add_sphere(parent, node_name, element_size, element_position, color)
+			"cylinder":
+				mesh = _add_cylinder(parent, node_name, local_dimensions.x * 0.5, local_dimensions.y, element_position, color)
+			_:
+				mesh = _add_box(parent, node_name, element_size, element_position, color)
+		if not appearance.is_empty():
+			mesh.material_override = _appearance_material(appearance, color, 0.84)
 
 
 func _build_furniture() -> void:
@@ -721,10 +716,10 @@ func _build_appearance_object(root: Node3D, dimensions: Vector3, semantic_kind: 
 			_build_floor_lamp(root, dimensions, appearance, base_color, accent_color)
 		"floor_seat":
 			_build_floor_seat(root, dimensions, appearance, base_color, accent_color)
-		"dragon_triptych":
-			_build_dragon_triptych(root, dimensions, appearance, base_color, accent_color)
-		"dragon_emblem":
-			_build_dragon_emblem(root, dimensions, appearance, base_color, accent_color)
+		"triptych_art", "dragon_triptych":
+			_build_triptych_art(root, dimensions, appearance, base_color, accent_color)
+		"wall_emblem", "dragon_emblem":
+			_build_wall_emblem(root, dimensions, appearance, base_color, accent_color)
 		"framed_map":
 			_build_framed_map(root, dimensions, appearance, base_color, accent_color)
 		"fabric_pile":
@@ -1057,12 +1052,6 @@ func _build_display_cabinet(root: Node3D, dimensions: Vector3, appearance: Dicti
 		_add_styled_box(root, "DisplayDoorRailH_%s" % str(y_fraction), Vector3(width - frame * 2.0, frame * 0.5, 0.8), Vector3(0.0, height * y_fraction, depth * 0.5 + 0.1), frame_appearance, accent_color, 0.7, true)
 	_add_styled_box(root, "DisplayHandleLeft", Vector3(0.65, height * 0.07, 0.8), Vector3(-width * 0.04, height * 0.55, depth * 0.5 + 0.55), frame_appearance, accent_color, 0.4, true)
 	_add_styled_box(root, "DisplayHandleRight", Vector3(0.65, height * 0.07, 0.8), Vector3(width * 0.04, height * 0.55, depth * 0.5 + 0.55), frame_appearance, accent_color, 0.4, true)
-	var collectible_colors := [Color("d2c7ab"), Color("b9a87f"), Color("ded7c4"), Color("9a947e")]
-	for index in range(4):
-		var box_size := Vector3(width * 0.18, height * 0.07, depth * 0.2)
-		_add_box(root, "CabinetCollectible_%d" % index, box_size, Vector3(-width * 0.3 + float(index) * width * 0.2, height + box_size.y * 0.5, 0.0), collectible_colors[index], 0.86)
-
-
 func _build_hammock(root: Node3D, dimensions: Vector3, appearance: Dictionary, base_color: Color, accent_color: Color) -> void:
 	var width := dimensions.x
 	var height := dimensions.y
@@ -1120,13 +1109,13 @@ func _add_hammock_fabric_stripe(parent: Node3D, node_name: String, span_x: float
 	parent.add_child(mesh_instance)
 
 
-func _build_dragon_triptych(root: Node3D, dimensions: Vector3, appearance: Dictionary, base_color: Color, accent_color: Color) -> void:
+func _build_triptych_art(root: Node3D, dimensions: Vector3, appearance: Dictionary, base_color: Color, accent_color: Color) -> void:
 	var width := dimensions.x
 	var height := dimensions.y
 	var depth := dimensions.z
-	var frame_color := Color("251b19")
+	var frame_color := accent_color.darkened(0.45)
 	_add_styled_box(root, "ArtBacking", Vector3(width, height, maxf(0.6, depth)), Vector3(0.0, height * 0.5, 0.0), appearance, frame_color, 0.82, true)
-	var panel_colors := [Color("171211"), Color("13151b"), Color("101720")]
+	var panel_colors := [base_color.darkened(0.42), accent_color.darkened(0.5), base_color.darkened(0.26)]
 	for index in range(3):
 		var panel_width := width / 3.0 - 0.9
 		var x := -width / 3.0 + float(index) * width / 3.0
@@ -1134,38 +1123,31 @@ func _build_dragon_triptych(root: Node3D, dimensions: Vector3, appearance: Dicti
 		if index > 0:
 			_add_styled_box(root, "ArtDivider_%d" % index, Vector3(0.8, height, depth * 0.4), Vector3(-width * 0.5 + float(index) * width / 3.0, height * 0.5, depth * 0.7), appearance, frame_color, 0.8, true)
 	var art_z := depth * 0.78
-	var fire_color := base_color.lightened(0.18)
-	var ice_color := accent_color.lightened(0.22)
-	var fire_shadow := Color("a93021")
-	var ice_shadow := Color("1769aa")
-	for side in [-1.0, 1.0]:
-		var body_color := fire_color if side < 0.0 else ice_color
-		var shadow_color := fire_shadow if side < 0.0 else ice_shadow
-		var body_x: float = side * width * 0.22
-		var head_x: float = body_x - side * width * 0.10
-		var tail_x: float = body_x + side * width * 0.20
-		var wing_x: float = body_x + side * width * 0.04
-		var dragon_prefix := "FireDragon" if side < 0.0 else "IceDragon"
-		_add_sphere(root, "%sBody" % dragon_prefix, Vector3(width * 0.24, height * 0.16, 0.7), Vector3(body_x, height * 0.45, art_z), body_color)
-		_add_sphere(root, "%sHead" % dragon_prefix, Vector3(width * 0.075, height * 0.095, 0.75), Vector3(head_x, height * 0.66, art_z), body_color.lightened(0.12))
-		_add_rod_between(root, "%sNeck" % dragon_prefix, Vector3(body_x - side * width * 0.04, height * 0.49, art_z), Vector3(head_x, height * 0.64, art_z), maxf(1.0, height * 0.028), appearance, body_color)
-		_add_rod_between(root, "%sTail" % dragon_prefix, Vector3(tail_x - side * width * 0.04, height * 0.43, art_z), Vector3(tail_x, height * 0.61, art_z), maxf(0.8, height * 0.021), appearance, shadow_color)
-		_add_art_triangle(root, "DragonWingLeft" if side < 0.0 else "IceDragonWingLeft", Vector3(wing_x, height * 0.56, art_z), Vector3(wing_x + side * width * 0.18, height * 0.96, art_z), Vector3(wing_x + side * width * 0.07, height * 0.46, art_z), body_color)
-		_add_art_triangle(root, "DragonWingRight" if side < 0.0 else "IceDragonWingRight", Vector3(body_x - side * width * 0.06, height * 0.57, art_z + 0.03), Vector3(body_x - side * width * 0.20, height * 0.86, art_z + 0.03), Vector3(body_x - side * width * 0.04, height * 0.45, art_z + 0.03), shadow_color)
-	if base_color.get_luminance() > 0.35:
-		_add_art_triangle(root, "DragonFire", Vector3(-width * 0.02, height * 0.66, art_z + 0.08), Vector3(-width * 0.28, height * 0.53, art_z + 0.08), Vector3(-width * 0.14, height * 0.48, art_z + 0.08), fire_color)
+	for index in range(3):
+		var center_x := -width / 3.0 + float(index) * width / 3.0
+		var shape_color := base_color.lightened(0.16) if index % 2 == 0 else accent_color.lightened(0.12)
+		_add_art_triangle(root, "TriptychTriangle_%d" % index, Vector3(center_x - width * 0.09, height * 0.25, art_z), Vector3(center_x + width * 0.12, height * 0.76, art_z), Vector3(center_x + width * 0.16, height * 0.30, art_z), shape_color)
+		_add_sphere(root, "TriptychCircle_%d" % index, Vector3(width * 0.12, height * 0.18, maxf(0.3, depth * 0.18)), Vector3(center_x - width * 0.08, height * 0.58, art_z + 0.05), accent_color.lightened(0.2))
 
 
-func _build_dragon_emblem(root: Node3D, dimensions: Vector3, appearance: Dictionary, base_color: Color, accent_color: Color) -> void:
+func _build_wall_emblem(root: Node3D, dimensions: Vector3, _appearance: Dictionary, base_color: Color, accent_color: Color) -> void:
 	var width := dimensions.x
 	var height := dimensions.y
 	var depth := dimensions.z
-	var color := base_color.lightened(0.35)
-	_add_sphere(root, "EmblemBody", Vector3(width * 0.28, height * 0.5, maxf(0.3, depth)), Vector3(0.0, height * 0.48, depth * 0.6), color)
-	_add_sphere(root, "EmblemHead", Vector3(width * 0.2, height * 0.22, maxf(0.3, depth)), Vector3(width * 0.28, height * 0.76, depth * 0.6), color)
-	_add_art_triangle(root, "EmblemWingLeft", Vector3(-width * 0.04, height * 0.56, depth * 0.62), Vector3(-width * 0.48, height * 0.96, depth * 0.62), Vector3(-width * 0.32, height * 0.38, depth * 0.62), color)
-	_add_art_triangle(root, "EmblemWingRight", Vector3(width * 0.04, height * 0.56, depth * 0.62), Vector3(width * 0.48, height * 0.9, depth * 0.62), Vector3(width * 0.3, height * 0.38, depth * 0.62), color)
-	_add_rod_between(root, "EmblemTail", Vector3(-width * 0.08, height * 0.42, depth * 0.62), Vector3(-width * 0.46, height * 0.16, depth * 0.62), maxf(0.3, width * 0.04), appearance, accent_color)
+	var center := Vector2(0.0, height * 0.5)
+	var outer_radius := minf(width, height) * 0.44
+	var inner_radius := outer_radius * 0.43
+	var art_z := depth * 0.62
+	for index in range(8):
+		var angle := TAU * float(index) / 8.0
+		var direction := Vector2(cos(angle), sin(angle))
+		var tangent := Vector2(-direction.y, direction.x)
+		var tip := center + direction * outer_radius
+		var base_a := center + direction * inner_radius + tangent * inner_radius * 0.52
+		var base_b := center + direction * inner_radius - tangent * inner_radius * 0.52
+		var ray_color := base_color.lightened(0.3) if index % 2 == 0 else accent_color.lightened(0.2)
+		_add_art_triangle(root, "EmblemRay_%d" % index, Vector3(base_a.x, base_a.y, art_z), Vector3(tip.x, tip.y, art_z), Vector3(base_b.x, base_b.y, art_z), ray_color)
+	_add_sphere(root, "EmblemCenter", Vector3(inner_radius * 1.6, inner_radius * 1.6, maxf(0.3, depth)), Vector3(center.x, center.y, art_z + 0.04), accent_color)
 
 
 func _build_framed_map(root: Node3D, dimensions: Vector3, appearance: Dictionary, base_color: Color, accent_color: Color) -> void:
@@ -1175,7 +1157,7 @@ func _build_framed_map(root: Node3D, dimensions: Vector3, appearance: Dictionary
 	var frame := maxf(0.75, minf(width, height) * 0.045)
 	_add_styled_box(root, "MapBacking", Vector3(thickness, height, width), Vector3.ZERO, appearance, accent_color, 0.74, true)
 	_add_styled_box(root, "MapImage", Vector3(thickness * 0.5, height - frame * 2.0, width - frame * 2.0), Vector3(thickness * 0.35, 0.0, 0.0), appearance, base_color, 0.96)
-	var land_colors := [Color("798d72"), Color("a9a27b"), Color("627f78")]
+	var land_colors := [base_color.lightened(0.18), accent_color.lightened(0.16), base_color.darkened(0.12)]
 	for index in range(3):
 		var patch_width := width * (0.18 + float(index % 2) * 0.04)
 		var patch_height := height * 0.3
@@ -1264,7 +1246,7 @@ func _build_boxed_collectibles(root: Node3D, dimensions: Vector3, _appearance: D
 	var package_width := width / float(columns) * 0.82
 	var package_height := height * 0.76
 	var package_depth := depth / float(rows) * 0.78
-	var palette := [Color("d8d1c1"), Color("b68a60"), Color("a8b5b5"), Color("817d70"), Color("c4a77f")]
+	var palette := [base_color.lightened(0.16), accent_color.lightened(0.12), base_color.darkened(0.12), accent_color.darkened(0.12), base_color]
 	for row in range(rows):
 		for column in range(columns):
 			var x := -width * 0.5 + width * (float(column) + 0.5) / float(columns)

@@ -27,7 +27,7 @@
 | `landmarks` | Positions inside the floor bounds for the simulation-generated `workshop`, `depot`, `housing`, and `work_area`. |
 | `activity_stations` | A `workshop` point list, one `housing` point, one `work_area` point, and at least four `patrol` points, all inside the floor bounds. |
 | `spawn` | `{ "center":[x,y,z], "dimensions":[width,0,depth] }`; center is 3D, X/Z footprint dimensions must be positive, and the footprint must stay within the 1-inch floor-edge clearance. The middle dimension is a zero vertical placeholder and is ignored for horizontal placement. |
-| `room_shell` | Required for version 2; omitted in legacy version 1. Defines wall runs/openings and shell appearance. |
+| `room_shell` | Required for version 2; omitted in legacy version 1. Defines wall runs/openings and shell appearance. An opening may optionally carry an `exterior_scene`. |
 | `camera` | Optional framing and lighting overrides. Defaults are derived from the room when omitted. |
 
 All world positions for spawn, landmarks, activity stations, and depot pickup use the walkable floor Y coordinate. Keep the generated settlement clear of major reconstructed objects.
@@ -48,7 +48,9 @@ Legacy version 1 can use `color` as an optional base-color string. Version 2 sho
 }
 ```
 
-Supported material categories are `wood`, `metal`, `fabric`, `glass`, `stone`, `plastic`, `ceramic`, `paint`, `plant`, and `other`. `archetype` is an open semantic-to-renderer hint. The current procedural renderer recognizes `simple`, `box`, `box_with_lid`, `table`, `workbench`, `chair`, `cabinet`, `bookcase`, `wardrobe`, `shelf`, `bed`, `sofa`, `cylinder`, `plant`, and `rug`; an unknown archetype falls back to a simple box while preserving the semantic `kind`. `base_color` and `accent_color` are HTML colors (3, 4, 6, or 8 hexadecimal digits, with an optional `#`). `transparency` ranges from `0` opaque to `1` transparent. Every field is optional; absent appearance values fall back to `color` and then a generic default.
+Supported material categories are `wood`, `metal`, `fabric`, `glass`, `stone`, `plastic`, `ceramic`, `paint`, `plant`, and `other`. Appearance fields are optional: `archetype`, `base_color`, `accent_color`, `glass_color`, `material`, and `transparency`. The colors are HTML colors (3, 4, 6, or 8 hexadecimal digits, with an optional `#`); transparency ranges from `0` opaque to `1` transparent. Colors default to legacy `color` and then a generic value. Materials select visual appearance and, when no explicit resource profile is supplied, contribute to the default finite salvage profile. Explicit resource metadata controls authored yields and stages.
+
+The renderer recognizes these generic object archetypes: `rug`, `table`, `desk`, `workbench`, `chair`, `rocking_chair`, `office_chair`, `hammock`, `monitor`, `monitor_pair`, `display_cabinet`, `floor_lamp`, `floor_seat`, `triptych_art`, `wall_emblem`, `framed_map`, `fabric_pile`, `blanket_pile`, `boxed_collectibles`, `octagonal_glass_table`, `stone_fireplace`, `cabinet`, `bookcase`, `built_in_bookcase`, `wardrobe`, `shelf`, `dresser`, `bed`, `sofa`, `cylinder`, `plant`, and `box_with_lid`. `dragon_triptych` and `dragon_emblem` remain accepted as compatibility aliases for the generic `triptych_art` and `wall_emblem` geometry; neither alias draws dragon-specific forms. `simple`, `box`, and unknown archetypes use a generic styled box while retaining the object's semantic `kind`.
 
 The semantic `kind` labels the real object. `appearance.archetype` selects a general procedural shape. They need not be identical: for example, kind `desk` may use archetype `table`. Do not encode behavior or room-specific game code in either field.
 
@@ -90,7 +92,11 @@ Example:
     {"id":"north-wall", "side":"north", "appearance":{"base_color":"d9c9aa", "material":"paint"},
      "openings":[
        {"id":"north-window", "kind":"window", "offset":72, "width":44, "bottom":30, "height":36,
-        "appearance":{"base_color":"99bac4", "accent_color":"f0ead8", "material":"glass", "transparency":0.32}}
+        "appearance":{"base_color":"99bac4", "accent_color":"f0ead8", "material":"glass", "transparency":0.32},
+        "exterior_scene":{"elements":[
+          {"shape":"box", "position":[0,0,80], "dimensions":[80,50,1], "appearance":{"base_color":"7eaeb2", "material":"paint"}},
+          {"shape":"sphere", "position":[24,8,44], "dimensions":[16,18,14], "appearance":{"base_color":"3b6240", "material":"plant"}}
+        ]}}
      ]}
   ]
 }
@@ -100,13 +106,17 @@ Each side may have at most one wall record. Side values must use lowercase `nort
 
 `ceiling_appearance` is optional. When present, it renders a flat visual ceiling at `floor.height + wall_height`; an empty object uses the generic warm-white paint defaults. Its one-sided surface preserves the open overhead room view. Omit it for a room that should remain open from every camera angle. `crown_molding_height` defaults to zero, so crown molding is off unless a positive height is supplied. The optional `crown_molding_appearance` defaults to the generic warm trim color; crown segments continue around the wall corners, project 0.75 inches beyond the interior wall face, and stop where an opening reaches into the crown band. Ceiling and crown geometry is visual-only and has no navigation or collision effect. Vaulted or sloped ceilings are not represented by this rectangular v2 shell.
 
-Opening `offset` and `width` are inches along the named side from that side's start point; their total must not exceed the side length. `bottom` is the opening's vertical distance above the floor, and `height` is its vertical size; the opening must fit inside `wall_height`. Kinds are `door`, `window`, and `opening`. Door bottom is zero. Windows render a translucent pane and frame; doors render a panel and frame; an `opening` is a clear cutout. The renderer creates actual wall segments around every opening rather than placing a prop over a solid wall. Openings are visual shell features; citizens use floor bounds and furniture obstacles for navigation.
+Opening `offset` and `width` are inches along the named side from that side's start point; their total must not exceed the side length. `bottom` is the opening's vertical distance above the floor, and `height` is its vertical size; the opening must fit inside `wall_height`. Kinds are `door`, `window`, and `opening`. Door bottom is zero. A window renders a translucent pane and frame; a door renders a panel and frame; an `opening` is a clear cutout. `appearance.base_color` colors window glazing or a solid door panel, `accent_color` colors the wood frame/muntins, `glass_color` colors glazed doors, and `transparency` applies to glazing. Window archetypes `transomed_window` and `shaded_window` add generic muntins or a roller shade; door archetypes `french_door` and `sliding_glass_door` add generic glazing and framing. Unknown opening archetypes fall back to the plain pane/frame or opaque panel/frame for the opening kind.
+
+There is no automatic outdoor scenery. Add optional `exterior_scene` only when the photos show scenery worth representing. Its required `elements` array contains at most 64 generic visual primitives. Each element has `shape` (`box`, `sphere`, or vertical `cylinder`), `position` `[along, up, outward]`, and positive `dimensions` `[along, vertical, outward]`, measured in inches. The origin is the center of the opening on the outer wall face; `along` follows increasing offset on the wall, `up` is world `+Y`, and positive `outward` points away from the room. For cylinders, the two radial dimensions must match. An element may include the same optional `appearance` fields as an object. Position offsets are limited to 2,000 inches in magnitude and dimensions to 2,000 inches per axis. The field is optional, ignored when absent, and has no collision or gameplay effect; without it a window produces no deck, rail, tree, or foliage geometry.
+
+The renderer creates actual wall segments around every opening rather than placing a prop over a solid wall. Openings and exterior-scene primitives are visual shell features; citizens use floor bounds and furniture obstacles for navigation.
 
 For an unobstructed default room view, optional `camera.cutaway_wall_id` hides one wall from the initial room composition while preserving its data and openings in RoomDefinition. Choose a wall whose removal best exposes the photographed layout. The camera can orbit to inspect the remaining shell. Optional `camera.focus`, `yaw_degrees`, `fill_position`, and `lantern_position` override derived presentation defaults.
 
 ## Validation and runtime
 
-`scripts/room_definition.gd` validates structure and field ranges before the population starts. Validation includes version, required metadata, finite geometry, rotated floor bounds, elevated visual-object bounds, appearance colors/materials, ceiling/crown appearance types and crown height, lowercase wall sides/opening kinds, opening extents/overlap, cutaway references, surface geometry, and target references. Runtime navigation validation then requires at least two walkable, reachable target approaches and a reachable derived construction site.
+`scripts/room_definition.gd` validates structure and field ranges before the population starts. Validation includes version, required metadata, finite geometry, rotated floor bounds, elevated visual-object bounds, appearance colors/materials/transparency, ceiling/crown appearance types and crown height, lowercase wall sides/opening kinds, opening extents/overlap, exterior-scene shape/size/count limits, cutaway references, surface geometry, and target references. Runtime navigation validation then requires at least two walkable, reachable target approaches and a reachable derived construction site.
 
 The loader selects any safe room ID under `rooms/`, or a project-local `.json` path through `ROOMSCALE_ROOM_FILE`. `RUN_ROOM_SCALE.ps1` and `TEST_ROOM_SCALE.ps1 -Room` accept either a room ID or a project-local JSON path. For a file path, the filename without `.json` must match `id`; paths outside the project are rejected.
 

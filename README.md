@@ -115,3 +115,9 @@ source-specific evidence; fresh cleanup verification is in the
 [POC45 fishbowl](docs/POC45_FISHBOWL.md), [POC4 economy](docs/POC4_GAMEPLAY.md) and
 older plan files preserve milestone scope/history. They do not override current guides.
 POC3's historical subjective visual-review requirement is not silently accepted here.
+
+The accepted POC2 photo workflow remains available. Its canonical input is
+`verification/poc2/candidates/primary/attempt-7/room_photo_luna.json`; the
+[POC2 acceptance matrix](verification/poc2/acceptance-matrix.md) preserves its
+source-specific verification. Ordinary windows add no exterior scenery unless
+validated room data explicitly supplies exterior primitives.

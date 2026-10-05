@@ -6,6 +6,11 @@ const WALL_SIDES := ["north", "south", "east", "west"]
 const OPENING_KINDS := ["door", "window", "opening"]
 const ResourceProfiles := preload("res://scripts/resource_system.gd")
 
+const EXTERIOR_SCENE_SHAPES := ["box", "sphere", "cylinder"]
+const MAX_EXTERIOR_SCENE_ELEMENTS := 64
+const MAX_EXTERIOR_SCENE_EXTENT := 2000.0
+const MAX_EXTERIOR_SCENE_OFFSET := 2000.0
+
 
 static func load_file(path: String) -> Dictionary:
 	if not FileAccess.file_exists(path):
@@ -520,10 +525,57 @@ static func _validate_room_shell(shell_value: Variant, definition: Dictionary, e
 				errors.append("room_shell door %s bottom must be zero" % opening_id)
 			if opening.has("appearance"):
 				_validate_appearance(opening.get("appearance"), "room_shell opening %s appearance" % opening_id, errors)
+			if opening.has("exterior_scene"):
+				_validate_exterior_scene(opening.get("exterior_scene"), "room_shell opening %s exterior_scene" % opening_id, errors)
 		for interval_index in range(intervals.size()):
 			for other_index in range(interval_index + 1, intervals.size()):
 				if intervals[interval_index].y > intervals[other_index].x and intervals[other_index].y > intervals[interval_index].x:
 					errors.append("room_shell wall %s openings must not overlap" % wall_id)
+
+
+static func _validate_exterior_scene(value: Variant, label: String, errors: Array[String]) -> void:
+	if not value is Dictionary:
+		errors.append("%s must be an object" % label)
+		return
+	var scene: Dictionary = value
+	var elements_value: Variant = scene.get("elements", null)
+	if not elements_value is Array:
+		errors.append("%s.elements must be an array" % label)
+		return
+	var elements: Array = elements_value
+	if elements.size() > MAX_EXTERIOR_SCENE_ELEMENTS:
+		errors.append("%s.elements must contain no more than %d items" % [label, MAX_EXTERIOR_SCENE_ELEMENTS])
+	for index in range(elements.size()):
+		var element_value: Variant = elements[index]
+		var element_label := "%s.elements[%d]" % [label, index]
+		if not element_value is Dictionary:
+			errors.append("%s must be an object" % element_label)
+			continue
+		var element: Dictionary = element_value
+		var shape_value: Variant = element.get("shape", null)
+		if not shape_value is String or not EXTERIOR_SCENE_SHAPES.has(String(shape_value)):
+			errors.append("%s.shape must be one of %s" % [element_label, ", ".join(EXTERIOR_SCENE_SHAPES)])
+		var position_value: Variant = element.get("position", null)
+		if not _number_vector(position_value, 3):
+			errors.append("%s.position must contain three finite numbers" % element_label)
+		else:
+			for coordinate in position_value:
+				if absf(float(coordinate)) > MAX_EXTERIOR_SCENE_OFFSET:
+					errors.append("%s.position coordinates must not exceed %g inches in magnitude" % [element_label, MAX_EXTERIOR_SCENE_OFFSET])
+					break
+		var dimensions_value: Variant = element.get("dimensions", null)
+		if not _positive_vector(dimensions_value, 3):
+			errors.append("%s.dimensions must contain three positive finite numbers" % element_label)
+		else:
+			for extent in dimensions_value:
+				if float(extent) > MAX_EXTERIOR_SCENE_EXTENT:
+					errors.append("%s.dimensions must not exceed %g inches per axis" % [element_label, MAX_EXTERIOR_SCENE_EXTENT])
+					break
+		if shape_value is String and String(shape_value) == "cylinder" and _positive_vector(dimensions_value, 3):
+			if not is_equal_approx(float(dimensions_value[0]), float(dimensions_value[2])):
+				errors.append("%s cylinder dimensions[0] and dimensions[2] must match" % element_label)
+		if element.has("appearance"):
+			_validate_appearance(element.get("appearance"), "%s appearance" % element_label, errors)
 
 
 static func _validate_appearance(value: Variant, label: String, errors: Array[String]) -> void:
