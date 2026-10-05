@@ -238,6 +238,58 @@ def fractional_case(seed):
     return c
 
 
+def is_admission_rejection(result: dict, returncode: int | None, log_text: str) -> bool:
+    """Recognize the observer's pre-simulation rejection protocol, never a run failure."""
+    failure = result.get("failure")
+    reasons = {
+        "Generator invalid: structural contract": "schema_errors",
+        "Generator invalid: navigation/connectivity": "navigation_errors",
+        "Generator invalid: insufficient feasibility certificate": "solvability_errors",
+    }
+    if (
+        returncode != 1
+        or result.get("result") != "FAIL"
+        or failure not in reasons
+        or f"POC471_OBSERVER_FAIL {failure}" not in log_text
+        or "SCRIPT ERROR:" in log_text
+        or "ERROR:" in log_text
+        or result.get("violations") != []
+        or result.get("deadlock") is not False
+        or result.get("milestones") != {}
+        or result.get("timeline") != []
+    ):
+        return False
+    validation = result.get("validation")
+    if not isinstance(validation, dict) or validation.get("solvable") is not False:
+        return False
+    reason = reasons[failure]
+    errors = validation.get(reason)
+    if failure == "Generator invalid: navigation/connectivity" and not errors:
+        errors = validation.get("solvability_errors")
+    if (
+        not isinstance(errors, list)
+        or not errors
+        or not all(isinstance(e, str) and e for e in errors)
+    ):
+        return False
+    if failure == "Generator invalid: structural contract":
+        if validation.get("structural") is not False:
+            return False
+    elif validation.get("structural") is not True:
+        return False
+    for key in ("initial", "final"):
+        snapshot = result.get(key, {})
+        if not isinstance(snapshot, dict):
+            return False
+        if snapshot:
+            seconds = snapshot.get("seconds")
+            if type(seconds) not in (int, float) or seconds != 0:
+                return False
+        elif failure == "Generator invalid: insufficient feasibility certificate":
+            return False
+    return True
+
+
 def execute(config: dict, output: Path, godot: str) -> dict:
     case_dir = output / config["id"]
     definition_path = case_dir / (config["definition"]["id"] + ".json")
@@ -299,11 +351,18 @@ def execute(config: dict, output: Path, godot: str) -> dict:
         else dict(result="ERROR", failure=error or "Observer produced no result")
     )
     log_text = (case_dir / "run.log").read_text(encoding="utf-8")
+    admission_rejection = (
+        not error
+        and config["classification"] != "negative"
+        and is_admission_rejection(
+            result, process.returncode if process is not None else None, log_text
+        )
+    )
     if (
         error
         or "SCRIPT ERROR:" in log_text
         or "ERROR:" in log_text
-        or (process is not None and process.returncode != 0)
+        or (process is not None and process.returncode != 0 and not admission_rejection)
     ):
         result.update(
             result="ERROR", failure=error or "Engine/script/process error; inspect run.log"
@@ -319,7 +378,7 @@ def execute(config: dict, output: Path, godot: str) -> dict:
         definition_sha256=hashlib.sha256(definition_path.read_bytes()).hexdigest(),
     )
     result.update(receipt)
-    if result.get("failure", "").startswith("Generator invalid:"):
+    if admission_rejection:
         result.update(result="REJECTED", classification="rejected")
     write(result_path, result)
     if result["result"] not in ["PASS", "REJECTED"]:

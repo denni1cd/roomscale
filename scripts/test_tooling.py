@@ -73,6 +73,66 @@ class CampaignExecutionTests(unittest.TestCase):
 
         self.assertEqual(self.run_case(failed)["result"], "ERROR")
 
+    def rejection_receipt(self) -> dict:
+        return {
+            "result": "FAIL",
+            "failure": "Generator invalid: insufficient feasibility certificate",
+            "validation": {
+                "structural": True,
+                "solvable": False,
+                "solvability_errors": ["No legal bootstrap depot site"],
+            },
+            "initial": {"seconds": 0.0},
+            "final": {"seconds": 0.0},
+            "violations": [],
+            "deadlock": False,
+            "milestones": {},
+            "timeline": [],
+        }
+
+    def execute_rejection(self, receipt: dict, code: int = 1, extra_log: str = "") -> dict:
+        def rejected(_command, **kwargs):
+            self.assertFalse(self.result_path.exists())
+            campaign.write(self.result_path, receipt)
+            kwargs["stdout"].write(f"POC471_OBSERVER_FAIL {receipt['failure']}\n{extra_log}")
+            return SimpleNamespace(returncode=code)
+
+        return self.run_case(rejected)
+
+    def test_fresh_pre_simulation_admission_rejection_is_distinct(self) -> None:
+        result = self.execute_rejection(self.rejection_receipt())
+        self.assertEqual(result["result"], "REJECTED")
+        self.assertEqual(result["classification"], "rejected")
+        self.assertFalse((self.output / "fixture/failure-package.json").exists())
+
+    def test_unknown_exit_or_malformed_rejection_is_an_error(self) -> None:
+        for mutation, code, log in [
+            ({}, 7, ""),
+            ({"final": {"seconds": 0.1}}, 1, ""),
+            (
+                {"validation": {"structural": True, "solvable": True, "solvability_errors": []}},
+                1,
+                "",
+            ),
+            ({"violations": ["startup invariant"]}, 1, ""),
+            ({"milestones": {"meaningful_work": 1}}, 1, ""),
+            ({}, 1, "SCRIPT ERROR: controlled failure"),
+            ({"final": {}}, 1, ""),
+            ({"result": "PASS"}, 1, ""),
+        ]:
+            with self.subTest(mutation=mutation, code=code, log=log):
+                receipt = self.rejection_receipt() | mutation
+                self.assertEqual(self.execute_rejection(receipt, code, log)["result"], "ERROR")
+
+    def test_timeout_remains_error_even_after_rejection_receipt(self) -> None:
+        def timed_out(command, **kwargs):
+            receipt = self.rejection_receipt()
+            campaign.write(self.result_path, receipt)
+            kwargs["stdout"].write(f"POC471_OBSERVER_FAIL {receipt['failure']}\n")
+            raise subprocess.TimeoutExpired(command, 3600)
+
+        self.assertEqual(self.run_case(timed_out)["result"], "ERROR")
+
     def test_success_is_fresh_utf8_and_environment_isolated(self) -> None:
         def succeeded(command, **kwargs):
             self.assertIsInstance(command, list)
