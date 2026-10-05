@@ -1,6 +1,6 @@
 # POC 4 acceptance matrix
 
-**Overall PASS — 45/45 criteria, 2026-10-02.** Contract: [project plan](../../RoomScale_POC_4_Project_Plan.md). See [final report](final-report.md) for commands, statistics and limits.
+**Overall PASS — 45/45 criteria, 2026-10-02.** Contract: [project plan](../../docs/history/poc4/RoomScale_POC_4_Project_Plan.md). See [final report](final-report.md) for commands, statistics and limits.
 
 Evidence shorthand below is relative to this directory: **F** = [final fast tests](final-fast/fast.log); **C** = [final contract tests](final-fast/contract.log); **R** = [final full batch](release/summary.json), including five complete scenarios and [30-day accounting](release/stability-30days.json); **S** = [rendered seven-day scenario](final-evidence/sustained-7days.json); **V** = [inspected visual review](visual-review.md). Scenario JSON checks 01–25 are assertions against actual production state. Tests execute the same fixed simulation tick as interactive play, with high-level directives only.
 

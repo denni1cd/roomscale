@@ -1,6 +1,6 @@
 # POC 2 Acceptance Matrix
 
-This is the current disposition against the 48 criteria in `RoomScale_POC_2_Project_Plan.md`. “PASS” has supporting run or artifact evidence. “DOCUMENTED” means the behavior/workflow is present in repository instructions but was not exercised end to end. “PARTIAL” means some evidence exists but a fresh confirmation is still needed. Visual findings are limited to the saved images and reviewer observations; they do not imply photo-realism or exact dimensions.
+This is the current disposition against the 48 criteria in [POC2 project plan](../../docs/history/poc2/RoomScale_POC_2_Project_Plan.md). “PASS” has supporting run or artifact evidence. “DOCUMENTED” means the behavior/workflow is present in repository instructions but was not exercised end to end. “PARTIAL” means some evidence exists but a fresh confirmation is still needed. Visual findings are limited to the saved images and reviewer observations; they do not imply photo-realism or exact dimensions.
 
 | Criterion | Disposition | Evidence / limit |
 | --- | --- | --- |

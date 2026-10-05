@@ -51,3 +51,14 @@ screenshots/**/*.import
 
 # Active evidence-audit code is source, even under verification.
 !verification/poc472/gather_evidence.py
+
+# Repository administration publishes compact reports; generated scratch stays local.
+!verification/repository-hygiene/
+!verification/repository-hygiene/*.md
+!verification/repository-hygiene/*.json
+verification/repository-hygiene/runs/
+
+# Future local captures are ignored; already tracked historical images stay tracked.
+screenshots/**/*.png
+screenshots/**/*.json
+screenshots/**/*.log

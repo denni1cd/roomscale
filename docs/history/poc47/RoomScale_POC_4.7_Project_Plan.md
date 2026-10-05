@@ -1,4 +1,4 @@
-> Historical milestone plan. Current project behavior and engineering commands are described in README.md and docs/ARCHITECTURE.md. This file retains its original milestone scope.
+> Historical milestone plan. Current behavior and engineering commands are in [README](../../../README.md), [ARCHITECTURE](../../ARCHITECTURE.md) and [TESTING](../../TESTING.md). This file retains its original milestone scope.
 
 # RoomScale POC 4.7 — Founder Start & Organic Civilization Growth
 
@@ -950,11 +950,11 @@ at 13:05, traversal deploys at 24:07 and elevated territory is used at 24:42.
 A separate live opening measured 185.4 simulation seconds in 185.611 wall seconds.
 The rendered full scenario and legacy regression gates pass.
 
-- [Final report and verification limits](verification/poc47/final-report.md)
-- [Acceptance matrix](verification/poc47/acceptance.md)
-- [Milestone record](verification/poc47/milestones.md)
-- [Rendered evidence review](verification/poc47/visual-review.md)
-- [Implementation guide and commands](docs/POC47_FOUNDERS.md)
+- [Final report and verification limits](../../../verification/poc47/final-report.md)
+- [Acceptance matrix](../../../verification/poc47/acceptance.md)
+- [Milestone record](../../../verification/poc47/milestones.md)
+- [Rendered evidence review](../../../verification/poc47/visual-review.md)
+- [Implementation guide and commands](../../../docs/POC47_FOUNDERS.md)
 
 Finite resources, simple procedural art and the absence of a new sixty-day founder
 test remain explicit limits. Main has not been merged.

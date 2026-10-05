@@ -181,7 +181,7 @@ POC 4 implementation and verification are complete. Play with
 `./RUN_ROOM_SCALE.ps1`; no Godot editing is needed. Earlier plans and evidence
 remain preserved.
 
-All planned milestones M0–M8 are complete and verified. Preserve the user-owned `poc_project_plan.md`; no further milestone work is in scope.
+All planned milestones M0–M8 are complete and verified. Preserve the user-owned `docs/history/poc1/poc_project_plan.md`; no further milestone work is in scope.
 
 ## RoomScale POC 2 completion
 

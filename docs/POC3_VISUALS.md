@@ -30,7 +30,7 @@ set `ROOMSCALE_PERFORMANCE_PATH=res://verification/poc3/refinement/performance.j
 when running the existing benchmark script alone.
 
 Work is on `codex/roomscale-poc3-visual-fidelity`; the authoritative scope is
-`RoomScale_POC_3_Project_Plan.md`. Evidence and limitations live under
+[POC3 project plan](history/poc3/RoomScale_POC_3_Project_Plan.md). Evidence and limitations live under
 `verification/poc3/`. Baseline details are in `verification/poc3/m0-status.md`.
 
 `scripts/visuals/visual_resolver.gd` loads `visual/catalog.json`. It resolves

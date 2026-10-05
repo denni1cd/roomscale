@@ -72,6 +72,10 @@ for every edit. Full mode definitions, environment isolation and replay commands
 in [testing guide](docs/TESTING.md). The legacy `TEST_ROOM_SCALE.ps1 -Room room_a`
 command remains a full M2-M6/M8 room smoke test.
 
+Changes to protected `main` use pull requests and require the GitHub Actions `fast`
+check with an up-to-date branch; no human approval is required.
+[Verified protection](verification/repository-hygiene/main-protection.md) records the rule.
+
 Headless CI checks Python quality and Fast on Windows. CI deliberately excludes
 campaigns, soaks and subjective visual acceptance. Raw runs are ignored; publish compact
 receipts and deliberately selected evidence, following [artifact policy](verification/stabilization/artifact-review.md).
@@ -114,7 +118,7 @@ source-specific evidence; fresh cleanup verification is in the
 [stabilization report](verification/stabilization/final-report.md).
 [POC47 founders](docs/POC47_FOUNDERS.md), [POC46 spectator](docs/POC46_SPECTATOR.md),
 [POC45 fishbowl](docs/POC45_FISHBOWL.md), [POC4 economy](docs/POC4_GAMEPLAY.md) and
-older plan files preserve milestone scope/history. They do not override current guides.
+[historical plans](docs/history/README.md) preserve milestone scope/history. They do not override current guides.
 POC3's historical subjective visual-review requirement is not silently accepted here.
 
 The accepted POC2 photo workflow remains available. Its canonical input is

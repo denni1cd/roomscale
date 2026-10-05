@@ -1,6 +1,6 @@
 # POC 4 implementation plan
 
-Authoritative contract: RoomScale_POC_4_Project_Plan.md (all 45 acceptance criteria).
+Authoritative contract: [POC4 project plan](../../docs/history/poc4/RoomScale_POC_4_Project_Plan.md) (all 45 acceptance criteria).
 
 1. M0: preserve source; run fast, visual, A/B/A and accepted photo-room regressions. Record actual results before gameplay changes (AC-1,45).
 2. M1: add persistent NeedSystem and stock-backed autonomous eat/drink/rest tasks, finite shelter and deterministic fixed stepping. Extend citizen_agent.gd and task_coordinator.gd; verify fifty production citizens (AC-2–7,42,43).
