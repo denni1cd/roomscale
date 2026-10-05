@@ -45,6 +45,38 @@ func run() -> void:
 	for i in range(all.size()):
 		for j in range(i): check(not first.apron(all[i].position).intersects(first.apron(all[j].position)), "future apron overlap")
 	check(first._plan_evidence.navigation_trials >= 4 and first._plan_evidence.navigation_trials <= first.MAX_TRIALS, "unbounded navigation search")
+	check(first.decisions[0].validation_navigation_trials == 1, "acceptance proof not counted separately")
+	var budget := Sites.new()
+	budget.configure(sim)
+	budget._prepare(false)
+	budget._search([], [], 0)
+	check(budget._trials == 1, "terminal connectivity/rest proof not counted")
+	budget._trials = budget.MAX_TRIALS
+	var exhausted := budget._trial([], 0)
+	check(not exhausted.valid and exhausted.reason == "navigation trial budget exhausted" and budget._trials == budget.MAX_TRIALS, "navigation trial cap exceeded")
+
+	# Loose, reachable bundles occupy every otherwise legal candidate apron.
+	# Collection changes no room geometry, but must invalidate a failed search.
+	var retry := Sites.new()
+	retry.configure(sim)
+	retry._prepare()
+	var bundle_ids: Array[int] = []
+	for site in retry._positions: bundle_ids.append(sim.resources.create_bundle("wood", 1, site, "planner_retry_fixture"))
+	check(not bundle_ids.is_empty(), "retry fixture has no legal positions")
+	var blocked := retry.select("shelter")
+	check(not blocked.valid and retry.reservations.is_empty() and not retry._failed_state.is_empty(), "transient bundles did not block planning")
+	var blocked_state: String = retry._failed_state
+	check(not retry.select("shelter").valid and retry._failed_state == blocked_state and retry._trials == 0, "identical failure state did not reuse cache")
+	for id in bundle_ids:
+		var at: Vector3 = sim.resources.bundles[id].position
+		check(sim.resources.reserve_bundle(id, 0), "fixture bundle reservation")
+		check(sim.resources.pickup_bundle(id, 0, at), "fixture bundle collection")
+		check(sim.resources.deliver_bundle(id, 0, sim.coordinator.depot_station, sim.coordinator.depot_station, sim.economy), "fixture bundle delivery")
+	var after_collection := physical_state(sim)
+	var retried := retry.select("shelter")
+	check(retried.valid and retry._failed_state.is_empty(), "collected bundles left planner permanently cached as infeasible")
+	check(JSON.stringify(retried) == JSON.stringify(selected), "retry changed deterministic site ordering")
+	check(after_collection == physical_state(sim), "retry mutated physical state")
 	print("POC472_PLANNER_%s trials=%s decisions=%s" % ["FAIL" if failed else "PASS", first._plan_evidence.navigation_trials, JSON.stringify(first.decisions)])
 	scene.queue_free()
 	quit(1 if failed else 0)

@@ -16,7 +16,7 @@ var _alternatives: Array[Dictionary] = []
 var _solution_rest: Array[Vector3] = []
 var _plan_evidence: Dictionary = {}
 var _considered := 0
-var _failed_geometry := ""
+var _failed_state := ""
 
 func configure(controller: Node) -> void:
 	sim = controller
@@ -128,12 +128,15 @@ func _cheap_reason(site: Vector3, chosen: Array[Dictionary]) -> String:
 	return ""
 
 func _trial(chosen: Array[Dictionary], rest_count: int) -> Dictionary:
+	# Count every cloned-navigation proof, including terminal rest validation.
+	if _trials >= MAX_TRIALS: return {"valid": false, "reason": "navigation trial budget exhausted", "rests": []}
+	_trials += 1
 	var definition: Dictionary = sim.coordinator.navigation.room_definition.duplicate(true)
 	for index in range(chosen.size()): definition.objects.append(sim.development.obstacle(chosen[index].position, "trial_%d" % index))
 	var nav := Floor.new()
 	nav.report_ready = false
 	nav.configure(definition)
-	nav._rebuild_grid()
+	nav.refresh_navigation()
 	var anchors: Array[Vector3] = _anchors.duplicate()
 	for item in chosen: anchors.append(item.target)
 	var reason := ""
@@ -208,7 +211,6 @@ func _search(kinds: Array, chosen: Array[Dictionary], rest_count: int) -> Array[
 		targets.sort_custom(_rank_before)
 		for target in targets:
 			if _trials >= MAX_TRIALS: break
-			_trials += 1
 			_considered += 1
 			var next: Array[Dictionary] = chosen.duplicate()
 			next.append({"kind": kinds[0], "valid": true, "position": site, "target": target, "score": site.distance_squared_to(sim.development.center()), "rank": rank})
@@ -267,15 +269,20 @@ func select(kind: String) -> Dictionary:
 	## Retain future footprints. Moving workers can delay acceptance, never move.
 	var reused := not reservations.is_empty()
 	if reservations.is_empty():
-		var geometry := JSON.stringify(sim.coordinator.navigation.room_definition).sha256_text()
-		if geometry == _failed_geometry: return {"valid": false}
+		_prepare(false)
+		# Search also depends on transient access anchors and citizen connectivity.
+		# A collected bundle or changed rest requirement must permit a fresh retry.
+		var citizens: Array[Vector3] = []
+		for citizen in sim.citizens: citizens.append(citizen.global_position)
+		var planning_state := JSON.stringify([sim.coordinator.navigation.room_definition, kind, sim.needs.rest_capacity, _anchors, sim.development.projects, sim.construction.project_created, sim.construction.site_position, citizens]).sha256_text()
+		if planning_state == _failed_state: return {"valid": false}
 		_prepare()
 		var kinds: Array = ["shelter", "depot", "workshop", "housing"] if sim.development.projects.is_empty() else [kind]
 		reservations = _search(kinds, [], 7 if kinds.size() == 4 else sim.needs.rest_capacity + (2 if kind == "housing" else 0))
 		if reservations.is_empty():
-			_failed_geometry = geometry
+			_failed_state = planning_state
 			return {"valid": false}
-		_failed_geometry = ""
+		_failed_state = ""
 		_plan_evidence = {"considered": _considered, "navigation_trials": _trials, "rejected": _rejections.values().reduce(func(a, b): return a + b, 0), "rejection_reasons": _rejections.duplicate(), "alternatives": _alternatives.duplicate(true)}
 		# Future rest locations are usable only as earned rest capacity grows.
 		rest_targets.assign(_solution_rest)
@@ -295,7 +302,7 @@ func select(kind: String) -> Dictionary:
 	var reason := _cheap_reason(selected.position, [])
 	var proof := _trial(reservations, sim.needs.rest_capacity)
 	if not reason.is_empty() or not proof.valid: return {"valid": false}
-	var decision := {"kind": kind, "considered": _plan_evidence.considered, "navigation_trials": _plan_evidence.navigation_trials, "rejected": _plan_evidence.rejected, "rejection_reasons": _plan_evidence.rejection_reasons, "alternatives": _plan_evidence.alternatives, "selected": selected.duplicate(true), "future_reservations": reservations.duplicate(true), "connectivity": true, "downstream_feasible": true, "reused": reused, "tie_break": "squared origin distance, z, x; work side uses same order"}
+	var decision := {"kind": kind, "considered": _plan_evidence.considered, "navigation_trials": _plan_evidence.navigation_trials, "validation_navigation_trials": _trials, "rejected": _plan_evidence.rejected, "rejection_reasons": _plan_evidence.rejection_reasons, "alternatives": _plan_evidence.alternatives, "selected": selected.duplicate(true), "future_reservations": reservations.duplicate(true), "connectivity": true, "downstream_feasible": true, "reused": reused, "tie_break": "squared origin distance, z, x; work side uses same order"}
 	decisions.append(decision)
 	reservations.erase(selected)
 	return selected

@@ -53,7 +53,7 @@ func check_invariants() -> void:
 	var future := Floor.new()
 	future.report_ready = false
 	future.configure(definition)
-	future._rebuild_grid()
+	future.refresh_navigation()
 	for item in all_sites:
 		if future.is_obstacle_position(item.target) or future.path_between(sim.coordinator.depot_station, item.target).is_empty(): violate("Reserved sequence lost future work connectivity")
 	for at in anchors:

@@ -1,71 +1,77 @@
-# Review of the stabilization changes
+# Independent review of stabilization changes
 
-Source candidate: `136d2350b6825999f49110ed2c8c25de28bc282e`.
-Independent second review completed before acceptance; executable source is unchanged
-while final gates run. This document is a review receipt, not the final acceptance report.
+Initial candidate `136d2350b6825999f49110ed2c8c25de28bc282e` was reviewed and tested
+against accepted POC471. It is historical investigation, not final acceptance. The
+required completed POC472 baseline (`efa5950`) was independently audited and merged
+normally before its additional fixes. Final source SHA and acceptance belong in
+final-report.md after the fresh current gates complete.
 
-## Correctness and behavior
+## Correctness and authority
 
-All changed core production scripts and focused fixtures were reviewed independently.
-The public stepping/replanning/navigation wrappers retain the original bodies, delta and
-fixed-tick order. Construction costs/work, citizen speed/need decay, founder count,
-resource amounts, shelter/growth/capability policies and finite exhaustion remain unchanged.
+Independent reviewers read all initial 60 active GDScript bodies, both Python tools,
+all 16 launch/test PowerShell scripts, source assets/configuration/RoomDefinitions,
+fixtures, documentation and evidence layout before broad cleanup. They then read the
+complete five-script POC472 delta, new Python/audit/PowerShell tools and milestone
+source receipts before changing that delta. Existing origin/main changes are reviewed
+before integration so final verification covers the actual mainline result.
 
-A second reviewer caught a malformed-field hazard in the new effective resource-profile
-validator. It was corrected before the source-candidate commit: kind/material must have
-validated String types before derivation; focused assertions require diagnostics rather
-than a crash. This correction does not weaken schema checks.
+Public stepping/replanning/navigation methods preserve original bodies, fixed tick
+order and state authority. No costs, work durations, speed, need decay, founder count,
+finite quantities or growth/capability rules are loosened. Startup creates a fully
+legal roster atomically with contiguous IDs; exact five/50 positions are retained.
+The150-entity fixture creates actual CitizenAgent objects through production setup.
+Malformed resource metadata must produce schema diagnostics rather than a cast crash.
+Raw authored IDs now resolve through an explicit root map, and elevated return paths
+must reach their requested floor destination.
 
-The 150-citizen fixture invokes production population construction and creates actual
-CitizenAgent entities with contiguous IDs. Its fixture camera bypasses only unrelated
-scene-ready setup. Atomic invalid-roster and blocked-return fixtures test real boundaries;
-they do not claim earned founder integration. Five/50 canonical starting positions are
-identical to old production calculations. New canonical receipts compare all 15 production
-fields and require PASS/complete fields. Host metadata alone is excluded.
+POC472 planning authority remains spatial only: clone-navigation search/reservations/
+rest targets, with Development owning earned benefits, projects and inventory use.
+The failure cache correction includes transient anchors and planning state; a focused
+fixture blocks sites with actual loose bundles, collects/delivers them via resource
+lifecycle and requires a successful retry with unchanged room geometry. This is an
+explicit unit fixture, not a claim of earned integration. All navigation clones count
+against the search proof budget; acceptance validation is reported separately.
 
-Final canonical production fingerprint equals the baseline fingerprint exactly:
-`67c88227dc59d62210f2d2a5547e3453894bffc253c7bc16e0c85a777c207b6f`.
-Every checkpoint difference is 0.0 simulation seconds. Three final runs match each other.
-Full generated-world and soak conclusions belong in final-report after completion.
+The mainline architecture change is preserved rather than replaced by invented new
+photo behavior. Its explicit exterior primitives and absent-data tests are reviewed
+and included in current schema/room regressions.
 
 ## Verification integrity
 
-Reviewed shared PowerShell quoting, asynchronous stream draining, bounded timeout kill,
-child environment isolation, root-relative paths and error/marker/JSON propagation.
-Legacy room/log/capture calls still delegate the old smoke contract. Specialized scenario
-assertions remain; no historical integration coverage is deleted. Campaign stale receipts
-are deleted before launch; execution errors cannot be restamped as accepted PASS.
-Failed evidence audit preserves the accepted summary/matrix/report and writes diagnostics.
+Shared PowerShell invocation uses ArgumentList, UTF8 concurrent stream draining,
+bounded timeout kill, child-only ROOMSCALE environment isolation, project-root paths
+and process/error/marker checks. Legacy smoke and specialized assertions remain.
+Python campaign reruns remove stale receipts. Nonzero/timeout/engine errors cannot
+restamp PASS. Legitimate admission rejection requires exact matching fresh diagnostics,
+zero simulation progress and no invariant/deadlock evidence; executable failure remains
+ERROR. A stopped preliminary471 campaign exposed overly strict rejection classification,
+which was corrected with real retained fixtures and adversarial boundary tests.
 
-Ruff formatting is separated conceptually from the small process/provenance changes;
-review did not treat formatting as evidence of simulation correctness. High-value rules
-E4/E7/E9/F/I avoid an indiscriminate style rewrite. Historical evidence and local tooling
-are excluded from lint, not active developer programs. Python source grows from two to
-four files for the explicit comparator and meaningful tooling tests.
+Current canonical repeats compare all15 production fields, excluding only capture/host
+metadata. POC472 Full must require the complete127-case corpus, six fresh matching
+repeats, correct negative classification and zero violations/deadlocks. Evidence audits
+must complete before publishing acceptance and remain active linted source, even when
+located under verification. Optimized Python must not disable acceptance checks.
 
-Shared PNG/JSON writes reduce identical historical helper blocks. M4/M5/M6 and named
-live/camera drivers propagate write failure; the report does not claim every older capture
-path was migrated. Broader scenario inheritance, camera private APIs, task dictionary
-encapsulation, global constants and scene decomposition remain explicit deferred debt.
+Focused fixtures manipulate controlled local objects explicitly. Current integrations
+use actual fixed ticks, physical extraction/hauling, labor, finite ledgers, population
+admission and earned traversal; no free stock, teleportation or manual completion is
+introduced. The observer control retains milestone/connectivity sampling, omitting
+continuous invariant checks and startup planner certificate queries.
 
-## Repository and documentation
+## Hygiene and deferred work
 
-Every removed PNG has a retained identical SHA-256 replacement: 20 files, 11,324,795
-bytes. No unique image, RoomDefinition/seed/config, independent receipt, historical report
-or regression fixture is deleted. Baseline history remains recoverable. Ignore rules
-require deliberate raw-evidence publication, while tracked evidence stays tracked.
-Verification/.gdignore avoids import clutter and Fast confirms direct FileAccess fixtures.
-Source UID sidecars are intentionally retained source metadata; asset import options are
-unchanged. No giant file moves or historical commit rewrite occurred.
+Twenty PNG copies totaling11,324,795 bytes have retained SHA256-identical replacements.
+No unique image, authored definition/config/seed, independent run receipt or report was
+deleted. Raw future output/caches stay ignored; source metadata remains tracked.
+Verification/.gdignore prevents evidence import scanning without preventing FileAccess.
+Current README/architecture/testing describe completed472; old plans are historical.
+CI is lightweight Windows quality/import/Fast, excluding expensive soaks and subjective
+visual acceptance. Remote CI execution is separately recorded after pushing.
 
-README/architecture/testing describe the selected stable baseline and limitations.
-Old plans/status are labeled historical; POC472 is excluded due the startup gate.
-The 500 bound is qualified as terminal task history rather than every live task.
-CI runs Windows Python quality/import/Fast only, and its remote execution is unverified
-until GitHub Actions actually runs. No subjective visual acceptance is newly claimed.
-
-The added-text audit found zero private-key patterns, credential-value patterns or
-user-machine absolute paths. Raw absolute-path execution receipts remain ignored;
-published manifests/reports use project-relative paths. Diff whitespace checks pass.
-The main merge gate remains blocked by the pending/excluded latest milestone baseline,
-even if all stabilization regressions pass. No automatic release tag is created.
+Broader scenario inheritance, camera private APIs, typed task mutation boundaries,
+large scene decomposition, trivial geometric duplication and asset readiness delays
+remain explicit deferred debt. None is an unresolved Critical/High correctness issue.
+No release tag, history rewrite or historical branch deletion is authorized here.
+Final source/provenance, secret scan, whitespace and regression conclusions are recorded
+in the final audit rather than inferred from formatting or this review.

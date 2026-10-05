@@ -16,11 +16,11 @@ python -m ruff format --check .
 
 | Mode | Coverage | Intended use |
 |---|---|---|
-| Fast (default) | Ruff check/format; Python provenance/process tests; PowerShell quoting/encoding/env/exit/timeout; RoomDefinition; founder fast; corner/narrow-aisle, unreachable retry, midlink route; new core and artifact-write fixtures | Every meaningful local change; no long simulation soaks |
+| Fast (default) | Ruff check/format; Python provenance/process tests; PowerShell quoting/encoding/env/exit/timeout; RoomDefinition; founder fast; corner/narrow-aisle, unreachable retry, midlink route; core and artifact-write fixtures; POC472 planner immutability/determinism and protected-pocket packing | Every meaningful local change; no long simulation soaks |
 | Canonical | Three fresh eight-day five-founder production scenarios with deterministic state/checkpoint comparison | Behavior/timing confirmation |
-| Regression | POC46 Fast/scenario; POC45 Fast/survival/scenario; POC4 Fast/contract/cleanup and seven-day sustained; complete Room A and B M2-M6/M8 smoke | Before accepting runtime or harness changes |
-| Robustness | POC471 Short: ten named admitted positive worlds and five intentional negatives | A practical generated-world spot campaign |
-| Soak | Existing founder 90/60/60-day scenarios | Explicit expensive retention/exhaustion gate |
+| Regression | POC46 Fast/scenario; POC45 Fast/survival/scenario; POC4 Fast/contract/cleanup and seven-day sustained; complete Room A and B M2-M6/M8 smoke; 20 retained POC471 exploration cases | Before accepting runtime or harness changes |
+| Robustness | POC472 Development: five retained positive worlds, the now-feasible former NEG-03 and 31 placement worlds | A practical placement campaign with 37 expected successful worlds |
+| Soak | POC472 retained founder 90/60/60-day scenarios | Explicit expensive retention/exhaustion gate |
 | All | All five categories above | Full local acceptance; expensive, not per-commit CI |
 | Smoke | Original arbitrary-room production M2-M6/M8 scenario | Room reconstruction and legacy compatibility |
 
@@ -48,12 +48,12 @@ Use the top-level categories for a clear current hierarchy. No historical covera
 deleted or silently weakened.
 
 ```powershell
-# Broad production campaign including fractional water, six repeats and three soaks
-./TEST_ROOM_SCALE_POC471.ps1 -Mode Full -Count 60 -Workers 2 -OutputDirectory verification/stabilization/runs/full
+# Complete current campaign: 95 exact retained inputs plus 31 placements and one layout negative
+./TEST_ROOM_SCALE_POC472.ps1 -Mode Full -Workers 2 -OutputDirectory verification/stabilization/runs/full
 # Separate retained probes, including resource/origin/identifier/order boundaries
 ./TEST_ROOM_SCALE_POC471.ps1 -Mode Explore -Workers 2 -OutputDirectory verification/stabilization/runs/exploration
 # Exact retained definition/config replay; no regeneration or resource edits
-./TEST_ROOM_SCALE_POC471.ps1 -Mode Reproduce -Scenario verification/poc471/final/POS-001/config.json -OutputDirectory verification/stabilization/runs/replay
+./TEST_ROOM_SCALE_POC472.ps1 -Mode Reproduce -Scenario verification/poc472/final/POS-001/config.json -OutputDirectory verification/stabilization/runs/replay
 # RoomDefinition structural + runtime navigation gate
 ./VALIDATE_ROOM_SCALE.ps1 -Room verification/poc2/candidates/primary/attempt-7/room_photo_luna.json
 ```
@@ -63,6 +63,32 @@ inputs separately from admitted positives, expected negatives separately from su
 and finite exhaustion honestly. They use real extraction, salvage, deliveries, labor,
 construction, capability and admission. Focused fixtures may directly configure local
 objects/links/inventory to isolate a boundary; their markers do not claim earned gameplay.
+
+The current production baseline is completed POC472. Its Full campaign has 127 expected
+outcomes: 112 declared positives, six legacy/new negative labels, six deterministic
+repeats and three soaks. NEG-03 retains its historical negative label but now must earn
+all normal founding/traversal milestones: its obstacle blocks only the old fixed depot
+apron. The five genuine impossible inputs include NEG-05, which is rejected for a
+disconnected spawn before stepping. The separate supplemental narrow-pocket evidence
+brings historical final evidence to 128 results; it is not an extra default Full case.
+POC471 Short/Full retain their older fixed-depot expectation and are not current
+acceptance gates; use POC472 Full or exact replay for those retained worlds.
+
+The POC472 observer runs ordinary production steps and checks actual delivery segments,
+disjoint settlement aprons, connected work/rest/activity targets and future reservations
+on separate navigation grids. Planner/packing fixtures assert immutability, deterministic
+selection, bounded trials and feasible downstream geometry without claiming earned
+construction. `poc472_unobserved.gd` skips startup planner feasibility queries and per-tick
+invariant checks; it still samples milestones and checks connectivity on geometry changes.
+Its retained POS-001 control matches the observed physical state and semantic fingerprint.
+That single-world control supports observer independence for the demonstrated case.
+
+```powershell
+./TEST_ROOM_SCALE_POC472.ps1 -Mode Placement -Workers 2 -OutputDirectory verification/stabilization/runs/placement
+./TEST_ROOM_SCALE_POC472.ps1 -Mode Control -OutputDirectory verification/stabilization/runs/control
+# Expanded focused and historical regression wrapper
+./TEST_ROOM_SCALE_POC472_REGRESSIONS.ps1 -OutputDirectory verification/stabilization/runs/poc472-regressions
+```
 
 ## Failure handling and evidence
 

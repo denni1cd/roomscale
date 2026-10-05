@@ -128,3 +128,19 @@ Additional findings, each fixed now unless stated otherwise:
 Combined review counts: **0 Critical, 2 High, 24 Medium, 9 Low** (35 findings).
 The latest baseline gate is now eligible for main merge evaluation, conditional on
 all stabilization tests, final review, clean tree and frozen-source receipts.
+
+## Existing mainline integration review before freeze
+
+Remote main `305573651b52b4472250736431d091d821ca3c17` contains an accepted POC2
+architecture cleanup absent from the milestone ancestry. Full changed production,
+validator, test, guide and reconstruction-contract bodies were read before integration.
+Its explicit exterior primitives are existing mainline behavior; stabilization does
+not introduce a new photo feature. Navigation/economy contracts remain independent.
+
+| ID | Severity | Evidence, risk and proposed action |
+|---|---|---|
+| M25 | Medium | room_definition_test deletes empty_ceiling_renderer.free() without replacement. Unattached fixture leaks its scene; retained Fast logs report195ObjectDB leaks and ERROR resources still in use. Restore cleanup after assertion; actual Fast must have clean logs. |
+| L10 | Low | pipeline_proof _build_triptych_art motif centers are[-w/6,w/6,w/2] while panel centers are[-w/3,0,w/3]; last motif exceeds frame bounds. Align with panel centers; focused coordinate/bounds assertion. |
+
+Final combined review inventory: **0 Critical,2 High,25 Medium,10 Low** (37 findings).
+Both additional findings are fixed now before source freeze, with current Fast coverage.

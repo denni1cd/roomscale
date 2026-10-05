@@ -1,6 +1,7 @@
 # Evidence and artifact review
 
-Baseline evidence occupied 353.05 MiB across 3,359 tracked files (all milestones).
+Completed POC472 baseline evidence occupies 412.15 MiB across 4,403 tracked files (all milestones).
+The initial POC471 inventory was 353.05 MiB across 3,359 files.
 The entire Git tree was measured and PNG copies compared by SHA-256. Historical
 commits are preserved; deleting files here does not shrink Git history.
 
@@ -12,7 +13,7 @@ commits are preserved; deleting files here does not shrink Git history.
   remains a historical outstanding judgment; cleanup does not grant it.
 - RoomDefinition candidates and unique rejected/bug fixtures, including pre-fix
   source snapshots and failed reproduction packages needed by root-cause reports.
-- POC471 final/exploration definitions, configs and all independent execution
+- POC471 and completed POC472 final/exploration definitions, configs and all independent execution
   receipts. The later settlement-planner campaign depends on these exact inputs.
 - Independently executed repeatability records, even when resulting JSON/log bytes
   are identical. Identical outcomes are meaningful determinism evidence.
@@ -39,7 +40,7 @@ from baseline Git history. No JSON, log, seed, fixture, unique image or test is 
 `verification/stabilization/runs/`, future raw milestone runs/replays, temporary
 stdout/stderr, generated import/translation sidecars, engine .godot state, downloaded
 .tools runtime, local .venv, Python/Ruff caches and developer environment files.
-The former blanket `!verification/poc471/**` rule is removed. Existing tracked files
+The former blanket `!verification/poc471/**` and `!verification/poc472/**` rules are removed. Existing tracked files
 remain tracked; new raw output requires conscious inclusion. Authored photo candidates,
 regression fixtures and compact root reports retain explicit allowlists.
 
