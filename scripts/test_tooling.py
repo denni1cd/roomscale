@@ -244,6 +244,14 @@ class PlacementAcceptanceTests(unittest.TestCase):
                 )
         self.assertTrue(placement.acceptance_errors([], "full"))
 
+    def test_duration_allows_roundoff_but_rejects_missing_ticks(self) -> None:
+        cases = self.full_cases()
+        negative = next(c for c in cases if c["id"] == "NEG-03")
+        negative["final"]["seconds"] = 4799.99999999993
+        self.assertEqual(placement.acceptance_errors(cases, "full"), [])
+        negative["final"]["seconds"] = 4799.9
+        self.assertTrue(placement.acceptance_errors(cases, "full"))
+
     def test_invariants_repeat_and_negative_semantics_cannot_be_hidden(self) -> None:
         for sid, key, value in (
             ("POS-001", "violations", ["conservation"]),

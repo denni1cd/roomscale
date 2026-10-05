@@ -255,7 +255,7 @@ def acceptance_errors(results: list[dict], mode: str) -> list[str]:
             errors.append("Six deterministic repeats are missing or different")
         if by_id.get("NEG-05", {}).get("validation", {}).get("expected_rejection") is not True:
             errors.append("Disconnected NEG-05 must retain expected preflight rejection")
-        if by_id.get("NEG-03", {}).get("final", {}).get("seconds", 0) < 4800:
+        if abs(by_id.get("NEG-03", {}).get("final", {}).get("seconds", 0) - 4800) > 0.001:
             errors.append("Former fixed-apron NEG-03 must complete its feasible production run")
     if mode in ("full", "soak"):
         for sid, days in (("SOAK-01", 90), ("SOAK-02", 60), ("SOAK-03", 60)):

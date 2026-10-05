@@ -159,3 +159,14 @@ and connected to the depot. Larger rosters retain explicit spawn bounds and atom
 rejection. Both authored photo inputs now receive actual50-entity production-loop
 fixtures; full photo gameplay must also pass. Old candidate receipts are preliminary,
 not restamped as acceptance for changed source. A new freeze and full rerun are required.
+
+## M20 numeric boundary correction before final freeze
+
+All127engine receipts on0c26873 PASS, including full90/60/60daysoaks. The aggregate
+harness alone returned exit1 because its new NEG03 duration condition used exact
+`seconds <4800`; actual fixed-step accumulation was4799.99999999993. The corrected
+boundary uses the same0.001second tolerance as all other duration audits, less than
+one0.1second tick. A focused test accepts real roundoff and rejects one missing tick.
+Production GDScript is byte-identical. Nevertheless this provisional harness freeze
+is invalidated: re-run the complete campaign on the final corrected source/harness
+commit, retaining old receipts with their original hashes and never restamping them.
