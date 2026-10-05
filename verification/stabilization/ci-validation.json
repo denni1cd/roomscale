@@ -1,5 +1,4 @@
 {
-  "validated_main_sha": "ba73fea7bd744d3bfbd7291918784355cfc01f5b",
   "run_id": 37367466464,
   "url": "https://github.com/denni1cd/roomscale/actions/runs/37367466464",
   "first_attempt": {
@@ -13,6 +12,140 @@
     "status": "queued",
     "conclusion": null
   },
-  "recorded_utc": "2026-10-05T21:02:10.077018+00:00",
-  "interpretation": "Hosted-runner allocation failure; no quality/import/Fast step executed. Remote tests remain unverified. Local acceptance and post-merge Fast passed; executable source and workflow unchanged."
+  "recorded_utc": "2026-10-05T21:10:30.904281+00:00",
+  "interpretation": "Remote Python quality,Godot import and complete Fast all passed after the one-line controlled fixture correction. Production,campaign,audit,workflow and inputs are unchanged. Original acceptance receipts are not restamped.",
+  "original_validated_main_sha": "ba73fea7bd744d3bfbd7291918784355cfc01f5b",
+  "validated_main_sha": "487583a39bce5666688a14f70c5bfe885943fcae",
+  "later_fixture_failure": {
+    "run_id": 37373403455,
+    "sha": "bb261070049d562f35f797d05b673ceddf5d0c0f",
+    "failure": "Unresolved synthetic fixture ROOT with Windows short TEMP alias",
+    "production_failure": false
+  },
+  "correction": {
+    "file": "scripts/test_tooling.py",
+    "change": "Path(directory).resolve()",
+    "frozen_sha": "487583a39bce5666688a14f70c5bfe885943fcae",
+    "native_short_temp_alias_test": "PASS",
+    "fast": "PASS",
+    "ordinary_python_tests": 14,
+    "optimized_python_tests": 14
+  },
+  "final_remote_ci": {
+    "run_id": 37373885965,
+    "url": "https://github.com/denni1cd/roomscale/actions/runs/37373885965",
+    "tested_sha": "487583a39bce5666688a14f70c5bfe885943fcae",
+    "status": "completed",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "completedAt": "2026-10-05T21:09:05Z",
+        "conclusion": "success",
+        "databaseId": 111977461529,
+        "name": "fast",
+        "startedAt": "2026-10-05T21:07:45Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-10-05T21:07:47Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "startedAt": "2026-10-05T21:07:46Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-05T21:08:07Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "startedAt": "2026-10-05T21:07:47Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-05T21:08:07Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-python@v5",
+            "number": 3,
+            "startedAt": "2026-10-05T21:08:07Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-05T21:08:15Z",
+            "conclusion": "success",
+            "name": "Python quality",
+            "number": 4,
+            "startedAt": "2026-10-05T21:08:07Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-05T21:08:16Z",
+            "conclusion": "success",
+            "name": "Run actions/cache@v4",
+            "number": 5,
+            "startedAt": "2026-10-05T21:08:15Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-05T21:08:40Z",
+            "conclusion": "success",
+            "name": "Import production assets",
+            "number": 6,
+            "startedAt": "2026-10-05T21:08:16Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-05T21:08:57Z",
+            "conclusion": "success",
+            "name": "Focused and startup regressions",
+            "number": 7,
+            "startedAt": "2026-10-05T21:08:40Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-05T21:08:57Z",
+            "conclusion": "skipped",
+            "name": "Run actions/upload-artifact@v4",
+            "number": 8,
+            "startedAt": "2026-10-05T21:08:57Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-05T21:09:01Z",
+            "conclusion": "success",
+            "name": "Post Run actions/cache@v4",
+            "number": 14,
+            "startedAt": "2026-10-05T21:08:57Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-05T21:09:01Z",
+            "conclusion": "success",
+            "name": "Post Run actions/setup-python@v5",
+            "number": 15,
+            "startedAt": "2026-10-05T21:09:01Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-05T21:09:03Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 16,
+            "startedAt": "2026-10-05T21:09:01Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-05T21:09:03Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 17,
+            "startedAt": "2026-10-05T21:09:03Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/denni1cd/roomscale/actions/runs/37373885965/job/111977461529"
+      }
+    ],
+    "raw_log_sha256": "9438dd86fccf669f2c920a33c9975b5bcf4694a6336cc1a6564f94be7b477b5e"
+  }
 }

@@ -2,14 +2,17 @@
 
 **Merged and pushed to main after all required local gates passed.** Normal merge
 `167e80b13396bae6830460819158a22de443a074` was verified remotely; Fast and import
-passed from that main revision. The primary checkout is on main and frozen source
-remains unchanged. `main-merge.md` records delivery. Initial remote GitHub CI failed to acquire a hosted runner and executed zero steps.
-A rerun was dispatched; remote execution remains unverified. See `ci-validation.md`.
+passed from that main revision. The primary checkout is on main; production and
+campaign/audit source remain unchanged. `main-merge.md` records original delivery.
+Remote CI exposed a Windows temporary-path alias issue in a controlled unit-test
+fixture. Its one-line correction was frozen and retested locally and on hosted CI.
+**Remote CI now passes**; `ci-validation.md` records both failures and final success.
 
 - Selected baseline: completed POC 4.7.2, `efa5950e4a03a318bf030eb0217e6cb184714053`.
 - POC 4.7.2 is included, with its complete accepted history and evidence.
 - Stabilization branch: `codex/roomscale-stabilization`.
-- Frozen production and test-harness SHA: `ef5ebd325351ae6c3702a7ab8d89266aafed59ea`.
+- Original full-campaign production and test-harness SHA: `ef5ebd325351ae6c3702a7ab8d89266aafed59ea`.
+- Follow-up unit-test harness freeze: `487583a39bce5666688a14f70c5bfe885943fcae`; production/campaign/audit/workflow unchanged.
 - Existing mainline `305573651b52b4472250736431d091d821ca3c17` was reviewed and integrated before freeze.
 - Final delivery SHA is the documentation/evidence commit containing this report; a
   committed report cannot embed its own SHA. Exact delivery/main SHAs accompany delivery.
@@ -152,8 +155,8 @@ README, architecture, testing and artifact-policy documentation describe complet
 4.7.2; obsolete plans/status files are explicitly historical.
 
 Windows CI performs Python quality, import and Fast only. Expensive campaigns/soaks
-and subjective visuals stay explicit local gates. Remote CI status is recorded after
-push; local PASS is not presented as remote CI PASS.
+and subjective visuals stay explicit local gates. Remote CI PASS is verified on follow-up487583a and linked in `ci-validation.md`;
+local PASS is not used as a substitute for remote execution.
 
 ## Failed and superseded attempts
 
@@ -184,10 +187,16 @@ Critical/High correctness blockers.
 
 AC01–AC32 pass locally with the evidence linked above and in `main-merge.md`. The
 clean documentation/evidence commit preceded the conditional normal merge; remote
-main was verified and its Fast smoke passed. Only documentation/evidence commits
-follow frozen ef5ebd3; all 188 manifest hashes are verified at main delivery. Remote
-CI failed before execution because no hosted runner acquired the job; a retry is
-pending. It is not asserted as a pass. See `ci-validation.md` for the exact annotation.
+main was verified and its Fast smoke passed. At original main delivery, only documentation/evidence commits
+followed frozen ef5ebd3 and all188 hashes matched. The explicit later fixture-only
+follow-up supersedes the complete-harness freeze without changing production. Remote
+CI subsequently found a Windows short-path alias issue confined to a controlled test
+fixture. A one-line correction is frozen at487583a; Fast,ordinary/optimized tests and
+a real short-TEMP-alias test pass. `ci-portability-manifest.json` records the sole
+changed unit-test file and replacement188-file manifest. Original ef5 campaign
+receipts are historical and unaltered. Hosted follow-up validation PASS on exact487583a: Python quality,Godot import
+and complete Fast. See `ci-validation.md`. All production,campaign,audit,workflow and scenario inputs match
+the original accepted freeze.
 
 No release tag or historical branch deletion is performed. Recommend the user-selected
 future tag `roomscale-founder-stable` (or `v0.1.0` if adopting versioned releases).

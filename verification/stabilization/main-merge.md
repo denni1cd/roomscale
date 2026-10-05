@@ -30,3 +30,12 @@ passed. The workflow exists and dispatched; remote execution remains unverified.
 
 No force push, history rewrite, automatic tag or historical branch deletion occurred.
 Recommend a user-selected future `roomscale-founder-stable` tag.
+
+## Completed remote validation follow-up
+
+Remote execution later exposed a Windows short-path mismatch in the controlled unit-test
+fixture. The one-line fixture ROOT normalization is frozen at487583a; relevant Fast,
+ordinary/optimized tests and a native short-TEMP-alias test pass. Original complete
+harness freeze remains historical; production,campaign,audit,workflow and inputs do
+not change. [Follow-up CI](https://github.com/denni1cd/roomscale/actions/runs/37373885965) passed Python quality,Godot import and full Fast.
+See ci-validation.md and ci-portability-manifest.json for exact provenance.
