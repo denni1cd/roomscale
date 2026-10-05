@@ -195,7 +195,7 @@ class PlacementPublicationTests(unittest.TestCase):
     def test_failed_audit_does_not_publish_acceptance(self) -> None:
         audit = runpy.run_path(str(placement.ROOT / "verification/poc472/gather_evidence.py"))
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            root = Path(directory).resolve()
             output = root / "verification/poc472"
             output.mkdir(parents=True)
             accepted = output / "audit.json"
