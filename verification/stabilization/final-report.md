@@ -3,8 +3,8 @@
 **Merged and pushed to main after all required local gates passed.** Normal merge
 `167e80b13396bae6830460819158a22de443a074` was verified remotely; Fast and import
 passed from that main revision. The primary checkout is on main and frozen source
-remains unchanged. `main-merge.md` records delivery. Remote GitHub CI remains queued,
-so its execution is unverified; no CI PASS is claimed.
+remains unchanged. `main-merge.md` records delivery. Initial remote GitHub CI failed to acquire a hosted runner and executed zero steps.
+A rerun was dispatched; remote execution remains unverified. See `ci-validation.md`.
 
 - Selected baseline: completed POC 4.7.2, `efa5950e4a03a318bf030eb0217e6cb184714053`.
 - POC 4.7.2 is included, with its complete accepted history and evidence.
@@ -186,7 +186,8 @@ AC01–AC32 pass locally with the evidence linked above and in `main-merge.md`. 
 clean documentation/evidence commit preceded the conditional normal merge; remote
 main was verified and its Fast smoke passed. Only documentation/evidence commits
 follow frozen ef5ebd3; all 188 manifest hashes are verified at main delivery. Remote
-CI is explicitly pending hosted-runner execution, rather than an asserted pass.
+CI failed before execution because no hosted runner acquired the job; a retry is
+pending. It is not asserted as a pass. See `ci-validation.md` for the exact annotation.
 
 No release tag or historical branch deletion is performed. Recommend the user-selected
 future tag `roomscale-founder-stable` (or `v0.1.0` if adopting versioned releases).
