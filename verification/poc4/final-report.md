@@ -1,6 +1,6 @@
 # RoomScale POC 4 final report
 
-**Result: PASS. Milestones 0–9 complete. All 45 acceptance criteria PASS.** Completed 2026-10-02 against [the POC4 plan](../../RoomScale_POC_4_Project_Plan.md). The individual evidence-backed results are in [acceptance.md](acceptance.md); milestone history is in `implementation-plan.md`, `m0-m2-status.md`, `m3-m7-status.md`, `m8-status.md`, and [PROJECT_PROGRESS.md](../../PROJECT_PROGRESS.md).
+**Result: PASS. Milestones 0–9 complete. All 45 acceptance criteria PASS.** Completed 2026-10-02 against [the POC4 plan](../../docs/history/poc4/RoomScale_POC_4_Project_Plan.md). The individual evidence-backed results are in [acceptance.md](acceptance.md); milestone history is in `implementation-plan.md`, `m0-m2-status.md`, `m3-m7-status.md`, `m8-status.md`, and [PROJECT_PROGRESS.md](../../PROJECT_PROGRESS.md).
 
 The subsequent narrow correctness cleanup fixes rejected salvage authorization leaking navigation changes and material overrides retaining mismatched automatic stages. Targeted regressions, the fast/contract suites, one complete canonical scenario and existing room/navigation fast regression pass; canonical recovery and yields remain unchanged. See [cleanup report](cleanup/report.md). The original five-run and thirty-day evidence below remains historical; those suites were not rerun for this cleanup.
 

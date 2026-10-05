@@ -1,6 +1,6 @@
 # POC 4 simulation and verification
 
-Read RoomScale_POC_4_Project_Plan.md as the acceptance contract. Milestone evidence and the final criterion matrix live in verification/poc4/.
+Read [POC4 project plan](history/poc4/RoomScale_POC_4_Project_Plan.md) as the acceptance contract. Milestone evidence and the final criterion matrix live in verification/poc4/.
 
 ## Gameplay
 

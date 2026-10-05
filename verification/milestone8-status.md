@@ -20,4 +20,4 @@ Status: **PASS**
 
 ## Scope
 
-All planned milestones M0–M8 are complete. No M9 or other gameplay work is in scope. The user-provided `poc_project_plan.md` remains untouched and untracked.
+All planned milestones M0–M8 are complete. No M9 or other gameplay work is in scope. The user-provided `docs/history/poc1/poc_project_plan.md` remains untouched and untracked.

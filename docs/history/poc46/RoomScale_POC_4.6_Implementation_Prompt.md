@@ -1,4 +1,4 @@
-> Historical milestone plan. Current project behavior and engineering commands are described in README.md and docs/ARCHITECTURE.md. This file retains its original milestone scope.
+> Historical milestone plan. Current behavior and engineering commands are in [README](../../../README.md), [ARCHITECTURE](../../ARCHITECTURE.md) and [TESTING](../../TESTING.md). This file retains its original milestone scope.
 
 # RoomScale POC 4.6 Implementation Prompt
 
@@ -10,7 +10,7 @@ Repository root:
 
 Authoritative project plan:
 
-`C:\Users\Zero\python_projects\ai\roomscale\RoomScale_POC_4.6_Project_Plan.md`
+[POC4.6 project plan](RoomScale_POC_4.6_Project_Plan.md)
 
 Verified POC 4.5 baseline:
 
