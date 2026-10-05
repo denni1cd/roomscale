@@ -65,7 +65,8 @@ python -m ruff format --check .
 
 Fast contains focused fixtures, schema/navigation checks and milestone fast gates.
 Canonical runs three fresh current founder scenarios with repeatability checks.
-Regression runs meaningful historical POC4/45/46/47 integration and sustained gates.
+Regression runs meaningful historical POC4/45/46 integration, navigation/placement
+checks and sustained gates.
 Robustness and Soak are explicit expensive modes; All includes them and is unsuitable
 for every edit. Full mode definitions, environment isolation and replay commands are
 in [testing guide](docs/TESTING.md). The legacy `TEST_ROOM_SCALE.ps1 -Room room_a`

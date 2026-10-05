@@ -18,7 +18,7 @@ python -m ruff format --check .
 |---|---|---|
 | Fast (default) | Ruff check/format; Python provenance/process tests; PowerShell quoting/encoding/env/exit/timeout; RoomDefinition; founder fast; corner/narrow-aisle, unreachable retry, midlink route; core and artifact-write fixtures; POC472 planner immutability/determinism and protected-pocket packing | Every meaningful local change; no long simulation soaks |
 | Canonical | Three fresh eight-day five-founder production scenarios with deterministic state/checkpoint comparison | Behavior/timing confirmation |
-| Regression | POC46 Fast/scenario; POC45 Fast/survival/scenario; POC4 Fast/contract/cleanup and seven-day sustained; complete Room A and B M2-M6/M8 smoke; 20 retained POC471 exploration cases | Before accepting runtime or harness changes |
+| Regression | POC46 Fast/scenario; POC45 Fast/survival/scenario; POC4 Fast/contract/cleanup and seven-day sustained; complete Room A and B M2-M6/M8 smoke; POC472 focused planner/packing checks; 20 retained POC471 exploration cases | Before accepting runtime or harness changes |
 | Robustness | POC472 Development: five retained positive worlds, the now-feasible former NEG-03 and 31 placement worlds | A practical placement campaign with 37 expected successful worlds |
 | Soak | POC472 retained founder 90/60/60-day scenarios | Explicit expensive retention/exhaustion gate |
 | All | All five categories above | Full local acceptance; expensive, not per-commit CI |
@@ -71,6 +71,8 @@ all normal founding/traversal milestones: its obstacle blocks only the old fixed
 apron. The five genuine impossible inputs include NEG-05, which is rejected for a
 disconnected spawn before stepping. The separate supplemental narrow-pocket evidence
 brings historical final evidence to 128 results; it is not an extra default Full case.
+The 20 retained exploration cases are included in POC472 Full; the separate471 Explore
+command also preserves their positive-only probe suite.
 POC471 Short/Full retain their older fixed-depot expectation and are not current
 acceptance gates; use POC472 Full or exact replay for those retained worlds.
 

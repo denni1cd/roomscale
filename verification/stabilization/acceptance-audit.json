@@ -1,0 +1,1185 @@
+{
+  "all_inputs_including_supplemental": 128,
+  "continuous_simulation_days": 1193.9999999983322,
+  "continuous_ticks": 7164000,
+  "declared_positive_worlds": 112,
+  "determinism": [
+    {
+      "id": "POS-001-REPEAT-1",
+      "identical": true,
+      "original": "ec52a9fbb90c4b5550c6b6d5faff3522abc90c660197c45a65f8170582770876",
+      "repeat": "ec52a9fbb90c4b5550c6b6d5faff3522abc90c660197c45a65f8170582770876"
+    },
+    {
+      "id": "POS-001-REPEAT-2",
+      "identical": true,
+      "original": "ec52a9fbb90c4b5550c6b6d5faff3522abc90c660197c45a65f8170582770876",
+      "repeat": "ec52a9fbb90c4b5550c6b6d5faff3522abc90c660197c45a65f8170582770876"
+    },
+    {
+      "id": "POS-006-REPEAT-1",
+      "identical": true,
+      "original": "e7838d0bbfc2f2c73219a7c05b8b846365d276cedb662d4e478f44693287c24a",
+      "repeat": "e7838d0bbfc2f2c73219a7c05b8b846365d276cedb662d4e478f44693287c24a"
+    },
+    {
+      "id": "POS-006-REPEAT-2",
+      "identical": true,
+      "original": "e7838d0bbfc2f2c73219a7c05b8b846365d276cedb662d4e478f44693287c24a",
+      "repeat": "e7838d0bbfc2f2c73219a7c05b8b846365d276cedb662d4e478f44693287c24a"
+    },
+    {
+      "id": "POS-009-REPEAT-1",
+      "identical": true,
+      "original": "a4bb52a377165e69a142cad9dfc5d65b1cc5f3e699cc9b4c9be88386c062ef46",
+      "repeat": "a4bb52a377165e69a142cad9dfc5d65b1cc5f3e699cc9b4c9be88386c062ef46"
+    },
+    {
+      "id": "POS-009-REPEAT-2",
+      "identical": true,
+      "original": "a4bb52a377165e69a142cad9dfc5d65b1cc5f3e699cc9b4c9be88386c062ef46",
+      "repeat": "a4bb52a377165e69a142cad9dfc5d65b1cc5f3e699cc9b4c9be88386c062ef46"
+    }
+  ],
+  "feasible_former_negative": "NEG-03",
+  "formerly_rejected": {
+    "POS-023": "PASS",
+    "POS-029": "PASS"
+  },
+  "frozen_commit": "ef5ebd325351ae6c3702a7ab8d89266aafed59ea",
+  "generator_rejections": 0,
+  "genuine_negative_worlds": 5,
+  "markers": {
+    "poc471_midlink_test": "POC471_MIDLINK_PASS",
+    "poc471_navigation_test": "POC471_NAVIGATION_PASS",
+    "poc471_unreachable_task_test": "POC471_UNREACHABLE_PASS",
+    "poc472_packing_test": "POC472_PACKING_PASS",
+    "poc472_planner_test": "POC472_PLANNER_PASS",
+    "room-definition-fast": "ROOMSCALE_FAST_TEST_PASS"
+  },
+  "negative_classification_results": 6,
+  "new_placement_positives": 31,
+  "new_placement_positives_including_supplemental": 32,
+  "observer_control_identical": true,
+  "original_packing_prefix_replayed_unchanged": true,
+  "packing_evidence": {
+    "alternatives": [
+      {
+        "position": "(-2.0, 0.0, 8.0)",
+        "reason": "room/completed geometry"
+      },
+      {
+        "position": "(2.0, 0.0, 8.0)",
+        "reason": "room/completed geometry"
+      },
+      {
+        "position": "(-2.0, 0.0, 9.49)",
+        "reason": "room/completed geometry"
+      },
+      {
+        "position": "(2.0, 0.0, 9.49)",
+        "reason": "room/completed geometry"
+      },
+      {
+        "position": "(-2.0, 0.0, 9.99)",
+        "reason": "room/completed geometry"
+      },
+      {
+        "position": "(2.0, 0.0, 9.99)",
+        "reason": "room/completed geometry"
+      },
+      {
+        "position": "(-4.01, 0.0, 8.0)",
+        "reason": "room/completed geometry"
+      },
+      {
+        "position": "(4.01, 0.0, 8.0)",
+        "reason": "room/completed geometry"
+      },
+      {
+        "position": "(-2.0, 0.0, 41.01)",
+        "reason": "insufficient downstream apron coverage"
+      },
+      {
+        "position": "(-2.0, 0.0, 41.01)",
+        "reason": "downstream founding arrangement"
+      },
+      {
+        "position": "(-2.0, 0.0, 41.01)",
+        "reason": "mandatory connectivity/work access"
+      },
+      {
+        "position": "(2.0, 0.0, 41.01)",
+        "reason": "insufficient downstream apron coverage"
+      },
+      {
+        "position": "(2.0, 0.0, 41.01)",
+        "reason": "downstream founding arrangement"
+      },
+      {
+        "position": "(2.0, 0.0, 41.01)",
+        "reason": "mandatory connectivity/work access"
+      },
+      {
+        "position": "(-4.01, 0.0, 41.01)",
+        "reason": "mandatory connectivity/work access"
+      },
+      {
+        "position": "(4.01, 0.0, 41.01)",
+        "reason": "insufficient downstream apron coverage"
+      }
+    ],
+    "connectivity": true,
+    "considered": 9806,
+    "downstream_feasible": true,
+    "future_reservations": [
+      {
+        "kind": "shelter",
+        "position": "(-10.0, 0.0, 41.01)",
+        "rank": 9,
+        "score": 1189.66003417969,
+        "target": "(-10.0, 0.0, 32.01)",
+        "valid": true
+      },
+      {
+        "kind": "depot",
+        "position": "(10.0, 0.0, 41.01)",
+        "rank": 10,
+        "score": 1189.66003417969,
+        "target": "(10.0, 0.0, 32.01)",
+        "valid": true
+      },
+      {
+        "kind": "workshop",
+        "position": "(-10.0, 0.0, 60.0)",
+        "rank": 93,
+        "score": 2804.0,
+        "target": "(-10.0, 0.0, 51.0)",
+        "valid": true
+      },
+      {
+        "kind": "housing",
+        "position": "(10.0, 0.0, 60.0)",
+        "rank": 94,
+        "score": 2804.0,
+        "target": "(10.0, 0.0, 51.0)",
+        "valid": true
+      }
+    ],
+    "kind": "shelter",
+    "navigation_trials": 77,
+    "rejected": 9713,
+    "rejection_reasons": {
+      "downstream founding arrangement": 45,
+      "future reservation overlap": 188,
+      "insufficient downstream apron coverage": 45,
+      "mandatory connectivity/work access": 27,
+      "room boundary": 1844,
+      "room/completed geometry": 7564
+    },
+    "reused": false,
+    "selected": {
+      "kind": "shelter",
+      "position": "(-10.0, 0.0, 41.01)",
+      "rank": 9,
+      "score": 1189.66003417969,
+      "target": "(-10.0, 0.0, 32.01)",
+      "valid": true
+    },
+    "tie_break": "squared origin distance, z, x; work side uses same order",
+    "validation_navigation_trials": 1
+  },
+  "planner_decisions": 498,
+  "planner_navigation_trial_max": 77,
+  "planner_reused_decisions": 430,
+  "pre_tick_physical_rejections": [
+    "NEG-05"
+  ],
+  "previous_79": 79,
+  "production_commit": "ef5ebd325351ae6c3702a7ab8d89266aafed59ea",
+  "regression_commands": [
+    {
+      "Command": "./TEST_ROOM_SCALE_POC47.ps1 -Mode All -OutputDirectory .\\verification\\stabilization\\runs\\final\\regressions/poc47",
+      "Passed": true
+    },
+    {
+      "Command": "./TEST_ROOM_SCALE_POC46.ps1 -Mode Fast -OutputDirectory .\\verification\\stabilization\\runs\\final\\regressions/poc46-fast",
+      "Passed": true
+    },
+    {
+      "Command": "./TEST_ROOM_SCALE_POC46.ps1 -Mode Scenario -OutputDirectory .\\verification\\stabilization\\runs\\final\\regressions/poc46-scenario",
+      "Passed": true
+    },
+    {
+      "Command": "./TEST_ROOM_SCALE_POC45.ps1 -Mode Fast -OutputDirectory .\\verification\\stabilization\\runs\\final\\regressions/poc45-fast",
+      "Passed": true
+    },
+    {
+      "Command": "./TEST_ROOM_SCALE_POC45.ps1 -Mode Survival -OutputDirectory .\\verification\\stabilization\\runs\\final\\regressions/poc45-survival",
+      "Passed": true
+    },
+    {
+      "Command": "./TEST_ROOM_SCALE_POC45.ps1 -Mode Scenario -OutputDirectory .\\verification\\stabilization\\runs\\final\\regressions/poc45-scenario",
+      "Passed": true
+    },
+    {
+      "Command": "./TEST_ROOM_SCALE_POC4.ps1 -Mode Fast -OutputDirectory .\\verification\\stabilization\\runs\\final\\regressions/poc4-fast",
+      "Passed": true
+    },
+    {
+      "Command": "./TEST_ROOM_SCALE_POC4.ps1 -Mode Sustained -TimeoutSeconds 400 -OutputDirectory .\\verification\\stabilization\\runs\\final\\regressions/poc4-sustained",
+      "Passed": true
+    },
+    {
+      "Command": "./TEST_ROOM_SCALE_FAST.ps1 -LogPath .\\verification\\stabilization\\runs\\final\\regressions/room-definition-fast.log",
+      "Passed": true
+    },
+    {
+      "Command": "$godot --headless --path . --script res://scripts/poc471_navigation_test.gd",
+      "Passed": true
+    },
+    {
+      "Command": "$godot --headless --path . --script res://scripts/poc471_unreachable_task_test.gd",
+      "Passed": true
+    },
+    {
+      "Command": "$godot --headless --path . --script res://scripts/poc471_midlink_test.gd",
+      "Passed": true
+    },
+    {
+      "Command": "$godot --headless --path . --script res://scripts/poc472_planner_test.gd",
+      "Passed": true
+    },
+    {
+      "Command": "python -c \"import sys; from pathlib import Path; sys.path.insert(0,sys.argv[1]); import poc472_campaign as c; c.prior.write(Path(sys.argv[2]),c.packing_layout()[\"definition\"])\" \"scripts\" \".\\verification\\stabilization\\runs\\final\\regressions\\packing-input\\PLACE-031.json\"",
+      "Passed": true
+    },
+    {
+      "Command": "$env:ROOMSCALE_ROOM_FILE = \".\\verification\\stabilization\\runs\\final\\regressions\\packing-input\\PLACE-031.json\"; $godot --headless --path . --script res://scripts/poc472_packing_test.gd",
+      "Passed": true
+    }
+  ],
+  "regressions": {
+    "poc4-fast": [
+      {
+        "DaysAfterRecovery": 0,
+        "Error": "",
+        "Log": ".\\verification\\stabilization\\runs\\final\\regressions\\poc4-fast\\fast.log",
+        "Passed": true,
+        "Run": "fast",
+        "Seconds": 30.35
+      },
+      {
+        "DaysAfterRecovery": 0,
+        "Error": "",
+        "Log": ".\\verification\\stabilization\\runs\\final\\regressions\\poc4-fast\\contract.log",
+        "Passed": true,
+        "Run": "contract",
+        "Seconds": 0.3
+      },
+      {
+        "DaysAfterRecovery": 0,
+        "Error": "",
+        "Log": ".\\verification\\stabilization\\runs\\final\\regressions\\poc4-fast\\cleanup.log",
+        "Passed": true,
+        "Run": "cleanup",
+        "Seconds": 0.48
+      }
+    ],
+    "poc4-sustained": [
+      {
+        "DaysAfterRecovery": 7,
+        "Error": "",
+        "Log": ".\\verification\\stabilization\\runs\\final\\regressions\\poc4-sustained\\sustained-7days.log",
+        "Passed": true,
+        "Run": "sustained-7days",
+        "Seconds": 68.84
+      }
+    ],
+    "poc45-fast": [
+      {
+        "Days": 0,
+        "Error": "",
+        "Log": ".\\verification\\stabilization\\runs\\final\\regressions\\poc45-fast\\fast.log",
+        "Passed": true,
+        "Run": "fast",
+        "Seconds": 13.89
+      }
+    ],
+    "poc45-scenario": [
+      {
+        "Days": 8,
+        "Error": "",
+        "Log": ".\\verification\\stabilization\\runs\\final\\regressions\\poc45-scenario\\scenario.log",
+        "Passed": true,
+        "Run": "scenario",
+        "Seconds": 93.78
+      }
+    ],
+    "poc45-survival": [
+      {
+        "Days": 0,
+        "Error": "",
+        "Log": ".\\verification\\stabilization\\runs\\final\\regressions\\poc45-survival\\survival.log",
+        "Passed": true,
+        "Run": "survival",
+        "Seconds": 5.98
+      }
+    ],
+    "poc46-fast": [
+      {
+        "Days": 0,
+        "Error": "",
+        "Log": ".\\verification\\stabilization\\runs\\final\\regressions\\poc46-fast\\fast.log",
+        "Passed": true,
+        "Run": "fast",
+        "Seconds": 0.88
+      }
+    ],
+    "poc46-scenario": [
+      {
+        "Days": 8,
+        "Error": "",
+        "Log": ".\\verification\\stabilization\\runs\\final\\regressions\\poc46-scenario\\scenario.log",
+        "Passed": true,
+        "Run": "scenario",
+        "Seconds": 94.44
+      }
+    ],
+    "poc47": [
+      {
+        "Days": 0,
+        "Error": "",
+        "Log": ".\\verification\\stabilization\\runs\\final\\regressions\\poc47\\fast.log",
+        "Passed": true,
+        "Run": "fast",
+        "Seconds": 0.78
+      },
+      {
+        "Days": 8,
+        "Error": "",
+        "Log": ".\\verification\\stabilization\\runs\\final\\regressions\\poc47\\repeat-01.log",
+        "Passed": true,
+        "Run": "repeat-01",
+        "Seconds": 20.13
+      },
+      {
+        "Days": 8,
+        "Error": "",
+        "Log": ".\\verification\\stabilization\\runs\\final\\regressions\\poc47\\repeat-02.log",
+        "Passed": true,
+        "Run": "repeat-02",
+        "Seconds": 24.39
+      },
+      {
+        "Days": 8,
+        "Error": "",
+        "Log": ".\\verification\\stabilization\\runs\\final\\regressions\\poc47\\repeat-03.log",
+        "Passed": true,
+        "Run": "repeat-03",
+        "Seconds": 21.98
+      }
+    ]
+  },
+  "retained_definitions_identical": [
+    {
+      "id": "EDGE-FRACTION-01",
+      "identical_bytes": true,
+      "sha256": "99e423da8e09c79d6f8e7ee64d3bc5d5514886fa1af06c5d33aca640d4f4b9d2"
+    },
+    {
+      "id": "NEG-01",
+      "identical_bytes": true,
+      "sha256": "3d874c70ae94f3663bc620e61f9e6b0e8b13ca1aca2536cc1eb6aca4dc6fcbfc"
+    },
+    {
+      "id": "NEG-02",
+      "identical_bytes": true,
+      "sha256": "05a58ef9f1811ec5efe30889b53eca66159a2c7b298ab4d811e06731858241fb"
+    },
+    {
+      "id": "NEG-03",
+      "identical_bytes": true,
+      "sha256": "0faa6ef99550a0a7f3e3026bfce98e64c52c46b8cc5c9c78efc006f5f94e5e9b"
+    },
+    {
+      "id": "NEG-04",
+      "identical_bytes": true,
+      "sha256": "cc082eb9ed9e82eab3e451d44f353d8436f22a69f192826f4a0bf4abca3aabfb"
+    },
+    {
+      "id": "NEG-05",
+      "identical_bytes": true,
+      "sha256": "50580493f864c0c43cbb24bbe66e33faee57520d33616c1f20ded9899fbf71e8"
+    },
+    {
+      "id": "POS-001",
+      "identical_bytes": true,
+      "sha256": "662486aa543c097fcd0a2ee9e2ce2f0d0e6675c252454126b012ca6c0e4faa74"
+    },
+    {
+      "id": "POS-001-REPEAT-1",
+      "identical_bytes": true,
+      "sha256": "662486aa543c097fcd0a2ee9e2ce2f0d0e6675c252454126b012ca6c0e4faa74"
+    },
+    {
+      "id": "POS-001-REPEAT-2",
+      "identical_bytes": true,
+      "sha256": "662486aa543c097fcd0a2ee9e2ce2f0d0e6675c252454126b012ca6c0e4faa74"
+    },
+    {
+      "id": "POS-002",
+      "identical_bytes": true,
+      "sha256": "d8dc7340ab086b46a573ff6be59d49df29bd034d3a8e6f6aa454d12471f79243"
+    },
+    {
+      "id": "POS-003",
+      "identical_bytes": true,
+      "sha256": "26fdb3725fe698e00fb5e7211ae1877c7c8eb07cd4719ca8bbfcf3ac749566e9"
+    },
+    {
+      "id": "POS-004",
+      "identical_bytes": true,
+      "sha256": "6077b37f9732eeff0d8b476b50afef5ce015261f06b472d54c1f50ecfb05cfde"
+    },
+    {
+      "id": "POS-005",
+      "identical_bytes": true,
+      "sha256": "29622efaaa0f8e3e8896bd7dfcfcd3363c88c9069aa0467d718a1b5361749ef5"
+    },
+    {
+      "id": "POS-006",
+      "identical_bytes": true,
+      "sha256": "a6885d8e72e13e3657cdf48aab5d2b131b00dd51c801308dd9f1859ebdfe1559"
+    },
+    {
+      "id": "POS-006-REPEAT-1",
+      "identical_bytes": true,
+      "sha256": "a6885d8e72e13e3657cdf48aab5d2b131b00dd51c801308dd9f1859ebdfe1559"
+    },
+    {
+      "id": "POS-006-REPEAT-2",
+      "identical_bytes": true,
+      "sha256": "a6885d8e72e13e3657cdf48aab5d2b131b00dd51c801308dd9f1859ebdfe1559"
+    },
+    {
+      "id": "POS-007",
+      "identical_bytes": true,
+      "sha256": "30e3645c87cab3e470577179d17585b7abea4b58371797b36e4fba713acf3a45"
+    },
+    {
+      "id": "POS-008",
+      "identical_bytes": true,
+      "sha256": "91d3572399e45f2b53179c66ab1eeb5af0e6e877d04e810776ee393aa5a646ef"
+    },
+    {
+      "id": "POS-009",
+      "identical_bytes": true,
+      "sha256": "28aad3da1fa6fa2ff681ebea3e811c5f6f0c9f16e8cf1c3bc2e1d31000ab8fbf"
+    },
+    {
+      "id": "POS-009-REPEAT-1",
+      "identical_bytes": true,
+      "sha256": "28aad3da1fa6fa2ff681ebea3e811c5f6f0c9f16e8cf1c3bc2e1d31000ab8fbf"
+    },
+    {
+      "id": "POS-009-REPEAT-2",
+      "identical_bytes": true,
+      "sha256": "28aad3da1fa6fa2ff681ebea3e811c5f6f0c9f16e8cf1c3bc2e1d31000ab8fbf"
+    },
+    {
+      "id": "POS-010",
+      "identical_bytes": true,
+      "sha256": "85b86d70c465a397b15ba78dd1f634b0ba3e871e35a78ab4074e29e2f8bb3921"
+    },
+    {
+      "id": "POS-011",
+      "identical_bytes": true,
+      "sha256": "5149d20bf7b6d9c6ea8a1c9d91b52a5df768cd01005d7ef63fe5d3a8c5c42c49"
+    },
+    {
+      "id": "POS-012",
+      "identical_bytes": true,
+      "sha256": "7e1016c7c06f2d8cb85bd5315ee68c77467d11d0433aa04e0c9b088623bd013e"
+    },
+    {
+      "id": "POS-013",
+      "identical_bytes": true,
+      "sha256": "067fb282b7968ad63abfefee9584385ebe19279ff26351368634bd8016f6281f"
+    },
+    {
+      "id": "POS-014",
+      "identical_bytes": true,
+      "sha256": "fe0a39bbd3d93819eb6d9c0fcdc4d2a84a094a07b0939ba6d6d4f000643ff43f"
+    },
+    {
+      "id": "POS-015",
+      "identical_bytes": true,
+      "sha256": "a8cdbe539c58cb47c9282d010fb48545bb9cf3914f470e546884c389e8b395e9"
+    },
+    {
+      "id": "POS-016",
+      "identical_bytes": true,
+      "sha256": "93b0fee4070fbf9940e2b41aa383127155da10c7aa460c8fd9d36957577c7525"
+    },
+    {
+      "id": "POS-017",
+      "identical_bytes": true,
+      "sha256": "da50efc28343c02eee49e707e0a15e0a00f4201a67a87a0e886111544da7b7b1"
+    },
+    {
+      "id": "POS-018",
+      "identical_bytes": true,
+      "sha256": "c771ad2fda9746956786a78acc42fe5d2ebf5833b98563d4d55ac9ea902be277"
+    },
+    {
+      "id": "POS-019",
+      "identical_bytes": true,
+      "sha256": "f4f5fe78beb7e8a140de3fe4b74d81b08ea41ba6ce3541f22eac2c29115e430c"
+    },
+    {
+      "id": "POS-020",
+      "identical_bytes": true,
+      "sha256": "9f5824743ba9eb28ee2c9a856c7ddbaff2c4f0cc29c6b892aafc71852d4d53c1"
+    },
+    {
+      "id": "POS-021",
+      "identical_bytes": true,
+      "sha256": "6262f6e35db014fc13ae16c32c978f1c6717f9c7819f96e4653d44ebaa2d13c3"
+    },
+    {
+      "id": "POS-022",
+      "identical_bytes": true,
+      "sha256": "d225c5e4fd4663e8fc41e75f80fb1891aaa4ddba71c96dd211db746edeb351fd"
+    },
+    {
+      "id": "POS-023",
+      "identical_bytes": true,
+      "sha256": "a471f98153b8e65d66ee71305667218b74df32090281410cfa7cf3e16973789e"
+    },
+    {
+      "id": "POS-024",
+      "identical_bytes": true,
+      "sha256": "666340012d6e56b75c28c21ce823e8a55385d8dc5a480717a8c945e69cd2aca1"
+    },
+    {
+      "id": "POS-025",
+      "identical_bytes": true,
+      "sha256": "deab7a285e1ed07b2f09ffa31a781ac2231b1769c7bd4cba002b2d15c6153431"
+    },
+    {
+      "id": "POS-026",
+      "identical_bytes": true,
+      "sha256": "733b3c11dba3c1fc4d629f6466c7e1ff6f8e26017401c418ebd8433b25fd95e7"
+    },
+    {
+      "id": "POS-027",
+      "identical_bytes": true,
+      "sha256": "2c08bca569a098afcb236e3831915b834c68cc459c09c693efdbefc6274def01"
+    },
+    {
+      "id": "POS-028",
+      "identical_bytes": true,
+      "sha256": "3bc9c2c8daf32028ae4f7c7cdc98eb9b893926a087bbc44a0ac7206ec88bdaed"
+    },
+    {
+      "id": "POS-029",
+      "identical_bytes": true,
+      "sha256": "f7b97eb898aca0b5496eb7b807963e9e8ce5c225a3d3ccdc57ba9553c75dbc4c"
+    },
+    {
+      "id": "POS-030",
+      "identical_bytes": true,
+      "sha256": "7227c6f77d10adfc0f4a5d3e95e913d275158099dbfb3e39ef3a55e40c23580b"
+    },
+    {
+      "id": "POS-031",
+      "identical_bytes": true,
+      "sha256": "14d900701c8e0a5cbbdda15a9a8ed7d530cfdc442344a0d8bdc5b1f9341ff837"
+    },
+    {
+      "id": "POS-032",
+      "identical_bytes": true,
+      "sha256": "c179b04a165766b2ff4e398cec43fe8bf67a34782629d1eb2bdea8c3c2db9caf"
+    },
+    {
+      "id": "POS-033",
+      "identical_bytes": true,
+      "sha256": "026f5266897018e800aff2c02a975c51f2a26794612b1c9a69689edf7233f365"
+    },
+    {
+      "id": "POS-034",
+      "identical_bytes": true,
+      "sha256": "512e1b4059f77de229380e8dadb0962c27ca6efed3d3412c2f0545b6e4bf48ee"
+    },
+    {
+      "id": "POS-035",
+      "identical_bytes": true,
+      "sha256": "ced72d91dc3e59647b4990317b94acc3f0939601489aa2026e1f755d6fc2dfe9"
+    },
+    {
+      "id": "POS-036",
+      "identical_bytes": true,
+      "sha256": "28e2bb6e85755476c004144a9083e6304a5dedabfac90c3dcb207d1e370b46fb"
+    },
+    {
+      "id": "POS-037",
+      "identical_bytes": true,
+      "sha256": "381cf0a69d02043bcf4284e650461ec39dac50041392bd7d082564a8b8b84326"
+    },
+    {
+      "id": "POS-038",
+      "identical_bytes": true,
+      "sha256": "a2be48001fb436af36a60f694eadd7d3139be590fdb829b4150c4dc4c17d2662"
+    },
+    {
+      "id": "POS-039",
+      "identical_bytes": true,
+      "sha256": "3269e37a68675d21ac417f5fd73b5ee6004c11c733962b8bdaa0347a5e2dc2b3"
+    },
+    {
+      "id": "POS-040",
+      "identical_bytes": true,
+      "sha256": "4c3fd3e775298dc197702dff47fead74deaf97e48f95665c3eebb502aa500f3f"
+    },
+    {
+      "id": "POS-041",
+      "identical_bytes": true,
+      "sha256": "1f144d2c231671b29bd68d1c67262745b1501dd6e92ee52b7211a48bddac47d4"
+    },
+    {
+      "id": "POS-042",
+      "identical_bytes": true,
+      "sha256": "85a4066841a9c8bf90572016b21fd2deb96dee7f26c65e6c81d91bfb99a78225"
+    },
+    {
+      "id": "POS-043",
+      "identical_bytes": true,
+      "sha256": "8b10156d5214355ea5ce6568a0abaf747cf367cf3ade4a6cf8c989cb18b52f92"
+    },
+    {
+      "id": "POS-044",
+      "identical_bytes": true,
+      "sha256": "f5f0b45b430b61c4ab20813dcc85da8495e6c928f42f6e325f0a309c8bc3d119"
+    },
+    {
+      "id": "POS-045",
+      "identical_bytes": true,
+      "sha256": "ab9fe2a497ebd6df326b778396ced507ad314fecfdc016b66dbddd1ea5693ab3"
+    },
+    {
+      "id": "POS-046",
+      "identical_bytes": true,
+      "sha256": "79dd63b1488a0d3ed03c8353360912bf98a068cfc344785ce90f98658873c1ff"
+    },
+    {
+      "id": "POS-047",
+      "identical_bytes": true,
+      "sha256": "aede3667f856c24521d9599576cf3485e2fc0602698c16893be0fcaae587bb17"
+    },
+    {
+      "id": "POS-048",
+      "identical_bytes": true,
+      "sha256": "a2ad2819a7783883a9e8e23c365d855cb7d86a5a7c58a791339040fe87f55b94"
+    },
+    {
+      "id": "POS-049",
+      "identical_bytes": true,
+      "sha256": "a83722b6d65c1f34007b08d09216ba5db5db9726917981ab14dd34900c7d4d94"
+    },
+    {
+      "id": "POS-050",
+      "identical_bytes": true,
+      "sha256": "4799f0b299d688efa872eed431c37000afb9981e4ea6e7e3ba8956b408965bde"
+    },
+    {
+      "id": "POS-051",
+      "identical_bytes": true,
+      "sha256": "59bb4df05a032c3beeb724e87670850ef7fbd74465c2e18e19aaf4b51665b284"
+    },
+    {
+      "id": "POS-052",
+      "identical_bytes": true,
+      "sha256": "c80f8ced1c7faa837ee91657bbcc8092ec4954bfc8c677b07d47672777647460"
+    },
+    {
+      "id": "POS-053",
+      "identical_bytes": true,
+      "sha256": "1181827e97f134bd7da440a54b641d4724ee71a8892ea3894dddec020566e091"
+    },
+    {
+      "id": "POS-054",
+      "identical_bytes": true,
+      "sha256": "3d793eb5d52758b170cd7f1332ce457d43681743a0f8d41670c8e868096d40d6"
+    },
+    {
+      "id": "POS-055",
+      "identical_bytes": true,
+      "sha256": "421b7118c8348a006556bde7c5b768780d9ffc855b01b2ccf5b78973dc60073b"
+    },
+    {
+      "id": "POS-056",
+      "identical_bytes": true,
+      "sha256": "a1aafee186c9c736a218cf4be50c00dceb53b8e619ffee4b78d0500061c3827c"
+    },
+    {
+      "id": "POS-057",
+      "identical_bytes": true,
+      "sha256": "39030a20d6d4f65bd2fa339064740ee97cf1b87e393be4beb81ba66c91dfa292"
+    },
+    {
+      "id": "POS-058",
+      "identical_bytes": true,
+      "sha256": "f4fa57a59ae1750243c5919326ee5c2d17989ce6d33b9f9a5673b98ad61b6834"
+    },
+    {
+      "id": "POS-059",
+      "identical_bytes": true,
+      "sha256": "9a07b4cfefbe62b12af224a0430a7ec1d6739a8c7104bd9548c630364427fcdc"
+    },
+    {
+      "id": "POS-060",
+      "identical_bytes": true,
+      "sha256": "2ef45c979b49ce6bcd3dba3ce601a06ff4f04c011b2bbc6bfe9e704c45aae0d3"
+    },
+    {
+      "id": "SOAK-01",
+      "identical_bytes": true,
+      "sha256": "662486aa543c097fcd0a2ee9e2ce2f0d0e6675c252454126b012ca6c0e4faa74"
+    },
+    {
+      "id": "SOAK-02",
+      "identical_bytes": true,
+      "sha256": "a6885d8e72e13e3657cdf48aab5d2b131b00dd51c801308dd9f1859ebdfe1559"
+    },
+    {
+      "id": "SOAK-03",
+      "identical_bytes": true,
+      "sha256": "85b86d70c465a397b15ba78dd1f634b0ba3e871e35a78ab4074e29e2f8bb3921"
+    },
+    {
+      "id": "EXP-IDENTITY-00",
+      "identical_bytes": true,
+      "sha256": "b9c822345373961ac7c46361ab06b5d4153a300c04cb4ced7f7407d031d0226c"
+    },
+    {
+      "id": "EXP-IDENTITY-01",
+      "identical_bytes": true,
+      "sha256": "67f72e43d679a616566113e1e69a1a21a4d7de5315b140411982021f9918708a"
+    },
+    {
+      "id": "EXP-ORIGIN-00",
+      "identical_bytes": true,
+      "sha256": "236551ea36da3a344e21519fbc10a3644fe5110f617fc7da8091ad2783770906"
+    },
+    {
+      "id": "EXP-ORIGIN-01",
+      "identical_bytes": true,
+      "sha256": "c771ad2fda9746956786a78acc42fe5d2ebf5833b98563d4d55ac9ea902be277"
+    },
+    {
+      "id": "EXP-ORIGIN-02",
+      "identical_bytes": true,
+      "sha256": "ee6ad15ef073a4caa57e6c1ef120278dfaf4d8efe9340efbbb7c82acb0bb3b53"
+    },
+    {
+      "id": "EXP-ORIGIN-03",
+      "identical_bytes": true,
+      "sha256": "e93b7b1d83ec211768130857cdc54dc86a1609068c4d5fa773e2da2bb4071a05"
+    },
+    {
+      "id": "EXP-ORIGIN-04",
+      "identical_bytes": true,
+      "sha256": "de1d50c29721c2f41b1ec9cb2f37743296a05568395a298a8109d7297d78568e"
+    },
+    {
+      "id": "EXP-ORIGIN-05",
+      "identical_bytes": true,
+      "sha256": "1567ba87139718f8418589ef0e7a176a62feaf20853927cb7fbb506e05c15496"
+    },
+    {
+      "id": "EXP-ROUTING-00",
+      "identical_bytes": true,
+      "sha256": "a6885d8e72e13e3657cdf48aab5d2b131b00dd51c801308dd9f1859ebdfe1559"
+    },
+    {
+      "id": "EXP-ROUTING-01",
+      "identical_bytes": true,
+      "sha256": "d69a33a50704c0b90b3dddeb36667e07e89c4b949627667a7df0ab527f8a68ad"
+    },
+    {
+      "id": "EXP-ROUTING-02",
+      "identical_bytes": true,
+      "sha256": "8023b7814bb93327cace7710f2c5b514199b68fe5773f7575b87181a3d06ce5d"
+    },
+    {
+      "id": "EXP-ROUTING-03",
+      "identical_bytes": true,
+      "sha256": "49a6cdefc97bd8d8ce6c9ed50c66b02a7be82d3096988d61e763524ad7ed619a"
+    },
+    {
+      "id": "EXP-ROUTING-04",
+      "identical_bytes": true,
+      "sha256": "1ac7b4bac18aa88dbd352561397f099d94625d09cbfe37a74cc2b9317338f766"
+    },
+    {
+      "id": "EXP-ROUTING-05",
+      "identical_bytes": true,
+      "sha256": "f2b4dd632336e31a7724d89fa5a02d04a2d9e2f9de9be20323197426be4a7f33"
+    },
+    {
+      "id": "EXP-WATER-00",
+      "identical_bytes": true,
+      "sha256": "9acc04c92d47d0cbaa7fbbd967277efe4e5ec3061e4ffceb703b37872e377847"
+    },
+    {
+      "id": "EXP-WATER-01",
+      "identical_bytes": true,
+      "sha256": "b4bde1de17a65c8cc5c8aacf42cfbd52ae3c1951925a2e15b53daaa05f3c9643"
+    },
+    {
+      "id": "EXP-WATER-02",
+      "identical_bytes": true,
+      "sha256": "fe10f6cf85538d6363ac072301667d6a2952136f467904fd6e503aa7b3f13513"
+    },
+    {
+      "id": "EXP-WATER-03",
+      "identical_bytes": true,
+      "sha256": "47f1d793a019ee5b36d5e932b488f2a4e619fb626a5840171551f34bd9792ad1"
+    },
+    {
+      "id": "EXP-WATER-04",
+      "identical_bytes": true,
+      "sha256": "84832b5ac2a19b67d7ab14ccd4fc8ae29c42107c056a6a3e5352ca8800e3263f"
+    },
+    {
+      "id": "EXP-WATER-05",
+      "identical_bytes": true,
+      "sha256": "46816644f2395a86c9229851a1c991a51ff6e3de1e61ca6a0266a3ee60ec280d"
+    }
+  ],
+  "retained_negative_inputs": 5,
+  "soaks": [
+    {
+      "available": {
+        "food": 447.0,
+        "metal": 1.0,
+        "water": 650.0,
+        "wood": 1.0
+      },
+      "consumed": {
+        "food": 8746.0,
+        "metal": 23.0,
+        "water": 12941.0,
+        "wood": 90.0
+      },
+      "days": 90,
+      "execution_seconds": 1259.313,
+      "governor": {
+        "emergency": false,
+        "mode": "STABLE",
+        "reason": "Reserves recovered; assess shelter and finite carrying capacity",
+        "rejections": {
+          "bookcase": "depleted",
+          "chair": "depleted",
+          "desk": "resource source support",
+          "packing_crate": "depleted",
+          "side_table": "depleted",
+          "spare_crate": "depleted",
+          "storage_box": "depleted"
+        }
+      },
+      "growth": "Insufficient shelter for entire cohort",
+      "id": "SOAK-01",
+      "journal": 128,
+      "journal_sequence": 147,
+      "maxima": {
+        "bundles": 6,
+        "journal": 128,
+        "live_tasks": 75,
+        "movement": 0.650005340576172,
+        "oldest_live_task": 158.899999999855,
+        "population": 75,
+        "projects": 10,
+        "tasks": 500,
+        "tickets": 17
+      },
+      "population": 75,
+      "projects": 10,
+      "remaining": {
+        "food": 20824.0,
+        "water": 46480.0
+      },
+      "result": "PASS",
+      "shelter": 75,
+      "suppression_keys": 131,
+      "tasks": {
+        "active": 75,
+        "available": 18,
+        "cancelled": 0,
+        "cancelled_total": 4,
+        "complete": 407,
+        "completed_total": 634868,
+        "created_total": 634965,
+        "failed": 0,
+        "failed_total": 0,
+        "reserved": 0,
+        "retained_tasks": 500
+      }
+    },
+    {
+      "available": {
+        "food": 323.0,
+        "metal": 5.0,
+        "water": 476.0,
+        "wood": 4.0
+      },
+      "consumed": {
+        "food": 4185.0,
+        "metal": 19.0,
+        "water": 6187.0,
+        "wood": 70.0
+      },
+      "days": 60,
+      "execution_seconds": 766.3,
+      "governor": {
+        "emergency": false,
+        "mode": "STABLE",
+        "reason": "Reserves recovered; assess shelter and finite carrying capacity",
+        "rejections": {
+          "bookcase": "depleted",
+          "chair": "depleted",
+          "desk": "resource source support",
+          "packing_crate": "depleted",
+          "route_detour_0": "explicitly protected",
+          "route_detour_1": "explicitly protected",
+          "route_detour_2": "explicitly protected",
+          "route_detour_3": "explicitly protected",
+          "side_table": "depleted",
+          "spare_crate": "depleted",
+          "storage_box": "depleted"
+        }
+      },
+      "growth": "Insufficient shelter for entire cohort",
+      "id": "SOAK-02",
+      "journal": 119,
+      "journal_sequence": 119,
+      "maxima": {
+        "bundles": 6,
+        "journal": 119,
+        "live_tasks": 55,
+        "movement": 0.650005340576172,
+        "oldest_live_task": 152.799999999923,
+        "population": 55,
+        "projects": 8,
+        "tasks": 500,
+        "tickets": 18
+      },
+      "population": 55,
+      "projects": 8,
+      "remaining": {
+        "food": 45512.0,
+        "water": 62408.0
+      },
+      "result": "PASS",
+      "shelter": 55,
+      "suppression_keys": 103,
+      "tasks": {
+        "active": 55,
+        "available": 10,
+        "cancelled": 0,
+        "cancelled_total": 5,
+        "complete": 435,
+        "completed_total": 283389,
+        "created_total": 283459,
+        "failed": 0,
+        "failed_total": 0,
+        "reserved": 0,
+        "retained_tasks": 500
+      }
+    },
+    {
+      "available": {
+        "food": 0.0,
+        "metal": 1.0,
+        "water": 0.0,
+        "wood": 28.0
+      },
+      "consumed": {
+        "food": 200.0,
+        "metal": 11.0,
+        "water": 360.0,
+        "wood": 30.0
+      },
+      "days": 60,
+      "execution_seconds": 431.397,
+      "governor": {
+        "emergency": true,
+        "mode": "SURVIVAL",
+        "reason": "Reserve below safety threshold; development restrained",
+        "rejections": {
+          "bookcase": "depleted",
+          "desk": "resource source support",
+          "storage_box": "depleted"
+        }
+      },
+      "growth": "Survival reserves unsafe",
+      "id": "SOAK-03",
+      "journal": 50,
+      "journal_sequence": 50,
+      "maxima": {
+        "bundles": 3,
+        "journal": 50,
+        "live_tasks": 10,
+        "movement": 0.650005340576172,
+        "oldest_live_task": 139.299999999873,
+        "population": 10,
+        "projects": 4,
+        "tasks": 500,
+        "tickets": 14
+      },
+      "population": 10,
+      "projects": 4,
+      "remaining": {
+        "food": 0.0,
+        "water": 0.0
+      },
+      "result": "PASS",
+      "shelter": 15,
+      "suppression_keys": 38,
+      "tasks": {
+        "active": 0,
+        "available": 10,
+        "cancelled": 0,
+        "cancelled_total": 13,
+        "complete": 490,
+        "completed_total": 9563,
+        "created_total": 9586,
+        "failed": 0,
+        "failed_total": 0,
+        "reserved": 0,
+        "retained_tasks": 500
+      }
+    }
+  ],
+  "source_and_harness_unchanged": true,
+  "supplemental_placement": {
+    "execution_seconds": 67.984,
+    "final_population": 11,
+    "id": "EXTRA-NARROW-01",
+    "layout": {
+      "alternatives": [
+        {
+          "position": "(-2.0, 0.0, -31.01)",
+          "reason": "room/completed geometry"
+        },
+        {
+          "position": "(2.0, 0.0, -31.01)",
+          "reason": "room/completed geometry"
+        },
+        {
+          "position": "(-2.0, 0.0, -28.99)",
+          "reason": "room/completed geometry"
+        },
+        {
+          "position": "(2.0, 0.0, -28.99)",
+          "reason": "room/completed geometry"
+        },
+        {
+          "position": "(-2.0, 0.0, -32.0)",
+          "reason": "room/completed geometry"
+        },
+        {
+          "position": "(2.0, 0.0, -32.0)",
+          "reason": "room/completed geometry"
+        },
+        {
+          "position": "(-2.0, 0.0, -28.0)",
+          "reason": "room/completed geometry"
+        },
+        {
+          "position": "(2.0, 0.0, -28.0)",
+          "reason": "room/completed geometry"
+        }
+      ],
+      "connectivity": true,
+      "considered": 10106,
+      "downstream_feasible": true,
+      "future_reservations": [
+        {
+          "kind": "shelter",
+          "position": "(-2.0, 0.0, 0.0)",
+          "rank": 0,
+          "score": 904.0,
+          "target": "(-2.0, 0.0, -9.0)",
+          "valid": true
+        },
+        {
+          "kind": "depot",
+          "position": "(-2.0, 0.0, 19.01)",
+          "rank": 60,
+          "score": 2405.98022460938,
+          "target": "(-2.0, 0.0, 10.01)",
+          "valid": true
+        },
+        {
+          "kind": "workshop",
+          "position": "(-2.0, 0.0, 40.0)",
+          "rank": 126,
+          "score": 4904.0,
+          "target": "(-2.0, 0.0, 31.0)",
+          "valid": true
+        },
+        {
+          "kind": "housing",
+          "position": "(-2.0, 0.0, 60.0)",
+          "rank": 168,
+          "score": 8104.0,
+          "target": "(-2.0, 0.0, 51.0)",
+          "valid": true
+        }
+      ],
+      "kind": "shelter",
+      "navigation_trials": 5,
+      "rejected": 9882,
+      "rejection_reasons": {
+        "future reservation overlap": 354,
+        "required activity/resource/traversal access": 30,
+        "room boundary": 2068,
+        "room/completed geometry": 7430
+      },
+      "reused": false,
+      "selected": {
+        "kind": "shelter",
+        "position": "(-2.0, 0.0, 0.0)",
+        "rank": 0,
+        "score": 904.0,
+        "target": "(-2.0, 0.0, -9.0)",
+        "valid": true
+      },
+      "tie_break": "squared origin distance, z, x; work side uses same order",
+      "validation_navigation_trials": 1
+    },
+    "milestones": {
+      "depot_complete": 222.099999999992,
+      "depot_started": 134.999999999997,
+      "elevated_territory": 1776.99999999948,
+      "first_haul": 38.1000000000003,
+      "first_salvage": 30.9000000000002,
+      "housing_complete": 662.900000000082,
+      "housing_started": 490.000000000043,
+      "material_haul": 38.1000000000003,
+      "meaningful_work": 30.9000000000002,
+      "physical_climb": 1760.89999999949,
+      "shelter_complete": 132.699999999997,
+      "shelter_started": 5.0,
+      "sixth_citizen": 965.000000000151,
+      "traversal_complete": 1736.99999999952,
+      "traversal_started": 1421.2999999998,
+      "workshop_complete": 485.400000000042,
+      "workshop_started": 224.999999999992
+    },
+    "result": "PASS"
+  },
+  "total": 127
+}

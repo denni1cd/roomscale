@@ -59,7 +59,10 @@ deferred; no generic entity/framework layer is introduced.
 
 ## Citizens and task lifecycle
 
-Startup builds a complete valid roster atomically, preserving canonical starts. IDs
+Startup builds a complete valid roster atomically, preserving the original five-founder
+and Room A/B positions. Compact legacy spawn areas are seed regions: small rosters
+can fall back to distinct legal connected room cells; larger rosters remain within
+their explicitly sized spawn footprint. IDs
 remain contiguous indices, node names CitizenNN and append order are explicit contracts.
 A citizen claims a task, navigates its first leg, performs physical pickup/work, traverses
 its delivery leg, completes or fails, releases reservations and chooses normal next work.

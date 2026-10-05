@@ -75,3 +75,12 @@ remain explicit deferred debt. None is an unresolved Critical/High correctness i
 No release tag, history rewrite or historical branch deletion is authorized here.
 Final source/provenance, secret scan, whitespace and regression conclusions are recorded
 in the final audit rather than inferred from formatting or this review.
+
+## Final acceptance
+
+Frozen source and harness ef5ebd325351ae6c3702a7ab8d89266aafed59ea passed all required
+current/legacy gates and the strict evidence audit. All127 campaign fingerprints
+match completed472. Three isolated canonical repeats and the representative world
+match baseline with no material measured performance regression. The188-file broad
+manifest and added-source key/credential/user-path scan are clean. Details and honest
+superseded-run failures are in final-report.md and the compact audit files.
