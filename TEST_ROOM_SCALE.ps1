@@ -1,106 +1,79 @@
+<#
+Current verification entry point (PowerShell 7).
+Fast: Python quality/tooling, schema, founder fast, navigation focused tests.
+Canonical: three fresh eight-day founder runs.
+Regression: meaningful POC4/4.5/4.6 checks and legacy Room A/B smoke.
+Robustness:37 POC472 development worlds, including31 placements and feasible NEG-03.
+Soak: existing 90/60/60-day founder runs. All includes every category.
+Legacy -Room calls, with Mode omitted, retain the historical smoke contract.
+Outputs default to ignored verification/stabilization/runs; accepted evidence is curated separately.
+#>
 param(
-	[string]$Room = 'room_a',
-	[string]$LogPath = '',
-	[int]$TimeoutSeconds = 360,
-	[switch]$CaptureVisuals,
-	[string]$VisualDirectory = '',
-	[string[]]$VisualPhases = @()
+    [ValidateSet('Fast','Canonical','Regression','Robustness','Soak','All','Smoke')][string]$Mode = 'Fast',
+    [string]$Room = 'room_a',
+    [string]$OutputDirectory = 'verification/stabilization/runs',
+    [string]$PythonExecutable = 'python',
+    [int]$TimeoutSeconds = 1200,
+    [string]$LogPath = '',
+    [switch]$CaptureVisuals,
+    [string]$VisualDirectory = '',
+    [string[]]$VisualPhases = @(),
+    [int]$Workers = 2
 )
-
 $ErrorActionPreference = 'Stop'
 $ProjectRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
-. (Join-Path $ProjectRoot 'scripts/Resolve-RoomScaleRoom.ps1')
-$SelectedRoom = Resolve-RoomScaleRoomInput -Value $Room -ProjectRoot $ProjectRoot
-$knownVisualPhases = @('initial-room', 'citizen-inspection', 'living-civilization', 'target-investigation', 'resource-hauling', 'construction', 'grapple-deployment', 'citizen-traversal', 'citizen-traversal-detail', 'elevated-surface-exploration', 'elevated-surface-exploration-detail')
-foreach ($phase in $VisualPhases) {
-	if ($phase -notin $knownVisualPhases) { throw "Unknown visual phase '$phase'. Choose one of: $($knownVisualPhases -join ', ')" }
+. (Join-Path $ProjectRoot 'scripts/Invoke-RoomScaleProcess.ps1')
+if (-not $PSBoundParameters.ContainsKey('Mode') -and @('Room','LogPath','CaptureVisuals','VisualDirectory','VisualPhases').Where({$PSBoundParameters.ContainsKey($_)}).Count -gt 0) { $Mode = 'Smoke' }
+if ($Mode -eq 'Smoke') {
+    if (-not $PSBoundParameters.ContainsKey('TimeoutSeconds')) { $TimeoutSeconds = 360 }
+    $smoke = @{Room=$Room; TimeoutSeconds=$TimeoutSeconds; LogPath=$LogPath; CaptureVisuals=$CaptureVisuals; VisualDirectory=$VisualDirectory; VisualPhases=$VisualPhases}
+    & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_SMOKE.ps1') @smoke
+    return
 }
-$GodotExecutable = & (Join-Path $ProjectRoot 'SETUP_ROOM_SCALE.ps1') | Select-Object -Last 1
-if (-not $GodotExecutable -or -not (Test-Path -LiteralPath $GodotExecutable)) {
-    throw 'Godot setup did not return a valid executable path.'
-}
-
-if (-not $LogPath) {
-	$LogPath = Join-Path $ProjectRoot "verification/poc15/$($SelectedRoom.RoomId)/full-smoke.log"
-}
-New-Item -ItemType Directory -Force -Path (Split-Path -Parent $LogPath) | Out-Null
-$stdoutPath = "$LogPath.stdout.tmp"
-$stderrPath = "$LogPath.stderr.tmp"
-$previousRoom = [Environment]::GetEnvironmentVariable('ROOMSCALE_ROOM', 'Process')
-$previousRoomFile = [Environment]::GetEnvironmentVariable('ROOMSCALE_ROOM_FILE', 'Process')
-$previousVisualDirectory = [Environment]::GetEnvironmentVariable('ROOMSCALE_VISUAL_DIR', 'Process')
-$previousVisualPhases = [Environment]::GetEnvironmentVariable('ROOMSCALE_VISUAL_PHASES', 'Process')
-$previousDisableStartupCapture = [Environment]::GetEnvironmentVariable('ROOMSCALE_DISABLE_STARTUP_CAPTURE', 'Process')
-$process = $null
-try {
-	[Environment]::SetEnvironmentVariable('ROOMSCALE_ROOM', $SelectedRoom.RoomId, 'Process')
-	[Environment]::SetEnvironmentVariable('ROOMSCALE_ROOM_FILE', $(if ($SelectedRoom.IsExplicitFile) { $SelectedRoom.File } else { '' }), 'Process')
-	[Environment]::SetEnvironmentVariable('ROOMSCALE_DISABLE_STARTUP_CAPTURE', '1', 'Process')
-	if ($CaptureVisuals) {
-		if (-not $VisualDirectory) { $VisualDirectory = Join-Path $ProjectRoot "verification/poc15/visual/$($SelectedRoom.RoomId)" }
-		$VisualDirectory = [System.IO.Path]::GetFullPath($VisualDirectory)
-		New-Item -ItemType Directory -Force -Path $VisualDirectory | Out-Null
-		[Environment]::SetEnvironmentVariable('ROOMSCALE_VISUAL_DIR', $VisualDirectory, 'Process')
-	} else {
-		[Environment]::SetEnvironmentVariable('ROOMSCALE_VISUAL_DIR', '', 'Process')
-	}
-	[Environment]::SetEnvironmentVariable('ROOMSCALE_VISUAL_PHASES', $(if ($VisualPhases.Count -gt 0) { $VisualPhases -join ',' } else { '' }), 'Process')
-	$arguments = @()
-	if (-not $CaptureVisuals) { $arguments += '--headless' }
-	$arguments += @('--path', $ProjectRoot, '--script', 'res://scripts/smoke_test.gd')
-	$process = Start-Process -FilePath $GodotExecutable `
-		-ArgumentList $arguments `
-		-WorkingDirectory $ProjectRoot `
-		-RedirectStandardOutput $stdoutPath `
-		-RedirectStandardError $stderrPath `
-		-PassThru -WindowStyle $(if ($CaptureVisuals) { 'Normal' } else { 'Hidden' })
-	if (-not $process.WaitForExit([int]([Math]::Max(1, $TimeoutSeconds) * 1000))) {
-		try {
-			$process.Kill($true)
-		} catch {
-			& taskkill.exe /PID $process.Id /T /F 2>&1 | Out-Null
-		}
-		if (-not $process.WaitForExit(5000)) {
-			throw "Godot did not exit within five seconds after timeout cleanup. See $LogPath"
-		}
-		$timeoutText = "SMOKE_TIMEOUT room=$Room after $TimeoutSeconds seconds."
-		$partialStdout = if (Test-Path -LiteralPath $stdoutPath) { [System.IO.File]::ReadAllText($stdoutPath) } else { '' }
-		$partialStderr = if (Test-Path -LiteralPath $stderrPath) { [System.IO.File]::ReadAllText($stderrPath) } else { '' }
-		$timeoutEvidence = @(
-			$timeoutText
-			'--- stdout captured before forced stop ---'
-			$partialStdout
-			'--- stderr captured before forced stop ---'
-			$partialStderr
-		) -join [Environment]::NewLine
-		[System.IO.File]::WriteAllText($LogPath, $timeoutEvidence, [System.Text.UTF8Encoding]::new($false))
-		Remove-Item -LiteralPath $stdoutPath, $stderrPath -Force -ErrorAction SilentlyContinue
-		throw "Godot smoke test timed out after $TimeoutSeconds seconds for $Room. See $LogPath"
-	}
-} finally {
-	[Environment]::SetEnvironmentVariable('ROOMSCALE_ROOM', $previousRoom, 'Process')
-	[Environment]::SetEnvironmentVariable('ROOMSCALE_ROOM_FILE', $previousRoomFile, 'Process')
-	[Environment]::SetEnvironmentVariable('ROOMSCALE_VISUAL_DIR', $previousVisualDirectory, 'Process')
-	[Environment]::SetEnvironmentVariable('ROOMSCALE_VISUAL_PHASES', $previousVisualPhases, 'Process')
-	[Environment]::SetEnvironmentVariable('ROOMSCALE_DISABLE_STARTUP_CAPTURE', $previousDisableStartupCapture, 'Process')
-}
-$process.Refresh()
-$exitCode = $process.ExitCode
-$combined = @(
-	if (Test-Path -LiteralPath $stdoutPath) { [System.IO.File]::ReadAllText($stdoutPath) }
-	if (Test-Path -LiteralPath $stderrPath) { [System.IO.File]::ReadAllText($stderrPath) }
-) -join [Environment]::NewLine
-[System.IO.File]::WriteAllText($LogPath, $combined, [System.Text.UTF8Encoding]::new($false))
-Remove-Item -LiteralPath $stdoutPath, $stderrPath -Force -ErrorAction SilentlyContinue
-Write-Output $combined
-foreach ($marker in @('ROOMSCALE_M2_SMOKE_PASS', 'ROOMSCALE_M3_SMOKE_PASS', 'ROOMSCALE_M4_SMOKE_PASS', 'ROOMSCALE_M5_SMOKE_PASS', 'ROOMSCALE_M6_SMOKE_PASS', 'ROOMSCALE_M8_SMOKE_PASS')) {
-	if ($combined -notmatch [regex]::Escape($marker)) {
-		throw "Godot smoke test omitted required marker $marker. See $LogPath"
-	}
-}
-if ($combined -match 'SCRIPT ERROR:|ROOMSCALE_SMOKE_FAIL:') {
-	throw "Godot smoke test emitted a script/assertion error. See $LogPath"
-}
-if ($null -ne $exitCode -and $exitCode -ne 0) {
-	throw "Godot smoke test failed with exit code $exitCode. See $LogPath"
+$OutputDirectory = Resolve-RoomScaleOutputPath -Value $OutputDirectory -ProjectRoot $ProjectRoot
+$categories = if ($Mode -eq 'All') { @('Fast','Canonical','Regression','Robustness','Soak') } else { @($Mode) }
+foreach ($category in $categories) {
+    $out = Join-Path $OutputDirectory $category.ToLower()
+    New-Item -ItemType Directory -Force -Path $out | Out-Null
+    switch ($category) {
+        'Fast' {
+            Push-Location $ProjectRoot
+            try {
+                & $PythonExecutable -m ruff check .
+                if ($LASTEXITCODE -ne 0) { throw 'Ruff check failed.' }
+                & $PythonExecutable -m ruff format --check .
+                if ($LASTEXITCODE -ne 0) { throw 'Ruff format check failed.' }
+                & $PythonExecutable -m unittest discover -s scripts -p test_tooling.py
+                if ($LASTEXITCODE -ne 0) { throw 'Python tooling regressions failed.' }
+            } finally { Pop-Location }
+            & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_TOOLING.ps1') -PythonExecutable $PythonExecutable -OutputDirectory (Join-Path $out 'tooling')
+            & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_FAST.ps1') -LogPath (Join-Path $out 'room-definition.log')
+            & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_POC47.ps1') -Mode Fast -OutputDirectory (Join-Path $out 'founder') -TimeoutSeconds $TimeoutSeconds
+            $godot = & (Join-Path $ProjectRoot 'SETUP_ROOM_SCALE.ps1') | Select-Object -Last 1
+            foreach ($check in @(@{Script='verification/evidence_io_test'; Marker='ROOMSCALE_EVIDENCE_IO_PASS'}, @{Script='stabilization_core_test'; Marker='STABILIZATION_CORE_PASS'})) {
+                $run = Invoke-RoomScaleProcess -FilePath $godot -ArgumentList @('--headless','--path',$ProjectRoot,'--script',("res://scripts/" + $check.Script + '.gd')) -ProjectRoot $ProjectRoot -LogPath (Join-Path $out ($check.Script + '.log')) -TimeoutSeconds $TimeoutSeconds
+                if ($run.TimedOut -or $run.ExitCode -ne 0 -or $run.Content -notmatch $check.Marker -or $run.Content -match 'ERROR:|SCRIPT ERROR:') { throw "Focused regression failed: $($check.Script). See $($run.LogPath)" }
+                Write-Output "$($check.Marker) log=$($run.LogPath)"
+            }
+            & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_POC472_REGRESSIONS.ps1') -Mode Focused -OutputDirectory (Join-Path $out 'placement') -PythonExecutable $PythonExecutable -TimeoutSeconds $TimeoutSeconds
+        }
+        'Canonical' { & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_POC47.ps1') -Mode Repeatability -RunCount 3 -OutputDirectory $out -TimeoutSeconds $TimeoutSeconds -CaptureVisuals:$CaptureVisuals -PythonExecutable $PythonExecutable }
+        'Regression' {
+            & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_POC46.ps1') -Mode Fast -OutputDirectory (Join-Path $out 'poc46-fast') -TimeoutSeconds $TimeoutSeconds
+            & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_POC46.ps1') -Mode Scenario -OutputDirectory (Join-Path $out 'poc46-scenario') -TimeoutSeconds $TimeoutSeconds
+            & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_POC45.ps1') -Mode Fast -OutputDirectory (Join-Path $out 'poc45-fast') -TimeoutSeconds $TimeoutSeconds
+            & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_POC45.ps1') -Mode Survival -OutputDirectory (Join-Path $out 'poc45-survival') -TimeoutSeconds $TimeoutSeconds
+            & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_POC45.ps1') -Mode Scenario -OutputDirectory (Join-Path $out 'poc45-scenario') -TimeoutSeconds $TimeoutSeconds
+            & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_POC4.ps1') -Mode Fast -OutputDirectory (Join-Path $out 'poc4-fast') -TimeoutSeconds $TimeoutSeconds
+            & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_POC4.ps1') -Mode Sustained -OutputDirectory (Join-Path $out 'poc4-sustained') -TimeoutSeconds $TimeoutSeconds
+            foreach ($legacyRoom in @('room_a','room_b')) {
+                & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_SMOKE.ps1') -Room $legacyRoom -LogPath (Join-Path $out ($legacyRoom + '.log')) -TimeoutSeconds $TimeoutSeconds
+            }
+            & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_POC472_REGRESSIONS.ps1') -Mode Focused -OutputDirectory (Join-Path $out 'placement') -PythonExecutable $PythonExecutable -TimeoutSeconds $TimeoutSeconds
+            & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_POC471.ps1') -Mode Explore -OutputDirectory (Join-Path $out 'poc471-positive-exploration') -PythonExecutable $PythonExecutable -Workers $Workers
+        }
+        'Robustness' { & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_POC472.ps1') -Mode Development -OutputDirectory $out -Workers $Workers -PythonExecutable $PythonExecutable }
+        'Soak' { & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_POC472.ps1') -Mode Soak -OutputDirectory $out -Workers $Workers -PythonExecutable $PythonExecutable }
+    }
+    Write-Output "ROOMSCALE_CATEGORY_PASS category=$category output=$out"
 }

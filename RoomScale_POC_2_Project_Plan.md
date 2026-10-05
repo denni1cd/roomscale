@@ -1,3 +1,5 @@
+> Historical milestone plan. Current project behavior and engineering commands are described in README.md and docs/ARCHITECTURE.md. This file retains its original milestone scope.
+
 # RoomScale POC 2 — AI-Assisted Photo → RoomDefinition
 
 ## 1. Purpose

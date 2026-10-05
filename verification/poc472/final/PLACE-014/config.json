@@ -1,0 +1,68 @@
+{
+  "classification": "positive",
+  "days": 8,
+  "generator_version": 1,
+  "id": "PLACE-014",
+  "mutations": {
+    "finite_quantities": "unchanged canonical",
+    "origin": [
+      0,
+      0,
+      44
+    ],
+    "protected_obstacles": [
+      {
+        "blocks_navigation": true,
+        "dimensions": [
+          6,
+          6,
+          60
+        ],
+        "id": "corridor_-1",
+        "kind": "box",
+        "name": "corridor_-1",
+        "navigation_padding": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          -28,
+          0,
+          48
+        ],
+        "resource_profile": {
+          "protected": true
+        }
+      },
+      {
+        "blocks_navigation": true,
+        "dimensions": [
+          6,
+          6,
+          60
+        ],
+        "id": "corridor_1",
+        "kind": "box",
+        "name": "corridor_1",
+        "navigation_padding": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          28,
+          0,
+          48
+        ],
+        "resource_profile": {
+          "protected": true
+        }
+      }
+    ]
+  },
+  "name": "Narrow legal settlement corridor",
+  "reproduction": "./TEST_ROOM_SCALE_POC472.ps1 -Mode Reproduce -Scenario \"verification/poc472/final/PLACE-014/config.json\" -OutputDirectory verification/poc472/reproduced",
+  "room_file": "C:\\Users\\Zero\\python_projects\\ai\\roomscale\\verification\\poc472\\final\\PLACE-014\\PLACE-014.json",
+  "seed": 472013
+}

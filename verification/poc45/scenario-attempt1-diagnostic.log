@@ -1,0 +1,28 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SCRIPT ERROR: Parse Error: Cannot infer the type of "spawn" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://scripts/population_system.gd:36)
+   GDScript backtrace (most recent call first):
+       [0] run (res://scripts/poc45_scenario_test.gd:18)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://scripts/civilization_simulation.gd:0)
+   GDScript backtrace (most recent call first):
+       [0] run (res://scripts/poc45_scenario_test.gd:18)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://scripts/pipeline_proof.gd:0)
+   GDScript backtrace (most recent call first):
+       [0] run (res://scripts/poc45_scenario_test.gd:18)
+ERROR: Failed to load script "res://scripts/pipeline_proof.gd" with error "Compilation failed".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)
+   GDScript backtrace (most recent call first):
+       [0] run (res://scripts/poc45_scenario_test.gd:18)
+ROOMSCALE_VISUAL_ASSET object=desk source=res://assets/generated/writing_desk.glb normalization={ "source_bounds": [P: (-34.0, 0.0, -17.0), S: (68.0, 30.0, 34.0)], "fitted_dimensions": (68.0, 30.0, 34.0) }
+ROOMSCALE_VISUAL_ASSET object=side_table source=res://assets/generated/writing_desk.glb normalization={ "source_bounds": [P: (-34.0, 0.0, -17.0), S: (68.0, 30.0, 34.0)], "fitted_dimensions": (20.0, 20.0, 17.0) }
+ROOMSCALE_FLOOR_NAV_READY room=room_poc45 grid=60x45 cell=4in obstacles=11
+ROOMSCALE_CITIZEN_SPAWN count=50 separate_nodes=true height=0.5in
+SCRIPT ERROR: Invalid call. Nonexistent function 'new' in base 'GDScript'.
+   at: configure (res://scripts/civilization_simulation.gd:56)
+   GDScript backtrace (most recent call first):
+       [0] configure (res://scripts/civilization_simulation.gd:56)
+       [1] start_civilization (res://scripts/pipeline_proof.gd:85)
+       [2] _ready (res://scripts/pipeline_proof.gd:77)

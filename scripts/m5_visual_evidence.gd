@@ -1,4 +1,5 @@
 extends SceneTree
+const Evidence := preload("res://scripts/verification/evidence_io.gd")
 ## Live evidence driver for deployed infrastructure and continuous surface traversal.
 
 func _initialize() -> void:
@@ -48,7 +49,7 @@ func _run() -> void:
 	rig._apply_transform()
 	rig.zoom_by(1.0)
 	await process_frame
-	_save_capture("milestone5-deployed-cable")
+	if not _save_capture("milestone5-deployed-cable"): return
 	var climber: Node3D
 	for child in scene.get_children():
 		if child.name.begins_with("Citizen") and child.task_type == "SURFACE_TRAVERSAL":
@@ -77,7 +78,7 @@ func _run() -> void:
 	rig.distance = 8.0
 	rig._apply_transform()
 	await process_frame
-	_save_capture("milestone5-citizen-on-target-surface")
+	if not _save_capture("milestone5-citizen-on-target-surface"): return
 	var proof := FileAccess.open("res://verification/milestone5-visual.log", FileAccess.WRITE)
 	proof.store_line("Cable capture: segments=%d status=%s" % [cable_root.get_child_count() - 1, JSON.stringify(construction.status())])
 	proof.store_line("Surface arrival: citizen=%s state=%s position=%s walked=%.1fin region=%s" % [climber.name, climber.state, climber.global_position, coordinator.get_traversal_goal_status().actual_travelled_distance, target_surface.region_id])
@@ -85,9 +86,12 @@ func _run() -> void:
 	quit(0)
 
 
-func _save_capture(name: String) -> void:
-	var directory := ProjectSettings.globalize_path("res://verification")
-	DirAccess.make_dir_recursive_absolute(directory)
-	var path := "%s/%s.png" % [directory, name]
-	var result := get_root().get_viewport().get_texture().get_image().save_png(path)
+func _save_capture(name: String) -> bool:
+	var path := "res://verification".path_join(name + ".png")
+	var result := Evidence.save_png(root.get_texture().get_image(), path)
 	print("ROOMSCALE_M5_CAPTURE path=%s result=%d" % [path, result])
+	if result != OK:
+		push_error("M5_EVIDENCE_FAIL: screenshot write failed: %s (error=%d)" % [path, result])
+		quit(1)
+		return false
+	return true

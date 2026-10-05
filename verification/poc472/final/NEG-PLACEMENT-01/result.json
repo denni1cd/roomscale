@@ -1,0 +1,7943 @@
+{
+  "classification": "negative",
+  "config_sha256": "19edb645c03ebb36b4ceba70d16836d93a663000a62956681dcddfd7ddd3ab16",
+  "connectivity": [
+    {
+      "obstacles": 79,
+      "paths": {
+        "food_cache": true,
+        "housing": true,
+        "spilled_water": true
+      },
+      "seconds": 0.1
+    }
+  ],
+  "deadlock": false,
+  "definition_sha256": "4ed4cd72da26dc83b4416f0e78e94cdf6828026d82228ccc2ab2589d908b8ab5",
+  "execution_seconds": 34.968,
+  "failure": "",
+  "final": {
+    "active_development": {},
+    "bundles": {},
+    "citizens": [
+      {
+        "destination": "(0.0, 0.0, 48.0)",
+        "id": 0,
+        "needs": {
+          "fatigue": 1.0,
+          "food": 1.0,
+          "rest_slot": -1,
+          "sheltered": false,
+          "water": 1.0
+        },
+        "path": [
+          "(2.0, 0.0, 48.0)",
+          "(0.0, 0.0, 48.0)"
+        ],
+        "path_cursor": 2,
+        "position": "(0.0, 0.0, 48.0)",
+        "state": "IDLE",
+        "task": "NEED_DRINK",
+        "task_id": 425,
+        "travelled": 2639.93661694546
+      },
+      {
+        "destination": "(0.0, 0.0, 48.0)",
+        "id": 1,
+        "needs": {
+          "fatigue": 1.0,
+          "food": 1.0,
+          "rest_slot": -1,
+          "sheltered": false,
+          "water": 1.0
+        },
+        "path": [
+          "(2.0, 0.0, 48.0)",
+          "(0.0, 0.0, 48.0)"
+        ],
+        "path_cursor": 2,
+        "position": "(0.0, 0.0, 48.0)",
+        "state": "IDLE",
+        "task": "NEED_DRINK",
+        "task_id": 424,
+        "travelled": 2395.67568457738
+      },
+      {
+        "destination": "(0.0, 0.0, 48.0)",
+        "id": 2,
+        "needs": {
+          "fatigue": 1.0,
+          "food": 1.0,
+          "rest_slot": -1,
+          "sheltered": false,
+          "water": 1.0
+        },
+        "path": [
+          "(2.0, 0.0, 48.0)",
+          "(0.0, 0.0, 48.0)"
+        ],
+        "path_cursor": 2,
+        "position": "(0.0, 0.0, 48.0)",
+        "state": "IDLE",
+        "task": "NEED_EAT",
+        "task_id": 426,
+        "travelled": 2455.16486428397
+      },
+      {
+        "destination": "(0.0, 0.0, 48.0)",
+        "id": 3,
+        "needs": {
+          "fatigue": 1.0,
+          "food": 1.0,
+          "rest_slot": -1,
+          "sheltered": false,
+          "water": 1.0
+        },
+        "path": [
+          "(2.0, 0.0, 48.0)",
+          "(0.0, 0.0, 48.0)"
+        ],
+        "path_cursor": 2,
+        "position": "(0.0, 0.0, 48.0)",
+        "state": "IDLE",
+        "task": "NEED_DRINK",
+        "task_id": 420,
+        "travelled": 1900.73261905918
+      },
+      {
+        "destination": "(0.0, 0.0, 48.0)",
+        "id": 4,
+        "needs": {
+          "fatigue": 1.0,
+          "food": 1.0,
+          "rest_slot": -1,
+          "sheltered": false,
+          "water": 1.0
+        },
+        "path": [
+          "(2.0, 0.0, 48.0)",
+          "(0.0, 0.0, 48.0)"
+        ],
+        "path_cursor": 2,
+        "position": "(0.0, 0.0, 48.0)",
+        "state": "IDLE",
+        "task": "NEED_DRINK",
+        "task_id": 419,
+        "travelled": 1904.36054458628
+      }
+    ],
+    "connections": [],
+    "governor": {
+      "emergency": true,
+      "mode": "SURVIVAL",
+      "reason": "Reserve below safety threshold; development restrained",
+      "rejections": {
+        "desk": "resource source support",
+        "placement_block_-108_-20": "explicitly protected",
+        "placement_block_-108_-44": "explicitly protected",
+        "placement_block_-108_-68": "explicitly protected",
+        "placement_block_-108_28": "explicitly protected",
+        "placement_block_-108_4": "explicitly protected",
+        "placement_block_-108_52": "explicitly protected",
+        "placement_block_-108_76": "explicitly protected",
+        "placement_block_-12_-20": "explicitly protected",
+        "placement_block_-12_-44": "explicitly protected",
+        "placement_block_-12_-68": "explicitly protected",
+        "placement_block_-12_28": "explicitly protected",
+        "placement_block_-12_4": "explicitly protected",
+        "placement_block_-12_52": "explicitly protected",
+        "placement_block_-12_76": "explicitly protected",
+        "placement_block_-36_-20": "explicitly protected",
+        "placement_block_-36_-44": "explicitly protected",
+        "placement_block_-36_-68": "explicitly protected",
+        "placement_block_-36_28": "explicitly protected",
+        "placement_block_-36_4": "explicitly protected",
+        "placement_block_-36_52": "explicitly protected",
+        "placement_block_-36_76": "explicitly protected",
+        "placement_block_-60_-20": "explicitly protected",
+        "placement_block_-60_-44": "explicitly protected",
+        "placement_block_-60_-68": "explicitly protected",
+        "placement_block_-60_28": "explicitly protected",
+        "placement_block_-60_4": "explicitly protected",
+        "placement_block_-60_52": "explicitly protected",
+        "placement_block_-60_76": "explicitly protected",
+        "placement_block_-84_-20": "explicitly protected",
+        "placement_block_-84_-44": "explicitly protected",
+        "placement_block_-84_-68": "explicitly protected",
+        "placement_block_-84_28": "explicitly protected",
+        "placement_block_-84_4": "explicitly protected",
+        "placement_block_-84_52": "explicitly protected",
+        "placement_block_-84_76": "explicitly protected",
+        "placement_block_108_-20": "explicitly protected",
+        "placement_block_108_-44": "explicitly protected",
+        "placement_block_108_-68": "explicitly protected",
+        "placement_block_108_28": "explicitly protected",
+        "placement_block_108_4": "explicitly protected",
+        "placement_block_108_52": "explicitly protected",
+        "placement_block_108_76": "explicitly protected",
+        "placement_block_12_-20": "explicitly protected",
+        "placement_block_12_-44": "explicitly protected",
+        "placement_block_12_-68": "explicitly protected",
+        "placement_block_12_28": "explicitly protected",
+        "placement_block_12_4": "explicitly protected",
+        "placement_block_12_52": "explicitly protected",
+        "placement_block_12_76": "explicitly protected",
+        "placement_block_36_-20": "explicitly protected",
+        "placement_block_36_-44": "explicitly protected",
+        "placement_block_36_-68": "explicitly protected",
+        "placement_block_36_28": "explicitly protected",
+        "placement_block_36_4": "explicitly protected",
+        "placement_block_36_52": "explicitly protected",
+        "placement_block_36_76": "explicitly protected",
+        "placement_block_60_-20": "explicitly protected",
+        "placement_block_60_-44": "explicitly protected",
+        "placement_block_60_-68": "explicitly protected",
+        "placement_block_60_28": "explicitly protected",
+        "placement_block_60_4": "explicitly protected",
+        "placement_block_60_52": "explicitly protected",
+        "placement_block_60_76": "explicitly protected",
+        "placement_block_84_-20": "explicitly protected",
+        "placement_block_84_-44": "explicitly protected",
+        "placement_block_84_-68": "explicitly protected",
+        "placement_block_84_28": "explicitly protected",
+        "placement_block_84_4": "explicitly protected",
+        "placement_block_84_52": "explicitly protected",
+        "placement_block_84_76": "explicitly protected"
+      }
+    },
+    "growth_events": [],
+    "growth_reason": "Settlement infrastructure not yet established",
+    "journal": [
+      {
+        "day": 0.0,
+        "evidence": {
+          "population": 5
+        },
+        "focus": "(0.0, 0.0, 48.0)",
+        "id": 1,
+        "kind": "founders_arrived",
+        "major": false,
+        "message": "Founders arrived",
+        "seconds": 0.0
+      },
+      {
+        "day": 0.00833333333333333,
+        "evidence": {
+          "days": 0.00833333333333333,
+          "drinks": 0,
+          "economy": {
+            "food": {
+              "available": 20.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "metal": {
+              "available": 0.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "water": {
+              "available": 30.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "wood": {
+              "available": 0.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            }
+          },
+          "food_days": 2.0,
+          "meals": 0,
+          "population": 5,
+          "resting": 0,
+          "rests": 0,
+          "shelter": 0,
+          "urgent": 0,
+          "water_days": 2.0
+        },
+        "focus": "(0.0, 0.0, 0.0)",
+        "id": 2,
+        "kind": "governor",
+        "major": false,
+        "message": "STABLE: Reserves recovered; assess shelter and finite carrying capacity",
+        "seconds": 5.0
+      },
+      {
+        "day": 0.00833333333333333,
+        "evidence": {
+          "days": 0.00833333333333333,
+          "drinks": 0,
+          "economy": {
+            "food": {
+              "available": 20.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "metal": {
+              "available": 0.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "water": {
+              "available": 30.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "wood": {
+              "available": 0.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            }
+          },
+          "food_days": 2.0,
+          "meals": 0,
+          "population": 5,
+          "resting": 0,
+          "rests": 0,
+          "shelter": 0,
+          "urgent": 0,
+          "water_days": 2.0
+        },
+        "focus": "(0.0, 0.0, 0.0)",
+        "id": 3,
+        "kind": "growth_paused",
+        "major": false,
+        "message": "No safe connected build site; expansion paused",
+        "seconds": 5.0
+      },
+      {
+        "day": 0.00833333333333333,
+        "evidence": {
+          "days": 0.00833333333333333,
+          "drinks": 0,
+          "economy": {
+            "food": {
+              "available": 20.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "metal": {
+              "available": 0.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "water": {
+              "available": 30.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "wood": {
+              "available": 0.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            }
+          },
+          "food_days": 2.0,
+          "meals": 0,
+          "population": 5,
+          "resting": 0,
+          "rests": 0,
+          "shelter": 0,
+          "urgent": 0,
+          "water_days": 2.0
+        },
+        "focus": "(0.0, 0.0, 48.0)",
+        "id": 4,
+        "kind": "growth_paused",
+        "major": false,
+        "message": "Settlement infrastructure not yet established",
+        "seconds": 5.0
+      },
+      {
+        "day": 0.191666666666663,
+        "evidence": {
+          "days": 0.191666666666663,
+          "drinks": 0,
+          "economy": {
+            "food": {
+              "available": 36.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 16.0,
+              "reserved": 0.0
+            },
+            "metal": {
+              "available": 0.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "water": {
+              "available": 29.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 1.0
+            },
+            "wood": {
+              "available": 0.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            }
+          },
+          "food_days": 3.6,
+          "meals": 0,
+          "population": 5,
+          "resting": 0,
+          "rests": 0,
+          "shelter": 0,
+          "urgent": 0,
+          "water_days": 1.93333333333333
+        },
+        "focus": "(0.0, 0.0, 48.0)",
+        "id": 5,
+        "kind": "directive",
+        "major": false,
+        "message": "Secure Water",
+        "seconds": 114.999999999998
+      },
+      {
+        "day": 2.73333333333267,
+        "evidence": {
+          "extracted": {
+            "water": 60.0
+          },
+          "initial": {
+            "water": 60.0
+          },
+          "position": "(-24.0, 0.0, 20.0)",
+          "region": "FLOOR",
+          "remaining": {
+            "water": 0.0
+          },
+          "reserved": {
+            "water": 0.0
+          },
+          "work": 2.0
+        },
+        "focus": "(-24.0, 0.0, 20.0)",
+        "id": 6,
+        "kind": "source_exhausted",
+        "major": true,
+        "message": "Finite source exhausted: spilled_water / water",
+        "seconds": 1639.9999999996
+      },
+      {
+        "day": 4.88333333333072,
+        "evidence": {
+          "days": 4.88333333333072,
+          "drinks": 75,
+          "economy": {
+            "food": {
+              "available": 34.0,
+              "consumed": 50.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 64.0,
+              "reserved": 0.0
+            },
+            "metal": {
+              "available": 0.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "water": {
+              "available": 14.0,
+              "consumed": 75.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 60.0,
+              "reserved": 1.0
+            },
+            "wood": {
+              "available": 0.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            }
+          },
+          "food_days": 3.4,
+          "meals": 50,
+          "population": 5,
+          "resting": 0,
+          "rests": 0,
+          "shelter": 0,
+          "urgent": 0,
+          "water_days": 0.933333333333333
+        },
+        "focus": "(0.0, 0.0, 0.0)",
+        "id": 7,
+        "kind": "governor",
+        "major": false,
+        "message": "SURVIVAL: Reserve below safety threshold; development restrained",
+        "seconds": 2929.99999999843
+      }
+    ],
+    "journal_sequence": 7,
+    "ledger": {
+      "available": {
+        "food": 32.0,
+        "metal": 0.0,
+        "water": 0.0,
+        "wood": 0.0
+      },
+      "consumed": {
+        "food": 60.0,
+        "metal": 0.0,
+        "water": 90.0,
+        "wood": 0.0
+      },
+      "exported": {
+        "food": 0.0,
+        "metal": 0.0,
+        "water": 0.0,
+        "wood": 0.0
+      },
+      "initial": {
+        "food": 20.0,
+        "metal": 0.0,
+        "water": 30.0,
+        "wood": 0.0
+      },
+      "project_consumed": {
+        "food": 0.0,
+        "metal": 0.0,
+        "water": 0.0,
+        "wood": 0.0
+      },
+      "received": {
+        "food": 72.0,
+        "metal": 0.0,
+        "water": 60.0,
+        "wood": 0.0
+      },
+      "tickets": {}
+    },
+    "oldest_live_tasks": [],
+    "physical_delivery_segments": 0,
+    "placement_checks": 2,
+    "planner": [
+      "Water reserve critical",
+      "Shelter shortage: 5 citizens",
+      "Secure Water: source unreachable; traversal required"
+    ],
+    "population": 5,
+    "projects": [],
+    "salvage": {
+      "bookcase": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 16.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 12.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 14.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "chair": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 5.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 5.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "desk": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 34.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 25.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 27.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "packing_crate": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 4.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-108_-20": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-108_-44": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-108_-68": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-108_28": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-108_4": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-108_52": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-108_76": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-12_-20": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-12_-44": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-12_-68": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-12_28": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-12_4": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-12_52": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-12_76": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-36_-20": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-36_-44": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-36_-68": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-36_28": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-36_4": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-36_52": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-36_76": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-60_-20": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-60_-44": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-60_-68": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-60_28": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-60_4": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-60_52": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-60_76": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-84_-20": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-84_-44": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-84_-68": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-84_28": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-84_4": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-84_52": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-84_76": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_108_-20": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_108_-44": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_108_-68": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_108_28": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_108_4": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_108_52": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_108_76": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_12_-20": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_12_-44": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_12_-68": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_12_28": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_12_4": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_12_52": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_12_76": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_36_-20": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_36_-44": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_36_-68": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_36_28": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_36_4": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_36_52": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_36_76": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_60_-20": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_60_-44": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_60_-68": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_60_28": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_60_4": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_60_52": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_60_76": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_84_-20": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_84_-44": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_84_-68": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_84_28": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_84_4": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_84_52": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_84_76": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "side_table": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "spare_crate": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 4.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "storage_box": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      }
+    },
+    "seconds": 4799.99999999993,
+    "settlement_plan": {
+      "decisions": [],
+      "reservations": [],
+      "rests": []
+    },
+    "shelter": 0,
+    "site_reason": "No safe connected build site; expansion paused",
+    "sources": {
+      "food_cache": {
+        "extracted": {
+          "food": 72.0
+        },
+        "initial": {
+          "food": 40000.0
+        },
+        "position": "(-44.0, 0.0, 20.0)",
+        "region": "FLOOR",
+        "remaining": {
+          "food": 39928.0
+        },
+        "reserved": {
+          "food": 0.0
+        },
+        "work": 2.0
+      },
+      "spilled_water": {
+        "extracted": {
+          "water": 60.0
+        },
+        "initial": {
+          "water": 60.0
+        },
+        "position": "(-24.0, 0.0, 20.0)",
+        "region": "FLOOR",
+        "remaining": {
+          "water": 0.0
+        },
+        "reserved": {
+          "water": 0.0
+        },
+        "work": 2.0
+      },
+      "water_cup": {
+        "extracted": {},
+        "initial": {
+          "water": 60000.0
+        },
+        "position": "(-58.0, 30.0, -50.0)",
+        "region": "STUDY_SURFACE",
+        "remaining": {
+          "water": 60000.0
+        },
+        "reserved": {},
+        "work": 2.0
+      }
+    },
+    "states": {
+      "IDLE": 5
+    },
+    "status": {
+      "days": 7.99999999999988,
+      "drinks": 90,
+      "economy": {
+        "food": {
+          "available": 32.0,
+          "consumed": 60.0,
+          "delivered": 0.0,
+          "in_transit": 0.0,
+          "received": 72.0,
+          "reserved": 0.0
+        },
+        "metal": {
+          "available": 0.0,
+          "consumed": 0.0,
+          "delivered": 0.0,
+          "in_transit": 0.0,
+          "received": 0.0,
+          "reserved": 0.0
+        },
+        "water": {
+          "available": 0.0,
+          "consumed": 90.0,
+          "delivered": 0.0,
+          "in_transit": 0.0,
+          "received": 60.0,
+          "reserved": 0.0
+        },
+        "wood": {
+          "available": 0.0,
+          "consumed": 0.0,
+          "delivered": 0.0,
+          "in_transit": 0.0,
+          "received": 0.0,
+          "reserved": 0.0
+        }
+      },
+      "food_days": 3.2,
+      "meals": 60,
+      "population": 5,
+      "resting": 0,
+      "rests": 0,
+      "shelter": 0,
+      "urgent": 5,
+      "water_days": 0.0
+    },
+    "suppression_keys": 6,
+    "tasks": {
+      "active": 0,
+      "available": 5,
+      "cancelled": 5,
+      "cancelled_total": 5,
+      "complete": 416,
+      "completed_total": 416,
+      "created_total": 426,
+      "failed": 0,
+      "failed_total": 0,
+      "reserved": 0,
+      "retained_tasks": 426
+    },
+    "traversal": {
+      "active_stage": "locked",
+      "cable_deployed": false,
+      "completed_stages": 0,
+      "created": false,
+      "delivered": {
+        "mechanical_parts": 0,
+        "metal": 0,
+        "wood": 0
+      },
+      "floor_target_connected": false,
+      "picked_up": {
+        "mechanical_parts": 0,
+        "metal": 0,
+        "wood": 0
+      },
+      "progress_percent": 0.0,
+      "required": {
+        "mechanical_parts": 0,
+        "metal": 4,
+        "wood": 4
+      },
+      "site": "(2.0, 0.0, -52.0)",
+      "stage_gates": [],
+      "stage_progress": 0.0,
+      "state": "AWAITING_BARRIER",
+      "stockpile": {
+        "mechanical_parts": 0,
+        "metal": 0.0,
+        "wood": 0.0
+      },
+      "traversal": {}
+    }
+  },
+  "fingerprint": "60ae760d011c096d8e14865b1ce819cbc265ebc9f8dcbd76e7b7edb753651675",
+  "harness_hashes": {
+    "TEST_ROOM_SCALE_POC471.ps1": "70f21f08d47342416ef0d0f7f8e8aacfb99bb735de863c45449122621ba9ebaa",
+    "TEST_ROOM_SCALE_POC472.ps1": "ce7f3b5299ab23a4a7951200d0396bebe55ffaf43eb1faf95e1369f70c6fc63a",
+    "scripts/poc471_campaign.py": "fc3f41bd56404df1073aeb9e23696e848ec493df48210384abbbadc3957b0048",
+    "scripts/poc471_evidence.py": "377d1bf69a260de81fbca32c830364e1cb471533063a9b89e49b60fc877131f1",
+    "scripts/poc471_observer.gd": "43971890f61fec6ee92d8cc6eaba7c3c7bc18a1e9ce731217cb110689e2e6f37",
+    "scripts/poc472_campaign.py": "ac005cb7e933f383d6860bfe6c875b0e36c04dcbf98ffa4be87f072d98307812",
+    "scripts/poc472_observer.gd": "49569a532f3a594f5f85617f784e2c0804e539a27bbe29975407731e9d8f6e1b",
+    "scripts/poc472_unobserved.gd": "29b7b5ff9b3094366d41c15bc813d81086dc211dea89de13eb3db6802dc40817"
+  },
+  "id": "NEG-PLACEMENT-01",
+  "initial": {
+    "active_development": {},
+    "bundles": {},
+    "citizens": [
+      {
+        "destination": "(-12.0, 0.0, 36.0)",
+        "id": 0,
+        "needs": {
+          "fatigue": 0.0,
+          "food": 0.08,
+          "rest_slot": -1,
+          "sheltered": false,
+          "water": 0.12
+        },
+        "path": [
+          "(2.0, 0.0, 48.0)",
+          "(-2.0, 0.0, 44.0)",
+          "(-6.0, 0.0, 44.0)",
+          "(-10.0, 0.0, 40.0)",
+          "(-14.0, 0.0, 40.0)",
+          "(-12.0, 0.0, 36.0)"
+        ],
+        "path_cursor": 0,
+        "position": "(2.0, 0.0, 48.0)",
+        "state": "TRAVEL",
+        "task": "FLOOR_PATROL",
+        "task_id": 1,
+        "travelled": 0.0
+      },
+      {
+        "destination": "(12.0, 0.0, 36.0)",
+        "id": 1,
+        "needs": {
+          "fatigue": 0.055,
+          "food": 0.105,
+          "rest_slot": -1,
+          "sheltered": false,
+          "water": 0.155
+        },
+        "path": [
+          "(2.0, 0.0, 52.0)",
+          "(2.0, 0.0, 48.0)",
+          "(2.0, 0.0, 44.0)",
+          "(6.0, 0.0, 40.0)",
+          "(10.0, 0.0, 40.0)",
+          "(12.0, 0.0, 36.0)"
+        ],
+        "path_cursor": 0,
+        "position": "(2.0, 0.0, 52.0)",
+        "state": "TRAVEL",
+        "task": "FLOOR_PATROL",
+        "task_id": 2,
+        "travelled": 0.0
+      },
+      {
+        "destination": "(12.0, 0.0, 60.0)",
+        "id": 2,
+        "needs": {
+          "fatigue": 0.11,
+          "food": 0.13,
+          "rest_slot": -1,
+          "sheltered": false,
+          "water": 0.19
+        },
+        "path": [
+          "(2.0, 0.0, 56.0)",
+          "(2.0, 0.0, 60.0)",
+          "(2.0, 0.0, 64.0)",
+          "(6.0, 0.0, 64.0)",
+          "(10.0, 0.0, 64.0)",
+          "(12.0, 0.0, 60.0)"
+        ],
+        "path_cursor": 0,
+        "position": "(2.0, 0.0, 56.0)",
+        "state": "TRAVEL",
+        "task": "FLOOR_PATROL",
+        "task_id": 3,
+        "travelled": 0.0
+      },
+      {
+        "destination": "(-12.0, 0.0, 60.0)",
+        "id": 3,
+        "needs": {
+          "fatigue": 0.165,
+          "food": 0.155,
+          "rest_slot": -1,
+          "sheltered": false,
+          "water": 0.225
+        },
+        "path": [
+          "(2.0, 0.0, 60.0)",
+          "(-2.0, 0.0, 64.0)",
+          "(-6.0, 0.0, 64.0)",
+          "(-10.0, 0.0, 64.0)",
+          "(-14.0, 0.0, 64.0)",
+          "(-12.0, 0.0, 60.0)"
+        ],
+        "path_cursor": 0,
+        "position": "(2.0, 0.0, 60.0)",
+        "state": "TRAVEL",
+        "task": "FLOOR_PATROL",
+        "task_id": 4,
+        "travelled": 0.0
+      },
+      {
+        "destination": "(-12.0, 0.0, 36.0)",
+        "id": 4,
+        "needs": {
+          "fatigue": 0.22,
+          "food": 0.18,
+          "rest_slot": -1,
+          "sheltered": false,
+          "water": 0.26
+        },
+        "path": [
+          "(2.0, 0.0, 64.0)",
+          "(-2.0, 0.0, 60.0)",
+          "(-2.0, 0.0, 56.0)",
+          "(-2.0, 0.0, 52.0)",
+          "(-2.0, 0.0, 48.0)",
+          "(-2.0, 0.0, 44.0)",
+          "(-6.0, 0.0, 44.0)",
+          "(-10.0, 0.0, 40.0)",
+          "(-14.0, 0.0, 40.0)",
+          "(-12.0, 0.0, 36.0)"
+        ],
+        "path_cursor": 0,
+        "position": "(2.0, 0.0, 64.0)",
+        "state": "TRAVEL",
+        "task": "FLOOR_PATROL",
+        "task_id": 5,
+        "travelled": 0.0
+      }
+    ],
+    "connections": [],
+    "governor": {
+      "emergency": false,
+      "mode": "OBSERVING",
+      "reason": "Evaluating civilization state every five simulation seconds",
+      "rejections": {}
+    },
+    "growth_events": [],
+    "growth_reason": "Waiting for sustained reserves and shelter",
+    "journal": [
+      {
+        "day": 0.0,
+        "evidence": {
+          "population": 5
+        },
+        "focus": "(0.0, 0.0, 48.0)",
+        "id": 1,
+        "kind": "founders_arrived",
+        "major": false,
+        "message": "Founders arrived",
+        "seconds": 0.0
+      }
+    ],
+    "journal_sequence": 1,
+    "ledger": {
+      "available": {
+        "food": 20.0,
+        "metal": 0.0,
+        "water": 30.0,
+        "wood": 0.0
+      },
+      "consumed": {
+        "food": 0.0,
+        "metal": 0.0,
+        "water": 0.0,
+        "wood": 0.0
+      },
+      "exported": {
+        "food": 0.0,
+        "metal": 0.0,
+        "water": 0.0,
+        "wood": 0.0
+      },
+      "initial": {
+        "food": 20.0,
+        "metal": 0.0,
+        "water": 30.0,
+        "wood": 0.0
+      },
+      "project_consumed": {
+        "food": 0.0,
+        "metal": 0.0,
+        "water": 0.0,
+        "wood": 0.0
+      },
+      "received": {
+        "food": 0.0,
+        "metal": 0.0,
+        "water": 0.0,
+        "wood": 0.0
+      },
+      "tickets": {}
+    },
+    "oldest_live_tasks": [
+      {
+        "citizen_id": 0,
+        "claimed_sim": 0.0,
+        "created_at": 454,
+        "created_sim": 0.0,
+        "cycle": 0,
+        "id": 1,
+        "owner_hint": 0,
+        "progress": 0.0,
+        "source": "(-12.0, 0.0, 36.0)",
+        "started_at": 458,
+        "started_sim": 0.0,
+        "state": "active",
+        "target": "(-12.0, 0.0, 36.0)",
+        "task_type": "FLOOR_PATROL"
+      },
+      {
+        "citizen_id": 1,
+        "claimed_sim": 0.0,
+        "created_at": 454,
+        "created_sim": 0.0,
+        "cycle": 0,
+        "id": 2,
+        "owner_hint": 1,
+        "progress": 0.0,
+        "source": "(12.0, 0.0, 36.0)",
+        "started_at": 458,
+        "started_sim": 0.0,
+        "state": "active",
+        "target": "(12.0, 0.0, 36.0)",
+        "task_type": "FLOOR_PATROL"
+      },
+      {
+        "citizen_id": 2,
+        "claimed_sim": 0.0,
+        "created_at": 454,
+        "created_sim": 0.0,
+        "cycle": 0,
+        "id": 3,
+        "owner_hint": 2,
+        "progress": 0.0,
+        "source": "(12.0, 0.0, 60.0)",
+        "started_at": 458,
+        "started_sim": 0.0,
+        "state": "active",
+        "target": "(12.0, 0.0, 60.0)",
+        "task_type": "FLOOR_PATROL"
+      },
+      {
+        "citizen_id": 3,
+        "claimed_sim": 0.0,
+        "created_at": 454,
+        "created_sim": 0.0,
+        "cycle": 0,
+        "id": 4,
+        "owner_hint": 3,
+        "progress": 0.0,
+        "source": "(-12.0, 0.0, 60.0)",
+        "started_at": 459,
+        "started_sim": 0.0,
+        "state": "active",
+        "target": "(-12.0, 0.0, 60.0)",
+        "task_type": "FLOOR_PATROL"
+      },
+      {
+        "citizen_id": 4,
+        "claimed_sim": 0.0,
+        "created_at": 454,
+        "created_sim": 0.0,
+        "cycle": 0,
+        "id": 5,
+        "owner_hint": 4,
+        "progress": 0.0,
+        "source": "(-12.0, 0.0, 36.0)",
+        "started_at": 459,
+        "started_sim": 0.0,
+        "state": "active",
+        "target": "(-12.0, 0.0, 36.0)",
+        "task_type": "FLOOR_PATROL"
+      }
+    ],
+    "physical_delivery_segments": 0,
+    "placement_checks": 0,
+    "planner": [],
+    "population": 5,
+    "projects": [],
+    "salvage": {
+      "bookcase": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 16.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 12.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 14.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "chair": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 5.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 5.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "desk": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 34.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 25.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 27.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "packing_crate": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 4.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-108_-20": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-108_-44": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-108_-68": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-108_28": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-108_4": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-108_52": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-108_76": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-12_-20": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-12_-44": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-12_-68": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-12_28": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-12_4": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-12_52": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-12_76": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-36_-20": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-36_-44": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-36_-68": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-36_28": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-36_4": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-36_52": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-36_76": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-60_-20": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-60_-44": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-60_-68": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-60_28": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-60_4": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-60_52": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-60_76": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-84_-20": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-84_-44": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-84_-68": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-84_28": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-84_4": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-84_52": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_-84_76": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_108_-20": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_108_-44": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_108_-68": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_108_28": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_108_4": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_108_52": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_108_76": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_12_-20": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_12_-44": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_12_-68": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_12_28": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_12_4": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_12_52": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_12_76": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_36_-20": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_36_-44": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_36_-68": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_36_28": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_36_4": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_36_52": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_36_76": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_60_-20": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_60_-44": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_60_-68": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_60_28": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_60_4": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_60_52": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_60_76": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_84_-20": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_84_-44": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_84_-68": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_84_28": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_84_4": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_84_52": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "placement_block_84_76": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "side_table": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "spare_crate": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 4.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "storage_box": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      }
+    },
+    "seconds": 0.0,
+    "settlement_plan": {
+      "decisions": [],
+      "reservations": [],
+      "rests": []
+    },
+    "shelter": 0,
+    "site_reason": "",
+    "sources": {
+      "food_cache": {
+        "extracted": {},
+        "initial": {
+          "food": 40000.0
+        },
+        "position": "(-44.0, 0.0, 20.0)",
+        "region": "FLOOR",
+        "remaining": {
+          "food": 40000.0
+        },
+        "reserved": {},
+        "work": 2.0
+      },
+      "spilled_water": {
+        "extracted": {},
+        "initial": {
+          "water": 60.0
+        },
+        "position": "(-24.0, 0.0, 20.0)",
+        "region": "FLOOR",
+        "remaining": {
+          "water": 60.0
+        },
+        "reserved": {},
+        "work": 2.0
+      },
+      "water_cup": {
+        "extracted": {},
+        "initial": {
+          "water": 60000.0
+        },
+        "position": "(-58.0, 30.0, -50.0)",
+        "region": "STUDY_SURFACE",
+        "remaining": {
+          "water": 60000.0
+        },
+        "reserved": {},
+        "work": 2.0
+      }
+    },
+    "states": {
+      "TRAVEL": 5
+    },
+    "status": {
+      "days": 0.0,
+      "drinks": 0,
+      "economy": {
+        "food": {
+          "available": 20.0,
+          "consumed": 0.0,
+          "delivered": 0.0,
+          "in_transit": 0.0,
+          "received": 0.0,
+          "reserved": 0.0
+        },
+        "metal": {
+          "available": 0.0,
+          "consumed": 0.0,
+          "delivered": 0.0,
+          "in_transit": 0.0,
+          "received": 0.0,
+          "reserved": 0.0
+        },
+        "water": {
+          "available": 30.0,
+          "consumed": 0.0,
+          "delivered": 0.0,
+          "in_transit": 0.0,
+          "received": 0.0,
+          "reserved": 0.0
+        },
+        "wood": {
+          "available": 0.0,
+          "consumed": 0.0,
+          "delivered": 0.0,
+          "in_transit": 0.0,
+          "received": 0.0,
+          "reserved": 0.0
+        }
+      },
+      "food_days": 2.0,
+      "meals": 0,
+      "population": 5,
+      "resting": 0,
+      "rests": 0,
+      "shelter": 0,
+      "urgent": 0,
+      "water_days": 2.0
+    },
+    "suppression_keys": 1,
+    "tasks": {
+      "active": 5,
+      "available": 0,
+      "cancelled": 0,
+      "cancelled_total": 0,
+      "complete": 0,
+      "completed_total": 0,
+      "created_total": 5,
+      "failed": 0,
+      "failed_total": 0,
+      "reserved": 0,
+      "retained_tasks": 5
+    },
+    "traversal": {
+      "active_stage": "locked",
+      "cable_deployed": false,
+      "completed_stages": 0,
+      "created": false,
+      "delivered": {
+        "mechanical_parts": 0,
+        "metal": 0,
+        "wood": 0
+      },
+      "floor_target_connected": false,
+      "picked_up": {
+        "mechanical_parts": 0,
+        "metal": 0,
+        "wood": 0
+      },
+      "progress_percent": 0.0,
+      "required": {
+        "mechanical_parts": 0,
+        "metal": 4,
+        "wood": 4
+      },
+      "site": "(2.0, 0.0, -52.0)",
+      "stage_gates": [],
+      "stage_progress": 0.0,
+      "state": "AWAITING_BARRIER",
+      "stockpile": {
+        "mechanical_parts": 0,
+        "metal": 0.0,
+        "wood": 0.0
+      },
+      "traversal": {}
+    }
+  },
+  "maxima": {
+    "bundles": 3,
+    "journal": 7,
+    "live_tasks": 5,
+    "movement": 0.650001525878906,
+    "oldest_live_task": 34.0000000000003,
+    "population": 5,
+    "projects": 0,
+    "tasks": 426,
+    "tickets": 3
+  },
+  "milestones": {
+    "first_haul": 22.1,
+    "meaningful_work": 20.1
+  },
+  "name": "No Complete Founding Layout",
+  "observer_seconds": 34.694,
+  "reproduction": "./TEST_ROOM_SCALE_POC472.ps1 -Mode Reproduce -Scenario \"verification/poc472/final/NEG-PLACEMENT-01/config.json\" -OutputDirectory verification/poc472/reproduced",
+  "result": "PASS",
+  "seed": 472999,
+  "source_hashes": {
+    "scripts/asset_pipeline/generate_desk.gd": "ae32175e0b3e60a5e2682d4886b919ff318893c6efa3ad01cb1f477c5b31dbf3",
+    "scripts/asset_pipeline/validate_assets.gd": "bb03d6d343856e45c81a28623c14833270ffec2a16ac4c4b45af6b7a4cfb6d1e",
+    "scripts/autonomous_governor.gd": "b37adc700a6ade6fbe45c225f08950d4ccb908b9379901b3c2c35a7e5914eae9",
+    "scripts/citizen_agent.gd": "b3d171c0f95b4850228af8f1bd8df02426f3bc89e58209bc5be76b6e05c3b8c6",
+    "scripts/civilization_planner.gd": "b037bc8efdc1977fdf6efaa0bd8fbf24f996f40813477852f9f293f9460a3144",
+    "scripts/civilization_simulation.gd": "8afee84a0cad3aa7634f8902ea752e27072c7f6c3173941170f8e58641253e01",
+    "scripts/civilization_ui.gd": "6ef6142ab0c8c16c2b88bd28ab0b458d1e9f12cae9c456a692107270f303541f",
+    "scripts/construction_system.gd": "8e33771c2a01148aaebfa294cb73b290747ce8c92a1c1ddf3027d1da602c9abd",
+    "scripts/economy_system.gd": "3d5663bc09904ca3aae0807e6f25320f09da0946a37ed2aa543f81e1b8cb935d",
+    "scripts/event_journal.gd": "1e0c9b38982fe070692506d2028ed620158c9b8be4443b229711afe938b7568d",
+    "scripts/fishbowl_camera_director.gd": "7d5971d946c9acba1915a1000d5867d959a7c48448caa0cf67304db3bc76227c",
+    "scripts/fishbowl_event_presenter.gd": "e134ed51fe57326267e77519239277475dfbf7a04104597902582a495c623620",
+    "scripts/fishbowl_hud.gd": "d0c6b417f2726e33a8900d99b4793e6bb6f68a3d979931fce283d01f33621841",
+    "scripts/fishbowl_narrative_adapter.gd": "fee35a222a0437749420bdecbfc1055e68b4ff3b97b97a8cd5bc5bc690749644",
+    "scripts/floor_navigation.gd": "345c2d4f87d1d59b6292a35dc7915240a5635ecb2ef49d1a60b9afaf717fb43e",
+    "scripts/m3_visual_evidence.gd": "96574c3f03f0de28c5035b175cce23805d585fe32a2d4e1d70e2dbb58405b5df",
+    "scripts/m4_visual_evidence.gd": "3b2abf9c340a3b7214e821373b09d17ee1d9c1951fa85f3ea513c69db14ba5a0",
+    "scripts/m5_visual_evidence.gd": "3a0abe1386eaba219f8469f842ba706da1935c4a20831da088669b4627b4369f",
+    "scripts/m6_visual_evidence.gd": "e3045c8ef76209a06d7ae9d964ba6fa324c7e19621f1bfee55c342615f9595f6",
+    "scripts/need_system.gd": "51ab4683328885b7032339f814d52c9532b7c1b8a88e010984cc1bc393dd30b1",
+    "scripts/pipeline_proof.gd": "11f07b9fca75c286d0f636f334acdac7a7d933b322c713fe582f4faec181bfc5",
+    "scripts/poc45_fast_test.gd": "c4acefcad2db557bd9f6cca0bd5282ee04c371b37bb8015b3c1908970b329f6a",
+    "scripts/poc45_scenario_test.gd": "9e3a96d66d011e99df21ab715a891fa905661a73891abd0e2da180290f33fc1b",
+    "scripts/poc45_survival_test.gd": "cf076974e2f6ee7d910012dcb345d7a772a6668dfad8786435d883eab05c04cd",
+    "scripts/poc46_camera_visual_test.gd": "69223fecf308c2c07aed74ab1842639c2eb808e03d0c44515329be46e7264d5c",
+    "scripts/poc46_fast_test.gd": "fd770bceeb9f6d55f4a02f593726b73b4e1c7d5cbc95e4b7fea93fcd18624261",
+    "scripts/poc46_scenario_test.gd": "0175db5a13caa76ad6a502cfa9b7aca987dc583b01a66daad3d498a8f283cd73",
+    "scripts/poc46_visual_test.gd": "da82a86475ad8a420325656c6bf32025e0cb56a0da608cf0854cd718448c7694",
+    "scripts/poc471_midlink_test.gd": "cf79e9e547edb97ce69460eaa6870c40dee08209e1b1d80b90930e752a790a2d",
+    "scripts/poc471_navigation_test.gd": "3d7945fd7b677df56b7fdc943f267e5d4442948892b9981bfcb1c9e94424a98a",
+    "scripts/poc471_observer.gd": "43971890f61fec6ee92d8cc6eaba7c3c7bc18a1e9ce731217cb110689e2e6f37",
+    "scripts/poc471_unreachable_task_test.gd": "e780d305b3ad54613ee6a0bf4722f2a234a563eb43b82068fbf462f8ea69cdb0",
+    "scripts/poc472_observer.gd": "49569a532f3a594f5f85617f784e2c0804e539a27bbe29975407731e9d8f6e1b",
+    "scripts/poc472_packing_test.gd": "6d703e2a78a07e2bda0882088eddd17b9d9c72576193c2ccb1e3ba146788ee8c",
+    "scripts/poc472_planner_test.gd": "1d94cf05202bdcb28860a2e9a6bc4c331ad95a1f565128253afab54e5f854a03",
+    "scripts/poc472_unobserved.gd": "29b7b5ff9b3094366d41c15bc813d81086dc211dea89de13eb3db6802dc40817",
+    "scripts/poc47_fast_test.gd": "36fbbe16a4f7c66c669ebfbd23a3aa2356e2863b24bb8eeecda98ebcaee7d726",
+    "scripts/poc47_live_test.gd": "18a66a2ddf543f5c48c59ef82a5bdda4c5ce04011fff9a675f87e806696880cd",
+    "scripts/poc47_scenario_test.gd": "d5a332e1b0bb681b090d4e311d3741dd30eb131ae7669aa85fcf42846fc73945",
+    "scripts/poc4_cleanup_test.gd": "cbaa58e52d1075ff15dec83ef298252f4f9bd595354f95993d08908e287ff85f",
+    "scripts/poc4_contract_test.gd": "6eb6219c0233b8378c5838df41a037748f8947e99a7b5f1d11f023e3f6c88ceb",
+    "scripts/poc4_fast_test.gd": "d17ef1eea0c9b5db150077595668070a4507408b796ff7c931fef9261f7c461e",
+    "scripts/poc4_scenario_test.gd": "719d83a83ce6a29a98afe0cc3dfc73ce787b2f35d9fca36050416e7a4514960d",
+    "scripts/population_system.gd": "bf362083aaff8cec58547c5898336d8fdbb25045c9991f2f7ce239c55431a31a",
+    "scripts/resource_system.gd": "e5301436108fe7008f67dd6a681c38369cde1f049d3ffd83d993093d291a56d5",
+    "scripts/room_definition.gd": "abaa388a25d5829e2a3b28394523a73c071fd1ddd3aa1477c100b8f1c9a85404",
+    "scripts/room_definition_test.gd": "cfac1d5398215b77feb008adc1e90ee96a4d47f38b68d2ec4e741a43d196ab59",
+    "scripts/salvage_system.gd": "85590178ffc800775d998da8d1cd617226d6e6ca19f21f724b3a656a69d51ff2",
+    "scripts/settlement_development_system.gd": "30fc197e6b4cc4c707a52854a86dd3d7979df5c189cbdde9293a9387d0402bb4",
+    "scripts/settlement_site_planner.gd": "d808dc9d5feac46f8f8d6d443b872b30d5993d638577b5779f0a93d0994bf7e2",
+    "scripts/smoke_test.gd": "556bac827646b6187275406b1c40eefb76cf5cf934255282bc5dc7b677bc6d76",
+    "scripts/strategy_camera.gd": "b238dff6ad08058088e18352043fdf514a627496eae0a143921e335db48c684b",
+    "scripts/surface_navigation.gd": "abf69255e321646c32f0ec2c51f7057a20461e9f6af1887ba68e9e890fba4a6f",
+    "scripts/task_coordinator.gd": "6be6f1e42240f300331adf2bc91d83bddae6acd5ac9fb475e8cb8bb767ced368",
+    "scripts/validate_room_definition.gd": "978f185780e784719b06666ed4430070326a89de08a3b51d7c04a3614c440b08",
+    "scripts/visuals/furniture_recipes.gd": "8aa4ba343663afe2e19cfac01b495f12d7ea6d058e7a300406bff60481cd565a",
+    "scripts/visuals/grapple_details.gd": "a8b09656f7edf7d31d02b6ff6006debf1c3fa60014004a0bd460814cf0878880",
+    "scripts/visuals/material_library.gd": "0b57aca4130d911049efe0cd435f2e8e7f253ea23aeb5875d651c79787a8c32b",
+    "scripts/visuals/performance_benchmark.gd": "f7cc9f67bd4e8d4e7bd9e7a23fa5b58a777f95ffa6841ae5826368763a00e58a",
+    "scripts/visuals/presentation_test.gd": "9ab37e9d3b0aa2ce79b9817d52363afe1bb335bc959af8a0c44e9222a2ac7f91",
+    "scripts/visuals/settlement_composition.gd": "636e53708bab9133e400bce841c6c37f52f3681bf744f24c0f84dbc2c7cf2cbe",
+    "scripts/visuals/settlement_details.gd": "7a42a869937f5d0e138966c16a941dafef4ba3222868a357cb3c2fc150738dfe",
+    "scripts/visuals/visual_geometry.gd": "b82b3db049e66110601b54e915b0c8a51406d27fa7cc3e92313a03fe791c90aa",
+    "scripts/visuals/visual_resolver.gd": "1f6d6f4fb6075892f342a9c4732b717848c63800f8db4095b2a7a8ae29c19887",
+    "scripts/visuals/visual_resolver_test.gd": "2d74e2ae88ccdc42bce4d0602b57307d25d5d89c985ff743f25e1fb64d82bb68"
+  },
+  "stage_history": {},
+  "stall_windows": [
+    {
+      "classification": "expected impossible scenario",
+      "development": "No safe connected build site; expansion paused",
+      "governor": "Reserves recovered; assess shelter and finite carrying capacity",
+      "growth": "Settlement infrastructure not yet established",
+      "no_strategic_progress_seconds": 1799.99999999944,
+      "seconds": 1819.99999999944
+    },
+    {
+      "classification": "expected impossible scenario",
+      "development": "No safe connected build site; expansion paused",
+      "governor": "Reserves recovered; assess shelter and finite carrying capacity",
+      "growth": "Settlement infrastructure not yet established",
+      "no_strategic_progress_seconds": 2399.99999999889,
+      "seconds": 2419.99999999889
+    },
+    {
+      "classification": "expected impossible scenario",
+      "development": "No safe connected build site; expansion paused",
+      "governor": "Reserve below safety threshold; development restrained",
+      "growth": "Settlement infrastructure not yet established",
+      "no_strategic_progress_seconds": 2999.99999999835,
+      "seconds": 3019.99999999835
+    },
+    {
+      "classification": "expected impossible scenario",
+      "development": "No safe connected build site; expansion paused",
+      "governor": "Reserve below safety threshold; development restrained",
+      "growth": "Settlement infrastructure not yet established",
+      "no_strategic_progress_seconds": 3599.9999999978,
+      "seconds": 3619.9999999978
+    },
+    {
+      "classification": "expected impossible scenario",
+      "development": "No safe connected build site; expansion paused",
+      "governor": "Reserve below safety threshold; development restrained",
+      "growth": "Settlement infrastructure not yet established",
+      "no_strategic_progress_seconds": 4199.99999999782,
+      "seconds": 4219.99999999782
+    }
+  ],
+  "structures": {
+    "depot": 0,
+    "housing": 0,
+    "shelter": 0,
+    "workshop": 0
+  },
+  "tested_commit": "9a7df235a80ea5df03fa37826cc727bc6da64afd",
+  "timeline": [
+    {
+      "governor": "Reserves recovered; assess shelter and finite carrying capacity",
+      "growth": "Settlement infrastructure not yet established",
+      "journal_sequence": 4,
+      "journal_size": 4,
+      "projects": 0,
+      "seconds": 20.0,
+      "states": {
+        "TRAVEL": 4,
+        "WORK": 1
+      },
+      "status": {
+        "days": 0.0333333333333334,
+        "drinks": 0,
+        "economy": {
+          "food": {
+            "available": 20.0,
+            "consumed": 0.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 0.0,
+            "reserved": 0.0
+          },
+          "metal": {
+            "available": 0.0,
+            "consumed": 0.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 0.0,
+            "reserved": 0.0
+          },
+          "water": {
+            "available": 30.0,
+            "consumed": 0.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 0.0,
+            "reserved": 0.0
+          },
+          "wood": {
+            "available": 0.0,
+            "consumed": 0.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 0.0,
+            "reserved": 0.0
+          }
+        },
+        "food_days": 2.0,
+        "meals": 0,
+        "population": 5,
+        "resting": 0,
+        "rests": 0,
+        "shelter": 0,
+        "urgent": 0,
+        "water_days": 2.0
+      },
+      "suppression_keys": 4,
+      "tasks": {
+        "active": 5,
+        "available": 1,
+        "cancelled": 0,
+        "cancelled_total": 0,
+        "complete": 9,
+        "completed_total": 9,
+        "created_total": 15,
+        "failed": 0,
+        "failed_total": 0,
+        "reserved": 0,
+        "retained_tasks": 15
+      }
+    },
+    {
+      "governor": "Reserves recovered; assess shelter and finite carrying capacity",
+      "growth": "Settlement infrastructure not yet established",
+      "journal_sequence": 5,
+      "journal_size": 5,
+      "projects": 0,
+      "seconds": 600.000000000068,
+      "states": {
+        "IDLE": 5
+      },
+      "status": {
+        "days": 1.00000000000011,
+        "drinks": 15,
+        "economy": {
+          "food": {
+            "available": 34.0,
+            "consumed": 10.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 24.0,
+            "reserved": 0.0
+          },
+          "metal": {
+            "available": 0.0,
+            "consumed": 0.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 0.0,
+            "reserved": 0.0
+          },
+          "water": {
+            "available": 47.0,
+            "consumed": 15.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 32.0,
+            "reserved": 0.0
+          },
+          "wood": {
+            "available": 0.0,
+            "consumed": 0.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 0.0,
+            "reserved": 0.0
+          }
+        },
+        "food_days": 3.4,
+        "meals": 10,
+        "population": 5,
+        "resting": 0,
+        "rests": 0,
+        "shelter": 0,
+        "urgent": 0,
+        "water_days": 3.13333333333333
+      },
+      "suppression_keys": 5,
+      "tasks": {
+        "active": 0,
+        "available": 5,
+        "cancelled": 5,
+        "cancelled_total": 5,
+        "complete": 281,
+        "completed_total": 281,
+        "created_total": 291,
+        "failed": 0,
+        "failed_total": 0,
+        "reserved": 0,
+        "retained_tasks": 291
+      }
+    },
+    {
+      "governor": "Reserves recovered; assess shelter and finite carrying capacity",
+      "growth": "Settlement infrastructure not yet established",
+      "journal_sequence": 5,
+      "journal_size": 5,
+      "projects": 0,
+      "seconds": 1200.0,
+      "states": {
+        "IDLE": 5
+      },
+      "status": {
+        "days": 2.00000000000001,
+        "drinks": 30,
+        "economy": {
+          "food": {
+            "available": 32.0,
+            "consumed": 20.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 32.0,
+            "reserved": 0.0
+          },
+          "metal": {
+            "available": 0.0,
+            "consumed": 0.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 0.0,
+            "reserved": 0.0
+          },
+          "water": {
+            "available": 48.0,
+            "consumed": 30.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 48.0,
+            "reserved": 0.0
+          },
+          "wood": {
+            "available": 0.0,
+            "consumed": 0.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 0.0,
+            "reserved": 0.0
+          }
+        },
+        "food_days": 3.2,
+        "meals": 20,
+        "population": 5,
+        "resting": 0,
+        "rests": 0,
+        "shelter": 0,
+        "urgent": 0,
+        "water_days": 3.2
+      },
+      "suppression_keys": 5,
+      "tasks": {
+        "active": 0,
+        "available": 5,
+        "cancelled": 5,
+        "cancelled_total": 5,
+        "complete": 309,
+        "completed_total": 309,
+        "created_total": 319,
+        "failed": 0,
+        "failed_total": 0,
+        "reserved": 0,
+        "retained_tasks": 319
+      }
+    },
+    {
+      "governor": "Reserves recovered; assess shelter and finite carrying capacity",
+      "growth": "Settlement infrastructure not yet established",
+      "journal_sequence": 6,
+      "journal_size": 6,
+      "projects": 0,
+      "seconds": 1819.99999999944,
+      "states": {
+        "IDLE": 5
+      },
+      "status": {
+        "days": 3.0333333333324,
+        "drinks": 47,
+        "economy": {
+          "food": {
+            "available": 30.0,
+            "consumed": 30.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 40.0,
+            "reserved": 0.0
+          },
+          "metal": {
+            "available": 0.0,
+            "consumed": 0.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 0.0,
+            "reserved": 0.0
+          },
+          "water": {
+            "available": 43.0,
+            "consumed": 47.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 60.0,
+            "reserved": 0.0
+          },
+          "wood": {
+            "available": 0.0,
+            "consumed": 0.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 0.0,
+            "reserved": 0.0
+          }
+        },
+        "food_days": 3.0,
+        "meals": 30,
+        "population": 5,
+        "resting": 0,
+        "rests": 0,
+        "shelter": 0,
+        "urgent": 0,
+        "water_days": 2.86666666666667
+      },
+      "suppression_keys": 6,
+      "tasks": {
+        "active": 0,
+        "available": 5,
+        "cancelled": 5,
+        "cancelled_total": 5,
+        "complete": 339,
+        "completed_total": 339,
+        "created_total": 349,
+        "failed": 0,
+        "failed_total": 0,
+        "reserved": 0,
+        "retained_tasks": 349
+      }
+    },
+    {
+      "governor": "Reserves recovered; assess shelter and finite carrying capacity",
+      "growth": "Settlement infrastructure not yet established",
+      "journal_sequence": 6,
+      "journal_size": 6,
+      "projects": 0,
+      "seconds": 2419.99999999889,
+      "states": {
+        "IDLE": 5
+      },
+      "status": {
+        "days": 4.03333333333149,
+        "drinks": 65,
+        "economy": {
+          "food": {
+            "available": 36.0,
+            "consumed": 40.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 56.0,
+            "reserved": 0.0
+          },
+          "metal": {
+            "available": 0.0,
+            "consumed": 0.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 0.0,
+            "reserved": 0.0
+          },
+          "water": {
+            "available": 25.0,
+            "consumed": 65.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 60.0,
+            "reserved": 0.0
+          },
+          "wood": {
+            "available": 0.0,
+            "consumed": 0.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 0.0,
+            "reserved": 0.0
+          }
+        },
+        "food_days": 3.6,
+        "meals": 40,
+        "population": 5,
+        "resting": 0,
+        "rests": 0,
+        "shelter": 0,
+        "urgent": 0,
+        "water_days": 1.66666666666667
+      },
+      "suppression_keys": 6,
+      "tasks": {
+        "active": 0,
+        "available": 5,
+        "cancelled": 5,
+        "cancelled_total": 5,
+        "complete": 369,
+        "completed_total": 369,
+        "created_total": 379,
+        "failed": 0,
+        "failed_total": 0,
+        "reserved": 0,
+        "retained_tasks": 379
+      }
+    },
+    {
+      "governor": "Reserve below safety threshold; development restrained",
+      "growth": "Settlement infrastructure not yet established",
+      "journal_sequence": 7,
+      "journal_size": 7,
+      "projects": 0,
+      "seconds": 3019.99999999835,
+      "states": {
+        "IDLE": 5
+      },
+      "status": {
+        "days": 5.03333333333058,
+        "drinks": 80,
+        "economy": {
+          "food": {
+            "available": 32.0,
+            "consumed": 52.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 64.0,
+            "reserved": 0.0
+          },
+          "metal": {
+            "available": 0.0,
+            "consumed": 0.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 0.0,
+            "reserved": 0.0
+          },
+          "water": {
+            "available": 10.0,
+            "consumed": 80.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 60.0,
+            "reserved": 0.0
+          },
+          "wood": {
+            "available": 0.0,
+            "consumed": 0.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 0.0,
+            "reserved": 0.0
+          }
+        },
+        "food_days": 3.2,
+        "meals": 52,
+        "population": 5,
+        "resting": 0,
+        "rests": 0,
+        "shelter": 0,
+        "urgent": 0,
+        "water_days": 0.666666666666667
+      },
+      "suppression_keys": 6,
+      "tasks": {
+        "active": 0,
+        "available": 5,
+        "cancelled": 5,
+        "cancelled_total": 5,
+        "complete": 397,
+        "completed_total": 397,
+        "created_total": 407,
+        "failed": 0,
+        "failed_total": 0,
+        "reserved": 0,
+        "retained_tasks": 407
+      }
+    },
+    {
+      "governor": "Reserve below safety threshold; development restrained",
+      "growth": "Settlement infrastructure not yet established",
+      "journal_sequence": 7,
+      "journal_size": 7,
+      "projects": 0,
+      "seconds": 3619.9999999978,
+      "states": {
+        "IDLE": 5
+      },
+      "status": {
+        "days": 6.03333333332967,
+        "drinks": 90,
+        "economy": {
+          "food": {
+            "available": 32.0,
+            "consumed": 60.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 72.0,
+            "reserved": 0.0
+          },
+          "metal": {
+            "available": 0.0,
+            "consumed": 0.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 0.0,
+            "reserved": 0.0
+          },
+          "water": {
+            "available": 0.0,
+            "consumed": 90.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 60.0,
+            "reserved": 0.0
+          },
+          "wood": {
+            "available": 0.0,
+            "consumed": 0.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 0.0,
+            "reserved": 0.0
+          }
+        },
+        "food_days": 3.2,
+        "meals": 60,
+        "population": 5,
+        "resting": 0,
+        "rests": 0,
+        "shelter": 0,
+        "urgent": 5,
+        "water_days": 0.0
+      },
+      "suppression_keys": 6,
+      "tasks": {
+        "active": 0,
+        "available": 5,
+        "cancelled": 5,
+        "cancelled_total": 5,
+        "complete": 416,
+        "completed_total": 416,
+        "created_total": 426,
+        "failed": 0,
+        "failed_total": 0,
+        "reserved": 0,
+        "retained_tasks": 426
+      }
+    },
+    {
+      "governor": "Reserve below safety threshold; development restrained",
+      "growth": "Settlement infrastructure not yet established",
+      "journal_sequence": 7,
+      "journal_size": 7,
+      "projects": 0,
+      "seconds": 4219.99999999782,
+      "states": {
+        "IDLE": 5
+      },
+      "status": {
+        "days": 7.0333333333297,
+        "drinks": 90,
+        "economy": {
+          "food": {
+            "available": 32.0,
+            "consumed": 60.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 72.0,
+            "reserved": 0.0
+          },
+          "metal": {
+            "available": 0.0,
+            "consumed": 0.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 0.0,
+            "reserved": 0.0
+          },
+          "water": {
+            "available": 0.0,
+            "consumed": 90.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 60.0,
+            "reserved": 0.0
+          },
+          "wood": {
+            "available": 0.0,
+            "consumed": 0.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 0.0,
+            "reserved": 0.0
+          }
+        },
+        "food_days": 3.2,
+        "meals": 60,
+        "population": 5,
+        "resting": 0,
+        "rests": 0,
+        "shelter": 0,
+        "urgent": 5,
+        "water_days": 0.0
+      },
+      "suppression_keys": 6,
+      "tasks": {
+        "active": 0,
+        "available": 5,
+        "cancelled": 5,
+        "cancelled_total": 5,
+        "complete": 416,
+        "completed_total": 416,
+        "created_total": 426,
+        "failed": 0,
+        "failed_total": 0,
+        "reserved": 0,
+        "retained_tasks": 426
+      }
+    }
+  ],
+  "traversal_labor_witnesses": {},
+  "validation": {
+    "depot_site": {
+      "candidate_count": 0,
+      "navigation_trials": 0,
+      "reason": "bounded search found no connected founding arrangement",
+      "rejection_reasons": {
+        "room boundary": 1728,
+        "room/completed geometry": 6696
+      },
+      "search_exhausted": false,
+      "valid": false
+    },
+    "floor_resource_path_lengths": {
+      "food_cache": 66.9705624580383,
+      "spilled_water": 49.3137083053589
+    },
+    "floor_resources": {
+      "food": 40000.0,
+      "water": 60.0
+    },
+    "navigation_errors": [],
+    "safe_salvage_path_lengths": {
+      "bookcase": 179.201523780823,
+      "chair": 99.7976717948914,
+      "packing_crate": 116.199470996857,
+      "side_table": 91.5613436698914,
+      "spare_crate": 107.068831920624,
+      "storage_box": 70.883553981781
+    },
+    "safe_salvage_totals": {
+      "metal": 24.0,
+      "wood": 91.0
+    },
+    "schema_errors": [],
+    "shelter_site": {
+      "candidate_count": 0,
+      "navigation_trials": 0,
+      "reason": "bounded search found no connected founding arrangement",
+      "rejection_reasons": {
+        "room boundary": 1728,
+        "room/completed geometry": 6696
+      },
+      "search_exhausted": false,
+      "valid": false
+    },
+    "solvability_errors": [
+      "No legal primitive shelter site",
+      "No legal bootstrap depot site"
+    ],
+    "solvable": false,
+    "structural": true
+  },
+  "violations": []
+}

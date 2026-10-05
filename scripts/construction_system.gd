@@ -2,6 +2,9 @@ extends Node
 ## M4 project inventory, verified deliveries, and work-driven component construction.
 
 const RoomDefinitionLoader := preload("res://scripts/room_definition.gd")
+const GrappleDetails := preload("res://scripts/visuals/grapple_details.gd")
+const G := preload("res://scripts/visuals/visual_geometry.gd")
+const Materials := preload("res://scripts/visuals/material_library.gd")
 
 signal project_updated(status: Dictionary)
 
@@ -29,7 +32,6 @@ var picked_up := {"wood": 0, "metal": 0, "mechanical_parts": 0}
 var project_state := "AWAITING_BARRIER"
 var project_created := false
 var traversal_deployed := false
-var traversal_arrival: Dictionary = {}
 var _active_stage := -1
 var _completed_stages := 0
 var _stage_work := 0.0
@@ -43,6 +45,21 @@ var _deployment_anchor: MeshInstance3D
 var _deployment_timer := 0.0
 var _deployment_cursor := 0
 var _deployment_path: Array[Vector3] = []
+var _detail_groups: Array[Node3D] = []
+var _work_steam: GPUParticles3D
+var economy: RefCounted
+
+
+func requirements() -> Dictionary:
+	var result := REQUIRED.duplicate(true)
+	if economy != null: result.mechanical_parts = 0
+	return result
+
+
+func stage_requirements(stage: int) -> Dictionary:
+	var result: Dictionary = STAGES[stage].required.duplicate(true)
+	if economy != null: result.mechanical_parts = 0
+	return result
 
 
 func configure(task_coordinator: Node, floor_navigation: Node, population: Array, scene: Node3D, definition: Dictionary) -> void:
@@ -59,20 +76,33 @@ func configure(task_coordinator: Node, floor_navigation: Node, population: Array
 
 
 func _process(delta: float) -> void:
+	advance_simulation(delta)
+
+
+func advance_simulation(delta: float) -> void:
+	if not _detail_groups.is_empty():
+		var progress := _stage_work / float(STAGES[_active_stage].work_seconds) if _active_stage >= 0 else 0.0
+		GrappleDetails.animate(_detail_groups, _completed_stages, _active_stage, progress, project_state == "DEPLOYING_TRAVERSAL", delta)
+		if is_instance_valid(_work_steam):
+			_work_steam.emitting = (project_state == "DEPLOYING_TRAVERSAL") or (_active_stage >= 0 and _stage_work > 0.0)
 	if _deployment_segments.is_empty() or traversal_deployed:
 		return
 	_deployment_timer += delta
-	while _deployment_timer >= 0.075 and _deployment_cursor < _deployment_segments.size():
-		_deployment_timer -= 0.075
+	while _deployment_timer >= 0.18 and _deployment_cursor < _deployment_segments.size():
+		_deployment_timer -= 0.18
 		_deployment_segments[_deployment_cursor].visible = true
 		_deployment_cursor += 1
 	if _deployment_cursor >= _deployment_segments.size() and is_instance_valid(_deployment_anchor) and not _deployment_anchor.visible:
 		_deployment_anchor.visible = true
+	if _deployment_cursor >= _deployment_segments.size() and _deployment_timer >= 0.5:
 		_finish_traversal_deployment()
 
 
 func on_reach_goal_updated(goal: Dictionary) -> void:
 	if goal.get("state", "") == "BARRIER_CONFIRMED" and not project_created:
+		target_region = String(goal.surface)
+		target_anchor = surface_navigation.regions[target_region].anchor
+		site_position = coordinator.get_construction_site()
 		_create_project()
 
 
@@ -80,7 +110,14 @@ func has_project() -> bool:
 	return project_created
 
 
-func take_stock(resource: String, amount: int) -> bool:
+func take_stock(resource: String, amount: int, ticket_id: int = -1) -> bool:
+	if economy != null:
+		if not economy.tickets.has(ticket_id): return false
+		var ticket: Dictionary = economy.tickets[ticket_id]
+		if ticket.resource != resource or float(ticket.amount) != amount or ticket.owner != "traversal": return false
+		if not economy.pickup(ticket_id): return false
+		picked_up[resource] += amount
+		return true
 	if not project_created or not stockpile.has(resource) or amount <= 0 or int(stockpile[resource]) < amount:
 		return false
 	stockpile[resource] = int(stockpile[resource]) - amount
@@ -89,13 +126,17 @@ func take_stock(resource: String, amount: int) -> bool:
 	return true
 
 
-func accept_delivery(resource: String, amount: int, destination: Vector3) -> bool:
+func accept_delivery(resource: String, amount: int, destination: Vector3, ticket_id: int = -1) -> bool:
 	if not project_created or not delivered.has(resource) or amount <= 0:
 		return false
 	if destination.distance_to(site_position) > 1.5:
 		return false
-	if int(delivered[resource]) + amount > int(REQUIRED[resource]):
+	if int(delivered[resource]) + amount > int(requirements()[resource]):
 		return false
+	if economy != null:
+		if not economy.tickets.has(ticket_id): return false
+		var ticket: Dictionary = economy.tickets[ticket_id]
+		if ticket.resource != resource or float(ticket.amount) != amount or ticket.owner != "traversal" or not economy.deliver(ticket_id): return false
 	delivered[resource] = int(delivered[resource]) + amount
 	_emit_update()
 	_update_build_unlocks()
@@ -128,8 +169,8 @@ func status() -> Dictionary:
 	return {
 		"created": project_created,
 		"state": project_state,
-		"required": REQUIRED.duplicate(true),
-		"stockpile": stockpile.duplicate(true),
+		"required": requirements(),
+		"stockpile": {"wood": economy.available.wood, "metal": economy.available.metal, "mechanical_parts": 0} if economy != null else stockpile.duplicate(true),
 		"picked_up": picked_up.duplicate(true),
 		"delivered": delivered.duplicate(true),
 		"active_stage": current_stage_name,
@@ -161,9 +202,14 @@ func active_builder_count() -> int:
 
 
 func _create_project() -> void:
+	if is_instance_valid(coordinator.civilization) and not coordinator.civilization.has_capability("advanced_construction"): return
 	project_created = true
 	project_state = "DELIVERING"
 	_create_visible_project()
+	if economy != null:
+		project_state = "WAITING_FOR_MATERIALS"
+		_emit_update()
+		return
 	var resource_jobs: Array[String] = [
 		"wood", "wood", "metal", "wood", "metal", "mechanical_parts",
 		"metal", "wood", "metal", "mechanical_parts", "mechanical_parts",
@@ -201,7 +247,7 @@ func _update_build_unlocks() -> void:
 
 
 func _has_materials_for_stage(stage_index: int) -> bool:
-	var threshold: Dictionary = STAGES[stage_index].required
+	var threshold: Dictionary = stage_requirements(stage_index)
 	for resource in RESOURCE_ORDER:
 		if int(delivered[resource]) < int(threshold[resource]):
 			return false
@@ -216,6 +262,9 @@ func _start_build_stage(stage_index: int) -> void:
 	_stage_gate_snapshots.append(delivered.duplicate(true))
 	project_state = "BUILDING_%s" % String(STAGES[stage_index].name).to_upper()
 	_construction_worker_ids.clear()
+	if economy != null:
+		_emit_update()
+		return
 	var builders := _nearest_available_builders(site_position, 2)
 	for builder in builders:
 		_construction_worker_ids[builder.citizen_id] = true
@@ -242,6 +291,9 @@ func _complete_component(stage_index: int, completing_task_id: int) -> void:
 		if is_instance_valid(component):
 			component.visible = true
 	if _completed_stages >= STAGES.size():
+		if economy != null:
+			for ticket_id in economy.tickets.keys():
+				if economy.tickets[ticket_id].owner == "traversal" and economy.tickets[ticket_id].state == "delivered": economy.consume(ticket_id, true)
 		project_state = "CONSTRUCTION_COMPLETE"
 		_delivery_citizen_ids.clear()
 		_construction_worker_ids.clear()
@@ -278,9 +330,6 @@ func _deploy_traversal() -> void:
 		var subdivisions := maxi(1, ceili(start.distance_to(finish) / 2.5))
 		for substep in range(1, subdivisions + 1):
 			surface_route.append(start.lerp(finish, float(substep) / float(subdivisions)))
-	if not surface_navigation.connect_regions("FLOOR", target_region, surface_route):
-		push_error("Grapple deployment blocked: generated route could not connect the selected surface.")
-		return
 	_deployment_path = surface_route
 	_create_cable_visual(cable_path)
 	project_state = "DEPLOYING_TRAVERSAL"
@@ -302,8 +351,8 @@ func _create_cable_visual(path: Array[Vector3]) -> void:
 		var segment := MeshInstance3D.new()
 		segment.name = "CableSegment%02d" % index
 		var mesh := CylinderMesh.new()
-		mesh.top_radius = 0.07
-		mesh.bottom_radius = 0.07
+		mesh.top_radius = 0.035
+		mesh.bottom_radius = 0.035
 		mesh.height = direction.length()
 		segment.mesh = mesh
 		segment.position = (start + finish) * 0.5
@@ -326,7 +375,14 @@ func _create_cable_visual(path: Array[Vector3]) -> void:
 
 
 func _finish_traversal_deployment() -> void:
+	if not surface_navigation.connect_regions("FLOOR", target_region, _deployment_path):
+		push_error("Grapple deployment blocked: generated route could not connect the selected surface.")
+		return
 	traversal_deployed = true
+	if economy != null:
+		project_state = "CABLE_DEPLOYED"
+		_emit_update()
+		return
 	var carriers: Array[Dictionary] = []
 	for citizen in citizens:
 		var climber := citizen as Node3D
@@ -376,27 +432,47 @@ func _create_visible_project() -> void:
 	_site_root.name = "GrappleConstructionSite"
 	_site_root.position = site_position
 	scene_root.add_child(_site_root)
-	var blueprint := _add_box(_site_root, "BlueprintFootprint", Vector3(12.0, 0.08, 9.0), Vector3(0.0, 0.08, 0.0), Color("56aac1", 0.55))
+	var work_light := OmniLight3D.new()
+	work_light.name = "WorkLamp"
+	work_light.position = Vector3(0, 2.8, 3)
+	work_light.light_color = Color("f9d4a0")
+	work_light.light_energy = 0.65
+	work_light.omni_range = 12
+	_site_root.add_child(work_light)
+	# Paper presentation sits above the .12in rug instead of sharing its face.
+	# Keep the authoritative site and all physical construction coordinates fixed.
+	var blueprint := _add_box(_site_root, "BlueprintFootprint", Vector3(12.0, 0.02, 9.0), Vector3(0.0, 0.16, 0.0), Color("56aac1", 0.55))
 	var blueprint_material := blueprint.material_override as StandardMaterial3D
 	blueprint_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	blueprint_material.albedo_color.a = 0.38
 	_visuals["blueprint"] = blueprint
-	var base := _add_box(_site_root, "GrappleBase", Vector3(10.0, 1.3, 8.0), Vector3(0.0, 0.65, 0.0), Color("72533a"), false)
-	var base_plate := _add_box(_site_root, "BrassBasePlate", Vector3(8.0, 0.35, 6.0), Vector3(0.0, 1.45, 0.0), Color("bd914d"), false)
+	# Open-frame foundation leaves the authoritative worker position visible.
+	var base := _add_box(_site_root, "GrappleBase", Vector3(10.0, 0.12, 0.7), Vector3(0.0, 0.06, -3.5), Color("72533a"), false)
+	var base_plate := _add_box(_site_root, "BrassBasePlate", Vector3(8.0, 0.12, 0.6), Vector3(0.0, 0.06, 3.5), Color("a88751"), false)
 	var winch := _add_cylinder(_site_root, "WinchDrum", 2.4, 1.8, Vector3(0.0, 3.0, 0.0), Color("677977"), false)
+	winch.rotation.x = PI * 0.5
+	winch.position.y = 3.6
 	var gear := _add_cylinder(_site_root, "WinchGear", 2.1, 0.45, Vector3(0.0, 3.0, 1.2), Color("d1a14e"), false)
 	gear.rotation.x = deg_to_rad(90.0)
+	gear.position.y = 3.6
 	var launcher := _add_box(_site_root, "LauncherFrame", Vector3(1.3, 7.0, 1.3), Vector3(0.0, 5.0, -1.6), Color("4d6666"), false)
 	var arm := _add_box(_site_root, "LauncherArm", Vector3(1.1, 5.0, 1.1), Vector3(0.0, 8.2, -1.6), Color("be9650"), false)
 	arm.rotation.x = deg_to_rad(22.0)
 	_visuals["base"] = [base, base_plate]
 	_visuals["winch"] = [winch, gear]
 	_visuals["launcher"] = [launcher, arm]
+	_detail_groups = GrappleDetails.build(_site_root)
+	scene_root.call("_add_steam_emitter", _detail_groups[1], "PressureSteam", Vector3(-3.0, 5.2, 0))
+	_work_steam = _detail_groups[1].get_node("PressureSteam") as GPUParticles3D
+	_work_steam.amount = 8
+	_work_steam.emitting = false
 	_add_world_label(_site_root, "ProjectSign", "GRAPPLE PROJECT", Vector3(0.0, 11.0, 3.0))
 	_add_stockpile_visuals()
 
 
 func _add_stockpile_visuals() -> void:
+	# Economy-backed projects use actual carried parcels, never decorative stock.
+	if economy != null: return
 	var depot := scene_root.get_node("Settlement/Depot") as Node3D
 	var stock := Node3D.new()
 	stock.name = "ConstructionStockpile"

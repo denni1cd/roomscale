@@ -1,0 +1,327 @@
+{
+  "classification": "positive",
+  "days": 8,
+  "generator_version": 2,
+  "id": "EXP-WATER-05",
+  "mutations": {
+    "bootstrap_water": 75,
+    "initial_stock": {
+      "food": 20,
+      "metal": 0,
+      "water": 30,
+      "wood": 0
+    },
+    "object_positions": {
+      "bookcase": [
+        91,
+        0,
+        -63
+      ],
+      "chair": [
+        -58,
+        0,
+        -20
+      ],
+      "desk": [
+        -58,
+        0,
+        -52
+      ],
+      "food_cache": [
+        -44,
+        0,
+        20
+      ],
+      "packing_crate": [
+        101,
+        0,
+        9
+      ],
+      "plant": [
+        -91,
+        0,
+        -46
+      ],
+      "rug": [
+        50,
+        0,
+        -22
+      ],
+      "side_table": [
+        44,
+        0,
+        -15
+      ],
+      "spare_crate": [
+        103,
+        0,
+        62
+      ],
+      "spilled_water": [
+        96,
+        0,
+        76
+      ],
+      "storage_box": [
+        75,
+        0,
+        43
+      ],
+      "waste_bin": [
+        -99,
+        0,
+        12
+      ],
+      "water_cup": [
+        -58,
+        30,
+        -50
+      ]
+    },
+    "origin": [
+      0,
+      0,
+      46
+    ],
+    "quantities": {
+      "bookcase": {
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8,
+            "yields": {
+              "metal": 2
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12,
+            "yields": {
+              "metal": 2,
+              "wood": 20
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12,
+            "yields": {
+              "wood": 15
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10,
+            "yields": {
+              "wood": 17
+            }
+          }
+        ]
+      },
+      "chair": {
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8,
+            "yields": {
+              "metal": 2
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12,
+            "yields": {
+              "metal": 2,
+              "wood": 6
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12,
+            "yields": {
+              "wood": 4
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10,
+            "yields": {
+              "wood": 6
+            }
+          }
+        ]
+      },
+      "desk": {},
+      "food_cache": {
+        "contents": {
+          "food": 46000.0
+        },
+        "work_seconds": 2
+      },
+      "packing_crate": {
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8,
+            "yields": {
+              "metal": 2
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12,
+            "yields": {
+              "metal": 2,
+              "wood": 4
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12,
+            "yields": {
+              "wood": 3
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10,
+            "yields": {
+              "wood": 5
+            }
+          }
+        ]
+      },
+      "plant": {},
+      "rug": {},
+      "side_table": {
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8,
+            "yields": {
+              "metal": 2
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12,
+            "yields": {
+              "metal": 2,
+              "wood": 4
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12,
+            "yields": {
+              "wood": 3
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10,
+            "yields": {
+              "wood": 3
+            }
+          }
+        ]
+      },
+      "spare_crate": {
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8,
+            "yields": {
+              "metal": 2
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12,
+            "yields": {
+              "metal": 2,
+              "wood": 4
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12,
+            "yields": {
+              "wood": 3
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10,
+            "yields": {
+              "wood": 5
+            }
+          }
+        ]
+      },
+      "spilled_water": {
+        "contents": {
+          "water": 75
+        },
+        "work_seconds": 2
+      },
+      "storage_box": {
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8,
+            "yields": {
+              "metal": 2
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12,
+            "yields": {
+              "metal": 2,
+              "wood": 4
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12,
+            "yields": {
+              "wood": 3
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10,
+            "yields": {
+              "wood": 3
+            }
+          }
+        ]
+      },
+      "waste_bin": {},
+      "water_cup": {
+        "contents": {
+          "water": 60000
+        },
+        "region_id": "STUDY_SURFACE",
+        "work_seconds": 2
+      }
+    },
+    "salvage_yield_multiplier": 1.25,
+    "spawn": {
+      "center": [
+        4,
+        0,
+        50
+      ],
+      "dimensions": [
+        24,
+        0,
+        12
+      ]
+    }
+  },
+  "name": "Long Water Haul",
+  "reproduction": "./TEST_ROOM_SCALE_POC471.ps1 -Mode Reproduce -Scenario \"verification/poc471/exploration/EXP-WATER-05/config.json\" -OutputDirectory verification/poc471/reproduced",
+  "room_file": "C:\\Users\\Zero\\python_projects\\ai\\roomscale\\verification\\poc471\\exploration\\EXP-WATER-05\\POS-002.json",
+  "seed": 471001
+}

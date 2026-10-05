@@ -1,0 +1,331 @@
+{
+  "classification": "positive",
+  "days": 8,
+  "generator_version": 2,
+  "id": "EXP-ORIGIN-00",
+  "mutations": {
+    "initial_stock": {
+      "food": 20,
+      "metal": 0,
+      "water": 30,
+      "wood": 0
+    },
+    "object_positions": {
+      "bookcase": [
+        91,
+        0,
+        -63
+      ],
+      "chair": [
+        -50,
+        0,
+        -20
+      ],
+      "desk": [
+        -50,
+        0,
+        -52
+      ],
+      "food_cache": [
+        -40,
+        0,
+        72
+      ],
+      "packing_crate": [
+        97,
+        0,
+        5
+      ],
+      "plant": [
+        -91,
+        0,
+        -46
+      ],
+      "rug": [
+        50,
+        0,
+        -22
+      ],
+      "side_table": [
+        44,
+        0,
+        -15
+      ],
+      "spare_crate": [
+        99,
+        0,
+        66
+      ],
+      "spilled_water": [
+        -12,
+        0,
+        32
+      ],
+      "storage_box": [
+        79,
+        0,
+        39
+      ],
+      "waste_bin": [
+        -99,
+        0,
+        12
+      ],
+      "water_cup": [
+        -50,
+        30,
+        -50
+      ]
+    },
+    "origin": [
+      4,
+      0,
+      8
+    ],
+    "origin_probe": [
+      0,
+      0,
+      8
+    ],
+    "quantities": {
+      "bookcase": {
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8,
+            "yields": {
+              "metal": 2
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12,
+            "yields": {
+              "metal": 2,
+              "wood": 16
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12,
+            "yields": {
+              "wood": 12
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10,
+            "yields": {
+              "wood": 14
+            }
+          }
+        ]
+      },
+      "chair": {
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8,
+            "yields": {
+              "metal": 2
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12,
+            "yields": {
+              "metal": 2,
+              "wood": 5
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12,
+            "yields": {
+              "wood": 3
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10,
+            "yields": {
+              "wood": 5
+            }
+          }
+        ]
+      },
+      "desk": {},
+      "food_cache": {
+        "contents": {
+          "food": 40000
+        },
+        "work_seconds": 2
+      },
+      "packing_crate": {
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8,
+            "yields": {
+              "metal": 2
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12,
+            "yields": {
+              "metal": 2,
+              "wood": 4
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12,
+            "yields": {
+              "wood": 3
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10,
+            "yields": {
+              "wood": 3
+            }
+          }
+        ]
+      },
+      "plant": {},
+      "rug": {},
+      "side_table": {
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8,
+            "yields": {
+              "metal": 2
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12,
+            "yields": {
+              "metal": 2,
+              "wood": 3
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12,
+            "yields": {
+              "wood": 2
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10,
+            "yields": {
+              "wood": 3
+            }
+          }
+        ]
+      },
+      "spare_crate": {
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8,
+            "yields": {
+              "metal": 2
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12,
+            "yields": {
+              "metal": 2,
+              "wood": 4
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12,
+            "yields": {
+              "wood": 3
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10,
+            "yields": {
+              "wood": 3
+            }
+          }
+        ]
+      },
+      "spilled_water": {
+        "contents": {
+          "water": 51.0
+        },
+        "work_seconds": 2
+      },
+      "storage_box": {
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8,
+            "yields": {
+              "metal": 2
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12,
+            "yields": {
+              "metal": 2,
+              "wood": 3
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12,
+            "yields": {
+              "wood": 2
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10,
+            "yields": {
+              "wood": 3
+            }
+          }
+        ]
+      },
+      "waste_bin": {},
+      "water_cup": {
+        "contents": {
+          "water": 69000.0
+        },
+        "region_id": "STUDY_SURFACE",
+        "work_seconds": 2
+      }
+    },
+    "salvage_yield_multiplier": 1,
+    "spawn": {
+      "center": [
+        4,
+        0,
+        12
+      ],
+      "dimensions": [
+        24,
+        0,
+        12
+      ]
+    }
+  },
+  "name": "Combined layout variation",
+  "reproduction": "./TEST_ROOM_SCALE_POC472.ps1 -Mode Reproduce -Scenario \"verification/poc472/final/EXP-ORIGIN-00/config.json\" -OutputDirectory verification/poc472/reproduced",
+  "room_file": "C:\\Users\\Zero\\python_projects\\ai\\roomscale\\verification\\poc472\\final\\EXP-ORIGIN-00\\POS-018.json",
+  "seed": 471017
+}

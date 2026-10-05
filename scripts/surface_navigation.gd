@@ -55,9 +55,20 @@ func goal_surface() -> Dictionary:
 	return regions.get(goal_surface_id, {}).duplicate(true)
 
 
+func remove_object_surface(object_id: String) -> void:
+	var removed: Array[String] = []
+	for region in regions:
+		if String(regions[region].get("object_id", "")) == object_id: removed.append(region)
+	for region in removed:
+		regions.erase(region)
+		connections = connections.filter(func(link: Dictionary) -> bool: return String(link.from) != region and String(link.to) != region)
+
+
 func route_between(start_region: String, end_region: String, start: Vector3, finish: Vector3) -> Dictionary:
 	if not regions.has(start_region) or not regions.has(end_region):
 		return {"reachable": false, "path": [], "reason": "unknown navigation region"}
+	var active_link := _route_from_link(start, finish, end_region)
+	if not active_link.is_empty(): return active_link
 	if start_region == FLOOR_REGION and end_region == FLOOR_REGION:
 		var floor_path: Array[Vector3] = floor_navigation.path_between(start, finish)
 		return {"reachable": not floor_path.is_empty(), "path": floor_path, "reason": "" if not floor_path.is_empty() else "floor route blocked"}
@@ -88,6 +99,8 @@ func route_between(start_region: String, end_region: String, start: Vector3, fin
 			for index in range(link_path.size() - 1, -1, -1):
 				route.append(link_path[index])
 			var floor_exit: Array[Vector3] = floor_navigation.path_between(link_path[0], finish)
+			if floor_exit.is_empty():
+				return {"reachable": false, "path": [], "reason": "no floor exit from deployed traversal"}
 			for index in range(1, floor_exit.size()):
 				route.append(floor_exit[index])
 		else:
@@ -103,6 +116,31 @@ func route_between(start_region: String, end_region: String, start: Vector3, fin
 				route.append(finish)
 		return {"reachable": not route.is_empty(), "path": route, "reason": "deployed traversal geometry"}
 	return {"reachable": false, "path": [], "reason": "no navigation connection between %s and %s" % [start_region, end_region]}
+
+
+func _route_from_link(start: Vector3, finish: Vector3, end_region: String) -> Dictionary:
+	if absf(start.y - _floor_height) < .001: return {}
+	for connection in connections:
+		if connection.from != FLOOR_REGION or end_region not in [connection.from, connection.to]: continue
+		var link: Array[Vector3] = connection.path
+		for index in range(link.size() - 1):
+			var a := link[index]
+			var b := link[index + 1]
+			var direction := b - a
+			if direction.length_squared() < .000001: continue
+			var along := clampf((start-a).dot(direction) / direction.length_squared(), 0, 1)
+			if start.distance_to(a + direction * along) >= .001: continue
+			var path: Array[Vector3] = [start]
+			if end_region == FLOOR_REGION:
+				for step in range(index, -1, -1): path.append(link[step])
+				var floor_exit: Array[Vector3] = floor_navigation.path_between(link[0], finish)
+				if floor_exit.is_empty(): return {"reachable":false,"path":[],"reason":"no floor exit from active traversal"}
+				path.append_array(floor_exit)
+			else:
+				for step in range(index + 1, link.size()): path.append(link[step])
+				if path.back().distance_to(finish) > .001: path.append(finish)
+			return {"reachable":true,"path":path,"reason":"continue deployed traversal from physical position"}
+	return {}
 
 
 func connect_regions(start_region: String, end_region: String, path: Array[Vector3]) -> bool:
@@ -202,13 +240,6 @@ func _append_distinct(candidates: Array[Vector3], candidate: Vector3) -> bool:
 			return false
 	candidates.append(candidate)
 	return true
-
-
-func investigation_route(start: Vector3, candidate_index: int) -> Array[Vector3]:
-	var candidates := investigation_candidates()
-	if candidate_index < 0 or candidate_index >= candidates.size():
-		return []
-	return floor_navigation.path_between(start, candidates[candidate_index])
 
 
 func exploration_route(start: Vector3, region_id: String) -> Array[Vector3]:

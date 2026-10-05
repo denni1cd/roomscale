@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "defaults": {"fallback": "existing_procedural", "scale_policy": "fit_bounds", "yaw_degrees": 0},
+  "entries": {
+    "desk": {"asset": "res://assets/generated/writing_desk.glb", "fallback": "detailed_furniture", "material": "wood"},
+    "table": {"asset": "res://assets/generated/writing_desk.glb", "fallback": "detailed_furniture", "material": "wood"},
+    "workbench": {"fallback": "detailed_furniture", "material": "wood"},
+    "chair": {"fallback": "detailed_furniture", "material": "leather"},
+    "bookcase": {"fallback": "detailed_furniture", "material": "wood"},
+    "wardrobe": {"fallback": "detailed_furniture", "material": "wood"},
+    "rug": {"fallback": "existing_procedural", "material": "canvas"},
+    "citizen": {"fallback": "modular_clockwork_citizen", "tags": ["shared_meshes", "task_driven_roles"]},
+    "settlement": {"fallback": "clockwork_settlement", "tags": ["procedural", "ambient_machinery"]},
+    "grapple": {"fallback": "clockwork_grapple", "tags": ["construction_progress", "real_traversal"]}
+  }
+}

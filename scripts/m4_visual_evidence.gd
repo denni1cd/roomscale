@@ -1,4 +1,5 @@
 extends SceneTree
+const Evidence := preload("res://scripts/verification/evidence_io.gd")
 ## Visible driver for production Reach/Explore, hauling, and construction evidence.
 
 func _initialize() -> void:
@@ -43,7 +44,7 @@ func _run() -> void:
 	rig.set_citizen_focus(carrier)
 	rig.zoom_by(2.0)
 	await process_frame
-	_save_capture("milestone4-hauling")
+	if not _save_capture("milestone4-hauling"): return
 	var haul_status: Dictionary = construction.status()
 	var haul_proof := FileAccess.open("res://verification/milestone4-visual.log", FileAccess.WRITE)
 	haul_proof.store_line("Hauling capture: citizen=%s carrying=%s cargo=%s citizen_view=%d in active_carriers=%d delivered=%s" % [carrier.name, carrier.carrying, carrier.get_node("Figure/Parcel").get_meta("cargo_resource", ""), roundi(rig.distance), construction.active_delivery_count(), JSON.stringify(haul_status.delivered)])
@@ -77,7 +78,7 @@ func _run() -> void:
 	rig.zoom_by(1.0)
 	await create_timer(0.75).timeout
 	await process_frame
-	_save_capture("milestone4-construction")
+	if not _save_capture("milestone4-construction"): return
 	var final_status: Dictionary = construction.status()
 	var proof := FileAccess.open("res://verification/milestone4-visual.log", FileAccess.READ_WRITE)
 	proof.seek_end()
@@ -87,9 +88,12 @@ func _run() -> void:
 	quit(0)
 
 
-func _save_capture(name: String) -> void:
-	var directory := ProjectSettings.globalize_path("res://verification")
-	DirAccess.make_dir_recursive_absolute(directory)
-	var path := "%s/%s.png" % [directory, name]
-	var result := get_root().get_viewport().get_texture().get_image().save_png(path)
+func _save_capture(name: String) -> bool:
+	var path := "res://verification".path_join(name + ".png")
+	var result := Evidence.save_png(root.get_texture().get_image(), path)
 	print("ROOMSCALE_M4_CAPTURE path=%s result=%d" % [path, result])
+	if result != OK:
+		push_error("M4_EVIDENCE_FAIL: screenshot write failed: %s (error=%d)" % [path, result])
+		quit(1)
+		return false
+	return true

@@ -48,7 +48,7 @@ Legacy version 1 can use `color` as an optional base-color string. Version 2 sho
 }
 ```
 
-Supported material categories are `wood`, `metal`, `fabric`, `glass`, `stone`, `plastic`, `ceramic`, `paint`, `plant`, and `other`. Appearance fields are optional: `archetype`, `base_color`, `accent_color`, `glass_color`, `material`, and `transparency`. The colors are HTML colors (3, 4, 6, or 8 hexadecimal digits, with an optional `#`); transparency ranges from `0` opaque to `1` transparent. Colors default to legacy `color` and then a generic value. Materials affect the renderer's visual material only.
+Supported material categories are `wood`, `metal`, `fabric`, `glass`, `stone`, `plastic`, `ceramic`, `paint`, `plant`, and `other`. Appearance fields are optional: `archetype`, `base_color`, `accent_color`, `glass_color`, `material`, and `transparency`. The colors are HTML colors (3, 4, 6, or 8 hexadecimal digits, with an optional `#`); transparency ranges from `0` opaque to `1` transparent. Colors default to legacy `color` and then a generic value. Materials select visual appearance and, when no explicit resource profile is supplied, contribute to the default finite salvage profile. Explicit resource metadata controls authored yields and stages.
 
 The renderer recognizes these generic object archetypes: `rug`, `table`, `desk`, `workbench`, `chair`, `rocking_chair`, `office_chair`, `hammock`, `monitor`, `monitor_pair`, `display_cabinet`, `floor_lamp`, `floor_seat`, `triptych_art`, `wall_emblem`, `framed_map`, `fabric_pile`, `blanket_pile`, `boxed_collectibles`, `octagonal_glass_table`, `stone_fireplace`, `cabinet`, `bookcase`, `built_in_bookcase`, `wardrobe`, `shelf`, `dresser`, `bed`, `sofa`, `cylinder`, `plant`, and `box_with_lid`. `dragon_triptych` and `dragon_emblem` remain accepted as compatibility aliases for the generic `triptych_art` and `wall_emblem` geometry; neither alias draws dragon-specific forms. `simple`, `box`, and unknown archetypes use a generic styled box while retaining the object's semantic `kind`.
 
@@ -123,3 +123,57 @@ The loader selects any safe room ID under `rooms/`, or a project-local `.json` p
 The fast test exercises both legacy rooms, malformed input, schema v2 fixtures, room-shell openings, generic appearances, rotated geometry, nonzero floor elevation, project-local candidate loading, geometry-derived obstacles/targets/approaches/sites, navigation connectivity, and bounded task history. Full production scenarios verify movement, hauling, construction, climbing, exploration, and route reuse. A valid JSON parse is not equivalent to passing either validator or full gameplay.
 
 The reconstruction skill records uncertainty separately from the JSON. The RoomDefinition remains inspectable; no AI state or room-specific gameplay logic is required at runtime.
+
+## Optional POC 4 civilization economy
+
+An ordinary schema 1 or 2 RoomDefinition can enable the production needs/economy simulation with:
+
+```json
+"civilization": {
+  "stock": {"food":300, "water":100, "wood":0, "metal":0},
+  "shelter_capacity":50,
+  "rest_capacity":12,
+  "economy_construction":true
+}
+```
+
+Stock is finite and nonnegative. Capacities are finite nonnegative integers. This metadata does not change object geometry, spawn, stations or surface requirements. Existing room files remain valid without it. Economy construction uses the existing grapple stages and route system, with four wood and four metal supplied through actual reservations/pickups/deliveries.
+
+Objects can provide optional `resource_profile` metadata:
+
+```json
+"resource_profile": {
+  "contents":{"water":25000},
+  "region_id":"WORKTABLE_TOP",
+  "work_seconds":2
+}
+```
+
+This represents a finite survival resource. The object position is the citizen extraction point and must lie in its navigation region. A floor source uses `FLOOR`; a source on a table uses the table surface region and sits at its height. Extraction reserves content, requires on-site citizen work, then creates a carried bundle. Depot inventory changes only after the return trip. No source automatically refills.
+
+Furniture salvage derives conservative stages from semantic/material data. Wooden chair/table/desk/workbench/bookcase/box/crate defaults can infer wood; explicit `appearance.material` takes precedence. Unknown non-material objects remain non-harvestable. Explicit resource_profile fields can override `harvestable`, `protected`, `work_seconds`, and `stages`:
+
+```json
+"resource_profile": {
+  "harvestable":true,
+  "protected":true,
+  "stages":[
+    {"name":"STRIPPED", "work":8, "yields":{"metal":2}},
+    {"name":"PARTIAL", "work":12, "yields":{"wood":5,"metal":2}},
+    {"name":"FRAME", "work":12, "yields":{"wood":3}},
+    {"name":"DEPLETED", "work":10, "yields":{"wood":5}}
+  ]
+}
+```
+
+Every destructive object still requires explicit civilization-level authorization. Stages are finite, work-driven, once-only and session-persistent; presentation uses predetermined geometry. No object ID or canonical coordinates select a resource rule. Active infrastructure/source-support surfaces are protected against unsafe dismantling. See [POC 4 gameplay](POC4_GAMEPLAY.md) for scoring, consumption and verification commands.
+# POC 4.5 canonical configuration note
+
+`rooms/room_poc45.json` derives from the POC 4 definition without a schema change.
+It keeps the elevated water source and zero starting construction material, adjusts
+finite food/water contents, and adds two ordinary crates. Fishbowl activation is an
+explicit launch setting (`ROOMSCALE_FISHBOWL=1`), not inferred from a room ID.
+Explicit `resource_profile.protected: true` prevents autonomous salvage; inferred
+default protection retains the ordinary manual-authorization rule. Runtime settlement
+obstacles are derived from development projects, never hand-authored housing sites.
+See `docs/POC45_FISHBOWL.md` for the generalized policy and project contract.

@@ -1,36 +1,53 @@
+# Runtime downloads, engine state and local Python tooling
 .tools/
 .godot/
-verification/*
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.ruff_cache/
+.pytest_cache/
+.coverage
+.env
+.env.*
+*.local.env
+
+# Generated run output is opt-in evidence, never a blanket milestone allowlist.
+verification/**
 !verification/.gitkeep
-!verification/milestone0-status.md
-!verification/milestone1-status.md
-!verification/milestone2-status.md
-!verification/milestone3-status.md
-!verification/milestone4-status.md
-!verification/milestone4-smoke.log
-!verification/milestone4-visual.log
-!verification/milestone4-hauling.png
-!verification/milestone4-construction.png
-!verification/milestone5-status.md
-!verification/milestone5-smoke.log
-!verification/milestone5-visual.log
-!verification/milestone5-deployed-cable.png
-!verification/milestone5-citizen-on-desk.png
-!verification/milestone6-status.md
-!verification/milestone6-smoke.log
-!verification/milestone6-visual.log
-!verification/milestone6-desk-exploration.png
-!verification/milestone6-autonomous-route-reuse.png
-!verification/milestone7-status.md
-!verification/milestone7-repeatability-summary.md
-!verification/milestone7-runs/
-!verification/milestone7-runs/*.log
-!verification/milestone8-status.md
-!verification/milestone8-smoke.log
-!verification/milestone8-launch.log
-!verification/milestone8-launch-startup.png
-!verification/milestone8-launch-startup.log
-!verification/milestone8-settlement-view.png
-!verification/milestone8-settlement-view.log
-!verification/poc2/
-!verification/poc2/**
+!verification/.gdignore
+!verification/*.md
+!verification/poc*/
+!verification/poc*/*.md
+!verification/poc*/*summary*.json
+!verification/poc*/acceptance*.json
+!verification/poc*/change-manifest.json
+
+# Authored RoomDefinition/reproduction fixtures remain addable.
+!verification/poc2/candidates/
+!verification/poc2/candidates/**/
+!verification/poc2/candidates/**/*.json
+!verification/poc2/candidates/**/*.md
+!verification/poc2/fixtures/
+!verification/poc2/fixtures/*.json
+
+# Stabilization publishes compact reports/manifests; raw runs stay local.
+!verification/stabilization/
+!verification/stabilization/*.md
+!verification/stabilization/*.json
+verification/stabilization/runs/
+
+# Existing tracked milestone evidence stays tracked regardless of ignore rules.
+# New canonical images/raw campaigns require a deliberate git add -f review.
+verification/**/*.import
+verification/**/*.uid
+verification/**/*.translation
+
+verification/**/*.tmp
+photo_holder/**/*.import
+screenshots/**/*.import
+*.stdout.tmp
+*.stderr.tmp
+
+# Active evidence-audit code is source, even under verification.
+!verification/poc472/gather_evidence.py

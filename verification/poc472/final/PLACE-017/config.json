@@ -1,0 +1,68 @@
+{
+  "classification": "positive",
+  "days": 8,
+  "generator_version": 1,
+  "id": "PLACE-017",
+  "mutations": {
+    "finite_quantities": "unchanged canonical",
+    "origin": [
+      -22,
+      0,
+      58
+    ],
+    "protected_obstacles": [
+      {
+        "blocks_navigation": true,
+        "dimensions": [
+          6,
+          6,
+          62
+        ],
+        "id": "divider_south",
+        "kind": "box",
+        "name": "divider_south",
+        "navigation_padding": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          34,
+          0,
+          36
+        ],
+        "resource_profile": {
+          "protected": true
+        }
+      },
+      {
+        "blocks_navigation": true,
+        "dimensions": [
+          6,
+          6,
+          60
+        ],
+        "id": "divider_north",
+        "kind": "box",
+        "name": "divider_north",
+        "navigation_padding": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          34,
+          0,
+          -48
+        ],
+        "resource_profile": {
+          "protected": true
+        }
+      }
+    ]
+  },
+  "name": "Separated open areas with legal connecting gaps",
+  "reproduction": "./TEST_ROOM_SCALE_POC472.ps1 -Mode Reproduce -Scenario \"verification/poc472/final/PLACE-017/config.json\" -OutputDirectory verification/poc472/reproduced",
+  "room_file": "C:\\Users\\Zero\\python_projects\\ai\\roomscale\\verification\\poc472\\final\\PLACE-017\\PLACE-017.json",
+  "seed": 472016
+}

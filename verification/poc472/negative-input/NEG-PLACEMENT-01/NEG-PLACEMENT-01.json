@@ -1,0 +1,2291 @@
+{
+  "camera": {
+    "fill_position": [
+      5,
+      68,
+      24
+    ],
+    "focus": [
+      0,
+      0,
+      0
+    ],
+    "lantern_position": [
+      -25,
+      10,
+      60
+    ]
+  },
+  "civilization": {
+    "cohort_size": 1,
+    "economy_construction": true,
+    "initial_speed": 1,
+    "rest_capacity": 0,
+    "shelter_capacity": 0,
+    "stock": {
+      "food": 20,
+      "metal": 0,
+      "water": 30,
+      "wood": 0
+    }
+  },
+  "dimensions": [
+    240,
+    180
+  ],
+  "display_name": "Five Founders / Organic Civilization",
+  "floor": {
+    "center": [
+      0,
+      0,
+      0
+    ],
+    "dimensions": [
+      240,
+      180
+    ],
+    "height": 0
+  },
+  "floor_color": "795b43",
+  "id": "NEG-PLACEMENT-01",
+  "objects": [
+    {
+      "blocks_navigation": true,
+      "color": "81593e",
+      "dimensions": [
+        68,
+        30,
+        34
+      ],
+      "id": "desk",
+      "kind": "table",
+      "name": "Desk",
+      "navigation_padding": [
+        8,
+        0,
+        7
+      ],
+      "position": [
+        -58,
+        0,
+        -52
+      ],
+      "surface": {
+        "anchor": [
+          -58,
+          30,
+          -52
+        ],
+        "height": 30,
+        "region_id": "STUDY_SURFACE"
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "color": "546d68",
+      "dimensions": [
+        25,
+        19,
+        23
+      ],
+      "id": "chair",
+      "kind": "chair",
+      "name": "Chair",
+      "navigation_padding": [
+        3,
+        0,
+        3
+      ],
+      "position": [
+        -58,
+        0,
+        -20
+      ]
+    },
+    {
+      "blocks_navigation": true,
+      "color": "74503a",
+      "dimensions": [
+        32,
+        63,
+        17
+      ],
+      "id": "bookcase",
+      "kind": "bookcase",
+      "name": "Bookcase",
+      "navigation_padding": [
+        3,
+        0,
+        2
+      ],
+      "position": [
+        91,
+        0,
+        -63
+      ]
+    },
+    {
+      "blocks_navigation": false,
+      "color": "a66e4e",
+      "dimensions": [
+        92,
+        0.12,
+        68
+      ],
+      "id": "rug",
+      "kind": "rug",
+      "name": "Rug",
+      "position": [
+        50,
+        0,
+        -22
+      ]
+    },
+    {
+      "blocks_navigation": true,
+      "color": "80583d",
+      "dimensions": [
+        20,
+        20,
+        17
+      ],
+      "id": "side_table",
+      "kind": "table",
+      "name": "Side Table",
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "position": [
+        44,
+        0,
+        -15
+      ]
+    },
+    {
+      "blocks_navigation": true,
+      "color": "a98254",
+      "dimensions": [
+        17,
+        15,
+        14
+      ],
+      "id": "storage_box",
+      "kind": "box",
+      "name": "Storage Box",
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "position": [
+        75,
+        0,
+        43
+      ]
+    },
+    {
+      "blocks_navigation": true,
+      "color": "637674",
+      "dimensions": [
+        16,
+        14,
+        16
+      ],
+      "id": "waste_bin",
+      "kind": "cylinder",
+      "name": "Waste Bin",
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "position": [
+        -99,
+        0,
+        12
+      ]
+    },
+    {
+      "blocks_navigation": true,
+      "color": "789166",
+      "dimensions": [
+        13,
+        42,
+        12
+      ],
+      "id": "plant",
+      "kind": "plant",
+      "name": "Room Plant",
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "position": [
+        -91,
+        0,
+        -46
+      ]
+    },
+    {
+      "blocks_navigation": false,
+      "color": "6ea6b8",
+      "dimensions": [
+        3,
+        5,
+        3
+      ],
+      "id": "water_cup",
+      "kind": "water_container",
+      "name": "Water Container",
+      "position": [
+        -58,
+        30,
+        -50
+      ],
+      "resource_profile": {
+        "contents": {
+          "water": 60000
+        },
+        "region_id": "STUDY_SURFACE",
+        "work_seconds": 2
+      }
+    },
+    {
+      "blocks_navigation": false,
+      "color": "d0a864",
+      "dimensions": [
+        2,
+        1,
+        2
+      ],
+      "id": "food_cache",
+      "kind": "food_cache",
+      "name": "Food Cache",
+      "position": [
+        -44,
+        0,
+        20
+      ],
+      "resource_profile": {
+        "contents": {
+          "food": 40000
+        },
+        "work_seconds": 2
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "color": "92754e",
+      "dimensions": [
+        20,
+        20,
+        20
+      ],
+      "id": "packing_crate",
+      "kind": "box",
+      "name": "Packing Crate",
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "position": [
+        101,
+        0,
+        9
+      ]
+    },
+    {
+      "blocks_navigation": true,
+      "color": "88704f",
+      "dimensions": [
+        20,
+        20,
+        20
+      ],
+      "id": "spare_crate",
+      "kind": "box",
+      "name": "Spare Crate",
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "position": [
+        103,
+        0,
+        62
+      ]
+    },
+    {
+      "blocks_navigation": false,
+      "color": "6ea6b8",
+      "dimensions": [
+        3,
+        0.15,
+        3
+      ],
+      "id": "spilled_water",
+      "kind": "water_container",
+      "name": "Spilled Water",
+      "position": [
+        -24,
+        0,
+        20
+      ],
+      "resource_profile": {
+        "contents": {
+          "water": 60
+        },
+        "work_seconds": 2
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-108_-84",
+      "kind": "box",
+      "name": "placement_block_-108_-84",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -108,
+        0,
+        -84
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-108_-60",
+      "kind": "box",
+      "name": "placement_block_-108_-60",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -108,
+        0,
+        -60
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-108_-36",
+      "kind": "box",
+      "name": "placement_block_-108_-36",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -108,
+        0,
+        -36
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-108_-12",
+      "kind": "box",
+      "name": "placement_block_-108_-12",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -108,
+        0,
+        -12
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-108_12",
+      "kind": "box",
+      "name": "placement_block_-108_12",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -108,
+        0,
+        12
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-108_36",
+      "kind": "box",
+      "name": "placement_block_-108_36",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -108,
+        0,
+        36
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-108_60",
+      "kind": "box",
+      "name": "placement_block_-108_60",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -108,
+        0,
+        60
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-108_84",
+      "kind": "box",
+      "name": "placement_block_-108_84",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -108,
+        0,
+        84
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-84_-84",
+      "kind": "box",
+      "name": "placement_block_-84_-84",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -84,
+        0,
+        -84
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-84_-60",
+      "kind": "box",
+      "name": "placement_block_-84_-60",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -84,
+        0,
+        -60
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-84_-36",
+      "kind": "box",
+      "name": "placement_block_-84_-36",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -84,
+        0,
+        -36
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-84_-12",
+      "kind": "box",
+      "name": "placement_block_-84_-12",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -84,
+        0,
+        -12
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-84_12",
+      "kind": "box",
+      "name": "placement_block_-84_12",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -84,
+        0,
+        12
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-84_36",
+      "kind": "box",
+      "name": "placement_block_-84_36",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -84,
+        0,
+        36
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-84_60",
+      "kind": "box",
+      "name": "placement_block_-84_60",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -84,
+        0,
+        60
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-84_84",
+      "kind": "box",
+      "name": "placement_block_-84_84",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -84,
+        0,
+        84
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-60_-84",
+      "kind": "box",
+      "name": "placement_block_-60_-84",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -60,
+        0,
+        -84
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-60_-60",
+      "kind": "box",
+      "name": "placement_block_-60_-60",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -60,
+        0,
+        -60
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-60_-36",
+      "kind": "box",
+      "name": "placement_block_-60_-36",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -60,
+        0,
+        -36
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-60_-12",
+      "kind": "box",
+      "name": "placement_block_-60_-12",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -60,
+        0,
+        -12
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-60_12",
+      "kind": "box",
+      "name": "placement_block_-60_12",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -60,
+        0,
+        12
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-60_36",
+      "kind": "box",
+      "name": "placement_block_-60_36",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -60,
+        0,
+        36
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-60_60",
+      "kind": "box",
+      "name": "placement_block_-60_60",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -60,
+        0,
+        60
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-60_84",
+      "kind": "box",
+      "name": "placement_block_-60_84",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -60,
+        0,
+        84
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-36_-84",
+      "kind": "box",
+      "name": "placement_block_-36_-84",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -36,
+        0,
+        -84
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-36_-60",
+      "kind": "box",
+      "name": "placement_block_-36_-60",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -36,
+        0,
+        -60
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-36_-36",
+      "kind": "box",
+      "name": "placement_block_-36_-36",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -36,
+        0,
+        -36
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-36_-12",
+      "kind": "box",
+      "name": "placement_block_-36_-12",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -36,
+        0,
+        -12
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-36_12",
+      "kind": "box",
+      "name": "placement_block_-36_12",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -36,
+        0,
+        12
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-36_36",
+      "kind": "box",
+      "name": "placement_block_-36_36",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -36,
+        0,
+        36
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-36_60",
+      "kind": "box",
+      "name": "placement_block_-36_60",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -36,
+        0,
+        60
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-36_84",
+      "kind": "box",
+      "name": "placement_block_-36_84",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -36,
+        0,
+        84
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-12_-84",
+      "kind": "box",
+      "name": "placement_block_-12_-84",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -12,
+        0,
+        -84
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-12_-60",
+      "kind": "box",
+      "name": "placement_block_-12_-60",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -12,
+        0,
+        -60
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-12_-36",
+      "kind": "box",
+      "name": "placement_block_-12_-36",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -12,
+        0,
+        -36
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-12_-12",
+      "kind": "box",
+      "name": "placement_block_-12_-12",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -12,
+        0,
+        -12
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-12_12",
+      "kind": "box",
+      "name": "placement_block_-12_12",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -12,
+        0,
+        12
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-12_36",
+      "kind": "box",
+      "name": "placement_block_-12_36",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -12,
+        0,
+        36
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-12_60",
+      "kind": "box",
+      "name": "placement_block_-12_60",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -12,
+        0,
+        60
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_-12_84",
+      "kind": "box",
+      "name": "placement_block_-12_84",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -12,
+        0,
+        84
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_12_-84",
+      "kind": "box",
+      "name": "placement_block_12_-84",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        12,
+        0,
+        -84
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_12_-60",
+      "kind": "box",
+      "name": "placement_block_12_-60",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        12,
+        0,
+        -60
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_12_-36",
+      "kind": "box",
+      "name": "placement_block_12_-36",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        12,
+        0,
+        -36
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_12_-12",
+      "kind": "box",
+      "name": "placement_block_12_-12",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        12,
+        0,
+        -12
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_12_12",
+      "kind": "box",
+      "name": "placement_block_12_12",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        12,
+        0,
+        12
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_12_36",
+      "kind": "box",
+      "name": "placement_block_12_36",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        12,
+        0,
+        36
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_12_60",
+      "kind": "box",
+      "name": "placement_block_12_60",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        12,
+        0,
+        60
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_12_84",
+      "kind": "box",
+      "name": "placement_block_12_84",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        12,
+        0,
+        84
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_36_-84",
+      "kind": "box",
+      "name": "placement_block_36_-84",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        36,
+        0,
+        -84
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_36_-60",
+      "kind": "box",
+      "name": "placement_block_36_-60",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        36,
+        0,
+        -60
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_36_-36",
+      "kind": "box",
+      "name": "placement_block_36_-36",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        36,
+        0,
+        -36
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_36_-12",
+      "kind": "box",
+      "name": "placement_block_36_-12",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        36,
+        0,
+        -12
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_36_12",
+      "kind": "box",
+      "name": "placement_block_36_12",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        36,
+        0,
+        12
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_36_36",
+      "kind": "box",
+      "name": "placement_block_36_36",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        36,
+        0,
+        36
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_36_60",
+      "kind": "box",
+      "name": "placement_block_36_60",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        36,
+        0,
+        60
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_36_84",
+      "kind": "box",
+      "name": "placement_block_36_84",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        36,
+        0,
+        84
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_60_-84",
+      "kind": "box",
+      "name": "placement_block_60_-84",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        60,
+        0,
+        -84
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_60_-60",
+      "kind": "box",
+      "name": "placement_block_60_-60",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        60,
+        0,
+        -60
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_60_-36",
+      "kind": "box",
+      "name": "placement_block_60_-36",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        60,
+        0,
+        -36
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_60_-12",
+      "kind": "box",
+      "name": "placement_block_60_-12",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        60,
+        0,
+        -12
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_60_12",
+      "kind": "box",
+      "name": "placement_block_60_12",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        60,
+        0,
+        12
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_60_36",
+      "kind": "box",
+      "name": "placement_block_60_36",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        60,
+        0,
+        36
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_60_60",
+      "kind": "box",
+      "name": "placement_block_60_60",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        60,
+        0,
+        60
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_60_84",
+      "kind": "box",
+      "name": "placement_block_60_84",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        60,
+        0,
+        84
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_84_-84",
+      "kind": "box",
+      "name": "placement_block_84_-84",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        84,
+        0,
+        -84
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_84_-60",
+      "kind": "box",
+      "name": "placement_block_84_-60",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        84,
+        0,
+        -60
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_84_-36",
+      "kind": "box",
+      "name": "placement_block_84_-36",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        84,
+        0,
+        -36
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_84_-12",
+      "kind": "box",
+      "name": "placement_block_84_-12",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        84,
+        0,
+        -12
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_84_12",
+      "kind": "box",
+      "name": "placement_block_84_12",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        84,
+        0,
+        12
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_84_36",
+      "kind": "box",
+      "name": "placement_block_84_36",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        84,
+        0,
+        36
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_84_60",
+      "kind": "box",
+      "name": "placement_block_84_60",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        84,
+        0,
+        60
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_84_84",
+      "kind": "box",
+      "name": "placement_block_84_84",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        84,
+        0,
+        84
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_108_-84",
+      "kind": "box",
+      "name": "placement_block_108_-84",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        108,
+        0,
+        -84
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_108_-60",
+      "kind": "box",
+      "name": "placement_block_108_-60",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        108,
+        0,
+        -60
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_108_-36",
+      "kind": "box",
+      "name": "placement_block_108_-36",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        108,
+        0,
+        -36
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_108_-12",
+      "kind": "box",
+      "name": "placement_block_108_-12",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        108,
+        0,
+        -12
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_108_12",
+      "kind": "box",
+      "name": "placement_block_108_12",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        108,
+        0,
+        12
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_108_36",
+      "kind": "box",
+      "name": "placement_block_108_36",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        108,
+        0,
+        36
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_108_60",
+      "kind": "box",
+      "name": "placement_block_108_60",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        108,
+        0,
+        60
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "placement_block_108_84",
+      "kind": "box",
+      "name": "placement_block_108_84",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        108,
+        0,
+        84
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    }
+  ],
+  "schema_version": 1,
+  "spawn": {
+    "center": [
+      0,
+      0,
+      50
+    ],
+    "dimensions": [
+      28,
+      0,
+      12
+    ]
+  },
+  "start": {
+    "infrastructure": [],
+    "origin": [
+      0,
+      0,
+      46
+    ],
+    "population": 5
+  },
+  "target_surface_id": "STUDY_SURFACE",
+  "wall_height": 72
+}

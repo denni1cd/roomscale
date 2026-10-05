@@ -9,10 +9,11 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $ProjectRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
+. (Join-Path $ProjectRoot 'scripts/Invoke-RoomScaleProcess.ps1')
 if (-not $OutputDirectory) {
 	$OutputDirectory = Join-Path $ProjectRoot "verification/poc15/repeatability/$Room"
 }
-$OutputDirectory = [System.IO.Path]::GetFullPath($OutputDirectory)
+$OutputDirectory = Resolve-RoomScaleOutputPath -Value $OutputDirectory -ProjectRoot $ProjectRoot
 New-Item -ItemType Directory -Force -Path $OutputDirectory | Out-Null
 if ($RunCount -lt 1 -or $PerRunTimeoutSeconds -lt 1 -or $OverallTimeoutMinutes -lt 1) {
 	throw 'Run count and timeout values must be positive.'
@@ -75,4 +76,4 @@ $summary = @(
 $summaryPath = Join-Path $OutputDirectory 'summary.md'
 [System.IO.File]::WriteAllText($summaryPath, $summary + [Environment]::NewLine, [System.Text.UTF8Encoding]::new($false))
 Write-Output "SUMMARY: $summaryPath ($state, $passCount/$RunCount)"
-if ($state -ne 'PASS') { exit 1 }
+if ($state -ne 'PASS') { throw $failure }

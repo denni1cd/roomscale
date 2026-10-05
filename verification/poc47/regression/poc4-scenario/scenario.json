@@ -1,0 +1,170 @@
+{
+	"captures": [],
+	"checks": [
+		"01 population=50 and production simulation initializes",
+		"02 generic elevated water and material sources discovered",
+		"03 persistent citizen needs initialized",
+		"04 starting construction stock insufficient",
+		"05 real need decay and water consumption lower forecast",
+		"06 water shortage forecast",
+		"07 civilization Secure Water directive",
+		"08 water source initially unreachable",
+		"09 existing physical investigation creates traversal project",
+		"10 protected objects remain intact during shortage",
+		"11 planner explains missing authorized construction resources",
+		"12 high-level salvage authorization",
+		"13 complete water crisis recovery within bounded time",
+		"14 citizens perform genuine staged salvage work",
+		"15 visible persistent depleted object",
+		"16 physical bundle pickup/carry/delivery",
+		"17 exclusive reserved/transit/delivered/consumed project material",
+		"18 existing construction builds and activates traversal",
+		"19 citizens climb to elevated source and return stored water",
+		"20 recovered water forecast"
+	],
+	"days_after_recovery": 0.0,
+	"max_active_task_seconds": 228.000000000029,
+	"max_bundles": 10,
+	"max_movement_per_tick": 0.650002837181091,
+	"max_tasks": 500,
+	"max_tickets": 24,
+	"observations": {
+		"climb": true,
+		"delivered": true,
+		"haul": true,
+		"in_transit": true,
+		"reserved": true,
+		"salvage_work": true
+	},
+	"recovered_seconds": 847.000000000124,
+	"result": "PASS",
+	"salvage": {
+		"authorized": true,
+		"progress": 0.0,
+		"stage": 4,
+		"stages": [
+			{
+				"name": "STRIPPED",
+				"work": 8.0,
+				"yields": {
+					"metal": 2.0
+				}
+			},
+			{
+				"name": "PARTIAL",
+				"work": 12.0,
+				"yields": {
+					"metal": 2.0,
+					"wood": 5.0
+				}
+			},
+			{
+				"name": "FRAME",
+				"work": 12.0,
+				"yields": {
+					"wood": 3.0
+				}
+			},
+			{
+				"name": "DEPLETED",
+				"work": 10.0,
+				"yields": {
+					"wood": 5.0
+				}
+			}
+		],
+		"state": "DEPLETED",
+		"work": 42.0000000000003,
+		"yielded": {
+			"metal": 4.0,
+			"wood": 13.0
+		}
+	},
+	"source_visits": {
+		"food": 17,
+		"water": 40
+	},
+	"sources": {
+		"food_cache": {
+			"extracted": {
+				"food": 136.0
+			},
+			"initial": {
+				"food": 12000.0
+			},
+			"position": "(-44.0, 0.0, 20.0)",
+			"region": "FLOOR",
+			"remaining": {
+				"food": 11864.0
+			},
+			"reserved": {
+				"food": 8.0
+			},
+			"work": 2.0
+		},
+		"water_cup": {
+			"extracted": {
+				"water": 320.0
+			},
+			"initial": {
+				"water": 25000.0
+			},
+			"position": "(-58.0, 30.0, -50.0)",
+			"region": "STUDY_SURFACE",
+			"remaining": {
+				"water": 24680.0
+			},
+			"reserved": {
+				"water": 8.0
+			},
+			"work": 2.0
+		}
+	},
+	"status": {
+		"days": 1.41166666666687,
+		"drinks": 200,
+		"economy": {
+			"food": {
+				"available": 282.0,
+				"consumed": 133.0,
+				"delivered": 0.0,
+				"in_transit": 0.0,
+				"received": 120.0,
+				"reserved": 5.0
+			},
+			"metal": {
+				"available": 0.0,
+				"consumed": 4.0,
+				"delivered": 0.0,
+				"in_transit": 0.0,
+				"received": 4.0,
+				"reserved": 0.0
+			},
+			"water": {
+				"available": 164.0,
+				"consumed": 200.0,
+				"delivered": 0.0,
+				"in_transit": 0.0,
+				"received": 264.0,
+				"reserved": 0.0
+			},
+			"wood": {
+				"available": 9.0,
+				"consumed": 4.0,
+				"delivered": 0.0,
+				"in_transit": 0.0,
+				"received": 13.0,
+				"reserved": 0.0
+			}
+		},
+		"food_days": 2.82,
+		"meals": 133,
+		"population": 50,
+		"resting": 4,
+		"rests": 91,
+		"shelter": 50,
+		"urgent": 3,
+		"water_days": 1.09333333333333
+	},
+	"wall_seconds": 9.934
+}

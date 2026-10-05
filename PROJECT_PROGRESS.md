@@ -1,4 +1,115 @@
-# RoomScale POC 1 and POC 1.5 Progress
+> Historical milestone ledger. See README.md for the current accepted baseline and verification/stabilization/final-report.md for this cleanup.
+
+# RoomScale Progress
+
+## POC 4.7.1 founding robustness
+
+Final campaign: **79/79 positive worlds**, **5/5 expected negatives**, **3 full
+soaks (90/60/60 days)** and **6/6 identical repeats**. All required shared
+regressions pass after the last production fix. Two infeasible candidates are
+excluded before simulation. Seven defects were fixed; classification is
+**3. moderately robust**, with explicit supported-topology and finite-supply limits.
+
+A deterministic production-observer campaign covers founder origins, legal spawns,
+resource placement/quantities, salvage yields, obstacles, traversal approaches,
+impossible inputs, replay and long soaks. Narrow fixes reserve the future depot
+rest apron, keep exterior grid connectors clear of completed footprints, and
+defer failed-path task retries through the existing idle timer, ignore uncollectable
+fractional bootstrap remnants, and resolve blocked founder patrol anchors.
+Physical corner connectors recover sub-grid aisles, and A* diagonals require
+both neighboring cells clear. Simulation claim/start timestamps correct the
+earlier task-age test. Replanning during later building completions preserves
+active climbers on their deployed traversal link. No gameplay
+systems or second civilization are added. See the
+[harness guide](docs/POC471_ROBUSTNESS.md),
+[campaign report](verification/poc471/final-report.md) and
+[multi-civilization audit](verification/poc471/multiciv-readiness.md).
+
+## POC 4.7 founder start
+
+Five founders now build the settlement through production salvage, hauling and
+construction. Canonical Fishbowl starts at 1x with no completed infrastructure.
+Shelter, storage and workshop capabilities activate on completion; growth adds
+one CitizenAgent after sustained healthy conditions. Workshop capability gates
+advanced traversal. The existing established colony remains a legacy fixture.
+See the [founder guide](docs/POC47_FOUNDERS.md) and
+[verification report](verification/poc47/final-report.md) for final gate evidence.
+
+## POC 4.6 spectator experience
+
+Implemented on `codex/roomscale-poc46-spectator-ui` from verified POC 4.5
+`c0b93c5dd74081bc20068b7455ec9805dc5fb71d`. Compact HUD, real-time event cards,
+context projects, automatic shot titles/close-ups, F3 details, quiet fade and 10x
+fishbowl startup are in place. Cohorts now validate five distinct navigation points
+before any spawn, and task-board development progress uses development work.
+Three consecutive fresh eight-day runs passed at 80 real citizens, with zero failed
+tasks and conserved economy. POC 4.5 fast and POC 4 fast/contract/cleanup remain green.
+Rendered 1080p/1440p captures and each acceptance item are reviewed in the
+[POC 4.6 report](verification/poc46/final-report.md). Historical POC 4.5 evidence
+remains intact; no merge into main.
+
+## POC 4.5 autonomous colony
+
+**PASS** on `codex/roomscale-poc45-fishbowl`, extending verified POC 4.
+M0–M8 and all 55 criteria pass. Fresh full runs reach 80 citizens and four housing
+blocks plus a workshop; sixty-day production reaches 120 citizens, seven housing
+blocks and one workshop before stabilizing at finite material capacity. Final fresh
+repeatability is 3/3; POC 4/manual and Room A→B→A regressions remain green.
+The governor acts through civilization priorities/directives/authorization;
+citizens retain ordinary needs, movement, hauling, salvage, traversal and work.
+Housing/workshop modules use conserved delivery tickets and physical builders;
+five-node cohorts require sustained reserves and capacity. Manual mode is preserved.
+
+The [milestone record](verification/poc45/milestones.md),
+[55-criterion matrix](verification/poc45/acceptance.md), and
+[final report](verification/poc45/final-report.md) record the actual gate results,
+population/material limits, regressions, long-run metrics and inspected captures.
+Use [the gameplay guide](docs/POC45_FISHBOWL.md) to continue without chat context.
+
+## POC 4 completion
+
+**PASS** on 2026-10-02. Milestones 0–9 and all 45 acceptance criteria are
+complete. The canonical water crisis is resolved through authorized furniture
+salvage, physical hauling, existing construction/traversal, and stored water;
+50 citizens continue consuming food/water and resting autonomously.
+
+| Milestone | Status | Evidence under verification/poc4/ |
+| --- | --- | --- |
+| M0 — Regression and Baseline Gate | PASS | `baseline/`, `m0-m2-status.md` |
+| M1 — Core Needs | PASS | `final-fast/fast.log`, `release/stability-30days.json` |
+| M2 — Economy and Forecasting | PASS | Exclusive tickets, conservation audits, real consumption in final fast/full logs |
+| M3 — Priorities and Directives | PASS | Ranking and production labor checks; rendered high-level controls |
+| M4 — Room Resource Profiles | PASS | Generic profiles; `final-fast/contract.log`, alternate-surface scenario |
+| M5 — Staged Salvage | PASS | Four on-site stages, 13 wood/4 metal, real bundles and delivery |
+| M6 — Needs-to-Expansion Integration | PASS | `release/repeat-01.json`, complete causal chain |
+| M7 — Sustained Simulation | PASS | Five seven-day runs plus rendered `final-evidence/sustained-7days.json` |
+| M8 — Automated Verification | PASS | `release/summary.json`: 8/8, including five consecutive scenarios and 30 days |
+| M9 — Gameplay Presentation Pass | PASS | 17 inspected captures, normal HUD/inspection, `visual-review.md` |
+
+See the [criterion matrix](verification/poc4/acceptance.md) and
+[final report](verification/poc4/final-report.md) for exact commands, results,
+architecture changes and scope limits. The default launch is now POC 4;
+explicit historical rooms retain their existing scenarios. Earlier POC 3 human
+visual acceptance remains a separate historical gate.
+
+## POC 3 implementation
+
+The visual implementation and retained baseline are on
+`codex/roomscale-poc3-visual-fidelity`. Functional A/B/photo-room scenarios pass,
+the semantic catalog and original automated GLB pipeline are implemented, and
+enhanced citizens, settlement details, furniture, resources and grapple stages
+are captured from real simulation. See [the POC 3 acceptance record](verification/poc3/acceptance.md)
+for exact evidence, failed iterations, performance caveats and outstanding
+human visual acceptance. POC 3 is not declared complete from functional tests.
+
+The final constrained polish improves builder/tool contact, routes utility wires
+around the settlement perimeter with physical fittings, and adds quiet floor wear.
+See [the final polish review](verification/poc3/refinement/final-polish/review.md).
+
+The scene-composition refinement adds linked districts, storage clusters,
+miniature homes, human pencil/coin references, a neutral low-contrast floor,
+lit working poses and compact presentation HUD. Iterations and canonical
+refinement evidence are preserved separately; see [the refinement review](verification/poc3/refinement/review.md).
 
 | Milestone | Status | Evidence |
 | --- | --- | --- |
@@ -65,6 +176,10 @@ POC 1.5 is PASS. The current production source has no Room B gameplay branch and
 No known blocking defect. Construction progress is bounded at 100%; the floor-to-desk link appears only after launcher completion. Desk exploration and autonomous route reuse are session-scoped; no save-file persistence is required by the plan.
 
 ## Next Action
+
+POC 4 implementation and verification are complete. Play with
+`./RUN_ROOM_SCALE.ps1`; no Godot editing is needed. Earlier plans and evidence
+remain preserved.
 
 All planned milestones M0–M8 are complete and verified. Preserve the user-owned `poc_project_plan.md`; no further milestone work is in scope.
 

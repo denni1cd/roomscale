@@ -1,0 +1,4591 @@
+{
+  "classification": "positive",
+  "config_sha256": "f967a1adda2c70be0a8301f64695fedb20268867e7916bd5d66ff7e6cc56e824",
+  "connectivity": [
+    {
+      "obstacles": 9,
+      "paths": {
+        "food_cache": true,
+        "housing": true,
+        "spilled_water": true
+      },
+      "seconds": 0.1
+    },
+    {
+      "obstacles": 9,
+      "paths": {
+        "food_cache": true,
+        "housing": true,
+        "spilled_water": true
+      },
+      "seconds": 9.99999999999998
+    },
+    {
+      "obstacles": 9,
+      "paths": {
+        "food_cache": true,
+        "housing": true,
+        "spilled_water": true
+      },
+      "seconds": 93.599999999999
+    },
+    {
+      "obstacles": 8,
+      "paths": {
+        "food_cache": true,
+        "housing": true,
+        "spilled_water": true
+      },
+      "seconds": 104.199999999998
+    },
+    {
+      "obstacles": 9,
+      "paths": {
+        "food_cache": true,
+        "housing": true,
+        "spilled_water": true
+      },
+      "seconds": 152.999999999996
+    },
+    {
+      "obstacles": 10,
+      "paths": {
+        "food_cache": true,
+        "housing": true,
+        "spilled_water": true
+      },
+      "seconds": 207.299999999993
+    },
+    {
+      "obstacles": 10,
+      "paths": {
+        "food_cache": true,
+        "housing": true,
+        "spilled_water": true
+      },
+      "seconds": 224.999999999992
+    },
+    {
+      "obstacles": 10,
+      "paths": {
+        "food_cache": true,
+        "housing": true,
+        "spilled_water": true
+      },
+      "seconds": 288.199999999997
+    },
+    {
+      "obstacles": 9,
+      "paths": {
+        "food_cache": true,
+        "housing": true,
+        "spilled_water": true
+      },
+      "seconds": 299.3
+    },
+    {
+      "obstacles": 10,
+      "paths": {
+        "food_cache": true,
+        "housing": true,
+        "spilled_water": true
+      },
+      "seconds": 353.300000000012
+    },
+    {
+      "obstacles": 11,
+      "paths": {
+        "food_cache": true,
+        "housing": true,
+        "spilled_water": true
+      },
+      "seconds": 461.000000000036
+    },
+    {
+      "obstacles": 11,
+      "paths": {
+        "food_cache": true,
+        "housing": true,
+        "spilled_water": true
+      },
+      "seconds": 810.000000000116
+    },
+    {
+      "obstacles": 11,
+      "paths": {
+        "food_cache": true,
+        "housing": true,
+        "spilled_water": true
+      },
+      "seconds": 892.700000000134
+    },
+    {
+      "obstacles": 10,
+      "paths": {
+        "food_cache": true,
+        "housing": true,
+        "spilled_water": true
+      },
+      "seconds": 924.900000000142
+    }
+  ],
+  "deadlock": false,
+  "definition_sha256": "14d900701c8e0a5cbbdda15a9a8ed7d530cfdc442344a0d8bdc5b1f9341ff837",
+  "execution_seconds": 28.18,
+  "failure": "",
+  "final": {
+    "active_development": {},
+    "bundles": {},
+    "citizens": [
+      {
+        "destination": "(12.0, 0.0, 58.0)",
+        "id": 0,
+        "needs": {
+          "fatigue": 0.638610000000212,
+          "food": 0.462583333333313,
+          "rest_slot": -1,
+          "sheltered": true,
+          "water": 0.399425000000037
+        },
+        "path": [
+          "(-10.0, 0.0, 60.0)",
+          "(-10.0, 0.0, 56.0)",
+          "(-10.0, 0.0, 52.0)",
+          "(-6.0, 0.0, 52.0)",
+          "(-2.0, 0.0, 52.0)",
+          "(2.0, 0.0, 52.0)",
+          "(6.0, 0.0, 52.0)",
+          "(10.0, 0.0, 52.0)",
+          "(14.0, 0.0, 56.0)",
+          "(14.0, 0.0, 60.0)",
+          "(12.0, 0.0, 58.0)"
+        ],
+        "path_cursor": 8,
+        "position": "(10.45962, 0.0, 52.45962)",
+        "state": "TRAVEL",
+        "task": "FLOOR_PATROL",
+        "task_id": 5327,
+        "travelled": 20191.085610636
+      },
+      {
+        "destination": "(-12.0, 0.0, 58.0)",
+        "id": 1,
+        "needs": {
+          "fatigue": 0.210340000000214,
+          "food": 0.37049999999999,
+          "rest_slot": -1,
+          "sheltered": true,
+          "water": 0.485875000000012
+        },
+        "path": [
+          "(-10.0, 0.0, 60.0)",
+          "(-12.0, 0.0, 58.0)"
+        ],
+        "path_cursor": 1,
+        "position": "(-11.37886, 0.0, 58.62114)",
+        "state": "TRAVEL",
+        "task": "FLOOR_PATROL",
+        "task_id": 5340,
+        "travelled": 19129.3539281305
+      },
+      {
+        "destination": "(-12.0, 0.0, 34.0)",
+        "id": 2,
+        "needs": {
+          "fatigue": 0.652490000000215,
+          "food": 0.446983333333315,
+          "rest_slot": -1,
+          "sheltered": true,
+          "water": 0.490750000000013
+        },
+        "path": [
+          "(14.0, 0.0, 60.0)",
+          "(10.0, 0.0, 56.0)",
+          "(10.0, 0.0, 52.0)",
+          "(6.0, 0.0, 48.0)",
+          "(2.0, 0.0, 48.0)",
+          "(-2.0, 0.0, 48.0)",
+          "(-6.0, 0.0, 48.0)",
+          "(-10.0, 0.0, 48.0)",
+          "(-10.0, 0.0, 44.0)",
+          "(-10.0, 0.0, 40.0)",
+          "(-10.0, 0.0, 36.0)",
+          "(-12.0, 0.0, 34.0)"
+        ],
+        "path_cursor": 5,
+        "position": "(-1.9, 0.0, 48.0)",
+        "state": "TRAVEL",
+        "task": "FLOOR_PATROL",
+        "task_id": 5329,
+        "travelled": 19632.9254901834
+      },
+      {
+        "destination": "(-12.0, 0.0, 58.0)",
+        "id": 3,
+        "needs": {
+          "fatigue": 0.240240000000215,
+          "food": 0.558783333333302,
+          "rest_slot": -1,
+          "sheltered": true,
+          "water": 0.489125000000012
+        },
+        "path": [
+          "(14.0, 0.0, 60.0)",
+          "(10.0, 0.0, 56.0)",
+          "(10.0, 0.0, 52.0)",
+          "(6.0, 0.0, 52.0)",
+          "(2.0, 0.0, 52.0)",
+          "(-2.0, 0.0, 52.0)",
+          "(-6.0, 0.0, 52.0)",
+          "(-10.0, 0.0, 52.0)",
+          "(-10.0, 0.0, 56.0)",
+          "(-10.0, 0.0, 60.0)",
+          "(-12.0, 0.0, 58.0)"
+        ],
+        "path_cursor": 6,
+        "position": "(-4.6, 0.0, 52.0)",
+        "state": "TRAVEL",
+        "task": "FLOOR_PATROL",
+        "task_id": 5331,
+        "travelled": 18587.0523350373
+      },
+      {
+        "destination": "(-12.0, 0.0, 34.0)",
+        "id": 4,
+        "needs": {
+          "fatigue": 0.297910000000215,
+          "food": 0.458899999999936,
+          "rest_slot": -1,
+          "sheltered": true,
+          "water": 0.011375
+        },
+        "path": [
+          "(2.0, 0.0, 48.0)",
+          "(-2.0, 0.0, 48.0)",
+          "(-6.0, 0.0, 48.0)",
+          "(-10.0, 0.0, 48.0)",
+          "(-10.0, 0.0, 44.0)",
+          "(-10.0, 0.0, 40.0)",
+          "(-10.0, 0.0, 36.0)",
+          "(-12.0, 0.0, 34.0)"
+        ],
+        "path_cursor": 4,
+        "position": "(-10.0, 0.0, 44.74999)",
+        "state": "TRAVEL",
+        "task": "FLOOR_PATROL",
+        "task_id": 5330,
+        "travelled": 19753.2269594888
+      },
+      {
+        "destination": "(-12.0, 0.0, 34.0)",
+        "id": 5,
+        "needs": {
+          "fatigue": 0.39292000000018,
+          "food": 0.138450000000001,
+          "rest_slot": -1,
+          "sheltered": true,
+          "water": 0.03445
+        },
+        "path": [
+          "(-10.0, 0.0, 60.0)",
+          "(-10.0, 0.0, 56.0)",
+          "(-10.0, 0.0, 52.0)",
+          "(-10.0, 0.0, 48.0)",
+          "(-10.0, 0.0, 44.0)",
+          "(-10.0, 0.0, 40.0)",
+          "(-10.0, 0.0, 36.0)",
+          "(-12.0, 0.0, 34.0)"
+        ],
+        "path_cursor": 3,
+        "position": "(-10.0, 0.0, 50.7)",
+        "state": "TRAVEL",
+        "task": "FLOOR_PATROL",
+        "task_id": 5333,
+        "travelled": 16654.8621052656
+      },
+      {
+        "destination": "(-50.0, 30.0, -50.0)",
+        "id": 6,
+        "needs": {
+          "fatigue": 0.535480000000153,
+          "food": 0.129350000000001,
+          "rest_slot": -1,
+          "sheltered": true,
+          "water": 0.0409499999999999
+        },
+        "path": [
+          "(2.0, 0.0, 48.0)",
+          "(6.0, 0.0, 48.0)",
+          "(10.0, 0.0, 48.0)",
+          "(10.0, 0.0, 44.0)",
+          "(10.0, 0.0, 40.0)",
+          "(10.0, 0.0, 36.0)",
+          "(10.0, 0.0, 32.0)",
+          "(10.0, 0.0, 28.0)",
+          "(10.0, 0.0, 24.0)",
+          "(10.0, 0.0, 20.0)",
+          "(10.0, 0.0, 16.0)",
+          "(10.0, 0.0, 12.0)",
+          "(10.0, 0.0, 8.0)",
+          "(10.0, 0.0, 4.0)",
+          "(10.0, 0.0, 0.0)",
+          "(10.0, 0.0, -4.0)",
+          "(10.0, 0.0, -8.0)",
+          "(10.0, 0.0, -12.0)",
+          "(10.0, 0.0, -16.0)",
+          "(10.0, 0.0, -20.0)",
+          "(10.0, 0.0, -24.0)",
+          "(10.0, 0.0, -28.0)",
+          "(10.0, 0.0, -32.0)",
+          "(10.0, 0.0, -36.0)",
+          "(10.0, 0.0, -40.0)",
+          "(10.0, 0.0, -44.0)",
+          "(10.0, 0.0, -48.0)",
+          "(10.0, 0.0, -52.0)",
+          "(10.0, 0.6, -53.6)",
+          "(10.0, 3.2, -53.6)",
+          "(10.0, 5.8, -53.6)",
+          "(10.0, 8.4, -53.6)",
+          "(10.0, 11.0, -53.6)",
+          "(8.125, 11.44317, -53.55)",
+          "(6.25, 11.88634, -53.5)",
+          "(4.375, 12.32952, -53.45)",
+          "(2.5, 12.77269, -53.4)",
+          "(0.625, 13.23878, -53.35)",
+          "(-1.25, 13.70488, -53.3)",
+          "(-3.125, 14.17097, -53.25)",
+          "(-5.0, 14.63707, -53.2)",
+          "(-6.875, 15.14552, -53.15)",
+          "(-8.75, 15.65398, -53.1)",
+          "(-10.625, 16.16243, -53.05)",
+          "(-12.5, 16.67089, -53.0)",
+          "(-14.375, 17.23468, -52.95)",
+          "(-16.25, 17.79848, -52.9)",
+          "(-18.125, 18.36228, -52.85)",
+          "(-20.0, 18.92608, -52.8)",
+          "(-21.875, 19.54978, -52.75)",
+          "(-23.75, 20.17348, -52.7)",
+          "(-25.625, 20.79718, -52.65)",
+          "(-27.5, 21.42089, -52.6)",
+          "(-29.375, 22.09993, -52.55)",
+          "(-31.25, 22.77898, -52.5)",
+          "(-33.125, 23.45802, -52.45)",
+          "(-35.0, 24.13707, -52.4)",
+          "(-36.875, 24.85847, -52.35)",
+          "(-38.75, 25.57988, -52.3)",
+          "(-40.625, 26.30128, -52.25)",
+          "(-42.5, 27.02269, -52.2)",
+          "(-44.375, 27.76701, -52.15)",
+          "(-46.25, 28.51134, -52.1)",
+          "(-48.125, 29.25567, -52.05)",
+          "(-50.0, 30.0, -52.0)",
+          "(-50.0, 30.0, -50.0)"
+        ],
+        "path_cursor": 16,
+        "position": "(10.0, 0.0, -4.0)",
+        "state": "TRAVEL",
+        "task": "RESOURCE_COLLECT",
+        "task_id": 5314,
+        "travelled": 13807.4373065662
+      },
+      {
+        "destination": "(12.0, 0.0, 34.0)",
+        "id": 7,
+        "needs": {
+          "fatigue": 0.501300000000123,
+          "food": 0.10595,
+          "rest_slot": -1,
+          "sheltered": true,
+          "water": 0.0221
+        },
+        "path": [
+          "(14.0, 0.0, 60.0)",
+          "(14.0, 0.0, 56.0)",
+          "(14.0, 0.0, 52.0)",
+          "(14.0, 0.0, 48.0)",
+          "(14.0, 0.0, 44.0)",
+          "(14.0, 0.0, 40.0)",
+          "(14.0, 0.0, 36.0)",
+          "(12.0, 0.0, 34.0)"
+        ],
+        "path_cursor": 1,
+        "position": "(14.0, 0.0, 58.05)",
+        "state": "TRAVEL",
+        "task": "FLOOR_PATROL",
+        "task_id": 5335,
+        "travelled": 11032.6679940637
+      },
+      {
+        "destination": "(0.0, 0.0, 46.0)",
+        "id": 8,
+        "needs": {
+          "fatigue": 0.152580000000099,
+          "food": 0.112666666666667,
+          "rest_slot": -1,
+          "sheltered": true,
+          "water": 0.681200000000024
+        },
+        "path": [
+          "(-14.0, 0.0, 88.0)",
+          "(-14.0, 0.0, 84.0)",
+          "(-14.0, 0.0, 80.0)",
+          "(-10.0, 0.0, 76.0)",
+          "(-10.0, 0.0, 72.0)",
+          "(-10.0, 0.0, 68.0)",
+          "(-10.0, 0.0, 64.0)",
+          "(-10.0, 0.0, 60.0)",
+          "(-10.0, 0.0, 56.0)",
+          "(-10.0, 0.0, 52.0)",
+          "(-6.0, 0.0, 52.0)",
+          "(-2.0, 0.0, 48.0)",
+          "(2.0, 0.0, 48.0)",
+          "(0.0, 0.0, 46.0)"
+        ],
+        "path_cursor": 3,
+        "position": "(-12.16152, 0.0, 78.16153)",
+        "state": "TRAVEL",
+        "task": "NEED_DRINK",
+        "task_id": 5339,
+        "travelled": 9242.93522980572
+      },
+      {
+        "destination": "(-12.0, 0.0, 34.0)",
+        "id": 9,
+        "needs": {
+          "fatigue": 0.284460000000073,
+          "food": 0.061533333333333,
+          "rest_slot": -1,
+          "sheltered": true,
+          "water": 0.600600000000019
+        },
+        "path": [
+          "(14.0, 0.0, 36.0)",
+          "(10.0, 0.0, 32.0)",
+          "(10.0, 0.0, 28.0)",
+          "(6.0, 0.0, 28.0)",
+          "(2.0, 0.0, 28.0)",
+          "(-2.0, 0.0, 28.0)",
+          "(-6.0, 0.0, 28.0)",
+          "(-10.0, 0.0, 28.0)",
+          "(-10.0, 0.0, 32.0)",
+          "(-10.0, 0.0, 36.0)",
+          "(-12.0, 0.0, 34.0)"
+        ],
+        "path_cursor": 7,
+        "position": "(-9.9, 0.0, 28.0)",
+        "state": "TRAVEL",
+        "task": "FLOOR_PATROL",
+        "task_id": 5328,
+        "travelled": 6614.01502009237
+      },
+      {
+        "destination": "(-12.0, 0.0, 34.0)",
+        "id": 10,
+        "needs": {
+          "fatigue": 0.643290000000042,
+          "food": 0.39758333333332,
+          "rest_slot": -1,
+          "sheltered": true,
+          "water": 0.258699999999998
+        },
+        "path": [
+          "(-10.0, 0.0, 60.0)",
+          "(-10.0, 0.0, 56.0)",
+          "(-10.0, 0.0, 52.0)",
+          "(-10.0, 0.0, 48.0)",
+          "(-10.0, 0.0, 44.0)",
+          "(-10.0, 0.0, 40.0)",
+          "(-10.0, 0.0, 36.0)",
+          "(-12.0, 0.0, 34.0)"
+        ],
+        "path_cursor": 1,
+        "position": "(-10.0, 0.0, 58.7)",
+        "state": "TRAVEL",
+        "task": "FLOOR_PATROL",
+        "task_id": 5337,
+        "travelled": 4089.18480685094
+      },
+      {
+        "destination": "(12.0, 0.0, 34.0)",
+        "id": 11,
+        "needs": {
+          "fatigue": 0.297730000000018,
+          "food": 0.373316666666656,
+          "rest_slot": -1,
+          "sheltered": true,
+          "water": 0.215799999999999
+        },
+        "path": [
+          "(-10.0, 0.0, 36.0)",
+          "(-10.0, 0.0, 32.0)",
+          "(-10.0, 0.0, 28.0)",
+          "(-6.0, 0.0, 28.0)",
+          "(-2.0, 0.0, 28.0)",
+          "(2.0, 0.0, 28.0)",
+          "(6.0, 0.0, 28.0)",
+          "(10.0, 0.0, 28.0)",
+          "(14.0, 0.0, 32.0)",
+          "(14.0, 0.0, 36.0)",
+          "(12.0, 0.0, 34.0)"
+        ],
+        "path_cursor": 0,
+        "position": "(-11.08076, 0.0, 34.91924)",
+        "state": "TRAVEL",
+        "task": "FLOOR_PATROL",
+        "task_id": 5336,
+        "travelled": 1630.39890598958
+      }
+    ],
+    "connections": [
+      {
+        "from": "FLOOR",
+        "path": [
+          "(10.0, 0.0, -52.0)",
+          "(10.0, 0.6, -53.6)",
+          "(10.0, 3.2, -53.6)",
+          "(10.0, 5.8, -53.6)",
+          "(10.0, 8.4, -53.6)",
+          "(10.0, 11.0, -53.6)",
+          "(8.125, 11.44317, -53.55)",
+          "(6.25, 11.88634, -53.5)",
+          "(4.375, 12.32952, -53.45)",
+          "(2.5, 12.77269, -53.4)",
+          "(0.625, 13.23878, -53.35)",
+          "(-1.25, 13.70488, -53.3)",
+          "(-3.125, 14.17097, -53.25)",
+          "(-5.0, 14.63707, -53.2)",
+          "(-6.875, 15.14552, -53.15)",
+          "(-8.75, 15.65398, -53.1)",
+          "(-10.625, 16.16243, -53.05)",
+          "(-12.5, 16.67089, -53.0)",
+          "(-14.375, 17.23468, -52.95)",
+          "(-16.25, 17.79848, -52.9)",
+          "(-18.125, 18.36228, -52.85)",
+          "(-20.0, 18.92608, -52.8)",
+          "(-21.875, 19.54978, -52.75)",
+          "(-23.75, 20.17348, -52.7)",
+          "(-25.625, 20.79718, -52.65)",
+          "(-27.5, 21.42089, -52.6)",
+          "(-29.375, 22.09993, -52.55)",
+          "(-31.25, 22.77898, -52.5)",
+          "(-33.125, 23.45802, -52.45)",
+          "(-35.0, 24.13707, -52.4)",
+          "(-36.875, 24.85847, -52.35)",
+          "(-38.75, 25.57988, -52.3)",
+          "(-40.625, 26.30128, -52.25)",
+          "(-42.5, 27.02269, -52.2)",
+          "(-44.375, 27.76701, -52.15)",
+          "(-46.25, 28.51134, -52.1)",
+          "(-48.125, 29.25567, -52.05)",
+          "(-50.0, 30.0, -52.0)"
+        ],
+        "to": "STUDY_SURFACE"
+      }
+    ],
+    "governor": {
+      "emergency": false,
+      "mode": "STABLE",
+      "reason": "Reserves recovered; assess shelter and finite carrying capacity",
+      "rejections": {
+        "bookcase": "depleted",
+        "desk": "resource source support",
+        "side_table": "depleted"
+      }
+    },
+    "growth_events": [
+      {
+        "after": 6,
+        "before": 5,
+        "centroid": "(-2.0, 0.0, 88.0)",
+        "food_days_after": 2.83333333333333,
+        "food_days_before": 3.4,
+        "positions": [
+          "(-2.0, 0.0, 88.0)"
+        ],
+        "seconds": 765.000000000105,
+        "shelter": 15,
+        "stable_seconds": 300.000000000068,
+        "water_days_after": 2.77777777777778,
+        "water_days_before": 3.33333333333333
+      },
+      {
+        "after": 7,
+        "before": 6,
+        "centroid": "(-2.0, 0.0, 88.0)",
+        "food_days_after": 2.64285714285714,
+        "food_days_before": 3.08333333333333,
+        "positions": [
+          "(-2.0, 0.0, 88.0)"
+        ],
+        "seconds": 1369.99999999985,
+        "shelter": 15,
+        "stable_seconds": 469.999999999713,
+        "water_days_after": 2.52380952380952,
+        "water_days_before": 2.94444444444444
+      },
+      {
+        "after": 8,
+        "before": 7,
+        "centroid": "(-2.0, 0.0, 88.0)",
+        "food_days_after": 2.875,
+        "food_days_before": 3.28571428571429,
+        "positions": [
+          "(-2.0, 0.0, 88.0)"
+        ],
+        "seconds": 1974.9999999993,
+        "shelter": 15,
+        "stable_seconds": 604.99999999945,
+        "water_days_after": 2.66666666666667,
+        "water_days_before": 3.04761904761905
+      },
+      {
+        "after": 9,
+        "before": 8,
+        "centroid": "(-2.0, 0.0, 88.0)",
+        "food_days_after": 2.94444444444444,
+        "food_days_before": 3.3125,
+        "positions": [
+          "(-2.0, 0.0, 88.0)"
+        ],
+        "seconds": 2579.99999999875,
+        "shelter": 15,
+        "stable_seconds": 604.99999999945,
+        "water_days_after": 2.66666666666667,
+        "water_days_before": 3.0
+      },
+      {
+        "after": 10,
+        "before": 9,
+        "centroid": "(-2.0, 0.0, 88.0)",
+        "food_days_after": 2.85,
+        "food_days_before": 3.16666666666667,
+        "positions": [
+          "(-2.0, 0.0, 88.0)"
+        ],
+        "seconds": 3184.9999999982,
+        "shelter": 15,
+        "stable_seconds": 604.99999999945,
+        "water_days_after": 2.83333333333333,
+        "water_days_before": 3.14814814814815
+      },
+      {
+        "after": 11,
+        "before": 10,
+        "centroid": "(-2.0, 0.0, 88.0)",
+        "food_days_after": 2.77272727272727,
+        "food_days_before": 3.05,
+        "positions": [
+          "(-2.0, 0.0, 88.0)"
+        ],
+        "seconds": 3789.99999999765,
+        "shelter": 15,
+        "stable_seconds": 604.99999999945,
+        "water_days_after": 2.87878787878788,
+        "water_days_before": 3.16666666666667
+      },
+      {
+        "after": 12,
+        "before": 11,
+        "centroid": "(-2.0, 0.0, 88.0)",
+        "food_days_after": 2.95833333333333,
+        "food_days_before": 3.22727272727273,
+        "positions": [
+          "(-2.0, 0.0, 88.0)"
+        ],
+        "seconds": 4389.99999999844,
+        "shelter": 15,
+        "stable_seconds": 600.000000000791,
+        "water_days_after": 2.83333333333333,
+        "water_days_before": 3.09090909090909
+      }
+    ],
+    "growth_reason": "Cohort cooldown",
+    "journal": [
+      {
+        "day": 0.0,
+        "evidence": {
+          "population": 5
+        },
+        "focus": "(0.0, 0.0, 46.0)",
+        "id": 1,
+        "kind": "founders_arrived",
+        "major": false,
+        "message": "Founders arrived",
+        "seconds": 0.0
+      },
+      {
+        "day": 0.00833333333333333,
+        "evidence": {
+          "days": 0.00833333333333333,
+          "drinks": 0,
+          "economy": {
+            "food": {
+              "available": 20.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "metal": {
+              "available": 0.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "water": {
+              "available": 30.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "wood": {
+              "available": 0.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            }
+          },
+          "food_days": 2.0,
+          "meals": 0,
+          "population": 5,
+          "resting": 0,
+          "rests": 0,
+          "shelter": 0,
+          "urgent": 0,
+          "water_days": 2.0
+        },
+        "focus": "(0.0, 0.0, 0.0)",
+        "id": 2,
+        "kind": "governor",
+        "major": false,
+        "message": "STABLE: Reserves recovered; assess shelter and finite carrying capacity",
+        "seconds": 5.0
+      },
+      {
+        "day": 0.00833333333333333,
+        "evidence": {
+          "completed": -1.0,
+          "created": 5.0,
+          "delivered": {
+            "metal": 0.0,
+            "wood": 0.0
+          },
+          "delivery_distance": 0.0,
+          "effect_applied": false,
+          "id": "development_001",
+          "kind": "shelter",
+          "required": {
+            "metal": 0,
+            "wood": 4
+          },
+          "required_work": 60.0,
+          "site": "(0.0, 0.0, 62.0)",
+          "stage": "FOUNDATION",
+          "state": "PLANNED",
+          "target": "(0.0, 0.0, 71.0)",
+          "work": 0.0,
+          "work_by_citizen": {}
+        },
+        "focus": "(0.0, 0.0, 62.0)",
+        "id": 3,
+        "kind": "development_started",
+        "major": false,
+        "message": "Shelter project development_001",
+        "seconds": 5.0
+      },
+      {
+        "day": 0.00833333333333333,
+        "evidence": {
+          "days": 0.00833333333333333,
+          "drinks": 0,
+          "economy": {
+            "food": {
+              "available": 20.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "metal": {
+              "available": 0.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "water": {
+              "available": 30.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "wood": {
+              "available": 0.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            }
+          },
+          "food_days": 2.0,
+          "meals": 0,
+          "population": 5,
+          "resting": 0,
+          "rests": 0,
+          "shelter": 0,
+          "urgent": 0,
+          "water_days": 2.0
+        },
+        "focus": "(0.0, 0.0, 46.0)",
+        "id": 4,
+        "kind": "growth_paused",
+        "major": false,
+        "message": "Settlement infrastructure not yet established",
+        "seconds": 5.0
+      },
+      {
+        "day": 0.0166666666666666,
+        "evidence": {
+          "days": 0.0166666666666666,
+          "drinks": 0,
+          "economy": {
+            "food": {
+              "available": 20.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "metal": {
+              "available": 0.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "water": {
+              "available": 30.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "wood": {
+              "available": 0.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            }
+          },
+          "food_days": 2.0,
+          "meals": 0,
+          "population": 5,
+          "resting": 0,
+          "rests": 0,
+          "shelter": 0,
+          "urgent": 0,
+          "water_days": 2.0
+        },
+        "focus": "(0.0, 0.0, 0.0)",
+        "id": 5,
+        "kind": "governor",
+        "major": false,
+        "message": "MATERIALS: Approved project needs wood/metal: { \"wood\": 4.0, \"metal\": 0.0 }",
+        "seconds": 9.99999999999998
+      },
+      {
+        "day": 0.0166666666666666,
+        "evidence": {
+          "rejections": {
+            "desk": "resource source support"
+          },
+          "score": 1177.40070495605,
+          "shortage": {
+            "metal": 0.0,
+            "wood": 4.0
+          }
+        },
+        "focus": "(91.0, 0.0, -63.0)",
+        "id": 6,
+        "kind": "salvage_authorized",
+        "major": true,
+        "message": "Safe salvage authorized: bookcase",
+        "seconds": 9.99999999999998
+      },
+      {
+        "day": 0.0786666666666673,
+        "evidence": {
+          "object": "bookcase",
+          "yields": {
+            "metal": 2.0
+          }
+        },
+        "focus": "(74.78, 0.0, -63.0)",
+        "id": 7,
+        "kind": "first_salvage",
+        "major": false,
+        "message": "First material recovered",
+        "seconds": 47.2000000000004
+      },
+      {
+        "day": 0.149999999999999,
+        "evidence": {
+          "days": 0.149999999999999,
+          "drinks": 0,
+          "economy": {
+            "food": {
+              "available": 36.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 16.0,
+              "reserved": 0.0
+            },
+            "metal": {
+              "available": 4.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 4.0,
+              "reserved": 0.0
+            },
+            "water": {
+              "available": 30.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "wood": {
+              "available": 11.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 1.0,
+              "received": 12.0,
+              "reserved": 0.0
+            }
+          },
+          "food_days": 3.6,
+          "meals": 0,
+          "population": 5,
+          "resting": 0,
+          "rests": 0,
+          "shelter": 0,
+          "urgent": 0,
+          "water_days": 2.0
+        },
+        "focus": "(0.0, 0.0, 0.0)",
+        "id": 8,
+        "kind": "governor",
+        "major": false,
+        "message": "STABLE: Reserves recovered; assess shelter and finite carrying capacity",
+        "seconds": 89.9999999999992
+      },
+      {
+        "day": 0.173666666666664,
+        "evidence": {
+          "authorized": true,
+          "progress": 0.0,
+          "stage": 4,
+          "stages": [
+            {
+              "name": "STRIPPED",
+              "work": 8.0,
+              "yields": {
+                "metal": 2.0
+              }
+            },
+            {
+              "name": "PARTIAL",
+              "work": 12.0,
+              "yields": {
+                "metal": 2.0,
+                "wood": 12.0
+              }
+            },
+            {
+              "name": "FRAME",
+              "work": 12.0,
+              "yields": {
+                "wood": 9.0
+              }
+            },
+            {
+              "name": "DEPLETED",
+              "work": 10.0,
+              "yields": {
+                "wood": 11.0
+              }
+            }
+          ],
+          "state": "DEPLETED",
+          "work": 42.0000000000003,
+          "yielded": {
+            "metal": 4.0,
+            "wood": 32.0
+          }
+        },
+        "focus": "(91.0, 0.0, -63.0)",
+        "id": 9,
+        "kind": "object_depleted",
+        "major": false,
+        "message": "Object depleted: bookcase",
+        "seconds": 104.199999999998
+      },
+      {
+        "day": 0.18983333333333,
+        "evidence": {
+          "completed": -1.0,
+          "created": 5.0,
+          "delivered": {
+            "metal": 0.0,
+            "wood": 4.0
+          },
+          "delivery_distance": 116.257771897312,
+          "effect_applied": false,
+          "id": "development_001",
+          "kind": "shelter",
+          "required": {
+            "metal": 0,
+            "wood": 4
+          },
+          "required_work": 60.0,
+          "site": "(0.0, 0.0, 62.0)",
+          "stage": "FOUNDATION",
+          "state": "SUPPLIED",
+          "target": "(0.0, 0.0, 71.0)",
+          "work": 0.0,
+          "work_by_citizen": {}
+        },
+        "focus": "(0.0, 0.0, 62.0)",
+        "id": 10,
+        "kind": "materials_supplied",
+        "major": false,
+        "message": "Materials supplied: development_001",
+        "seconds": 113.899999999998
+      },
+      {
+        "day": 0.191666666666663,
+        "evidence": {
+          "days": 0.191666666666663,
+          "drinks": 0,
+          "economy": {
+            "food": {
+              "available": 36.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 16.0,
+              "reserved": 0.0
+            },
+            "metal": {
+              "available": 4.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 4.0,
+              "reserved": 0.0
+            },
+            "water": {
+              "available": 29.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 1.0
+            },
+            "wood": {
+              "available": 8.0,
+              "consumed": 0.0,
+              "delivered": 4.0,
+              "in_transit": 0.0,
+              "received": 12.0,
+              "reserved": 0.0
+            }
+          },
+          "food_days": 3.6,
+          "meals": 0,
+          "population": 5,
+          "resting": 0,
+          "rests": 0,
+          "shelter": 0,
+          "urgent": 0,
+          "water_days": 1.93333333333333
+        },
+        "focus": "(0.0, 0.0, 46.0)",
+        "id": 11,
+        "kind": "directive",
+        "major": false,
+        "message": "Secure Water",
+        "seconds": 114.999999999998
+      },
+      {
+        "day": 0.254999999999993,
+        "evidence": {
+          "project": "development_001",
+          "shelter": 5
+        },
+        "focus": "(0.0, 0.0, 62.0)",
+        "id": 12,
+        "kind": "shelter_increased",
+        "major": false,
+        "message": "Shelter capacity increased to 5",
+        "seconds": 152.999999999996
+      },
+      {
+        "day": 0.254999999999993,
+        "evidence": {
+          "completed": 152.999999999996,
+          "created": 5.0,
+          "delivered": {
+            "metal": 0.0,
+            "wood": 4.0
+          },
+          "delivery_distance": 116.257771897312,
+          "effect_applied": true,
+          "id": "development_001",
+          "kind": "shelter",
+          "required": {
+            "metal": 0,
+            "wood": 4
+          },
+          "required_work": 60.0,
+          "site": "(0.0, 0.0, 62.0)",
+          "stage": "COMPLETE",
+          "state": "COMPLETE",
+          "target": "(0.0, 0.0, 71.0)",
+          "work": 60.0000000000006,
+          "work_by_citizen": {
+            "1": 33.9000000000002,
+            "4": 26.1000000000001
+          }
+        },
+        "focus": "(0.0, 0.0, 62.0)",
+        "id": 13,
+        "kind": "structure_complete",
+        "major": true,
+        "message": "Shelter complete: development_001",
+        "seconds": 152.999999999996
+      },
+      {
+        "day": 0.258333333333326,
+        "evidence": {
+          "completed": -1.0,
+          "created": 154.999999999995,
+          "delivered": {
+            "metal": 0.0,
+            "wood": 0.0
+          },
+          "delivery_distance": 0.0,
+          "effect_applied": false,
+          "id": "development_002",
+          "kind": "depot",
+          "required": {
+            "metal": 1,
+            "wood": 4
+          },
+          "required_work": 70.0,
+          "site": "(0.0, 0.0, 37.0)",
+          "stage": "FOUNDATION",
+          "state": "PLANNED",
+          "target": "(10.0, 0.0, 37.0)",
+          "work": 0.0,
+          "work_by_citizen": {}
+        },
+        "focus": "(0.0, 0.0, 37.0)",
+        "id": 14,
+        "kind": "development_started",
+        "major": false,
+        "message": "Depot project development_002",
+        "seconds": 154.999999999995
+      },
+      {
+        "day": 0.279166666666658,
+        "evidence": {
+          "completed": -1.0,
+          "created": 154.999999999995,
+          "delivered": {
+            "metal": 1.0,
+            "wood": 4.0
+          },
+          "delivery_distance": 95.7106534540623,
+          "effect_applied": false,
+          "id": "development_002",
+          "kind": "depot",
+          "required": {
+            "metal": 1,
+            "wood": 4
+          },
+          "required_work": 70.0,
+          "site": "(0.0, 0.0, 37.0)",
+          "stage": "FOUNDATION",
+          "state": "SUPPLIED",
+          "target": "(10.0, 0.0, 37.0)",
+          "work": 0.0,
+          "work_by_citizen": {}
+        },
+        "focus": "(0.0, 0.0, 37.0)",
+        "id": 15,
+        "kind": "materials_supplied",
+        "major": false,
+        "message": "Materials supplied: development_002",
+        "seconds": 167.499999999995
+      },
+      {
+        "day": 0.345499999999988,
+        "evidence": {
+          "completed": 207.299999999993,
+          "created": 154.999999999995,
+          "delivered": {
+            "metal": 1.0,
+            "wood": 4.0
+          },
+          "delivery_distance": 95.7106534540623,
+          "effect_applied": true,
+          "id": "development_002",
+          "kind": "depot",
+          "required": {
+            "metal": 1,
+            "wood": 4
+          },
+          "required_work": 70.0,
+          "site": "(0.0, 0.0, 37.0)",
+          "stage": "COMPLETE",
+          "state": "COMPLETE",
+          "target": "(10.0, 0.0, 37.0)",
+          "work": 74.0000000000001,
+          "work_by_citizen": {
+            "1": 34.8000000000002,
+            "4": 39.2000000000003
+          }
+        },
+        "focus": "(0.0, 0.0, 37.0)",
+        "id": 16,
+        "kind": "structure_complete",
+        "major": true,
+        "message": "Depot complete: development_002",
+        "seconds": 207.299999999993
+      },
+      {
+        "day": 0.366666666666653,
+        "evidence": {
+          "completed": -1.0,
+          "created": 219.999999999992,
+          "delivered": {
+            "metal": 0.0,
+            "wood": 0.0
+          },
+          "delivery_distance": 0.0,
+          "effect_applied": false,
+          "id": "development_003",
+          "kind": "workshop",
+          "required": {
+            "metal": 4,
+            "wood": 8
+          },
+          "required_work": 100.0,
+          "site": "(0.0, 0.0, 14.0)",
+          "stage": "FOUNDATION",
+          "state": "PLANNED",
+          "target": "(0.0, 0.0, 23.0)",
+          "work": 0.0,
+          "work_by_citizen": {}
+        },
+        "focus": "(0.0, 0.0, 14.0)",
+        "id": 17,
+        "kind": "development_started",
+        "major": false,
+        "message": "Workshop project development_003",
+        "seconds": 219.999999999992
+      },
+      {
+        "day": 0.374999999999986,
+        "evidence": {
+          "days": 0.374999999999986,
+          "drinks": 5,
+          "economy": {
+            "food": {
+              "available": 33.0,
+              "consumed": 3.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 16.0,
+              "reserved": 0.0
+            },
+            "metal": {
+              "available": 3.0,
+              "consumed": 1.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 4.0,
+              "reserved": 0.0
+            },
+            "water": {
+              "available": 49.0,
+              "consumed": 5.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 24.0,
+              "reserved": 0.0
+            },
+            "wood": {
+              "available": 19.0,
+              "consumed": 8.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 32.0,
+              "reserved": 5.0
+            }
+          },
+          "food_days": 3.3,
+          "meals": 3,
+          "population": 5,
+          "resting": 0,
+          "rests": 0,
+          "shelter": 5,
+          "urgent": 0,
+          "water_days": 3.26666666666667
+        },
+        "focus": "(0.0, 0.0, 0.0)",
+        "id": 18,
+        "kind": "governor",
+        "major": false,
+        "message": "MATERIALS: Approved project needs wood/metal: { \"wood\": 0.0, \"metal\": 1.0 }",
+        "seconds": 224.999999999992
+      },
+      {
+        "day": 0.374999999999986,
+        "evidence": {
+          "rejections": {
+            "bookcase": "depleted",
+            "desk": "resource source support"
+          },
+          "score": 184.516921234131,
+          "shortage": {
+            "metal": 1.0,
+            "wood": 0.0
+          }
+        },
+        "focus": "(36.0, 0.0, -15.0)",
+        "id": 19,
+        "kind": "salvage_authorized",
+        "major": true,
+        "message": "Safe salvage authorized: side_table",
+        "seconds": 224.999999999992
+      },
+      {
+        "day": 0.474999999999994,
+        "evidence": {
+          "days": 0.474999999999994,
+          "drinks": 5,
+          "economy": {
+            "food": {
+              "available": 31.0,
+              "consumed": 5.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 16.0,
+              "reserved": 0.0
+            },
+            "metal": {
+              "available": 1.0,
+              "consumed": 1.0,
+              "delivered": 3.0,
+              "in_transit": 1.0,
+              "received": 6.0,
+              "reserved": 0.0
+            },
+            "water": {
+              "available": 49.0,
+              "consumed": 5.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 24.0,
+              "reserved": 0.0
+            },
+            "wood": {
+              "available": 16.0,
+              "consumed": 8.0,
+              "delivered": 8.0,
+              "in_transit": 0.0,
+              "received": 32.0,
+              "reserved": 0.0
+            }
+          },
+          "food_days": 3.1,
+          "meals": 5,
+          "population": 5,
+          "resting": 0,
+          "rests": 0,
+          "shelter": 5,
+          "urgent": 0,
+          "water_days": 3.26666666666667
+        },
+        "focus": "(0.0, 0.0, 0.0)",
+        "id": 20,
+        "kind": "governor",
+        "major": false,
+        "message": "STABLE: Reserves recovered; assess shelter and finite carrying capacity",
+        "seconds": 284.999999999996
+      },
+      {
+        "day": 0.483999999999996,
+        "evidence": {
+          "completed": -1.0,
+          "created": 219.999999999992,
+          "delivered": {
+            "metal": 4.0,
+            "wood": 8.0
+          },
+          "delivery_distance": 512.655754351654,
+          "effect_applied": false,
+          "id": "development_003",
+          "kind": "workshop",
+          "required": {
+            "metal": 4,
+            "wood": 8
+          },
+          "required_work": 100.0,
+          "site": "(0.0, 0.0, 14.0)",
+          "stage": "FOUNDATION",
+          "state": "SUPPLIED",
+          "target": "(0.0, 0.0, 23.0)",
+          "work": 0.0,
+          "work_by_citizen": {}
+        },
+        "focus": "(0.0, 0.0, 14.0)",
+        "id": 21,
+        "kind": "materials_supplied",
+        "major": false,
+        "message": "Materials supplied: development_003",
+        "seconds": 290.399999999998
+      },
+      {
+        "day": 0.498833333333333,
+        "evidence": {
+          "authorized": true,
+          "progress": 0.0,
+          "stage": 4,
+          "stages": [
+            {
+              "name": "STRIPPED",
+              "work": 8.0,
+              "yields": {
+                "metal": 2.0
+              }
+            },
+            {
+              "name": "PARTIAL",
+              "work": 12.0,
+              "yields": {
+                "metal": 2.0,
+                "wood": 3.0
+              }
+            },
+            {
+              "name": "FRAME",
+              "work": 12.0,
+              "yields": {
+                "wood": 2.0
+              }
+            },
+            {
+              "name": "DEPLETED",
+              "work": 10.0,
+              "yields": {
+                "wood": 3.0
+              }
+            }
+          ],
+          "state": "DEPLETED",
+          "work": 42.0000000000003,
+          "yielded": {
+            "metal": 4.0,
+            "wood": 8.0
+          }
+        },
+        "focus": "(36.0, 0.0, -15.0)",
+        "id": 22,
+        "kind": "object_depleted",
+        "major": false,
+        "message": "Object depleted: side_table",
+        "seconds": 299.3
+      },
+      {
+        "day": 0.588833333333353,
+        "evidence": {},
+        "focus": "(0.0, 0.0, 14.0)",
+        "id": 23,
+        "kind": "advanced_available",
+        "major": false,
+        "message": "Workshop enables advanced construction",
+        "seconds": 353.300000000012
+      },
+      {
+        "day": 0.588833333333353,
+        "evidence": {
+          "completed": 353.300000000012,
+          "created": 219.999999999992,
+          "delivered": {
+            "metal": 4.0,
+            "wood": 8.0
+          },
+          "delivery_distance": 512.655754351654,
+          "effect_applied": true,
+          "id": "development_003",
+          "kind": "workshop",
+          "required": {
+            "metal": 4,
+            "wood": 8
+          },
+          "required_work": 100.0,
+          "site": "(0.0, 0.0, 14.0)",
+          "stage": "COMPLETE",
+          "state": "COMPLETE",
+          "target": "(0.0, 0.0, 23.0)",
+          "work": 100.019999999999,
+          "work_by_citizen": {
+            "1": 41.0000000000003,
+            "3": 59.0200000000007
+          }
+        },
+        "focus": "(0.0, 0.0, 14.0)",
+        "id": 24,
+        "kind": "structure_complete",
+        "major": true,
+        "message": "Workshop complete: development_003",
+        "seconds": 353.300000000012
+      },
+      {
+        "day": 0.591666666666687,
+        "evidence": {
+          "completed": -1.0,
+          "created": 355.000000000012,
+          "delivered": {
+            "metal": 0.0,
+            "wood": 0.0
+          },
+          "delivery_distance": 0.0,
+          "effect_applied": false,
+          "id": "development_004",
+          "kind": "housing",
+          "required": {
+            "metal": 2,
+            "wood": 10
+          },
+          "required_work": 76.5,
+          "site": "(-32.0, 0.0, 46.0)",
+          "stage": "FOUNDATION",
+          "state": "PLANNED",
+          "target": "(-32.0, 0.0, 55.0)",
+          "work": 0.0,
+          "work_by_citizen": {}
+        },
+        "focus": "(-32.0, 0.0, 46.0)",
+        "id": 25,
+        "kind": "development_started",
+        "major": false,
+        "message": "Housing project development_004",
+        "seconds": 355.000000000012
+      },
+      {
+        "day": 0.591666666666687,
+        "evidence": {
+          "days": 0.591666666666687,
+          "drinks": 8,
+          "economy": {
+            "food": {
+              "available": 31.0,
+              "consumed": 5.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 16.0,
+              "reserved": 0.0
+            },
+            "metal": {
+              "available": 3.0,
+              "consumed": 5.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 8.0,
+              "reserved": 0.0
+            },
+            "water": {
+              "available": 44.0,
+              "consumed": 8.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 24.0,
+              "reserved": 2.0
+            },
+            "wood": {
+              "available": 24.0,
+              "consumed": 16.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 40.0,
+              "reserved": 0.0
+            }
+          },
+          "food_days": 3.1,
+          "meals": 5,
+          "population": 5,
+          "resting": 1,
+          "rests": 1,
+          "shelter": 5,
+          "urgent": 1,
+          "water_days": 2.93333333333333
+        },
+        "focus": "(0.0, 0.0, 71.0)",
+        "id": 26,
+        "kind": "growth_paused",
+        "major": false,
+        "message": "Insufficient shelter for entire cohort",
+        "seconds": 355.000000000012
+      },
+      {
+        "day": 0.696166666666711,
+        "evidence": {
+          "completed": -1.0,
+          "created": 355.000000000012,
+          "delivered": {
+            "metal": 2.0,
+            "wood": 10.0
+          },
+          "delivery_distance": 484.538516950672,
+          "effect_applied": false,
+          "id": "development_004",
+          "kind": "housing",
+          "required": {
+            "metal": 2,
+            "wood": 10
+          },
+          "required_work": 76.5,
+          "site": "(-32.0, 0.0, 46.0)",
+          "stage": "FOUNDATION",
+          "state": "SUPPLIED",
+          "target": "(-32.0, 0.0, 55.0)",
+          "work": 0.0,
+          "work_by_citizen": {}
+        },
+        "focus": "(-32.0, 0.0, 46.0)",
+        "id": 27,
+        "kind": "materials_supplied",
+        "major": false,
+        "message": "Materials supplied: development_004",
+        "seconds": 417.700000000026
+      },
+      {
+        "day": 0.768333333333394,
+        "evidence": {
+          "project": "development_004",
+          "shelter": 15
+        },
+        "focus": "(-32.0, 0.0, 46.0)",
+        "id": 28,
+        "kind": "shelter_increased",
+        "major": false,
+        "message": "Shelter capacity increased to 15",
+        "seconds": 461.000000000036
+      },
+      {
+        "day": 0.768333333333394,
+        "evidence": {
+          "completed": 461.000000000036,
+          "created": 355.000000000012,
+          "delivered": {
+            "metal": 2.0,
+            "wood": 10.0
+          },
+          "delivery_distance": 484.538516950672,
+          "effect_applied": true,
+          "id": "development_004",
+          "kind": "housing",
+          "required": {
+            "metal": 2,
+            "wood": 10
+          },
+          "required_work": 76.5,
+          "site": "(-32.0, 0.0, 46.0)",
+          "stage": "COMPLETE",
+          "state": "COMPLETE",
+          "target": "(-32.0, 0.0, 55.0)",
+          "work": 76.5999999999999,
+          "work_by_citizen": {
+            "1": 34.4000000000002,
+            "3": 42.2000000000003
+          }
+        },
+        "focus": "(-32.0, 0.0, 46.0)",
+        "id": 29,
+        "kind": "structure_complete",
+        "major": true,
+        "message": "Housing complete: development_004",
+        "seconds": 461.000000000036
+      },
+      {
+        "day": 1.27500000000018,
+        "evidence": {
+          "after": 6,
+          "before": 5,
+          "centroid": "(-2.0, 0.0, 88.0)",
+          "food_days_after": 2.83333333333333,
+          "food_days_before": 3.4,
+          "positions": [
+            "(-2.0, 0.0, 88.0)"
+          ],
+          "seconds": 765.000000000105,
+          "shelter": 15,
+          "stable_seconds": 300.000000000068,
+          "water_days_after": 2.77777777777778,
+          "water_days_before": 3.33333333333333
+        },
+        "focus": "(-2.0, 0.0, 88.0)",
+        "id": 30,
+        "kind": "cohort_joined",
+        "major": true,
+        "message": "New cohort joined: 6 real citizens",
+        "seconds": 765.000000000105
+      },
+      {
+        "day": 1.30000000000018,
+        "evidence": {
+          "extracted": {
+            "water": 45.0
+          },
+          "initial": {
+            "water": 45.0
+          },
+          "position": "(-40.0, 0.0, 72.0)",
+          "region": "FLOOR",
+          "remaining": {
+            "water": 0.0
+          },
+          "reserved": {
+            "water": 0.0
+          },
+          "work": 2.0
+        },
+        "focus": "(-40.0, 0.0, 72.0)",
+        "id": 31,
+        "kind": "source_exhausted",
+        "major": true,
+        "message": "Finite source exhausted: spilled_water / water",
+        "seconds": 780.000000000109
+      },
+      {
+        "day": 1.35000000000019,
+        "evidence": {
+          "active_stage": "locked",
+          "cable_deployed": false,
+          "completed_stages": 0,
+          "created": true,
+          "delivered": {
+            "mechanical_parts": 0,
+            "metal": 0,
+            "wood": 0
+          },
+          "floor_target_connected": false,
+          "picked_up": {
+            "mechanical_parts": 0,
+            "metal": 0,
+            "wood": 0
+          },
+          "progress_percent": 0.0,
+          "required": {
+            "mechanical_parts": 0,
+            "metal": 4,
+            "wood": 4
+          },
+          "site": "(10.0, 0.0, -52.0)",
+          "stage_gates": [],
+          "stage_progress": 0.0,
+          "state": "WAITING_FOR_MATERIALS",
+          "stockpile": {
+            "mechanical_parts": 0,
+            "metal": 1.0,
+            "wood": 12.0
+          },
+          "traversal": {}
+        },
+        "focus": "(10.0, 0.0, -52.0)",
+        "id": 32,
+        "kind": "traversal_started",
+        "major": false,
+        "message": "Traversal project started",
+        "seconds": 810.000000000116
+      },
+      {
+        "day": 1.35000000000019,
+        "evidence": {
+          "days": 1.35000000000019,
+          "drinks": 20,
+          "economy": {
+            "food": {
+              "available": 39.0,
+              "consumed": 11.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 32.0,
+              "reserved": 2.0
+            },
+            "metal": {
+              "available": 1.0,
+              "consumed": 7.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 8.0,
+              "reserved": 0.0
+            },
+            "water": {
+              "available": 55.0,
+              "consumed": 20.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 45.0,
+              "reserved": 0.0
+            },
+            "wood": {
+              "available": 12.0,
+              "consumed": 26.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 40.0,
+              "reserved": 2.0
+            }
+          },
+          "food_days": 3.25,
+          "meals": 11,
+          "population": 6,
+          "resting": 0,
+          "rests": 10,
+          "shelter": 15,
+          "urgent": 0,
+          "water_days": 3.05555555555556
+        },
+        "focus": "(0.0, 0.0, 0.0)",
+        "id": 33,
+        "kind": "governor",
+        "major": false,
+        "message": "MATERIALS: Approved project needs wood/metal: { \"wood\": 0.0, \"metal\": 3.0 }",
+        "seconds": 810.000000000116
+      },
+      {
+        "day": 1.35000000000019,
+        "evidence": {
+          "rejections": {
+            "bookcase": "depleted",
+            "desk": "resource source support",
+            "side_table": "depleted"
+          },
+          "score": 384.499295806885,
+          "shortage": {
+            "metal": 3.0,
+            "wood": 0.0
+          }
+        },
+        "focus": "(71.0, 0.0, 47.0)",
+        "id": 34,
+        "kind": "salvage_authorized",
+        "major": true,
+        "message": "Safe salvage authorized: storage_box",
+        "seconds": 810.000000000116
+      },
+      {
+        "day": 1.35000000000019,
+        "evidence": {
+          "days": 1.35000000000019,
+          "drinks": 20,
+          "economy": {
+            "food": {
+              "available": 39.0,
+              "consumed": 11.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 32.0,
+              "reserved": 2.0
+            },
+            "metal": {
+              "available": 1.0,
+              "consumed": 7.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 8.0,
+              "reserved": 0.0
+            },
+            "water": {
+              "available": 55.0,
+              "consumed": 20.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 45.0,
+              "reserved": 0.0
+            },
+            "wood": {
+              "available": 12.0,
+              "consumed": 26.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 40.0,
+              "reserved": 2.0
+            }
+          },
+          "food_days": 3.25,
+          "meals": 11,
+          "population": 6,
+          "resting": 0,
+          "rests": 10,
+          "shelter": 15,
+          "urgent": 0,
+          "water_days": 3.05555555555556
+        },
+        "focus": "(0.0, 0.0, 71.0)",
+        "id": 35,
+        "kind": "growth_paused",
+        "major": false,
+        "message": "Critical material project blocked",
+        "seconds": 810.000000000116
+      },
+      {
+        "day": 1.50000000000023,
+        "evidence": {
+          "days": 1.50000000000023,
+          "drinks": 21,
+          "economy": {
+            "food": {
+              "available": 37.0,
+              "consumed": 15.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 32.0,
+              "reserved": 0.0
+            },
+            "metal": {
+              "available": 1.0,
+              "consumed": 7.0,
+              "delivered": 1.0,
+              "in_transit": 3.0,
+              "received": 12.0,
+              "reserved": 0.0
+            },
+            "water": {
+              "available": 53.0,
+              "consumed": 21.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 45.0,
+              "reserved": 1.0
+            },
+            "wood": {
+              "available": 10.0,
+              "consumed": 26.0,
+              "delivered": 4.0,
+              "in_transit": 0.0,
+              "received": 40.0,
+              "reserved": 0.0
+            }
+          },
+          "food_days": 3.08333333333333,
+          "meals": 15,
+          "population": 6,
+          "resting": 0,
+          "rests": 10,
+          "shelter": 15,
+          "urgent": 0,
+          "water_days": 2.94444444444444
+        },
+        "focus": "(0.0, 0.0, 0.0)",
+        "id": 36,
+        "kind": "governor",
+        "major": false,
+        "message": "STABLE: Reserves recovered; assess shelter and finite carrying capacity",
+        "seconds": 900.000000000136
+      },
+      {
+        "day": 1.54150000000024,
+        "evidence": {
+          "authorized": true,
+          "progress": 0.0,
+          "stage": 4,
+          "stages": [
+            {
+              "name": "STRIPPED",
+              "work": 8.0,
+              "yields": {
+                "metal": 2.0
+              }
+            },
+            {
+              "name": "PARTIAL",
+              "work": 12.0,
+              "yields": {
+                "metal": 2.0,
+                "wood": 3.0
+              }
+            },
+            {
+              "name": "FRAME",
+              "work": 12.0,
+              "yields": {
+                "wood": 2.0
+              }
+            },
+            {
+              "name": "DEPLETED",
+              "work": 10.0,
+              "yields": {
+                "wood": 3.0
+              }
+            }
+          ],
+          "state": "DEPLETED",
+          "work": 42.0000000000003,
+          "yielded": {
+            "metal": 4.0,
+            "wood": 8.0
+          }
+        },
+        "focus": "(71.0, 0.0, 47.0)",
+        "id": 37,
+        "kind": "object_depleted",
+        "major": false,
+        "message": "Object depleted: storage_box",
+        "seconds": 924.900000000142
+      },
+      {
+        "day": 1.59166666666691,
+        "evidence": {
+          "active_stage": "complete",
+          "cable_deployed": true,
+          "completed_stages": 3,
+          "created": true,
+          "delivered": {
+            "mechanical_parts": 0,
+            "metal": 4,
+            "wood": 4
+          },
+          "floor_target_connected": true,
+          "picked_up": {
+            "mechanical_parts": 0,
+            "metal": 4,
+            "wood": 4
+          },
+          "progress_percent": 100.0,
+          "required": {
+            "mechanical_parts": 0,
+            "metal": 4,
+            "wood": 4
+          },
+          "site": "(10.0, 0.0, -52.0)",
+          "stage_gates": [
+            {
+              "mechanical_parts": 0,
+              "metal": 1,
+              "wood": 4
+            },
+            {
+              "mechanical_parts": 0,
+              "metal": 3,
+              "wood": 4
+            },
+            {
+              "mechanical_parts": 0,
+              "metal": 4,
+              "wood": 4
+            }
+          ],
+          "stage_progress": 0.0,
+          "state": "CABLE_DEPLOYED",
+          "stockpile": {
+            "mechanical_parts": 0,
+            "metal": 1.0,
+            "wood": 15.0
+          },
+          "traversal": {}
+        },
+        "focus": "(10.0, 0.0, -52.0)",
+        "id": 38,
+        "kind": "traversal_complete",
+        "major": true,
+        "message": "Traversal complete",
+        "seconds": 955.000000000149
+      },
+      {
+        "day": 1.66116666666693,
+        "evidence": {
+          "source": "water_cup"
+        },
+        "focus": "(-50.0, 30.0, -50.05)",
+        "id": 39,
+        "kind": "territory_reached",
+        "major": false,
+        "message": "Elevated resources reached",
+        "seconds": 996.700000000158
+      },
+      {
+        "day": 2.28333333333308,
+        "evidence": {
+          "after": 7,
+          "before": 6,
+          "centroid": "(-2.0, 0.0, 88.0)",
+          "food_days_after": 2.64285714285714,
+          "food_days_before": 3.08333333333333,
+          "positions": [
+            "(-2.0, 0.0, 88.0)"
+          ],
+          "seconds": 1369.99999999985,
+          "shelter": 15,
+          "stable_seconds": 469.999999999713,
+          "water_days_after": 2.52380952380952,
+          "water_days_before": 2.94444444444444
+        },
+        "focus": "(-2.0, 0.0, 88.0)",
+        "id": 40,
+        "kind": "cohort_joined",
+        "major": true,
+        "message": "New cohort joined: 7 real citizens",
+        "seconds": 1369.99999999985
+      },
+      {
+        "day": 3.2916666666655,
+        "evidence": {
+          "after": 8,
+          "before": 7,
+          "centroid": "(-2.0, 0.0, 88.0)",
+          "food_days_after": 2.875,
+          "food_days_before": 3.28571428571429,
+          "positions": [
+            "(-2.0, 0.0, 88.0)"
+          ],
+          "seconds": 1974.9999999993,
+          "shelter": 15,
+          "stable_seconds": 604.99999999945,
+          "water_days_after": 2.66666666666667,
+          "water_days_before": 3.04761904761905
+        },
+        "focus": "(-2.0, 0.0, 88.0)",
+        "id": 41,
+        "kind": "cohort_joined",
+        "major": true,
+        "message": "New cohort joined: 8 real citizens",
+        "seconds": 1974.9999999993
+      },
+      {
+        "day": 4.29999999999792,
+        "evidence": {
+          "after": 9,
+          "before": 8,
+          "centroid": "(-2.0, 0.0, 88.0)",
+          "food_days_after": 2.94444444444444,
+          "food_days_before": 3.3125,
+          "positions": [
+            "(-2.0, 0.0, 88.0)"
+          ],
+          "seconds": 2579.99999999875,
+          "shelter": 15,
+          "stable_seconds": 604.99999999945,
+          "water_days_after": 2.66666666666667,
+          "water_days_before": 3.0
+        },
+        "focus": "(-2.0, 0.0, 88.0)",
+        "id": 42,
+        "kind": "cohort_joined",
+        "major": true,
+        "message": "New cohort joined: 9 real citizens",
+        "seconds": 2579.99999999875
+      },
+      {
+        "day": 5.30833333333033,
+        "evidence": {
+          "after": 10,
+          "before": 9,
+          "centroid": "(-2.0, 0.0, 88.0)",
+          "food_days_after": 2.85,
+          "food_days_before": 3.16666666666667,
+          "positions": [
+            "(-2.0, 0.0, 88.0)"
+          ],
+          "seconds": 3184.9999999982,
+          "shelter": 15,
+          "stable_seconds": 604.99999999945,
+          "water_days_after": 2.83333333333333,
+          "water_days_before": 3.14814814814815
+        },
+        "focus": "(-2.0, 0.0, 88.0)",
+        "id": 43,
+        "kind": "cohort_joined",
+        "major": true,
+        "message": "New cohort joined: 10 real citizens",
+        "seconds": 3184.9999999982
+      },
+      {
+        "day": 6.31666666666275,
+        "evidence": {
+          "after": 11,
+          "before": 10,
+          "centroid": "(-2.0, 0.0, 88.0)",
+          "food_days_after": 2.77272727272727,
+          "food_days_before": 3.05,
+          "positions": [
+            "(-2.0, 0.0, 88.0)"
+          ],
+          "seconds": 3789.99999999765,
+          "shelter": 15,
+          "stable_seconds": 604.99999999945,
+          "water_days_after": 2.87878787878788,
+          "water_days_before": 3.16666666666667
+        },
+        "focus": "(-2.0, 0.0, 88.0)",
+        "id": 44,
+        "kind": "cohort_joined",
+        "major": true,
+        "message": "New cohort joined: 11 real citizens",
+        "seconds": 3789.99999999765
+      },
+      {
+        "day": 7.31666666666407,
+        "evidence": {
+          "after": 12,
+          "before": 11,
+          "centroid": "(-2.0, 0.0, 88.0)",
+          "food_days_after": 2.95833333333333,
+          "food_days_before": 3.22727272727273,
+          "positions": [
+            "(-2.0, 0.0, 88.0)"
+          ],
+          "seconds": 4389.99999999844,
+          "shelter": 15,
+          "stable_seconds": 600.000000000791,
+          "water_days_after": 2.83333333333333,
+          "water_days_before": 3.09090909090909
+        },
+        "focus": "(-2.0, 0.0, 88.0)",
+        "id": 45,
+        "kind": "cohort_joined",
+        "major": true,
+        "message": "New cohort joined: 12 real citizens",
+        "seconds": 4389.99999999844
+      }
+    ],
+    "journal_sequence": 45,
+    "ledger": {
+      "available": {
+        "food": 78.0,
+        "metal": 1.0,
+        "water": 105.0,
+        "wood": 18.0
+      },
+      "consumed": {
+        "food": 134.0,
+        "metal": 11.0,
+        "water": 201.0,
+        "wood": 30.0
+      },
+      "exported": {
+        "food": 0.0,
+        "metal": 0.0,
+        "water": 0.0,
+        "wood": 0.0
+      },
+      "initial": {
+        "food": 20.0,
+        "metal": 0.0,
+        "water": 30.0,
+        "wood": 0.0
+      },
+      "project_consumed": {
+        "food": 0.0,
+        "metal": 11.0,
+        "water": 0.0,
+        "wood": 30.0
+      },
+      "received": {
+        "food": 192.0,
+        "metal": 12.0,
+        "water": 277.0,
+        "wood": 48.0
+      },
+      "tickets": {
+        "377": {
+          "amount": 1.0,
+          "owner": "citizen:8",
+          "resource": "water",
+          "state": "reserved"
+        }
+      }
+    },
+    "oldest_live_tasks": [
+      {
+        "amount": 8.0,
+        "citizen_id": 6,
+        "claimed_sim": 4787.39999999989,
+        "created_at": 27902,
+        "created_sim": 4787.39999999989,
+        "cycle": 0,
+        "extracted": false,
+        "id": 5314,
+        "owner_hint": 6,
+        "progress": 0.0,
+        "resource": "water",
+        "source": "(-50.0, 30.0, -50.0)",
+        "source_id": "water_cup",
+        "source_region": "STUDY_SURFACE",
+        "started_at": 27902,
+        "started_sim": 4787.39999999989,
+        "state": "active",
+        "target": "(-50.0, 30.0, -50.0)",
+        "task_type": "RESOURCE_COLLECT",
+        "urgency": 0.35
+      },
+      {
+        "citizen_id": 0,
+        "claimed_sim": 4793.69999999991,
+        "created_at": 27951,
+        "created_sim": 4792.2999999999,
+        "cycle": 9,
+        "id": 5327,
+        "owner_hint": 1,
+        "progress": 0.0,
+        "source": "(12.0, 0.0, 58.0)",
+        "started_at": 27965,
+        "started_sim": 4793.69999999991,
+        "state": "active",
+        "target": "(12.0, 0.0, 58.0)",
+        "task_type": "FLOOR_PATROL"
+      },
+      {
+        "citizen_id": 9,
+        "claimed_sim": 4793.79999999991,
+        "created_at": 27957,
+        "created_sim": 4792.99999999991,
+        "cycle": 66,
+        "id": 5328,
+        "owner_hint": 2,
+        "progress": 0.0,
+        "source": "(-12.0, 0.0, 34.0)",
+        "started_at": 27967,
+        "started_sim": 4793.79999999991,
+        "state": "active",
+        "target": "(-12.0, 0.0, 34.0)",
+        "task_type": "FLOOR_PATROL"
+      },
+      {
+        "citizen_id": 2,
+        "claimed_sim": 4795.19999999991,
+        "created_at": 27960,
+        "created_sim": 4793.19999999991,
+        "cycle": 1,
+        "id": 5329,
+        "owner_hint": 7,
+        "progress": 0.0,
+        "source": "(-12.0, 0.0, 34.0)",
+        "started_at": 27979,
+        "started_sim": 4795.19999999991,
+        "state": "active",
+        "target": "(-12.0, 0.0, 34.0)",
+        "task_type": "FLOOR_PATROL"
+      },
+      {
+        "citizen_id": 4,
+        "claimed_sim": 4796.49999999992,
+        "created_at": 27964,
+        "created_sim": 4793.69999999991,
+        "cycle": 8,
+        "id": 5330,
+        "owner_hint": 0,
+        "progress": 0.0,
+        "source": "(-12.0, 0.0, 34.0)",
+        "started_at": 27990,
+        "started_sim": 4796.49999999992,
+        "state": "active",
+        "target": "(-12.0, 0.0, 34.0)",
+        "task_type": "FLOOR_PATROL"
+      },
+      {
+        "citizen_id": 3,
+        "claimed_sim": 4794.79999999991,
+        "created_at": 27966,
+        "created_sim": 4793.79999999991,
+        "cycle": 14,
+        "id": 5331,
+        "owner_hint": 9,
+        "progress": 0.0,
+        "source": "(-12.0, 0.0, 58.0)",
+        "started_at": 27975,
+        "started_sim": 4794.79999999991,
+        "state": "active",
+        "target": "(-12.0, 0.0, 58.0)",
+        "task_type": "FLOOR_PATROL"
+      },
+      {
+        "citizen_id": 5,
+        "claimed_sim": 4797.59999999992,
+        "created_at": 27978,
+        "created_sim": 4795.19999999991,
+        "cycle": 2,
+        "id": 5333,
+        "owner_hint": 2,
+        "progress": 0.0,
+        "source": "(-12.0, 0.0, 34.0)",
+        "started_at": 28000,
+        "started_sim": 4797.59999999992,
+        "state": "active",
+        "target": "(-12.0, 0.0, 34.0)",
+        "task_type": "FLOOR_PATROL"
+      },
+      {
+        "citizen_id": 7,
+        "claimed_sim": 4799.09999999993,
+        "created_at": 27989,
+        "created_sim": 4796.49999999992,
+        "cycle": 1,
+        "id": 5335,
+        "owner_hint": 4,
+        "progress": 0.0,
+        "source": "(12.0, 0.0, 34.0)",
+        "started_at": 28012,
+        "started_sim": 4799.09999999993,
+        "state": "active",
+        "target": "(12.0, 0.0, 34.0)",
+        "task_type": "FLOOR_PATROL"
+      },
+      {
+        "citizen_id": 11,
+        "claimed_sim": 4799.79999999993,
+        "created_at": 27997,
+        "created_sim": 4797.49999999992,
+        "cycle": 10,
+        "id": 5336,
+        "owner_hint": 11,
+        "progress": 0.0,
+        "source": "(12.0, 0.0, 34.0)",
+        "started_at": 28019,
+        "started_sim": 4799.79999999993,
+        "state": "active",
+        "target": "(12.0, 0.0, 34.0)",
+        "task_type": "FLOOR_PATROL"
+      },
+      {
+        "citizen_id": 10,
+        "claimed_sim": 4799.19999999993,
+        "created_at": 27999,
+        "created_sim": 4797.59999999992,
+        "cycle": 3,
+        "id": 5337,
+        "owner_hint": 5,
+        "progress": 0.0,
+        "source": "(-12.0, 0.0, 34.0)",
+        "started_at": 28014,
+        "started_sim": 4799.19999999993,
+        "state": "active",
+        "target": "(-12.0, 0.0, 34.0)",
+        "task_type": "FLOOR_PATROL"
+      },
+      {
+        "citizen_id": 8,
+        "claimed_sim": 4797.89999999992,
+        "created_at": 28003,
+        "created_sim": 4797.89999999992,
+        "cycle": 0,
+        "id": 5339,
+        "owner_hint": 8,
+        "progress": 0.0,
+        "resource": "water",
+        "source": "(0.0, 0.0, 46.0)",
+        "started_at": 28003,
+        "started_sim": 4797.89999999992,
+        "state": "active",
+        "target": "(0.0, 0.0, 46.0)",
+        "task_type": "NEED_DRINK",
+        "ticket": 377
+      },
+      {
+        "citizen_id": 1,
+        "claimed_sim": 4799.09999999993,
+        "created_at": 28010,
+        "created_sim": 4799.09999999993,
+        "cycle": 14,
+        "id": 5340,
+        "owner_hint": 1,
+        "progress": 0.0,
+        "source": "(-12.0, 0.0, 58.0)",
+        "started_at": 28011,
+        "started_sim": 4799.09999999993,
+        "state": "active",
+        "target": "(-12.0, 0.0, 58.0)",
+        "task_type": "FLOOR_PATROL"
+      }
+    ],
+    "planner": [],
+    "population": 12,
+    "projects": [
+      {
+        "completed": 152.999999999996,
+        "created": 5.0,
+        "delivered": {
+          "metal": 0.0,
+          "wood": 4.0
+        },
+        "delivery_distance": 116.257771897312,
+        "effect_applied": true,
+        "id": "development_001",
+        "kind": "shelter",
+        "required": {
+          "metal": 0,
+          "wood": 4
+        },
+        "required_work": 60.0,
+        "site": "(0.0, 0.0, 62.0)",
+        "stage": "COMPLETE",
+        "state": "COMPLETE",
+        "target": "(0.0, 0.0, 71.0)",
+        "work": 60.0000000000006,
+        "work_by_citizen": {
+          "1": 33.9000000000002,
+          "4": 26.1000000000001
+        }
+      },
+      {
+        "completed": 207.299999999993,
+        "created": 154.999999999995,
+        "delivered": {
+          "metal": 1.0,
+          "wood": 4.0
+        },
+        "delivery_distance": 95.7106534540623,
+        "effect_applied": true,
+        "id": "development_002",
+        "kind": "depot",
+        "required": {
+          "metal": 1,
+          "wood": 4
+        },
+        "required_work": 70.0,
+        "site": "(0.0, 0.0, 37.0)",
+        "stage": "COMPLETE",
+        "state": "COMPLETE",
+        "target": "(10.0, 0.0, 37.0)",
+        "work": 74.0000000000001,
+        "work_by_citizen": {
+          "1": 34.8000000000002,
+          "4": 39.2000000000003
+        }
+      },
+      {
+        "completed": 353.300000000012,
+        "created": 219.999999999992,
+        "delivered": {
+          "metal": 4.0,
+          "wood": 8.0
+        },
+        "delivery_distance": 512.655754351654,
+        "effect_applied": true,
+        "id": "development_003",
+        "kind": "workshop",
+        "required": {
+          "metal": 4,
+          "wood": 8
+        },
+        "required_work": 100.0,
+        "site": "(0.0, 0.0, 14.0)",
+        "stage": "COMPLETE",
+        "state": "COMPLETE",
+        "target": "(0.0, 0.0, 23.0)",
+        "work": 100.019999999999,
+        "work_by_citizen": {
+          "1": 41.0000000000003,
+          "3": 59.0200000000007
+        }
+      },
+      {
+        "completed": 461.000000000036,
+        "created": 355.000000000012,
+        "delivered": {
+          "metal": 2.0,
+          "wood": 10.0
+        },
+        "delivery_distance": 484.538516950672,
+        "effect_applied": true,
+        "id": "development_004",
+        "kind": "housing",
+        "required": {
+          "metal": 2,
+          "wood": 10
+        },
+        "required_work": 76.5,
+        "site": "(-32.0, 0.0, 46.0)",
+        "stage": "COMPLETE",
+        "state": "COMPLETE",
+        "target": "(-32.0, 0.0, 55.0)",
+        "work": 76.5999999999999,
+        "work_by_citizen": {
+          "1": 34.4000000000002,
+          "3": 42.2000000000003
+        }
+      }
+    ],
+    "salvage": {
+      "bookcase": {
+        "authorized": true,
+        "progress": 0.0,
+        "stage": 4,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 12.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 9.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 11.0
+            }
+          }
+        ],
+        "state": "DEPLETED",
+        "work": 42.0000000000003,
+        "yielded": {
+          "metal": 4.0,
+          "wood": 32.0
+        }
+      },
+      "chair": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 4.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "desk": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 34.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 25.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 27.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "packing_crate": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "side_table": {
+        "authorized": true,
+        "progress": 0.0,
+        "stage": 4,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "DEPLETED",
+        "work": 42.0000000000003,
+        "yielded": {
+          "metal": 4.0,
+          "wood": 8.0
+        }
+      },
+      "spare_crate": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "storage_box": {
+        "authorized": true,
+        "progress": 0.0,
+        "stage": 4,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "DEPLETED",
+        "work": 42.0000000000003,
+        "yielded": {
+          "metal": 4.0,
+          "wood": 8.0
+        }
+      }
+    },
+    "seconds": 4799.99999999993,
+    "shelter": 15,
+    "site_reason": "",
+    "sources": {
+      "food_cache": {
+        "extracted": {
+          "food": 192.0
+        },
+        "initial": {
+          "food": 40000.0
+        },
+        "position": "(60.0, 0.0, 32.0)",
+        "region": "FLOOR",
+        "remaining": {
+          "food": 39808.0
+        },
+        "reserved": {
+          "food": 0.0
+        },
+        "work": 2.0
+      },
+      "spilled_water": {
+        "extracted": {
+          "water": 45.0
+        },
+        "initial": {
+          "water": 45.0
+        },
+        "position": "(-40.0, 0.0, 72.0)",
+        "region": "FLOOR",
+        "remaining": {
+          "water": 0.0
+        },
+        "reserved": {
+          "water": 0.0
+        },
+        "work": 2.0
+      },
+      "water_cup": {
+        "extracted": {
+          "water": 232.0
+        },
+        "initial": {
+          "water": 45000.0
+        },
+        "position": "(-50.0, 30.0, -50.0)",
+        "region": "STUDY_SURFACE",
+        "remaining": {
+          "water": 44768.0
+        },
+        "reserved": {
+          "water": 8.0
+        },
+        "work": 2.0
+      }
+    },
+    "states": {
+      "TRAVEL": 12
+    },
+    "status": {
+      "days": 7.99999999999988,
+      "drinks": 201,
+      "economy": {
+        "food": {
+          "available": 78.0,
+          "consumed": 134.0,
+          "delivered": 0.0,
+          "in_transit": 0.0,
+          "received": 192.0,
+          "reserved": 0.0
+        },
+        "metal": {
+          "available": 1.0,
+          "consumed": 11.0,
+          "delivered": 0.0,
+          "in_transit": 0.0,
+          "received": 12.0,
+          "reserved": 0.0
+        },
+        "water": {
+          "available": 105.0,
+          "consumed": 201.0,
+          "delivered": 0.0,
+          "in_transit": 0.0,
+          "received": 277.0,
+          "reserved": 1.0
+        },
+        "wood": {
+          "available": 18.0,
+          "consumed": 30.0,
+          "delivered": 0.0,
+          "in_transit": 0.0,
+          "received": 48.0,
+          "reserved": 0.0
+        }
+      },
+      "food_days": 3.25,
+      "meals": 134,
+      "population": 12,
+      "resting": 0,
+      "rests": 103,
+      "shelter": 15,
+      "urgent": 0,
+      "water_days": 2.91666666666667
+    },
+    "suppression_keys": 36,
+    "tasks": {
+      "active": 12,
+      "available": 3,
+      "cancelled": 0,
+      "cancelled_total": 4,
+      "complete": 485,
+      "completed_total": 5323,
+      "created_total": 5342,
+      "failed": 0,
+      "failed_total": 0,
+      "reserved": 0,
+      "retained_tasks": 500
+    },
+    "traversal": {
+      "active_stage": "complete",
+      "cable_deployed": true,
+      "completed_stages": 3,
+      "created": true,
+      "delivered": {
+        "mechanical_parts": 0,
+        "metal": 4,
+        "wood": 4
+      },
+      "floor_target_connected": true,
+      "picked_up": {
+        "mechanical_parts": 0,
+        "metal": 4,
+        "wood": 4
+      },
+      "progress_percent": 100.0,
+      "required": {
+        "mechanical_parts": 0,
+        "metal": 4,
+        "wood": 4
+      },
+      "site": "(10.0, 0.0, -52.0)",
+      "stage_gates": [
+        {
+          "mechanical_parts": 0,
+          "metal": 1,
+          "wood": 4
+        },
+        {
+          "mechanical_parts": 0,
+          "metal": 3,
+          "wood": 4
+        },
+        {
+          "mechanical_parts": 0,
+          "metal": 4,
+          "wood": 4
+        }
+      ],
+      "stage_progress": 0.0,
+      "state": "CABLE_DEPLOYED",
+      "stockpile": {
+        "mechanical_parts": 0,
+        "metal": 1.0,
+        "wood": 18.0
+      },
+      "traversal": {}
+    }
+  },
+  "fingerprint": "bb9136b527625b6189171ed1318b580b38e54525725607ec5c7ae5392059eb75",
+  "harness_hashes": {
+    "TEST_ROOM_SCALE_POC471.ps1": "70f21f08d47342416ef0d0f7f8e8aacfb99bb735de863c45449122621ba9ebaa",
+    "scripts/poc471_campaign.py": "157cc7ceb3184126b25a605f33c55c9bce1c76940fbf2c16bb3f61403ae3c4ae",
+    "scripts/poc471_evidence.py": "377d1bf69a260de81fbca32c830364e1cb471533063a9b89e49b60fc877131f1",
+    "scripts/poc471_observer.gd": "43971890f61fec6ee92d8cc6eaba7c3c7bc18a1e9ce731217cb110689e2e6f37"
+  },
+  "id": "POS-031",
+  "initial": {
+    "active_development": {},
+    "bundles": {},
+    "citizens": [
+      {
+        "destination": "(-12.0, 0.0, 34.0)",
+        "id": 0,
+        "needs": {
+          "fatigue": 0.0,
+          "food": 0.08,
+          "rest_slot": -1,
+          "sheltered": false,
+          "water": 0.12
+        },
+        "path": [
+          "(-6.0, 0.0, 48.0)",
+          "(-6.0, 0.0, 44.0)",
+          "(-10.0, 0.0, 40.0)",
+          "(-10.0, 0.0, 36.0)",
+          "(-12.0, 0.0, 34.0)"
+        ],
+        "path_cursor": 0,
+        "position": "(-6.0, 0.0, 48.0)",
+        "state": "TRAVEL",
+        "task": "FLOOR_PATROL",
+        "task_id": 1,
+        "travelled": 0.0
+      },
+      {
+        "destination": "(12.0, 0.0, 34.0)",
+        "id": 1,
+        "needs": {
+          "fatigue": 0.055,
+          "food": 0.105,
+          "rest_slot": -1,
+          "sheltered": false,
+          "water": 0.155
+        },
+        "path": [
+          "(-2.0, 0.0, 48.0)",
+          "(2.0, 0.0, 44.0)",
+          "(6.0, 0.0, 40.0)",
+          "(10.0, 0.0, 36.0)",
+          "(14.0, 0.0, 36.0)",
+          "(12.0, 0.0, 34.0)"
+        ],
+        "path_cursor": 0,
+        "position": "(-2.0, 0.0, 48.0)",
+        "state": "TRAVEL",
+        "task": "FLOOR_PATROL",
+        "task_id": 2,
+        "travelled": 0.0
+      },
+      {
+        "destination": "(12.0, 0.0, 58.0)",
+        "id": 2,
+        "needs": {
+          "fatigue": 0.11,
+          "food": 0.13,
+          "rest_slot": -1,
+          "sheltered": false,
+          "water": 0.19
+        },
+        "path": [
+          "(-2.0, 0.0, 52.0)",
+          "(2.0, 0.0, 56.0)",
+          "(6.0, 0.0, 56.0)",
+          "(10.0, 0.0, 60.0)",
+          "(14.0, 0.0, 60.0)",
+          "(12.0, 0.0, 58.0)"
+        ],
+        "path_cursor": 0,
+        "position": "(-2.0, 0.0, 52.0)",
+        "state": "TRAVEL",
+        "task": "FLOOR_PATROL",
+        "task_id": 3,
+        "travelled": 0.0
+      },
+      {
+        "destination": "(-12.0, 0.0, 58.0)",
+        "id": 3,
+        "needs": {
+          "fatigue": 0.165,
+          "food": 0.155,
+          "rest_slot": -1,
+          "sheltered": false,
+          "water": 0.225
+        },
+        "path": [
+          "(2.0, 0.0, 48.0)",
+          "(-2.0, 0.0, 52.0)",
+          "(-6.0, 0.0, 56.0)",
+          "(-10.0, 0.0, 60.0)",
+          "(-12.0, 0.0, 58.0)"
+        ],
+        "path_cursor": 0,
+        "position": "(2.0, 0.0, 48.0)",
+        "state": "TRAVEL",
+        "task": "FLOOR_PATROL",
+        "task_id": 4,
+        "travelled": 0.0
+      },
+      {
+        "destination": "(-12.0, 0.0, 34.0)",
+        "id": 4,
+        "needs": {
+          "fatigue": 0.22,
+          "food": 0.18,
+          "rest_slot": -1,
+          "sheltered": false,
+          "water": 0.26
+        },
+        "path": [
+          "(2.0, 0.0, 52.0)",
+          "(-2.0, 0.0, 48.0)",
+          "(-6.0, 0.0, 44.0)",
+          "(-10.0, 0.0, 40.0)",
+          "(-10.0, 0.0, 36.0)",
+          "(-12.0, 0.0, 34.0)"
+        ],
+        "path_cursor": 0,
+        "position": "(2.0, 0.0, 52.0)",
+        "state": "TRAVEL",
+        "task": "FLOOR_PATROL",
+        "task_id": 5,
+        "travelled": 0.0
+      }
+    ],
+    "connections": [],
+    "governor": {
+      "emergency": false,
+      "mode": "OBSERVING",
+      "reason": "Evaluating civilization state every five simulation seconds",
+      "rejections": {}
+    },
+    "growth_events": [],
+    "growth_reason": "Waiting for sustained reserves and shelter",
+    "journal": [
+      {
+        "day": 0.0,
+        "evidence": {
+          "population": 5
+        },
+        "focus": "(0.0, 0.0, 46.0)",
+        "id": 1,
+        "kind": "founders_arrived",
+        "major": false,
+        "message": "Founders arrived",
+        "seconds": 0.0
+      }
+    ],
+    "journal_sequence": 1,
+    "ledger": {
+      "available": {
+        "food": 20.0,
+        "metal": 0.0,
+        "water": 30.0,
+        "wood": 0.0
+      },
+      "consumed": {
+        "food": 0.0,
+        "metal": 0.0,
+        "water": 0.0,
+        "wood": 0.0
+      },
+      "exported": {
+        "food": 0.0,
+        "metal": 0.0,
+        "water": 0.0,
+        "wood": 0.0
+      },
+      "initial": {
+        "food": 20.0,
+        "metal": 0.0,
+        "water": 30.0,
+        "wood": 0.0
+      },
+      "project_consumed": {
+        "food": 0.0,
+        "metal": 0.0,
+        "water": 0.0,
+        "wood": 0.0
+      },
+      "received": {
+        "food": 0.0,
+        "metal": 0.0,
+        "water": 0.0,
+        "wood": 0.0
+      },
+      "tickets": {}
+    },
+    "oldest_live_tasks": [
+      {
+        "citizen_id": 0,
+        "claimed_sim": 0.0,
+        "created_at": 382,
+        "created_sim": 0.0,
+        "cycle": 0,
+        "id": 1,
+        "owner_hint": 0,
+        "progress": 0.0,
+        "source": "(-12.0, 0.0, 34.0)",
+        "started_at": 385,
+        "started_sim": 0.0,
+        "state": "active",
+        "target": "(-12.0, 0.0, 34.0)",
+        "task_type": "FLOOR_PATROL"
+      },
+      {
+        "citizen_id": 1,
+        "claimed_sim": 0.0,
+        "created_at": 382,
+        "created_sim": 0.0,
+        "cycle": 0,
+        "id": 2,
+        "owner_hint": 1,
+        "progress": 0.0,
+        "source": "(12.0, 0.0, 34.0)",
+        "started_at": 385,
+        "started_sim": 0.0,
+        "state": "active",
+        "target": "(12.0, 0.0, 34.0)",
+        "task_type": "FLOOR_PATROL"
+      },
+      {
+        "citizen_id": 2,
+        "claimed_sim": 0.0,
+        "created_at": 382,
+        "created_sim": 0.0,
+        "cycle": 0,
+        "id": 3,
+        "owner_hint": 2,
+        "progress": 0.0,
+        "source": "(12.0, 0.0, 58.0)",
+        "started_at": 385,
+        "started_sim": 0.0,
+        "state": "active",
+        "target": "(12.0, 0.0, 58.0)",
+        "task_type": "FLOOR_PATROL"
+      },
+      {
+        "citizen_id": 3,
+        "claimed_sim": 0.0,
+        "created_at": 382,
+        "created_sim": 0.0,
+        "cycle": 0,
+        "id": 4,
+        "owner_hint": 3,
+        "progress": 0.0,
+        "source": "(-12.0, 0.0, 58.0)",
+        "started_at": 385,
+        "started_sim": 0.0,
+        "state": "active",
+        "target": "(-12.0, 0.0, 58.0)",
+        "task_type": "FLOOR_PATROL"
+      },
+      {
+        "citizen_id": 4,
+        "claimed_sim": 0.0,
+        "created_at": 382,
+        "created_sim": 0.0,
+        "cycle": 0,
+        "id": 5,
+        "owner_hint": 4,
+        "progress": 0.0,
+        "source": "(-12.0, 0.0, 34.0)",
+        "started_at": 386,
+        "started_sim": 0.0,
+        "state": "active",
+        "target": "(-12.0, 0.0, 34.0)",
+        "task_type": "FLOOR_PATROL"
+      }
+    ],
+    "planner": [],
+    "population": 5,
+    "projects": [],
+    "salvage": {
+      "bookcase": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 12.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 9.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 11.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "chair": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 4.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "desk": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 34.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 25.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 27.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "packing_crate": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "side_table": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "spare_crate": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      },
+      "storage_box": {
+        "authorized": false,
+        "progress": 0.0,
+        "stage": 0,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 8.0,
+            "yields": {
+              "metal": 2.0
+            }
+          },
+          {
+            "name": "PARTIAL",
+            "work": 12.0,
+            "yields": {
+              "metal": 2.0,
+              "wood": 3.0
+            }
+          },
+          {
+            "name": "FRAME",
+            "work": 12.0,
+            "yields": {
+              "wood": 2.0
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 10.0,
+            "yields": {
+              "wood": 3.0
+            }
+          }
+        ],
+        "state": "INTACT",
+        "work": 0.0,
+        "yielded": {}
+      }
+    },
+    "seconds": 0.0,
+    "shelter": 0,
+    "site_reason": "",
+    "sources": {
+      "food_cache": {
+        "extracted": {},
+        "initial": {
+          "food": 40000.0
+        },
+        "position": "(60.0, 0.0, 32.0)",
+        "region": "FLOOR",
+        "remaining": {
+          "food": 40000.0
+        },
+        "reserved": {},
+        "work": 2.0
+      },
+      "spilled_water": {
+        "extracted": {},
+        "initial": {
+          "water": 45.0
+        },
+        "position": "(-40.0, 0.0, 72.0)",
+        "region": "FLOOR",
+        "remaining": {
+          "water": 45.0
+        },
+        "reserved": {},
+        "work": 2.0
+      },
+      "water_cup": {
+        "extracted": {},
+        "initial": {
+          "water": 45000.0
+        },
+        "position": "(-50.0, 30.0, -50.0)",
+        "region": "STUDY_SURFACE",
+        "remaining": {
+          "water": 45000.0
+        },
+        "reserved": {},
+        "work": 2.0
+      }
+    },
+    "states": {
+      "TRAVEL": 5
+    },
+    "status": {
+      "days": 0.0,
+      "drinks": 0,
+      "economy": {
+        "food": {
+          "available": 20.0,
+          "consumed": 0.0,
+          "delivered": 0.0,
+          "in_transit": 0.0,
+          "received": 0.0,
+          "reserved": 0.0
+        },
+        "metal": {
+          "available": 0.0,
+          "consumed": 0.0,
+          "delivered": 0.0,
+          "in_transit": 0.0,
+          "received": 0.0,
+          "reserved": 0.0
+        },
+        "water": {
+          "available": 30.0,
+          "consumed": 0.0,
+          "delivered": 0.0,
+          "in_transit": 0.0,
+          "received": 0.0,
+          "reserved": 0.0
+        },
+        "wood": {
+          "available": 0.0,
+          "consumed": 0.0,
+          "delivered": 0.0,
+          "in_transit": 0.0,
+          "received": 0.0,
+          "reserved": 0.0
+        }
+      },
+      "food_days": 2.0,
+      "meals": 0,
+      "population": 5,
+      "resting": 0,
+      "rests": 0,
+      "shelter": 0,
+      "urgent": 0,
+      "water_days": 2.0
+    },
+    "suppression_keys": 1,
+    "tasks": {
+      "active": 5,
+      "available": 0,
+      "cancelled": 0,
+      "cancelled_total": 0,
+      "complete": 0,
+      "completed_total": 0,
+      "created_total": 5,
+      "failed": 0,
+      "failed_total": 0,
+      "reserved": 0,
+      "retained_tasks": 5
+    },
+    "traversal": {
+      "active_stage": "locked",
+      "cable_deployed": false,
+      "completed_stages": 0,
+      "created": false,
+      "delivered": {
+        "mechanical_parts": 0,
+        "metal": 0,
+        "wood": 0
+      },
+      "floor_target_connected": false,
+      "picked_up": {
+        "mechanical_parts": 0,
+        "metal": 0,
+        "wood": 0
+      },
+      "progress_percent": 0.0,
+      "required": {
+        "mechanical_parts": 0,
+        "metal": 4,
+        "wood": 4
+      },
+      "site": "(10.0, 0.0, -52.0)",
+      "stage_gates": [],
+      "stage_progress": 0.0,
+      "state": "AWAITING_BARRIER",
+      "stockpile": {
+        "mechanical_parts": 0,
+        "metal": 0.0,
+        "wood": 0.0
+      },
+      "traversal": {}
+    }
+  },
+  "maxima": {
+    "bundles": 3,
+    "journal": 45,
+    "live_tasks": 12,
+    "movement": 0.650005340576172,
+    "oldest_live_task": 97.8000000000126,
+    "population": 12,
+    "projects": 4,
+    "tasks": 500,
+    "tickets": 14
+  },
+  "milestones": {
+    "depot_complete": 207.299999999993,
+    "depot_started": 154.999999999995,
+    "elevated_territory": 994.100000000157,
+    "first_haul": 21.6,
+    "first_salvage": 39.8000000000003,
+    "housing_complete": 461.000000000036,
+    "housing_started": 355.000000000012,
+    "material_haul": 49.6000000000004,
+    "meaningful_work": 19.6,
+    "physical_climb": 978.000000000154,
+    "shelter_complete": 152.999999999996,
+    "shelter_started": 5.0,
+    "sixth_citizen": 765.000000000105,
+    "traversal_complete": 952.700000000148,
+    "traversal_started": 808.100000000115,
+    "workshop_complete": 353.300000000012,
+    "workshop_started": 219.999999999992
+  },
+  "name": "Combined layout variation",
+  "observer_seconds": 27.874,
+  "reproduction": "./TEST_ROOM_SCALE_POC471.ps1 -Mode Reproduce -Scenario \"verification/poc471/final/POS-031/config.json\" -OutputDirectory verification/poc471/reproduced",
+  "result": "PASS",
+  "seed": 471030,
+  "source_hashes": {
+    "scripts/asset_pipeline/generate_desk.gd": "ae32175e0b3e60a5e2682d4886b919ff318893c6efa3ad01cb1f477c5b31dbf3",
+    "scripts/asset_pipeline/validate_assets.gd": "bb03d6d343856e45c81a28623c14833270ffec2a16ac4c4b45af6b7a4cfb6d1e",
+    "scripts/autonomous_governor.gd": "b37adc700a6ade6fbe45c225f08950d4ccb908b9379901b3c2c35a7e5914eae9",
+    "scripts/citizen_agent.gd": "b3d171c0f95b4850228af8f1bd8df02426f3bc89e58209bc5be76b6e05c3b8c6",
+    "scripts/civilization_planner.gd": "b037bc8efdc1977fdf6efaa0bd8fbf24f996f40813477852f9f293f9460a3144",
+    "scripts/civilization_simulation.gd": "96f42a03d1475cc1d65de9ef6e5c2b65b1f26b635ff31b980dc9ca203806cd8d",
+    "scripts/civilization_ui.gd": "6ef6142ab0c8c16c2b88bd28ab0b458d1e9f12cae9c456a692107270f303541f",
+    "scripts/construction_system.gd": "8e33771c2a01148aaebfa294cb73b290747ce8c92a1c1ddf3027d1da602c9abd",
+    "scripts/economy_system.gd": "3d5663bc09904ca3aae0807e6f25320f09da0946a37ed2aa543f81e1b8cb935d",
+    "scripts/event_journal.gd": "1e0c9b38982fe070692506d2028ed620158c9b8be4443b229711afe938b7568d",
+    "scripts/fishbowl_camera_director.gd": "7d5971d946c9acba1915a1000d5867d959a7c48448caa0cf67304db3bc76227c",
+    "scripts/fishbowl_event_presenter.gd": "e134ed51fe57326267e77519239277475dfbf7a04104597902582a495c623620",
+    "scripts/fishbowl_hud.gd": "d0c6b417f2726e33a8900d99b4793e6bb6f68a3d979931fce283d01f33621841",
+    "scripts/fishbowl_narrative_adapter.gd": "fee35a222a0437749420bdecbfc1055e68b4ff3b97b97a8cd5bc5bc690749644",
+    "scripts/floor_navigation.gd": "45fd16ff43aa34f52482c3a0796f0b19fe678e7da9a6e1da7f73ddf81e562eb7",
+    "scripts/m3_visual_evidence.gd": "96574c3f03f0de28c5035b175cce23805d585fe32a2d4e1d70e2dbb58405b5df",
+    "scripts/m4_visual_evidence.gd": "3b2abf9c340a3b7214e821373b09d17ee1d9c1951fa85f3ea513c69db14ba5a0",
+    "scripts/m5_visual_evidence.gd": "3a0abe1386eaba219f8469f842ba706da1935c4a20831da088669b4627b4369f",
+    "scripts/m6_visual_evidence.gd": "e3045c8ef76209a06d7ae9d964ba6fa324c7e19621f1bfee55c342615f9595f6",
+    "scripts/need_system.gd": "51ab4683328885b7032339f814d52c9532b7c1b8a88e010984cc1bc393dd30b1",
+    "scripts/pipeline_proof.gd": "11f07b9fca75c286d0f636f334acdac7a7d933b322c713fe582f4faec181bfc5",
+    "scripts/poc45_fast_test.gd": "c4acefcad2db557bd9f6cca0bd5282ee04c371b37bb8015b3c1908970b329f6a",
+    "scripts/poc45_scenario_test.gd": "9e3a96d66d011e99df21ab715a891fa905661a73891abd0e2da180290f33fc1b",
+    "scripts/poc45_survival_test.gd": "cf076974e2f6ee7d910012dcb345d7a772a6668dfad8786435d883eab05c04cd",
+    "scripts/poc46_camera_visual_test.gd": "69223fecf308c2c07aed74ab1842639c2eb808e03d0c44515329be46e7264d5c",
+    "scripts/poc46_fast_test.gd": "fd770bceeb9f6d55f4a02f593726b73b4e1c7d5cbc95e4b7fea93fcd18624261",
+    "scripts/poc46_scenario_test.gd": "0175db5a13caa76ad6a502cfa9b7aca987dc583b01a66daad3d498a8f283cd73",
+    "scripts/poc46_visual_test.gd": "da82a86475ad8a420325656c6bf32025e0cb56a0da608cf0854cd718448c7694",
+    "scripts/poc471_midlink_test.gd": "cf79e9e547edb97ce69460eaa6870c40dee08209e1b1d80b90930e752a790a2d",
+    "scripts/poc471_navigation_test.gd": "3d7945fd7b677df56b7fdc943f267e5d4442948892b9981bfcb1c9e94424a98a",
+    "scripts/poc471_observer.gd": "43971890f61fec6ee92d8cc6eaba7c3c7bc18a1e9ce731217cb110689e2e6f37",
+    "scripts/poc471_unreachable_task_test.gd": "e780d305b3ad54613ee6a0bf4722f2a234a563eb43b82068fbf462f8ea69cdb0",
+    "scripts/poc47_fast_test.gd": "36fbbe16a4f7c66c669ebfbd23a3aa2356e2863b24bb8eeecda98ebcaee7d726",
+    "scripts/poc47_live_test.gd": "18a66a2ddf543f5c48c59ef82a5bdda4c5ce04011fff9a675f87e806696880cd",
+    "scripts/poc47_scenario_test.gd": "d5a332e1b0bb681b090d4e311d3741dd30eb131ae7669aa85fcf42846fc73945",
+    "scripts/poc4_cleanup_test.gd": "cbaa58e52d1075ff15dec83ef298252f4f9bd595354f95993d08908e287ff85f",
+    "scripts/poc4_contract_test.gd": "6eb6219c0233b8378c5838df41a037748f8947e99a7b5f1d11f023e3f6c88ceb",
+    "scripts/poc4_fast_test.gd": "d17ef1eea0c9b5db150077595668070a4507408b796ff7c931fef9261f7c461e",
+    "scripts/poc4_scenario_test.gd": "719d83a83ce6a29a98afe0cc3dfc73ce787b2f35d9fca36050416e7a4514960d",
+    "scripts/population_system.gd": "bf362083aaff8cec58547c5898336d8fdbb25045c9991f2f7ce239c55431a31a",
+    "scripts/resource_system.gd": "e5301436108fe7008f67dd6a681c38369cde1f049d3ffd83d993093d291a56d5",
+    "scripts/room_definition.gd": "be10615af71916716305fe4dfb3ab1ec0069e64e6090b7cf19738bb265aa5164",
+    "scripts/room_definition_test.gd": "cfac1d5398215b77feb008adc1e90ee96a4d47f38b68d2ec4e741a43d196ab59",
+    "scripts/salvage_system.gd": "85590178ffc800775d998da8d1cd617226d6e6ca19f21f724b3a656a69d51ff2",
+    "scripts/settlement_development_system.gd": "1eea255977aee2b55174483ca73bf0482da8e635dd903ccb979e23a10bf5d753",
+    "scripts/smoke_test.gd": "556bac827646b6187275406b1c40eefb76cf5cf934255282bc5dc7b677bc6d76",
+    "scripts/strategy_camera.gd": "b238dff6ad08058088e18352043fdf514a627496eae0a143921e335db48c684b",
+    "scripts/surface_navigation.gd": "abf69255e321646c32f0ec2c51f7057a20461e9f6af1887ba68e9e890fba4a6f",
+    "scripts/task_coordinator.gd": "6be6f1e42240f300331adf2bc91d83bddae6acd5ac9fb475e8cb8bb767ced368",
+    "scripts/validate_room_definition.gd": "978f185780e784719b06666ed4430070326a89de08a3b51d7c04a3614c440b08",
+    "scripts/visuals/furniture_recipes.gd": "8aa4ba343663afe2e19cfac01b495f12d7ea6d058e7a300406bff60481cd565a",
+    "scripts/visuals/grapple_details.gd": "a8b09656f7edf7d31d02b6ff6006debf1c3fa60014004a0bd460814cf0878880",
+    "scripts/visuals/material_library.gd": "0b57aca4130d911049efe0cd435f2e8e7f253ea23aeb5875d651c79787a8c32b",
+    "scripts/visuals/performance_benchmark.gd": "f7cc9f67bd4e8d4e7bd9e7a23fa5b58a777f95ffa6841ae5826368763a00e58a",
+    "scripts/visuals/presentation_test.gd": "9ab37e9d3b0aa2ce79b9817d52363afe1bb335bc959af8a0c44e9222a2ac7f91",
+    "scripts/visuals/settlement_composition.gd": "636e53708bab9133e400bce841c6c37f52f3681bf744f24c0f84dbc2c7cf2cbe",
+    "scripts/visuals/settlement_details.gd": "7a42a869937f5d0e138966c16a941dafef4ba3222868a357cb3c2fc150738dfe",
+    "scripts/visuals/visual_geometry.gd": "b82b3db049e66110601b54e915b0c8a51406d27fa7cc3e92313a03fe791c90aa",
+    "scripts/visuals/visual_resolver.gd": "1f6d6f4fb6075892f342a9c4732b717848c63800f8db4095b2a7a8ae29c19887",
+    "scripts/visuals/visual_resolver_test.gd": "2d74e2ae88ccdc42bce4d0602b57307d25d5d89c985ff743f25e1fb64d82bb68"
+  },
+  "stage_history": {
+    "development_001": {
+      "stages": [
+        "FOUNDATION",
+        "FRAME",
+        "SHELL",
+        "COMPLETE"
+      ],
+      "states": [
+        "PLANNED",
+        "WAITING_FOR_MATERIALS",
+        "SUPPLIED",
+        "UNDER_CONSTRUCTION",
+        "COMPLETE"
+      ]
+    },
+    "development_002": {
+      "stages": [
+        "FOUNDATION",
+        "FRAME",
+        "SHELL",
+        "COMPLETE"
+      ],
+      "states": [
+        "PLANNED",
+        "WAITING_FOR_MATERIALS",
+        "SUPPLIED",
+        "UNDER_CONSTRUCTION",
+        "COMPLETE"
+      ]
+    },
+    "development_003": {
+      "stages": [
+        "FOUNDATION",
+        "FRAME",
+        "SHELL",
+        "COMPLETE"
+      ],
+      "states": [
+        "PLANNED",
+        "WAITING_FOR_MATERIALS",
+        "SUPPLIED",
+        "UNDER_CONSTRUCTION",
+        "COMPLETE"
+      ]
+    },
+    "development_004": {
+      "stages": [
+        "FOUNDATION",
+        "FRAME",
+        "SHELL",
+        "COMPLETE"
+      ],
+      "states": [
+        "PLANNED",
+        "WAITING_FOR_MATERIALS",
+        "SUPPLIED",
+        "UNDER_CONSTRUCTION",
+        "COMPLETE"
+      ]
+    }
+  },
+  "stall_windows": [],
+  "structures": {
+    "depot": 1,
+    "housing": 1,
+    "shelter": 1,
+    "workshop": 1
+  },
+  "tested_commit": "b11fe41b8340123a7fb6ccb022bb0ba06e23f2d3",
+  "timeline": [
+    {
+      "governor": "Approved project needs wood/metal: { \"wood\": 4.0, \"metal\": 0.0 }",
+      "growth": "Settlement infrastructure not yet established",
+      "journal_sequence": 6,
+      "journal_size": 6,
+      "projects": 1,
+      "seconds": 20.0,
+      "states": {
+        "TRAVEL": 4,
+        "WORK": 1
+      },
+      "status": {
+        "days": 0.0333333333333334,
+        "drinks": 0,
+        "economy": {
+          "food": {
+            "available": 20.0,
+            "consumed": 0.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 0.0,
+            "reserved": 0.0
+          },
+          "metal": {
+            "available": 0.0,
+            "consumed": 0.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 0.0,
+            "reserved": 0.0
+          },
+          "water": {
+            "available": 30.0,
+            "consumed": 0.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 0.0,
+            "reserved": 0.0
+          },
+          "wood": {
+            "available": 0.0,
+            "consumed": 0.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 0.0,
+            "reserved": 0.0
+          }
+        },
+        "food_days": 2.0,
+        "meals": 0,
+        "population": 5,
+        "resting": 0,
+        "rests": 0,
+        "shelter": 0,
+        "urgent": 0,
+        "water_days": 2.0
+      },
+      "suppression_keys": 5,
+      "tasks": {
+        "active": 5,
+        "available": 3,
+        "cancelled": 0,
+        "cancelled_total": 0,
+        "complete": 11,
+        "completed_total": 11,
+        "created_total": 19,
+        "failed": 0,
+        "failed_total": 0,
+        "reserved": 0,
+        "retained_tasks": 19
+      }
+    },
+    {
+      "governor": "Reserves recovered; assess shelter and finite carrying capacity",
+      "growth": "Healthy stability window 135/300 seconds",
+      "journal_sequence": 29,
+      "journal_size": 29,
+      "projects": 4,
+      "seconds": 600.000000000068,
+      "states": {
+        "TRAVEL": 5
+      },
+      "status": {
+        "days": 1.00000000000011,
+        "drinks": 15,
+        "economy": {
+          "food": {
+            "available": 34.0,
+            "consumed": 10.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 24.0,
+            "reserved": 0.0
+          },
+          "metal": {
+            "available": 1.0,
+            "consumed": 7.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 8.0,
+            "reserved": 0.0
+          },
+          "water": {
+            "available": 47.0,
+            "consumed": 15.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 32.0,
+            "reserved": 0.0
+          },
+          "wood": {
+            "available": 14.0,
+            "consumed": 26.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 40.0,
+            "reserved": 0.0
+          }
+        },
+        "food_days": 3.4,
+        "meals": 10,
+        "population": 5,
+        "resting": 0,
+        "rests": 5,
+        "shelter": 15,
+        "urgent": 0,
+        "water_days": 3.13333333333333
+      },
+      "suppression_keys": 24,
+      "tasks": {
+        "active": 5,
+        "available": 0,
+        "cancelled": 0,
+        "cancelled_total": 0,
+        "complete": 288,
+        "completed_total": 288,
+        "created_total": 293,
+        "failed": 0,
+        "failed_total": 0,
+        "reserved": 0,
+        "retained_tasks": 293
+      }
+    },
+    {
+      "governor": "Reserves recovered; assess shelter and finite carrying capacity",
+      "growth": "Healthy stability window 300/300 seconds",
+      "journal_sequence": 39,
+      "journal_size": 39,
+      "projects": 4,
+      "seconds": 1200.0,
+      "states": {
+        "CARRY": 1,
+        "TRAVEL": 5
+      },
+      "status": {
+        "days": 2.00000000000001,
+        "drinks": 32,
+        "economy": {
+          "food": {
+            "available": 39.0,
+            "consumed": 21.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 40.0,
+            "reserved": 0.0
+          },
+          "metal": {
+            "available": 1.0,
+            "consumed": 11.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 12.0,
+            "reserved": 0.0
+          },
+          "water": {
+            "available": 51.0,
+            "consumed": 32.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 53.0,
+            "reserved": 0.0
+          },
+          "wood": {
+            "available": 18.0,
+            "consumed": 30.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 48.0,
+            "reserved": 0.0
+          }
+        },
+        "food_days": 3.25,
+        "meals": 21,
+        "population": 6,
+        "resting": 0,
+        "rests": 16,
+        "shelter": 15,
+        "urgent": 0,
+        "water_days": 2.83333333333333
+      },
+      "suppression_keys": 30,
+      "tasks": {
+        "active": 6,
+        "available": 0,
+        "cancelled": 4,
+        "cancelled_total": 4,
+        "complete": 490,
+        "completed_total": 635,
+        "created_total": 645,
+        "failed": 0,
+        "failed_total": 0,
+        "reserved": 0,
+        "retained_tasks": 500
+      }
+    },
+    {
+      "governor": "Reserves recovered; assess shelter and finite carrying capacity",
+      "growth": "Cohort cooldown",
+      "journal_sequence": 40,
+      "journal_size": 40,
+      "projects": 4,
+      "seconds": 1819.99999999944,
+      "states": {
+        "TRAVEL": 6,
+        "WORK": 1
+      },
+      "status": {
+        "days": 3.0333333333324,
+        "drinks": 52,
+        "economy": {
+          "food": {
+            "available": 42.0,
+            "consumed": 34.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 56.0,
+            "reserved": 0.0
+          },
+          "metal": {
+            "available": 1.0,
+            "consumed": 11.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 12.0,
+            "reserved": 0.0
+          },
+          "water": {
+            "available": 63.0,
+            "consumed": 52.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 85.0,
+            "reserved": 0.0
+          },
+          "wood": {
+            "available": 18.0,
+            "consumed": 30.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 48.0,
+            "reserved": 0.0
+          }
+        },
+        "food_days": 3.0,
+        "meals": 34,
+        "population": 7,
+        "resting": 2,
+        "rests": 25,
+        "shelter": 15,
+        "urgent": 0,
+        "water_days": 3.0
+      },
+      "suppression_keys": 31,
+      "tasks": {
+        "active": 7,
+        "available": 1,
+        "cancelled": 0,
+        "cancelled_total": 4,
+        "complete": 492,
+        "completed_total": 1190,
+        "created_total": 1202,
+        "failed": 0,
+        "failed_total": 0,
+        "reserved": 0,
+        "retained_tasks": 500
+      }
+    },
+    {
+      "governor": "Reserves recovered; assess shelter and finite carrying capacity",
+      "growth": "Cohort cooldown",
+      "journal_sequence": 41,
+      "journal_size": 41,
+      "projects": 4,
+      "seconds": 2419.99999999889,
+      "states": {
+        "TRAVEL": 7,
+        "WORK": 1
+      },
+      "status": {
+        "days": 4.03333333333149,
+        "drinks": 75,
+        "economy": {
+          "food": {
+            "available": 49.0,
+            "consumed": 51.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 80.0,
+            "reserved": 0.0
+          },
+          "metal": {
+            "available": 1.0,
+            "consumed": 11.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 12.0,
+            "reserved": 0.0
+          },
+          "water": {
+            "available": 72.0,
+            "consumed": 75.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 117.0,
+            "reserved": 0.0
+          },
+          "wood": {
+            "available": 18.0,
+            "consumed": 30.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 48.0,
+            "reserved": 0.0
+          }
+        },
+        "food_days": 3.0625,
+        "meals": 51,
+        "population": 8,
+        "resting": 1,
+        "rests": 37,
+        "shelter": 15,
+        "urgent": 0,
+        "water_days": 3.0
+      },
+      "suppression_keys": 32,
+      "tasks": {
+        "active": 8,
+        "available": 1,
+        "cancelled": 0,
+        "cancelled_total": 4,
+        "complete": 491,
+        "completed_total": 1818,
+        "created_total": 1831,
+        "failed": 0,
+        "failed_total": 0,
+        "reserved": 0,
+        "retained_tasks": 500
+      }
+    },
+    {
+      "governor": "Reserves recovered; assess shelter and finite carrying capacity",
+      "growth": "Cohort cooldown",
+      "journal_sequence": 42,
+      "journal_size": 42,
+      "projects": 4,
+      "seconds": 3019.99999999835,
+      "states": {
+        "TRAVEL": 7,
+        "WORK": 2
+      },
+      "status": {
+        "days": 5.03333333333058,
+        "drinks": 101,
+        "economy": {
+          "food": {
+            "available": 54.0,
+            "consumed": 69.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 104.0,
+            "reserved": 1.0
+          },
+          "metal": {
+            "available": 1.0,
+            "consumed": 11.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 12.0,
+            "reserved": 0.0
+          },
+          "water": {
+            "available": 85.0,
+            "consumed": 101.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 157.0,
+            "reserved": 1.0
+          },
+          "wood": {
+            "available": 18.0,
+            "consumed": 30.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 48.0,
+            "reserved": 0.0
+          }
+        },
+        "food_days": 3.0,
+        "meals": 69,
+        "population": 9,
+        "resting": 0,
+        "rests": 52,
+        "shelter": 15,
+        "urgent": 0,
+        "water_days": 3.14814814814815
+      },
+      "suppression_keys": 33,
+      "tasks": {
+        "active": 9,
+        "available": 2,
+        "cancelled": 0,
+        "cancelled_total": 4,
+        "complete": 489,
+        "completed_total": 2540,
+        "created_total": 2555,
+        "failed": 0,
+        "failed_total": 0,
+        "reserved": 0,
+        "retained_tasks": 500
+      }
+    },
+    {
+      "governor": "Reserves recovered; assess shelter and finite carrying capacity",
+      "growth": "Cohort cooldown",
+      "journal_sequence": 43,
+      "journal_size": 43,
+      "projects": 4,
+      "seconds": 3619.9999999978,
+      "states": {
+        "CARRY": 1,
+        "TRAVEL": 7,
+        "WORK": 2
+      },
+      "status": {
+        "days": 6.03333333332967,
+        "drinks": 133,
+        "economy": {
+          "food": {
+            "available": 58.0,
+            "consumed": 90.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 128.0,
+            "reserved": 0.0
+          },
+          "metal": {
+            "available": 1.0,
+            "consumed": 11.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 12.0,
+            "reserved": 0.0
+          },
+          "water": {
+            "available": 93.0,
+            "consumed": 133.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 197.0,
+            "reserved": 1.0
+          },
+          "wood": {
+            "available": 18.0,
+            "consumed": 30.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 48.0,
+            "reserved": 0.0
+          }
+        },
+        "food_days": 2.9,
+        "meals": 90,
+        "population": 10,
+        "resting": 1,
+        "rests": 66,
+        "shelter": 15,
+        "urgent": 0,
+        "water_days": 3.1
+      },
+      "suppression_keys": 34,
+      "tasks": {
+        "active": 10,
+        "available": 2,
+        "cancelled": 0,
+        "cancelled_total": 4,
+        "complete": 488,
+        "completed_total": 3369,
+        "created_total": 3385,
+        "failed": 0,
+        "failed_total": 0,
+        "reserved": 0,
+        "retained_tasks": 500
+      }
+    },
+    {
+      "governor": "Reserves recovered; assess shelter and finite carrying capacity",
+      "growth": "Cohort cooldown",
+      "journal_sequence": 44,
+      "journal_size": 44,
+      "projects": 4,
+      "seconds": 4219.99999999782,
+      "states": {
+        "TRAVEL": 6,
+        "WORK": 5
+      },
+      "status": {
+        "days": 7.0333333333297,
+        "drinks": 167,
+        "economy": {
+          "food": {
+            "available": 69.0,
+            "consumed": 111.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 160.0,
+            "reserved": 0.0
+          },
+          "metal": {
+            "available": 1.0,
+            "consumed": 11.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 12.0,
+            "reserved": 0.0
+          },
+          "water": {
+            "available": 99.0,
+            "consumed": 167.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 237.0,
+            "reserved": 1.0
+          },
+          "wood": {
+            "available": 18.0,
+            "consumed": 30.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 48.0,
+            "reserved": 0.0
+          }
+        },
+        "food_days": 3.13636363636364,
+        "meals": 111,
+        "population": 11,
+        "resting": 1,
+        "rests": 84,
+        "shelter": 15,
+        "urgent": 0,
+        "water_days": 3.0
+      },
+      "suppression_keys": 35,
+      "tasks": {
+        "active": 11,
+        "available": 1,
+        "cancelled": 0,
+        "cancelled_total": 4,
+        "complete": 488,
+        "completed_total": 4310,
+        "created_total": 4326,
+        "failed": 0,
+        "failed_total": 0,
+        "reserved": 0,
+        "retained_tasks": 500
+      }
+    }
+  ],
+  "traversal_labor_witnesses": {
+    "0": {
+      "2": true
+    },
+    "1": {
+      "0": true
+    },
+    "2": {
+      "1": true,
+      "5": true
+    }
+  },
+  "validation": {
+    "depot_site": {
+      "position": "(0.0, 0.0, 37.0)",
+      "valid": true
+    },
+    "floor_resource_path_lengths": {
+      "food_cache": 68.6274166107178,
+      "spilled_water": 51.9411249160767
+    },
+    "floor_resources": {
+      "food": 40000.0,
+      "water": 45.0
+    },
+    "navigation_errors": [],
+    "safe_salvage_path_lengths": {
+      "bookcase": 142.454671382904,
+      "chair": 91.3956508636475,
+      "packing_crate": 107.48579454422,
+      "side_table": 68.2835068702698,
+      "spare_crate": 108.895462036133,
+      "storage_box": 62.883553981781
+    },
+    "safe_salvage_totals": {
+      "metal": 24.0,
+      "wood": 74.0
+    },
+    "schema_errors": [],
+    "shelter_site": {
+      "position": "(0.0, 0.0, 62.0)",
+      "valid": true
+    },
+    "solvability_errors": [],
+    "solvable": true,
+    "structural": true
+  },
+  "violations": []
+}

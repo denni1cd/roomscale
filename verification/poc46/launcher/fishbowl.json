@@ -1,0 +1,8 @@
+{
+  "Observed": "speed=10.0 governor=true spectator=true",
+  "Passed": true,
+  "NoGameplayInput": true,
+  "Note": "Initial smoke checker incorrectly expected integer speed formatting; corrected to accept the actual float. GUI child outlives launching PowerShell, so it was stopped by verified child PID.",
+  "Evidence": "fishbowl.stdout.log",
+  "Command": "./RUN_ROOM_SCALE_FISHBOWL.ps1"
+}

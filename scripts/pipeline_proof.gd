@@ -7,7 +7,13 @@ const SurfaceNavigationController := preload("res://scripts/surface_navigation.g
 const TaskCoordinatorController := preload("res://scripts/task_coordinator.gd")
 const CitizenAgentController := preload("res://scripts/citizen_agent.gd")
 const ConstructionSystemController := preload("res://scripts/construction_system.gd")
+const CivilizationSimulation := preload("res://scripts/civilization_simulation.gd")
+const ResourceProfiles := preload("res://scripts/resource_system.gd")
 const RoomDefinitionLoader := preload("res://scripts/room_definition.gd")
+const VisualResolver := preload("res://scripts/visuals/visual_resolver.gd")
+const MaterialLibrary := preload("res://scripts/visuals/material_library.gd")
+const SettlementDetails := preload("res://scripts/visuals/settlement_details.gd")
+const Evidence := preload("res://scripts/verification/evidence_io.gd")
 const CITIZEN_HEIGHT_INCHES := 0.5
 const CROWN_INTERIOR_PROJECTION := 0.75
 
@@ -21,6 +27,7 @@ var _room_definition: Dictionary = {}
 var _capture_timer := 0.0
 var _capture_saved := false
 var _materials: Dictionary = {}
+var _visual_resolver := VisualResolver.new()
 var _citizens: Array[Node3D] = []
 var _animated_gear_roots: Array[Node3D] = []
 var _presentation_clock := 0.0
@@ -32,6 +39,7 @@ var _population_label: Label
 var _activity_label: Label
 var _focus_label: Label
 var _surface_outlines: Dictionary = {}
+var _room_object_roots: Dictionary = {}
 var _cutaway_wall_group: Node3D
 var _cutaway_wall_side := ""
 var _reach_button: Button
@@ -41,6 +49,8 @@ var _material_status_label: Label
 var _build_status_label: Label
 var _m6_status_label: Label
 var _inspection_label: Label
+var _presentation_mode := true
+var _compact_status: Label
 var _selected_citizen: Node3D
 var _selected_surface := ""
 
@@ -65,16 +75,29 @@ func _ready() -> void:
 	if not _build_population():
 		return
 	_build_ui()
+	if _room_definition.has("civilization"):
+		start_civilization(_room_definition.civilization)
 	print("ROOMSCALE_M2_READY Godot=%s room=%s size=%.0fx%.0f in citizens=%d" % [Engine.get_version_info().string, _room_definition.id, ROOM_WIDTH, ROOM_DEPTH, _citizens.size()])
+
+
+func start_civilization(config: Dictionary) -> Node:
+	var simulation := CivilizationSimulation.new()
+	simulation.name = "CivilizationSimulation"
+	add_child(simulation)
+	simulation.configure(self, config)
+	return simulation
 
 
 func _process(delta: float) -> void:
 	_presentation_clock += delta
+	var settlement := get_node_or_null("Settlement") as Node3D
+	if settlement != null:
+		SettlementDetails.animate(settlement, _presentation_clock)
 	for index in range(_animated_gear_roots.size()):
 		var gear := _animated_gear_roots[index]
 		gear.rotation.y += delta * (0.72 if index % 2 == 0 else -0.58)
 	if is_instance_valid(_boiler_light):
-		_boiler_light.light_energy = 20.0 + 5.0 * (0.5 + 0.5 * sin(_presentation_clock * 2.0))
+		_boiler_light.light_energy = 0.65 + 0.12 * (0.5 + 0.5 * sin(_presentation_clock * 2.0))
 	_capture_timer += delta
 	_ui_timer += delta
 	if _ui_timer >= 0.2:
@@ -92,10 +115,20 @@ func _build_settlement() -> void:
 	var settlement := Node3D.new()
 	settlement.name = "Settlement"
 	add_child(settlement)
-	_build_workshop(settlement)
-	_build_depot(settlement)
-	_build_housing(settlement)
-	_build_work_area(settlement)
+	if _room_definition.has("start") and _room_definition.start.infrastructure.is_empty():
+		var cache := Node3D.new()
+		cache.name = "PortableSupplies"
+		cache.position = RoomDefinitionLoader.vector3_from(_room_definition.start.origin)
+		settlement.add_child(cache)
+		for index in range(int(_room_definition.start.population)):
+			_add_box(cache, "Pack", Vector3(0.35, 0.3, 0.3), Vector3(index * 0.5 - 1, 0.15, 0), Color("99714a"))
+		return
+	var initial: Array = _room_definition.get("start", {}).get("infrastructure", ["workshop", "depot", "housing", "work_area"])
+	if "workshop" in initial: _build_workshop(settlement)
+	if "depot" in initial: _build_depot(settlement)
+	if "housing" in initial: _build_housing(settlement)
+	if "work_area" in initial: _build_work_area(settlement)
+	if initial.size() == 4: SettlementDetails.decorate(settlement, _room_definition)
 
 
 func _build_workshop(parent: Node3D) -> void:
@@ -129,7 +162,7 @@ func _build_workshop(parent: Node3D) -> void:
 	_boiler_light.name = "BoilerLamp"
 	_boiler_light.position = Vector3(-6.5, 7.0, 0.76)
 	_boiler_light.light_color = Color("f0a748")
-	_boiler_light.light_energy = 22.0
+	_boiler_light.light_energy = 0.8
 	_boiler_light.omni_range = 12.0
 	shop.add_child(_boiler_light)
 
@@ -224,6 +257,8 @@ func _build_room() -> void:
 	var floor_mesh := _add_box(room, "Floor", Vector3(ROOM_WIDTH, FLOOR_THICKNESS, ROOM_DEPTH), Vector3(floor_center.x, floor_height - FLOOR_THICKNESS * 0.5, floor_center.z), floor_color, 0.82)
 	if not floor_appearance.is_empty():
 		floor_mesh.material_override = _appearance_material(floor_appearance, floor_color, 0.82)
+	if floor_appearance.is_empty() or String(floor_appearance.get("material", "")) == "wood":
+		floor_mesh.material_override = MaterialLibrary.floor_material(floor_color.lerp(Color("7c8280"), 0.55))
 	if String(floor_appearance.get("material", "")).to_lower() == "wood":
 		var seam_count := maxi(1, floori(ROOM_WIDTH / 12.0))
 		for index in range(1, seam_count):
@@ -529,14 +564,21 @@ func _build_room_object(parent: Node3D, object: Dictionary) -> void:
 	root.rotation_degrees.y = float(object.get("rotation_degrees", 0.0))
 	root.set_meta("semantic_name", String(object.get("name", object.id)))
 	parent.add_child(root)
-	var legacy_color := Color(String(object.get("color", "80664b")))
-	var appearance_value: Variant = object.get("appearance", null)
-	if appearance_value is Dictionary:
-		_build_appearance_object(root, dimensions, String(object.kind), appearance_value, legacy_color)
-	elif int(_room_definition.get("schema_version", 1)) >= 2:
-		_build_appearance_object(root, dimensions, String(object.kind), {}, legacy_color)
-	else:
-		_build_legacy_room_object(root, dimensions, object, legacy_color)
+	_room_object_roots[String(object.id)] = root
+	_visual_resolver.render(root, object, _render_object_fallback)
+	if ResourceProfiles.derive(object).harvestable:
+		var object_body := StaticBody3D.new()
+		object_body.name = "ResourceSelectionCollider"
+		object_body.collision_layer = 4
+		object_body.collision_mask = 0
+		object_body.set_meta("object_id", String(object.id))
+		var selection_shape := CollisionShape3D.new()
+		var selection_box := BoxShape3D.new()
+		selection_box.size = dimensions
+		selection_shape.shape = selection_box
+		selection_shape.position.y = dimensions.y * 0.5
+		object_body.add_child(selection_shape)
+		root.add_child(object_body)
 	if object.has("surface"):
 		var surface: Dictionary = object.surface
 		var region_id := String(surface.region_id)
@@ -563,9 +605,28 @@ func _build_room_object(parent: Node3D, object: Dictionary) -> void:
 		_surface_outlines[region_id] = outline
 
 
+func get_room_object(object_id: String) -> Node3D:
+	return _room_object_roots.get(object_id) as Node3D
+
+
+func _render_object_fallback(root: Node3D, object: Dictionary) -> void:
+	var dimensions := RoomDefinitionLoader.vector3_from(object.dimensions)
+	var color := Color(String(object.get("color", "80664b")))
+	var appearance: Variant = object.get("appearance", null)
+	if appearance is Dictionary:
+		_build_appearance_object(root, dimensions, String(object.kind), appearance, color)
+	elif int(_room_definition.get("schema_version", 1)) >= 2:
+		_build_appearance_object(root, dimensions, String(object.kind), {}, color)
+	else:
+		_build_legacy_room_object(root, dimensions, object, color)
+
+
 func _build_legacy_room_object(root: Node3D, dimensions: Vector3, object: Dictionary, color: Color) -> void:
 	var kind := String(object.kind)
 	match kind:
+		"water_container":
+			_add_cylinder(root, "Container", dimensions.x * 0.5, dimensions.y, Vector3(0, dimensions.y * 0.5, 0), Color("8bb3c0"))
+			_add_cylinder(root, "WaterContents", dimensions.x * 0.44, 0.08, Vector3(0, dimensions.y + 0.04, 0), Color("287eae"))
 		"rug":
 			_add_box(root, "RugSurface", Vector3(dimensions.x, maxf(0.05, dimensions.y), dimensions.z), Vector3(0.0, dimensions.y * 0.5, 0.0), color, 0.96)
 		"table", "workbench":
@@ -1063,9 +1124,9 @@ func _build_triptych_art(root: Node3D, dimensions: Vector3, appearance: Dictiona
 			_add_styled_box(root, "ArtDivider_%d" % index, Vector3(0.8, height, depth * 0.4), Vector3(-width * 0.5 + float(index) * width / 3.0, height * 0.5, depth * 0.7), appearance, frame_color, 0.8, true)
 	var art_z := depth * 0.78
 	for index in range(3):
-		var center_x := -width / 3.0 + (float(index) + 0.5) * width / 3.0
+		var center_x := -width / 3.0 + float(index) * width / 3.0
 		var shape_color := base_color.lightened(0.16) if index % 2 == 0 else accent_color.lightened(0.12)
-		_add_art_triangle(root, "TriptychTriangle_%d" % index, Vector3(center_x - width * 0.09, height * 0.25, art_z), Vector3(center_x + width * 0.12, height * 0.76, art_z), Vector3(center_x + width * 0.18, height * 0.30, art_z), shape_color)
+		_add_art_triangle(root, "TriptychTriangle_%d" % index, Vector3(center_x - width * 0.09, height * 0.25, art_z), Vector3(center_x + width * 0.12, height * 0.76, art_z), Vector3(center_x + width * 0.16, height * 0.30, art_z), shape_color)
 		_add_sphere(root, "TriptychCircle_%d" % index, Vector3(width * 0.12, height * 0.18, maxf(0.3, depth * 0.18)), Vector3(center_x - width * 0.08, height * 0.58, art_z + 0.05), accent_color.lightened(0.2))
 
 
@@ -1250,8 +1311,8 @@ func _appearance_color(appearance: Variant, field: String, fallback: Color) -> C
 
 
 func _appearance_material(appearance: Dictionary, color: Color, default_roughness: float) -> StandardMaterial3D:
-	var material := _material(color, default_roughness).duplicate() as StandardMaterial3D
 	var category := String(appearance.get("material", "other")).to_lower()
+	var material := MaterialLibrary.get_material(category, color, default_roughness).duplicate() as StandardMaterial3D
 	match category:
 		"metal":
 			material.metallic = 0.72
@@ -1286,8 +1347,8 @@ func _build_lighting() -> void:
 	var fill := OmniLight3D.new()
 	fill.name = "RoomFill"
 	fill.position = RoomDefinitionLoader.vector3_from(fill_position)
-	fill.light_color = Color("f7d8a0")
-	fill.light_energy = 82.0
+	fill.light_color = Color("dbe4ec")
+	fill.light_energy = 1.2
 	fill.omni_range = maxf(190.0, ROOM_WIDTH * 0.9)
 	fill.omni_attenuation = 1.35
 	add_child(fill)
@@ -1297,8 +1358,8 @@ func _build_lighting() -> void:
 	resource.background_mode = Environment.BG_COLOR
 	resource.background_color = Color("17212b")
 	resource.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-	resource.ambient_light_color = Color("d5cdbb")
-	resource.ambient_light_energy = 0.34
+	resource.ambient_light_color = Color("d5dce4")
+	resource.ambient_light_energy = 0.72
 	resource.tonemap_mode = Environment.TONE_MAPPER_FILMIC
 	resource.glow_enabled = true
 	resource.glow_intensity = 0.14
@@ -1310,7 +1371,7 @@ func _build_lighting() -> void:
 	lantern_fill.name = "SettlementLanternFill"
 	lantern_fill.position = RoomDefinitionLoader.vector3_from(lantern_position)
 	lantern_fill.light_color = Color("e5a95d")
-	lantern_fill.light_energy = 24.0
+	lantern_fill.light_energy = 1.4
 	lantern_fill.omni_range = 38.0
 	lantern_fill.omni_attenuation = 1.5
 	add_child(lantern_fill)
@@ -1354,28 +1415,16 @@ func _build_population() -> bool:
 	_task_coordinator.surface_navigation = surface_navigation
 	_task_coordinator.configure_room(_room_definition)
 	add_child(_task_coordinator)
-	_task_coordinator.seed_population(50)
-	var starts: Array[Vector3] = []
-	var spawn: Dictionary = _room_definition.spawn
-	var spawn_center := RoomDefinitionLoader.vector3_from(spawn.center)
-	var spawn_dimensions: Array = spawn.dimensions
-	var floor_height := float(_room_definition.floor.height)
-	for citizen_id in range(50):
-		var column := citizen_id % 10
-		var row := floori(float(citizen_id) / 10.0)
-		var proposed := Vector3(spawn_center.x - float(spawn_dimensions[0]) * 0.5 + 4.0 + float(column) * (float(spawn_dimensions[0]) - 8.0) / 9.0, floor_height, spawn_center.z - float(spawn_dimensions[2]) * 0.5 + 4.0 + float(row) * (float(spawn_dimensions[2]) - 8.0) / 4.0)
-		var spawn_position: Vector3 = navigation.nearest_walkable_position(proposed)
-		if not is_finite(spawn_position.x):
-			push_error("No walkable spawn position for citizen %d" % citizen_id)
-			continue
-		var attempts := 0
-		while _overlaps_spawn(spawn_position, starts) and attempts < 8:
-			attempts += 1
-			proposed += Vector3(0.0, 0.0, 4.0)
-			spawn_position = navigation.nearest_walkable_position(proposed)
-		starts.append(spawn_position)
+	var initial_population := int(_room_definition.get("start", {}).get("population", 50))
+	var starts: Array[Vector3] = preload("res://scripts/population_system.gd").initial_positions(_room_definition, navigation, initial_population)
+	if starts.size() != initial_population:
+		push_error("ROOMSCALE_SPAWN_INVALID: insufficient safe connected positions for all %d citizens" % initial_population)
+		get_tree().quit(1)
+		return false
+	_task_coordinator.seed_population(initial_population)
+	for citizen_id in range(initial_population):
 		var citizen: Node3D = CitizenAgentController.new()
-		citizen.initialize(citizen_id, spawn_position, navigation, _task_coordinator)
+		citizen.initialize(citizen_id, starts[citizen_id], navigation, _task_coordinator)
 		add_child(citizen)
 		_citizens.append(citizen)
 	_construction_system = ConstructionSystemController.new()
@@ -1391,13 +1440,6 @@ func _build_population() -> bool:
 		get_node("CameraRig").set_citizen_focus(_citizens[0])
 	print("ROOMSCALE_CITIZEN_SPAWN count=%d separate_nodes=true height=%.1fin" % [_citizens.size(), CITIZEN_HEIGHT_INCHES])
 	return true
-
-
-func _overlaps_spawn(candidate: Vector3, existing: Array[Vector3]) -> bool:
-	for position in existing:
-		if Vector2(candidate.x - position.x, candidate.z - position.z).length() < 2.0:
-			return true
-	return false
 
 
 func _build_ui() -> void:
@@ -1461,7 +1503,23 @@ func _build_ui() -> void:
 	_inspection_label.custom_minimum_size = Vector2(255.0, 72.0)
 	_inspection_label.text = "CITIZEN INSPECTION\nClick a citizen"
 	overlay.add_child(_inspection_label)
+	_add_ui_panel(overlay, "PresentationPanel", Rect2(20, 18, 420, 74), Color(0.035, 0.052, 0.068, 0.72))
+	_compact_status = _make_label("PresentationStatus", Vector2(34, 27), 16, Color("f5e3c5"))
+	overlay.add_child(_compact_status)
+	_apply_presentation_mode()
 	_update_population_ui()
+
+func _apply_presentation_mode() -> void:
+	var overlay := get_node("Overlay")
+	for child in overlay.get_children():
+		if child.name == "CivilizationHUD":
+			child.visible = _presentation_mode
+		elif child.name in ["PresentationPanel", "PresentationStatus"]:
+			child.visible = _presentation_mode and not has_node("CivilizationSimulation")
+		elif child.name != "ReachExploreButton":
+			child.visible = not _presentation_mode
+	_reach_button.position = Vector2(20, 100) if _presentation_mode else Vector2(28, 184)
+
 
 
 func _update_population_ui() -> void:
@@ -1498,6 +1556,11 @@ func _update_population_ui() -> void:
 	var m6: Dictionary = _task_coordinator.get_m6_status()
 	_m6_status_label.text = "%s  ARRIVED %d · EXPLORED %d · REUSES %d/2 · LINK %s" % [_goal_surface_name().to_upper(), m6.target_arrivals, m6.target_explorations_completed, m6.autonomous_reuses_assigned, "LIVE" if m6.infrastructure_operational else "WAITING"]
 	_update_project_ui()
+	if is_instance_valid(_compact_status):
+		var project: Dictionary = _construction_system.status()
+		_compact_status.text = "ROOMSCALE  ·  %d CITIZENS\n%s   ·   F3 diagnostics" % [_citizens.size(), String(project.state).replace("_", " ") if project.created else "Explore the room"]
+		if _presentation_mode:
+			_focus_label.visible = false
 
 
 func _on_reach_goal_updated(status: Dictionary) -> void:
@@ -1543,20 +1606,20 @@ func _unhandled_input(event: InputEvent) -> void:
 		var mouse_button := event as InputEventMouseButton
 		if mouse_button.button_index == MOUSE_BUTTON_LEFT and mouse_button.pressed:
 			if not select_surface_at_screen_position(mouse_button.position):
-				select_citizen_at_screen_position(mouse_button.position)
+				if not select_resource_object_at_screen_position(mouse_button.position): select_citizen_at_screen_position(mouse_button.position)
 	elif event is InputEventKey:
 		var key := event as InputEventKey
 		if key.pressed and not key.echo:
-			if key.keycode == KEY_F12:
+			if key.keycode == KEY_F3:
+				_presentation_mode = not _presentation_mode
+				_apply_presentation_mode()
+				get_viewport().set_input_as_handled()
+			elif key.keycode == KEY_F12:
 				capture_interaction_state()
 				get_viewport().set_input_as_handled()
 			elif key.keycode == KEY_ENTER and _selected_surface == surface_navigation_goal_id():
 				issue_reach_explore()
 				get_viewport().set_input_as_handled()
-
-
-func _select_surface_under_cursor(screen_position: Vector2) -> void:
-	select_surface_at_screen_position(screen_position)
 
 
 func select_surface_at_screen_position(screen_position: Vector2) -> bool:
@@ -1568,6 +1631,16 @@ func select_surface_at_screen_position(screen_position: Vector2) -> bool:
 	if not hit.is_empty() and (hit.collider as Node).is_in_group("goal_surface"):
 		return select_goal_surface(String((hit.collider as Node).get_meta("region_id", "")))
 	return false
+
+
+func select_resource_object_at_screen_position(screen_position: Vector2) -> bool:
+	var civilization := get_node_or_null("CivilizationSimulation")
+	if civilization == null: return false
+	var camera := get_node("CameraRig/Camera") as Camera3D
+	var origin := camera.project_ray_origin(screen_position)
+	var query := PhysicsRayQueryParameters3D.create(origin, origin + camera.project_ray_normal(screen_position) * 1000, 4)
+	var hit: Dictionary = get_world_3d().direct_space_state.intersect_ray(query)
+	return not hit.is_empty() and civilization.hud.select_object(String(hit.collider.get_meta("object_id", "")))
 
 
 func select_citizen_at_screen_position(screen_position: Vector2) -> bool:
@@ -1758,20 +1831,14 @@ func _add_sphere(parent: Node3D, node_name: String, size: Vector3, at: Vector3, 
 	return item
 
 
-func _add_book_stack(parent: Node3D, node_name: String, at: Vector3, count: int) -> void:
-	var colors := [Color("97574a"), Color("52717b"), Color("c39b5a"), Color("596950")]
-	for index in range(count):
-		var width := 12.0 - float(index % 2) * 2.0
-		_add_box(parent, "%s%d" % [node_name, index], Vector3(width, 1.8, 9.0), at + Vector3(0.0, float(index) * 2.0, 0.0), colors[index % colors.size()], 0.76)
-
-
 func _material(color: Color, roughness: float) -> StandardMaterial3D:
 	var key := "%s_%.2f" % [color.to_html(), roughness]
 	if _materials.has(key):
 		return _materials[key] as StandardMaterial3D
-	var material := StandardMaterial3D.new()
-	material.albedo_color = color
-	material.roughness = roughness
+	var category := "wood" if color.r > color.b * 1.15 and roughness > 0.55 else "paint"
+	if roughness < 0.55:
+		category = "brass" if color.r > color.b * 1.2 else "iron"
+	var material := MaterialLibrary.get_material(category, color, roughness)
 	_materials[key] = material
 	return material
 
@@ -1786,11 +1853,15 @@ func _capture_frame() -> void:
 func _capture_frame_named(tag: String) -> void:
 	var image := get_viewport().get_texture().get_image()
 	var artifact_directory := ProjectSettings.globalize_path("res://verification")
-	DirAccess.make_dir_recursive_absolute(artifact_directory)
 	var image_path := "%s/%s.png" % [artifact_directory, tag]
-	var result := image.save_png(image_path)
+	var result := Evidence.save_png(image, image_path)
+	if result != OK:
+		push_error("ROOMSCALE_VISIBLE_CAPTURE_FAIL: screenshot write failed: %s (error=%d)" % [image_path, result])
+		return
 	var proof := FileAccess.open("%s/%s.log" % [artifact_directory, tag], FileAccess.WRITE)
-	proof.store_line("ROOMSCALE_M3_VISIBLE_PASS")
+	if proof == null:
+		push_error("ROOMSCALE_VISIBLE_CAPTURE_FAIL: receipt write failed (error=%d)" % FileAccess.get_open_error())
+		return
 	proof.store_line("Godot=%s" % Engine.get_version_info().string)
 	proof.store_line("Room=%.0fx%.0f in; walls=%.0f in" % [ROOM_WIDTH, ROOM_DEPTH, WALL_HEIGHT])
 	var room_object_names := PackedStringArray()
@@ -1806,4 +1877,9 @@ func _capture_frame_named(tag: String) -> void:
 	proof.store_line("Goal=%s" % JSON.stringify(_task_coordinator.get_reach_goal_status()))
 	proof.store_line("Screenshot=%s" % image_path)
 	proof.store_line("ImageSaveResult=%d" % result)
+	proof.store_line("ROOMSCALE_M3_VISIBLE_PASS")
+	proof.flush()
+	if proof.get_error() != OK:
+		push_error("ROOMSCALE_VISIBLE_CAPTURE_FAIL: receipt flush failed (error=%d)" % proof.get_error())
+		return
 	print("ROOMSCALE_VISIBLE_CAPTURE path=%s result=%d" % [image_path, result])

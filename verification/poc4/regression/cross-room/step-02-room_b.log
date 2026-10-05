@@ -1,0 +1,20 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ROOMSCALE_VISUAL_ASSET object=assembly_table source=res://assets/generated/writing_desk.glb normalization={ "source_bounds": [P: (-34.0, 0.0, -17.0), S: (68.0, 30.0, 34.0)], "fitted_dimensions": (42.0, 24.0, 32.0) }
+ROOMSCALE_FLOOR_NAV_READY room=room_b grid=65x55 cell=4in obstacles=12
+ROOMSCALE_CITIZEN_SPAWN count=50 separate_nodes=true height=0.5in
+ROOMSCALE_M2_READY Godot=4.7.2-stable (official) room=room_b size=260x220 in citizens=50
+ROOMSCALE_TRAVERSAL_START route=81.2in timeout=32.5s start=(115.2346, 0.0, -55.23455) target=(72.0, 36.0, -65.0)
+ROOMSCALE_M6_BUDGET task=305 type=SURFACE_EXPLORATION route=152.2in added=55.0s cumulative=75.0s
+ROOMSCALE_M6_BUDGET task=374 type=SURFACE_TRAVERSAL route=202.9in added=64.6s cumulative=139.6s
+ROOMSCALE_M6_BUDGET task=449 type=SURFACE_EXPLORATION route=152.2in added=55.0s cumulative=194.6s
+ROOMSCALE_M6_BUDGET task=514 type=SURFACE_TRAVERSAL route=204.8in added=65.1s cumulative=259.7s
+ROOMSCALE_M6_BUDGET task=583 type=SURFACE_EXPLORATION route=152.2in added=55.0s cumulative=314.7s
+ROOMSCALE_ROOM=room_b TARGET=Elevated Workbench REGION=BENCH_SURFACE FLOOR=260x220 SITE=(124.0, 0.0, -64.0)
+ROOMSCALE_M2_SMOKE_PASS room=room_b citizens=50 active=47 available=2 moving=45 obstacles=12 detour=124.7in
+ROOMSCALE_M3_SMOKE_PASS room=room_b selected=Elevated Workbench investigators=2 arrived=2 barrier=no navigation connection between FLOOR and BENCH_SURFACE elapsed=20.25s
+ROOMSCALE_M4_SMOKE_PASS room=room_b deliveries=11 delivered={ "wood": 4, "metal": 4, "mechanical_parts": 3 } builders_returned=true gates=3 components=3 site=(124.0, 0.0, -64.0) elapsed=73.75s
+ROOMSCALE_M5_SMOKE_PASS room=room_b cable_segments=8 radius=0.04in partial_deploy=true traverser=Citizen42 height=36.0in walked=82.3in route=81.2in max_step=1.34in max_step_interval=0.207s max_sample_speed=6.50in/s speed_sample_interval=0.207s speed_cap=6.5in/s step_tolerance=0.25in elapsed=12.60s
+ROOMSCALE_M6_SMOKE_PASS room=room_b arrivals=3 explorations=3 reused=2 distinct_travelers=3 work=12.0s persistent_link=true combined_max_step=1.35in max_step_interval=0.207s max_sample_speed=6.50in/s speed_sample_interval=0.201s speed_cap=6.5in/s step_tolerance=0.25in elapsed=141.60s budget=314.66s
+ROOMSCALE_M8_SMOKE_PASS room=room_b steam=true cog_teeth=8 citizen_inspection=true camera_easing=verified
+
