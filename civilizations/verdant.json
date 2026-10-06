@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "id": "verdant",
+  "display_name": "Verdant",
+  "description": "Gnome- and faerie-like woodland folk who reclaim the giant room with roots, living fiber, resin, fungi, flowers, and climbing vines.",
+  "citizen_style": "verdant_folk",
+  "settlement_style": "living_grove",
+  "traversal_style": "living_vine",
+  "palette": {
+    "primary": "557a3e",
+    "secondary": "765438",
+    "accent": "d0a24b",
+    "organic": "355638",
+    "glow": "d9cf72"
+  },
+  "resource_vocabulary": {
+    "wood": {"display_name": "Living Fiber", "visual_style": "fiber_bundle"},
+    "metal": {"display_name": "Resin", "visual_style": "resin_pod"},
+    "mechanical_parts": {"display_name": "Growth Spores", "visual_style": "spore_pods"}
+  },
+  "construction": {
+    "project_name": "Living Vine Project",
+    "stage_names": {
+      "base": "Root Bed",
+      "winch": "Growth Lattice",
+      "launcher": "Bloom Anchor"
+    },
+    "traversal_name": "Living Vine"
+  },
+  "world_influence": {
+    "enabled": true,
+    "style": "reclamation",
+    "settlement_patch_budget": 18,
+    "lower_anchor_patch_budget": 10,
+    "surface_patch_budget": 12
+  }
+}
