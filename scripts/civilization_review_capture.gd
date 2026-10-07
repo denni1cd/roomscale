@@ -88,6 +88,8 @@ func run() -> void:
 			finish(false, "Established production Reach / Explore action was rejected")
 			return
 	while elapsed() < timeout_seconds:
+		if not await observe_cargo():
+			return
 		if sim != null and not await observe_founder_modules():
 			return
 		if not await observe_traversal():
@@ -115,7 +117,30 @@ func observe_founder_modules() -> bool:
 			if not await capture(phase, module.global_position + Vector3.UP * 1.0, 18.0, 36.0, 0.3):
 				return false
 	if not captured.has("earned-settlement") and sim.development.count("workshop") > 0 and sim.development.count("depot") > 0 and sim.development.count("shelter") > 0:
+		if requested_civilization == "verdant":
+			for child in scene.get_children():
+				if child is Node3D and child.has_meta("module") and child.has_meta("stage"):
+					var signature := "%s:%s" % [child.get_meta("module"), child.get_meta("stage")]
+					if String(child.get_meta("verdant_signature", "")) != signature:
+						return true # Wait for the ordinary presentation refresh.
 		if not await capture("earned-settlement", settlement_center() + Vector3.UP * 2, 100.0, 42.0):
+			return false
+	return true
+
+
+func observe_cargo() -> bool:
+	for citizen in scene.get("_citizens"):
+		if not bool(citizen.get("carrying")):
+			continue
+		var cargo := citizen.get("_cargo") as MeshInstance3D
+		if cargo == null:
+			continue
+		var resource := String(cargo.get_meta("cargo_resource", ""))
+		if resource not in ["wood", "metal", "mechanical_parts"] or captured.has("resource-" + resource):
+			continue
+		if requested_civilization == "verdant" and (not cargo.has_node("VerdantCargo") or String(cargo.get_meta("verdant_styled_for", "")) != resource):
+			continue
+		if not await capture("resource-" + resource, citizen.global_position + Vector3.UP * 0.25, 1.8, 18.0, 0.3, citizen, false, [], resource):
 			return false
 	return true
 
@@ -170,7 +195,7 @@ func observe_traversal() -> bool:
 	return true
 
 
-func capture(phase: String, focus: Vector3, distance: float, tilt: float, yaw: float = 0.0, subject: Node3D = null, show_overlay: bool = false, required_points: Array[Vector3] = []) -> bool:
+func capture(phase: String, focus: Vector3, distance: float, tilt: float, yaw: float = 0.0, subject: Node3D = null, show_overlay: bool = false, required_points: Array[Vector3] = [], expected_resource: String = "") -> bool:
 	# Use the ordinary pause control to preserve brief earned states while the
 	# software renderer draws. Resume the same speed after the image is saved.
 	# No stage, pose, citizen position or work/material value is assigned here.
@@ -220,6 +245,13 @@ func capture(phase: String, focus: Vector3, distance: float, tilt: float, yaw: f
 	for entry in project_labels:
 		if is_instance_valid(entry.label):
 			entry.label.visible = bool(entry.visible)
+	if not expected_resource.is_empty():
+		var cargo := subject.get("_cargo") as MeshInstance3D
+		if not bool(subject.get("carrying")) or cargo == null or String(cargo.get_meta("cargo_resource", "")) != expected_resource:
+			overlay.visible = overlay_was_visible
+			if sim != null:
+				(sim.spectator.speed_buttons[previous_speed] as Button).pressed.emit()
+			return true # The real delivery finished; wait for a later real parcel.
 	if image.is_empty() or image.get_width() < 1280 or image.get_height() < 720:
 		overlay.visible = overlay_was_visible
 		finish(false, "Renderer returned an unusable image for %s" % phase)
@@ -238,6 +270,9 @@ func capture(phase: String, focus: Vector3, distance: float, tilt: float, yaw: f
 	receipt["camera"] = {"focus": rig.target, "distance": rig.distance, "tilt": rig.tilt_degrees, "yaw": rig.yaw, "overlay_visible": show_overlay, "project_labels_hidden": true}
 	if is_instance_valid(subject):
 		receipt["subject"] = {"id": subject.get("citizen_id"), "position": subject.global_position, "state": subject.get("state"), "task": subject.get("task_type"), "task_id": subject.get("task_id"), "travelled_distance": subject.get("travelled_distance")}
+		if not expected_resource.is_empty():
+			receipt["subject"]["cargo_resource"] = expected_resource
+			receipt["subject"]["carrying"] = bool(subject.get("carrying"))
 	captures.append(receipt)
 	captured[phase] = true
 	if sim != null:
@@ -286,6 +321,8 @@ func missing_phases() -> Array[String]:
 	required.append("upper-reclamation" if requested_civilization == "verdant" else "upper-anchor")
 	if sim != null:
 		required.append_array(["founder-module-foundation", "founder-module-frame", "founder-module-shell", "founder-module-complete", "earned-settlement"])
+	else:
+		required.append_array(["resource-wood", "resource-metal", "resource-mechanical_parts"])
 	var missing: Array[String] = []
 	for phase in required:
 		if not captured.has(phase):
