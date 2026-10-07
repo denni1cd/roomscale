@@ -38,10 +38,10 @@ func run() -> void:
 		_check(depot != null and depot.has_node("VerdantOverlay/WovenFloor"), "Depot must render a Seed Cache overlay")
 		_check(housing != null and housing.has_node("VerdantOverlay/HomePod0"), "Housing must render Pod Homes")
 		_check(work_area != null and work_area.has_node("VerdantOverlay/CultivationMat"), "Work area must render a Cultivation Circle")
-		var clockwork_details: Node3D = null
+		var boiler: Node3D = null
 		if workshop != null:
-			clockwork_details = workshop.get_node_or_null("ClockworkDetails") as Node3D
-		_check(clockwork_details != null and not clockwork_details.visible, "Clockwork presentation nodes must be preserved but hidden")
+			boiler = workshop.get_node_or_null("Boiler") as Node3D
+		_check(boiler != null and not boiler.visible, "Clockwork workshop nodes must be preserved but hidden")
 	var citizens: Variant = scene.get("_citizens")
 	_check(citizens is Array and not citizens.is_empty(), "production population must exist")
 	if citizens is Array and not citizens.is_empty():
