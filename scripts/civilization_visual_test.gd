@@ -38,7 +38,9 @@ func run() -> void:
 		_check(depot != null and depot.has_node("VerdantOverlay/WovenFloor"), "Depot must render a Seed Cache overlay")
 		_check(housing != null and housing.has_node("VerdantOverlay/HomePod0"), "Housing must render Pod Homes")
 		_check(work_area != null and work_area.has_node("VerdantOverlay/CultivationMat"), "Work area must render a Cultivation Circle")
-		var clockwork_details := workshop.get_node_or_null("ClockworkDetails") as Node3D if workshop != null else null
+		var clockwork_details: Node3D = null
+		if workshop != null:
+			clockwork_details = workshop.get_node_or_null("ClockworkDetails") as Node3D
 		_check(clockwork_details != null and not clockwork_details.visible, "Clockwork presentation nodes must be preserved but hidden")
 	var citizens: Variant = scene.get("_citizens")
 	_check(citizens is Array and not citizens.is_empty(), "production population must exist")
@@ -46,11 +48,15 @@ func run() -> void:
 		var citizen := citizens[0] as Node3D
 		var figure := citizen.get_node_or_null("Figure") as Node3D
 		_check(figure != null and figure.has_node("AcornCap"), "Verdant citizen must receive acorn/woodland headgear")
-		var clockwork_cap := figure.get_node_or_null("ClockworkCap") if figure != null else null
+		var clockwork_cap: Node3D = null
+		if figure != null:
+			clockwork_cap = figure.get_node_or_null("ClockworkCap") as Node3D
 		_check(clockwork_cap != null and not clockwork_cap.visible, "Clockwork cap must be hidden for Verdant citizen")
 	_check(scene.has_node("VerdantInfluence"), "Verdant initial reclamation layer must exist")
 	var overlay := scene.get_node_or_null("Overlay") as Control
-	var banner := overlay.get_node_or_null("CivilizationBanner") as Label if overlay != null else null
+	var banner: Label = null
+	if overlay != null:
+		banner = overlay.get_node_or_null("CivilizationBanner") as Label
 	_check(banner != null and banner.text.contains("Verdant"), "player UI must identify Verdant")
 	_finish()
 
