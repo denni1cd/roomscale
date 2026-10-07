@@ -34,20 +34,9 @@ jobs:
           $godot = & ./SETUP_ROOM_SCALE.ps1 | Select-Object -Last 1
           & $godot --headless --editor --path . --import
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-      - name: Civilization contract regression
+      - name: Civilization contracts
         shell: pwsh
-        run: |
-          $godot = & ./SETUP_ROOM_SCALE.ps1 | Select-Object -Last 1
-          & $godot --headless --path . --script res://scripts/civilization_definition_test.gd
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-      - name: Verdant production visual contract
-        shell: pwsh
-        run: |
-          $godot = & ./SETUP_ROOM_SCALE.ps1 | Select-Object -Last 1
-          $env:ROOMSCALE_ROOM = 'room_a'
-          $env:ROOMSCALE_CIVILIZATION = 'verdant'
-          & $godot --headless --path . --script res://scripts/civilization_visual_test.gd
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+        run: ./TEST_ROOM_SCALE_CIVILIZATIONS.ps1 -TimeoutSeconds 60
       - name: Focused and startup regressions
         shell: pwsh
         run: ./TEST_ROOM_SCALE.ps1 -Mode Fast
@@ -55,7 +44,7 @@ jobs:
         if: failure()
         with:
           name: fast-failure-evidence
-          path: verification/stabilization/runs/fast
+          path: verification/stabilization/runs
           if-no-files-found: ignore
 
   civilization-smoke:
