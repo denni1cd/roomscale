@@ -286,15 +286,17 @@ func _style_verdant_citizen(citizen: Node3D) -> void:
 		pack.material_override = _material(Color("53653c"), 0.96)
 	var cap := MeshInstance3D.new()
 	cap.name = "AcornCap"
-	var cap_mesh := CylinderMesh.new()
-	cap_mesh.top_radius = 0.025
-	cap_mesh.bottom_radius = 0.105
-	cap_mesh.height = 0.10
+	var cap_mesh := SphereMesh.new()
+	cap_mesh.radius = 0.5
+	cap_mesh.height = 1.0
 	cap_mesh.radial_segments = 12
+	cap_mesh.rings = 6
 	cap.mesh = cap_mesh
-	cap.position = Vector3(0, 0.474, 0)
+	cap.position = Vector3(0, 0.475, 0)
+	cap.scale = Vector3(0.18, 0.075, 0.17)
 	cap.material_override = _material(Color("8a633b"), 0.95)
 	figure.add_child(cap)
+	_cylinder(figure, "AcornRim", 0.088, 0.012, Vector3(0, 0.451, 0), Color("65472f"))
 	var cap_leaf := _leaf(figure, "CapLeaf", Vector3(0.075, 0.505, 0), Vector3(0.12, 0.025, 0.055), Color("5b873f"), 0.45)
 	cap_leaf.rotation.z = 0.2
 	for side in [-1.0, 1.0]:
@@ -524,16 +526,17 @@ func _build_vine(scene: Node3D, path: Array, coarse_segments: Array) -> void:
 		var segment_root := Node3D.new()
 		segment_root.name = "VineSegment%03d" % index
 		_verdant_vine.add_child(segment_root)
-		_segment(segment_root, "Stem", start, finish, 0.095 + 0.012 * float(index % 3), Color("3f6a38"))
+		# Keep the real climbing axis thin enough to leave a half-inch body visible.
+		_segment(segment_root, "Stem", start, finish, 0.036 + 0.004 * float(index % 3), Color("3f6a38"))
 		var direction := (finish - start).normalized()
 		var across := direction.cross(Vector3.UP).normalized()
 		if across.length_squared() < 0.01:
 			across = Vector3.RIGHT
 		var side := across * (0.075 if index % 2 == 0 else -0.075)
-		_segment(segment_root, "TwiningFiber", start + side, finish - side, 0.035, Color("8b8750"))
+		_segment(segment_root, "TwiningFiber", start + side, finish - side, 0.02, Color("8b8750"))
 		if index % 2 == 0:
 			var midpoint := (start + finish) * 0.5
-			_leaf(segment_root, "Leaf", midpoint + Vector3(0.18, 0.04, 0), Vector3(0.58, 0.055, 0.25), Color("659248"), float(index) * 0.71)
+			_leaf(segment_root, "Leaf", midpoint + across * 0.40 + Vector3(0, 0.04, 0), Vector3(0.42, 0.045, 0.19), Color("659248"), float(index) * 0.71)
 		segment_root.visible = false
 		_vine_segments.append(segment_root)
 		_vine_thresholds.append(_deployment_threshold((start + finish) * 0.5, coarse_segments))
@@ -587,7 +590,7 @@ func _create_initial_influence(scene: Node3D) -> void:
 	else:
 		for index in range(occupied.size()):
 			var budget := count / occupied.size() + (1 if index < count % occupied.size() else 0)
-			_add_moss_patches(_influence_root, occupied[index].global_position, 10.0, budget, "%s:%s:settlement" % [room_definition.id, occupied[index].name], scene, {}, 3.2)
+			_add_moss_patches(_influence_root, occupied[index].global_position, 9.0, budget, "%s:%s:settlement" % [room_definition.id, occupied[index].name], scene, {}, 5.4)
 
 
 func _apply_traversal_reclamation(scene: Node3D, construction: Node) -> void:
@@ -628,6 +631,30 @@ func _add_moss_patches(parent: Node3D, center: Vector3, radius: float, count: in
 			at.y = float(surface.height) + 0.035
 		var patch := _sphere(parent, "Moss_%s_%03d" % [abs(hash(seed_text)) % 10000, index], at, Vector3(rng.randf_range(0.55, 1.0) * patch_scale, 0.07, rng.randf_range(0.4, 0.9) * patch_scale), Color("4d7b3d") if index % 2 == 0 else Color("668b46"))
 		patch.rotation.y = angle
+		var root_start := center + Vector3(0, 0.05, 0)
+		var supported := true
+		var root_points: Array[Vector3] = []
+		for step in range(9):
+			var point := root_start.lerp(at, float(step) / 8.0)
+			if surface.is_empty():
+				var support_y := _floor_decoration_height(scene, point, 0.12)
+				if is_nan(support_y):
+					supported = false
+					break
+				point.y = support_y + 0.055
+			else:
+				if not _surface_contains(surface, point, 0.12):
+					supported = false
+					break
+				point.y = float(surface.height) + 0.055
+			root_points.append(point)
+		if supported and patch_scale >= 2.0:
+			for piece in range(1, root_points.size()):
+				_segment(parent, "RootRunner_%s_%03d_%d" % [abs(hash(seed_text)) % 10000, index, piece], root_points[piece - 1], root_points[piece], 0.055, Color("645434"))
+			var lobe_at := root_points[4]
+			var lobe_supported := _surface_contains(surface, lobe_at, patch_scale * 0.5) if not surface.is_empty() else not is_nan(_floor_decoration_height(scene, lobe_at, patch_scale * 0.5))
+			if lobe_supported:
+				_sphere(parent, "MossRunner_%s_%03d" % [abs(hash(seed_text)) % 10000, index], lobe_at - Vector3.UP * 0.02, Vector3(patch_scale * 0.75, 0.07, patch_scale * 0.4), Color("426e35"))
 		if index % 5 == 0:
 			_leaf(parent, "Sprout_%s_%03d" % [abs(hash(seed_text)) % 10000, index], at + Vector3(0, 0.08, 0), Vector3(0.28, 0.025, 0.12), Color("7aa253"), angle)
 
@@ -663,6 +690,10 @@ func _floor_decoration_height(scene: Node3D, at: Vector3, margin: float) -> floa
 		if bool(object.get("blocks_navigation", false)):
 			return NAN
 		if String(object.kind) == "rug":
+			# A flat patch must fit entirely on one support, rather than hovering
+			# across a raised rug edge. Thin roots can use their own small margin.
+			if absf(local.x) > half.x - margin or absf(local.y) > half.y - margin:
+				return NAN
 			height = maxf(height, center.y + float(object.dimensions[1]))
 	return height
 

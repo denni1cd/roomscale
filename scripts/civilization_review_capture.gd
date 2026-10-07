@@ -70,13 +70,17 @@ func run() -> void:
 	if not await capture("room-scale", camera_rig.get("_room_focus") + Vector3.UP * 12, 330.0, 52.0, 0.0, null, true):
 		return
 	var center := settlement_center()
-	if not await capture("settlement-scale", center + Vector3.UP * 3, 100.0 if sim == null else 30.0, 40.0):
+	if not await capture("settlement-scale", center + Vector3.UP * 3, 62.0 if sim == null else 30.0, 40.0):
 		return
+	if sim == null:
+		var nursery := scene.get_node("Settlement/Workshop") as Node3D
+		if not await capture("nursery-close", nursery.global_position + Vector3.UP * 2.5, 18.0, 28.0, 0.3):
+			return
 	var citizens: Array = scene.get("_citizens")
 	if citizens.is_empty():
 		finish(false, "Production population is empty")
 		return
-	if not await capture("citizen-close", citizens[0].global_position + Vector3.UP * 0.25, 1.8, 24.0, 0.3, citizens[0]):
+	if not await capture("citizen-close", citizens[0].global_position + Vector3.UP * 0.25, 1.8, 18.0, 0.3, citizens[0]):
 		return
 	if sim == null:
 		var navigation := scene.get_node("SurfaceNavigation")
@@ -148,7 +152,7 @@ func observe_traversal() -> bool:
 				var path_cursor := int(citizen.get("_path_cursor"))
 				var citizen_path: Array = citizen.get("_path")
 				var rising := path_cursor < citizen_path.size() and absf(citizen_path[path_cursor].y - citizen.global_position.y) > 0.01
-				if citizen.task_type in ["SURFACE_TRAVERSAL", "RESOURCE_COLLECT"] and citizen.state in ["TRAVEL", "CARRY"] and rising and citizen.global_position.y > floor_y + 5.0 and citizen.global_position.y < anchor.y - 3.0:
+				if citizen.task_type in ["SURFACE_TRAVERSAL", "RESOURCE_COLLECT"] and citizen.state in ["TRAVEL", "CARRY"] and rising and citizen.global_position.y > floor_y + 12.0 and citizen.global_position.y < anchor.y - 3.0:
 					if not await capture("citizen-climbing", citizen.global_position + Vector3.UP * 0.25, 2.2, 22.0, 0.3, citizen):
 						return false
 					break
