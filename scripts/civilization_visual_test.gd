@@ -1,7 +1,8 @@
 extends SceneTree
 ## Main-scene contract check for civilization presentation.
 ## Gameplay smoke proves the shared simulation; this verifies the selected
-## civilization actually changes the production scene the player sees.
+## civilization actually changes the production scene the player sees while
+## preserving production-owned Clockwork nodes that the scene still references.
 
 var failures: Array[String] = []
 
@@ -33,10 +34,12 @@ func run() -> void:
 		var depot := settlement.get_node_or_null("Depot") as Node3D
 		var housing := settlement.get_node_or_null("Housing") as Node3D
 		var work_area := settlement.get_node_or_null("WorkArea") as Node3D
-		_check(workshop != null and workshop.has_node("RootPlatform"), "Workshop must render as Growth Nursery")
-		_check(depot != null and depot.has_node("WovenFloor"), "Depot must render as Seed Cache")
-		_check(housing != null and housing.has_node("HomePod0"), "Housing must render as Pod Homes")
-		_check(work_area != null and work_area.has_node("CultivationMat"), "Work area must render as Cultivation Circle")
+		_check(workshop != null and workshop.has_node("VerdantOverlay/RootPlatform"), "Workshop must render a Growth Nursery overlay")
+		_check(depot != null and depot.has_node("VerdantOverlay/WovenFloor"), "Depot must render a Seed Cache overlay")
+		_check(housing != null and housing.has_node("VerdantOverlay/HomePod0"), "Housing must render Pod Homes")
+		_check(work_area != null and work_area.has_node("VerdantOverlay/CultivationMat"), "Work area must render a Cultivation Circle")
+		var clockwork_details := workshop.get_node_or_null("ClockworkDetails") as Node3D if workshop != null else null
+		_check(clockwork_details != null and not clockwork_details.visible, "Clockwork presentation nodes must be preserved but hidden")
 	var citizens: Variant = scene.get("_citizens")
 	_check(citizens is Array and not citizens.is_empty(), "production population must exist")
 	if citizens is Array and not citizens.is_empty():
@@ -59,7 +62,7 @@ func _check(condition: bool, message: String) -> void:
 
 func _finish() -> void:
 	if failures.is_empty():
-		print("ROOMSCALE_CIVILIZATION_VISUAL_PASS civilization=verdant settlement=true citizen=true influence=true ui=true")
+		print("ROOMSCALE_CIVILIZATION_VISUAL_PASS civilization=verdant settlement=true citizen=true influence=true ui=true ownership_preserved=true")
 		quit(0)
 	else:
 		push_error("ROOMSCALE_CIVILIZATION_VISUAL_FAIL %s" % JSON.stringify(failures))
