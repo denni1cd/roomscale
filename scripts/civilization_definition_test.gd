@@ -11,8 +11,8 @@ func _initialize() -> void:
 func run() -> void:
 	var clockwork_result := CivilizationDefinition.load_id("clockwork")
 	var verdant_result := CivilizationDefinition.load_id("verdant")
-	_check(bool(clockwork_result.ok), "Clockwork definition must validate: %s" % clockwork_result.errors)
-	_check(bool(verdant_result.ok), "Verdant definition must validate: %s" % verdant_result.errors)
+	_check(bool(clockwork_result.ok), "Clockwork definition must validate: %s" % [clockwork_result.errors])
+	_check(bool(verdant_result.ok), "Verdant definition must validate: %s" % [verdant_result.errors])
 	if bool(clockwork_result.ok) and bool(verdant_result.ok):
 		var clockwork: Dictionary = clockwork_result.definition
 		var verdant: Dictionary = verdant_result.definition
