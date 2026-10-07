@@ -2,6 +2,9 @@ name: RoomScale quality
 on:
   push:
   pull_request:
+concurrency:
+  group: roomscale-quality-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
