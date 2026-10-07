@@ -69,6 +69,7 @@ func run() -> void:
 				if detail_name.begins_with("Goggle") or detail_name.begins_with("Lens") or detail_name.begins_with("ShoulderPlate") or detail_name == "Buckle":
 					_check(not detail.visible, "citizen LOD must not revive Clockwork ornament %s" % detail_name)
 	_check(scene.has_node("VerdantInfluence"), "Verdant initial reclamation layer must exist")
+	_check_rotated_reclamation_support(scene)
 	_check_banner(scene)
 	scene.set("_presentation_mode", false)
 	scene._apply_presentation_mode()
@@ -101,6 +102,21 @@ func _check_banner(scene: Node3D) -> void:
 		if String(child.name).begins_with("CivilizationBanner"):
 			banner_count += 1
 	_check(banner_count == 1, "normal initialization and refresh must create exactly one banner")
+
+
+func _check_rotated_reclamation_support(scene: Node3D) -> void:
+	# Pure geometry fixture: transform actual target dimensions with the same
+	# 3D basis as room objects. This never changes the room or production state.
+	var surface: Dictionary = scene.get_node("SurfaceNavigation").goal_surface()
+	surface.rotation_degrees = 37.0
+	var center: Vector3 = surface.center
+	var half: Vector2 = surface.dimensions * 0.5
+	var basis := Basis(Vector3.UP, deg_to_rad(37.0))
+	var inside := center + basis * Vector3(half.x - 0.8, 0, half.y - 0.8)
+	var outside := center + basis * Vector3(half.x + 0.8, 0, half.y - 0.8)
+	var presenter := root.get_node("CivilizationPresentation")
+	_check(presenter._surface_contains(surface, inside, 0.5), "reclamation must accept supported points on a rotated surface")
+	_check(not presenter._surface_contains(surface, outside, 0.5), "reclamation must reject points beyond a rotated furniture edge")
 
 
 func _check_scene_reload(previous_scene_id: int) -> void:

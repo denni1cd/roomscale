@@ -663,7 +663,7 @@ func _surface_contains(surface: Dictionary, at: Vector3, margin: float) -> bool:
 	if surface.is_empty():
 		return false
 	var center: Vector3 = surface.center
-	var local := Vector2(at.x - center.x, at.z - center.z).rotated(-deg_to_rad(float(surface.get("rotation_degrees", 0))))
+	var local := Vector2(at.x - center.x, at.z - center.z).rotated(deg_to_rad(float(surface.get("rotation_degrees", 0))))
 	var half: Vector2 = surface.dimensions * 0.5 - Vector2.ONE * margin
 	return absf(local.x) <= half.x and absf(local.y) <= half.y
 
@@ -683,7 +683,7 @@ func _floor_decoration_height(scene: Node3D, at: Vector3, margin: float) -> floa
 		if String(object.kind) == "settlement":
 			continue
 		var center := _vec3(object.position)
-		var local := Vector2(at.x - center.x, at.z - center.z).rotated(-deg_to_rad(float(object.get("rotation_degrees", 0))))
+		var local := Vector2(at.x - center.x, at.z - center.z).rotated(deg_to_rad(float(object.get("rotation_degrees", 0))))
 		var half := Vector2(float(object.dimensions[0]), float(object.dimensions[2])) * 0.5
 		if absf(local.x) > half.x + margin or absf(local.y) > half.y + margin:
 			continue

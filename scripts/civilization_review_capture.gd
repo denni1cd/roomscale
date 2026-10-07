@@ -211,6 +211,10 @@ func capture(phase: String, focus: Vector3, distance: float, tilt: float, yaw: f
 			project_labels.append({"label": label, "visible": label.visible})
 			label.visible = false
 	await process_frame
+	if is_instance_valid(subject):
+		# Camera cuts must not photograph stale room-distance LOD. The public
+		# presentation refresh also works during ordinary paused gameplay.
+		subject.refresh_visual_lod()
 	await RenderingServer.frame_post_draw
 	var image := root.get_texture().get_image()
 	for entry in project_labels:
