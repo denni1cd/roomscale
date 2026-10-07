@@ -1,7 +1,11 @@
 # RoomScale architecture
 
-This describes stabilization based on completed POC4.7.2 (`efa5950`). Current launch/test commands are in README and TESTING.
-There is one room, one civilization, append-only citizen IDs and finite resources.
+This describes stabilization based on completed POC4.7.2 (`efa5950`) plus the
+civilization-selection boundary introduced after that baseline. Current launch/test
+commands are in README and TESTING. There is one room and **one active civilization per
+run**, append-only citizen IDs and finite resources. Clockwork and Verdant are selectable
+implementations of the same production simulation; simultaneous civilizations are not
+implemented.
 
 ## Composition and configuration
 
@@ -14,10 +18,18 @@ obstacles; authored files are never mutated by simulation. RoomDefinition valida
 schema 1/2, finite geometry, IDs, source/stage metadata, appearance and startup fields.
 Runtime navigation validation is a separate gate from structural JSON validation.
 
-Environment variables select room/file, autonomous mode and capture/test outputs at
-launch. Test runners isolate them and restore parent process configuration. A local JSON
-must stay inside the project and have a filename stem matching its room ID. Arbitrary
-object IDs are mapped explicitly to room-object roots rather than interpreted as NodePaths.
+`CivilizationDefinition` is a separate input contract under `civilizations/`. It owns
+civilization identity, presentation vocabulary, palette/style identifiers and player-facing
+construction/resource terminology. It does **not** own room coordinates, economy ledgers,
+navigation links or citizen decision state. `clockwork.json` remains the compatibility
+default; `verdant.json` is the second implementation.
+
+Environment variables select room/file, civilization, autonomous mode and capture/test
+outputs at launch. Test runners isolate them and restore parent process configuration. A
+local JSON must stay inside the project and have a filename stem matching its room ID.
+Arbitrary object IDs are mapped explicitly to room-object roots rather than interpreted as
+NodePaths. Room and civilization selection are orthogonal: a room definition never gains
+Clockwork grapple coordinates or Verdant vine coordinates.
 
 ## Simulation clock and order
 
@@ -32,11 +44,17 @@ Simulation days are 600 seconds. Presentation camera/HUD updates have no economy
 capability authority. Pause stops production while explicit presentation refresh remains
 possible. Changing insertion order, tick order or timers can change deterministic outcomes.
 
+`CivilizationSimulation` means the **shared society runtime**. It must not be confused
+with `CivilizationDefinition`: selecting Verdant does not create a second simulation,
+economy, task board or navigation authority.
+
 ## State authority
 
 | Domain | Authority | Consumers and mutation rules |
 |---|---|---|
 | Authored geometry/config | RoomDefinition | Composition validates then copies; no test rewrites live inputs to earn acceptance. |
+| Active civilization identity/vocabulary | CivilizationDefinition | Loaded once from `civilizations/`; presentation consumes it. It cannot mutate room geometry or production ledgers. |
+| Civilization appearance | CivilizationPresentation / VerdantDevelopmentPresentation | Reads real production state and creates/hides presentation only; no task, cost, progress, collision or navigation authority. |
 | Floor obstacles/grid | FloorNavigation | Salvage/development update legitimate object state and refresh navigation; route changes must preserve physical traversal. |
 | Surfaces/deployed links | SurfaceNavigation | Construction registers a link only after real build/deploy/attachment. A route is reachable only with its floor exit. |
 | Citizen position/work | CitizenAgent | Follows validated waypoints at existing speed; owns current task/path, physical carry and work progress. |
@@ -74,6 +92,11 @@ mode admits one real CitizenAgent; established legacy mode admits five. Initial 
 have no shelter by design; added citizens require earned capacity. No counter-only growth,
 teleportation, mortality or resource creation is present.
 
+Citizen locomotion/work animation remains shared. Civilization presentation decorates the
+same live figure rig rather than creating a second agent class. Verdant hides Clockwork-only
+hat/goggle/tool details and adds woodland/acorn/leaf/faerie details while preserving the
+same citizen identity, task, needs, movement and animation state.
+
 ## Economy, salvage and construction
 
 Source reservation alone does not increase inventory. On-site extraction/salvage work
@@ -87,8 +110,18 @@ completion. The bounded site planner reserves a connected shelter/depot/workshop
 layout and permanent rest targets before founding. Completion revalidates current
 occupants and activity access. Failure caching must include transient planning state;
 cloned navigation validation does not mutate the live world. Workshop completion
-gates advanced traversal. Grapple construction uses ordinary costs, stages, work and
+gates advanced traversal. Traversal construction uses ordinary costs, stages, work and
 physical attachment/deployment before SurfaceNavigation receives its link.
+No civilization presentation change grants links, materials, completed stages, citizens or
+capabilities.
+
+The current compatibility seam deliberately retains the production resource slot IDs
+`wood`, `metal` and `mechanical_parts` so POC4.x economy/salvage behavior is not rewritten.
+Clockwork presents those names directly. Verdant presents the same paced slots as Living
+Fiber, Resin and Growth Spores. Likewise the shared stage IDs remain `base`, `winch` and
+`launcher`, while Verdant presents Root Bed, Growth Lattice and Bloom Anchor. These aliases
+are a stable presentation mapping for this milestone, not a claim of asymmetric economics.
+
 No cleanup changes costs, durations, speed, need decay, founder count, housing/growth
 rules, resource quantities or capability sequence.
 
@@ -98,10 +131,31 @@ FloorNavigation uses a four-inch A* grid with conservative rotated/padded obstac
 footprints and physically validated endpoint connectors. Narrow legal aisles have an
 explicit physical connector fallback. Legacy established-room interior endpoints remain
 supported; founder observers forbid entry into blocking geometry.
-SurfaceNavigation joins floor paths, deployed cable/launcher points and elevated paths.
-A citizen already on a link must continue on actual deployed geometry during replanning;
+SurfaceNavigation joins floor paths, deployed traversal points and elevated paths. A
+citizen already on a link must continue on actual deployed geometry during replanning;
 construction completion cannot drop it through open space. Reverse elevated-to-floor
-routes now reject disconnected floor exits. No cleanup grants links or bypasses labor.
+routes reject disconnected floor exits. No presentation code grants links or bypasses labor.
+
+Clockwork renders the completed route as the existing grapple/cable. Verdant reads the
+**same real deployment path and deployment cursor** and renders progressive living-vine
+segments and an organic upper anchor. The underlying SurfaceNavigation connection remains
+the one created by ConstructionSystem. Verdant reclamation is bounded deterministic visual
+state only; moss, roots and fungi have no collision/navigation or resource authority.
+
+## Settlement presentation and lifecycle
+
+The established settlement still originates from the verified production composition.
+Verdant does not delete or replace simulation-owned building parents. Existing Clockwork
+presentation children are retained and hidden, then a `VerdantOverlay` is added to the same
+Workshop/Depot/Housing/WorkArea node. This is deliberate: the production root retains
+references to animated gears, boiler lights and other presentation nodes, and freeing them
+would create stale-reference risk.
+
+Founder-mode development remains owned by `SettlementDevelopmentSystem`. As it earns and
+re-renders shelter, depot, housing and workshop modules, `VerdantDevelopmentPresentation`
+observes their real `module`/`stage` metadata, recolors the produced structure and adds
+organic growth appropriate to the actual construction stage. It never advances the stage or
+applies the structure's gameplay effect.
 
 ## Scene contracts and remaining coupling
 
@@ -114,9 +168,16 @@ navigation-refresh APIs remove misleading engine/private invocation contracts wi
 changing state authority. Splitting the root, camera API redesign and full task mutation
 encapsulation are deferred, with evidence in code-review.md.
 
-Duplicating the civilization services is unsafe: it would duplicate finite source/salvage
-ledgers and allow conflicting site reservations/navigation revisions. This document is
-an ownership audit, not permission to implement multi-civilization features.
+The civilization presentation adapter currently reads a small number of production scene
+fields (citizen roster, construction deployment path/cursor/stage state). That is explicit
+compatibility debt chosen to avoid destabilizing the verified POC4.7.2 lifecycle while the
+civilization boundary is introduced. Those reads have presentation authority only.
+
+Duplicating `CivilizationSimulation`, EconomySystem, ResourceSystem, SalvageSystem,
+TaskCoordinator or navigation services remains unsafe: it would duplicate finite ledgers
+and allow conflicting reservations/revisions. Two civilization **definitions** therefore do
+not imply two live societies in one room. Multi-civilization coexistence requires a future
+shared-world authority design rather than instantiating today's services twice.
 
 ## Verification and artifacts
 
@@ -127,12 +188,19 @@ POC4/45/46 and original rooms. Campaigns vary authored definitions/seeds and obs
 production fixed ticks with continuous conservation, capability, population and movement
 checks. Soaks measure bounded retained task/event state and honest finite exhaustion.
 
+Civilization verification is layered:
+
+- `civilization_definition_test.gd` validates both profiles, shared pacing slots and invalid-ID rejection;
+- `civilization_visual_test.gd` loads the real main scene as Verdant and verifies settlement, citizen, UI and reclamation presentation while production-owned nodes remain alive;
+- the GitHub Actions matrix runs the unchanged M2-M6/M8 production smoke for Clockwork and Verdant in both Room A and Room B.
+
 Runner success requires process exit, explicit pass marker and no engine/script error.
 Campaign reruns remove stale result files and execution failure overrides any JSON PASS.
-Evidence audits cannot overwrite acceptance reports on inconsistency. The strengthened M4/M5/M6, POC47 live and POC46 camera drivers
-check PNG output before declaring evidence success; older visual/sidecar paths retain
-their historical behavior and do not supply cleanup visual acceptance. Ruff covers Python only; GDScript receives
-manual review, parse/import and actual Godot regressions.
+Evidence audits cannot overwrite acceptance reports on inconsistency. The strengthened
+M4/M5/M6, POC47 live and POC46 camera drivers check PNG output before declaring evidence
+success; older visual/sidecar paths retain their historical behavior and do not supply
+cleanup visual acceptance. Ruff covers Python only; GDScript receives parse/import,
+contract and actual Godot regression coverage.
 
 Raw outputs are ignored. Compact source-specific reports/manifests are published after
 freezing verified production/harness SHA; any later executable source edit invalidates
