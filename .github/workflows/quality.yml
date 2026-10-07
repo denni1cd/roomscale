@@ -31,6 +31,12 @@ jobs:
           $godot = & ./SETUP_ROOM_SCALE.ps1 | Select-Object -Last 1
           & $godot --headless --editor --path . --import
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Civilization contract regression
+        shell: pwsh
+        run: |
+          $godot = & ./SETUP_ROOM_SCALE.ps1 | Select-Object -Last 1
+          & $godot --headless --path . --script res://scripts/civilization_definition_test.gd
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Focused and startup regressions
         shell: pwsh
         run: ./TEST_ROOM_SCALE.ps1 -Mode Fast
@@ -39,4 +45,33 @@ jobs:
         with:
           name: fast-failure-evidence
           path: verification/stabilization/runs/fast
+          if-no-files-found: ignore
+
+  civilization-smoke:
+    runs-on: windows-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        civilization: [clockwork, verdant]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: .tools
+          key: godot-windows-${{ hashFiles('SETUP_ROOM_SCALE.ps1') }}
+      - name: Import production assets
+        shell: pwsh
+        run: |
+          $godot = & ./SETUP_ROOM_SCALE.ps1 | Select-Object -Last 1
+          & $godot --headless --editor --path . --import
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Production civilization smoke
+        shell: pwsh
+        run: ./TEST_ROOM_SCALE_SMOKE.ps1 -Room room_a -Civilization '${{ matrix.civilization }}' -TimeoutSeconds 360
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: civilization-${{ matrix.civilization }}-failure
+          path: verification/poc15/room_a
           if-no-files-found: ignore
