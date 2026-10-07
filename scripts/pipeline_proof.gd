@@ -8,6 +8,7 @@ const TaskCoordinatorController := preload("res://scripts/task_coordinator.gd")
 const CitizenAgentController := preload("res://scripts/citizen_agent.gd")
 const ConstructionSystemController := preload("res://scripts/construction_system.gd")
 const CivilizationSimulation := preload("res://scripts/civilization_simulation.gd")
+const CivilizationVocabulary := preload("res://scripts/fishbowl_narrative_adapter.gd")
 const ResourceProfiles := preload("res://scripts/resource_system.gd")
 const RoomDefinitionLoader := preload("res://scripts/room_definition.gd")
 const VisualResolver := preload("res://scripts/visuals/visual_resolver.gd")
@@ -1446,7 +1447,7 @@ func _build_ui() -> void:
 	var overlay := CanvasLayer.new()
 	overlay.name = "Overlay"
 	add_child(overlay)
-	_add_ui_panel(overlay, "HudPanel", Rect2(16.0, 12.0, 570.0, 326.0), Color(0.035, 0.052, 0.068, 0.79))
+	_add_ui_panel(overlay, "HudPanel", Rect2(16.0, 12.0, 570.0, 358.0 if CivilizationVocabulary.is_verdant() else 326.0), Color(0.035, 0.052, 0.068, 0.79))
 	_add_ui_panel(overlay, "CameraPanel", Rect2(988.0, 16.0, 270.0, 78.0), Color(0.035, 0.052, 0.068, 0.78))
 	_add_ui_panel(overlay, "ControlsPanel", Rect2(18.0, 628.0, 1244.0, 70.0), Color(0.035, 0.052, 0.068, 0.84))
 	var title := _make_label("Title", Vector2(26.0, 20.0), 25, Color("fff2dc"))
@@ -1486,12 +1487,12 @@ func _build_ui() -> void:
 	_project_status_label.custom_minimum_size = Vector2(530.0, 22.0)
 	overlay.add_child(_project_status_label)
 	_material_status_label = _make_label("MaterialStatus", Vector2(28.0, 278.0), 12, Color("d9e0d9"))
-	_material_status_label.custom_minimum_size = Vector2(530.0, 20.0)
+	_material_status_label.custom_minimum_size = Vector2(530.0, 38.0 if CivilizationVocabulary.is_verdant() else 20.0)
 	overlay.add_child(_material_status_label)
-	_build_status_label = _make_label("BuildStatus", Vector2(28.0, 300.0), 12, Color("a8d7c4"))
+	_build_status_label = _make_label("BuildStatus", Vector2(28.0, 320.0 if CivilizationVocabulary.is_verdant() else 300.0), 12, Color("a8d7c4"))
 	_build_status_label.custom_minimum_size = Vector2(530.0, 20.0)
 	overlay.add_child(_build_status_label)
-	_m6_status_label = _make_label("IntegratedStatus", Vector2(28.0, 322.0), 12, Color("c9d5ee"))
+	_m6_status_label = _make_label("IntegratedStatus", Vector2(28.0, 344.0 if CivilizationVocabulary.is_verdant() else 322.0), 12, Color("c9d5ee"))
 	_m6_status_label.custom_minimum_size = Vector2(530.0, 20.0)
 	overlay.add_child(_m6_status_label)
 	_focus_label = _make_label("CitizenFocus", Vector2(1000.0, 54.0), 15, Color("a9dad4"))
@@ -1512,7 +1513,9 @@ func _build_ui() -> void:
 func _apply_presentation_mode() -> void:
 	var overlay := get_node("Overlay")
 	for child in overlay.get_children():
-		if child.name == "CivilizationHUD":
+		if child.name == "CivilizationBanner":
+			child.visible = true
+		elif child.name == "CivilizationHUD":
 			child.visible = _presentation_mode
 		elif child.name in ["PresentationPanel", "PresentationStatus"]:
 			child.visible = _presentation_mode and not has_node("CivilizationSimulation")
@@ -1537,12 +1540,14 @@ func _update_population_ui() -> void:
 	var delivery_count: int = _construction_system.active_delivery_count() if is_instance_valid(_construction_system) else 0
 	var builder_count: int = _construction_system.active_builder_count() if is_instance_valid(_construction_system) else 0
 	_activity_label.text = "TASKS  ACTIVE %02d · READY %02d · DONE %d\nHAUL %02d · BUILD %02d   WORKSHOP / DEPOT / HOMES / FLOOR" % [summary.active, summary.available, summary.completed_total, delivery_count, builder_count]
+	_activity_label.text = CivilizationVocabulary.presentation_text(_activity_label.text)
 	_reach_button.visible = _selected_surface == surface_navigation_goal_id()
 	var goal: Dictionary = _task_coordinator.get_reach_goal_status()
 	if goal.is_empty():
 		_goal_status_label.text = "GOAL  Click %s to select." % _goal_surface_name() if _selected_surface.is_empty() else "TARGET  %s SELECTED · Choose Reach / Explore." % _goal_surface_name().to_upper()
 	else:
 		_goal_status_label.text = "GOAL  %s\n%s" % [String(goal.state).replace("_", " "), String(goal.message)]
+	_goal_status_label.text = CivilizationVocabulary.presentation_text(_goal_status_label.text)
 	var camera_rig := get_node("CameraRig")
 	_focus_label.visible = camera_rig.view_mode == 2 and _citizens.size() > 23
 	if _focus_label.visible:
@@ -1550,15 +1555,18 @@ func _update_population_ui() -> void:
 		if not is_instance_valid(focus):
 			focus = _citizens[23]
 		_focus_label.text = "%s  ·  %s  ·  %s" % [focus.name, focus.task_type.replace("_", " "), focus.state]
+		_focus_label.text = CivilizationVocabulary.presentation_text(_focus_label.text)
 	if is_instance_valid(_selected_citizen) and is_instance_valid(_inspection_label):
 		var inspection: Dictionary = _selected_citizen.get_inspection_status()
 		_inspection_label.text = "CITIZEN %02d  ·  %s\nTASK %s\nTARGET (%.0f, %.0f, %.0f)" % [int(inspection.id) + 1, inspection.state, String(inspection.task).replace("_", " "), inspection.target.x, inspection.target.y, inspection.target.z]
+		_inspection_label.text = CivilizationVocabulary.presentation_text(_inspection_label.text)
 	var m6: Dictionary = _task_coordinator.get_m6_status()
 	_m6_status_label.text = "%s  ARRIVED %d · EXPLORED %d · REUSES %d/2 · LINK %s" % [_goal_surface_name().to_upper(), m6.target_arrivals, m6.target_explorations_completed, m6.autonomous_reuses_assigned, "LIVE" if m6.infrastructure_operational else "WAITING"]
 	_update_project_ui()
 	if is_instance_valid(_compact_status):
 		var project: Dictionary = _construction_system.status()
 		_compact_status.text = "ROOMSCALE  ·  %d CITIZENS\n%s   ·   F3 diagnostics" % [_citizens.size(), String(project.state).replace("_", " ") if project.created else "Explore the room"]
+		_compact_status.text = CivilizationVocabulary.presentation_text(_compact_status.text)
 		if _presentation_mode:
 			_focus_label.visible = false
 
@@ -1585,12 +1593,24 @@ func _update_project_ui() -> void:
 	if not bool(project.created):
 		_project_status_label.text = "PROJECT  Awaiting recognized barrier"
 		_material_status_label.text = "STOCKPILE  wood 4   metal 4   mechanical parts 3"
+		_material_status_label.text = CivilizationVocabulary.presentation_text(_material_status_label.text)
 		_build_status_label.text = "BUILD  Locked until material thresholds are met"
 		return
 	_project_status_label.text = "PROJECT  STEAMPUNK GRAPPLE  ·  %s  ·  Site (%.0f, %.0f) in" % [String(project.state).replace("_", " "), project.site.x, project.site.z]
+	_project_status_label.text = CivilizationVocabulary.presentation_text(_project_status_label.text)
 	var stockpile: Dictionary = project.stockpile
 	var delivered: Dictionary = project.delivered
 	_material_status_label.text = "MATERIALS  Stockpile W %d/4  M %d/4  P %d/3     Delivered W %d/4  M %d/4  P %d/3" % [stockpile.wood, stockpile.metal, stockpile.mechanical_parts, delivered.wood, delivered.metal, delivered.mechanical_parts]
+	if CivilizationVocabulary.is_verdant():
+		var resources := ["wood", "metal", "mechanical_parts"]
+		var stock: Array[String] = []
+		var received: Array[String] = []
+		for resource in resources:
+			if not project.required.has(resource): continue
+			var label := CivilizationVocabulary.resource_name(resource)
+			stock.append("%s %d" % [label, stockpile.get(resource, 0)])
+			received.append("%s %d/%d" % [label, delivered.get(resource, 0), project.required[resource]])
+		_material_status_label.text = "STOCK  %s\nDELIVERED  %s" % [" · ".join(stock), " · ".join(received)]
 	if not project.cable_deployed:
 		_build_status_label.text = "BUILD  %s %02.0f%%  ·  Components %d / 3  ·  Cable undeployed  ·  Floor / target disconnected" % [String(project.active_stage).to_upper(), project.progress_percent, project.completed_stages]
 	else:
@@ -1599,6 +1619,7 @@ func _update_project_ui() -> void:
 		if traversal.has("actual_travelled_distance"):
 			traversal_text += "  %.0f in walked to %s" % [float(traversal.actual_travelled_distance), _goal_surface_name()]
 		_build_status_label.text = "TRAVERSAL  CABLE DEPLOYED  ·  FLOOR ↔ TARGET CONNECTED  ·  %s" % traversal_text
+	_build_status_label.text = CivilizationVocabulary.presentation_text(_build_status_label.text)
 
 
 func _unhandled_input(event: InputEvent) -> void:

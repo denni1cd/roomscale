@@ -1,0 +1,95 @@
+name: Verdant renderer evidence
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [feature/verdant-civilization]
+    paths:
+      - civilizations/verdant.json
+      - civilizations/clockwork.json
+      - scripts/civilization_presentation.gd
+      - scripts/civilization_presentation_runtime.gd
+      - scripts/verdant_development_presentation.gd
+      - scripts/civilization_review_capture.gd
+      - scripts/civilization_ui.gd
+      - scripts/fishbowl_hud.gd
+      - scripts/fishbowl_narrative_adapter.gd
+      - scripts/fishbowl_camera_director.gd
+      - scripts/pipeline_proof.gd
+      - scripts/strategy_camera.gd
+      - .github/workflows/verdant-visual-review.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verdant-renderer-evidence-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  renderer-evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - civilization: verdant
+            room: room_a
+            fishbowl: '0'
+          - civilization: clockwork
+            room: room_a
+            fishbowl: '0'
+          - civilization: verdant
+            room: room_poc47
+            fishbowl: '1'
+          - civilization: clockwork
+            room: room_poc47
+            fishbowl: '1'
+    env:
+      LIBGL_ALWAYS_SOFTWARE: '1'
+      GALLIUM_DRIVER: llvmpipe
+      ROOMSCALE_ROOM: ${{ matrix.room }}
+      ROOMSCALE_CIVILIZATION: ${{ matrix.civilization }}
+      ROOMSCALE_FISHBOWL: ${{ matrix.fishbowl }}
+      ROOMSCALE_MANUAL_CAMERA: '1'
+      ROOMSCALE_DISABLE_STARTUP_CAPTURE: '1'
+      ROOMSCALE_REVIEW_TIMEOUT_SECONDS: '540'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install virtual display and software OpenGL
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb xauth libgl1-mesa-dri libglx-mesa0 mesa-utils
+      - name: Download pinned Godot standard runtime
+        run: |
+          mkdir -p .tools/godot-4.7.2
+          curl --fail --location --retry 3 \
+            https://godot-releases.nbg1.your-objectstorage.com/4.7.2-stable/Godot_v4.7.2-stable_linux.x86_64.zip \
+            --output .tools/godot-4.7.2/godot-linux.zip
+          unzip -q .tools/godot-4.7.2/godot-linux.zip -d .tools/godot-4.7.2
+          chmod +x .tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64
+          .tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64 --version | grep '^4\.7\.2\.stable'
+      - name: Import production assets
+        run: |
+          mkdir -p verification/stabilization/runs/civilization-visual-review
+          timeout 90s .tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64 \
+            --headless --editor --path . --import 2>&1 | tee verification/stabilization/runs/civilization-visual-review/import.log
+          if grep -E 'SCRIPT ERROR:|ERROR:' verification/stabilization/runs/civilization-visual-review/import.log; then exit 1; fi
+      - name: Observe real gameplay in an isolated virtual display
+        run: |
+          export ROOMSCALE_REVIEW_DIR="$GITHUB_WORKSPACE/verification/stabilization/runs/civilization-visual-review/${ROOMSCALE_CIVILIZATION}-${ROOMSCALE_ROOM}"
+          mkdir -p "$ROOMSCALE_REVIEW_DIR"
+          xvfb-run --auto-servernum --server-args='-screen 0 1920x1080x24 -nolisten tcp' \
+            timeout 565s .tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64 \
+            --path . --rendering-method gl_compatibility --audio-driver Dummy --resolution 1600x900 \
+            --script res://scripts/civilization_review_capture.gd 2>&1 | tee "$ROOMSCALE_REVIEW_DIR/observer.log"
+          grep 'ROOMSCALE_CIVILIZATION_REVIEW_PASS' "$ROOMSCALE_REVIEW_DIR/observer.log"
+          if grep -E 'SCRIPT ERROR:|ERROR:|ROOMSCALE_CIVILIZATION_REVIEW_FAIL' "$ROOMSCALE_REVIEW_DIR/observer.log"; then exit 1; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: renderer-${{ matrix.civilization }}-${{ matrix.room }}-${{ github.sha }}
+          path: verification/stabilization/runs/civilization-visual-review
+          retention-days: 7
+          if-no-files-found: error

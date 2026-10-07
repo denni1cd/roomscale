@@ -14,11 +14,14 @@ var _refresh_timer := 0.0
 var _verdant_site: Node3D
 var _verdant_vine: Node3D
 var _vine_segments: Array[Node3D] = []
+var _vine_thresholds: Array[int] = []
 var _vine_anchor: Node3D
 var _influence_root: Node3D
 var _route_signature := ""
 var _reclamation_applied := false
 var _banner: Label
+var _growth_magic: Node3D
+var _magic_clock := 0.0
 
 
 func _ready() -> void:
@@ -33,6 +36,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	_magic_clock += delta
 	if definition.is_empty():
 		return
 	var scene := get_tree().current_scene as Node3D
@@ -60,21 +64,24 @@ func _reset_for_scene(scene: Node3D) -> void:
 	_verdant_site = null
 	_verdant_vine = null
 	_vine_segments.clear()
+	_vine_thresholds.clear()
 	_vine_anchor = null
 	_influence_root = null
 	_route_signature = ""
 	_reclamation_applied = false
 	_banner = null
+	_growth_magic = null
 
 
 func _try_apply_scene(scene: Node3D) -> void:
-	if not scene.has_node("Settlement") or not scene.has_node("Overlay"):
+	if not scene.is_node_ready() or not scene.has_node("Settlement"):
 		return
 	var citizens_variant: Variant = scene.get("_citizens")
 	if not (citizens_variant is Array) or citizens_variant.is_empty():
 		return
+	if not _ensure_banner(scene):
+		return
 	scene.set_meta("civilization_definition", definition.duplicate(true))
-	_ensure_banner(scene)
 	if String(definition.id) == "verdant":
 		_apply_verdant_settlement(scene)
 		_refresh_verdant_citizens(scene)
@@ -83,24 +90,37 @@ func _try_apply_scene(scene: Node3D) -> void:
 	print("ROOMSCALE_CIVILIZATION_PRESENTATION_READY id=%s citizens=%d" % [definition.id, citizens_variant.size()])
 
 
-func _ensure_banner(scene: Node3D) -> void:
-	var overlay := scene.get_node("Overlay") as Control
+func _ensure_banner(scene: Node3D) -> bool:
+	# Overlay is the production CanvasLayer, not a Control. Readiness is retried
+	# by _try_apply_scene so presentation is never marked applied without its UI.
+	var overlay := scene.get_node_or_null("Overlay") as CanvasLayer
+	if overlay == null or not overlay.is_node_ready():
+		return false
 	_banner = overlay.get_node_or_null("CivilizationBanner") as Label
 	if _banner != null:
-		return
+		_refresh_banner(scene)
+		return true
 	_banner = Label.new()
 	_banner.name = "CivilizationBanner"
-	_banner.position = Vector2(16, 12)
-	_banner.size = Vector2(420, 66)
+	_banner.size = Vector2(310, 64)
 	_banner.add_theme_font_size_override("font_size", 17)
+	_banner.add_theme_color_override("font_color", Color("fff2dc"))
+	_banner.add_theme_color_override("font_outline_color", Color("263320"))
+	_banner.add_theme_constant_override("outline_size", 5)
+	_banner.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_banner.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	overlay.add_child(_banner)
 	_refresh_banner(scene)
+	return true
 
 
 func _refresh_banner(scene: Node3D) -> void:
-	if _banner == null:
+	if not is_instance_valid(_banner):
 		return
+	_banner.position = Vector2(scene.get_viewport().get_visible_rect().size.x - 330, 176)
+	var simulation := scene.get_node_or_null("CivilizationSimulation")
+	if simulation != null:
+		_banner.position.y = 126 if is_instance_valid(simulation.get("spectator")) else 320
 	var text := "Civilization: %s" % String(definition.display_name)
 	var construction := scene.get_node_or_null("ConstructionSystem")
 	if construction != null and bool(construction.get("project_created")):
@@ -110,14 +130,6 @@ func _refresh_banner(scene: Node3D) -> void:
 		if stage_id not in ["locked", "complete"]:
 			stage_name = CivilizationDefinition.stage_name(definition, stage_id)
 		text += "\n%s — %s" % [CivilizationDefinition.project_name(definition), stage_name]
-		var delivered: Dictionary = status.get("delivered", {})
-		var required: Dictionary = status.get("required", {})
-		var material_parts: Array[String] = []
-		for resource in CivilizationDefinition.REQUIRED_RESOURCE_KEYS:
-			if required.has(resource):
-				material_parts.append("%s %s/%s" % [CivilizationDefinition.resource_name(definition, resource), delivered.get(resource, 0), required.get(resource, 0)])
-		if not material_parts.is_empty():
-			text += "\n" + "  •  ".join(material_parts)
 	_banner.text = text
 
 
@@ -237,13 +249,25 @@ func _refresh_verdant_citizens(scene: Node3D) -> void:
 
 func _style_verdant_citizen(citizen: Node3D) -> void:
 	var figure := citizen.get_node_or_null("Figure") as Node3D
-	if figure == null or figure.has_meta("verdant_styled"):
+	if figure == null:
+		return
+	# The shared LOD refresh controls visibility on these original details. Remove
+	# only Clockwork ornaments from that visual list so close views cannot revive
+	# goggles/plates; leave the original rig, limbs and animation references alive.
+	var fine_details: Array = citizen.get("_fine_details")
+	for child in figure.get_children():
+		var child_name := String(child.name)
+		if child_name in ["ClockworkCap", "CapBrim", "Buckle"] or child_name.begins_with("Goggle") or child_name.begins_with("Lens") or child_name.begins_with("ShoulderPlate"):
+			child.visible = false
+			fine_details.erase(child)
+	if figure.has_meta("verdant_styled"):
 		return
 	figure.set_meta("verdant_styled", true)
 	var body := figure.get_node_or_null("Body") as MeshInstance3D
 	var head := figure.get_node_or_null("Head") as MeshInstance3D
 	if body != null:
-		body.material_override = _material(Color("68834b") if int(citizen.get("citizen_id")) % 2 == 0 else Color("7a7048"), 0.94)
+		var coats := [Color("68834b"), Color("a2784d"), Color("83618b"), Color("628b89"), Color("b58b4e")]
+		body.material_override = _material(coats[int(citizen.get("citizen_id")) % coats.size()], 0.94)
 	if head != null:
 		head.material_override = _material(Color("ddb98d"), 0.96)
 	for limb_name in ["LeftArm", "RightArm", "LeftLeg", "RightLeg"]:
@@ -273,6 +297,10 @@ func _style_verdant_citizen(citizen: Node3D) -> void:
 	figure.add_child(cap)
 	var cap_leaf := _leaf(figure, "CapLeaf", Vector3(0.075, 0.505, 0), Vector3(0.12, 0.025, 0.055), Color("5b873f"), 0.45)
 	cap_leaf.rotation.z = 0.2
+	for side in [-1.0, 1.0]:
+		_sphere(figure, "Eye%s" % side, Vector3(side * 0.027, 0.409, 0.064), Vector3(0.015, 0.017, 0.011), Color("30291f"))
+		_sphere(figure, "Ear%s" % side, Vector3(side * 0.068, 0.4, 0), Vector3(0.035, 0.026, 0.022), Color("ddb98d"))
+	_sphere(figure, "Nose", Vector3(0, 0.389, 0.067), Vector3(0.023, 0.025, 0.028), Color("c89c74"))
 	_leaf(figure, "LeafCloakLeft", Vector3(-0.06, 0.265, -0.07), Vector3(0.15, 0.025, 0.12), Color("4f773b"), -0.55)
 	_leaf(figure, "LeafCloakRight", Vector3(0.06, 0.265, -0.07), Vector3(0.15, 0.025, 0.12), Color("628b45"), 0.55)
 	if int(citizen.get("citizen_id")) % 4 == 0:
@@ -337,17 +365,52 @@ func _refresh_verdant_project(scene: Node3D) -> void:
 	var construction := scene.get_node_or_null("ConstructionSystem")
 	if construction == null or not bool(construction.get("project_created")):
 		return
+	_refresh_verdant_stockpile(scene, construction)
 	var old_site := scene.get_node_or_null("GrappleConstructionSite") as Node3D
 	if old_site != null:
 		old_site.visible = false
 	if _verdant_site == null or not is_instance_valid(_verdant_site):
 		_build_verdant_project(scene, construction)
 	_update_verdant_project_stages(construction)
+	_refresh_growth_magic(construction)
 	var path_variant: Variant = construction.get("_deployment_path")
 	if path_variant is Array and not path_variant.is_empty():
 		_refresh_vine(scene, construction, path_variant)
 	if bool(construction.get("traversal_deployed")) and not _reclamation_applied:
 		_apply_traversal_reclamation(scene, construction)
+
+
+func _refresh_verdant_stockpile(scene: Node3D, construction: Node) -> void:
+	var stock := scene.get_node_or_null("Settlement/Depot/ConstructionStockpile") as Node3D
+	if stock == null:
+		return
+	var organic := stock.get_node_or_null("VerdantStock") as Node3D
+	if organic == null:
+		for child in stock.get_children():
+			if child is Node3D:
+				child.visible = false
+		organic = Node3D.new()
+		organic.name = "VerdantStock"
+		stock.add_child(organic)
+		for resource in CivilizationDefinition.REQUIRED_RESOURCE_KEYS:
+			for index in range(4 if resource != "mechanical_parts" else 3):
+				var unit := Node3D.new()
+				unit.name = "%s%d" % [resource, index]
+				unit.position = Vector3(-3.6 if resource == "wood" else (0.0 if resource == "metal" else 3.6), 0.3 + float(index / 2) * 0.6, -0.6 + float(index % 2) * 1.2)
+				if resource == "wood":
+					unit.position.y = 0.06 + float(index / 2) * 0.32
+				organic.add_child(unit)
+				if resource == "wood":
+					for fiber in range(3):
+						_segment(unit, "Fiber%d" % fiber, Vector3(-0.7, fiber * 0.1, 0), Vector3(0.7, fiber * 0.1, 0), 0.06, Color("75904e"))
+				else:
+					_sphere(unit, "Pod", Vector3.ZERO, Vector3(0.6, 0.5, 0.6), Color("d39742") if resource == "metal" else Color("b9ad67"))
+					_leaf(unit, "PodLeaf", Vector3(0, 0.27, 0), Vector3(0.6, 0.06, 0.25), Color("668844"), 0.3)
+	var status: Dictionary = construction.status()
+	var remaining: Dictionary = status.get("stockpile", {})
+	for resource in CivilizationDefinition.REQUIRED_RESOURCE_KEYS:
+		for index in range(4 if resource != "mechanical_parts" else 3):
+			(organic.get_node("%s%d" % [resource, index]) as Node3D).visible = index < int(remaining.get(resource, 0))
 
 
 func _build_verdant_project(scene: Node3D, construction: Node) -> void:
@@ -370,17 +433,45 @@ func _build_verdant_project(scene: Node3D, construction: Node) -> void:
 	for index in range(4):
 		var angle := TAU * float(index) / 4.0
 		var base := Vector3(cos(angle) * 1.8, 0.25, sin(angle) * 1.8)
-		var top := Vector3(cos(angle + 0.45) * 0.75, 7.0, sin(angle + 0.45) * 0.75)
+		var top := Vector3(cos(angle + 0.45) * 0.75, 8.8, -1.6 + sin(angle + 0.45) * 0.75)
 		_segment(lattice, "LatticeVine%d" % index, base, top, 0.16, Color("486b3a"))
 		_leaf(lattice, "LatticeLeaf%d" % index, top * 0.7 + Vector3(0, 0.3, 0), Vector3(0.7, 0.08, 0.32), Color("6b9349"), angle)
 	var bloom := Node3D.new()
 	bloom.name = "BloomAnchor"
 	_verdant_site.add_child(bloom)
-	_sphere(bloom, "Bud", Vector3(0, 7.7, 0), Vector3(1.35, 1.6, 1.35), Color("8b9a4f"))
+	# Meet the shared real launcher tip exactly; presentation never moves it.
+	_segment(bloom, "BloomStem", Vector3(0, 8.4, -1.6), Vector3(0, 11.0, -1.6), 0.19, Color("486b3a"))
+	_sphere(bloom, "Bud", Vector3(0, 10.5, -1.6), Vector3(1.35, 1.6, 1.35), Color("8b9a4f"))
 	for index in range(6):
 		var angle := TAU * float(index) / 6.0
-		_leaf(bloom, "Petal%d" % index, Vector3(cos(angle) * 1.1, 7.7, sin(angle) * 1.1), Vector3(1.25, 0.10, 0.52), Color("879d55") if index % 2 == 0 else Color("d0a25a"), angle)
+		_leaf(bloom, "Petal%d" % index, Vector3(cos(angle) * 1.1, 10.5, -1.6 + sin(angle) * 1.1), Vector3(1.25, 0.10, 0.52), Color("879d55") if index % 2 == 0 else Color("d0a25a"), angle)
 	_world_label(_verdant_site, "ProjectSign", CivilizationDefinition.project_name(definition).to_upper(), Vector3(0, 10.5, 2.8), Color("d9cf72"))
+	_growth_magic = Node3D.new()
+	_growth_magic.name = "GrowthMagic"
+	_verdant_site.add_child(_growth_magic)
+	for index in range(7):
+		var mote := _sphere(_growth_magic, "SporeLight%d" % index, Vector3.ZERO, Vector3.ONE * (0.10 + float(index % 3) * 0.035), Color("e4d483"))
+		var glow := mote.material_override as StandardMaterial3D
+		glow.emission_enabled = true
+		glow.emission = Color("cadd82")
+		glow.emission_energy_multiplier = 1.6
+		glow.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	_growth_magic.visible = false
+
+
+func _refresh_growth_magic(construction: Node) -> void:
+	if not is_instance_valid(_growth_magic):
+		return
+	var status: Dictionary = construction.status()
+	var growing := String(status.get("state", "")) == "DEPLOYING_TRAVERSAL" or (int(construction.get("_active_stage")) >= 0 and float(status.get("stage_progress", 0)) > 0)
+	_growth_magic.visible = growing and not bool(construction.get("traversal_deployed"))
+	if not _growth_magic.visible:
+		return
+	var height := 0.7 + float(maxi(0, int(construction.get("_active_stage")))) * 3.8
+	for index in range(_growth_magic.get_child_count()):
+		var angle := _magic_clock * 0.65 + TAU * float(index) / 7.0
+		var mote := _growth_magic.get_child(index) as Node3D
+		mote.position = Vector3(cos(angle) * 1.8, height + sin(angle * 1.5 + index) * 0.45, -1.6 + sin(angle) * 1.2)
 
 
 func _update_verdant_project_stages(construction: Node) -> void:
@@ -406,37 +497,46 @@ func _refresh_vine(scene: Node3D, construction: Node, path: Array) -> void:
 	var signature := "%d:%s:%s" % [path.size(), path.front(), path.back()]
 	if _verdant_vine == null or not is_instance_valid(_verdant_vine) or signature != _route_signature:
 		_route_signature = signature
-		_build_vine(scene, path)
+		_build_vine(scene, path, construction.get("_deployment_segments"))
 	var old_cable := scene.get_node_or_null("DeployedGrappleCable") as Node3D
 	if old_cable != null:
 		old_cable.visible = false
 	var cursor := int(construction.get("_deployment_cursor"))
 	var deployed := bool(construction.get("traversal_deployed"))
 	for index in range(_vine_segments.size()):
-		_vine_segments[index].visible = deployed or index < cursor
+		_vine_segments[index].visible = deployed or cursor >= _vine_thresholds[index]
 	if _vine_anchor != null:
-		_vine_anchor.visible = deployed or cursor >= _vine_segments.size()
+		var coarse_segments: Array = construction.get("_deployment_segments")
+		_vine_anchor.visible = deployed or cursor >= coarse_segments.size()
 
 
-func _build_vine(scene: Node3D, path: Array) -> void:
+func _build_vine(scene: Node3D, path: Array, coarse_segments: Array) -> void:
 	if _verdant_vine != null and is_instance_valid(_verdant_vine):
 		_verdant_vine.queue_free()
 	_verdant_vine = Node3D.new()
 	_verdant_vine.name = "VerdantTraversal"
 	scene.add_child(_verdant_vine)
 	_vine_segments.clear()
+	_vine_thresholds.clear()
 	for index in range(1, path.size()):
 		var start: Vector3 = path[index - 1]
 		var finish: Vector3 = path[index]
 		var segment_root := Node3D.new()
 		segment_root.name = "VineSegment%03d" % index
 		_verdant_vine.add_child(segment_root)
-		_segment(segment_root, "Stem", start, finish, 0.055 + 0.008 * float(index % 3), Color("3f6a38"))
-		if index % 4 == 0:
+		_segment(segment_root, "Stem", start, finish, 0.095 + 0.012 * float(index % 3), Color("3f6a38"))
+		var direction := (finish - start).normalized()
+		var across := direction.cross(Vector3.UP).normalized()
+		if across.length_squared() < 0.01:
+			across = Vector3.RIGHT
+		var side := across * (0.075 if index % 2 == 0 else -0.075)
+		_segment(segment_root, "TwiningFiber", start + side, finish - side, 0.035, Color("8b8750"))
+		if index % 2 == 0:
 			var midpoint := (start + finish) * 0.5
-			_leaf(segment_root, "Leaf", midpoint + Vector3(0.08, 0.04, 0), Vector3(0.30, 0.035, 0.13), Color("659248"), float(index) * 0.71)
+			_leaf(segment_root, "Leaf", midpoint + Vector3(0.18, 0.04, 0), Vector3(0.58, 0.055, 0.25), Color("659248"), float(index) * 0.71)
 		segment_root.visible = false
 		_vine_segments.append(segment_root)
+		_vine_thresholds.append(_deployment_threshold((start + finish) * 0.5, coarse_segments))
 	_vine_anchor = Node3D.new()
 	_vine_anchor.name = "LivingSurfaceAnchor"
 	_vine_anchor.position = path.back()
@@ -445,6 +545,21 @@ func _build_vine(scene: Node3D, path: Array) -> void:
 		var angle := TAU * float(index) / 7.0
 		_leaf(_vine_anchor, "AnchorLeaf%d" % index, Vector3(cos(angle) * 0.32, 0.08, sin(angle) * 0.32), Vector3(0.5, 0.04, 0.2), Color("608b45"), angle)
 	_vine_anchor.visible = false
+
+
+func _deployment_threshold(midpoint: Vector3, coarse_segments: Array) -> int:
+	# The navigation route subdivides coarse production cable sections. Reveal
+	# each subdivision with its actual parent section, rather than comparing two
+	# different array counts. The already-built lower tower has no cable section.
+	for index in range(coarse_segments.size()):
+		var segment := coarse_segments[index] as MeshInstance3D
+		var half_axis := segment.quaternion * Vector3.UP * (segment.mesh as CylinderMesh).height * 0.5
+		var start := segment.position - half_axis
+		var direction := half_axis * 2.0
+		var ratio := clampf((midpoint - start).dot(direction) / maxf(direction.length_squared(), 0.000001), 0, 1)
+		if midpoint.distance_to(start + direction * ratio) < 0.001:
+			return index + 1
+	return 0
 
 
 func _create_initial_influence(scene: Node3D) -> void:
@@ -461,7 +576,18 @@ func _create_initial_influence(scene: Node3D) -> void:
 		center = _vec3(room_definition.landmarks.housing)
 	var influence: Dictionary = definition.get("world_influence", {})
 	var count := int(influence.get("settlement_patch_budget", 18))
-	_add_moss_patches(_influence_root, center, 9.0, count, "%s:%s:settlement" % [room_definition.get("id", "room"), definition.id])
+	var settlement := scene.get_node("Settlement") as Node3D
+	var occupied: Array[Node3D] = []
+	for child in settlement.get_children():
+		if child is Node3D and child.has_node("VerdantOverlay"):
+			occupied.append(child as Node3D)
+	if occupied.is_empty():
+		# Founders have only their real portable supplies; a mature grove is earned.
+		_add_moss_patches(_influence_root, center, 3.0, count, "%s:founders" % room_definition.id, scene, {}, 0.8)
+	else:
+		for index in range(occupied.size()):
+			var budget := count / occupied.size() + (1 if index < count % occupied.size() else 0)
+			_add_moss_patches(_influence_root, occupied[index].global_position, 10.0, budget, "%s:%s:settlement" % [room_definition.id, occupied[index].name], scene, {}, 3.2)
 
 
 func _apply_traversal_reclamation(scene: Node3D, construction: Node) -> void:
@@ -472,25 +598,73 @@ func _apply_traversal_reclamation(scene: Node3D, construction: Node) -> void:
 	var influence: Dictionary = definition.get("world_influence", {})
 	var lower: Vector3 = construction.get("site_position")
 	var upper: Vector3 = construction.get("target_anchor")
-	_add_moss_patches(_influence_root, lower, 4.5, int(influence.get("lower_anchor_patch_budget", 10)), "%s:%s:lower" % [room_definition.get("id", "room"), construction.get("target_region")])
-	_add_moss_patches(_influence_root, upper + Vector3(0, 0.03, 0), 5.5, int(influence.get("surface_patch_budget", 12)), "%s:%s:surface" % [room_definition.get("id", "room"), construction.get("target_region")])
+	var navigation: Node = construction.get("surface_navigation")
+	var surface: Dictionary = navigation.regions.get(String(construction.get("target_region")), {})
+	_add_moss_patches(_influence_root, lower, 4.5, int(influence.get("lower_anchor_patch_budget", 10)), "%s:%s:lower" % [room_definition.get("id", "room"), construction.get("target_region")], scene, {}, 2.0)
+	_add_moss_patches(_influence_root, upper, 5.5, int(influence.get("surface_patch_budget", 12)), "%s:%s:surface" % [room_definition.get("id", "room"), construction.get("target_region")], scene, surface, 2.2)
 	for index in range(3):
-		var offset := Vector3(-1.4 + index * 1.4, 0.12, 1.1 + float(index % 2) * 0.7)
-		_mushroom(_influence_root, "SurfaceMushroom%d" % index, upper + offset, 0.22 + index * 0.03)
+		var at := upper + Vector3(-1.4 + index * 1.4, 0, 1.1 + float(index % 2) * 0.7)
+		if _surface_contains(surface, at, 0.6):
+			at.y = float(surface.height)
+			_mushroom(_influence_root, "SurfaceMushroom%d" % index, at, 0.32 + index * 0.05)
 	print("ROOMSCALE_VERDANT_RECLAMATION target=%s lower_patches=%s surface_patches=%s" % [construction.get("target_region"), influence.get("lower_anchor_patch_budget", 10), influence.get("surface_patch_budget", 12)])
 
 
-func _add_moss_patches(parent: Node3D, center: Vector3, radius: float, count: int, seed_text: String) -> void:
+func _add_moss_patches(parent: Node3D, center: Vector3, radius: float, count: int, seed_text: String, scene: Node3D, surface: Dictionary = {}, patch_scale: float = 1.0) -> void:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = abs(hash(seed_text))
 	for index in range(count):
 		var angle := rng.randf_range(0.0, TAU)
 		var distance := sqrt(rng.randf()) * radius
 		var at := center + Vector3(cos(angle) * distance, 0.035, sin(angle) * distance)
-		var patch := _sphere(parent, "Moss_%s_%03d" % [abs(hash(seed_text)) % 10000, index], at, Vector3(rng.randf_range(0.35, 0.85), 0.06, rng.randf_range(0.28, 0.72)), Color("4d7b3d") if index % 2 == 0 else Color("668b46"))
+		if surface.is_empty():
+			var supported := _floor_decoration_height(scene, at, patch_scale * 0.5)
+			if is_nan(supported):
+				continue
+			at.y = supported + 0.035
+		else:
+			if not _surface_contains(surface, at, patch_scale * 0.5):
+				continue
+			at.y = float(surface.height) + 0.035
+		var patch := _sphere(parent, "Moss_%s_%03d" % [abs(hash(seed_text)) % 10000, index], at, Vector3(rng.randf_range(0.55, 1.0) * patch_scale, 0.07, rng.randf_range(0.4, 0.9) * patch_scale), Color("4d7b3d") if index % 2 == 0 else Color("668b46"))
 		patch.rotation.y = angle
 		if index % 5 == 0:
 			_leaf(parent, "Sprout_%s_%03d" % [abs(hash(seed_text)) % 10000, index], at + Vector3(0, 0.08, 0), Vector3(0.28, 0.025, 0.12), Color("7aa253"), angle)
+
+
+func _surface_contains(surface: Dictionary, at: Vector3, margin: float) -> bool:
+	if surface.is_empty():
+		return false
+	var center: Vector3 = surface.center
+	var local := Vector2(at.x - center.x, at.z - center.z).rotated(-deg_to_rad(float(surface.get("rotation_degrees", 0))))
+	var half: Vector2 = surface.dimensions * 0.5 - Vector2.ONE * margin
+	return absf(local.x) <= half.x and absf(local.y) <= half.y
+
+
+func _floor_decoration_height(scene: Node3D, at: Vector3, margin: float) -> float:
+	# Consult room geometry only for visual support. No collision or navigation
+	# objects are added, and no decoration is suspended over an edge or furniture.
+	var room: Dictionary = scene.get("_room_definition")
+	var floor: Dictionary = room.get("floor", {})
+	var floor_center := _vec3(floor.get("center", [0, 0, 0]))
+	var dimensions: Array = floor.get("dimensions", room.dimensions)
+	if absf(at.x - floor_center.x) > float(dimensions[0]) * 0.5 - margin or absf(at.z - floor_center.z) > float(dimensions[1]) * 0.5 - margin:
+		return NAN
+	var height := float(floor.get("height", 0))
+	for object_variant in room.objects:
+		var object: Dictionary = object_variant
+		if String(object.kind) == "settlement":
+			continue
+		var center := _vec3(object.position)
+		var local := Vector2(at.x - center.x, at.z - center.z).rotated(-deg_to_rad(float(object.get("rotation_degrees", 0))))
+		var half := Vector2(float(object.dimensions[0]), float(object.dimensions[2])) * 0.5
+		if absf(local.x) > half.x + margin or absf(local.y) > half.y + margin:
+			continue
+		if bool(object.get("blocks_navigation", false)):
+			return NAN
+		if String(object.kind) == "rug":
+			height = maxf(height, center.y + float(object.dimensions[1]))
+	return height
 
 
 func _mushroom(parent: Node3D, node_name: String, at: Vector3, size: float) -> void:
@@ -582,8 +756,8 @@ func _world_label(parent: Node3D, node_name: String, value: String, at: Vector3,
 	label.name = node_name
 	label.text = value
 	label.position = at
-	label.font_size = 32
-	label.pixel_size = 0.025
+	label.font_size = 24
+	label.pixel_size = 0.014
 	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	label.modulate = color
 	label.outline_modulate = Color("263320")

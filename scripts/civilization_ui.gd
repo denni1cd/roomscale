@@ -1,5 +1,6 @@
 extends Control
 ## Normal gameplay HUD reads authoritative civilization state.
+const Vocabulary := preload("res://scripts/fishbowl_narrative_adapter.gd")
 
 var simulation: Node
 var resources: Label
@@ -80,7 +81,7 @@ func configure(controller: Node) -> void:
 	var row := 0
 	for family in simulation.planner.priorities:
 		var label := Label.new()
-		label.text = family
+		label.text = Vocabulary.presentation_text(family)
 		label.position = Vector2(14 + (row % 2) * 235, 225 + (row / 2) * 35)
 		label.add_theme_font_size_override("font_size", 14)
 		add_child(label)
@@ -125,7 +126,7 @@ func configure(controller: Node) -> void:
 	var directives := Label.new()
 	directives.name = "Directives"
 	directives.position = Vector2(14, 347)
-	directives.add_theme_font_size_override("font_size", 13)
+	directives.add_theme_font_size_override("font_size", 12 if Vocabulary.is_verdant() else 13)
 	directives.modulate = Color("a9dad4")
 	add_child(directives)
 	var speed_row := HBoxContainer.new()
@@ -160,6 +161,8 @@ func refresh() -> void:
 	for bundle in simulation.resources.bundles.values():
 		if bundle.state == "in_transit" and bundle.resource in ["wood", "metal"]: in_transit += float(bundle.amount)
 	resources.text = "ROOMSCALE  ·  %d citizens  ·  Day %.2f  ·  %dx\nFood %.0f  ·  %.2f days  ·  use %d/day\nWater %.0f  ·  %.2f days  ·  use %d/day\nWood %.0f  ·  Metal %.0f  ·  %.0f materials in transit\nShelter %d/%d  ·  Rest %d/%d  ·  Urgent %d" % [state.population, state.days, int(simulation.speed), stock.food, state.food_days, state.population * 2, stock.water, state.water_days, state.population * 3, stock.wood, stock.metal, in_transit, state.shelter, state.population, state.resting, simulation.needs.rest_capacity, state.urgent]
+	if Vocabulary.is_verdant():
+		resources.text = "ROOMSCALE  ·  %d citizens  ·  Day %.2f  ·  %dx\nFood %.0f  ·  %.2f days  ·  use %d/day\nWater %.0f  ·  %.2f days  ·  use %d/day\n%s %.0f  ·  %s %.0f  ·  %s %.0f\nMaterials in transit %.0f\nShelter %d/%d  ·  Rest %d/%d  ·  Urgent %d" % [state.population, state.days, int(simulation.speed), stock.food, state.food_days, state.population * 2, stock.water, state.water_days, state.population * 3, Vocabulary.resource_name("wood"), stock.wood, Vocabulary.resource_name("metal"), stock.metal, Vocabulary.resource_name("mechanical_parts"), stock.get("mechanical_parts", 0), in_transit, state.shelter, state.population, state.resting, simulation.needs.rest_capacity, state.urgent]
 	var reasons: Array[String] = simulation.planner.reasons.duplicate()
 	reasons.sort_custom(func(a: String, b: String) -> bool: return a.contains("No authorized") and not b.contains("No authorized"))
 	strategy.text = "\n".join(reasons.slice(0, 4)) if not reasons.is_empty() else ("Water reserve critical — secure a water source" if state.water_days < 1 else "Food and water reserves stable")
@@ -168,6 +171,12 @@ func refresh() -> void:
 	get_node("Directives").text = "Objectives: " + (" / ".join(simulation.planner.directives.values()) if not simulation.planner.directives.is_empty() else "Choose a civilization objective")
 	var project: Dictionary = simulation.construction.status()
 	get_node("Directives").text += "\nTraversal: %s %.0f%% · W %d/%d M %d/%d" % [String(project.state).replace("_", " "), project.progress_percent, project.delivered.wood, project.required.wood, project.delivered.metal, project.required.metal]
+	if Vocabulary.is_verdant():
+		var delivered: Array[String] = []
+		for resource in ["wood", "metal", "mechanical_parts"]:
+			if project.required.has(resource):
+				delivered.append("%s %d/%d" % [Vocabulary.resource_name(resource), project.delivered.get(resource, 0), project.required[resource]])
+		get_node("Directives").text = "Objectives: %s\n%s: %s %.0f%%\n%s" % [" / ".join(simulation.planner.directives.values()) if not simulation.planner.directives.is_empty() else "Choose a civilization objective", Vocabulary.traversal_name(), String(project.state).replace("_", " "), project.progress_percent, " · ".join(delivered)]
 	var selected: Node3D = simulation.scene.get("_selected_citizen")
 	citizen_panel.visible = is_instance_valid(selected)
 	if is_instance_valid(selected):
@@ -189,10 +198,23 @@ func refresh() -> void:
 		if not simulation.development.active.is_empty():
 			var active: Dictionary = simulation.development.active
 			project_state = "%s · %s · %s · %.0f%%" % [String(active.kind).capitalize(), active.state, active.stage, active.work / active.required_work * 100]
+			if Vocabulary.is_verdant():
+				var stage_names := {"FOUNDATION": "Rooting foundations", "FRAME": "Weaving a living frame", "SHELL": "Growing the enclosure"}
+				project_state = "%s · %s · %s · %.0f%%" % [Vocabulary.module_name(active), String(active.state).replace("_", " "), stage_names.get(active.stage, String(active.stage).capitalize()), active.work / active.required_work * 100]
 		fishbowl_development.text = "Development: " + project_state + "\nCompleted: %d housing / %d workshop" % [simulation.development.count("housing"), simulation.development.count("workshop")]
 		var lines: Array[String] = ["Recent civilization events"]
 		for event in simulation.journal.events.slice(-6): lines.append("Day %.2f · %s" % [event.day, event.message])
 		fishbowl_events.text = "\n".join(lines)
+	# Translate only the rendered copy. Planner reasons, resource IDs, objective
+	# values and task records retain their shared production vocabulary.
+	strategy.text = Vocabulary.presentation_text(strategy.text)
+	get_node("Directives").text = Vocabulary.presentation_text(get_node("Directives").text)
+	citizen_label.text = Vocabulary.presentation_text(citizen_label.text)
+	inspection.text = Vocabulary.presentation_text(inspection.text)
+	if fishbowl_development != null:
+		fishbowl_development.text = Vocabulary.presentation_text(fishbowl_development.text)
+	if fishbowl_events != null:
+		fishbowl_events.text = Vocabulary.presentation_text(fishbowl_events.text)
 
 func select_object(object_id: String) -> bool:
 	var index := object_ids.find(object_id)

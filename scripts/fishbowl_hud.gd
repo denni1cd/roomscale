@@ -75,12 +75,12 @@ func configure(sim: Node) -> void:
 	status_label = label_for(lines, 18)
 	governor_label = label_for(lines, 14)
 	governor_label.add_theme_color_override("font_color", Color("dbbc7f"))
-	project_panel = panel_at(Vector2(1, 1), Rect2(-324, -200, 304, 110))
+	project_panel = panel_at(Vector2(1, 1), Rect2(-384, -260, 364, 170) if Adapter.is_verdant() else Rect2(-324, -200, 304, 110))
 	project_label = label_for(project_panel)
 	event_panel = panel_at(Vector2(0, 1), Rect2(20, -182, 570, 80))
 	event_label = label_for(event_panel, 17)
 	event_panel.hide()
-	title_panel = panel_at(Vector2.ZERO, Rect2(20, 98, 500, 66))
+	title_panel = panel_at(Vector2.ZERO, Rect2(20, 118 if Adapter.is_verdant() else 98, 500, 66))
 	title_label = label_for(title_panel, 17)
 	title_label.text = "ROOMSCALE\nAutonomous Colony · Fishbowl Mode"
 	controls_panel = panel_at(Vector2(0, 1), Rect2(20, -68, 585, 50))
@@ -166,10 +166,18 @@ func advance(real_delta: float) -> void:
 func refresh() -> void:
 	var s := Adapter.status(simulation)
 	status_label.text = "Day %.2f   ·   Population %d/%d   ·   Food %.1fd   ·   Water %.1fd   ·   Wood %.0f   ·   Metal %.0f   ·   %s" % [s.days, s.population, s.shelter, s.food_days, s.water_days, s.wood, s.metal, "Paused" if s.speed == 0 else "%d×" % int(s.speed)]
+	if Adapter.is_verdant():
+		status_label.text = "Day %.2f   ·   Population %d/%d   ·   Food %.1fd   ·   Water %.1fd   ·   %s\n%s %.0f   ·   %s %.0f   ·   %s %.0f" % [s.days, s.population, s.shelter, s.food_days, s.water_days, "Paused" if s.speed == 0 else "%d×" % int(s.speed), Adapter.resource_name("wood"), s.wood, Adapter.resource_name("metal"), s.metal, Adapter.resource_name("mechanical_parts"), s.mechanical_parts]
 	governor_label.text = s.governor
 	var p := Adapter.project(simulation)
 	project_panel.visible = not p.is_empty() and not diagnostics
 	if not p.is_empty(): project_label.text = "%s\n%s · %.0f%%\nWood %d/%d · Metal %d/%d" % [p.name, p.stage, p.progress * 100, p.delivered.wood, p.required.wood, p.delivered.metal, p.required.metal]
+	if not p.is_empty() and Adapter.is_verdant():
+		var materials: Array[String] = []
+		for resource in ["wood", "metal", "mechanical_parts"]:
+			if p.required.has(resource):
+				materials.append("%s %d/%d" % [Adapter.resource_name(resource), p.delivered.get(resource, 0), p.required[resource]])
+		project_label.text = "%s\n%s · %.0f%%\n%s" % [p.name, p.stage, p.progress * 100, "\n".join(materials)]
 	for multiplier in speed_buttons: speed_buttons[multiplier].modulate = Color("f3cf86") if simulation.speed == multiplier else Color.WHITE
 	camera_button.set_pressed_no_signal(simulation.camera_director.enabled)
 	if diagnostics:
@@ -177,3 +185,4 @@ func refresh() -> void:
 		var hud: Control = simulation.hud
 		details_label.text = "COLONY DETAILS\n" + hud.resources.text + "\n\n" + hud.strategy.text + "\n\nPlanner: " + " / ".join(simulation.planner.reasons) + "\n" + hud.get_node("Directives").text + "\n\n" + hud.fishbowl_development.text + "\n\n" + hud.inspection.text + "\n\n" + (hud.citizen_label.text if hud.citizen_panel.visible else "Click a citizen for needs and task details.") + "\n\nAccounting: " + str(simulation.economy.snapshot()) + "\n\n"
 		for event in simulation.journal.events: details_label.text += "Day %.2f · %s\n" % [event.day, event.message]
+		details_label.text = Adapter.presentation_text(details_label.text)

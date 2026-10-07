@@ -3,6 +3,7 @@ class_name StrategyCamera
 ## Orbit/pan/tilt/zoom strategy camera; keyboard presets map to three useful scales.
 
 const MIN_DISTANCE := 22.0
+const CITIZEN_MIN_DISTANCE := 1.5
 const MAX_DISTANCE := 520.0
 const MIN_TILT_DEGREES := 18.0
 const MAX_TILT_DEGREES := 78.0
@@ -157,7 +158,10 @@ func pan_by(delta: Vector2) -> void:
 
 
 func zoom_by(factor: float) -> void:
-	distance = clampf(distance * factor, MIN_DISTANCE, MAX_DISTANCE)
+	# The citizen preset starts at 11in; using the room minimum here made the
+	# first inward wheel step jump out to 22in and prevented actual inspection.
+	var minimum := CITIZEN_MIN_DISTANCE if view_mode == 2 else MIN_DISTANCE
+	distance = clampf(distance * factor, minimum, MAX_DISTANCE)
 	_apply_transform()
 	var label := get_node_or_null("../Overlay/CameraMode") as Label
 	if label:

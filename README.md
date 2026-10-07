@@ -38,11 +38,15 @@ Two civilizations are currently selectable:
 - **Clockwork** — the existing brass, timber, steam, gears and grapple/cable society.
   Its traversal construction reads as Base → Winch → Launcher and uses Wood, Metal and
   Mechanical Parts.
-- **Verdant** — gnome/faerie-like woodland folk whose settlement grows as a living grove.
+- **Verdant** — gnome/faerie-like woodland folk whose settlement grows as a living grove:
+  branching tree nurseries, willow seed caches, rooted pod homes and cultivated saplings.
   The same production resource slots present as Living Fiber, Resin and Growth Spores;
   traversal construction reads as Root Bed → Growth Lattice → Bloom Anchor and the
-  completed real route is presented as a growing living vine. Bounded deterministic moss,
-  roots and fungi visually reclaim occupied areas without changing collision or navigation.
+  completed real route is presented as a growing, twining living vine. Blossoms and growth
+  spores suggest nature magic; construction effects consume real production stage state.
+  Bounded deterministic moss, roots and fungi visually reclaim occupied areas without
+  changing collision or navigation. Earned founder structures grow roots, branches and
+  canopies as their actual construction stages advance.
 
 Clockwork and Verdant intentionally share the same underlying pacing and gameplay
 capabilities at this stage. Civilization choice is not yet a difficulty or balance choice.
