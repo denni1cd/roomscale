@@ -1,6 +1,6 @@
 {
   "baseline": "8621b08f9156cdeda305f90eb5442e5947d11f00",
-  "tested_implementation_commit": "f5884d15b63a671ea3b043fb58f6bdbb070da687",
+  "tested_implementation_commit": "502cc1ef65d6b978be7d2092594f3ad95917160d",
   "repeatability": "5/5 identical",
   "canonical_runs": [
     {
@@ -728,19 +728,19 @@
     "scripts/asset_pipeline/validate_assets.gd": "bb03d6d343856e45c81a28623c14833270ffec2a16ac4c4b45af6b7a4cfb6d1e",
     "scripts/autonomous_governor.gd": "b37adc700a6ade6fbe45c225f08950d4ccb908b9379901b3c2c35a7e5914eae9",
     "scripts/canonical_results.py": "de14c0c621d52c83fac5b587305d09ea7952d32cca0a4787925802473561e490",
-    "scripts/citizen_agent.gd": "aff3acfe14149ccbe656e84d54ca2d113e502be3d3e26f9d9f9de892dc287e73",
+    "scripts/citizen_agent.gd": "59cfa490d5f5d7b7b30296583c080f692bd4f1adb05358f9113e75c704bb1cbb",
     "scripts/civilization_definition.gd": "af8945f31a43903af01c59ff39d0dc3d79892e3f6bb3db09cb51768c89085903",
     "scripts/civilization_definition_test.gd": "2d6b0dcf0e45f5017acd734ac1ad3cd5942a177bdb8e6916466ebf77e1d91c9e",
     "scripts/civilization_planner.gd": "b037bc8efdc1977fdf6efaa0bd8fbf24f996f40813477852f9f293f9460a3144",
     "scripts/civilization_presentation.gd": "c9c4842b132a0ad82d8a1d4bcc7ae87926d0362ce4219c4bda9e87bb6758fea8",
     "scripts/civilization_presentation_runtime.gd": "18d868865cc8b34d60d1d917dd90b19aa59479674d56c1fd5b4c1d96b7669a3f",
     "scripts/civilization_review_capture.gd": "8c5bbc93b15052a7c48a3b238901f3a9d137e2f5c9fc0b63d34cb73fa202af12",
-    "scripts/civilization_simulation.gd": "9e6044f954980ce11cfdcb28196f049726a94630eaac7e841b9f827dc004f1d5",
+    "scripts/civilization_simulation.gd": "de13b811a0e4b624e78260c567a4caba7db87a9b5ac7401a2ba6a00a06975f53",
     "scripts/civilization_ui.gd": "2a057a9fbf73acb257ef986bcb1bb933d6d9f1e3a552268c1ed2204deae4abfb",
     "scripts/civilization_visual_test.gd": "7eeabeca4b34c9890ea6cfba02bbf77db5055e0872c0b068c8252ca204467db7",
     "scripts/combat_system.gd": "f03a0ae1d90357661c61c308772a34779f460d5e6351976d9a751f073353ec2c",
     "scripts/conflict_startup.gd": "f2e156e89fa566c00d8f723bcc4a9d5153af101e818673f96ad35c367af0e439",
-    "scripts/conflict_test.gd": "9b5eaa966b0b6fccb7e20ceb7254ac3d0de1b08740ec4669e37c769854effa31",
+    "scripts/conflict_test.gd": "b285cfda7167ab0c72bde8ff3b3ea3a2501f3e02dcc3a2bc6fcb77272a8891c5",
     "scripts/construction_system.gd": "4802147d30b9760762ddd6c530781b102afa45bf44b503c1a214f0fc7e78d69a",
     "scripts/economy_system.gd": "9196f5ecca818c33f48c808d17690f11dcd999b3673a1135b54e5e1a6746b63f",
     "scripts/event_journal.gd": "1e0c9b38982fe070692506d2028ed620158c9b8be4443b229711afe938b7568d",
@@ -791,7 +791,7 @@
     "scripts/stabilization_core_test.gd": "0eeafd53e54ea06903ff6879ab66d51ee17043a0f86a8109140dcbb170e93546",
     "scripts/strategy_camera.gd": "bb75920e754166093920a4d1540158c87ea9509467dcdcb61d96e9e1350cbc95",
     "scripts/surface_navigation.gd": "c83f77c441d5704cebe166a6ca51282fa26bd04ccc7442ebc5d1c4baa33aaaae",
-    "scripts/task_coordinator.gd": "3acd807d7965c913ce56066c4e1bff1a761b713d566c210b8b8ce33bfd507b95",
+    "scripts/task_coordinator.gd": "c587141aacb23eac5af54776396c99032607aedd04446c4d736b297e98af2467",
     "scripts/territory_system.gd": "a4686f0b5020a9e44a52835cf5f9535b77dcb6cda6671ba351f872fd65da39ca",
     "scripts/test_tooling.py": "fac5f36dc6e32871a115f1f4695f38963c2918ea9d030b52b924730a95904bff",
     "scripts/validate_room_definition.gd": "978f185780e784719b06666ed4430070326a89de08a3b51d7c04a3614c440b08",
@@ -812,7 +812,7 @@
     "visual/catalog.json": "2594ea3b27fd56ac355f8a1b4c6644a26cfdbb97aeb04dac89d774ce1142343b",
     "visual/materials.json": "94f7b451c7572b9075a0958fbc2fc4c14b1424ed36accb9d9a4e12d2ad1858fc"
   },
-  "note": "Report/evidence-only follow-up commit does not change tested executable source.",
+  "note": "Manual creation/direct assignment/Reach-Explore now apply instance, life and military-duty guards. New negative probes leave real production tasks and movement unchanged. Only report/evidence files change after the tested implementation commit.",
   "verification_commands": [
     {
       "command": "python -m ruff check . (repository .venv interpreter)",
@@ -831,35 +831,35 @@
       "result": "PASS: ROOMSCALE_CIVILIZATION_CHECKS_PASS definitions=true verdant_visual=true; exit 0"
     },
     {
-      "command": "./TEST_ROOM_SCALE_SMOKE.ps1 -Room room_a -Civilization clockwork -LogPath verification/stabilization/runs/poc5/accepted-smokes/room_a-clockwork.log",
+      "command": "./TEST_ROOM_SCALE_SMOKE.ps1 -Room room_a -Civilization clockwork -LogPath verification/stabilization/runs/poc5/manual-ownership-smokes/room_a-clockwork.log",
       "result": "PASS: M2, M3, M4, M5, M6, M8 and civilization production smoke; exit 0"
     },
     {
-      "command": "./TEST_ROOM_SCALE_SMOKE.ps1 -Room room_a -Civilization verdant -LogPath verification/stabilization/runs/poc5/accepted-smokes/room_a-verdant.log",
+      "command": "./TEST_ROOM_SCALE_SMOKE.ps1 -Room room_a -Civilization verdant -LogPath verification/stabilization/runs/poc5/manual-ownership-smokes/room_a-verdant.log",
       "result": "PASS: M2, M3, M4, M5, M6, M8 and civilization production smoke; exit 0"
     },
     {
-      "command": "./TEST_ROOM_SCALE_SMOKE.ps1 -Room room_b -Civilization clockwork -LogPath verification/stabilization/runs/poc5/accepted-smokes/room_b-clockwork.log",
+      "command": "./TEST_ROOM_SCALE_SMOKE.ps1 -Room room_b -Civilization clockwork -LogPath verification/stabilization/runs/poc5/manual-ownership-smokes/room_b-clockwork.log",
       "result": "PASS: M2, M3, M4, M5, M6, M8 and civilization production smoke; exit 0"
     },
     {
-      "command": "./TEST_ROOM_SCALE_SMOKE.ps1 -Room room_b -Civilization verdant -LogPath verification/stabilization/runs/poc5/accepted-smokes/room_b-verdant.log",
+      "command": "./TEST_ROOM_SCALE_SMOKE.ps1 -Room room_b -Civilization verdant -LogPath verification/stabilization/runs/poc5/manual-ownership-smokes/room_b-verdant.log",
       "result": "PASS: M2, M3, M4, M5, M6, M8 and civilization production smoke; exit 0"
     },
     {
-      "command": "./TEST_ROOM_SCALE_CONFLICT.ps1 -RunCount 5 -OutputDirectory verification/stabilization/runs/poc5/accepted-repeatability",
+      "command": "./TEST_ROOM_SCALE_CONFLICT.ps1 -RunCount 5 -OutputDirectory verification/stabilization/runs/poc5/manual-ownership-repeatability",
       "result": "PASS: 5/5 identical; all five exit 0"
     },
     {
-      "command": "./TEST_ROOM_SCALE_CONFLICT.ps1 -Room room_conflict_b -OutputDirectory verification/stabilization/runs/poc5/accepted-second-room",
+      "command": "./TEST_ROOM_SCALE_CONFLICT.ps1 -Room room_conflict_b -OutputDirectory verification/stabilization/runs/poc5/manual-ownership-second-room",
       "result": "PASS: Clockwork capture tick 1973; exit 0"
     },
     {
-      "command": "./TEST_ROOM_SCALE_CONFLICT.ps1 -CaptureVisuals -OutputDirectory verification/stabilization/runs/poc5/accepted-visual",
+      "command": "./TEST_ROOM_SCALE_CONFLICT.ps1 -CaptureVisuals -OutputDirectory verification/stabilization/runs/poc5/manual-ownership-visual",
       "result": "PASS: real graphical renderer, same strategic outcome; 14 PNGs captured, 13 selected; exit 0"
     },
     {
-      "command": "./TEST_ROOM_SCALE_POC47.ps1 -Mode Scenario -OutputDirectory verification/stabilization/runs/poc5/final-founder -PythonExecutable ./.venv/Scripts/python.exe",
+      "command": "./TEST_ROOM_SCALE_POC47.ps1 -Mode Scenario -OutputDirectory verification/stabilization/runs/poc5/manual-ownership-founder -PythonExecutable ./.venv/Scripts/python.exe",
       "result": "PASS: earned eight-day single-society founder progression; POC47_BATCH_PASS runs=1; exit 0"
     },
     {

@@ -2,9 +2,9 @@
 
 Branch: `feature/poc5-multi-civ-conflict`. Accepted main baseline:
 `8621b08f9156cdeda305f90eb5442e5947d11f00`. Frozen implementation:
-`f5884d15b63a671ea3b043fb58f6bdbb070da687`. Subsequent evidence-only commit adds
-this report, normalized source hashes and deliberately selected images. The PR is opened
-into main and is not merged; its URL and final evidence commit are provided in the delivery.
+`502cc1ef65d6b978be7d2092594f3ad95917160d`. Subsequent evidence-only commit adds
+this report, normalized source hashes and deliberately selected images. PR [#4](https://github.com/denni1cd/roomscale/pull/4) targets main and is not merged.
+The final evidence commit is provided in the delivery.
 
 ## Architecture
 
@@ -15,7 +15,9 @@ CivilizationSimulation serves as each society runtime, with independent definiti
 roster, needs, economy, development, population and governor/planner. Compatibility
 wrappers delegate advance/step to the world, so old founder observers retain production
 ordering. Scoped boards and traversal projects hold shared navigation/source references.
-Tasks and tickets carry instance IDs. Claims reject foreign/dead citizens. Source
+Tasks and tickets carry instance IDs. Manual Reach/Explore filters the combined world
+roster by ownership/life/duty; direct player/project/traversal/exploration assignment
+rejects foreign or military-bound citizens before changing their existing task. Claims reject foreign/dead citizens. Source
 reservations track their owners; foreign extraction/cancellation cannot consume/release
 another owner's quantities. Bundles bind global citizen and instance identity and reject
 foreign inventory receipt. Every production tick conserves finite source and inventory
@@ -66,14 +68,14 @@ markers, failed assertions and timeouts remain hard failures.
 | `python -m ruff format --check . (repository .venv interpreter)` | PASS: 6 files already formatted; exit 0 |
 | `./TEST_ROOM_SCALE.ps1 -Mode Fast -PythonExecutable ./.venv/Scripts/python.exe` | PASS: ROOMSCALE_CATEGORY_PASS category=Fast; exit 0 |
 | `./TEST_ROOM_SCALE_CIVILIZATIONS.ps1` | PASS: ROOMSCALE_CIVILIZATION_CHECKS_PASS definitions=true verdant_visual=true; exit 0 |
-| `./TEST_ROOM_SCALE_SMOKE.ps1 -Room room_a -Civilization clockwork -LogPath verification/stabilization/runs/poc5/accepted-smokes/room_a-clockwork.log` | PASS: M2, M3, M4, M5, M6, M8 and civilization production smoke; exit 0 |
-| `./TEST_ROOM_SCALE_SMOKE.ps1 -Room room_a -Civilization verdant -LogPath verification/stabilization/runs/poc5/accepted-smokes/room_a-verdant.log` | PASS: M2, M3, M4, M5, M6, M8 and civilization production smoke; exit 0 |
-| `./TEST_ROOM_SCALE_SMOKE.ps1 -Room room_b -Civilization clockwork -LogPath verification/stabilization/runs/poc5/accepted-smokes/room_b-clockwork.log` | PASS: M2, M3, M4, M5, M6, M8 and civilization production smoke; exit 0 |
-| `./TEST_ROOM_SCALE_SMOKE.ps1 -Room room_b -Civilization verdant -LogPath verification/stabilization/runs/poc5/accepted-smokes/room_b-verdant.log` | PASS: M2, M3, M4, M5, M6, M8 and civilization production smoke; exit 0 |
-| `./TEST_ROOM_SCALE_CONFLICT.ps1 -RunCount 5 -OutputDirectory verification/stabilization/runs/poc5/accepted-repeatability` | PASS: 5/5 identical; all five exit 0 |
-| `./TEST_ROOM_SCALE_CONFLICT.ps1 -Room room_conflict_b -OutputDirectory verification/stabilization/runs/poc5/accepted-second-room` | PASS: Clockwork capture tick 1973; exit 0 |
-| `./TEST_ROOM_SCALE_CONFLICT.ps1 -CaptureVisuals -OutputDirectory verification/stabilization/runs/poc5/accepted-visual` | PASS: real graphical renderer, same strategic outcome; 14 PNGs captured, 13 selected; exit 0 |
-| `./TEST_ROOM_SCALE_POC47.ps1 -Mode Scenario -OutputDirectory verification/stabilization/runs/poc5/final-founder -PythonExecutable ./.venv/Scripts/python.exe` | PASS: earned eight-day single-society founder progression; POC47_BATCH_PASS runs=1; exit 0 |
+| `./TEST_ROOM_SCALE_SMOKE.ps1 -Room room_a -Civilization clockwork -LogPath verification/stabilization/runs/poc5/manual-ownership-smokes/room_a-clockwork.log` | PASS: M2, M3, M4, M5, M6, M8 and civilization production smoke; exit 0 |
+| `./TEST_ROOM_SCALE_SMOKE.ps1 -Room room_a -Civilization verdant -LogPath verification/stabilization/runs/poc5/manual-ownership-smokes/room_a-verdant.log` | PASS: M2, M3, M4, M5, M6, M8 and civilization production smoke; exit 0 |
+| `./TEST_ROOM_SCALE_SMOKE.ps1 -Room room_b -Civilization clockwork -LogPath verification/stabilization/runs/poc5/manual-ownership-smokes/room_b-clockwork.log` | PASS: M2, M3, M4, M5, M6, M8 and civilization production smoke; exit 0 |
+| `./TEST_ROOM_SCALE_SMOKE.ps1 -Room room_b -Civilization verdant -LogPath verification/stabilization/runs/poc5/manual-ownership-smokes/room_b-verdant.log` | PASS: M2, M3, M4, M5, M6, M8 and civilization production smoke; exit 0 |
+| `./TEST_ROOM_SCALE_CONFLICT.ps1 -RunCount 5 -OutputDirectory verification/stabilization/runs/poc5/manual-ownership-repeatability` | PASS: 5/5 identical; all five exit 0 |
+| `./TEST_ROOM_SCALE_CONFLICT.ps1 -Room room_conflict_b -OutputDirectory verification/stabilization/runs/poc5/manual-ownership-second-room` | PASS: Clockwork capture tick 1973; exit 0 |
+| `./TEST_ROOM_SCALE_CONFLICT.ps1 -CaptureVisuals -OutputDirectory verification/stabilization/runs/poc5/manual-ownership-visual` | PASS: real graphical renderer, same strategic outcome; 14 PNGs captured, 13 selected; exit 0 |
+| `./TEST_ROOM_SCALE_POC47.ps1 -Mode Scenario -OutputDirectory verification/stabilization/runs/poc5/manual-ownership-founder -PythonExecutable ./.venv/Scripts/python.exe` | PASS: earned eight-day single-society founder progression; POC47_BATCH_PASS runs=1; exit 0 |
 | `Godot 4.7.2 --headless --path . --editor --import` | PASS: import completes without script/engine errors; exit 0 |
 | `git diff --check` | PASS: no whitespace errors; exit 0 |
 
@@ -98,7 +100,9 @@ of these diagnostic failures were repaired before final acceptance.
 
 Rendered review found unreadable objective labels, premature battle captures, overlapping
 stations, a stale shared-salvage work approach and global-ID shelter allocation. Those
-issues were fixed and all final gates rerun. Earlier capture iterations/raw logs remain
+issues were fixed and all final gates rerun. A final review found manual Reach/Explore still received the
+combined roster; owner/life/duty filters and direct-assignment guards closed that path,
+with negative probes on real tasks and a complete verification rerun. Earlier capture iterations/raw logs remain
 ignored. This report publishes only deliberate evidence, never a giant capture directory.
 
 ## Rendered evidence and limits
