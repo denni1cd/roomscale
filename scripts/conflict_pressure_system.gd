@@ -158,10 +158,13 @@ func _secured_space_capacity(world: Node, instance_id: String, population: int) 
 	var capacity := float(population) * 2.0
 	for participant in world.scenario.get("participants", []):
 		if String(participant.get("instance_id", "")) != instance_id: continue
-		for slot in world.room_definition.get("start_slots", []):
-			if String(slot.get("id", "")) == String(participant.get("start_slot", "")):
-				capacity = float(slot.get("space_capacity", capacity))
-				break
+		if participant.has("home_space_capacity"):
+			capacity = float(participant.home_space_capacity)
+		else:
+			for slot in world.room_definition.get("start_slots", []):
+				if String(slot.get("id", "")) == String(participant.get("start_slot", "")):
+					capacity = float(slot.get("space_capacity", capacity))
+					break
 		break
 	for site in world.territory.sites.values():
 		if String(site.owner_civilization_id) == instance_id:
