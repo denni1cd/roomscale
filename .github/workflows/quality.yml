@@ -76,3 +76,31 @@ jobs:
           name: civilization-${{ matrix.civilization }}-${{ matrix.room }}-failure
           path: verification/poc15/${{ matrix.room }}
           if-no-files-found: ignore
+
+  conflict:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: .tools
+          key: godot-windows-${{ hashFiles('SETUP_ROOM_SCALE.ps1') }}
+      - name: Import production assets
+        shell: pwsh
+        run: |
+          $godot = & ./SETUP_ROOM_SCALE.ps1 | Select-Object -Last 1
+          & $godot --headless --editor --path . --import
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Shared-world conflict and determinism
+        shell: pwsh
+        run: ./TEST_ROOM_SCALE_CONFLICT.ps1 -RunCount 5
+      - name: Second room conflict
+        shell: pwsh
+        run: ./TEST_ROOM_SCALE_CONFLICT.ps1 -Room room_conflict_b
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: conflict-failure-evidence
+          path: verification/stabilization/runs/poc5
+          if-no-files-found: ignore

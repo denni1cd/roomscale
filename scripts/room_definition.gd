@@ -389,6 +389,7 @@ static func validate(definition: Dictionary) -> Array[String]:
 		_validate_room_shell(definition.get("room_shell", null), definition, errors)
 	elif definition.has("room_shell"):
 		errors.append("room_shell requires schema_version 2")
+	errors.append_array(_validate_conflict_anchors(definition))
 	return errors
 
 
@@ -640,6 +641,12 @@ static func validate_navigation(definition: Dictionary, floor_navigation: Node, 
 			var offset: Vector3 = position - region.center
 			var local := offset.rotated(Vector3.UP, -deg_to_rad(float(region.rotation_degrees)))
 			if not is_equal_approx(position.y, float(region.height)) or absf(local.x) > float(region.dimensions.x) * 0.5 or absf(local.z) > float(region.dimensions.y) * 0.5: errors.append("resource source %s extraction point must lie on its declared surface" % object.id)
+	for slot in definition.get("start_slots",[]):
+		var home := vector3_from(slot.home)
+		if floor_navigation.is_obstacle_position(home) or not floor_navigation.is_walkable(home): errors.append("start slot requires a legal home/rally point")
+		for site in definition.get("strategic_sites",[]):
+			var at := vector3_from(site.position)
+			if floor_navigation.is_obstacle_position(at) or floor_navigation.path_between(home,at).is_empty(): errors.append("strategic site must be physically reachable from every start slot")
 	return errors
 
 
@@ -699,3 +706,28 @@ static func _inside_floor(position_value: Variant, center: Array, room_size: Arr
 		return false
 	var position: Array = position_value
 	return absf(float(position[0]) - float(center[0])) <= float(room_size[0]) * 0.5 - margin and absf(float(position[2]) - float(center[2])) <= float(room_size[1]) * 0.5 - margin
+
+static func _validate_conflict_anchors(definition: Dictionary) -> Array[String]:
+	var errors: Array[String] = []
+	if definition.has("start_slots") or definition.has("strategic_sites"):
+		if not definition.get("floor") is Dictionary or not _number_vector(definition.floor.get("center"),3) or not _finite_number(definition.floor.get("height")) or not _positive_vector(definition.get("dimensions"),2): return ["conflict anchors require a valid floor"]
+	for field in ["start_slots","strategic_sites"]:
+		if not definition.has(field): continue
+		if not definition[field] is Array:
+			errors.append(field + " must be an array")
+			continue
+		var ids := {}
+		for record in definition[field]:
+			if not record is Dictionary or not record.get("id") is String or String(record.get("id","")).is_empty():
+				errors.append(field + " requires anchor IDs")
+				continue
+			if ids.has(record.id): errors.append(field + " duplicate ID")
+			ids[record.id] = true
+			var point: Variant = record.get("home" if field == "start_slots" else "position")
+			if not _number_vector(point,3): errors.append(field + " requires finite room coordinates")
+			elif not _inside_floor(point,definition.floor.center,definition.dimensions) or not is_equal_approx(float(point[1]),float(definition.floor.height)): errors.append(field + " anchor must lie on the room floor")
+			if field == "strategic_sites" and record.get("region_id") != "FLOOR": errors.append("POC5 strategic sites require stable FLOOR space")
+			if field == "start_slots":
+				if not _positive_number(record.get("population")) or float(record.population) != floorf(float(record.population)) or float(record.population) > 150: errors.append("start slot population must be an integer from 1 to 150")
+				if not record.get("spawn") is Dictionary or not _number_vector(record.spawn.get("center"),3) or not _number_vector(record.spawn.get("dimensions"),3): errors.append("start slot requires spawn center and dimensions")
+	return errors

@@ -69,7 +69,7 @@ func run() -> void:
 	check(not retry.select("shelter").valid and retry._failed_state == blocked_state and retry._trials == 0, "identical failure state did not reuse cache")
 	for id in bundle_ids:
 		var at: Vector3 = sim.resources.bundles[id].position
-		check(sim.resources.reserve_bundle(id, 0), "fixture bundle reservation")
+		check(sim.resources.reserve_bundle(id, 0, sim.instance_id), "fixture bundle reservation")
 		check(sim.resources.pickup_bundle(id, 0, at), "fixture bundle collection")
 		check(sim.resources.deliver_bundle(id, 0, sim.coordinator.depot_station, sim.coordinator.depot_station, sim.economy), "fixture bundle delivery")
 	var after_collection := physical_state(sim)

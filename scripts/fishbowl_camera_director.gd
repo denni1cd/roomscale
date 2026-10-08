@@ -133,7 +133,7 @@ func advance(delta: float) -> void:
 func title_is_current() -> bool:
 	if current_shot.has("citizen"):
 		return simulation.citizens[int(current_shot.citizen)].task_type == current_shot.get("activity_task", "")
-	if String(current_shot.get("key", "")).begins_with("development_"):
+	if String(current_shot.get("key", "")).contains("development_"):
 		return simulation.development.active.get("id", "") == current_shot.key
 	return true
 

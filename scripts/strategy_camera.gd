@@ -219,3 +219,8 @@ func _mode_name() -> String:
 
 func get_view_mode_name() -> String:
 	return _mode_name()
+
+func focus_detail_at(world_position: Vector3, desired_distance: float, desired_tilt: float = 52.0) -> void:
+	focus_at(world_position,desired_distance,desired_tilt)
+	distance = clampf(desired_distance,CITIZEN_MIN_DISTANCE,MAX_DISTANCE)
+	_apply_transform()

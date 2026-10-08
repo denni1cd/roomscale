@@ -83,6 +83,7 @@ func arrival_positions(sim: Node) -> Array[Vector3]:
 	for at in candidates:
 		if not nav.room_bounds().has_point(Vector2(at.x, at.z)) or not nav.is_walkable(at) or nav.is_obstacle_position(at): continue
 		if nav.path_between(at, sim.coordinator.depot_station).is_empty(): continue
+		if sim.world_simulation.runtimes.size() > 1 and sim.world_citizens().any(func(c: Node3D) -> bool: return c.global_position.distance_to(at) < 2.0): continue
 		if points.any(func(p: Vector3) -> bool: return p.distance_to(at) < 3.99): continue
 		points.append(at)
 		if points.size() == cohort_size: return points
@@ -119,32 +120,34 @@ func evaluate(sim: Node, state: Dictionary, emergency: bool, blocked: bool) -> v
 		return
 	# Ensure forecasts remain healthy immediately after the whole cohort joins.
 	for resource in ["food", "water"]:
-		if sim.economy.forecast(resource, sim.citizens.size() + cohort_size) < 2: return
-	var before: int = sim.citizens.size()
+		if sim.economy.forecast(resource, sim.living_population() + cohort_size) < 2: return
+	var before: int = sim.living_population()
 	var water_before: float = sim.economy.forecast("water", before)
 	var food_before: float = sim.economy.forecast("food", before)
 	var stable_seconds: float = sim.seconds - stable_since
 	for offset in range(cohort_size):
-		var id: int = sim.citizens.size()
+		var id: int = sim.world_simulation.allocate_citizen_id()
 		var citizen := Citizen.new()
 		citizen.needs = sim.needs.initial(id)
+		citizen.needs.sheltered = before + offset < sim.needs.shelter_capacity
 		sim.citizens.append(citizen)
 		sim.scene.add_child(citizen)
 		sim.coordinator._enqueue_for(id, 0)
 		citizen.initialize(id, positions[offset], sim.coordinator.navigation, sim.coordinator)
+		if not sim.world_simulation.citizens.has(citizen): sim.world_simulation.citizens.append(citizen)
 		citizen.set_process(false)
 	last_growth = sim.seconds
 	stable_since = sim.seconds
 	reason = "Cohort joined after sustained stability"
-	var cohort := {"seconds": sim.seconds, "before": before, "after": sim.citizens.size(), "food_days_before": state.food_days, "water_days_before": state.water_days, "shelter": state.shelter}
+	var cohort := {"seconds": sim.seconds, "before": before, "after": sim.living_population(), "food_days_before": state.food_days, "water_days_before": state.water_days, "shelter": state.shelter}
 	cohort.stable_seconds = stable_seconds
 	cohort.food_days_before = food_before
 	cohort.water_days_before = water_before
-	cohort.food_days_after = sim.economy.forecast("food", sim.citizens.size())
-	cohort.water_days_after = sim.economy.forecast("water", sim.citizens.size())
+	cohort.food_days_after = sim.economy.forecast("food", sim.living_population())
+	cohort.water_days_after = sim.economy.forecast("water", sim.living_population())
 	cohort.positions = positions.duplicate()
 	var centroid := Vector3.ZERO
 	for at in positions: centroid += at / cohort_size
 	cohort.centroid = centroid
 	cohorts.append(cohort)
-	sim.journal.record(sim.seconds, "cohort_joined", "New cohort joined: %d real citizens" % sim.citizens.size(), cohort, centroid, "cohort:%d" % cohorts.size())
+	sim.journal.record(sim.seconds, "cohort_joined", "New cohort joined: %d real citizens" % sim.living_population(), cohort, centroid, "cohort:%d" % cohorts.size())

@@ -1,0 +1,460 @@
+{
+  "schema_version": 1,
+  "id": "room_conflict",
+  "display_name": "Shared Frontier / Five Founders / Organic Civilization",
+  "dimensions": [
+    240,
+    180
+  ],
+  "floor": {
+    "center": [
+      0,
+      0,
+      0
+    ],
+    "dimensions": [
+      240,
+      180
+    ],
+    "height": 0
+  },
+  "wall_height": 72,
+  "target_surface_id": "STUDY_SURFACE",
+  "floor_color": "795b43",
+  "objects": [
+    {
+      "id": "desk",
+      "name": "Desk",
+      "kind": "table",
+      "position": [
+        -58,
+        0,
+        -52
+      ],
+      "dimensions": [
+        68,
+        30,
+        34
+      ],
+      "blocks_navigation": true,
+      "navigation_padding": [
+        8,
+        0,
+        7
+      ],
+      "color": "81593e",
+      "surface": {
+        "region_id": "STUDY_SURFACE",
+        "height": 30,
+        "anchor": [
+          -58,
+          30,
+          -52
+        ]
+      }
+    },
+    {
+      "id": "chair",
+      "name": "Chair",
+      "kind": "chair",
+      "position": [
+        -58,
+        0,
+        -20
+      ],
+      "dimensions": [
+        25,
+        19,
+        23
+      ],
+      "blocks_navigation": true,
+      "navigation_padding": [
+        3,
+        0,
+        3
+      ],
+      "color": "546d68"
+    },
+    {
+      "id": "bookcase",
+      "name": "Bookcase",
+      "kind": "bookcase",
+      "position": [
+        91,
+        0,
+        -63
+      ],
+      "dimensions": [
+        32,
+        63,
+        17
+      ],
+      "blocks_navigation": true,
+      "navigation_padding": [
+        3,
+        0,
+        2
+      ],
+      "color": "74503a"
+    },
+    {
+      "id": "rug",
+      "name": "Rug",
+      "kind": "rug",
+      "position": [
+        50,
+        0,
+        -22
+      ],
+      "dimensions": [
+        92,
+        0.12,
+        68
+      ],
+      "blocks_navigation": false,
+      "color": "a66e4e"
+    },
+    {
+      "id": "side_table",
+      "name": "Side Table",
+      "kind": "table",
+      "position": [
+        44,
+        0,
+        -15
+      ],
+      "dimensions": [
+        20,
+        20,
+        17
+      ],
+      "blocks_navigation": true,
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "color": "80583d"
+    },
+    {
+      "id": "storage_box",
+      "name": "Storage Box",
+      "kind": "box",
+      "position": [
+        75,
+        0,
+        43
+      ],
+      "dimensions": [
+        17,
+        15,
+        14
+      ],
+      "blocks_navigation": true,
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "color": "a98254"
+    },
+    {
+      "id": "waste_bin",
+      "name": "Waste Bin",
+      "kind": "cylinder",
+      "position": [
+        -99,
+        0,
+        12
+      ],
+      "dimensions": [
+        16,
+        14,
+        16
+      ],
+      "blocks_navigation": true,
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "color": "637674"
+    },
+    {
+      "id": "plant",
+      "name": "Room Plant",
+      "kind": "plant",
+      "position": [
+        -91,
+        0,
+        -46
+      ],
+      "dimensions": [
+        13,
+        42,
+        12
+      ],
+      "blocks_navigation": true,
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "color": "789166"
+    },
+    {
+      "kind": "water_container",
+      "id": "water_cup",
+      "position": [
+        -58,
+        30,
+        -50
+      ],
+      "resource_profile": {
+        "work_seconds": 2,
+        "contents": {
+          "water": 60000
+        },
+        "region_id": "STUDY_SURFACE"
+      },
+      "dimensions": [
+        3,
+        5,
+        3
+      ],
+      "blocks_navigation": false,
+      "color": "6ea6b8",
+      "name": "Water Container"
+    },
+    {
+      "kind": "food_cache",
+      "id": "food_cache",
+      "position": [
+        -44,
+        0,
+        20
+      ],
+      "resource_profile": {
+        "contents": {
+          "food": 40000
+        },
+        "work_seconds": 2
+      },
+      "dimensions": [
+        2,
+        1,
+        2
+      ],
+      "blocks_navigation": false,
+      "color": "d0a864",
+      "name": "Food Cache"
+    },
+    {
+      "id": "packing_crate",
+      "name": "Packing Crate",
+      "kind": "box",
+      "position": [
+        101,
+        0,
+        9
+      ],
+      "dimensions": [
+        20,
+        20,
+        20
+      ],
+      "blocks_navigation": true,
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "color": "92754e"
+    },
+    {
+      "id": "spare_crate",
+      "name": "Spare Crate",
+      "kind": "box",
+      "position": [
+        103,
+        0,
+        62
+      ],
+      "dimensions": [
+        20,
+        20,
+        20
+      ],
+      "blocks_navigation": true,
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "color": "88704f"
+    },
+    {
+      "id": "spilled_water",
+      "name": "Spilled Water",
+      "kind": "water_container",
+      "position": [
+        -24,
+        0,
+        20
+      ],
+      "dimensions": [
+        3,
+        0.15,
+        3
+      ],
+      "blocks_navigation": false,
+      "color": "6ea6b8",
+      "resource_profile": {
+        "contents": {
+          "water": 600
+        },
+        "work_seconds": 2
+      }
+    }
+  ],
+  "spawn": {
+    "center": [
+      -26,
+      0,
+      58
+    ],
+    "dimensions": [
+      28,
+      0,
+      12
+    ]
+  },
+  "camera": {
+    "focus": [
+      0,
+      0,
+      0
+    ],
+    "fill_position": [
+      5,
+      68,
+      24
+    ],
+    "lantern_position": [
+      -25,
+      10,
+      60
+    ]
+  },
+  "civilization": {
+    "shelter_capacity": 0,
+    "rest_capacity": 0,
+    "economy_construction": true,
+    "initial_speed": 1,
+    "cohort_size": 1,
+    "stock": {
+      "food": 20,
+      "water": 30,
+      "wood": 0,
+      "metal": 0
+    }
+  },
+  "start": {
+    "origin": [
+      -26,
+      0,
+      58
+    ],
+    "population": 12,
+    "infrastructure": []
+  },
+  "construction": {
+    "depot_pickup": [
+      -26,
+      0,
+      58
+    ]
+  },
+  "activity_stations": {
+    "workshop": [
+      [
+        -26,
+        0,
+        58
+      ]
+    ],
+    "housing": [
+      -26,
+      0,
+      58
+    ],
+    "work_area": [
+      -26,
+      0,
+      58
+    ],
+    "patrol": [
+      [
+        -26,
+        0,
+        58
+      ]
+    ]
+  },
+  "start_slots": [
+    {
+      "id": "frontier_1",
+      "home": [
+        -26,
+        0,
+        58
+      ],
+      "spawn": {
+        "center": [
+          -26,
+          0,
+          58
+        ],
+        "dimensions": [
+          28,
+          0,
+          12
+        ]
+      },
+      "population": 12
+    },
+    {
+      "id": "frontier_2",
+      "home": [
+        42,
+        0,
+        58
+      ],
+      "spawn": {
+        "center": [
+          42,
+          0,
+          58
+        ],
+        "dimensions": [
+          28,
+          0,
+          12
+        ]
+      },
+      "population": 12
+    }
+  ],
+  "strategic_sites": [
+    {
+      "id": "frontier_cache",
+      "region_id": "FLOOR",
+      "position": [
+        -2,
+        0,
+        22
+      ],
+      "display_name": "Frontier supply approach"
+    }
+  ]
+}

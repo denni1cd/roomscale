@@ -3,7 +3,7 @@
 RoomScale is a 3D civilization simulation in which half-inch citizens treat a human
 room as a landscape. Authored RoomDefinition JSON supplies furniture, finite resources,
 spawn geometry and elevated surfaces. Citizens physically salvage, haul, build, rest,
-climb and explore. One selected civilization operates in one room.
+climb and explore. Single-civilization launches remain available. The POC 5 conflict launch runs Clockwork and Verdant in one shared finite room.
 
 The accepted production baseline is **POC 4.7.2**, completed at
 `efa5950e4a03a318bf030eb0217e6cb184714053`. Stabilization includes that verified
@@ -20,8 +20,8 @@ and labor. Completed workshop capability gates advanced traversal. Growth adds o
 citizen at a time after shelter, reserves, stability and cooldown checks.
 
 Resources never replenish. Exhaustion can legitimately pause growth or leave a colony
-in crisis. There is no mortality, farming, combat, diplomacy, simultaneous competing
-civilizations, save/load or multiplayer. Existing established-colony and manual room
+in crisis. Combat mortality, retreat and strategic-site capture are available in POC 5. There is no
+natural mortality, farming, diplomacy, save/load or multiplayer. Existing established-colony and manual room
 scenarios remain regression coverage. Photo reconstruction behavior and visual features
 remain room-data driven.
 
@@ -50,7 +50,8 @@ Two civilizations are currently selectable:
 
 Clockwork and Verdant intentionally share the same underlying pacing and gameplay
 capabilities at this stage. Civilization choice is not yet a difficulty or balance choice.
-Only one civilization inhabits a run; coexistence, diplomacy and competition are future work.
+The conflict scenario runs two instance-owned societies. Combat stats are identical;
+this milestone does not claim asymmetric balance or diplomacy.
 
 Definitions live in `civilizations/`. Clockwork remains the default when no explicit
 civilization is supplied.
@@ -87,6 +88,26 @@ its work. Keys 1/2/3 select room/settlement/citizen views. WASD/arrows pan, righ
 orbits, middle drag pans, wheel zooms and Q/E change height. In manual mode select an
 elevated surface and choose Reach/Explore; POC4 also exposes priorities, Secure Water
 and explicit salvage authorization. F12 saves a local capture under `verification/`.
+
+## POC 5 shared-world conflict
+
+```powershell
+./RUN_ROOM_SCALE_CONFLICT.ps1
+./RUN_ROOM_SCALE_CONFLICT.ps1 -ManualCamera
+./RUN_ROOM_SCALE_CONFLICT.ps1 -Room room_conflict_b
+./TEST_ROOM_SCALE_CONFLICT.ps1
+./TEST_ROOM_SCALE_CONFLICT.ps1 -RunCount 5
+./TEST_ROOM_SCALE_CONFLICT.ps1 -Room room_conflict_b
+./TEST_ROOM_SCALE_CONFLICT.ps1 -CaptureVisuals
+```
+
+Two twelve-citizen founder societies gather from the same finite sources and earn
+settlements. After peaceful work, real scouts discover the shared supply approach.
+Competing claims produce contact and hostility; each governor commits three ordinary
+citizens. They physically march, exchange deterministic ranged attacks, suffer a real
+casualty, retreat on morale, hold the objective for ten seconds, then resume work.
+Pause/1x/4x/10x remain available. Default camera follows conflict phases; manual mode
+retains the usual camera controls. See [POC 5 architecture and limits](docs/POC5.md).
 
 ## Development and quality gates
 

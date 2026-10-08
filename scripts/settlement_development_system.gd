@@ -79,10 +79,10 @@ func carrying_capacity(population: int) -> bool:
 
 func center() -> Vector3:
 	if sim.founder_mode:
-		var at: Array = sim.scene.get("_room_definition").start.origin
+		var at: Array = sim.room_definition.start.origin
 		return Vector3(float(at[0]), float(at[1]), float(at[2]))
 	var result := Vector3.ZERO
-	var landmarks: Dictionary = sim.scene.get("_room_definition").landmarks
+	var landmarks: Dictionary = sim.room_definition.landmarks
 	for at in landmarks.values(): result += Vector3(float(at[0]), float(at[1]), float(at[2]))
 	return result / landmarks.size()
 
@@ -120,7 +120,7 @@ func valid_site(site: Vector3, work_target: Vector3 = Vector3.INF) -> bool:
 	if not candidate.is_walkable(target) or candidate.is_obstacle_position(target): valid = false
 	for anchor in anchors:
 		if candidate.path_between(sim.coordinator.depot_station, anchor).is_empty(): valid = false
-	for citizen in sim.citizens:
+	for citizen in sim.world_citizens():
 		if citizen.global_position.y < site.y + 2 and footprint.has_point(Vector2(citizen.global_position.x, citizen.global_position.z)): valid = false
 	if candidate.path_between(sim.coordinator.depot_station, target).is_empty(): valid = false
 	candidate.free()
@@ -156,7 +156,7 @@ func request(kind: String) -> bool:
 		sim.journal.record(sim.seconds, "growth_paused", site_reason, sim.status())
 		return false
 	var blueprint: Dictionary = BLUEPRINTS[kind]
-	var id := "development_%03d" % (projects.size() + 1)
+	var id := "%s_development_%03d" % [sim.instance_id, projects.size() + 1]
 	active = {"id": id, "kind": kind, "site": selected.position, "target": selected.get("target", selected.position + Vector3(0, 0, SIZE.z / 2 + 4)), "required": {"wood": blueprint.wood, "metal": blueprint.metal}, "delivered": {"wood": 0.0, "metal": 0.0}, "work": 0.0, "required_work": float(blueprint.work) * (0.85 if workshop_count > 0 else 1.0), "state": "PLANNED", "stage": "FOUNDATION", "effect_applied": false, "created": sim.seconds, "completed": -1.0, "work_by_citizen": {}, "delivery_distance": 0.0}
 	projects.append(active)
 	render(active)
@@ -222,7 +222,7 @@ func work(task: Dictionary, citizen: Node3D, effort: float) -> bool:
 		render(active)
 	if fraction < 1: return false
 	# Citizens are never displaced to make room for a completed footprint.
-	for worker in sim.citizens:
+	for worker in sim.world_citizens():
 		if worker.global_position.y < active.site.y + 2 and absf(worker.global_position.x - active.site.x) < SIZE.x / 2 + 0.5 and absf(worker.global_position.z - active.site.z) < SIZE.z / 2 + 0.5: return false
 	if sim.founder_mode and not site_planner.can_complete(active): return false
 	active.state = "COMPLETE"
@@ -234,7 +234,7 @@ func work(task: Dictionary, citizen: Node3D, effort: float) -> bool:
 	sim.coordinator.navigation.room_definition.objects.append(obstacle(active.site, active.id))
 	sim.coordinator.navigation.refresh_navigation()
 	# All existing routes must adapt to the new physical footprint.
-	for worker in sim.citizens:
+	for worker in sim.world_citizens():
 		if worker.state in ["TRAVEL", "CARRY"]: worker.replan_current_route()
 	render(active)
 	sim.journal.record(sim.seconds, "structure_complete", active.kind.capitalize() + " complete: " + String(active.id), active, active.site, String(active.id) + ":complete")
@@ -248,7 +248,10 @@ func apply_effect(project: Dictionary) -> void:
 		sim.needs.shelter_capacity += int(BLUEPRINTS[project.kind].shelter)
 		sim.needs.rest_capacity += 5 if project.kind == "shelter" else 2
 		if sim.founder_mode and project.kind == "shelter": sim.coordinator.housing_station = project.target
-		for citizen in sim.citizens: citizen.needs.sheltered = citizen.citizen_id < sim.needs.shelter_capacity
+		var housed := 0
+		for citizen in sim.citizens:
+			citizen.needs.sheltered = citizen.life_state == "ALIVE" and housed < sim.needs.shelter_capacity
+			if citizen.life_state == "ALIVE": housed += 1
 		sim.journal.record(sim.seconds, "shelter_increased", "Shelter capacity increased to %d" % sim.needs.shelter_capacity, {"project": project.id, "shelter": sim.needs.shelter_capacity}, project.site, String(project.id) + ":shelter")
 	elif project.kind == "workshop":
 		workshop_count = mini(workshop_count + 1, 1)
@@ -261,6 +264,7 @@ func render(project: Dictionary) -> void:
 	root.name = id
 	sim.scene.add_child(root)
 	root.position = project.site
+	root.set_meta("civilization_id", sim.instance_id)
 	root.set_meta("module", project.kind)
 	root.set_meta("stage", project.stage)
 	visuals[id] = root

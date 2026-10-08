@@ -66,6 +66,15 @@ func _prepare(rebuild_positions: bool = true) -> void:
 			if support: continue
 		var at: Vector3 = sim.salvage_targets[id]
 		if at.is_finite() and not nav.is_obstacle_position(at) and not nav.path_between(sim.coordinator.depot_station, at).is_empty(): _anchors.append(at)
+	if sim.world_simulation != null and sim.world_simulation.runtimes.size() > 1:
+		for runtime in sim.world_simulation.runtimes:
+			if runtime == sim: continue
+			_anchors.append(runtime.coordinator.depot_station)
+			_anchors.append(runtime.coordinator.housing_station)
+			_anchors.append(runtime.coordinator.work_area_station)
+			_anchors.append_array(runtime.development.site_planner.rest_targets)
+			for project in runtime.development.projects: _anchors.append(project.target)
+		for site in sim.world_simulation.territory.sites.values(): _anchors.append(site.position)
 	var traversal: Vector3 = sim.coordinator.get_construction_site()
 	if traversal.is_finite() and not nav.is_obstacle_position(traversal): _anchors.append(traversal)
 	for approach in sim.coordinator.surface_navigation.investigation_candidates():
@@ -117,6 +126,13 @@ func _cheap_reason(site: Vector3, chosen: Array[Dictionary]) -> String:
 	for object in nav.room_definition.objects:
 		if object.kind == "rug" or float(object.position[1]) > site.y + 2: continue
 		if rect.intersects(_occupied(object)): return "room/completed geometry"
+	if sim.world_simulation != null:
+		for runtime in sim.world_simulation.runtimes:
+			if runtime == sim: continue
+			for project in runtime.development.projects:
+				if rect.intersects(apron(project.site)): return "other society project apron"
+			for item in runtime.development.site_planner.reservations:
+				if rect.intersects(apron(item.position)): return "other society future reservation"
 	for project in sim.development.projects:
 		if rect.intersects(apron(project.site)): return "existing project apron"
 	for item in chosen:
@@ -145,7 +161,7 @@ func _trial(chosen: Array[Dictionary], rest_count: int) -> Dictionary:
 			reason = "mandatory connectivity/work access"
 			break
 	if reason.is_empty():
-		for citizen in sim.citizens:
+		for citizen in sim.world_citizens():
 			var at: Vector3 = citizen.global_position
 			if at.y > nav._floor_height + 0.1: continue
 			# Occupancy is checked for the immediate build at acceptance; future
@@ -273,7 +289,7 @@ func select(kind: String) -> Dictionary:
 		# Search also depends on transient access anchors and citizen connectivity.
 		# A collected bundle or changed rest requirement must permit a fresh retry.
 		var citizens: Array[Vector3] = []
-		for citizen in sim.citizens: citizens.append(citizen.global_position)
+		for citizen in sim.world_citizens(): citizens.append(citizen.global_position)
 		var planning_state := JSON.stringify([sim.coordinator.navigation.room_definition, kind, sim.needs.rest_capacity, _anchors, sim.development.projects, sim.construction.project_created, sim.construction.site_position, citizens]).sha256_text()
 		if planning_state == _failed_state: return {"valid": false}
 		_prepare()
@@ -293,9 +309,9 @@ func select(kind: String) -> Dictionary:
 			break
 	if selected.is_empty(): return {"valid": false}
 	var rect := apron(selected.position)
-	for citizen in sim.citizens:
+	for citizen in sim.world_citizens():
 		if citizen.global_position.y < selected.position.y + 2 and rect.has_point(Vector2(citizen.global_position.x, citizen.global_position.z)): return {"valid": false}
-	for citizen in sim.citizens:
+	for citizen in sim.world_citizens():
 		if citizen.state in ["TRAVEL", "CARRY", "WORK"] and citizen._destination.y < selected.position.y + 2 and rect.has_point(Vector2(citizen._destination.x, citizen._destination.z)): return {"valid": false}
 	# A cached reservation is checked against the current world and active endpoints.
 	_prepare(false)
@@ -316,7 +332,7 @@ func can_complete(project: Dictionary) -> bool:
 	## Occupants and active targets may change between acceptance and completion.
 	_prepare(false)
 	var rect := apron(project.site)
-	for citizen in sim.citizens:
+	for citizen in sim.world_citizens():
 		if citizen.state in ["TRAVEL", "CARRY", "WORK"] and citizen._destination.y < project.site.y + 2 and rect.has_point(Vector2(citizen._destination.x, citizen._destination.z)):
 			# The project's own exterior work target is legal within its apron.
 			if not citizen._destination.is_equal_approx(project.target): return false

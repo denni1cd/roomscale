@@ -36,6 +36,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	if OS.get_environment("ROOMSCALE_CONFLICT") == "1": return
 	_magic_clock += delta
 	if definition.is_empty():
 		return

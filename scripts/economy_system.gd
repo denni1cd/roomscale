@@ -2,6 +2,7 @@ extends RefCounted
 ## Exclusive inventory states and bounded transaction records. No stock at pickup twice.
 
 const RESOURCES := ["food", "water", "wood", "metal"]
+var instance_id := "legacy"
 var available: Dictionary = {}
 var initial: Dictionary = {}
 var received: Dictionary = {}
@@ -26,7 +27,7 @@ func reserve(resource: String, amount: float, owner: String) -> int:
 	available[resource] -= amount
 	var id := _next_ticket
 	_next_ticket += 1
-	tickets[id] = {"resource": resource, "amount": amount, "owner": owner, "state": "reserved"}
+	tickets[id] = {"resource": resource, "amount": amount, "owner": owner, "instance_id": instance_id, "state": "reserved"}
 	return id
 
 func pickup(id: int) -> bool:
