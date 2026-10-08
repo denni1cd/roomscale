@@ -17,6 +17,9 @@ var scene: Node3D
 var journal := preload("res://scripts/event_journal.gd").new()
 var territory := preload("res://scripts/territory_system.gd").new()
 var combat := preload("res://scripts/combat_system.gd").new()
+var conflict_pressure := preload("res://scripts/conflict_pressure_system.gd").new()
+var conflict_state: Dictionary = {}
+var next_pressure_evaluation := 0.0
 var scenario: Dictionary = {}
 var scouts: Dictionary = {}
 var first_contact_tick := -1
@@ -98,7 +101,7 @@ func enable_conflict(config: Dictionary) -> void:
 	for index in range(4):
 		var button := Button.new()
 		button.text = ["Pause","1x","4x","10x"][index]
-		button.position = Vector2(20 + index * 72,92)
+		button.position = Vector2(20 + index * 72,110)
 		var rate: float = [0.0,1.0,4.0,10.0][index]
 		button.pressed.connect(func() -> void: runtimes[0].speed = rate)
 		scene.get_node("Overlay").add_child(button)
@@ -123,9 +126,33 @@ func advance_conflict() -> void:
 		var scout: Node3D = scouts[id]
 		if scout.task_type == "STRATEGIC_SCOUT" and scout.state == "WORK" and scout.global_position.distance_to(at) < 1.6:
 			territory.claim(site_id,id,seconds)
-	if territory.sites[site_id].claim_state == "CONTESTED" and combat.phase == "DORMANT":
-		if first_contact_tick < 0: first_contact_tick = tick
-		if combat.start(self,site_id):
+	if territory.sites[site_id].claim_state != "CONTESTED": return
+	if first_contact_tick < 0: first_contact_tick = tick
+	if seconds + 0.000001 < next_pressure_evaluation: return
+	next_pressure_evaluation = seconds + 1.0
+	var previous_intensity := int(conflict_state.get("intensity", -1))
+	var previous_cause := String(conflict_state.get("cause", ""))
+	conflict_state = conflict_pressure.evaluate(self, site_id)
+	var intensity := int(conflict_state.intensity)
+	var cause := String(conflict_state.cause)
+	if intensity != previous_intensity or cause != previous_cause:
+		journal.record(seconds,"CONFLICT_PRESSURE_CHANGED","Conflict pressure is %s because of %s" % [conflict_state.intensity_name,cause],conflict_state,at,site_id + ":pressure:" + String(conflict_state.intensity_name) + ":" + cause)
+	var participants: Array = territory.sites[site_id].contesting_civilizations
+	if participants.size() < 2: return
+	var a := String(participants[0])
+	var b := String(participants[1])
+	if intensity < conflict_pressure.LIMITED_WAR:
+		territory.set_relation(a,b,"COMPETITION" if intensity == conflict_pressure.COMPETITION else "CONTACT",seconds,site_id,conflict_state)
+		if combat.phase in ["MARCH","FIGHT"]: combat.stand_down("scarcity pressure resolved")
+		return
+	territory.set_relation(a,b,"HOSTILE",seconds,site_id,conflict_state)
+	if combat.phase == "DORMANT":
+		var war_policy: Dictionary = conflict_state.policy.duplicate(true)
+		war_policy["intensity_name"] = conflict_state.intensity_name
+		war_policy["cause"] = conflict_state.cause
+		war_policy["resource"] = conflict_state.resource
+		war_policy["objective"] = conflict_state.objective
+		if combat.start(self,site_id,war_policy):
 			for id in scouts:
 				var scout: Node3D = scouts[id]
 				if scout.combat_duty.is_empty():
@@ -199,4 +226,7 @@ func _process(delta: float) -> void:
 	objective_marker.get_node("OrganicControl").visible = owner_organic
 	objective_marker.get_node("ObjectiveLabel").visible = scene.get_node("CameraRig").distance >= 40
 	objective_marker.get_node("ControlMarker").material_override.albedo_color = control_color
-	status_label.text = "CLOCKWORK %d  /  VERDANT %d     %s · %s\n%s" % [runtimes[0].living_population(),runtimes[1].living_population(),site.claim_state,combat.phase,"Shared finite world · autonomous societies" if combat.winner.is_empty() else (combat.winner + " controls the frontier; " + combat.retreating_side + " survives" if site.claim_state == "CONTROLLED" else combat.retreating_side + " retreats to home; securing site")]
+	var pressure_text := "No conflict pressure yet"
+	if not conflict_state.is_empty():
+		pressure_text = "%s %.0f%% · %s%s" % [String(conflict_state.intensity_name),float(conflict_state.score) * 100.0,String(conflict_state.cause),(" / " + String(conflict_state.resource)) if not String(conflict_state.resource).is_empty() else ""]
+	status_label.text = "CLOCKWORK %d  /  VERDANT %d     %s · %s\n%s\n%s" % [runtimes[0].living_population(),runtimes[1].living_population(),site.claim_state,combat.phase,pressure_text,"Shared finite world · autonomous societies" if combat.winner.is_empty() else (combat.winner + " controls the frontier; " + combat.retreating_side + " survives" if site.claim_state == "CONTROLLED" else combat.retreating_side + " retreats to home; securing site")]
