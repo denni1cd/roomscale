@@ -119,3 +119,33 @@ screenshots remain ignored unless deliberately reviewed for publication. Histori
 receipt hashes describe their historical source, not the cleanup source. Final cleanup
 receipts record the frozen tested SHA and normalized production/harness hashes. If any
 executable source changes after verification, invalidate that freeze and rerun its gates.
+
+## POC 5 conflict
+
+`TEST_ROOM_SCALE_CONFLICT.ps1` instantiates the real production scene, disables only the
+engine wrappers and advances the same world fixed tick. No stock, stages, links, health,
+casualties or movement are granted by the observer. The negative delivery probe attempts
+to deliver an already physically carried bundle to a foreign economy; rejection must
+leave the ledger unchanged. A peaceful 100-second checkpoint verifies both governors,
+real hauling, separate ledgers/rosters/boards and shared resource/salvage/navigation references.
+Every tick audits inventories, finite sources, source reservation owners, live task ownership,
+dead-node immobility and movement speed. Final checks require contact, hostility, contest,
+both arrivals, real attacks/health loss/death, morale, physical retreat, ten-second capture,
+both societies alive and each surviving combatant completing ordinary work afterward.
+
+```powershell
+./TEST_ROOM_SCALE_CONFLICT.ps1
+./TEST_ROOM_SCALE_CONFLICT.ps1 -RunCount 5
+./TEST_ROOM_SCALE_CONFLICT.ps1 -Room room_conflict_b
+./TEST_ROOM_SCALE_CONFLICT.ps1 -CaptureVisuals
+```
+
+Runs reject stale/missing JSON, nonzero exit, timeouts and any engine/script error.
+Repeatability compares contact/commit/capture ticks, force sizes, casualties, winner,
+retreat, attacks, morale, returns and living population without relaxing ordering.
+Graphical mode uses a real renderer, steps the same production clock and pauses stepping
+only to frame captures. Camera changes and cosmetic flash lifetimes have no damage authority.
+CI runs the five canonical repeats and second-room gate alongside existing Fast,
+civilization contracts and the unchanged four single-civilization smokes. Long soaks
+remain explicit. Curated evidence and reports live under `verification/poc5/`; raw logs
+and rejected framing iterations remain ignored.

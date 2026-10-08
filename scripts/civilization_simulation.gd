@@ -23,8 +23,8 @@ const STEP := 0.1
 var needs := Needs.new()
 var economy := Economy.new()
 var planner := Planner.new()
-var resources := Resources.new()
-var salvage := Salvage.new()
+var resources: Resources
+var salvage: Salvage
 var bundle_visuals: Dictionary = {}
 var salvage_targets: Dictionary = {}
 var haul_pickups := 0
@@ -38,14 +38,24 @@ var construction: Node
 var citizens: Array = []
 var seconds := 0.0
 var speed := 1.0
-var _accumulator := 0.0
 var self_care_completed := {}
 var hud: Control
 var spectator: Control
 var founder_mode := false
+# Instance identity is separate from the selected presentation definition.
+var world_simulation: Node
+var room_definition: Dictionary = {}
+var instance_id := ""
+var definition_id := ""
+var definition: Dictionary = {}
+
+func citizen_for(id: int) -> Node3D:
+	for citizen in citizens:
+		if citizen.citizen_id == id: return citizen
+	return null
 
 func has_capability(capability: String) -> bool:
-	var initial: Array = scene.get("_room_definition").get("start", {}).get("infrastructure", ["workshop", "depot", "housing", "work_area"])
+	var initial: Array = room_definition.get("start", {}).get("infrastructure", ["workshop", "depot", "housing", "work_area"])
 	match capability:
 		"shelter": return "housing" in initial or development.count("shelter") + development.count("housing") > 0
 		"storage": return "depot" in initial or development.count("depot") > 0
@@ -54,17 +64,35 @@ func has_capability(capability: String) -> bool:
 
 func configure(world: Node3D, config: Dictionary) -> void:
 	scene = world
-	coordinator = scene.get_node("TaskCoordinator")
-	construction = scene.get_node("ConstructionSystem")
-	citizens = scene.get("_citizens")
-	founder_mode = scene.get("_room_definition").has("start") and scene.get("_room_definition").start.infrastructure.is_empty()
+	world_simulation = scene.get_node_or_null("WorldSimulation")
+	if world_simulation == null:
+		world_simulation = preload("res://scripts/world_simulation.gd").new()
+		world_simulation.name = "WorldSimulation"
+		scene.add_child(world_simulation)
+		world_simulation.configure(scene)
+	world_simulation.runtimes.append(self)
+	resources = world_simulation.resources
+	salvage = world_simulation.salvage
+	bundle_visuals = world_simulation.bundle_visuals
+	room_definition = config.get("room_definition", scene.get("_room_definition"))
+	definition = config.get("definition", preload("res://scripts/civilization_definition.gd").load_requested().definition)
+	definition_id = String(definition.id)
+	instance_id = String(config.get("instance_id", definition_id + "_alpha"))
+	coordinator = config.get("coordinator", scene.get_node("TaskCoordinator"))
+	construction = config.get("construction", scene.get_node("ConstructionSystem"))
+	citizens = config.get("citizens", scene.get("_citizens"))
+	founder_mode = room_definition.has("start") and room_definition.start.infrastructure.is_empty()
 	needs.shelter_capacity = int(config.get("shelter_capacity", 50))
 	needs.rest_capacity = mini(needs.shelter_capacity, int(config.get("rest_capacity", 12)))
 	economy.configure(config.get("stock", {"food": 5000, "water": 5000, "wood": 0, "metal": 0}))
 	if bool(config.get("economy_construction", false)): construction.economy = economy
 	if founder_mode: construction.stockpile = {"wood":0,"metal":0,"mechanical_parts":0}
 	coordinator.civilization = self
-	governor.enabled = OS.get_environment("ROOMSCALE_FISHBOWL") == "1"
+	coordinator.instance_id = instance_id
+	economy.instance_id = instance_id
+	for task in coordinator.tasks: task.instance_id = instance_id
+	for citizen in citizens: citizen.civilization_id = instance_id
+	governor.enabled = bool(config.get("autonomous", OS.get_environment("ROOMSCALE_FISHBOWL") == "1"))
 	speed = float(config.get("initial_speed", 10.0 if governor.enabled else 1.0))
 	if governor.enabled:
 		governor.mode = "OBSERVING"
@@ -74,9 +102,7 @@ func configure(world: Node3D, config: Dictionary) -> void:
 	population = Population.new()
 	population.cohort_size = int(config.get("cohort_size", 5))
 	if founder_mode:
-		journal.record(0, "founders_arrived", "Founders arrived", {"population": citizens.size()}, coordinator.depot_station, "founders")
-	resources.configure(scene.get("_room_definition"))
-	salvage.configure(resources.objects)
+		journal.record(0, "founders_arrived", "Founders arrived", {"population": living_population()}, coordinator.depot_station, "founders")
 	for object_id in salvage.objects:
 		var object: Dictionary = resources.objects[object_id].data
 		var at: Array = object.position
@@ -88,6 +114,7 @@ func configure(world: Node3D, config: Dictionary) -> void:
 	for citizen in citizens:
 		citizen.needs = needs.initial(citizen.citizen_id)
 		citizen.set_process(false)
+	if not bool(config.get("presentation", true)): return
 	hud = HUD.new()
 	scene.get_node("Overlay").add_child(hud)
 	hud.configure(self)
@@ -101,7 +128,7 @@ func configure(world: Node3D, config: Dictionary) -> void:
 		spectator = preload("res://scripts/fishbowl_hud.gd").new()
 		scene.get_node("Overlay").add_child(spectator)
 		spectator.configure(self)
-		print("ROOMSCALE_FISHBOWL_READY governor=true population=%d camera=%s room=%s speed=%s" % [citizens.size(), camera_director.enabled, scene.get("_room_definition").id, speed])
+		print("ROOMSCALE_FISHBOWL_READY governor=true population=%d camera=%s room=%s speed=%s" % [living_population(), camera_director.enabled, room_definition.id, speed])
 	print("ROOMSCALE_CIVILIZATION_READY speed=%s governor=%s spectator=%s" % [speed, governor.enabled, spectator != null])
 	scene.get_node("Overlay/PresentationPanel").hide()
 	scene.get_node("Overlay/PresentationStatus").hide()
@@ -113,27 +140,28 @@ func advance_elapsed_time(delta: float) -> void:
 	advance(delta * speed)
 
 func advance(delta: float) -> void:
-	_accumulator += delta
-	while _accumulator + 0.000001 >= STEP:
-		_accumulator -= STEP
-		step()
+	world_simulation.advance(delta)
 
 func step() -> void:
-	seconds += STEP
+	world_simulation.step()
+
+func step_society() -> void:
 	governor.tick(self)
 	_planner_timer += STEP
 	if _planner_timer >= 1:
 		_planner_timer = 0
 		plan()
 	for citizen in citizens:
+		if citizen.life_state == "DEAD": continue
 		needs.decay(citizen.needs, STEP, citizen.task_type == "NEED_REST" and citizen.state == "WORK")
 		citizen.advance_simulation(STEP)
 	construction.advance_simulation(STEP)
 
 func claim(citizen: Node3D) -> Dictionary:
+	if citizen.life_state != "ALIVE" or citizen.civilization_id != instance_id or not citizen.combat_duty.is_empty(): return {}
 	var ordinary_score := -INF
 	for task in coordinator.tasks:
-		if task.state == "available": ordinary_score = maxf(ordinary_score, planner.score(String(task.task_type), 0, citizen.global_position.distance_to(task.target)))
+		if task.state == "available" and task.instance_id == instance_id: ordinary_score = maxf(ordinary_score, planner.score(String(task.task_type), 0, citizen.global_position.distance_to(task.target)))
 	var urgent := "water" if float(citizen.needs.water) >= float(citizen.needs.food) else "food"
 	var care_kind := "NEED_DRINK" if urgent == "water" else "NEED_EAT"
 	if float(citizen.needs[urgent]) >= 0.6 and planner.score(care_kind, float(citizen.needs[urgent]), citizen.global_position.distance_to(coordinator.depot_station)) > ordinary_score:
@@ -157,12 +185,12 @@ func claim(citizen: Node3D) -> Dictionary:
 			best_score = value
 			best = option
 	if not best.is_empty():
-		if best.task_type == "BUNDLE_HAUL" and not resources.reserve_bundle(int(best.bundle_id), citizen.citizen_id): return {}
+		if best.task_type == "BUNDLE_HAUL" and not resources.reserve_bundle(int(best.bundle_id), citizen.citizen_id, instance_id): return {}
 		if best.task_type == "CONSTRUCTION_DELIVERY":
 			var ticket := economy.reserve(String(best.resource), float(best.amount), String(best.get("project_id", "traversal")))
 			if ticket < 0: return {}
 			best.ticket = ticket
-		if best.task_type == "RESOURCE_COLLECT" and not resources.reserve_source(String(best.source_id), String(best.resource), float(best.amount)): return {}
+		if best.task_type == "RESOURCE_COLLECT" and not resources.reserve_source(String(best.source_id), String(best.resource), float(best.amount), instance_id): return {}
 		planner.record(String(best.task_type))
 		return coordinator.create_construction_task(best, citizen.citizen_id)
 	return {}
@@ -182,7 +210,7 @@ func work_options(citizen: Node3D) -> Array[Dictionary]:
 	for source_id in resources.sources:
 		var source: Dictionary = resources.sources[source_id]
 		for resource in source.remaining:
-			var target_stock := citizens.size() * (2 if resource == "food" else 3) * 3.0
+			var target_stock := living_population() * (2 if resource == "food" else 3) * 3.0
 			var pending := 0.0
 			var collectors := 0
 			for task in coordinator.tasks:
@@ -194,7 +222,7 @@ func work_options(citizen: Node3D) -> Array[Dictionary]:
 			if resources.source_available(source_id, resource) < 1: continue
 			var route: Dictionary = coordinator.surface_navigation.route_between(region_of(citizen.global_position), String(source.region), citizen.global_position, source.position)
 			if not route.reachable: continue
-			options.append({"task_type": "RESOURCE_COLLECT", "source_id": source_id, "resource": resource, "amount": minf(8, resources.source_available(source_id, resource)), "source": source.position, "target": source.position, "source_region": source.region, "urgency": 0.9 if economy.forecast(resource, citizens.size()) < 1 else 0.35, "extracted": false})
+			options.append({"task_type": "RESOURCE_COLLECT", "source_id": source_id, "resource": resource, "amount": minf(8, resources.source_available(source_id, resource)), "source": source.position, "target": source.position, "source_region": source.region, "urgency": 0.9 if economy.forecast(resource, living_population()) < 1 else 0.35, "extracted": false})
 	for id in salvage.objects:
 		var state: Dictionary = salvage.objects[id]
 		if not state.authorized or salvage.depleted(id): continue
@@ -211,8 +239,8 @@ func work_options(citizen: Node3D) -> Array[Dictionary]:
 
 func plan() -> void:
 	planner.reasons.clear()
-	if economy.forecast("water", citizens.size()) < 1: planner.reasons.append("Water reserve critical")
-	if needs.shelter_capacity < citizens.size(): planner.reasons.append("Shelter shortage: %d citizens" % (citizens.size() - needs.shelter_capacity))
+	if economy.forecast("water", living_population()) < 1: planner.reasons.append("Water reserve critical")
+	if needs.shelter_capacity < living_population(): planner.reasons.append("Shelter shortage: %d citizens" % (living_population() - needs.shelter_capacity))
 	for resource in planner.directives:
 		if founder_mode:
 			var accessible := false
@@ -264,11 +292,11 @@ func work(citizen: Node3D, delta: float) -> bool:
 		if citizen._work_timer < float(resources.sources[task.source_id].work): return false
 		var stored: Dictionary = coordinator._find_task(citizen.task_id)
 		if stored.extracted: return false
-		var bundle := resources.extract(String(task.source_id), String(task.resource), float(task.amount), citizen.global_position)
+		var bundle := resources.extract(String(task.source_id), String(task.resource), float(task.amount), citizen.global_position, instance_id)
 		if bundle < 0: return false
 		stored.extracted = true
 		stored.bundle_id = bundle
-		resources.reserve_bundle(bundle, citizen.citizen_id)
+		resources.reserve_bundle(bundle, citizen.citizen_id, instance_id)
 		show_bundle(bundle)
 		if not pickup_bundle(citizen): return false
 		source_visits[task.resource] += 1
@@ -290,17 +318,17 @@ func release(task: Dictionary) -> void:
 	if task.has("ticket"):
 		var dropped := economy.drop(int(task.ticket))
 		if not dropped.is_empty():
-			var at: Vector3 = citizens[int(task.citizen_id)].global_position
+			var at: Vector3 = citizen_for(int(task.citizen_id)).global_position
 			show_bundle(resources.create_bundle(String(dropped.resource), float(dropped.amount), at, "interrupted_delivery"))
 		else: economy.release(int(task.ticket))
 	if task.has("slot"):
 		needs.release_rest(int(task.slot), false)
-		citizens[int(task.citizen_id)].needs.rest_slot = -1
+		citizen_for(int(task.citizen_id)).needs.rest_slot = -1
 	if task.has("bundle_id"):
-		var citizen: Node3D = citizens[int(task.citizen_id)]
+		var citizen: Node3D = citizen_for(int(task.citizen_id))
 		resources.release_bundle(int(task.bundle_id), citizen.citizen_id, citizen.global_position)
 		show_bundle(int(task.bundle_id))
-	if task.task_type == "RESOURCE_COLLECT" and not task.get("extracted", false): resources.release_source(String(task.source_id), String(task.resource), float(task.amount))
+	if task.task_type == "RESOURCE_COLLECT" and not task.get("extracted", false): resources.release_source(String(task.source_id), String(task.resource), float(task.amount), instance_id)
 
 func should_interrupt(citizen: Node3D) -> bool:
 	return maxf(float(citizen.needs.food), float(citizen.needs.water)) >= 0.7 or float(citizen.needs.fatigue) >= 0.8
@@ -308,8 +336,9 @@ func should_interrupt(citizen: Node3D) -> bool:
 func status() -> Dictionary:
 	var urgent := 0
 	for citizen in citizens:
+		if citizen.life_state == "DEAD": continue
 		if maxf(float(citizen.needs.food), float(citizen.needs.water)) >= 0.7: urgent += 1
-	return {"days": seconds / Needs.DAY_SECONDS, "population": citizens.size(), "food_days": economy.forecast("food", citizens.size()), "water_days": economy.forecast("water", citizens.size()), "shelter": needs.shelter_capacity, "resting": needs.resting.size(), "urgent": urgent, "meals": needs.meals, "drinks": needs.drinks, "rests": needs.rests, "economy": economy.snapshot()}
+	return {"days": seconds / Needs.DAY_SECONDS, "population": living_population(), "food_days": economy.forecast("food", living_population()), "water_days": economy.forecast("water", living_population()), "shelter": needs.shelter_capacity, "resting": needs.resting.size(), "urgent": urgent, "meals": needs.meals, "drinks": needs.drinks, "rests": needs.rests, "economy": economy.snapshot()}
 
 func secure_resource(resource: String) -> bool:
 	return planner.secure(resource)
@@ -320,6 +349,12 @@ func authorize_salvage(object_id: String) -> bool:
 	coordinator.navigation.allow_object_edge_access(object_id)
 	candidates.sort_custom(func(a: Vector3, b: Vector3) -> bool: return a.distance_to(coordinator.depot_station) < b.distance_to(coordinator.depot_station))
 	salvage_targets[object_id] = candidates[0]
+	if world_simulation != null:
+		for runtime in world_simulation.runtimes:
+			if runtime == self: continue
+			var approaches: Array[Vector3] = runtime.salvage_approaches(object_id)
+			approaches.sort_custom(func(a: Vector3, b: Vector3) -> bool: return a.distance_to(runtime.coordinator.depot_station) < b.distance_to(runtime.coordinator.depot_station))
+			if not approaches.is_empty(): runtime.salvage_targets[object_id] = approaches[0]
 	planner.authorized[object_id] = true
 	return true
 
@@ -424,7 +459,7 @@ func apply_salvage_stage(id: String) -> void:
 		coordinator.navigation.update_object_footprint(id, world_center, Vector3(d.x * 0.86, d.y, d.z * 0.06))
 
 func routine_score(task: Dictionary, citizen_id: int) -> float:
-	var citizen: Node3D = citizens[citizen_id]
+	var citizen: Node3D = citizen_for(citizen_id)
 	return planner.score(String(task.task_type), 0, citizen.global_position.distance_to(task.target))
 
 func region_of(position: Vector3) -> String:
@@ -445,3 +480,9 @@ func route_for(citizen: Node3D, destination: Vector3) -> Array[Vector3]:
 	if citizen.carrying and task.has("bundle_id"):
 		coordinator._find_task(citizen.task_id)["haul_route_length"] = coordinator._path_length(path)
 	return path
+
+func living_population() -> int:
+	return citizens.filter(func(c: Node3D) -> bool: return c.life_state == "ALIVE").size()
+
+func world_citizens() -> Array:
+	return world_simulation.citizens if world_simulation != null else citizens

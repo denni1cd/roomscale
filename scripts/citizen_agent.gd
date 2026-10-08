@@ -9,6 +9,71 @@ const Materials := preload("res://scripts/visuals/material_library.gd")
 static var _shared_meshes: Dictionary = {}
 
 var citizen_id := -1
+var civilization_id := "legacy"
+var health := 100.0
+var life_state := "ALIVE"
+var combat_duty := ""
+var combat_arrived := false
+var _combat_weapon: Node3D
+
+func eligible_for_combat(target: Vector3) -> bool:
+	if life_state != "ALIVE" or not combat_duty.is_empty() or carrying: return false
+	var task: Dictionary = coordinator.get_task(task_id)
+	if task.has("ticket") or task.has("bundle_id") or task_type.begins_with("NEED_"): return false
+	if not needs.is_empty() and coordinator.civilization.should_interrupt(self): return false
+	if absf(global_position.y - navigation._floor_height) > 0.1: return false
+	return not navigation.path_between(global_position, target).is_empty()
+
+func assign_combat_duty(duty: String, target: Vector3) -> bool:
+	var route: Array[Vector3] = navigation.path_between(global_position, target)
+	if life_state != "ALIVE" or carrying or route.is_empty(): return false
+	combat_duty = duty
+	if task_id > 0: coordinator.cancel_task(task_id, "strategic military commitment")
+	task_id = -1
+	task_type = "COMBAT"
+	_needs_second_leg = false
+	_destination = target
+	_path = route
+	_path_cursor = 0
+	combat_arrived = false
+	state = "TRAVEL"
+	if _combat_weapon == null:
+		_combat_weapon = Node3D.new()
+		_combat_weapon.name = "RangedWeapon"
+		_right_arm.add_child(_combat_weapon)
+		var organic: bool = coordinator.civilization.definition.citizen_style == "verdant_folk"
+		G.box(_combat_weapon, "Thorn" if organic else "BoltCaster", Vector3(0.055, 0.05, 0.2), Vector3(0.02, -0.025, 0.10), "wood" if organic else "brass", Color("638c44") if organic else Color("d1a14e"), 0.01)
+		if not organic:
+			var barrel := G.cylinder(_combat_weapon,"MechanicalBarrel",0.026,0.14,Vector3(0.02,-0.025,0.21),"iron",Color("53656c"))
+			barrel.rotation.x = PI / 2
+		else:
+			for side in [-1.0,1.0]:
+				var leaf := G.box(_combat_weapon,"ThornLeaf",Vector3(0.08,0.015,0.045),Vector3(side*0.045,-0.01,0.11),"wood",Color("7da65a"),0.015)
+				leaf.rotation.y = side*0.5
+	_combat_weapon.show()
+	return true
+
+func end_combat_duty() -> void:
+	combat_duty = ""
+	if _combat_weapon != null: _combat_weapon.hide()
+	task_type = "IDLE"
+	state = "IDLE"
+	_assign_next_task()
+
+func suffer_combat_damage(amount: float) -> bool:
+	if life_state != "ALIVE": return false
+	health = maxf(0, health - amount)
+	if health > 0: return false
+	life_state = "DEAD"
+	if task_id > 0: coordinator.cancel_task(task_id, "combat casualty")
+	task_id = -1
+	task_type = "DEAD"
+	state = "DEAD"
+	combat_duty = ""
+	_path.clear()
+	get_node("Figure").rotation.z = PI * 0.5
+	get_node("Figure").position.y = 0.09
+	return true
 var navigation: Node
 var coordinator: Node
 var task_id := -1
@@ -48,6 +113,7 @@ func initialize(id: int, start: Vector3, floor_navigation: Node, task_system: No
 	position = start
 	navigation = floor_navigation
 	coordinator = task_system
+	civilization_id = coordinator.instance_id
 	_build_figure()
 	_assign_next_task()
 
@@ -57,6 +123,13 @@ func _process(delta: float) -> void:
 
 
 func advance_simulation(delta: float) -> void:
+	if life_state == "DEAD": return
+	if not combat_duty.is_empty():
+		_animation_time += delta
+		if state == "TRAVEL": _advance_path(delta)
+		_update_animation()
+		if state == "HOLD": _right_arm.rotation.x = -0.9
+		return
 	_lod_timer += delta
 	if _lod_timer >= 0.4:
 		_lod_timer = 0.0
@@ -87,6 +160,8 @@ func advance_simulation(delta: float) -> void:
 			if coordinator.advance_construction_work(task_id, citizen_id, effort):
 				coordinator.complete_task(task_id)
 				_assign_next_task()
+		elif task_type == "STRATEGIC_SCOUT":
+			pass
 		elif task_type == "SURFACE_EXPLORATION":
 			if coordinator.advance_surface_exploration(self, task_id, delta):
 				state = "ON_SURFACE"
@@ -109,6 +184,7 @@ func refresh_visual_lod() -> void:
 
 
 func assign_player_goal_task(task: Dictionary) -> void:
+	if task.is_empty() or task.get("instance_id",coordinator.instance_id) != civilization_id or life_state != "ALIVE" or not combat_duty.is_empty(): return
 	if task_id > 0:
 		coordinator.supersede_task(task_id, "reassigned to player Reach / Explore goal")
 	task_id = int(task.id)
@@ -122,6 +198,7 @@ func assign_player_goal_task(task: Dictionary) -> void:
 
 
 func assign_project_task(task: Dictionary) -> void:
+	if task.is_empty() or task.get("instance_id",coordinator.instance_id) != civilization_id or life_state != "ALIVE" or not combat_duty.is_empty(): return
 	if task_id > 0:
 		coordinator.supersede_task(task_id, "reassigned to construction project")
 	task_id = int(task.id)
@@ -140,6 +217,7 @@ func assign_project_task(task: Dictionary) -> void:
 
 
 func assign_traversal_task(task: Dictionary) -> void:
+	if task.is_empty() or task.get("instance_id",coordinator.instance_id) != civilization_id or life_state != "ALIVE" or not combat_duty.is_empty(): return
 	if task_id > 0:
 		coordinator.supersede_task(task_id, "assigned grapple traversal")
 	task_id = int(task.id)
@@ -158,6 +236,7 @@ func assign_traversal_task(task: Dictionary) -> void:
 
 
 func assign_surface_exploration_task(task: Dictionary) -> void:
+	if task.is_empty() or task.get("instance_id",coordinator.instance_id) != civilization_id or life_state != "ALIVE" or not combat_duty.is_empty(): return
 	if task_id > 0:
 		coordinator.supersede_task(task_id, "surface traversal completed; surface exploration assigned")
 	task_id = int(task.id)
@@ -193,6 +272,7 @@ func get_inspection_status() -> Dictionary:
 
 
 func _assign_next_task() -> void:
+	if life_state == "DEAD" or not combat_duty.is_empty(): return
 	var task: Dictionary = coordinator.claim_for(citizen_id)
 	if task.is_empty():
 		state = "IDLE"
@@ -258,6 +338,10 @@ func _advance_path(delta: float) -> void:
 
 
 func _arrive_at_destination() -> void:
+	if not combat_duty.is_empty():
+		combat_arrived = true
+		state = "HOLD"
+		return
 	if task_type == "SURFACE_TRAVERSAL":
 		if coordinator.report_traversal_arrival(self, task_id):
 			return

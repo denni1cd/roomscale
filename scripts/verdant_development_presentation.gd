@@ -15,6 +15,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	if OS.get_environment("ROOMSCALE_CONFLICT") == "1": return
 	if not _active:
 		return
 	_refresh_timer += delta

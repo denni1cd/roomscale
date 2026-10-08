@@ -76,7 +76,9 @@ func _ready() -> void:
 	if not _build_population():
 		return
 	_build_ui()
-	if _room_definition.has("civilization"):
+	if OS.get_environment("ROOMSCALE_CONFLICT") == "1":
+		preload("res://scripts/conflict_startup.gd").start(self)
+	elif _room_definition.has("civilization"):
 		start_civilization(_room_definition.civilization)
 	print("ROOMSCALE_M2_READY Godot=%s room=%s size=%.0fx%.0f in citizens=%d" % [Engine.get_version_info().string, _room_definition.id, ROOM_WIDTH, ROOM_DEPTH, _citizens.size()])
 
@@ -1656,7 +1658,7 @@ func select_surface_at_screen_position(screen_position: Vector2) -> bool:
 
 func select_resource_object_at_screen_position(screen_position: Vector2) -> bool:
 	var civilization := get_node_or_null("CivilizationSimulation")
-	if civilization == null: return false
+	if civilization == null or civilization.hud == null: return false
 	var camera := get_node("CameraRig/Camera") as Camera3D
 	var origin := camera.project_ray_origin(screen_position)
 	var query := PhysicsRayQueryParameters3D.create(origin, origin + camera.project_ray_normal(screen_position) * 1000, 4)

@@ -170,6 +170,8 @@ func test_object_identity() -> void:
 	var sim := Simulation.new()
 	sim.scene = world
 	sim.coordinator = coordinator
+	sim.resources = Resources.new()
+	sim.salvage = preload("res://scripts/salvage_system.gd").new()
 	sim.resources.configure(definition)
 	sim.salvage.configure(sim.resources.objects)
 	sim.salvage.authorize(String(object.id))

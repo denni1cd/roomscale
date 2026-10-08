@@ -1,11 +1,9 @@
 # RoomScale architecture
 
-This describes stabilization based on completed POC4.7.2 (`efa5950`) plus the
-civilization-selection boundary introduced after that baseline. Current launch/test
-commands are in README and TESTING. There is one room and **one active civilization per
-run**, append-only citizen IDs and finite resources. Clockwork and Verdant are selectable
-implementations of the same production simulation; simultaneous civilizations are not
-implemented.
+POC 5 builds on accepted `8621b08`. Normal launches preserve the original society
+runtime. The conflict launch composes two instance-owned society runtimes over one
+finite room. Citizen IDs are globally append-only and casualties remain terminal nodes.
+See [POC 5](POC5.md) for the scenario, evidence and current limitations.
 
 ## Composition and configuration
 
@@ -33,20 +31,22 @@ Clockwork grapple coordinates or Verdant vine coordinates.
 
 ## Simulation clock and order
 
-`CivilizationSimulation._process` multiplies wall delta by selected speed and calls
-`advance`; its accumulator repeatedly executes `step` at **0.1 simulation seconds**.
-Each tick increments seconds, runs the governor (its internal five-second decision
-cadence), advances the one-second planner cadence, decays each citizen's needs and
-advances that citizen in stable array order, then advances traversal construction.
-The new `advance_simulation` methods expose intentional stepping; engine callbacks
-remain wrappers. Tests call the same production step, without reordering workers.
-Simulation days are 600 seconds. Presentation camera/HUD updates have no economy or
-capability authority. Pause stops production while explicit presentation refresh remains
-possible. Changing insertion order, tick order or timers can change deterministic outcomes.
+`WorldSimulation` owns the 0.1-second accumulator, seconds and integer tick. The
+primary `CivilizationSimulation._process` delegates elapsed time to that world; secondary
+society nodes have no engine-driven gameplay callback. Explicit `advance`/`step` calls
+also delegate to the same world clock, preserving existing observers.
 
-`CivilizationSimulation` means the **shared society runtime**. It must not be confused
-with `CivilizationDefinition`: selecting Verdant does not create a second simulation,
-economy, task board or navigation authority.
+Each tick advances society runtimes in scenario insertion order. Within a runtime the
+existing order remains governor, one-second planner cadence, living citizens in roster
+order, then that society's traversal construction. Shared contact/territory observation
+and combat run afterward. Rendering updates only labels, decoration, camera and flashes.
+Single-civilization conflict services stay dormant. Pause stops the production clock.
+
+`CivilizationSimulation` now serves as the civilization runtime: instance identity,
+definition, roster, needs, depot economy, development, population and strategic intent.
+It holds references to the one world ResourceSystem, SalvageSystem and bundle visuals.
+Its room view contains society startup anchors; world geometry/depletion is never
+initialized from that view a second time. Production navigation nodes remain shared.
 
 ## State authority
 
@@ -81,7 +81,8 @@ Startup builds a complete valid roster atomically, preserving the original five-
 and Room A/B positions. Compact legacy spawn areas are seed regions: small rosters
 can fall back to distinct legal connected room cells; larger rosters remain within
 their explicitly sized spawn footprint. IDs
-remain contiguous indices, node names CitizenNN and append order are explicit contracts.
+are globally allocated, node names CitizenNN and append order are explicit contracts.
+A society resolves citizens by ID rather than assuming its roster index equals a global ID.
 A citizen claims a task, navigates its first leg, performs physical pickup/work, traverses
 its delivery leg, completes or fails, releases reservations and chooses normal next work.
 Unavailable navigation returns to idle/retry at the existing tick boundary; it must not
@@ -90,7 +91,7 @@ recursively exhaust the stack. Self-care can interrupt routine work and releases
 Population growth uses completed capability/shelter and finite source forecasts. Founder
 mode admits one real CitizenAgent; established legacy mode admits five. Initial founders
 have no shelter by design; added citizens require earned capacity. No counter-only growth,
-teleportation, mortality or resource creation is present.
+teleportation or resource creation is present. Combat mortality is described below.
 
 Citizen locomotion/work animation remains shared. Civilization presentation decorates the
 same live figure rig rather than creating a second agent class. Verdant hides Clockwork-only
@@ -173,11 +174,9 @@ fields (citizen roster, construction deployment path/cursor/stage state). That i
 compatibility debt chosen to avoid destabilizing the verified POC4.7.2 lifecycle while the
 civilization boundary is introduced. Those reads have presentation authority only.
 
-Duplicating `CivilizationSimulation`, EconomySystem, ResourceSystem, SalvageSystem,
-TaskCoordinator or navigation services remains unsafe: it would duplicate finite ledgers
-and allow conflicting reservations/revisions. Two civilization **definitions** therefore do
-not imply two live societies in one room. Multi-civilization coexistence requires a future
-shared-world authority design rather than instantiating today's services twice.
+Independent copies of ResourceSystem, SalvageSystem or live navigation would still be
+unsafe. POC 5 separates their world authority from society economies and task boards;
+coexistence uses shared service references rather than duplicating the former scene.
 
 ## Verification and artifacts
 
@@ -207,3 +206,40 @@ freezing verified production/harness SHA; any later executable source edit inval
 that freeze. Verification/.gdignore prevents evidence assets from being imported as game
 resources. Exact duplicate-image replacements are listed in the artifact manifest; unique
 fixtures, images, seeds, failed investigations and independent repeat receipts are kept.
+
+## POC 5 ownership and combat boundary
+
+`WorldSimulation` initializes sources/salvage once and owns the global citizen registry,
+ID allocator, journal, TerritorySystem, CombatSystem and clock. The existing FloorNavigation
+and SurfaceNavigation are the only live navigation authorities. Temporary cloned grids
+remain non-authoritative placement proofs.
+
+Each society has an owned TaskCoordinator and ConstructionSystem. Task IDs and economy
+tickets are local to their owning service; citizen IDs are global. Board claims reject
+foreign or dead citizens and records carry `instance_id`. Source reservations track
+instance ownership inside the one aggregate finite ledger. Bundles bind both citizen ID
+and instance ID; delivery rejects a different depot economy. Cancellation releases only
+the owner's source quantities. Shared salvage progresses once, while each society chooses
+a legal work approach. Projects use globally unique instance-prefixed IDs and shared
+occupant, activity and future-footprint checks. A traversal objective can be committed
+by only one society at a time; either society can use its eventual shared link.
+
+Combat selects reachable living citizens without cargo, reserved tickets/bundles, urgent
+self-care or unstable vertical position. CitizenAgent owns terminal health/life state,
+physical paths and duty; CombatSystem alone authorizes damage at fixed ticks. Target
+selection is distance then citizen ID. Attacks resolve in global citizen ID order, with
+morale evaluated after each attack so the remaining force can retreat before a lethal
+volley destroys it. This initiative convention is deterministic and is not balanced.
+
+Death stops work and need decay, releases active tasks safely, retains the fallen node
+and excludes it from living forecasts/admission calculations. IDs are never recycled;
+replacement uses normal housing/reserve/stability/cooldown production rules. No other
+mortality cause exists. Retreat navigates survivors to their real rally, then restores
+ordinary duty. Losing commitment gets a 600-second cooldown; the current small scenario
+runs one encounter, without automatic repeated wars.
+
+Territory uses authored strategic anchors: NEUTRAL, CLAIMED, CONTESTED, CONTROLLED.
+Actual arriving scouts create overlapping claims and one UNKNOWN → CONTACT → HOSTILE
+relation keyed by instance IDs. The winner must remain present while all retreating
+opponents physically clear attack range, then hold for ten seconds. Capture changes the
+shared site record and its industrial/organic marker. It never deletes traversal links.
