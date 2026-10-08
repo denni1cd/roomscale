@@ -179,6 +179,9 @@ func cancel_construction_stage(stage_index: int, keep_task_id: int = -1) -> void
 
 
 func create_construction_task(specification: Dictionary, citizen_id: int) -> Dictionary:
+	if is_instance_valid(civilization):
+		var citizen: Node3D = civilization.citizen_for(citizen_id)
+		if citizen == null or citizen.civilization_id != instance_id or citizen.life_state != "ALIVE" or not citizen.combat_duty.is_empty(): return {}
 	var task_id := _next_task_id
 	_next_task_id += 1
 	_created_count += 1
@@ -288,7 +291,7 @@ func issue_reach_explore(surface_id: String, citizens: Array) -> Dictionary:
 	var needed := mini(2, candidates.size())
 	for citizen in citizens:
 		var node := citizen as Node3D
-		if not is_instance_valid(node):
+		if not is_instance_valid(node) or node.civilization_id != instance_id or node.life_state != "ALIVE" or not node.combat_duty.is_empty():
 			continue
 		for candidate_index in range(needed):
 			var route: Array[Vector3] = navigation.path_between(node.global_position, candidates[candidate_index])
@@ -367,6 +370,7 @@ func get_construction_site() -> Vector3:
 
 
 func create_traversal_task(citizen: Node3D, route: Array[Vector3]) -> Dictionary:
+	if citizen.civilization_id != instance_id or citizen.life_state != "ALIVE" or not citizen.combat_duty.is_empty(): return {}
 	if not surface_navigation.has_connection(FLOOR_REGION, _goal_region) or route.size() < 2:
 		return {}
 	var task := _create_task_record({
@@ -417,6 +421,7 @@ func report_traversal_arrival(citizen: Node3D, task_id: int) -> bool:
 
 
 func _create_surface_exploration_task(citizen: Node3D, traversal_id: int, region: String) -> Dictionary:
+	if citizen.civilization_id != instance_id or citizen.life_state != "ALIVE" or not citizen.combat_duty.is_empty(): return {}
 	var path: Array[Vector3] = surface_navigation.exploration_route(citizen.global_position, region)
 	var task := _create_task_record({
 		"task_type": "SURFACE_EXPLORATION",

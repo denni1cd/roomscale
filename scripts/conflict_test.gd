@@ -8,6 +8,7 @@ var world: Node
 var post_work: Dictionary = {}
 var foreign_delivery_checked := false
 var foreign_source_checked := false
+var military_assignment_checked := false
 
 func _initialize() -> void:
 	call_deferred("run")
@@ -45,6 +46,12 @@ func run() -> void:
 	check(a.resources == b.resources and a.salvage == b.salvage,"one finite source and salvage authority")
 	check(a.coordinator.navigation == b.coordinator.navigation and a.coordinator.surface_navigation == b.coordinator.surface_navigation,"one navigation authority")
 	check(a.coordinator.claim_for(b.citizens[0].citizen_id).is_empty() and b.coordinator.claim_for(a.citizens[0].citizen_id).is_empty(),"foreign citizen claim rejected")
+	check(a.coordinator.create_construction_task({"task_type":"FLOOR_PATROL","target":a.coordinator.depot_station},b.citizens[0].citizen_id).is_empty(),"manual task creation rejects a foreign roster member")
+	var actor: Node3D = a.citizens[0]
+	var previous_task: int = actor.task_id
+	var previous_destination: Vector3 = actor._destination
+	actor.assign_player_goal_task(b.coordinator.get_task(b.citizens[0].task_id))
+	check(actor.task_id == previous_task and actor._destination == previous_destination,"direct foreign task assignment rejected without interrupting owned work")
 	await capture("01-two-societies",Vector3.ZERO,280)
 	var complete_at := -1
 	var pre_checked := false
@@ -97,6 +104,17 @@ func run() -> void:
 			check(world.combat.phase == "DORMANT","bounded peaceful coexistence")
 			await capture("02-coexistence",Vector3.ZERO,190)
 		if world.first_contact_tick == world.tick: await capture("03-contested-site",world.territory.sites[world.scenario.strategic_site].position + Vector3(0,0.3,0),10)
+		if world.combat.phase == "MARCH" and not military_assignment_checked:
+			for id in world.combat.forces:
+				var runtime: Node = world.runtime_for(id)
+				for task in runtime.coordinator.tasks:
+					if task.state != "available": continue
+					var combatant: Node3D = world.combat.forces[id][0]
+					var destination: Vector3 = combatant._destination
+					combatant.assign_player_goal_task(task)
+					check(combatant.combat_duty == "MARCH" and combatant.task_id == -1 and combatant._destination == destination,"manual assignment cannot interrupt military duty")
+					military_assignment_checked = true
+					break
 		if world.combat.phase == "MARCH" and world.tick - world.combat.battle_start_tick >= 10:
 			for id in world.combat.forces:
 				if captures.has("03-" + id + "-march"): continue
@@ -122,6 +140,7 @@ func run() -> void:
 	check(max_step <= 0.65001,"all military and retreat movement respects production speed")
 	for kind in ["SITE_TARGETED","FIRST_CONTACT","HOSTILITY_DECLARED","SITE_CONTESTED","FORCE_COMMITTED","FORCE_ARRIVED","COMBAT_CASUALTY","RETREAT","SITE_CAPTURED"]:
 		check(world.journal.events.any(func(e: Dictionary) -> bool: return e.kind == kind),"event " + kind)
+	check(military_assignment_checked,"manual military reassignment boundary exercised")
 	check(foreign_source_checked,"foreign source negative boundary exercised on a real reservation")
 	check(foreign_delivery_checked,"cross-depot negative boundary exercised on a real bundle")
 	for kind in ["FIRST_CONTACT","HOSTILITY_DECLARED","SITE_CONTESTED","SITE_CAPTURED"]:

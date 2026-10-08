@@ -184,6 +184,7 @@ func refresh_visual_lod() -> void:
 
 
 func assign_player_goal_task(task: Dictionary) -> void:
+	if task.is_empty() or task.get("instance_id",coordinator.instance_id) != civilization_id or life_state != "ALIVE" or not combat_duty.is_empty(): return
 	if task_id > 0:
 		coordinator.supersede_task(task_id, "reassigned to player Reach / Explore goal")
 	task_id = int(task.id)
@@ -197,6 +198,7 @@ func assign_player_goal_task(task: Dictionary) -> void:
 
 
 func assign_project_task(task: Dictionary) -> void:
+	if task.is_empty() or task.get("instance_id",coordinator.instance_id) != civilization_id or life_state != "ALIVE" or not combat_duty.is_empty(): return
 	if task_id > 0:
 		coordinator.supersede_task(task_id, "reassigned to construction project")
 	task_id = int(task.id)
@@ -215,6 +217,7 @@ func assign_project_task(task: Dictionary) -> void:
 
 
 func assign_traversal_task(task: Dictionary) -> void:
+	if task.is_empty() or task.get("instance_id",coordinator.instance_id) != civilization_id or life_state != "ALIVE" or not combat_duty.is_empty(): return
 	if task_id > 0:
 		coordinator.supersede_task(task_id, "assigned grapple traversal")
 	task_id = int(task.id)
@@ -233,6 +236,7 @@ func assign_traversal_task(task: Dictionary) -> void:
 
 
 func assign_surface_exploration_task(task: Dictionary) -> void:
+	if task.is_empty() or task.get("instance_id",coordinator.instance_id) != civilization_id or life_state != "ALIVE" or not combat_duty.is_empty(): return
 	if task_id > 0:
 		coordinator.supersede_task(task_id, "surface traversal completed; surface exploration assigned")
 	task_id = int(task.id)

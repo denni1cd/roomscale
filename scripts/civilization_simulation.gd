@@ -158,7 +158,7 @@ func step_society() -> void:
 	construction.advance_simulation(STEP)
 
 func claim(citizen: Node3D) -> Dictionary:
-	if citizen.life_state != "ALIVE" or citizen.civilization_id != instance_id: return {}
+	if citizen.life_state != "ALIVE" or citizen.civilization_id != instance_id or not citizen.combat_duty.is_empty(): return {}
 	var ordinary_score := -INF
 	for task in coordinator.tasks:
 		if task.state == "available" and task.instance_id == instance_id: ordinary_score = maxf(ordinary_score, planner.score(String(task.task_type), 0, citizen.global_position.distance_to(task.target)))
