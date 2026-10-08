@@ -57,16 +57,21 @@ func start(controller: Node, objective: String, war_policy: Dictionary = {}) -> 
 			return da < db if da != db else a.citizen_id < b.citizen_id)
 		if selected.size() < count: return false
 		forces[runtime.instance_id] = selected.slice(0, count)
-	# Validate every station before any citizen/task mutation.
+	# Validate every station before any citizen/task mutation. Keep the original
+	# 4-inch navigation-grid spacing, expanding into additional depth rows for
+	# larger wars instead of shrinking the proven POC5 formation.
 	var planned_targets := {}
 	var occupied: Array[Vector3] = []
 	for runtime in world.runtimes:
-		for index in range(forces[runtime.instance_id].size()):
+		var force_size: int = forces[runtime.instance_id].size()
+		for index in range(force_size):
 			var citizen: Node3D = forces[runtime.instance_id][index]
 			var sign_x := -1.0 if runtime == world.runtimes[0] else 1.0
-			var row := float(index - floori(forces[runtime.instance_id].size() / 2.0))
 			var depth := floori(index / 5.0)
-			var at: Vector3 = runtime.coordinator.navigation.nearest_walkable_position(target + Vector3(sign_x * (2.0 + depth * 2.0), 0, row * 3.0))
+			var slot_in_row := index % 5
+			var row_count := mini(5, force_size - depth * 5)
+			var lateral := (float(slot_in_row) - float(row_count - 1) / 2.0) * 4.0
+			var at: Vector3 = runtime.coordinator.navigation.nearest_walkable_position(target + Vector3(sign_x * (2.0 + depth * 4.0), 0, lateral))
 			if runtime.coordinator.navigation.is_obstacle_position(at) or runtime.coordinator.navigation.path_between(citizen.global_position,at).is_empty() or occupied.any(func(point: Vector3) -> bool: return point.distance_to(at) < 1.0): return false
 			occupied.append(at)
 			planned_targets[citizen.citizen_id] = at
