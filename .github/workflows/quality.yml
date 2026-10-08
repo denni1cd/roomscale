@@ -92,6 +92,9 @@ jobs:
           $godot = & ./SETUP_ROOM_SCALE.ps1 | Select-Object -Last 1
           & $godot --headless --editor --path . --import
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Scarcity-driven conflict pressure
+        shell: pwsh
+        run: ./TEST_ROOM_SCALE_CONFLICT_PRESSURE.ps1
       - name: Shared-world conflict and determinism
         shell: pwsh
         run: ./TEST_ROOM_SCALE_CONFLICT.ps1 -RunCount 5
