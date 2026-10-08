@@ -5,6 +5,10 @@ config_version=5
 config/name="RoomScale"
 run/main_scene="res://scenes/pipeline_proof.tscn"
 
+[autoload]
+CivilizationPresentation="*res://scripts/civilization_presentation_runtime.gd"
+VerdantDevelopmentPresentation="*res://scripts/verdant_development_presentation.gd"
+
 [display]
 window/size/viewport_width=1280
 window/size/viewport_height=720

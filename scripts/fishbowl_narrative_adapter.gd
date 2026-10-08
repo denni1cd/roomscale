@@ -1,5 +1,51 @@
 extends RefCounted
 ## Deterministic translations; all numbers are read from production state.
+const CivilizationDefinition := preload("res://scripts/civilization_definition.gd")
+
+static func civilization_definition() -> Dictionary:
+	# The presenter loads identity before production HUDs are configured. Reading
+	# that profile also works while current_scene/scene metadata is initializing.
+	var tree := Engine.get_main_loop() as SceneTree
+	if tree != null:
+		var presentation := tree.root.get_node_or_null("CivilizationPresentation")
+		if presentation != null:
+			var selected: Dictionary = presentation.get("definition")
+			if not selected.is_empty(): return selected
+	var loaded := CivilizationDefinition.load_requested()
+	return loaded.get("definition", {})
+
+static func is_verdant() -> bool:
+	return String(civilization_definition().get("id", "clockwork")) == "verdant"
+
+static func resource_name(resource: String) -> String:
+	return CivilizationDefinition.resource_name(civilization_definition(), resource)
+
+static func stage_name(stage: String) -> String:
+	return CivilizationDefinition.stage_name(civilization_definition(), stage)
+
+static func traversal_name() -> String:
+	return CivilizationDefinition.traversal_name(civilization_definition())
+
+static func presentation_text(value: String) -> String:
+	if not is_verdant(): return value
+	var replacements := [
+		["mechanical_parts", resource_name("mechanical_parts")],
+		["mechanical parts", resource_name("mechanical_parts")],
+		["wood", resource_name("wood")], ["metal", resource_name("metal")],
+		["winch", stage_name("winch")], ["launcher", stage_name("launcher")],
+		["base", stage_name("base")],
+		["grapple cable", traversal_name()], ["grapple route", traversal_name()],
+		["steampunk grapple", traversal_name()], ["grapple", traversal_name()],
+		["cable", "vine"], ["founder shelter", "Grove Shelter"],
+		["shelter module", "Grove Shelter"], ["workshop", "Growth Nursery"],
+		["depot", "Seed Cache"], ["housing block", "Pod Homes"], ["housing", "Pod Homes"],
+	]
+	for replacement in replacements:
+		var expression := RegEx.new()
+		expression.compile("(?i)\\b%s\\b" % String(replacement[0]))
+		value = expression.sub(value, String(replacement[1]), true)
+	return value
+
 static func governor(sim: Node) -> String:
 	if not sim.governor.enabled: return "Governor off · Manual control"
 	var modes := {"OBSERVING": "Surveying the colony", "SURVIVAL": "Securing survival resources", "MATERIALS": "Gathering construction materials", "STABLE": "Colony stable"}
@@ -14,13 +60,14 @@ static func governor(sim: Node) -> String:
 		if not sim.has_capability("shelter"): intent = "Establishing the first shelter"
 		elif not sim.has_capability("storage"): intent = "Establishing permanent storage"
 		elif not sim.has_capability("workshop"): intent = "Building the first workshop"
-	return "Governor on · %s — %s" % [modes.get(sim.governor.mode, "Assessing the colony"), intent]
+	return presentation_text("Governor on · %s — %s" % [modes.get(sim.governor.mode, "Assessing the colony"), intent])
 
 static func status(sim: Node) -> Dictionary:
-	return {"days": sim.seconds / 600.0, "population": sim.citizens.size(), "shelter": sim.needs.shelter_capacity, "food_days": sim.economy.forecast("food", sim.citizens.size()), "water_days": sim.economy.forecast("water", sim.citizens.size()), "wood": sim.economy.available.wood, "metal": sim.economy.available.metal, "speed": sim.speed, "governor": governor(sim)}
+	return {"days": sim.seconds / 600.0, "population": sim.citizens.size(), "shelter": sim.needs.shelter_capacity, "food_days": sim.economy.forecast("food", sim.citizens.size()), "water_days": sim.economy.forecast("water", sim.citizens.size()), "wood": sim.economy.available.wood, "metal": sim.economy.available.metal, "mechanical_parts": sim.economy.available.get("mechanical_parts", 0), "speed": sim.speed, "governor": governor(sim)}
 
 static func module_name(project: Dictionary) -> String:
 	var names := {"shelter": "Founder Shelter ", "depot": "Depot ", "housing": "Housing Block ", "workshop": "Workshop "}
+	if is_verdant(): names = {"shelter": "Grove Shelter ", "depot": "Seed Cache ", "housing": "Pod Homes ", "workshop": "Growth Nursery "}
 	return names.get(project.get("kind", ""), "Structure ") + String(project.get("id", "")).trim_prefix("development_").trim_prefix("0").trim_prefix("0")
 
 static func project(sim: Node) -> Dictionary:
@@ -30,7 +77,14 @@ static func project(sim: Node) -> Dictionary:
 		return {"name": module_name(p), "stage": "Waiting for materials" if p.state in ["PLANNED", "WAITING_FOR_MATERIALS"] else stages.get(p.stage, "Building"), "progress": float(p.work) / float(p.required_work), "delivered": p.delivered.duplicate(), "required": p.required.duplicate()}
 	if sim.construction.project_created and not sim.construction.traversal_deployed:
 		var p: Dictionary = sim.construction.status()
-		return {"name": "Grapple Route", "stage": "Waiting for materials" if p.state == "WAITING_FOR_MATERIALS" else "Building", "progress": p.progress_percent / 100.0, "delivered": p.delivered.duplicate(), "required": p.required.duplicate()}
+		var name := "Grapple Route"
+		var stage := "Waiting for materials" if p.state == "WAITING_FOR_MATERIALS" else "Building"
+		if is_verdant():
+			name = CivilizationDefinition.project_name(civilization_definition())
+			var active := String(p.get("active_stage", "locked"))
+			if active in CivilizationDefinition.REQUIRED_STAGE_KEYS:
+				stage = "%s · %s" % [stage_name(active), stage]
+		return {"name": name, "stage": stage, "progress": p.progress_percent / 100.0, "delivered": p.delivered.duplicate(), "required": p.required.duplicate()}
 	return {}
 
 static func event_card(event: Dictionary) -> Dictionary:
@@ -109,4 +163,6 @@ static func event_card(event: Dictionary) -> Dictionary:
 			headline = "SALVAGE COMPLETE"
 			subtitle = "All usable material recovered from " + String(event.message).get_slice(": ", 1).replace("_", " ") + "."
 	if headline.is_empty(): return {}
+	headline = presentation_text(headline)
+	subtitle = presentation_text(subtitle)
 	return {"id": event.id, "kind": kind, "headline": headline, "subtitle": subtitle, "priority": priority, "duration": 8.0 if priority >= 3 else 5.0, "key": headline + subtitle, "day": event.day}

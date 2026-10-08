@@ -3,7 +3,7 @@
 RoomScale is a 3D civilization simulation in which half-inch citizens treat a human
 room as a landscape. Authored RoomDefinition JSON supplies furniture, finite resources,
 spawn geometry and elevated surfaces. Citizens physically salvage, haul, build, rest,
-climb and explore. One civilization operates in one room.
+climb and explore. One selected civilization operates in one room.
 
 The accepted production baseline is **POC 4.7.2**, completed at
 `efa5950e4a03a318bf030eb0217e6cb184714053`. Stabilization includes that verified
@@ -20,9 +20,40 @@ and labor. Completed workshop capability gates advanced traversal. Growth adds o
 citizen at a time after shelter, reserves, stability and cooldown checks.
 
 Resources never replenish. Exhaustion can legitimately pause growth or leave a colony
-in crisis. There is no mortality, farming, combat, second civilization, save/load or
-multiplayer. Existing established-colony and manual room scenarios remain regression
-coverage. Photo reconstruction behavior and visual features are unchanged.
+in crisis. There is no mortality, farming, combat, diplomacy, simultaneous competing
+civilizations, save/load or multiplayer. Existing established-colony and manual room
+scenarios remain regression coverage. Photo reconstruction behavior and visual features
+remain room-data driven.
+
+## Civilizations
+
+RoomScale now separates the physical world from the civilization that inhabits it.
+`RoomDefinition` describes the room. `CivilizationDefinition` describes civilization
+identity, resource vocabulary and presentation while the same production simulation
+continues to own needs, economy, tasks, construction progress, legal movement and
+traversal state.
+
+Two civilizations are currently selectable:
+
+- **Clockwork** — the existing brass, timber, steam, gears and grapple/cable society.
+  Its traversal construction reads as Base → Winch → Launcher and uses Wood, Metal and
+  Mechanical Parts.
+- **Verdant** — gnome/faerie-like woodland folk whose settlement grows as a living grove:
+  branching tree nurseries, willow seed caches, rooted pod homes and cultivated saplings.
+  The same production resource slots present as Living Fiber, Resin and Growth Spores;
+  traversal construction reads as Root Bed → Growth Lattice → Bloom Anchor and the
+  completed real route is presented as a growing, twining living vine. Blossoms and growth
+  spores suggest nature magic; construction effects consume real production stage state.
+  Bounded deterministic moss, roots and fungi visually reclaim occupied areas without
+  changing collision or navigation. Earned founder structures grow roots, branches and
+  canopies as their actual construction stages advance.
+
+Clockwork and Verdant intentionally share the same underlying pacing and gameplay
+capabilities at this stage. Civilization choice is not yet a difficulty or balance choice.
+Only one civilization inhabits a run; coexistence, diplomacy and competition are future work.
+
+Definitions live in `civilizations/`. Clockwork remains the default when no explicit
+civilization is supplied.
 
 ## Setup and launch
 
@@ -32,17 +63,24 @@ for developer campaign tooling, not for normal gameplay. No API key is required.
 
 ```powershell
 ./SETUP_ROOM_SCALE.ps1
-./RUN_ROOM_SCALE_FISHBOWL.ps1                  # Canonical five-founder start
-./RUN_ROOM_SCALE_FISHBOWL.ps1 -ManualCamera
-./RUN_ROOM_SCALE.ps1                         # Manual established POC4 economy
-./RUN_ROOM_SCALE_FISHBOWL.ps1 -Room room_poc45 # Historical established colony
-./RUN_ROOM_SCALE.ps1 -Room room_a
-./RUN_ROOM_SCALE.ps1 -Room room_b
+
+# Canonical five-founder fishbowl
+./RUN_ROOM_SCALE_FISHBOWL.ps1
+./RUN_ROOM_SCALE_FISHBOWL.ps1 -Civilization verdant
+./RUN_ROOM_SCALE_FISHBOWL.ps1 -Civilization verdant -ManualCamera
+
+# Established/manual rooms
+./RUN_ROOM_SCALE.ps1 -Civilization clockwork
+./RUN_ROOM_SCALE.ps1 -Civilization verdant
+./RUN_ROOM_SCALE.ps1 -Room room_a -Civilization verdant
+./RUN_ROOM_SCALE.ps1 -Room room_b -Civilization verdant
 ```
 
 Room parameters accept a safe ID in `rooms/` or a project-local JSON file. The file's
-stem must match its `id`. See [RoomDefinition contract](docs/RoomDefinition_Contract.md)
-and [reconstruction workflow](skills/roomscale-room-reconstruction/SKILL.md).
+stem must match its `id`. Civilization selection is independent of room selection; room
+files do not contain Clockwork- or Verdant-specific traversal coordinates or presentation.
+See [RoomDefinition contract](docs/RoomDefinition_Contract.md) and
+[reconstruction workflow](skills/roomscale-room-reconstruction/SKILL.md).
 
 Pause/1x/4x/10x control time; F3/Details opens diagnostics. Click a citizen to inspect
 its work. Keys 1/2/3 select room/settlement/citizen views. WASD/arrows pan, right drag
@@ -61,12 +99,19 @@ python -m ruff format --check .
 ./TEST_ROOM_SCALE.ps1 -Mode Fast
 ./TEST_ROOM_SCALE.ps1 -Mode Canonical
 ./TEST_ROOM_SCALE.ps1 -Mode Regression
+
+# Civilization-specific production smoke
+./TEST_ROOM_SCALE_SMOKE.ps1 -Room room_a -Civilization clockwork
+./TEST_ROOM_SCALE_SMOKE.ps1 -Room room_a -Civilization verdant
 ```
 
-Fast contains focused fixtures, schema/navigation checks and milestone fast gates.
-Canonical runs three fresh current founder scenarios with repeatability checks.
-Regression runs meaningful historical POC4/45/46 integration, navigation/placement
-checks and sustained gates.
+Fast contains focused fixtures, schema/navigation checks, civilization-definition and
+Verdant main-scene presentation contracts, and milestone fast gates. Canonical runs three
+fresh current founder scenarios with repeatability checks. Regression runs meaningful
+historical POC4/45/46 integration, navigation/placement checks and sustained gates.
+The GitHub Actions civilization matrix runs the same production smoke scenario for
+Clockwork and Verdant across Room A and Room B.
+
 Robustness and Soak are explicit expensive modes; All includes them and is unsuitable
 for every edit. Full mode definitions, environment isolation and replay commands are
 in [testing guide](docs/TESTING.md). The legacy `TEST_ROOM_SCALE.ps1 -Room room_a`
@@ -76,21 +121,31 @@ Changes to protected `main` use pull requests and require the GitHub Actions `fa
 check with an up-to-date branch; no human approval is required.
 [Verified protection](verification/repository-hygiene/main-protection.md) records the rule.
 
-Headless CI checks Python quality and Fast on Windows. CI deliberately excludes
-campaigns, soaks and subjective visual acceptance. Raw runs are ignored; publish compact
-receipts and deliberately selected evidence, following [artifact policy](verification/stabilization/artifact-review.md).
+Headless CI checks Python quality, Fast, civilization contracts and production room
+smokes on Windows. Campaigns, soaks and subjective final art acceptance remain explicit
+rather than running on every edit. Raw runs are ignored; publish compact receipts and
+deliberately selected evidence, following
+[artifact policy](verification/stabilization/artifact-review.md).
 
 ## Architecture and repository
 
-`CivilizationSimulation` owns a 0.1-second deterministic tick. Need decay, citizen work,
-construction, governor/planner decisions and population admission use that clock.
+`CivilizationSimulation` owns the shared 0.1-second deterministic society tick. Need decay,
+citizen work, construction, governor/planner decisions and population admission use that
+clock. It is deliberately different from `CivilizationDefinition`, which describes which
+society is selected and how shared production concepts are presented.
+
 `TaskCoordinator` owns tasks; `CitizenAgent` owns motion and work. `EconomySystem`
 tracks inventory transactions; `ResourceSystem` and `SalvageSystem` own finite world
 supplies. Development owns earned structures/capabilities, and floor/surface navigation
-owns legal routes and completed traversal links. Presentation consumes state/events.
+owns legal routes and completed traversal links. Civilization presentation consumes those
+real states: it does not create alternate task, navigation or economy simulations.
 See [architecture and authority](docs/ARCHITECTURE.md) for contracts and current debt.
 
-- `rooms/`: authoritative authored inputs.
+- `rooms/`: authoritative physical-world inputs.
+- `civilizations/`: data-driven civilization identity and presentation vocabulary.
+- `scripts/civilization_definition.gd`: civilization loading/validation contract.
+- `scripts/civilization_presentation.gd`: selected civilization presentation over production state.
+- `scripts/verdant_development_presentation.gd`: Verdant styling for structures earned later by the fishbowl lifecycle.
 - `scripts/`: production services, presentation and specialized verification drivers.
 - `scripts/visuals/`, `scripts/asset_pipeline/`, `visual/`, `assets/`: procedural appearance/catalog/desk assets.
 - `scenes/`: code-built production scene entry point.
@@ -103,9 +158,12 @@ See [architecture and authority](docs/ARCHITECTURE.md) for contracts and current
 ## Limits and historical evidence
 
 Current supported worlds use rectangular floor bounds, conservative furniture footprints,
-one initial elevated target and deterministic single-civilization ordering. POC472 founding
-uses bounded connected layout search, downstream site reservations and planned rest
-positions; it does not prove arbitrary layouts.
+one initial elevated target and deterministic single-active-civilization ordering. POC472
+founding uses bounded connected layout search, downstream site reservations and planned
+rest positions; it does not prove arbitrary layouts. Verdant and Clockwork currently share
+production resource slots and pacing; civilization-specific economy bonuses, asymmetric
+technology and multi-civilization world authority are not claimed.
+
 Legacy established-room interior activity anchors are a documented compatibility contract.
 Citizen IDs are contiguous and append-only. No lifetime/deletion or shared-world authority
 model is claimed. Large scene composition, raw task dictionaries and some camera internals

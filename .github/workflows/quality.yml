@@ -2,6 +2,9 @@ name: RoomScale quality
 on:
   push:
   pull_request:
+concurrency:
+  group: roomscale-quality-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
@@ -31,6 +34,9 @@ jobs:
           $godot = & ./SETUP_ROOM_SCALE.ps1 | Select-Object -Last 1
           & $godot --headless --editor --path . --import
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Civilization contracts
+        shell: pwsh
+        run: ./TEST_ROOM_SCALE_CIVILIZATIONS.ps1 -TimeoutSeconds 60
       - name: Focused and startup regressions
         shell: pwsh
         run: ./TEST_ROOM_SCALE.ps1 -Mode Fast
@@ -38,5 +44,35 @@ jobs:
         if: failure()
         with:
           name: fast-failure-evidence
-          path: verification/stabilization/runs/fast
+          path: verification/stabilization/runs
+          if-no-files-found: ignore
+
+  civilization-smoke:
+    runs-on: windows-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        civilization: [clockwork, verdant]
+        room: [room_a, room_b]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: .tools
+          key: godot-windows-${{ hashFiles('SETUP_ROOM_SCALE.ps1') }}
+      - name: Import production assets
+        shell: pwsh
+        run: |
+          $godot = & ./SETUP_ROOM_SCALE.ps1 | Select-Object -Last 1
+          & $godot --headless --editor --path . --import
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Production civilization smoke
+        shell: pwsh
+        run: ./TEST_ROOM_SCALE_SMOKE.ps1 -Room '${{ matrix.room }}' -Civilization '${{ matrix.civilization }}' -TimeoutSeconds 360
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: civilization-${{ matrix.civilization }}-${{ matrix.room }}-failure
+          path: verification/poc15/${{ matrix.room }}
           if-no-files-found: ignore

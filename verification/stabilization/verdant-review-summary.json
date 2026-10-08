@@ -1,0 +1,145 @@
+{
+  "date": "2026-10-07",
+  "source_sha": "79d549bda5b31432a1d3540edeb5d1edc9c7af6e",
+  "synchronized_base": "a9af7a88d788944fb52d8a7383e953474bd09dd3",
+  "civilization_contract": "PASS exit 0",
+  "fast": "PASS exit 0",
+  "fast_python": "local .venv with repository-pinned ruff 0.15.20",
+  "production_smokes": [
+    {
+      "case": "clockwork-room-a",
+      "result": "PASS",
+      "log_sha256": "10a24535cf091fd86acfad4bd51d78431d1ddfac9b66e8f81e61605c93fb8403",
+      "markers": [
+        "ROOMSCALE_M2_SMOKE_PASS room=room_a citizens=50 active=47 available=2 moving=45 obstacles=11 detour=150.0in",
+        "ROOMSCALE_M3_SMOKE_PASS room=room_a selected=Desk investigators=2 arrived=2 barrier=no navigation connection between FLOOR and STUDY_SURFACE elapsed=18.25s",
+        "ROOMSCALE_M4_SMOKE_PASS room=room_a deliveries=11 delivered={ \"wood\": 4, \"metal\": 4, \"mechanical_parts\": 3 } builders_returned=true gates=3 components=3 site=(2.0, 0.0, -52.0) elapsed=54.50s",
+        "ROOMSCALE_M5_SMOKE_PASS room=room_a cable_segments=8 radius=0.04in partial_deploy=true traverser=Citizen04 height=30.0in walked=87.5in route=87.2in max_step=1.34in max_step_interval=0.206s max_sample_speed=6.50in/s speed_sample_interval=0.204s speed_cap=6.5in/s step_tolerance=0.25in elapsed=13.60s",
+        "ROOMSCALE_M6_SMOKE_PASS room=room_a arrivals=3 explorations=3 reused=2 distinct_travelers=3 work=12.0s persistent_link=true combined_max_step=1.36in max_step_interval=0.210s max_sample_speed=6.50in/s speed_sample_interval=0.200s speed_cap=6.5in/s step_tolerance=0.25in elapsed=140.60s budget=309.96s",
+        "ROOMSCALE_M8_SMOKE_PASS room=room_a steam=true cog_teeth=8 citizen_inspection=true camera_easing=verified",
+        "ROOMSCALE_CIVILIZATION_SMOKE_PASS civilization=clockwork production_scene=true identity=true traversal_geometry=true deployment_cursor=true presentation_read_only=true"
+      ],
+      "engine_errors": false
+    },
+    {
+      "case": "verdant-room-a",
+      "result": "PASS",
+      "log_sha256": "1252b5a62e135361be2425a8248898f4510af7b5fb5a98cc1d1f0a6b984c43fa",
+      "markers": [
+        "ROOMSCALE_M2_SMOKE_PASS room=room_a citizens=50 active=47 available=2 moving=46 obstacles=11 detour=150.0in",
+        "ROOMSCALE_M3_SMOKE_PASS room=room_a selected=Desk investigators=2 arrived=2 barrier=no navigation connection between FLOOR and STUDY_SURFACE elapsed=18.25s",
+        "ROOMSCALE_M4_SMOKE_PASS room=room_a deliveries=11 delivered={ \"wood\": 4, \"metal\": 4, \"mechanical_parts\": 3 } builders_returned=true gates=3 components=3 site=(2.0, 0.0, -52.0) elapsed=54.25s",
+        "ROOMSCALE_M5_SMOKE_PASS room=room_a cable_segments=8 radius=0.04in partial_deploy=true traverser=Citizen03 height=30.0in walked=87.5in route=86.5in max_step=1.35in max_step_interval=0.208s max_sample_speed=6.50in/s speed_sample_interval=0.205s speed_cap=6.5in/s step_tolerance=0.25in elapsed=13.60s",
+        "ROOMSCALE_M6_SMOKE_PASS room=room_a arrivals=3 explorations=3 reused=2 distinct_travelers=3 work=12.0s persistent_link=true combined_max_step=1.36in max_step_interval=0.209s max_sample_speed=6.50in/s speed_sample_interval=0.208s speed_cap=6.5in/s step_tolerance=0.25in elapsed=140.60s budget=309.98s",
+        "ROOMSCALE_M8_SMOKE_PASS room=room_a steam=true cog_teeth=8 citizen_inspection=true camera_easing=verified",
+        "ROOMSCALE_CIVILIZATION_SMOKE_PASS civilization=verdant production_scene=true identity=true traversal_geometry=true deployment_cursor=true presentation_read_only=true"
+      ],
+      "engine_errors": false
+    },
+    {
+      "case": "clockwork-room-b",
+      "result": "PASS",
+      "log_sha256": "0168e2104f1bc93beb601a9fadb5080976d0fa8e6b1123e1c16c61071dc762b7",
+      "markers": [
+        "ROOMSCALE_M2_SMOKE_PASS room=room_b citizens=50 active=47 available=2 moving=45 obstacles=12 detour=129.4in",
+        "ROOMSCALE_M3_SMOKE_PASS room=room_b selected=Elevated Workbench investigators=2 arrived=2 barrier=no navigation connection between FLOOR and BENCH_SURFACE elapsed=20.25s",
+        "ROOMSCALE_M4_SMOKE_PASS room=room_b deliveries=11 delivered={ \"wood\": 4, \"metal\": 4, \"mechanical_parts\": 3 } builders_returned=true gates=3 components=3 site=(124.0, 0.0, -64.0) elapsed=76.50s",
+        "ROOMSCALE_M5_SMOKE_PASS room=room_b cable_segments=8 radius=0.04in partial_deploy=true traverser=Citizen37 height=36.0in walked=82.3in route=81.2in max_step=1.35in max_step_interval=0.208s max_sample_speed=6.50in/s speed_sample_interval=0.207s speed_cap=6.5in/s step_tolerance=0.25in elapsed=12.80s",
+        "ROOMSCALE_M6_SMOKE_PASS room=room_b arrivals=3 explorations=3 reused=2 distinct_travelers=3 work=12.0s persistent_link=true combined_max_step=1.36in max_step_interval=0.209s max_sample_speed=6.50in/s speed_sample_interval=0.203s speed_cap=6.5in/s step_tolerance=0.25in elapsed=143.40s budget=315.28s",
+        "ROOMSCALE_M8_SMOKE_PASS room=room_b steam=true cog_teeth=8 citizen_inspection=true camera_easing=verified",
+        "ROOMSCALE_CIVILIZATION_SMOKE_PASS civilization=clockwork production_scene=true identity=true traversal_geometry=true deployment_cursor=true presentation_read_only=true"
+      ],
+      "engine_errors": false
+    },
+    {
+      "case": "verdant-room-b",
+      "result": "PASS",
+      "log_sha256": "1f2c53e68ad5bceb92bb7dc10c7413b0cf5f205ec84e7e2830d124909ffac10c",
+      "markers": [
+        "ROOMSCALE_M2_SMOKE_PASS room=room_b citizens=50 active=47 available=2 moving=45 obstacles=12 detour=129.4in",
+        "ROOMSCALE_M3_SMOKE_PASS room=room_b selected=Elevated Workbench investigators=2 arrived=2 barrier=no navigation connection between FLOOR and BENCH_SURFACE elapsed=20.25s",
+        "ROOMSCALE_M4_SMOKE_PASS room=room_b deliveries=11 delivered={ \"wood\": 4, \"metal\": 4, \"mechanical_parts\": 3 } builders_returned=true gates=3 components=3 site=(124.0, 0.0, -64.0) elapsed=74.50s",
+        "ROOMSCALE_M5_SMOKE_PASS room=room_b cable_segments=8 radius=0.04in partial_deploy=true traverser=Citizen04 height=36.0in walked=82.3in route=81.2in max_step=1.35in max_step_interval=0.207s max_sample_speed=6.50in/s speed_sample_interval=0.207s speed_cap=6.5in/s step_tolerance=0.25in elapsed=12.80s",
+        "ROOMSCALE_M6_SMOKE_PASS room=room_b arrivals=3 explorations=3 reused=2 distinct_travelers=3 work=12.0s persistent_link=true combined_max_step=1.37in max_step_interval=0.211s max_sample_speed=6.50in/s speed_sample_interval=0.203s speed_cap=6.5in/s step_tolerance=0.25in elapsed=144.00s budget=316.47s",
+        "ROOMSCALE_M8_SMOKE_PASS room=room_b steam=true cog_teeth=8 citizen_inspection=true camera_easing=verified",
+        "ROOMSCALE_CIVILIZATION_SMOKE_PASS civilization=verdant production_scene=true identity=true traversal_geometry=true deployment_cursor=true presentation_read_only=true"
+      ],
+      "engine_errors": false
+    }
+  ],
+  "renderer_review": "PASS 4/4; final artifacts inspected at room, settlement and citizen scales, including earned development, real materials and actual climbing",
+  "renderer_run": "https://github.com/denni1cd/roomscale/actions/runs/37688360891",
+  "local_smoke_source_sha": "ba9f428bd5e4c14954b61547c7ce1515fa8d2b1a",
+  "local_contract_directory": "verification/stabilization/runs/verdant-review/final-support/contracts",
+  "local_fast_directory": "verification/stabilization/runs/verdant-review/render-polish",
+  "hosted_quality": {
+    "source_sha": "79d549bda5b31432a1d3540edeb5d1edc9c7af6e",
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/denni1cd/roomscale/actions/runs/37688360747",
+    "jobs": [
+      {
+        "name": "fast",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/denni1cd/roomscale/actions/runs/37688360747/job/113021906214"
+      },
+      {
+        "name": "civilization-smoke (clockwork, room_b)",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/denni1cd/roomscale/actions/runs/37688360747/job/113021906487"
+      },
+      {
+        "name": "civilization-smoke (verdant, room_b)",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/denni1cd/roomscale/actions/runs/37688360747/job/113021906500"
+      },
+      {
+        "name": "civilization-smoke (verdant, room_a)",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/denni1cd/roomscale/actions/runs/37688360747/job/113021906563"
+      },
+      {
+        "name": "civilization-smoke (clockwork, room_a)",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/denni1cd/roomscale/actions/runs/37688360747/job/113021906596"
+      }
+    ]
+  },
+  "hosted_renderer": {
+    "source_sha": "79d549bda5b31432a1d3540edeb5d1edc9c7af6e",
+    "status": "completed",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "renderer-evidence (verdant, room_a, 0)",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/denni1cd/roomscale/actions/runs/37688360891/job/113021907069"
+      },
+      {
+        "name": "renderer-evidence (clockwork, room_a, 0)",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/denni1cd/roomscale/actions/runs/37688360891/job/113021907419"
+      },
+      {
+        "name": "renderer-evidence (verdant, room_poc47, 1)",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/denni1cd/roomscale/actions/runs/37688360891/job/113021907485"
+      },
+      {
+        "name": "renderer-evidence (clockwork, room_poc47, 1)",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/denni1cd/roomscale/actions/runs/37688360891/job/113021907521"
+      }
+    ]
+  },
+  "evidence_manifest": "verification/stabilization/verdant-renderer-evidence.json"
+}

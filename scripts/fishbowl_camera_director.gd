@@ -73,7 +73,7 @@ func choose() -> Dictionary:
 			if citizen.state == "WORK" and citizen.task_type == "CONSTRUCTION_BUILD":
 				return activity(citizen, "CONSTRUCTION AT WORK", "A citizen assembles the colony's infrastructure")
 	if simulation.construction.project_created and not simulation.construction.traversal_deployed:
-		return {"key": "traversal", "focus": simulation.construction.site_position + Vector3.UP * 3, "distance": 45.0, "event": event_id, "headline": "EXPEDITION TO THE DESK", "subtitle": "Building a grapple route to the water supply"}
+		return {"key": "traversal", "focus": simulation.construction.site_position + Vector3.UP * 3, "distance": 45.0, "event": event_id, "headline": "EXPEDITION TO THE DESK", "subtitle": Adapter.presentation_text("Building a grapple route to the water supply")}
 	if not simulation.development.active.is_empty():
 		var p: Dictionary = simulation.development.active
 		return {"key": String(p.id), "focus": p.site + Vector3(0, 2, 3), "distance": 30.0, "event": event_id, "headline": Adapter.module_name(p).to_upper(), "subtitle": Adapter.module_name(p) + " under construction"}
@@ -85,7 +85,7 @@ func choose() -> Dictionary:
 	return {"key": "settlement", "focus": simulation.development.center() + Vector3.UP * 3, "distance": 115.0, "event": event_id, "headline": "LIFE IN THE SETTLEMENT", "subtitle": "%d citizens · Working, carrying and resting" % simulation.citizens.size()}
 
 func activity(citizen: Node3D, headline: String, subtitle: String) -> Dictionary:
-	return {"key": "citizen:%d:%s" % [citizen.citizen_id, citizen.task_type], "citizen": citizen.citizen_id, "activity_task": citizen.task_type, "focus": citizen.global_position + Vector3.UP * 0.25, "distance": 6.0, "event": event_id, "headline": headline, "subtitle": subtitle}
+	return {"key": "citizen:%d:%s" % [citizen.citizen_id, citizen.task_type], "citizen": citizen.citizen_id, "activity_task": citizen.task_type, "focus": citizen.global_position + Vector3.UP * 0.25, "distance": 6.0, "event": event_id, "headline": Adapter.presentation_text(headline), "subtitle": Adapter.presentation_text(subtitle)}
 
 func advance(delta: float) -> void:
 	if not enabled or not is_instance_valid(simulation): return

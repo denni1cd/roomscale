@@ -37,8 +37,13 @@ func _run() -> void:
 		_fail("main scene did not instantiate as Node3D")
 		return
 	root.add_child(scene)
+	# Autoload presentation observes the real active production scene, just as
+	# it does in a normal game launch. Adding a root child alone leaves it unset.
+	current_scene = scene
 	await process_frame
 	await physics_frame
+	if not _verify_initial_civilization_presentation(scene):
+		return
 	if not await _capture_visual(scene, "initial-room", floor_start, 330.0):
 		return
 	var expected_room := String(definition.id)
@@ -337,6 +342,8 @@ func _run() -> void:
 	var grapple_visual_saved := false
 	var deployment_wait := 0.0
 	while not construction.status().cable_deployed and deployment_wait < 8.0:
+		if not _verify_traversal_presentation(scene, construction, surface_navigation, goal_region):
+			return
 		if surface_navigation.has_connection("FLOOR", goal_region) and not construction.status().cable_deployed:
 			_fail("navigation connection activated before visible cable attachment and settling")
 			return
@@ -359,6 +366,8 @@ func _run() -> void:
 		deployment_wait += 0.04
 	if not construction.status().cable_deployed or not partial_deployment_seen:
 		_fail("grapple did not deploy visibly over time")
+		return
+	if not _verify_traversal_presentation(scene, construction, surface_navigation, goal_region):
 		return
 	if not await _capture_visual(scene, "grapple-complete", site + Vector3.UP * 5.0, 32.0, 32.0, 0.6, true, true):
 		return
@@ -594,6 +603,8 @@ func _run() -> void:
 	if not final_route.reachable or final_route.path.size() < 12 or cable_root.get_child_count() < 7:
 		_fail("session infrastructure failed to preserve a usable traversal route: route=%s cable_nodes=%d floor_site=%s target=%s" % [final_route, cable_root.get_child_count(), site, goal_surface.anchor])
 		return
+	if not _verify_traversal_presentation(scene, construction, surface_navigation, goal_region):
+		return
 	if not _visual_directory.is_empty():
 		for phase in ["initial-room", "living-civilization", "settlement-close", "citizen-close", "resource-carry-close", "builder-close", "citizen-climb-close", "elevated-citizen-close", "grapple-complete", "citizen-inspection", "target-investigation", "resource-hauling", "construction", "grapple-deployment", "citizen-traversal", "citizen-traversal-detail", "elevated-surface-exploration", "elevated-surface-exploration-detail"]:
 			if not _visual_phase_enabled(phase):
@@ -610,7 +621,109 @@ func _run() -> void:
 	print("ROOMSCALE_M5_SMOKE_PASS room=%s cable_segments=%d radius=%.2fin partial_deploy=true traverser=%s height=%.1fin walked=%.1fin route=%.1fin max_step=%.2fin max_step_interval=%.3fs max_sample_speed=%.2fin/s speed_sample_interval=%.3fs speed_cap=%.1fin/s step_tolerance=0.25in elapsed=%.2fs" % [expected_room, cable_segments, largest_cable_radius, climber.name, climber.global_position.y, completed_traversal.actual_travelled_distance, completed_traversal.route_length, max_step, max_step_seconds, max_sample_speed, max_sample_seconds, M6_CITIZEN_WALK_SPEED, traversal_elapsed])
 	print("ROOMSCALE_M6_SMOKE_PASS room=%s arrivals=%d explorations=%d reused=%d distinct_travelers=%d work=%.1fs persistent_link=true combined_max_step=%.2fin max_step_interval=%.3fs max_sample_speed=%.2fin/s speed_sample_interval=%.3fs speed_cap=%.1fin/s step_tolerance=0.25in elapsed=%.2fs budget=%.2fs" % [expected_room, m6_status.target_arrivals, m6_status.target_explorations_completed, m6_status.autonomous_reuses_assigned, owners.size(), total_exploration_work, m6_max_step, m6_max_step_seconds, m6_max_sample_speed, m6_max_sample_seconds, M6_CITIZEN_WALK_SPEED, m6_elapsed, m6_timeout])
 	print("ROOMSCALE_M8_SMOKE_PASS room=%s steam=%s cog_teeth=%d citizen_inspection=%s camera_easing=verified" % [expected_room, steam.emitting, gears.get_child_count() - 2, inspection_verified])
+	print("ROOMSCALE_CIVILIZATION_SMOKE_PASS civilization=%s production_scene=true identity=true traversal_geometry=true deployment_cursor=true presentation_read_only=true" % String(scene.get_meta("civilization_definition", {}).get("id", "")))
 	quit(0)
+
+
+func _verify_initial_civilization_presentation(scene: Node3D) -> bool:
+	var requested := OS.get_environment("ROOMSCALE_CIVILIZATION").strip_edges().to_lower()
+	if requested.is_empty():
+		requested = "clockwork"
+	var definition: Dictionary = scene.get_meta("civilization_definition", {})
+	var banner := scene.get_node_or_null("Overlay/CivilizationBanner") as Label
+	if current_scene != scene or String(definition.get("id", "")) != requested or banner == null or not banner.text.contains(String(definition.get("display_name", ""))):
+		_fail("active production scene did not initialize selected civilization presentation: requested=%s definition=%s" % [requested, definition])
+		return false
+	if requested == "verdant":
+		if not scene.has_node("VerdantInfluence") or not scene.has_node("Settlement/Workshop/VerdantOverlay") or not scene.has_node("Citizen01/Figure/AcornCap"):
+			_fail("Verdant smoke must exercise the real settlement, citizen and reclamation presentation")
+			return false
+	else:
+		if not _verify_no_verdant_presentation(scene):
+			return false
+	return true
+
+
+func _verify_no_verdant_presentation(scene: Node3D) -> bool:
+	for path in ["VerdantInfluence", "VerdantConstructionSite", "VerdantTraversal", "Settlement/Workshop/VerdantOverlay", "Citizen01/Figure/AcornCap"]:
+		if scene.has_node(path):
+			_fail("Clockwork production scene contains Verdant presentation residue: %s" % path)
+			return false
+	return true
+
+
+func _verify_traversal_presentation(scene: Node3D, construction: Node, surface_navigation: Node, goal_region: String) -> bool:
+	var definition: Dictionary = scene.get_meta("civilization_definition", {})
+	if String(definition.get("id", "")) != "verdant":
+		return _verify_no_verdant_presentation(scene)
+	var presenter := root.get_node("CivilizationPresentation")
+	var status_before: Dictionary = construction.status().duplicate(true)
+	var path: Array[Vector3] = construction.get("_deployment_path").duplicate()
+	var cursor := int(construction.get("_deployment_cursor"))
+	var connected_before: bool = surface_navigation.has_connection("FLOOR", goal_region)
+	# The smoke samples at 0.04s, faster than the visual refresh cadence. Refresh
+	# presentation atomically from real current state without advancing gameplay.
+	presenter._refresh_verdant_project(scene)
+	if construction.status() != status_before or construction.get("_deployment_path") != path or int(construction.get("_deployment_cursor")) != cursor or surface_navigation.has_connection("FLOOR", goal_region) != connected_before:
+		_fail("Verdant presentation changed production construction or navigation state")
+		return false
+	var vine := scene.get_node_or_null("VerdantTraversal") as Node3D
+	var old_cable := scene.get_node_or_null("DeployedGrappleCable") as Node3D
+	if path.size() < 2 or vine == null or old_cable == null or old_cable.visible:
+		_fail("real Verdant deployment must present a living vine while retaining the hidden production cable")
+		return false
+	var coarse_segments: Array = construction.get("_deployment_segments")
+	var deployed := bool(construction.get("traversal_deployed"))
+	var vine_segment_count := 0
+	for child in vine.get_children():
+		if String(child.name).begins_with("VineSegment"):
+			vine_segment_count += 1
+	if vine_segment_count != path.size() - 1:
+		_fail("living vine must follow every segment of the real production route")
+		return false
+	for index in range(1, path.size()):
+		var segment_root := vine.get_node_or_null("VineSegment%03d" % index) as Node3D
+		var stem := segment_root.get_node_or_null("Stem") as MeshInstance3D if segment_root != null else null
+		if stem == null or not (stem.mesh is CylinderMesh):
+			_fail("living vine route segment %d is missing its stem" % index)
+			return false
+		var endpoints := _cylinder_endpoints(stem)
+		if endpoints[0].distance_to(path[index - 1]) > 0.001 or endpoints[1].distance_to(path[index]) > 0.001:
+			_fail("living vine stem %d does not meet the authoritative traversal endpoints" % index)
+			return false
+		var expected_visible := true
+		var midpoint := (path[index - 1] + path[index]) * 0.5
+		for coarse_index in range(coarse_segments.size()):
+			var coarse_endpoints := _cylinder_endpoints(coarse_segments[coarse_index] as MeshInstance3D)
+			if midpoint.distance_to(Geometry3D.get_closest_point_to_segment(midpoint, coarse_endpoints[0], coarse_endpoints[1])) <= 0.001:
+				expected_visible = deployed or cursor > coarse_index
+				break
+		if segment_root.visible != expected_visible:
+			_fail("living vine segment %d visibility does not match real deployment cursor %d" % [index, cursor])
+			return false
+	var anchor := vine.get_node_or_null("LivingSurfaceAnchor") as Node3D
+	var target_anchor: Vector3 = construction.get("target_anchor")
+	if anchor == null or anchor.global_position.distance_to(path.back()) > 0.001 or anchor.global_position.distance_to(target_anchor) > 0.001 or anchor.visible != (deployed or cursor >= coarse_segments.size()):
+		_fail("living vine anchor does not match the real endpoint and deployment state")
+		return false
+	if _has_collision_or_navigation(vine):
+		_fail("living vine presentation must not create collision or navigation authority")
+		return false
+	return true
+
+
+func _cylinder_endpoints(stem: MeshInstance3D) -> Array[Vector3]:
+	var mesh := stem.mesh as CylinderMesh
+	return [stem.global_transform * Vector3(0, -mesh.height * 0.5, 0), stem.global_transform * Vector3(0, mesh.height * 0.5, 0)]
+
+
+func _has_collision_or_navigation(node: Node) -> bool:
+	if node is CollisionObject3D or node is CollisionShape3D or node is NavigationRegion3D or node is NavigationLink3D:
+		return true
+	for child in node.get_children():
+		if _has_collision_or_navigation(child):
+			return true
+	return false
 
 
 func _moving_count(citizens: Array[Node3D]) -> int:

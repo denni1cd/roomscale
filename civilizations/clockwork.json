@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "id": "clockwork",
+  "display_name": "Clockwork",
+  "description": "Tiny industrial engineers who tame the room with brass, timber, gears, steam, and cable infrastructure.",
+  "citizen_style": "clockwork",
+  "settlement_style": "clockwork",
+  "traversal_style": "grapple_cable",
+  "palette": {
+    "primary": "8b643f",
+    "secondary": "4d6666",
+    "accent": "d1a14e",
+    "organic": "574537",
+    "glow": "e6ab59"
+  },
+  "resource_vocabulary": {
+    "wood": {"display_name": "Wood", "visual_style": "timber_bundle"},
+    "metal": {"display_name": "Metal", "visual_style": "metal_ingots"},
+    "mechanical_parts": {"display_name": "Mechanical Parts", "visual_style": "gear_crate"}
+  },
+  "construction": {
+    "project_name": "Grapple Project",
+    "stage_names": {
+      "base": "Base",
+      "winch": "Winch",
+      "launcher": "Launcher"
+    },
+    "traversal_name": "Grapple Cable"
+  },
+  "world_influence": {
+    "enabled": false,
+    "style": "industrial"
+  }
+}

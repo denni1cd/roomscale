@@ -1,5 +1,6 @@
 param(
-	[string]$Room = 'room_poc4'
+	[string]$Room = 'room_poc4',
+	[string]$Civilization = 'clockwork'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -13,14 +14,17 @@ if (-not $GodotExecutable -or -not (Test-Path -LiteralPath $GodotExecutable)) {
 $VisibleExecutable = $GodotExecutable -replace '_console\.exe$', '.exe'
 $PreviousRoom = [Environment]::GetEnvironmentVariable('ROOMSCALE_ROOM', 'Process')
 $PreviousRoomFile = [Environment]::GetEnvironmentVariable('ROOMSCALE_ROOM_FILE', 'Process')
+$PreviousCivilization = [Environment]::GetEnvironmentVariable('ROOMSCALE_CIVILIZATION', 'Process')
 $RunExitCode = 0
 try {
 	[Environment]::SetEnvironmentVariable('ROOMSCALE_ROOM', $SelectedRoom.RoomId, 'Process')
 	[Environment]::SetEnvironmentVariable('ROOMSCALE_ROOM_FILE', $(if ($SelectedRoom.IsExplicitFile) { $SelectedRoom.File } else { '' }), 'Process')
+	[Environment]::SetEnvironmentVariable('ROOMSCALE_CIVILIZATION', $Civilization.Trim().ToLowerInvariant(), 'Process')
 	& $VisibleExecutable --path $ProjectRoot
 	$RunExitCode = $LASTEXITCODE
 } finally {
 	[Environment]::SetEnvironmentVariable('ROOMSCALE_ROOM', $PreviousRoom, 'Process')
 	[Environment]::SetEnvironmentVariable('ROOMSCALE_ROOM_FILE', $PreviousRoomFile, 'Process')
+	[Environment]::SetEnvironmentVariable('ROOMSCALE_CIVILIZATION', $PreviousCivilization, 'Process')
 }
 exit $RunExitCode
