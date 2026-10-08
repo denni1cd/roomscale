@@ -65,7 +65,7 @@ func evaluate(world: Node, site_id: String) -> Dictionary:
 	if participants.size() < 2:
 		return _store({"site_id":site_id,"score":0.0,"intensity":PEACE,"intensity_name":"PEACE","cause":"NONE","resource":"","objective":"COEXIST","per_civilization":{}})
 
-	var benefits: Dictionary = site.get("benefits", {})
+	var benefits: Dictionary = world.scenario.get("site_benefits", site.get("benefits", {}))
 	var per_civilization := {}
 	for id in participants:
 		per_civilization[id] = {"space":0.0,"resources":{},"secured_space":0.0}
@@ -167,6 +167,9 @@ func _secured_space_capacity(world: Node, instance_id: String, population: int) 
 					break
 		break
 	for site in world.territory.sites.values():
-		if String(site.owner_civilization_id) == instance_id:
-			capacity += float(site.get("benefits", {}).get("space_capacity", 0.0))
+		if String(site.owner_civilization_id) != instance_id: continue
+		var benefits: Dictionary = site.get("benefits", {})
+		if String(site.site_id) == String(world.scenario.get("strategic_site", "")):
+			benefits = world.scenario.get("site_benefits", benefits)
+		capacity += float(benefits.get("space_capacity", 0.0))
 	return capacity
