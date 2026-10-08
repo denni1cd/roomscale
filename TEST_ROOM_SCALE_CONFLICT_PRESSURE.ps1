@@ -18,6 +18,7 @@ $environment = @{
 $arguments = @('--headless','--path',$root,'--script','res://scripts/conflict_pressure_test.gd')
 $execution = Invoke-RoomScaleProcess -FilePath $godot -ArgumentList $arguments -ProjectRoot $root -LogPath $logPath -Environment $environment -TimeoutSeconds $TimeoutSeconds
 if ($execution.TimedOut -or $execution.ExitCode -ne 0 -or $execution.Content -match 'ERROR:|SCRIPT ERROR:|ROOMSCALE_CONFLICT_PRESSURE_FAIL' -or $execution.Content -notmatch 'ROOMSCALE_CONFLICT_PRESSURE_PASS') {
+    Write-Host $execution.Content
     throw "Conflict pressure test failed; inspect $logPath"
 }
 Write-Output "ROOMSCALE_CONFLICT_PRESSURE_PASS log=$logPath"
