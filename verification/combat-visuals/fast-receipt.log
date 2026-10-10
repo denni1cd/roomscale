@@ -1,0 +1,51 @@
+All checks passed!
+6 files already formatted
+fixture ERROR Engine/script/process error; inspect run.log wall=0.005s
+fixture REJECTED Generator invalid: insufficient feasibility certificate wall=0.006s
+fixture ERROR Engine/script/process error; inspect run.log wall=0.002s
+fixture PASS  wall=0.005s
+fixture ERROR Wall-clock timeout; production process killed after 3600s wall=0.001s
+fixture ERROR Wall-clock timeout; production process killed after 3600s wall=0.002s
+fixture ERROR Engine/script/process error; inspect run.log wall=0.002s
+fixture ERROR Engine/script/process error; inspect run.log wall=0.006s
+fixture ERROR Engine/script/process error; inspect run.log wall=0.002s
+fixture ERROR Engine/script/process error; inspect run.log wall=0.005s
+fixture ERROR Engine/script/process error; inspect run.log wall=0.007s
+fixture ERROR Engine/script/process error; inspect run.log wall=0.005s
+fixture ERROR Engine/script/process error; inspect run.log wall=0.002s
+fixture ERROR Engine/script/process error; inspect run.log wall=0.007s
+{"evidence_consistency_errors": ["Missing/failed regression: room-definition-fast.log", "Missing/failed regression: navigation.log", "Missing/failed regression: unreachable.log", "Missing/failed regression: midlink.log", "Incomplete required regression set", "Fewer than 30 admitted core positives", "Named case missing", "Missing founder soaks", "Determinism failed or incomplete"]}
+..............
+----------------------------------------------------------------------
+Ran 14 tests in 0.407s
+
+OK
+ROOMSCALE_TOOLING_PASS quoting utf8 environment failure timeout
+Godot runtime ready: 4.7.2.stable.official.ed1daf0bf
+Executable: C:\Users\Zero\python_projects\ai\roomscale\.tools\godot-4.7.2\Godot_v4.7.2-stable_win64_console.exe
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ROOMSCALE_CIVILIZATION_PROFILE id=clockwork name=Clockwork citizen_style=clockwork settlement_style=clockwork traversal_style=grapple_cable
+ROOMSCALE_FLOOR_NAV_READY room=room_a grid=60x45 cell=4in obstacles=11
+ROOMSCALE_FLOOR_NAV_READY room=room_b grid=65x55 cell=4in obstacles=12
+ROOMSCALE_FLOOR_NAV_READY room=m2_fixture grid=60x45 cell=4in obstacles=11
+ROOMSCALE_FAST_TEST_PASS rooms=2 legacy_schema=verified schema_v2=verified malformed_cases=29 candidate_file=verified obstacles=generated rotated_bounds=verified rotated_approaches=verified elevated_floor=verified elevated_nonblocking_objects=verified room_shell_openings=verified exterior_scene=verified ceiling_crown=verified generic_appearance=verified targets=discovered sites=reachable runtime_navigation=validated region_connectivity=verified task_history=500/500
+
+
+Godot runtime ready: 4.7.2.stable.official.ed1daf0bf
+Executable: C:\Users\Zero\python_projects\ai\roomscale\.tools\godot-4.7.2\Godot_v4.7.2-stable_win64_console.exe
+fast PASS seconds=0.76
+POC47_BATCH_PASS runs=1
+Godot runtime ready: 4.7.2.stable.official.ed1daf0bf
+Executable: C:\Users\Zero\python_projects\ai\roomscale\.tools\godot-4.7.2\Godot_v4.7.2-stable_win64_console.exe
+ROOMSCALE_EVIDENCE_IO_PASS log=C:\Users\Zero\python_projects\ai\roomscale\verification\combat-visuals\fast\fast\verification\evidence_io_test.log
+STABILIZATION_CORE_PASS log=C:\Users\Zero\python_projects\ai\roomscale\verification\combat-visuals\fast\fast\stabilization_core_test.log
+Godot runtime ready: 4.7.2.stable.official.ed1daf0bf
+Executable: C:\Users\Zero\python_projects\ai\roomscale\.tools\godot-4.7.2\Godot_v4.7.2-stable_win64_console.exe
+POC471_NAVIGATION_PASS log=C:\Users\Zero\python_projects\ai\roomscale\verification\combat-visuals\fast\fast\placement\poc471_navigation_test.log
+POC471_UNREACHABLE_PASS log=C:\Users\Zero\python_projects\ai\roomscale\verification\combat-visuals\fast\fast\placement\poc471_unreachable_task_test.log
+POC471_MIDLINK_PASS log=C:\Users\Zero\python_projects\ai\roomscale\verification\combat-visuals\fast\fast\placement\poc471_midlink_test.log
+POC472_PLANNER_PASS log=C:\Users\Zero\python_projects\ai\roomscale\verification\combat-visuals\fast\fast\placement\poc472_planner_test.log
+POC472_PACKING_PASS log=C:\Users\Zero\python_projects\ai\roomscale\verification\combat-visuals\fast\fast\placement\poc472_packing_test.log
+POC472_REGRESSIONS_PASS commands=6 mode=Focused
+ROOMSCALE_CATEGORY_PASS category=Fast output=C:\Users\Zero\python_projects\ai\roomscale\verification\combat-visuals\fast\fast
