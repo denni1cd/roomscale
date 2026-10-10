@@ -1,0 +1,512 @@
+{
+  "attacks": 55,
+  "battle_start_tick": 1316,
+  "captures": [
+    "01-two-societies",
+    "02-coexistence",
+    "03-contested-site",
+    "03-clockwork_alpha-march",
+    "03-verdant_alpha-march",
+    "04-battle",
+    "04-clockwork_alpha-weapon",
+    "04-verdant_alpha-weapon",
+    "05-retreat",
+    "06-captured-site",
+    "07-post-battle",
+    "08-clockwork_alpha-settlement",
+    "08-verdant_alpha-settlement",
+    "09-casualty"
+  ],
+  "casualties": {
+    "clockwork_alpha": 0,
+    "verdant_alpha": 1
+  },
+  "events": [
+    {
+      "day": 0.200166666666662,
+      "evidence": {
+        "instance_id": "clockwork_alpha"
+      },
+      "focus": "(-2.0, 0.0, 22.0)",
+      "id": 1,
+      "kind": "SITE_TARGETED",
+      "major": false,
+      "message": "clockwork_alpha explores the shared approach",
+      "seconds": 120.099999999997
+    },
+    {
+      "day": 0.200166666666662,
+      "evidence": {
+        "instance_id": "verdant_alpha"
+      },
+      "focus": "(-2.0, 0.0, 22.0)",
+      "id": 2,
+      "kind": "SITE_TARGETED",
+      "major": false,
+      "message": "verdant_alpha explores the shared approach",
+      "seconds": 120.099999999997
+    },
+    {
+      "day": 0.219333333333328,
+      "evidence": {
+        "participants": [
+          "clockwork_alpha",
+          "verdant_alpha"
+        ]
+      },
+      "focus": "(-2.0, 0.0, 22.0)",
+      "id": 3,
+      "kind": "FIRST_CONTACT",
+      "major": false,
+      "message": "Territorial encounter at frontier_cache",
+      "seconds": 131.599999999997
+    },
+    {
+      "day": 0.219333333333328,
+      "evidence": {
+        "site_id": "frontier_cache"
+      },
+      "focus": "(-2.0, 0.0, 22.0)",
+      "id": 4,
+      "kind": "SITE_CONTESTED",
+      "major": false,
+      "message": "Strategic site contested",
+      "seconds": 131.599999999997
+    },
+    {
+      "day": 0.219333333333328,
+      "evidence": {
+        "cause": "SPACE",
+        "intensity": 2,
+        "intensity_name": "LIMITED_WAR",
+        "objective": "SECURE_TERRITORY",
+        "per_civilization": {
+          "clockwork_alpha": {
+            "resources": {},
+            "secured_space": 11.0,
+            "space": 0.613636363636364
+          },
+          "verdant_alpha": {
+            "resources": {},
+            "secured_space": 11.0,
+            "space": 0.613636363636364
+          }
+        },
+        "policy": {
+          "allow_retreat": true,
+          "force_fraction": 0.25,
+          "max_force": 6,
+          "min_force": 2,
+          "objective": "SECURE_CONTESTED_ASSET",
+          "retreat_threshold": 0.7
+        },
+        "resource": "",
+        "score": 0.613636363636364,
+        "site_id": "frontier_cache"
+      },
+      "focus": "(-2.0, 0.0, 22.0)",
+      "id": 5,
+      "kind": "CONFLICT_PRESSURE_CHANGED",
+      "major": false,
+      "message": "Conflict pressure is LIMITED_WAR because of SPACE",
+      "seconds": 131.599999999997
+    },
+    {
+      "day": 0.219333333333328,
+      "evidence": {
+        "cause": "SPACE",
+        "intensity": 2,
+        "intensity_name": "LIMITED_WAR",
+        "objective": "SECURE_TERRITORY",
+        "participants": [
+          "clockwork_alpha",
+          "verdant_alpha"
+        ],
+        "per_civilization": {
+          "clockwork_alpha": {
+            "resources": {},
+            "secured_space": 11.0,
+            "space": 0.613636363636364
+          },
+          "verdant_alpha": {
+            "resources": {},
+            "secured_space": 11.0,
+            "space": 0.613636363636364
+          }
+        },
+        "policy": {
+          "allow_retreat": true,
+          "force_fraction": 0.25,
+          "max_force": 6,
+          "min_force": 2,
+          "objective": "SECURE_CONTESTED_ASSET",
+          "retreat_threshold": 0.7
+        },
+        "resource": "",
+        "score": 0.613636363636364,
+        "site_id": "frontier_cache"
+      },
+      "focus": "(-2.0, 0.0, 22.0)",
+      "id": 6,
+      "kind": "HOSTILITY_DECLARED",
+      "major": false,
+      "message": "Scarcity escalates competing claims to hostility",
+      "seconds": 131.599999999997
+    },
+    {
+      "day": 0.219333333333328,
+      "evidence": {
+        "cause": "SPACE",
+        "instance_id": "clockwork_alpha",
+        "intensity": "LIMITED_WAR",
+        "objective": "SECURE_TERRITORY",
+        "size": 3
+      },
+      "focus": "(-2.0, 0.0, 22.0)",
+      "id": 7,
+      "kind": "FORCE_COMMITTED",
+      "major": false,
+      "message": "clockwork_alpha committed citizens",
+      "seconds": 131.599999999997
+    },
+    {
+      "day": 0.219333333333328,
+      "evidence": {
+        "cause": "SPACE",
+        "instance_id": "verdant_alpha",
+        "intensity": "LIMITED_WAR",
+        "objective": "SECURE_TERRITORY",
+        "size": 3
+      },
+      "focus": "(-2.0, 0.0, 22.0)",
+      "id": 8,
+      "kind": "FORCE_COMMITTED",
+      "major": false,
+      "message": "verdant_alpha committed citizens",
+      "seconds": 131.599999999997
+    },
+    {
+      "day": 0.222833333333328,
+      "evidence": {
+        "instance_id": "clockwork_alpha"
+      },
+      "focus": "(-2.0, 0.0, 22.0)",
+      "id": 9,
+      "kind": "FORCE_ARRIVED",
+      "major": false,
+      "message": "clockwork_alpha physically arrived",
+      "seconds": 133.699999999997
+    },
+    {
+      "day": 0.236333333333327,
+      "evidence": {
+        "instance_id": "verdant_alpha"
+      },
+      "focus": "(-2.0, 0.0, 22.0)",
+      "id": 10,
+      "kind": "FORCE_ARRIVED",
+      "major": false,
+      "message": "verdant_alpha physically arrived",
+      "seconds": 141.799999999996
+    },
+    {
+      "day": 0.252833333333326,
+      "evidence": {
+        "citizen_id": 13,
+        "instance_id": "verdant_alpha"
+      },
+      "focus": "(2.0, 0.0, 20.0)",
+      "id": 11,
+      "kind": "COMBAT_CASUALTY",
+      "major": false,
+      "message": "Citizen 13 fell",
+      "seconds": 151.699999999996
+    },
+    {
+      "day": 0.252833333333326,
+      "evidence": {
+        "instance_id": "verdant_alpha",
+        "intensity": "LIMITED_WAR",
+        "morale": {
+          "clockwork_alpha": 0.865,
+          "verdant_alpha": 0.581666666666667
+        }
+      },
+      "focus": "(-2.0, 0.0, 22.0)",
+      "id": 12,
+      "kind": "RETREAT",
+      "major": false,
+      "message": "verdant_alpha morale broke; returning to rally",
+      "seconds": 151.699999999996
+    },
+    {
+      "day": 0.269999999999992,
+      "evidence": {
+        "site_id": "frontier_cache",
+        "winner": "clockwork_alpha"
+      },
+      "focus": "(-2.0, 0.0, 22.0)",
+      "id": 13,
+      "kind": "SITE_CAPTURED",
+      "major": false,
+      "message": "clockwork_alpha secured frontier_cache",
+      "seconds": 161.999999999995
+    }
+  ],
+  "failures": [],
+  "final_tick": 2620,
+  "first_contact_tick": 1316,
+  "force_sizes": {
+    "clockwork_alpha": 3,
+    "verdant_alpha": 3
+  },
+  "living_populations": {
+    "clockwork_alpha": 12,
+    "verdant_alpha": 11
+  },
+  "max_step": 0.650005340576172,
+  "morale": {
+    "clockwork_alpha": 0.865,
+    "verdant_alpha": 0.581666666666667
+  },
+  "result": "PASS",
+  "retreating_side": "verdant_alpha",
+  "returned": {
+    "clockwork_alpha": 3,
+    "verdant_alpha": 2
+  },
+  "room": "room_conflict",
+  "site_capture_tick": 1620,
+  "societies": {
+    "clockwork_alpha": {
+      "deliveries": 25,
+      "projects": [
+        {
+          "completed": 169.899999999995,
+          "created": 45.0000000000004,
+          "delivered": {
+            "metal": 0.0,
+            "wood": 4.0
+          },
+          "delivery_distance": 27.7999572753897,
+          "effect_applied": true,
+          "id": "clockwork_alpha_development_001",
+          "kind": "shelter",
+          "required": {
+            "metal": 0,
+            "wood": 4
+          },
+          "required_work": 60.0,
+          "site": "(-26.0, 0.0, 48.0)",
+          "stage": "COMPLETE",
+          "state": "COMPLETE",
+          "target": "(-26.0, 0.0, 57.0)",
+          "work": 66.1000000000005,
+          "work_by_citizen": {
+            "7": 34.5000000000002,
+            "10": 31.6000000000002
+          }
+        },
+        {
+          "completed": 250.49999999999,
+          "created": 169.999999999995,
+          "delivered": {
+            "metal": 1.0,
+            "wood": 4.0
+          },
+          "delivery_distance": 14.749992370605,
+          "effect_applied": true,
+          "id": "clockwork_alpha_development_002",
+          "kind": "depot",
+          "required": {
+            "metal": 1,
+            "wood": 4
+          },
+          "required_work": 70.0,
+          "site": "(-26.0, 0.0, 68.0)",
+          "stage": "COMPLETE",
+          "state": "COMPLETE",
+          "target": "(-26.0, 0.0, 59.0)",
+          "work": 70.0000000000003,
+          "work_by_citizen": {
+            "8": 34.9000000000002,
+            "9": 35.1000000000002
+          }
+        },
+        {
+          "completed": -1.0,
+          "created": 254.99999999999,
+          "delivered": {
+            "metal": 3.0,
+            "wood": 8.0
+          },
+          "delivery_distance": 149.125365585086,
+          "effect_applied": false,
+          "id": "clockwork_alpha_development_003",
+          "kind": "workshop",
+          "required": {
+            "metal": 4,
+            "wood": 8
+          },
+          "required_work": 100.0,
+          "site": "(-46.0, 0.0, 56.0)",
+          "stage": "FOUNDATION",
+          "state": "WAITING_FOR_MATERIALS",
+          "target": "(-36.0, 0.0, 56.0)",
+          "work": 0.0,
+          "work_by_citizen": {}
+        }
+      ],
+      "status": {
+        "days": 0.436666666666652,
+        "drinks": 13,
+        "economy": {
+          "food": {
+            "available": 72.0,
+            "consumed": 12.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 64.0,
+            "reserved": 0.0
+          },
+          "metal": {
+            "available": 0.0,
+            "consumed": 1.0,
+            "delivered": 3.0,
+            "in_transit": 0.0,
+            "received": 4.0,
+            "reserved": 0.0
+          },
+          "water": {
+            "available": 113.0,
+            "consumed": 13.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 96.0,
+            "reserved": 0.0
+          },
+          "wood": {
+            "available": 17.0,
+            "consumed": 8.0,
+            "delivered": 8.0,
+            "in_transit": 0.0,
+            "received": 33.0,
+            "reserved": 0.0
+          }
+        },
+        "food_days": 3.0,
+        "meals": 12,
+        "population": 12,
+        "resting": 1,
+        "rests": 1,
+        "shelter": 5,
+        "urgent": 0,
+        "water_days": 3.13888888888889
+      }
+    },
+    "verdant_alpha": {
+      "deliveries": 23,
+      "projects": [
+        {
+          "completed": 195.199999999993,
+          "created": 75.0,
+          "delivered": {
+            "metal": 0.0,
+            "wood": 4.0
+          },
+          "delivery_distance": 27.7999572753897,
+          "effect_applied": true,
+          "id": "verdant_alpha_development_001",
+          "kind": "shelter",
+          "required": {
+            "metal": 0,
+            "wood": 4
+          },
+          "required_work": 60.0,
+          "site": "(42.0, 0.0, 48.0)",
+          "stage": "COMPLETE",
+          "state": "COMPLETE",
+          "target": "(42.0, 0.0, 57.0)",
+          "work": 60.0000000000006,
+          "work_by_citizen": {
+            "12": 29.5000000000001,
+            "14": 30.5000000000002
+          }
+        },
+        {
+          "completed": -1.0,
+          "created": 229.999999999991,
+          "delivered": {
+            "metal": 1.0,
+            "wood": 4.0
+          },
+          "delivery_distance": 14.7499923706055,
+          "effect_applied": false,
+          "id": "verdant_alpha_development_002",
+          "kind": "depot",
+          "required": {
+            "metal": 1,
+            "wood": 4
+          },
+          "required_work": 70.0,
+          "site": "(42.0, 0.0, 68.0)",
+          "stage": "FOUNDATION",
+          "state": "UNDER_CONSTRUCTION",
+          "target": "(42.0, 0.0, 59.0)",
+          "work": 15.2,
+          "work_by_citizen": {
+            "16": 7.69999999999999,
+            "17": 7.49999999999999
+          }
+        }
+      ],
+      "status": {
+        "days": 0.436666666666652,
+        "drinks": 14,
+        "economy": {
+          "food": {
+            "available": 66.0,
+            "consumed": 10.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 56.0,
+            "reserved": 0.0
+          },
+          "metal": {
+            "available": 3.0,
+            "consumed": 0.0,
+            "delivered": 1.0,
+            "in_transit": 0.0,
+            "received": 4.0,
+            "reserved": 0.0
+          },
+          "water": {
+            "available": 104.0,
+            "consumed": 14.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 88.0,
+            "reserved": 0.0
+          },
+          "wood": {
+            "available": 14.0,
+            "consumed": 4.0,
+            "delivered": 4.0,
+            "in_transit": 0.0,
+            "received": 22.0,
+            "reserved": 0.0
+          }
+        },
+        "food_days": 3.0,
+        "meals": 10,
+        "population": 11,
+        "resting": 3,
+        "rests": 0,
+        "shelter": 5,
+        "urgent": 0,
+        "water_days": 3.15151515151515
+      }
+    }
+  },
+  "winner": "clockwork_alpha"
+}

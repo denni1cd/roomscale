@@ -29,6 +29,7 @@ var status_label: Label
 var camera_phase := ""
 var attack_effects: Array[Dictionary] = []
 const G := preload("res://scripts/visuals/visual_geometry.gd")
+const CombatPresentation := preload("res://scripts/combat_presentation.gd")
 
 func configure(root: Node3D) -> void:
 	scene = root
@@ -175,30 +176,22 @@ func present_home(runtime: Node, at: Vector3) -> void:
 	marker.add_child(label)
 
 func present_attack(attacker: Node3D, victim: Node3D) -> void:
-	var root := Node3D.new()
-	scene.add_child(root)
 	var direction: Vector3 = victim.global_position - attacker.global_position
 	attacker.rotation.y = atan2(direction.x,direction.z)
-	var start: Vector3 = attacker.global_position + Vector3(0,0.3,0)
+	attacker.present_combat_shot()
+	var start: Vector3 = attacker.global_position + attacker.global_basis * Vector3(0.08,0.28,0.43)
 	var finish: Vector3 = victim.global_position + Vector3(0,0.3,0)
 	var organic: bool = runtime_for(attacker.civilization_id).definition.citizen_style == "verdant_folk"
-	if organic:
-		for index in range(4):
-			var seed := G.box(root,"SeedPollen%d" % index,Vector3(0.055,0.035,0.11),start.lerp(finish,(index+1)/5.0),"wood",Color("b0ce75"),0.015)
-			seed.look_at(finish)
-	else:
-		var bolt := G.box(root,"BoltSpark",Vector3(0.025,0.025,start.distance_to(finish)),(start+finish)/2,"brass",Color("ffcf69"),0.01)
-		bolt.look_at(finish)
-	attack_effects.append({"node":root,"remaining":0.25})
+	attack_effects.append(CombatPresentation.shot(scene,start,finish,organic))
 
 func _process(delta: float) -> void:
 	# Renderer timing affects only cosmetic flashes and state labels.
 	for effect in attack_effects.duplicate():
-		effect.remaining -= delta
-		if effect.remaining <= 0:
+		if CombatPresentation.advance(effect,delta):
 			effect.node.queue_free()
 			attack_effects.erase(effect)
 	if not conflict_enabled: return
+	for citizen in citizens: citizen.refresh_combat_presentation(delta)
 	if OS.get_environment("ROOMSCALE_MANUAL_CAMERA") != "1" and camera_phase != combat.phase:
 		camera_phase = combat.phase
 		var camera: Node = scene.get_node("CameraRig")
@@ -230,3 +223,5 @@ func _process(delta: float) -> void:
 	if not conflict_state.is_empty():
 		pressure_text = "%s %.0f%% · %s%s" % [String(conflict_state.intensity_name),float(conflict_state.score) * 100.0,String(conflict_state.cause),(" / " + String(conflict_state.resource)) if not String(conflict_state.resource).is_empty() else ""]
 	status_label.text = "CLOCKWORK %d  /  VERDANT %d     %s · %s\n%s\n%s" % [runtimes[0].living_population(),runtimes[1].living_population(),site.claim_state,combat.phase,pressure_text,"Shared finite world · autonomous societies" if combat.winner.is_empty() else (combat.winner + " controls the frontier; " + combat.retreating_side + " survives" if site.claim_state == "CONTROLLED" else combat.retreating_side + " retreats to home; securing site")]
+	if combat.phase in ["MARCH","FIGHT"]:
+		status_label.text = status_label.text.get_slice("\n",0) + "\n" + pressure_text + "\nSecure territory · Forces %d / %d · Losses %d / %d" % [int(combat.initial_sizes.get(runtimes[0].instance_id,0)),int(combat.initial_sizes.get(runtimes[1].instance_id,0)),int(combat.casualties.get(runtimes[0].instance_id,0)),int(combat.casualties.get(runtimes[1].instance_id,0))]

@@ -6,6 +6,7 @@ const WALK_SPEED := 6.5
 const CitizenMeshScale := 1.0
 const G := preload("res://scripts/visuals/visual_geometry.gd")
 const Materials := preload("res://scripts/visuals/material_library.gd")
+const CombatPresentation := preload("res://scripts/combat_presentation.gd")
 static var _shared_meshes: Dictionary = {}
 
 var citizen_id := -1
@@ -15,6 +16,22 @@ var life_state := "ALIVE"
 var combat_duty := ""
 var combat_arrived := false
 var _combat_weapon: Node3D
+var _combat_indicators: Node3D
+var _combat_recoil := 0.0
+
+func present_combat_shot() -> void:
+	_combat_recoil = 1.0
+
+func refresh_combat_presentation(delta: float) -> void:
+	_combat_recoil = maxf(0.0,_combat_recoil-delta*6.0)
+	if _combat_indicators != null:
+		_combat_indicators.visible = life_state == "ALIVE" and not combat_duty.is_empty()
+		_combat_indicators.get_node("HealthFill").scale.x = maxf(0.01,health/100.0)
+		_combat_indicators.get_node("HealthFill").material_override.albedo_color = Color("ec7357") if health < 40 else Color("91da6b")
+		_combat_indicators.get_node("HealthFill").material_override.emission = Color("ec7357") if health < 40 else Color("91da6b")
+	if _combat_weapon != null and life_state == "ALIVE" and not combat_duty.is_empty():
+		_combat_weapon.position.z = 0.10-_combat_recoil*0.04
+		_combat_weapon.rotation.x = -_combat_recoil*0.12
 
 func eligible_for_combat(target: Vector3) -> bool:
 	if life_state != "ALIVE" or not combat_duty.is_empty() or carrying: return false
@@ -38,18 +55,9 @@ func assign_combat_duty(duty: String, target: Vector3) -> bool:
 	combat_arrived = false
 	state = "TRAVEL"
 	if _combat_weapon == null:
-		_combat_weapon = Node3D.new()
-		_combat_weapon.name = "RangedWeapon"
-		_right_arm.add_child(_combat_weapon)
 		var organic: bool = coordinator.civilization.definition.citizen_style == "verdant_folk"
-		G.box(_combat_weapon, "Thorn" if organic else "BoltCaster", Vector3(0.055, 0.05, 0.2), Vector3(0.02, -0.025, 0.10), "wood" if organic else "brass", Color("638c44") if organic else Color("d1a14e"), 0.01)
-		if not organic:
-			var barrel := G.cylinder(_combat_weapon,"MechanicalBarrel",0.026,0.14,Vector3(0.02,-0.025,0.21),"iron",Color("53656c"))
-			barrel.rotation.x = PI / 2
-		else:
-			for side in [-1.0,1.0]:
-				var leaf := G.box(_combat_weapon,"ThornLeaf",Vector3(0.08,0.015,0.045),Vector3(side*0.045,-0.01,0.11),"wood",Color("7da65a"),0.015)
-				leaf.rotation.y = side*0.5
+		_combat_weapon = CombatPresentation.weapon(get_node("Figure"),organic)
+		_combat_indicators = CombatPresentation.indicators(self,organic)
 	_combat_weapon.show()
 	return true
 
@@ -128,7 +136,9 @@ func advance_simulation(delta: float) -> void:
 		_animation_time += delta
 		if state == "TRAVEL": _advance_path(delta)
 		_update_animation()
-		if state == "HOLD": _right_arm.rotation.x = -0.9
+		if state == "HOLD":
+			_right_arm.rotation.x = -PI/2
+			_left_arm.rotation.x = -1.1
 		return
 	_lod_timer += delta
 	if _lod_timer >= 0.4:
