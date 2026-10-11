@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "civilization_id": "clockwork",
+  "technologies": [
+    {
+      "id": "grapple_engineering",
+      "display_name": "Grapple Engineering",
+      "description": "Experiments with anchors, cable, and compact launch mechanisms.",
+      "grants": ["CABLE_ENGINEERING", "ANCHORED_TRAVERSAL"],
+      "requires_capabilities": [],
+      "priority": 1.1,
+      "research_work": 100
+    },
+    {
+      "id": "steam_engine",
+      "display_name": "Steam Engine",
+      "description": "Controlled steam pressure becomes a reusable source of mechanical power.",
+      "grants": ["STEAM_POWER"],
+      "requires_capabilities": [],
+      "priority": 0.9,
+      "research_work": 160
+    },
+    {
+      "id": "structural_engineering",
+      "display_name": "Structural Engineering",
+      "description": "Load paths, bracing, and framed construction support heavier permanent machinery.",
+      "grants": ["LOAD_BEARING_FRAMES"],
+      "requires_capabilities": [],
+      "priority": 0.95,
+      "research_work": 130
+    }
+  ],
+  "solutions": [
+    {
+      "id": "grapple_route",
+      "display_name": "Grapple Route",
+      "addresses": ["VERTICAL_ACCESS", "CROSS_GAP"],
+      "requires_capabilities": ["CABLE_ENGINEERING"],
+      "priority": 1.0,
+      "construction": {"wood": 1, "metal": 2, "mechanical_parts": 1, "work": 60},
+      "properties": {"throughput": 1, "permanent": false, "operating_cost": "none"}
+    },
+    {
+      "id": "steam_lift",
+      "display_name": "Steam Lift",
+      "addresses": ["VERTICAL_ACCESS", "LONG_HAUL_DISTANCE", "LOGISTICS_BOTTLENECK"],
+      "requires_capabilities": ["CABLE_ENGINEERING", "POWER_SOURCE", "LOAD_BEARING_FRAMES"],
+      "priority": 1.35,
+      "construction": {"wood": 6, "metal": 12, "mechanical_parts": 8, "work": 240},
+      "properties": {"throughput": 6, "permanent": true, "operating_cost": "fuel"}
+    },
+    {
+      "id": "suspended_walkway",
+      "display_name": "Suspended Walkway",
+      "addresses": ["CROSS_GAP", "LONG_HAUL_DISTANCE"],
+      "requires_capabilities": ["CABLE_ENGINEERING", "LOAD_BEARING_FRAMES"],
+      "priority": 1.15,
+      "construction": {"wood": 8, "metal": 5, "mechanical_parts": 1, "work": 150},
+      "properties": {"throughput": 4, "permanent": true, "operating_cost": "none"}
+    }
+  ]
+}
