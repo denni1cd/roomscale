@@ -174,8 +174,8 @@ func research_candidates(problem_instances: Array) -> Array[Dictionary]:
 				entry.score += severity * float(solution.get("priority", 1.0)) * float(technology.get("priority", 1.0)) * coverage_ratio
 				if not entry.problems.has(problem_type):
 					entry.problems.append(problem_type)
-			if not entry.enables_toward.has(String(solution.id)):
-				entry.enables_toward.append(String(solution.id))
+				if not entry.enables_toward.has(String(solution.id)):
+					entry.enables_toward.append(String(solution.id))
 				scored[technology_id] = entry
 	var result: Array[Dictionary] = []
 	for technology_id in scored:
