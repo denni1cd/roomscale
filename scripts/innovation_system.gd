@@ -70,12 +70,12 @@ func _validate_cross_references() -> Array[String]:
 
 func learn_technology(technology_id: String) -> Dictionary:
 	var normalized := technology_id.strip_edges().to_lower()
-	var technology := catalog.technology(normalized)
+	var technology: Dictionary = catalog.technology(normalized)
 	if technology.is_empty():
 		return {"ok": false, "error": "unknown technology: %s" % normalized}
 	if known_technologies.has(normalized):
 		return {"ok": true, "technology": technology, "already_known": true}
-	var missing := capability_registry.missing(known_capabilities(), technology.get("requires_capabilities", []))
+	var missing: Array[String] = capability_registry.missing(known_capabilities(), technology.get("requires_capabilities", []))
 	if not missing.is_empty():
 		return {"ok": false, "error": "technology %s is missing prerequisites: %s" % [normalized, missing], "missing": missing}
 	known_technologies[normalized] = true
@@ -93,7 +93,7 @@ func known_capabilities() -> Array[String]:
 	var technology_ids := known_technologies.keys()
 	technology_ids.sort()
 	for technology_id in technology_ids:
-		var technology := catalog.technology(String(technology_id))
+		var technology: Dictionary = catalog.technology(String(technology_id))
 		for capability in technology.get("grants", []):
 			capabilities.append(capability)
 	return capability_registry.expand(capabilities)
@@ -152,11 +152,11 @@ func research_candidates(problem_instances: Array) -> Array[Dictionary]:
 		for solution in catalog.solution_list():
 			if not solution.get("addresses", []).has(problem_type):
 				continue
-			var missing := capability_registry.missing(known, solution.get("requires_capabilities", []))
+			var missing: Array[String] = capability_registry.missing(known, solution.get("requires_capabilities", []))
 			if missing.is_empty():
 				continue
 			for technology in researchable:
-				var granted := capability_registry.expand(technology.get("grants", []))
+				var granted: Array[String] = capability_registry.expand(technology.get("grants", []))
 				var coverage := 0
 				for capability in missing:
 					if granted.has(capability):
