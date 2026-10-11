@@ -23,8 +23,8 @@ func run() -> void:
 	_check(bool(problem_result.ok), "Shared problem registry must validate: %s" % [problem_result.errors])
 	var problems: Array[Dictionary] = []
 	if bool(problem_result.ok):
-		var first := problem_result.registry.set_problem("vertical_access", "desk_north", 0.8, {"target": "water"})
-		var second := problem_result.registry.set_problem("VERTICAL_ACCESS", "desk_north", 0.9, {"target": "water"})
+		var first: Dictionary = problem_result.registry.set_problem("vertical_access", "desk_north", 0.8, {"target": "water"})
+		var second: Dictionary = problem_result.registry.set_problem("VERTICAL_ACCESS", "desk_north", 0.9, {"target": "water"})
 		_check(bool(first.ok) and bool(second.ok), "World systems must be able to report a shared problem")
 		_check(int(second.problem.observation_count) == 2, "Repeated observations must preserve problem identity")
 		problems = problem_result.registry.active_problems()
