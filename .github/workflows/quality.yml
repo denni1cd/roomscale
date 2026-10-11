@@ -37,6 +37,9 @@ jobs:
       - name: Civilization contracts
         shell: pwsh
         run: ./TEST_ROOM_SCALE_CIVILIZATIONS.ps1 -TimeoutSeconds 60
+      - name: Innovation contracts
+        shell: pwsh
+        run: ./TEST_ROOM_SCALE_INNOVATION.ps1 -TimeoutSeconds 60
       - name: Focused and startup regressions
         shell: pwsh
         run: ./TEST_ROOM_SCALE.ps1 -Mode Fast
