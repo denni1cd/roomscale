@@ -83,7 +83,7 @@ func expand(capabilities: Array) -> Array[String]:
 		expanded[normalized] = true
 		pending.append(normalized)
 	while not pending.is_empty():
-		var current := pending.pop_front()
+		var current: String = pending.pop_front()
 		var definition: Dictionary = definitions.get(current, {})
 		for implied in definition.get("implies", []):
 			var implied_id := String(implied)
