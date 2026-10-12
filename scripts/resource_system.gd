@@ -1,7 +1,7 @@
 extends RefCounted
 ## Semantic/material profiles and finite source state use ordinary RoomDefinition objects.
 
-const RESOURCES := ["food", "water", "wood", "metal"]
+const RESOURCES := ["food", "water", "wood", "metal", "mechanical_parts"]
 var objects: Dictionary = {}
 var sources: Dictionary = {}
 var bundles: Dictionary = {}
@@ -42,7 +42,10 @@ func configure(definition: Dictionary) -> void:
 			sources[String(object.id)] = {"position": Vector3(float(position[0]), float(position[1]), float(position[2])), "region": String(profile.region_id), "remaining": profile.contents.duplicate(true), "initial": profile.contents.duplicate(true), "reserved": {}, "reservations": {}, "extracted": {}, "work": float(profile.work_seconds)}
 
 func create_bundle(resource: String, amount: float, position: Vector3, source: String) -> int:
-	if not resource in RESOURCES or amount <= 0: return -1
+	if not resource in RESOURCES or amount <= 0 or not is_finite(amount): return -1
+	if not generated.has(resource):
+		generated[resource] = 0.0
+		delivered[resource] = 0.0
 	var id := _next_bundle
 	_next_bundle += 1
 	bundles[id] = {"id": id, "resource": resource, "amount": amount, "position": position, "source": source, "state": "available", "citizen_id": -1}
@@ -111,7 +114,7 @@ func extract(id: String, resource: String, amount: float, position: Vector3, ins
 
 func audit() -> Array[String]:
 	var errors: Array[String] = []
-	for resource in RESOURCES:
+	for resource in generated:
 		var outstanding := 0.0
 		for bundle in bundles.values():
 			if bundle.resource == resource: outstanding += float(bundle.amount)

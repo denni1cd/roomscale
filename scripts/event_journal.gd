@@ -1,6 +1,6 @@
 extends RefCounted
 ## Bounded macro history. Suppression keys retain only bounded recent state.
-const MAJOR := ["salvage_authorized", "traversal_complete", "structure_complete", "cohort_joined", "source_exhausted"]
+const MAJOR := ["salvage_authorized", "traversal_complete", "structure_complete", "cohort_joined", "source_exhausted", "technology_complete", "solution_complete"]
 var limit := 128
 var events: Array[Dictionary] = []
 var sequence := 0

@@ -39,5 +39,42 @@ Combat does not target civilians. Forces stay on stable floor space; no fighting
 or mid-cable. Projected cosmetic bolts/pollen have no physics. The presenter remains
 procedural, and far room views intentionally keep half-inch citizens tiny. Society task
 boards and traversal project nodes remain scoped services; physical links, source state,
-salvage and occupancy checks remain shared. General multi-instance HUD/tool selection
-and automatic recurring wars remain future work.
+salvage and occupancy checks remain shared. Interactive selection of another society and automatic recurring wars remain future work.
+
+## Multi-party extension
+
+`room_conflict_c` adds a third generic start slot and a finite elevated water cup to
+Maker Loft. `scenarios/three_party_conflict.json` composes Clockwork, Verdant and
+Scavenger through data. Startup validates every participant, namespace, definition,
+slot and complete non-overlapping roster before replacing the scene's startup actors.
+The number of participants is determined by scenario data and available legal stations.
+
+Every living society must physically establish its claim before battle commitment.
+Contact and scarcity are evaluated for every bilateral relation. The greatest pressure
+sets the encounter policy, while only endpoints of hostile relations join its forces.
+A comfortable third claimant neither blocks a scarce pair's war nor becomes its enemy.
+Target selection and morale consider only living, non-retreated hostile forces.
+
+Multi-party stations use deterministic radial rows and ordinary navigation. Fighters
+outside attack range close distance through that navigation; damage never teleports
+actors. Each side withdraws independently. The first retreat in a three-party battle
+leaves two contenders fighting and chooses no winner. Only one remaining force can
+secure the site; all rivals must physically withdraw, and a living peaceful claimant's
+unresolved claim prevents exclusive military capture. Remaining non-hostile forces
+stand down instead of inventing a winner. Ten seconds of uninterrupted physical hold
+are still required, and survivors return to ordinary production jobs.
+
+Two-party station placement and shared damage/initiative rules are preserved. The
+shared HUD lists every society's population, forces and losses; optional `combat_style`
+selects industrial or organic presentation through data. Scavenger currently reuses
+industrial meshes with its own palette and rope solution; it has no combat bonus.
+
+```powershell
+./RUN_ROOM_SCALE_CONFLICT.ps1 -Room room_conflict_c -Scenario three_party_conflict
+# The same world can also research and construct shared access after conflict:
+./RUN_ROOM_SCALE_CONFLICT.ps1 -Room room_conflict_c -Scenario three_party_conflict -Innovation
+```
+
+The extension still uses one authored contested site and one resolved encounter,
+with a cooldown. Trade, treaties, coalition ownership, recurrent campaigns, civilian
+combat and fighting on elevated links are outside this milestone.

@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "id": "scavenger",
+  "display_name": "Scavenger",
+  "description": "Resourceful salvage workers who assemble scrap frames and rope access routes.",
+  "citizen_style": "clockwork",
+  "combat_style": "industrial",
+  "settlement_style": "clockwork",
+  "traversal_style": "grapple_cable",
+  "palette": {
+    "primary": "536c8b",
+    "secondary": "695647",
+    "accent": "d89b56",
+    "organic": "48565a",
+    "glow": "a6cad7"
+  },
+  "resource_vocabulary": {
+    "wood": {
+      "display_name": "Wood",
+      "visual_style": "timber_bundle"
+    },
+    "metal": {
+      "display_name": "Metal",
+      "visual_style": "metal_ingots"
+    },
+    "mechanical_parts": {
+      "display_name": "Mechanical Parts",
+      "visual_style": "gear_crate"
+    }
+  },
+  "construction": {
+    "project_name": "Scrap Access Project",
+    "stage_names": {
+      "base": "Scrap Footing",
+      "winch": "Rope Spool",
+      "launcher": "Anchor Frame"
+    },
+    "traversal_name": "Scrap Ladder"
+  },
+  "world_influence": {
+    "enabled": false,
+    "style": "industrial"
+  }
+}

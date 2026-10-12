@@ -8,6 +8,11 @@ const Definition := preload("res://scripts/room_definition.gd")
 var failures: Array[String] = []
 
 func _initialize() -> void:
+	# A script error aborts _run without quitting SceneTree. Bound that failure too.
+	create_timer(10.0).timeout.connect(func() -> void:
+		push_error("POC4_CLEANUP_FAIL: fixture did not finish within ten seconds")
+		quit(1)
+	)
 	call_deferred("_run")
 
 func check(condition: bool, label: String) -> void:
@@ -61,6 +66,8 @@ func _run() -> void:
 	coordinator.depot_station = Vector3(-40, 0, -40)
 	var sim := Simulation.new()
 	sim.coordinator = coordinator
+	sim.resources = Resources.new()
+	sim.salvage = preload("res://scripts/salvage_system.gd").new()
 	sim.resources.configure({"objects": [item]})
 	sim.salvage.configure(sim.resources.objects)
 	var before_definition: Dictionary = nav.room_definition.duplicate(true)

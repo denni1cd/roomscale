@@ -39,7 +39,7 @@ func run() -> void:
 		quit(1)
 		return
 	for runtime in world.runtimes: runtime.set_process(false)
-	check(world.runtimes.size() == 2,"two civilization instances")
+	check(world.runtimes.size() == world.scenario.participants.size(),"all scenario instances")
 	var a: Node = world.runtimes[0]
 	var b: Node = world.runtimes[1]
 	check(a.economy != b.economy and a.needs != b.needs and a.population != b.population and a.development != b.development,"independent society authorities")
@@ -52,16 +52,26 @@ func run() -> void:
 	var previous_destination: Vector3 = actor._destination
 	actor.assign_player_goal_task(b.coordinator.get_task(b.citizens[0].task_id))
 	check(actor.task_id == previous_task and actor._destination == previous_destination,"direct foreign task assignment rejected without interrupting owned work")
+	for left in world.runtimes:
+		for right in world.runtimes:
+			if left == right: continue
+			check(left.economy != right.economy and left.needs != right.needs and left.population != right.population and left.innovation != right.innovation, "every society owns its authorities")
+			check(left.resources == right.resources and left.coordinator.navigation == right.coordinator.navigation, "every society shares physical authorities")
+	var first_retreat_continued := false
 	await capture("01-two-societies",Vector3.ZERO,280)
 	var complete_at := -1
 	var pre_checked := false
 	var max_step := 0.0
 	var dead_positions: Dictionary = {}
 	var dead_distance: Dictionary = {}
-	for iteration in range(9000):
+	for iteration in range(24000 if OS.get_environment("ROOMSCALE_INNOVATION") == "1" else 9000):
 		var positions: Dictionary = {}
 		for citizen in world.citizens: positions[citizen.citizen_id] = citizen.global_position
 		world.step()
+		if world.combat.retreated_sides.size() == 1 and world.combat.forces.size() > 2:
+			check(world.combat.winner.is_empty() and world.combat.phase == "FIGHT", "first retreat cannot choose a multi-party winner")
+			first_retreat_continued = true
+		if world.combat.phase != "COMPLETE": check(String(world.territory.sites[world.scenario.strategic_site].owner_civilization_id).is_empty(), "no ownership before physical secure hold")
 		check(world.resources.audit().is_empty(),"finite source conservation")
 		if not foreign_source_checked:
 			for source_id in world.resources.sources:
@@ -134,7 +144,8 @@ func run() -> void:
 				complete_at = world.tick
 				for runtime in world.runtimes: post_work[runtime.instance_id] = runtime.coordinator._completed_count
 				await capture("06-captured-site",world.territory.sites[world.scenario.strategic_site].position + Vector3(0,0.3,0),9)
-			if world.tick - complete_at >= 1000: break
+			if world.tick - complete_at >= 1000:
+				if OS.get_environment("ROOMSCALE_INNOVATION") != "1" or world.runtimes.any(func(runtime: Node) -> bool: return runtime.journal.events.any(func(e: Dictionary) -> bool: return e.kind == "territory_reached")): break
 		if iteration % 100 == 0: await process_frame
 	check(complete_at > 0,"production battle and secure capture complete")
 	check(max_step <= 0.65001,"all military and retreat movement respects production speed")
@@ -144,7 +155,8 @@ func run() -> void:
 	check(foreign_source_checked,"foreign source negative boundary exercised on a real reservation")
 	check(foreign_delivery_checked,"cross-depot negative boundary exercised on a real bundle")
 	for kind in ["FIRST_CONTACT","HOSTILITY_DECLARED","SITE_CONTESTED","SITE_CAPTURED"]:
-		check(world.journal.events.filter(func(e: Dictionary) -> bool: return e.kind == kind).size() == 1,"single transition " + kind)
+		var expected: int = world.runtimes.size() * (world.runtimes.size()-1) / 2 if kind in ["FIRST_CONTACT","HOSTILITY_DECLARED"] else 1
+		check(world.journal.events.filter(func(e: Dictionary) -> bool: return e.kind == kind).size() == expected,"one transition per site or bilateral relation " + kind)
 	check(world.combat.attacks > 0 and dead_positions.size() > 0,"attacks cause real persistent casualties")
 	check(world.combat.morale.values().any(func(value: float) -> bool: return value < 1.0),"morale responds to health and losses")
 	for runtime in world.runtimes:
@@ -160,7 +172,26 @@ func run() -> void:
 	for runtime in world.runtimes:
 		await capture("08-" + runtime.instance_id + "-settlement",runtime.coordinator.depot_station + Vector3(0,0.5,0),25)
 	if not dead_positions.is_empty(): await capture("09-casualty",dead_positions.values()[0] + Vector3(0,0.25,0),2.2)
-	var result := {"result":"PASS" if failures.is_empty() else "FAIL","failures":failures,"room":world.room_definition.id,"first_contact_tick":world.first_contact_tick,"battle_start_tick":world.combat.battle_start_tick,"force_sizes":world.combat.initial_sizes,"casualties":world.combat.casualties,"retreating_side":world.combat.retreating_side,"winner":world.combat.winner,"site_capture_tick":world.combat.site_capture_tick,"attacks":world.combat.attacks,"morale":world.combat.morale,"returned":world.combat.returned,"max_step":max_step,"societies":{a.instance_id:{"status":a.status(),"projects":a.development.projects,"deliveries":a.haul_deliveries},b.instance_id:{"status":b.status(),"projects":b.development.projects,"deliveries":b.haul_deliveries}},"events":world.journal.events,"captures":captures,"final_tick":world.tick,"living_populations":{a.instance_id:a.living_population(),b.instance_id:b.living_population()}}
+	if world.runtimes.size() > 2:
+		check(first_retreat_continued, "multi-party battle continues after first retreat")
+		check(world.combat.retreated_sides.size() == world.runtimes.size()-1, "every losing side independently withdraws")
+		check(world.combat.initial_sizes.size() == world.runtimes.size(), "all hostile parties committed")
+	if OS.get_environment("ROOMSCALE_INNOVATION") == "1":
+		var completed_projects := 0
+		for runtime in world.runtimes:
+			check(runtime.innovation.enabled, "every participant has its own live innovation service")
+			for project in runtime.innovation.projects:
+				if project.state == "COMPLETE":
+					completed_projects += 1
+					check(project.delivered == project.required and project.work >= project.required_work - 0.00001 and project.delivery_distance > 0, "shared route funded and built by its owner")
+		check(completed_projects == 1 and world.innovation_claims.is_empty(), "one physical shared route; no duplicate construction or stale claims")
+		check(world.runtimes.any(func(runtime: Node) -> bool: return runtime.journal.events.any(func(e: Dictionary) -> bool: return e.kind == "territory_reached")), "multi-party survivors physically use invented access")
+	var societies := {}
+	var populations := {}
+	for runtime in world.runtimes:
+		societies[runtime.instance_id] = {"status":runtime.status(),"projects":runtime.development.projects,"deliveries":runtime.haul_deliveries,"innovation":runtime.innovation.status(),"innovation_projects":runtime.innovation.projects,"research":runtime.innovation.research_history}
+		populations[runtime.instance_id] = runtime.living_population()
+	var result := {"result":"PASS" if failures.is_empty() else "FAIL","failures":failures,"room":world.room_definition.id,"first_contact_tick":world.first_contact_tick,"battle_start_tick":world.combat.battle_start_tick,"force_sizes":world.combat.initial_sizes,"casualties":world.combat.casualties,"retreating_side":world.combat.retreating_side,"winner":world.combat.winner,"site_capture_tick":world.combat.site_capture_tick,"attacks":world.combat.attacks,"morale":world.combat.morale,"returned":world.combat.returned,"max_step":max_step,"societies":societies,"events":world.journal.events,"captures":captures,"final_tick":world.tick,"living_populations":populations,"retreated_sides":world.combat.retreated_sides}
 	if not output.is_empty():
 		var file := FileAccess.open(output,FileAccess.WRITE)
 		if file == null: check(false,"result write failed")

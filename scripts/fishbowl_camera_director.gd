@@ -42,7 +42,7 @@ func choose() -> Dictionary:
 	var priority := 0
 	for event in simulation.journal.events:
 		if event.id <= event_id or not valid_focus(event.focus): continue
-		if event.kind not in ["salvage_authorized", "traversal_complete", "structure_complete", "cohort_joined", "development_started", "territory_reached"]: continue
+		if event.kind not in ["salvage_authorized", "traversal_complete", "structure_complete", "cohort_joined", "development_started", "territory_reached", "research_started", "technology_complete", "solution_started", "solution_complete"]: continue
 		var card := Adapter.event_card(event)
 		if card.is_empty() or int(card.priority) < 3: continue
 		# Old arrivals have dispersed; current activity provides a truer subject.
@@ -69,9 +69,13 @@ func choose() -> Dictionary:
 	# Alternate a contextual view with actual worker detail, never move the worker.
 	if not String(current_shot.get("key", "")).begins_with("citizen:"):
 		for citizen in simulation.citizens:
+			if citizen.state == "WORK" and citizen.task_type == "INNOVATION_RESEARCH": return activity(citizen, "RESEARCH AT WORK", "A citizen tests the colony's next invention")
 			if citizen.state == "WORK" and citizen.task_type == "SALVAGE": return activity(citizen, "SALVAGE OPERATION", "Recovering finite construction materials")
 			if citizen.state == "WORK" and citizen.task_type == "CONSTRUCTION_BUILD":
 				return activity(citizen, "CONSTRUCTION AT WORK", "A citizen assembles the colony's infrastructure")
+	if simulation.get("innovation") != null and not simulation.innovation.active.is_empty():
+		var p: Dictionary = simulation.innovation.active
+		return {"key":p.id, "focus":p.site + Vector3.UP*3, "distance":45.0, "event":event_id, "headline":String(p.solution.get("display_name", p.solution.id)).to_upper(), "subtitle":"Citizens deliver materials and construct the chosen solution"}
 	if simulation.construction.project_created and not simulation.construction.traversal_deployed:
 		return {"key": "traversal", "focus": simulation.construction.site_position + Vector3.UP * 3, "distance": 45.0, "event": event_id, "headline": "EXPEDITION TO THE DESK", "subtitle": Adapter.presentation_text("Building a grapple route to the water supply")}
 	if not simulation.development.active.is_empty():

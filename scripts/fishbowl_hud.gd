@@ -171,8 +171,8 @@ func refresh() -> void:
 	governor_label.text = s.governor
 	var p := Adapter.project(simulation)
 	project_panel.visible = not p.is_empty() and not diagnostics
-	if not p.is_empty(): project_label.text = "%s\n%s · %.0f%%\nWood %d/%d · Metal %d/%d" % [p.name, p.stage, p.progress * 100, p.delivered.wood, p.required.wood, p.delivered.metal, p.required.metal]
-	if not p.is_empty() and Adapter.is_verdant():
+	if not p.is_empty(): project_label.text = "%s\n%s · %.0f%%" % [p.name, p.stage, p.progress * 100]
+	if not p.is_empty() and not p.required.is_empty():
 		var materials: Array[String] = []
 		for resource in ["wood", "metal", "mechanical_parts"]:
 			if p.required.has(resource):

@@ -309,6 +309,8 @@ static func validate(definition: Dictionary) -> Array[String]:
 		if not definition.civilization is Dictionary: errors.append("civilization must be an object")
 		else:
 			var config: Dictionary = definition.civilization
+			if config.has("innovation") and not config.innovation is bool: errors.append("civilization.innovation must be boolean")
+			if config.has("innovation_catalog_path") and (not config.innovation_catalog_path is String or config.innovation_catalog_path.strip_edges().is_empty()): errors.append("civilization.innovation_catalog_path must be a nonempty string")
 			if config.has("economy_construction") and not config.economy_construction is bool: errors.append("civilization.economy_construction must be boolean")
 			if config.has("cohort_size") and (not _positive_number(config.cohort_size) or float(config.cohort_size) != floorf(float(config.cohort_size)) or float(config.cohort_size) > 150): errors.append("civilization.cohort_size must be an integer from 1 to 150")
 			if config.has("initial_speed") and (not _finite_number(config.initial_speed) or float(config.initial_speed) < 0): errors.append("civilization.initial_speed must be finite and nonnegative")

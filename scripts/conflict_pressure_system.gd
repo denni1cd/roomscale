@@ -55,13 +55,26 @@ static func policy_for(intensity: int) -> Dictionary:
 			return {"force_fraction":1.0,"min_force":2,"max_force":150,"retreat_threshold":-1.0,"allow_retreat":false,"objective":"REMOVE_EXISTENTIAL_BLOCKER"}
 	return {"force_fraction":0.0,"min_force":0,"max_force":0,"retreat_threshold":1.0,"allow_retreat":true,"objective":"COEXIST"}
 
-func evaluate(world: Node, site_id: String) -> Dictionary:
+func evaluate(world: Node, site_id: String, selected: Array = []) -> Dictionary:
 	evaluations += 1
 	if not world.territory.sites.has(site_id):
 		return _store({"site_id":site_id,"score":0.0,"intensity":PEACE,"intensity_name":"PEACE","cause":"NONE","resource":"","objective":"COEXIST","per_civilization":{}})
 	var site: Dictionary = world.territory.sites[site_id]
-	var participants: Array = site.contesting_civilizations.duplicate()
+	var participants: Array = site.contesting_civilizations.duplicate() if selected.is_empty() else selected.duplicate()
 	participants.sort()
+	# Scarcity is bilateral. A comfortable bystander must not veto or join a war.
+	if selected.is_empty() and participants.size() > 2:
+		var pairs: Array[Dictionary] = []
+		var strongest: Dictionary = {}
+		for i in range(participants.size()):
+			for j in range(i + 1, participants.size()):
+				var pair := evaluate(world, site_id, [participants[i], participants[j]])
+				pair["participants"] = [participants[i], participants[j]]
+				pairs.append(pair)
+				if strongest.is_empty() or float(pair.score) > float(strongest.score): strongest = pair
+		var combined := strongest.duplicate(true)
+		combined["pairs"] = pairs
+		return _store(combined)
 	if participants.size() < 2:
 		return _store({"site_id":site_id,"score":0.0,"intensity":PEACE,"intensity_name":"PEACE","cause":"NONE","resource":"","objective":"COEXIST","per_civilization":{}})
 

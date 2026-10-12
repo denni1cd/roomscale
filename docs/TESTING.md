@@ -149,3 +149,36 @@ CI runs the five canonical repeats and second-room gate alongside existing Fast,
 civilization contracts and the unchanged four single-civilization smokes. Long soaks
 remain explicit. Curated evidence and reports live under `verification/poc5/`; raw logs
 and rejected framing iterations remain ignored.
+
+## Live innovation and multi-party integration
+
+```powershell
+./TEST_ROOM_SCALE_INNOVATION.ps1
+./TEST_ROOM_SCALE_INNOVATION_LIVE.ps1 -RunCount 2
+./TEST_ROOM_SCALE_INNOVATION_LIVE.ps1 -Civilizations clockwork -RunCount 1 -CancellationProbe
+./TEST_ROOM_SCALE_INNOVATION_LIVE.ps1 -Civilizations verdant -RunCount 1 -CaptureVisuals
+./TEST_ROOM_SCALE_CONFLICT_PRESSURE.ps1
+./TEST_ROOM_SCALE_CONFLICT.ps1 -Room room_conflict_c -Scenario three_party_conflict -RunCount 3
+./TEST_ROOM_SCALE_CONFLICT.ps1 -Room room_conflict_c -Scenario three_party_conflict -Innovation -TimeoutSeconds 300
+```
+
+The live innovation observer uses the production five-founder scene without granting
+stock, capabilities, labor or links. It checks physical research travel and effort,
+rejected manufactured/duplicate work, pause, actual material hauling, paid build,
+real deployed traversal and elevated resource access. Repeatability includes technology
+completion times, contributors, project costs/work, route style and source visits.
+The explicit cancellation fixture invokes cancellation after a real delivery, checks
+physical recovery and resumes the ordinary clock until a rebuilt solution succeeds.
+Graphical mode saves real renderer snapshots of research, route deployment and access.
+
+The conflict observer covers any configured participant count and checks every roster,
+board and economy each tick. Three-party acceptance requires the battle to continue
+after its first retreat, separate withdrawal of both losing sides and one physical
+capture. Pressure fixtures exercise malformed/duplicate/unknown scenario data before
+startup mutation and a comfortable third claimant excluded from actual fighting.
+The combined gate enables both features, requires exactly one paid shared route,
+released construction claims and actual elevated access by surviving citizens.
+
+CI configuration includes foundation/live/recovery gates and the three-party and
+combined gates. Only a remote Actions run establishes remote CI success. Long soaks,
+arbitrary large-party layouts and subjective visual acceptance remain explicit.

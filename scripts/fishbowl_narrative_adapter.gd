@@ -60,6 +60,9 @@ static func governor(sim: Node) -> String:
 		if not sim.has_capability("shelter"): intent = "Establishing the first shelter"
 		elif not sim.has_capability("storage"): intent = "Establishing permanent storage"
 		elif not sim.has_capability("workshop"): intent = "Building the first workshop"
+	if sim.get("innovation") != null and sim.innovation.enabled and not sim.governor.emergency:
+		if not sim.innovation.research.is_empty(): intent = "Researching " + String(sim.innovation.research.name)
+		elif not sim.innovation.active.is_empty(): intent = "Constructing " + String(sim.innovation.active.solution.get("display_name", sim.innovation.active.solution.id))
 	return presentation_text("Governor on · %s — %s" % [modes.get(sim.governor.mode, "Assessing the colony"), intent])
 
 static func status(sim: Node) -> Dictionary:
@@ -71,6 +74,13 @@ static func module_name(project: Dictionary) -> String:
 	return names.get(project.get("kind", ""), "Structure ") + String(project.get("id", "")).trim_prefix("development_").trim_prefix("0").trim_prefix("0")
 
 static func project(sim: Node) -> Dictionary:
+	if sim.get("innovation") != null and sim.innovation.enabled:
+		if not sim.innovation.research.is_empty():
+			var r: Dictionary = sim.innovation.research
+			return {"name":r.name, "stage":"Citizen research", "progress":float(r.work)/float(r.required_work), "delivered":{}, "required":{}}
+		if not sim.innovation.active.is_empty():
+			var p: Dictionary = sim.innovation.active
+			return {"name":p.solution.get("display_name", p.solution.id), "stage":"Waiting for materials" if p.state == "WAITING_FOR_MATERIALS" else "Citizen construction", "progress":float(p.work)/float(p.required_work), "delivered":p.delivered.duplicate(true), "required":p.required.duplicate(true)}
 	if not sim.development.active.is_empty():
 		var p: Dictionary = sim.development.active
 		var stages := {"FOUNDATION": "Laying foundations", "FRAME": "Frame construction", "SHELL": "Enclosing structure"}
@@ -94,6 +104,10 @@ static func event_card(event: Dictionary) -> Dictionary:
 	var subtitle := ""
 	var priority := 1
 	match kind:
+		"research_started", "technology_complete", "solution_started", "solution_complete":
+			headline = {"research_started":"RESEARCH BEGINS", "technology_complete":"TECHNOLOGY COMPLETE", "solution_started":"SOLUTION CONSTRUCTION", "solution_complete":"NEW ACCESS OPEN"}[kind]
+			subtitle = event.message
+			priority = 5 if kind in ["technology_complete", "solution_complete"] else 4
 		"first_salvage":
 			headline = "FIRST SALVAGE"
 			subtitle = "Real room materials are ready to be hauled home."

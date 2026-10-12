@@ -48,6 +48,9 @@ func tick(sim: Node) -> void:
 	if sim.get("development") != null:
 		var development_shortage: Dictionary = sim.development.shortage()
 		for resource in shortage: shortage[resource] += float(development_shortage[resource])
+	if sim.get("innovation") != null:
+		var innovation_shortage: Dictionary = sim.innovation.shortage()
+		for resource in shortage: shortage[resource] += float(innovation_shortage[resource])
 	sim.planner.set_priority("Survival", 4 if danger else 3)
 	sim.planner.set_priority("Resources", 3)
 	sim.planner.set_priority("Construction", 3)
@@ -59,7 +62,7 @@ func tick(sim: Node) -> void:
 		transition(sim, "SURVIVAL", "Reserve below safety threshold; development restrained", state)
 	else:
 		transition(sim, "STABLE", "Reserves recovered; assess shelter and finite carrying capacity", state)
-		if sim.get("development") != null: sim.development.consider(state)
+		if sim.get("development") != null and not (sim.get("innovation") != null and sim.innovation.busy()): sim.development.consider(state)
 	if sim.get("population") != null: sim.population.evaluate(sim, state, danger, float(shortage.wood) + float(shortage.metal) > 0)
 
 func candidates(sim: Node, shortage: Dictionary) -> Array[Dictionary]:

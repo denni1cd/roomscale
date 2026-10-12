@@ -21,7 +21,7 @@ func secure(resource: String) -> bool:
 func family(kind: String) -> String:
 	if kind.begins_with("NEED_") or kind == "RESOURCE_COLLECT": return "Survival"
 	if kind in ["SALVAGE", "BUNDLE_HAUL", "DEPOT_RUN"]: return "Resources"
-	if kind.begins_with("CONSTRUCTION_") or kind == "WORKSHOP_MAINTENANCE": return "Construction"
+	if kind.begins_with("CONSTRUCTION_") or kind.begins_with("INNOVATION_") or kind == "WORKSHOP_MAINTENANCE": return "Construction"
 	return "Exploration"
 
 func score(kind: String, urgency: float, distance: float) -> float:

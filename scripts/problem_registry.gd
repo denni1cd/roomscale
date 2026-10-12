@@ -5,6 +5,8 @@ extends RefCounted
 ## to know which civilization is observing the problem or what solution that
 ## civilization may eventually invent.
 
+const Validation := preload("res://scripts/innovation_validation.gd")
+
 const DEFAULT_PATH := "res://innovation/problems.json"
 
 var definitions: Dictionary = {}
@@ -31,14 +33,14 @@ static func load_path(path: String) -> Dictionary:
 		return {"ok": false, "registry": null, "errors": errors}
 	var registry := new()
 	registry.load_errors = registry._load(parsed)
-	return {"ok": registry.load_errors.is_empty(), "registry": registry, "errors": registry.load_errors}
+	return {"ok": registry.load_errors.is_empty(), "registry": registry if registry.load_errors.is_empty() else null, "errors": registry.load_errors}
 
 
 func _load(data: Dictionary) -> Array[String]:
 	var errors: Array[String] = []
-	if int(data.get("schema_version", 0)) != 1:
-		errors.append("unsupported problem schema_version %s" % data.get("schema_version", 0))
-	var entries: Variant = data.get("problems", [])
+	Validation.schema(data.get("schema_version"), errors)
+	var staged: Dictionary = {}
+	var entries: Variant = data.get("problems")
 	if not (entries is Array):
 		errors.append("problems must be an array")
 		return errors
@@ -47,16 +49,19 @@ func _load(data: Dictionary) -> Array[String]:
 			errors.append("problem entry must be an object")
 			continue
 		var entry: Dictionary = raw_entry
-		var problem_id := normalize_id(String(entry.get("id", "")))
+		var problem_id := Validation.id(entry.get("id"), "problem id", errors)
 		if problem_id.is_empty():
 			errors.append("problem id must not be empty")
 			continue
-		if definitions.has(problem_id):
+		if staged.has(problem_id):
 			errors.append("duplicate problem id: %s" % problem_id)
 			continue
 		var normalized := entry.duplicate(true)
 		normalized["id"] = problem_id
-		definitions[problem_id] = normalized
+		Validation.text_fields(entry, "problem %s" % problem_id, errors)
+		staged[problem_id] = normalized
+	if errors.is_empty():
+		definitions = staged
 	return errors
 
 

@@ -61,6 +61,8 @@ static func validate(definition: Dictionary, expected_id: String = "") -> Array[
 		errors.append("civilization file id '%s' does not match requested id '%s'" % [civilization_id, expected_id])
 	if int(definition.schema_version) != 1:
 		errors.append("unsupported civilization schema_version %s" % definition.schema_version)
+	if definition.has("combat_style") and definition.combat_style not in ["industrial", "organic"]:
+		errors.append("combat_style must be industrial or organic")
 	if not (definition.palette is Dictionary):
 		errors.append("palette must be an object")
 	if not (definition.resource_vocabulary is Dictionary):

@@ -14,6 +14,8 @@ const Governor := preload("res://scripts/autonomous_governor.gd")
 const Development := preload("res://scripts/settlement_development_system.gd")
 const Population := preload("res://scripts/population_system.gd")
 const CameraDirector := preload("res://scripts/fishbowl_camera_director.gd")
+const InnovationRuntime := preload("res://scripts/innovation_runtime.gd")
+var innovation := InnovationRuntime.new()
 var camera_director: Node
 var journal := Journal.new()
 var governor := Governor.new()
@@ -84,7 +86,9 @@ func configure(world: Node3D, config: Dictionary) -> void:
 	founder_mode = room_definition.has("start") and room_definition.start.infrastructure.is_empty()
 	needs.shelter_capacity = int(config.get("shelter_capacity", 50))
 	needs.rest_capacity = mini(needs.shelter_capacity, int(config.get("rest_capacity", 12)))
-	economy.configure(config.get("stock", {"food": 5000, "water": 5000, "wood": 0, "metal": 0}))
+	var initial_stock: Dictionary = config.get("stock", {"food": 5000, "water": 5000, "wood": 0, "metal": 0}).duplicate(true)
+	if bool(config.get("innovation", OS.get_environment("ROOMSCALE_INNOVATION") == "1")): initial_stock["mechanical_parts"] = float(initial_stock.get("mechanical_parts", 0))
+	economy.configure(initial_stock)
 	if bool(config.get("economy_construction", false)): construction.economy = economy
 	if founder_mode: construction.stockpile = {"wood":0,"metal":0,"mechanical_parts":0}
 	coordinator.civilization = self
@@ -101,6 +105,9 @@ func configure(world: Node3D, config: Dictionary) -> void:
 	development.configure(self)
 	population = Population.new()
 	population.cohort_size = int(config.get("cohort_size", 5))
+	if not innovation.configure(self, config):
+		get_tree().quit(2)
+		return
 	if founder_mode:
 		journal.record(0, "founders_arrived", "Founders arrived", {"population": living_population()}, coordinator.depot_station, "founders")
 	for object_id in salvage.objects:
@@ -146,6 +153,7 @@ func step() -> void:
 	world_simulation.step()
 
 func step_society() -> void:
+	innovation.tick()
 	governor.tick(self)
 	_planner_timer += STEP
 	if _planner_timer >= 1:
@@ -186,8 +194,8 @@ func claim(citizen: Node3D) -> Dictionary:
 			best = option
 	if not best.is_empty():
 		if best.task_type == "BUNDLE_HAUL" and not resources.reserve_bundle(int(best.bundle_id), citizen.citizen_id, instance_id): return {}
-		if best.task_type == "CONSTRUCTION_DELIVERY":
-			var ticket := economy.reserve(String(best.resource), float(best.amount), String(best.get("project_id", "traversal")))
+		if best.task_type in ["CONSTRUCTION_DELIVERY", "INNOVATION_FABRICATE"]:
+			var ticket := economy.reserve(String(best.resource), float(best.amount), String(best.get("fabrication_owner", best.get("project_id", "traversal"))))
 			if ticket < 0: return {}
 			best.ticket = ticket
 		if best.task_type == "RESOURCE_COLLECT" and not resources.reserve_source(String(best.source_id), String(best.resource), float(best.amount), instance_id): return {}
@@ -198,6 +206,7 @@ func claim(citizen: Node3D) -> Dictionary:
 func work_options(citizen: Node3D) -> Array[Dictionary]:
 	var options: Array[Dictionary] = []
 	options.append_array(development.options())
+	options.append_array(innovation.options(citizen))
 	if construction.economy != null and construction.project_created and not construction.traversal_deployed:
 		for resource in ["wood", "metal"]:
 			var outstanding := 0.0
@@ -255,7 +264,7 @@ func plan() -> void:
 			found = true
 			if source.region != "FLOOR" and not coordinator.surface_navigation.has_connection("FLOOR", String(source.region)):
 				planner.reasons.append("Secure %s: source unreachable; traversal required" % String(resource).capitalize())
-				if has_capability("advanced_construction") and not reach_requested.has(source.region):
+				if not innovation.enabled and has_capability("advanced_construction") and not reach_requested.has(source.region):
 					var result: Dictionary = coordinator.issue_reach_explore(String(source.region), citizens)
 					if result.get("accepted", false):
 						reach_requested[source.region] = true

@@ -1,7 +1,7 @@
 extends RefCounted
 ## Exclusive inventory states and bounded transaction records. No stock at pickup twice.
 
-const RESOURCES := ["food", "water", "wood", "metal"]
+const RESOURCES := ["food", "water", "wood", "metal", "mechanical_parts"]
 var instance_id := "legacy"
 var available: Dictionary = {}
 var initial: Dictionary = {}
@@ -14,6 +14,7 @@ var _next_ticket := 1
 
 func configure(stock: Dictionary) -> void:
 	for resource in RESOURCES:
+		if resource == "mechanical_parts" and not stock.has(resource): continue
 		available[resource] = float(stock.get(resource, 0))
 		initial[resource] = available[resource]
 		received[resource] = 0.0
@@ -61,6 +62,13 @@ func drop(id: int) -> Dictionary:
 	tickets.erase(id)
 	return ticket
 
+func recover_delivered(id: int) -> Dictionary:
+	if not tickets.has(id) or tickets[id].state != "delivered": return {}
+	var ticket: Dictionary = tickets[id].duplicate(true)
+	exported[ticket.resource] += float(ticket.amount)
+	tickets.erase(id)
+	return ticket
+
 func receive(resource: String, amount: float) -> bool:
 	if not available.has(resource) or amount <= 0 or not is_finite(amount): return false
 	available[resource] += amount
@@ -80,6 +88,7 @@ func forecast(resource: String, population: int) -> float:
 func audit() -> Array[String]:
 	var errors: Array[String] = []
 	for resource in RESOURCES:
+		if not available.has(resource): continue
 		var total := float(available[resource]) + float(consumed[resource])
 		for state in ["reserved", "in_transit", "delivered"]: total += state_total(resource, state)
 		if float(available[resource]) < -0.0001 or absf(total - float(initial[resource]) - float(received[resource]) + float(exported[resource])) > 0.0001:
@@ -89,5 +98,6 @@ func audit() -> Array[String]:
 func snapshot() -> Dictionary:
 	var result := {}
 	for resource in RESOURCES:
+		if not available.has(resource): continue
 		result[resource] = {"available": available[resource], "reserved": state_total(resource, "reserved"), "in_transit": state_total(resource, "in_transit"), "delivered": state_total(resource, "delivered"), "consumed": consumed[resource], "received": received[resource]}
 	return result

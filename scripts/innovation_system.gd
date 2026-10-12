@@ -9,6 +9,7 @@ extends RefCounted
 const CapabilityRegistry := preload("res://scripts/capability_registry.gd")
 const ProblemRegistry := preload("res://scripts/problem_registry.gd")
 const InnovationCatalog := preload("res://scripts/innovation_catalog.gd")
+const Validation := preload("res://scripts/innovation_validation.gd")
 
 var civilization_id: String = ""
 var capability_registry = null
@@ -19,10 +20,10 @@ var known_technologies: Dictionary = {}
 var validation_errors: Array[String] = []
 
 
-static func create(civ_id: String, starting_capabilities: Array = []) -> Dictionary:
+static func create(civ_id: String, starting_capabilities: Array = [], catalog_path: String = "") -> Dictionary:
 	var capability_result := CapabilityRegistry.load_default()
 	var problem_result := ProblemRegistry.load_default()
-	var catalog_result := InnovationCatalog.load_id(civ_id)
+	var catalog_result := InnovationCatalog.load_id(civ_id) if catalog_path.is_empty() else InnovationCatalog.load_path(catalog_path, civ_id)
 	var errors: Array[String] = []
 	if not bool(capability_result.ok):
 		errors.append_array(capability_result.errors)
@@ -38,12 +39,13 @@ static func create(civ_id: String, starting_capabilities: Array = []) -> Diction
 	system.problem_registry = problem_result.registry
 	system.catalog = catalog_result.catalog
 	for capability in starting_capabilities:
-		var normalized := String(capability).strip_edges().to_upper()
+		var normalized := Validation.id(capability, "starting capability", errors)
 		if not normalized.is_empty() and not system.base_capabilities.has(normalized):
 			system.base_capabilities.append(normalized)
 	system.base_capabilities.sort()
-	system.validation_errors = system._validate_cross_references()
-	return {"ok": system.validation_errors.is_empty(), "system": system, "errors": system.validation_errors}
+	errors.append_array(system._validate_cross_references())
+	system.validation_errors = errors
+	return {"ok": errors.is_empty(), "system": system if errors.is_empty() else null, "errors": errors}
 
 
 func _validate_cross_references() -> Array[String]:
@@ -123,6 +125,8 @@ func viable_solutions(problem_type: String) -> Array[Dictionary]:
 
 
 func solution_options(problem_instance: Dictionary) -> Array[Dictionary]:
+	if not (problem_instance.get("type") is String) or not Validation.number(problem_instance.get("severity", 0.0)):
+		return []
 	var problem_type := ProblemRegistry.normalize_id(String(problem_instance.get("type", "")))
 	var severity := clampf(float(problem_instance.get("severity", 0.0)), 0.0, 1.0)
 	var result: Array[Dictionary] = []
@@ -135,31 +139,62 @@ func solution_options(problem_instance: Dictionary) -> Array[Dictionary]:
 	return result
 
 
-func research_candidates(problem_instances: Array) -> Array[Dictionary]:
+func research_candidates(problem_instances: Array, applicable_solution: Callable = Callable()) -> Array[Dictionary]:
 	var known := known_capabilities()
 	var researchable := researchable_technologies()
+	var technologies: Array[Dictionary] = catalog.technology_list()
+	var solutions: Array[Dictionary] = []
+	for solution in catalog.solution_list():
+		if not applicable_solution.is_valid() or bool(applicable_solution.call(solution)): solutions.append(solution)
+	var technology_scale := 1.0
+	var solution_scale := 1.0
+	for technology in technologies:
+		technology_scale = maxf(technology_scale, float(technology.get("priority", 1.0)))
+	for solution in solutions:
+		solution_scale = maxf(solution_scale, float(solution.get("priority", 1.0)))
 	var scored: Dictionary = {}
+	var pressures: Array[Dictionary] = []
 	for raw_problem in problem_instances:
 		if not (raw_problem is Dictionary):
 			continue
 		var problem: Dictionary = raw_problem
-		var problem_type := ProblemRegistry.normalize_id(String(problem.get("type", "")))
+		if not (problem.get("type") is String) or not Validation.number(problem.get("severity", 0.0)):
+			continue
+		var problem_type := ProblemRegistry.normalize_id(problem.type)
 		if not problem_registry.has_problem(problem_type):
 			continue
 		var severity := clampf(float(problem.get("severity", 0.0)), 0.0, 1.0)
 		if severity <= 0.0:
 			continue
-		for solution in catalog.solution_list():
+		pressures.append({"type": problem_type, "severity": severity})
+	# Accumulate in a canonical order, independent of source/dictionary ordering.
+	pressures.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		return a.type < b.type if a.type != b.type else a.severity < b.severity
+	)
+	for problem in pressures:
+		var problem_type: String = problem.type
+		var severity: float = problem.severity
+		var problem_scores: Dictionary = {}
+		for solution in solutions:
 			if not solution.get("addresses", []).has(problem_type):
 				continue
 			var missing: Array[String] = capability_registry.missing(known, solution.get("requires_capabilities", []))
 			if missing.is_empty():
 				continue
+			var frontiers: Array[Dictionary] = []
+			var reachable := true
+			for capability in missing:
+				var path := _research_frontier(capability, known, technologies, {})
+				if not path.reachable:
+					reachable = false
+					break
+				frontiers.append(path.frontier)
+			if not reachable:
+				continue
 			for technology in researchable:
-				var granted: Array[String] = capability_registry.expand(technology.get("grants", []))
 				var coverage := 0
-				for capability in missing:
-					if granted.has(capability):
+				for frontier in frontiers:
+					if frontier.has(technology.id):
 						coverage += 1
 				if coverage == 0:
 					continue
@@ -171,7 +206,12 @@ func research_candidates(problem_instances: Array) -> Array[Dictionary]:
 					"enables_toward": [],
 				})
 				var coverage_ratio := float(coverage) / float(missing.size())
-				entry.score += severity * float(solution.get("priority", 1.0)) * float(technology.get("priority", 1.0)) * coverage_ratio
+				# Alternative solutions are alternatives, not additional world pressure.
+				# One common scaling preserves relative priorities while bounding products.
+				var contribution := severity * (float(solution.get("priority", 1.0)) / solution_scale) * (float(technology.get("priority", 1.0)) / technology_scale) * coverage_ratio
+				var previous: float = problem_scores.get(technology_id, 0.0)
+				entry.score += maxf(0.0, contribution - previous)
+				problem_scores[technology_id] = maxf(previous, contribution)
 				if not entry.problems.has(problem_type):
 					entry.problems.append(problem_type)
 				if not entry.enables_toward.has(String(solution.id)):
@@ -187,8 +227,39 @@ func research_candidates(problem_instances: Array) -> Array[Dictionary]:
 	return result
 
 
-func preferred_research(problem_instances: Array) -> Dictionary:
-	var candidates := research_candidates(problem_instances)
+func _research_frontier(capability: String, known: Array[String], technologies: Array[Dictionary], visiting: Dictionary) -> Dictionary:
+	if known.has(capability):
+		return {"reachable": true, "frontier": {}}
+	if visiting.has(capability):
+		return {"reachable": false, "frontier": {}}
+	var next := visiting.duplicate()
+	next[capability] = true
+	var frontier: Dictionary = {}
+	var reachable := false
+	for technology in technologies:
+		if knows_technology(technology.id) or not capability_registry.expand(technology.grants).has(capability):
+			continue
+		var missing: Array[String] = capability_registry.missing(known, technology.requires_capabilities)
+		if missing.is_empty():
+			reachable = true
+			frontier[technology.id] = true
+			continue
+		var prerequisites: Dictionary = {}
+		var viable := true
+		for required in missing:
+			var path := _research_frontier(required, known, technologies, next)
+			if not path.reachable:
+				viable = false
+				break
+			prerequisites.merge(path.frontier)
+		if viable:
+			reachable = true
+			frontier.merge(prerequisites)
+	return {"reachable": reachable, "frontier": frontier}
+
+
+func preferred_research(problem_instances: Array, applicable_solution: Callable = Callable()) -> Dictionary:
+	var candidates := research_candidates(problem_instances, applicable_solution)
 	return {} if candidates.is_empty() else candidates[0].duplicate(true)
 
 
@@ -196,7 +267,7 @@ func _sort_scored(entries: Array[Dictionary], nested_technology: bool = false) -
 	entries.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
 		var score_a := float(a.get("score", 0.0))
 		var score_b := float(b.get("score", 0.0))
-		if not is_equal_approx(score_a, score_b):
+		if score_a != score_b:
 			return score_a > score_b
 		var id_a := String(a.get("technology", {}).get("id", "")) if nested_technology else String(a.get("id", ""))
 		var id_b := String(b.get("technology", {}).get("id", "")) if nested_technology else String(b.get("id", ""))

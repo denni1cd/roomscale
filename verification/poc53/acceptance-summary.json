@@ -1,0 +1,420 @@
+{
+  "baseline_commit": "71a2d1a96d8024e95e18e051e2e8632ee360ac1c",
+  "branch": "codex/innovation-foundation-fixes",
+  "uncommitted": true,
+  "foundation_robustness_assertions": 97,
+  "live_innovation": {
+    "clockwork": {
+      "civilization": "clockwork",
+      "failures": [],
+      "projects": [
+        {
+          "completed": 529.200000000052,
+          "contributors": {
+            "0": 19.4,
+            "2": 40.5999999999997
+          },
+          "delivered": {
+            "mechanical_parts": 1.0,
+            "metal": 2.0,
+            "wood": 1.0
+          },
+          "delivery_distance": 447.195877409042,
+          "region": "STUDY_SURFACE",
+          "required": {
+            "mechanical_parts": 1.0,
+            "metal": 2.0,
+            "wood": 1.0
+          },
+          "solution": "grapple_route",
+          "style": "cable",
+          "work": 60.0
+        }
+      ],
+      "reason": "Known access problems solved",
+      "research": [
+        {
+          "completed": 443.200000000032,
+          "contributors": {
+            "0": 53.0000000000005,
+            "3": 47.0000000000004
+          },
+          "id": "grapple_engineering",
+          "work": 99.9999999999986
+        }
+      ],
+      "result": "PASS",
+      "seconds": 1370.89999999985,
+      "source_visits": {
+        "food": 5,
+        "water": 9
+      }
+    },
+    "verdant": {
+      "civilization": "verdant",
+      "failures": [],
+      "projects": [
+        {
+          "completed": 527.300000000051,
+          "contributors": {
+            "0": 23.2,
+            "2": 51.8000000000005
+          },
+          "delivered": {
+            "mechanical_parts": 0.0,
+            "metal": 1.0,
+            "wood": 3.0
+          },
+          "delivery_distance": 447.195877409042,
+          "region": "STUDY_SURFACE",
+          "required": {
+            "mechanical_parts": 0.0,
+            "metal": 1.0,
+            "wood": 3.0
+          },
+          "solution": "climbing_vine",
+          "style": "vine",
+          "work": 75.0
+        }
+      ],
+      "reason": "Known access problems solved",
+      "research": [
+        {
+          "completed": 443.200000000032,
+          "contributors": {
+            "0": 53.0000000000005,
+            "3": 47.0000000000004
+          },
+          "id": "cultivated_vines",
+          "work": 99.9999999999986
+        }
+      ],
+      "result": "PASS",
+      "seconds": 1372.99999999985,
+      "source_visits": {
+        "food": 5,
+        "water": 9
+      }
+    },
+    "scavenger": {
+      "civilization": "scavenger",
+      "failures": [],
+      "projects": [
+        {
+          "completed": 535.100000000053,
+          "contributors": {
+            "0": 34.5999999999999,
+            "4": 10.4
+          },
+          "delivered": {
+            "mechanical_parts": 1.0,
+            "metal": 1.0,
+            "wood": 2.0
+          },
+          "delivery_distance": 447.195877409042,
+          "region": "STUDY_SURFACE",
+          "required": {
+            "mechanical_parts": 1.0,
+            "metal": 1.0,
+            "wood": 2.0
+          },
+          "solution": "scrap_ladder",
+          "style": "rope",
+          "work": 45.0
+        }
+      ],
+      "reason": "Known access problems solved",
+      "research": [
+        {
+          "completed": 405.700000000024,
+          "contributors": {
+            "0": 15.4999999999999,
+            "3": 9.49999999999998
+          },
+          "id": "salvage_cable",
+          "work": 25.0
+        },
+        {
+          "completed": 427.100000000029,
+          "contributors": {
+            "3": 13.5999999999998,
+            "4": 16.4
+          },
+          "id": "scrap_frames",
+          "work": 30.0
+        },
+        {
+          "completed": 452.700000000034,
+          "contributors": {
+            "1": 16.8,
+            "4": 18.1999999999998
+          },
+          "id": "pressure_craft",
+          "work": 35.0
+        }
+      ],
+      "result": "PASS",
+      "seconds": 1372.49999999985,
+      "source_visits": {
+        "food": 5,
+        "water": 9
+      }
+    }
+  },
+  "three_party": {
+    "result": "PASS",
+    "first_contact_tick": 1396,
+    "battle_start_tick": 1446,
+    "force_sizes": {
+      "clockwork_alpha": 3,
+      "scavenger_alpha": 3,
+      "verdant_alpha": 3
+    },
+    "casualties": {
+      "clockwork_alpha": 1,
+      "scavenger_alpha": 0,
+      "verdant_alpha": 1
+    },
+    "retreated_sides": {
+      "clockwork_alpha": 1721,
+      "verdant_alpha": 1755
+    },
+    "winner": "scavenger_alpha",
+    "site_capture_tick": 1870,
+    "attacks": 47,
+    "returned": {
+      "clockwork_alpha": 2,
+      "scavenger_alpha": 3,
+      "verdant_alpha": 2
+    },
+    "living_populations": {
+      "clockwork_alpha": 11,
+      "scavenger_alpha": 12,
+      "verdant_alpha": 11
+    }
+  },
+  "combined": {
+    "result": "PASS",
+    "final_tick": 20114,
+    "winner": "scavenger_alpha",
+    "site_capture_tick": 1870,
+    "retreated_sides": {
+      "clockwork_alpha": 1721,
+      "verdant_alpha": 1755
+    }
+  },
+  "combined_innovation": {
+    "clockwork_alpha": {
+      "research": [],
+      "projects": [],
+      "status": {
+        "enabled": true,
+        "known_technologies": [],
+        "project": {},
+        "projects": 0,
+        "reason": "Research needs an earned workshop",
+        "research": {}
+      }
+    },
+    "scavenger_alpha": {
+      "research": [
+        {
+          "completed": 396.500000000022,
+          "id": "salvage_cable",
+          "name": "Salvaged Cable",
+          "required_work": 25.0,
+          "started": 380.100000000018,
+          "state": "COMPLETE",
+          "target": "(-54.0, 0.0, -44.0)",
+          "work": 25.0,
+          "work_by_citizen": {
+            "26": 12.2999999999999,
+            "28": 12.7
+          }
+        },
+        {
+          "completed": 416.200000000026,
+          "id": "scrap_frames",
+          "name": "Scrap Frames",
+          "required_work": 30.0,
+          "started": 396.600000000022,
+          "state": "COMPLETE",
+          "target": "(-54.0, 0.0, -44.0)",
+          "work": 30.0,
+          "work_by_citizen": {
+            "24": 14.8,
+            "33": 15.1999999999998
+          }
+        },
+        {
+          "completed": 437.500000000031,
+          "id": "pressure_craft",
+          "name": "Pressure Craft",
+          "required_work": 35.0,
+          "started": 416.300000000026,
+          "state": "COMPLETE",
+          "target": "(-54.0, 0.0, -44.0)",
+          "work": 35.0,
+          "work_by_citizen": {
+            "26": 17.4,
+            "29": 17.5999999999998
+          }
+        }
+      ],
+      "projects": [],
+      "status": {
+        "enabled": true,
+        "known_technologies": [
+          "salvage_cable",
+          "scrap_frames",
+          "pressure_craft"
+        ],
+        "project": {},
+        "projects": 0,
+        "reason": "Known access problems solved",
+        "research": {}
+      }
+    },
+    "verdant_alpha": {
+      "research": [
+        {
+          "completed": 418.300000000027,
+          "id": "cultivated_vines",
+          "name": "Cultivated Vines",
+          "required_work": 100.0,
+          "started": 365.100000000015,
+          "state": "COMPLETE",
+          "target": "(68.01, 0.0, 30.51)",
+          "work": 99.9999999999986,
+          "work_by_citizen": {
+            "15": 50.0000000000004,
+            "20": 50.0000000000004
+          }
+        }
+      ],
+      "projects": [
+        {
+          "completed": 519.90000000005,
+          "delivered": {
+            "mechanical_parts": 0.0,
+            "metal": 1.0,
+            "wood": 3.0
+          },
+          "delivery_distance": 519.329538130829,
+          "id": "verdant_alpha_innovation_001",
+          "path": [
+            "(124.0, 0.0, -64.0)",
+            "(122.7222, 2.0, -64.02457)",
+            "(121.4444, 4.0, -64.04915)",
+            "(120.1667, 6.0, -64.07372)",
+            "(118.8889, 8.0, -64.09829)",
+            "(117.6111, 10.0, -64.12286)",
+            "(116.3333, 12.0, -64.14744)",
+            "(115.0556, 14.0, -64.172)",
+            "(113.7778, 16.0, -64.19658)",
+            "(112.5, 18.0, -64.22115)",
+            "(111.2222, 20.0, -64.24573)",
+            "(109.9444, 22.0, -64.2703)",
+            "(108.6667, 24.0, -64.29487)",
+            "(107.3889, 26.0, -64.31944)",
+            "(106.1111, 28.0, -64.34402)",
+            "(104.8333, 30.0, -64.36859)",
+            "(103.5556, 32.0, -64.39316)",
+            "(102.2778, 34.0, -64.41773)",
+            "(101.0, 36.0, -64.44231)",
+            "(98.58334, 36.0, -64.48878)",
+            "(96.16666, 36.0, -64.53526)",
+            "(93.75, 36.0, -64.58173)",
+            "(91.33334, 36.0, -64.6282)",
+            "(88.91666, 36.0, -64.67468)",
+            "(86.5, 36.0, -64.72115)",
+            "(84.08334, 36.0, -64.76762)",
+            "(81.66666, 36.0, -64.8141)",
+            "(79.25, 36.0, -64.86058)",
+            "(76.83334, 36.0, -64.90705)",
+            "(74.41666, 36.0, -64.95352)",
+            "(72.0, 36.0, -65.0)"
+          ],
+          "region": "BENCH_SURFACE",
+          "required": {
+            "mechanical_parts": 0.0,
+            "metal": 1.0,
+            "wood": 3.0
+          },
+          "required_work": 75.0,
+          "site": "(124.0, 0.0, -64.0)",
+          "solution": {
+            "addresses": [
+              "CROSS_GAP",
+              "VERTICAL_ACCESS"
+            ],
+            "construction": {
+              "mechanical_parts": 0.0,
+              "metal": 1.0,
+              "wood": 3.0,
+              "work": 75.0
+            },
+            "deployment": {
+              "adapter": "climb_route",
+              "style": "vine"
+            },
+            "display_name": "Climbing Vine",
+            "grants": [],
+            "id": "climbing_vine",
+            "priority": 1.0,
+            "problem_type": "VERTICAL_ACCESS",
+            "properties": {
+              "operating_cost": "care",
+              "permanent": false,
+              "throughput": 1.0
+            },
+            "requires_capabilities": [
+              "FLEXIBLE_GROWTH"
+            ],
+            "score": 1.0
+          },
+          "started": 418.400000000027,
+          "state": "COMPLETE",
+          "target": "(124.0, 0.0, -64.0)",
+          "visible_segments": 30,
+          "work": 75.0,
+          "work_by_citizen": {
+            "13": 37.5000000000002,
+            "23": 37.5000000000003
+          }
+        }
+      ],
+      "status": {
+        "enabled": true,
+        "known_technologies": [
+          "cultivated_vines"
+        ],
+        "project": {},
+        "projects": 1,
+        "reason": "Known access problems solved",
+        "research": {}
+      }
+    }
+  },
+  "gates": {
+    "foundation": "PASS, 97 robustness assertions plus original contracts",
+    "civilizations": "PASS, production definitions and Verdant visual contracts",
+    "live": "PASS, 2 identical runs for each of 3 catalogs",
+    "cancellation": "PASS, material recovery and ordinary-clock retry",
+    "pressure": "PASS, invalid scenarios, atomic rejected commitment, peaceful third claimant",
+    "two_party": "PASS, 5 identical canonical runs plus room B",
+    "three_party": "PASS, 3 identical runs",
+    "combined": "PASS, 2 identical combat fingerprints; real research/build/access",
+    "fast": "PASS",
+    "canonical": "PASS, 3 identical founder runs",
+    "regression": "PASS, all historical gates and 20 exploration cases",
+    "original_smokes": "PASS, Clockwork/Verdant x Room A/B",
+    "renderer": "PASS, inspected Verdant research/route/access and three-party battle captures"
+  },
+  "limits": [
+    "Only vertical-access detector and climb_route deployment are live. Powered lifts, bridge upgrades and reservoirs remain catalog examples.",
+    "One contested floor site/encounter; no treaties, coalition capture or elevated combat.",
+    "No long soaks or arbitrary large-party layout campaign in this pass.",
+    "CI configuration updated; remote Actions not executed."
+  ]
+}

@@ -40,6 +40,12 @@ jobs:
       - name: Innovation contracts
         shell: pwsh
         run: ./TEST_ROOM_SCALE_INNOVATION.ps1 -TimeoutSeconds 60
+      - name: Live innovation and determinism
+        shell: pwsh
+        run: ./TEST_ROOM_SCALE_INNOVATION_LIVE.ps1 -RunCount 2
+      - name: Innovation material recovery
+        shell: pwsh
+        run: ./TEST_ROOM_SCALE_INNOVATION_LIVE.ps1 -Civilizations clockwork -RunCount 1 -CancellationProbe -OutputDirectory verification/stabilization/runs/innovation-cancel
       - name: Focused and startup regressions
         shell: pwsh
         run: ./TEST_ROOM_SCALE.ps1 -Mode Fast
@@ -101,6 +107,12 @@ jobs:
       - name: Shared-world conflict and determinism
         shell: pwsh
         run: ./TEST_ROOM_SCALE_CONFLICT.ps1 -RunCount 5
+      - name: Three-party conflict and determinism
+        shell: pwsh
+        run: ./TEST_ROOM_SCALE_CONFLICT.ps1 -Room room_conflict_c -Scenario three_party_conflict -RunCount 3
+      - name: Combined combat and live innovation
+        shell: pwsh
+        run: ./TEST_ROOM_SCALE_CONFLICT.ps1 -Room room_conflict_c -Scenario three_party_conflict -Innovation -TimeoutSeconds 300 -OutputDirectory verification/stabilization/runs/poc5/combined
       - name: Second room conflict
         shell: pwsh
         run: ./TEST_ROOM_SCALE_CONFLICT.ps1 -Room room_conflict_b
