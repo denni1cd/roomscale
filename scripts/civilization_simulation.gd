@@ -308,7 +308,7 @@ func work(citizen: Node3D, delta: float) -> bool:
 		resources.reserve_bundle(bundle, citizen.citizen_id, instance_id)
 		show_bundle(bundle)
 		if not pickup_bundle(citizen): return false
-		source_visits[task.resource] += 1
+		source_visits[task.resource] = int(source_visits.get(task.resource,0))+1
 		if founder_mode and String(resources.sources[task.source_id].region) != "FLOOR": journal.record(seconds, "territory_reached", "Elevated resources reached", {"source":task.source_id}, citizen.global_position, "territory_reached")
 		citizen.begin_resource_return(String(task.resource))
 		return false

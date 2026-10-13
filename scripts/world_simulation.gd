@@ -55,7 +55,7 @@ func advance(delta: float) -> void:
 func step() -> void:
 	tick += 1
 	seconds += STEP
-	for runtime in runtimes:
+	for runtime in ordered_runtimes():
 		runtime.seconds = seconds
 		runtime.step_society()
 	if conflict_enabled:
@@ -116,7 +116,7 @@ func advance_conflict() -> void:
 	var site_id := String(scenario.strategic_site)
 	var at: Vector3 = territory.sites[site_id].position
 	if scouts.size() < runtimes.size():
-		for runtime in runtimes:
+		for runtime in ordered_runtimes():
 			if scouts.has(runtime.instance_id) or runtime.haul_deliveries == 0: continue
 			for citizen in runtime.citizens:
 				if not citizen.eligible_for_combat(at): continue
@@ -160,6 +160,9 @@ func advance_conflict() -> void:
 	if combat.phase == "DORMANT":
 		var war_policy: Dictionary = conflict_state.policy.duplicate(true)
 		war_policy["participants"] = engaged
+		var bilateral: Array = pairs.duplicate(true)
+		if bilateral.size() == 1 and not bilateral[0].has("participants"): bilateral[0]["participants"] = participants.duplicate()
+		war_policy["side_policies"] = conflict_pressure.commitment_policies(bilateral, engaged)
 		war_policy["intensity_name"] = conflict_state.intensity_name
 		war_policy["cause"] = conflict_state.cause
 		war_policy["resource"] = conflict_state.resource
@@ -250,3 +253,8 @@ func _process(delta: float) -> void:
 		if not state.research.is_empty(): activity = "%s research %.0f%%" % [state.research.name, float(state.research.work) / float(state.research.required_work) * 100]
 		elif not state.project.is_empty(): activity = "%s · %s" % [state.project.solution.get("display_name", state.project.solution.id), state.project.state.replace("_", " ").to_lower()]
 		status_label.text += "\n%s · %s" % [runtime.definition.display_name, activity]
+
+func ordered_runtimes() -> Array:
+	var ordered: Array = runtimes.duplicate()
+	ordered.sort_custom(func(a: Node,b: Node) -> bool: return a.instance_id < b.instance_id)
+	return ordered

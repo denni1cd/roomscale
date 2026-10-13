@@ -2,6 +2,8 @@ param(
     [string]$OutputDirectory = 'verification/stabilization/runs/innovation-live',
     [switch]$CancellationProbe,
     [switch]$CaptureVisuals,
+    [string]$Room = 'room_poc47',
+    [switch]$RequireLivingStructure,
     [string[]]$Civilizations = @('clockwork','verdant','scavenger'),
     [ValidateRange(1,20)][int]$RunCount = 2,
     [ValidateRange(1,3600)][int]$TimeoutSeconds = 120
@@ -24,7 +26,7 @@ foreach ($civilization in $Civilizations) {
         $run = Invoke-RoomScaleProcess -FilePath $GodotExecutable -ProjectRoot $ProjectRoot `
             -ArgumentList $arguments `
             -LogPath (Join-Path $OutputDirectory "$civilization-$runIndex.log") -TimeoutSeconds $TimeoutSeconds `
-            -Environment @{ROOMSCALE_VISUAL_DIR=$visualDirectory;ROOMSCALE_INNOVATION_CANCEL_PROBE=$(if ($CancellationProbe) {'1'} else {'0'});ROOMSCALE_CIVILIZATION=$civilization;ROOMSCALE_INNOVATION_RESULT=$resultPath}
+            -Environment @{ROOMSCALE_ROOM=$Room;ROOMSCALE_REQUIRE_LIVING_STRUCTURE=$(if ($RequireLivingStructure) {'1'} else {'0'});ROOMSCALE_VISUAL_DIR=$visualDirectory;ROOMSCALE_INNOVATION_CANCEL_PROBE=$(if ($CancellationProbe) {'1'} else {'0'});ROOMSCALE_CIVILIZATION=$civilization;ROOMSCALE_INNOVATION_RESULT=$resultPath}
         if ($run.ExitCode -ne 0 -or $run.TimedOut -or $run.Content -match 'ERROR:|SCRIPT ERROR:' -or $run.Content -notmatch 'ROOMSCALE_INNOVATION_LIVE_PASS' -or -not (Test-Path -LiteralPath $resultPath)) {
             Write-Output $run.Content
             throw "Live innovation failed: $civilization run=$runIndex. See $($run.LogPath)"

@@ -11,6 +11,9 @@ var rejected_forged_work := false
 var paused_checked := false
 var cancellation_checked := false
 var captures: Array[String] = []
+var tree_completed := false
+var shelter_bonus_verified := false
+var recognition_time := -1.0
 
 func _initialize() -> void:
 	create_timer(90.0).timeout.connect(func() -> void: push_error("INNOVATION_LIVE_FAIL watchdog"); quit(1))
@@ -20,7 +23,7 @@ func check(condition: bool, label: String) -> void:
 	if not condition and not failures.has(label): failures.append(label)
 
 func run() -> void:
-	OS.set_environment("ROOMSCALE_ROOM", "room_poc47")
+	if OS.get_environment("ROOMSCALE_ROOM").is_empty(): OS.set_environment("ROOMSCALE_ROOM", "room_poc47")
 	OS.set_environment("ROOMSCALE_FISHBOWL", "1")
 	OS.set_environment("ROOMSCALE_INNOVATION", "1")
 	OS.set_environment("ROOMSCALE_DISABLE_STARTUP_CAPTURE", "1")
@@ -31,7 +34,7 @@ func run() -> void:
 	sim.set_process(false)
 	sim.camera_director.set_process(false)
 	sim.spectator.set_process(false)
-	check(sim.citizens.size() == 5 and sim.economy.available.wood == 0 and sim.economy.available.metal == 0 and sim.economy.available.mechanical_parts == 0, "Earned founder start")
+	check(sim.citizens.size() == int(sim.room_definition.start.population) and sim.economy.available.wood == 0 and sim.economy.available.metal == 0 and sim.economy.available.mechanical_parts == 0, "Earned founder start")
 	check(sim.innovation.enabled and sim.innovation.resolver.known_technologies.is_empty(), "No initial inventions")
 	var initial_problems := preload("res://scripts/world_problem_detector.gd").vertical_access(sim.resources, sim.coordinator.surface_navigation)
 	check(not initial_problems.is_empty() and initial_problems[0].type == "VERTICAL_ACCESS", "Generic world problem")
@@ -39,7 +42,19 @@ func run() -> void:
 		for tick_index in range(100):
 			var before: Dictionary = {}
 			for citizen in sim.citizens: before[citizen.citizen_id] = citizen.global_position
+			var shelter_before: int = sim.needs.shelter_capacity
 			sim.step()
+			if recognition_time < 0:
+				for recognized in sim.innovation.resolver.problem_registry.active_problems():
+					if recognized.type == "VERTICAL_ACCESS": recognition_time = recognized.recognized_at
+			if sim.seconds < 10:
+				check(sim.innovation.resolver.problem_registry.active_problems().is_empty() and sim.innovation.research.is_empty(), "Weak initial awareness cannot research")
+			for built in sim.innovation.projects:
+				if built.state == "COMPLETE" and built.solution.deployment.adapter == "living_structure" and not tree_completed:
+					check(sim.needs.shelter_capacity - shelter_before == int(built.solution.properties.shelter_capacity), "Authored shelter property changes actual capacity only at paid completion")
+					check(sim.needs.shelter_capacity == built.shelter_before + int(built.solution.properties.shelter_capacity), "Living effect applies once")
+					shelter_bonus_verified = true
+					tree_completed = true
 			check(not sim.construction.project_created, "Legacy progression bypassed")
 			check(sim.economy.audit().is_empty() and sim.resources.audit().is_empty(), "Conservation")
 			for citizen in sim.citizens:
@@ -77,6 +92,7 @@ func run() -> void:
 					check(project.state == "CANCELLED" and sim.innovation.active.is_empty() and sim.world_simulation.innovation_claims.is_empty(), "Cancelled project releases shared ownership")
 					check(sim.innovation.resolver.known_technologies.keys() == known and not sim.coordinator.surface_navigation.has_connection("FLOOR", project.region), "Cancellation grants no capability or route")
 					check(not sim.economy.tickets.values().any(func(ticket: Dictionary) -> bool: return ticket.owner == id), "Cancelled project has no ledger tickets")
+					check(not sim.coordinator.tasks.any(func(job: Dictionary) -> bool: return job.get("project_id","") == id and job.state in ["active","reserved"]), "Cancellation retires project delivery, build and recipe jobs")
 					for resource in paid:
 						var recovered := 0.0
 						for bundle in sim.resources.bundles.values():
@@ -93,11 +109,13 @@ func run() -> void:
 			await capture("research", sim.innovation.research.target + Vector3(0,1,0), 22)
 		if not sim.innovation.projects.is_empty() and sim.innovation.projects[-1].state == "COMPLETE":
 			var project: Dictionary = sim.innovation.projects[-1]
-			await capture("deployed-route", (project.site + project.path.back()) / 2, project.path[0].distance_to(project.path.back()) * 1.4)
+			if OS.get_environment("ROOMSCALE_REQUIRE_LIVING_STRUCTURE") != "1" or project.solution.deployment.adapter == "living_structure": await capture("deployed-route", (project.site + project.path.back()) / 2, project.path[0].distance_to(project.path.back()) * 1.4)
 		await process_frame
 		var completed: bool = not sim.innovation.projects.is_empty() and sim.innovation.projects[-1].state == "COMPLETE"
-		if completed and sim.journal.events.any(func(e: Dictionary) -> bool: return e.kind == "territory_reached"): break
+		if completed and (OS.get_environment("ROOMSCALE_REQUIRE_LIVING_STRUCTURE") != "1" or tree_completed) and sim.journal.events.any(func(e: Dictionary) -> bool: return e.kind == "territory_reached"): break
 	if OS.get_environment("ROOMSCALE_INNOVATION_CANCEL_PROBE") == "1": check(cancellation_checked, "Physical cancellation boundary exercised")
+	if OS.get_environment("ROOMSCALE_REQUIRE_LIVING_STRUCTURE") == "1": check(tree_completed and shelter_bonus_verified, "Mechanically distinct living structure completed")
+	check(recognition_time >= 10, "Vertical access recognized after fixed observations")
 	check(saw_research_travel and saw_research_work and paused_checked and rejected_forged_work, "Physical research and pause witnessed")
 	check(saw_solution_haul and saw_solution_work, "Physical hauling and construction witnessed")
 	check(not sim.innovation.research_history.is_empty(), "Research completed")
@@ -121,12 +139,18 @@ func run() -> void:
 		var sum := 0.0
 		for effort in project.work_by_citizen.values(): sum += float(effort)
 		check(absf(sum - float(project.required_work)) <= 0.0001, "Construction backed by citizen work")
-		project_receipts.append({"solution":project.solution.id, "region":project.region, "style":project.solution.deployment.style, "completed":project.completed, "required":project.required, "delivered":project.delivered, "work":project.work, "contributors":project.work_by_citizen, "delivery_distance":project.delivery_distance})
-	var receipt := {"result":"PASS" if failures.is_empty() else "FAIL", "failures":failures, "civilization":sim.definition_id, "research":research_receipts, "projects":project_receipts, "seconds":sim.seconds, "source_visits":sim.source_visits, "reason":sim.innovation.reason}
+		project_receipts.append({"solution":project.solution.id, "region":project.region, "style":project.solution.deployment.style, "completed":project.completed, "required":project.required, "delivered":project.delivered, "work":project.work, "contributors":project.work_by_citizen, "delivery_distance":project.delivery_distance,"shelter_added":project.solution.get("properties",{}).get("shelter_capacity",0) if project.get("effect_applied",false) else 0})
+		if project.solution.deployment.adapter == "living_structure":
+			var adapter: RefCounted = sim.innovation.adapters.adapter_for(project.solution)
+			var before_capacity: int = sim.needs.shelter_capacity
+			check(adapter.finish(sim,project) and before_capacity == sim.needs.shelter_capacity,"Completed living effect is idempotent")
+			var duplicate: Dictionary = adapter.prepare(sim,project.solution,{"source_id":project.region,"context":{"region":project.region}})
+			check(not duplicate.get("valid",false),"Permanent structure cannot be duplicated into free capacity at the same region")
+	var receipt := {"result":"PASS" if failures.is_empty() else "FAIL", "failures":failures, "civilization":sim.definition_id,"recognition_time":recognition_time,"shelter_bonus_verified":shelter_bonus_verified, "research":research_receipts, "projects":project_receipts, "seconds":sim.seconds, "source_visits":sim.source_visits, "reason":sim.innovation.reason}
 	var destination := OS.get_environment("ROOMSCALE_INNOVATION_RESULT")
 	if not destination.is_empty():
 		var file := FileAccess.open(destination, FileAccess.WRITE)
-		if file != null: file.store_string(JSON.stringify(receipt, "  "))
+		if file != null: file.store_string(JSON.stringify(receipt, "  ")); file.flush(); file.close()
 	print("INNOVATION_LIVE_RECEIPT ", JSON.stringify(receipt))
 	if failures.is_empty(): print("ROOMSCALE_INNOVATION_LIVE_PASS")
 	else: push_error("ROOMSCALE_INNOVATION_LIVE_FAIL %s" % [failures])

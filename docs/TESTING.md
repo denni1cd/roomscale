@@ -182,3 +182,34 @@ released construction claims and actual elevated access by surviving citizens.
 CI configuration includes foundation/live/recovery gates and the three-party and
 combined gates. Only a remote Actions run establishes remote CI success. Long soaks,
 arbitrary large-party layouts and subjective visual acceptance remain explicit.
+
+## POC 5.3 stabilization gates
+
+```powershell
+./TEST_ROOM_SCALE_EXTENSIBILITY.ps1 -RunCount 3
+./TEST_ROOM_SCALE_INNOVATION_LIVE.ps1 -RunCount 3
+./TEST_ROOM_SCALE_INNOVATION_LIVE.ps1 -Civilizations verdant -Room room_poc53_tree -RequireLivingStructure -RunCount 3
+./TEST_ROOM_SCALE_INNOVATION_LIVE.ps1 -Civilizations clockwork -CancellationProbe -RunCount 3
+./TEST_ROOM_SCALE_CONFLICT.ps1 -Room room_conflict_c -Scenario three_party_conflict -Innovation -RunCount 3 -TimeoutSeconds 300
+```
+
+Focused ranking/evidence tests cover water versus access, reversed input, exact ties,
+duplicate mild sources, combined benefits, unsupported classes, unrecognized pressure,
+repeated/same-time/order-independent observations and disappeared/reappearing episodes.
+An established-room fixture registers a new non-route adapter without runtime edits and
+pays food/water materials with actual delivery/build jobs. Its optional ongoing callback
+runs on the fixed clock and freezes when paused. Numeric rejection/audits cover overflow.
+
+Mixed combat uses authored unequal founder counts and pair-specific space relevance.
+A contested-claim fixture invokes normal pressure/orchestration; it seeds no actors,
+health, materials, movement, damage, work or technology. Ordinary ticks drive commitment,
+travel, combat and withdrawal. The test checks per-side force/retreat rules, peaceful
+pair non-targeting, atomic rejection of an unavailable force, terminal casualties and
+identical outcomes with reversed participant/runtime order. Separate pressure scenarios
+retain the peaceful third-claimant capture test.
+
+The six-founder Verdant scenario earns every technology/material/work unit. It must
+complete the living structure, gain the authored four real shelter places only at
+completion and reject duplicate benefit/structure application. Renderer runs require
+Clockwork access, this living structure and three-party combat. Curated images and
+compact summaries accompany the stabilization report; bulk output stays ignored.

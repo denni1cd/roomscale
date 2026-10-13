@@ -182,9 +182,9 @@ func run() -> void:
 			check(runtime.innovation.enabled, "every participant has its own live innovation service")
 			for project in runtime.innovation.projects:
 				if project.state == "COMPLETE":
-					completed_projects += 1
+					if project.solution.deployment.adapter == "climb_route": completed_projects += 1
 					check(project.delivered == project.required and project.work >= project.required_work - 0.00001 and project.delivery_distance > 0, "shared route funded and built by its owner")
-		check(completed_projects == 1 and world.innovation_claims.is_empty(), "one physical shared route; no duplicate construction or stale claims")
+		check(completed_projects == 1 and world.runtimes[0].coordinator.surface_navigation.connections.size() == 1 and world.innovation_claims.is_empty(), "one physical shared route; no duplicate construction or stale claims")
 		check(world.runtimes.any(func(runtime: Node) -> bool: return runtime.journal.events.any(func(e: Dictionary) -> bool: return e.kind == "territory_reached")), "multi-party survivors physically use invented access")
 	var societies := {}
 	var populations := {}
@@ -195,6 +195,7 @@ func run() -> void:
 	if not output.is_empty():
 		var file := FileAccess.open(output,FileAccess.WRITE)
 		if file == null: check(false,"result write failed")
-		else: file.store_string(JSON.stringify(result,"  "))
+		else:
+			file.store_string(JSON.stringify(result,"  ")); file.flush(); file.close()
 	print("ROOMSCALE_CONFLICT_" + ("PASS" if failures.is_empty() else "FAIL") + " " + JSON.stringify(result))
 	quit(0 if failures.is_empty() else 1)

@@ -16,6 +16,7 @@ var winner := ""
 var retreating_side := ""
 var retreated_sides: Dictionary = {}
 var attacks := 0
+var attack_pairs: Dictionary = {}
 var retreat_tick := -1
 var battle_start_tick := -1
 var site_capture_tick := -1
@@ -25,11 +26,10 @@ var returned: Dictionary = {}
 var cooldown_until: Dictionary = {}
 var arrivals: Dictionary = {}
 var policy: Dictionary = {}
+var side_policies: Dictionary = {}
 var conflict_intensity := "LIMITED_WAR"
 var conflict_cause := ""
 var conflict_objective := "SECURE_CONTESTED_ASSET"
-var retreat_threshold := DEFAULT_RETREAT_THRESHOLD
-var allow_retreat := true
 
 func start(controller: Node, objective: String, war_policy: Dictionary = {}) -> bool:
 	if phase != "DORMANT" or not controller.territory.sites.has(objective): return false
@@ -41,25 +41,26 @@ func start(controller: Node, objective: String, war_policy: Dictionary = {}) -> 
 	for id in ids:
 		if not id is String or not controller.territory.sites[objective].contesting_civilizations.has(id): return false
 		if not ids.any(func(rival: Variant) -> bool: return rival is String and rival != id and controller.territory.relations.get(controller.territory.relation_key(id, rival), "UNKNOWN") == "HOSTILE"): return false
-	for field in ["force_fraction", "min_force", "max_force", "retreat_threshold"]:
-		if war_policy.has(field) and not preload("res://scripts/innovation_validation.gd").number(war_policy[field]): return false
-	for field in ["min_force", "max_force"]:
-		if war_policy.has(field) and (war_policy[field] < 1 or war_policy[field] > 150 or war_policy[field] != floorf(war_policy[field])): return false
-	if war_policy.has("allow_retreat") and not war_policy.allow_retreat is bool: return false
+	var staged_policies := {}
+	if war_policy.has("side_policies") and not war_policy.side_policies is Dictionary: return false
+	for id in ids:
+		if war_policy.has("side_policies") and not war_policy.side_policies.has(id): return false
+		var own: Variant = war_policy.get("side_policies", {}).get(id, war_policy)
+		if not own is Dictionary or not _valid_policy(own): return false
+		staged_policies[id] = own.duplicate(true)
 	var participants: Array = []
 	for runtime in controller.runtimes:
 		if ids.has(runtime.instance_id): participants.append(runtime)
 	if participants.size() != ids.size(): return false
+	participants.sort_custom(func(a: Node, b: Node) -> bool: return a.instance_id < b.instance_id)
 	for id in ids:
 		if controller.seconds < float(cooldown_until.get(id, -1)): return false
 	var staged_forces := {}
-	var force_fraction := clampf(float(war_policy.get("force_fraction", 0.25)), 0.0, 1.0)
-	var min_force := maxi(1, int(war_policy.get("min_force", 2)))
-	var max_force := maxi(min_force, int(war_policy.get("max_force", 6)))
 	var target: Vector3 = controller.territory.sites[objective].position
 	for runtime in participants:
 		var selected: Array = []
-		var count := mini(max_force, maxi(min_force, ceili(runtime.living_population() * force_fraction)))
+		var own: Dictionary = staged_policies[runtime.instance_id]
+		var count := mini(int(own.get("max_force",6)), maxi(int(own.get("min_force",2)), ceili(runtime.living_population() * float(own.get("force_fraction",0.25)))))
 		for citizen in runtime.citizens:
 			if citizen.eligible_for_combat(target): selected.append(citizen)
 		selected.sort_custom(func(a: Node3D, b: Node3D) -> bool:
@@ -107,9 +108,8 @@ func start(controller: Node, objective: String, war_policy: Dictionary = {}) -> 
 	conflict_intensity = String(policy.get("intensity_name", "LIMITED_WAR"))
 	conflict_cause = String(policy.get("cause", ""))
 	conflict_objective = String(policy.get("objective", "SECURE_CONTESTED_ASSET"))
-	retreat_threshold = float(policy.get("retreat_threshold", DEFAULT_RETREAT_THRESHOLD))
-	allow_retreat = bool(policy.get("allow_retreat", true))
 	forces = staged_forces
+	side_policies = staged_policies
 	# No partial commitment if either side cannot supply a legal force.
 	for runtime in participants:
 		var id: String = runtime.instance_id
@@ -123,13 +123,14 @@ func start(controller: Node, objective: String, war_policy: Dictionary = {}) -> 
 			# Distinct legal station points keep the tiny force readable.
 			if not citizen.assign_combat_duty("MARCH", planned_targets[citizen.citizen_id]): return false
 			next_attack[citizen.citizen_id] = 0.0
-		world.journal.record(world.seconds, "FORCE_COMMITTED", id + " committed citizens", {"instance_id":id,"size":initial_sizes[id],"intensity":conflict_intensity,"cause":conflict_cause,"objective":conflict_objective}, target, id + ":force")
+		world.journal.record(world.seconds, "FORCE_COMMITTED", id + " committed citizens", {"instance_id":id,"size":initial_sizes[id],"intensity":side_policies[id].get("intensity_name", conflict_intensity),"cause":side_policies[id].get("cause", conflict_cause),"objective":side_policies[id].get("objective", conflict_objective)}, target, id + ":force")
 	phase = "MARCH"
 	battle_start_tick = world.tick
 	return true
 
 func _reset_battle_state() -> void:
 	forces.clear()
+	side_policies.clear()
 	initial_sizes.clear()
 	morale.clear()
 	casualties.clear()
@@ -140,6 +141,7 @@ func _reset_battle_state() -> void:
 	retreating_side = ""
 	retreated_sides.clear()
 	attacks = 0
+	attack_pairs.clear()
 	retreat_tick = -1
 	battle_start_tick = -1
 	site_capture_tick = -1
@@ -201,6 +203,8 @@ func update() -> void:
 			phase = "FIGHT"
 			next_attack[citizen.citizen_id] = world.seconds + ATTACK_INTERVAL
 			attacks += 1
+			var pair_key: String = world.territory.relation_key(citizen.civilization_id,victim.civilization_id)
+			attack_pairs[pair_key] = int(attack_pairs.get(pair_key,0))+1
 			world.present_attack(citizen, victim)
 			if victim.suffer_combat_damage(ATTACK_DAMAGE):
 				casualties[victim.civilization_id] += 1
@@ -246,7 +250,7 @@ func retreat(id: String) -> void:
 	world.territory.sites[site_id].hold_progress = 0.0
 	cooldown_until[id] = world.seconds + 600.0
 	for citizen in living(id): citizen.assign_combat_duty("RETREAT", world.runtime_for(id).coordinator.housing_station)
-	world.journal.record(world.seconds, "RETREAT", id + " morale broke; returning to rally", {"instance_id":id,"morale":morale.duplicate(),"intensity":conflict_intensity}, world.territory.sites[site_id].position, id + ":retreat")
+	world.journal.record(world.seconds, "RETREAT", id + " morale broke; returning to rally", {"instance_id":id,"morale":morale.duplicate(),"intensity":side_policies[id].get("intensity_name", conflict_intensity),"survivors":living(id).size()}, world.territory.sites[site_id].position, id + ":retreat")
 
 func stand_down(reason: String) -> void:
 	if phase not in ["MARCH", "FIGHT"]: return
@@ -261,7 +265,7 @@ func stand_down(reason: String) -> void:
 
 func evaluate_morale() -> bool:
 	var losing := ""
-	var lowest := retreat_threshold
+	var largest_deficit := 0.0
 	for id in forces:
 		if retreated_sides.has(id): continue
 		var survivors := living(id)
@@ -275,8 +279,10 @@ func evaluate_morale() -> bool:
 		for survivor in survivors: average += survivor.health / maxf(1, survivors.size())
 		var disadvantage := maxf(0, 1.0 - float(survivors.size()) / maxf(1, other))
 		morale[id] = 1.0 - float(casualties[id]) / initial_sizes[id] * 0.65 - disadvantage * 0.20 - (1.0 - average / 100.0) * 0.15
-		if allow_retreat and morale[id] < lowest:
-			lowest = morale[id]
+		var own: Dictionary = side_policies[id]
+		var deficit := float(own.get("retreat_threshold", DEFAULT_RETREAT_THRESHOLD)) - float(morale[id])
+		if bool(own.get("allow_retreat", true)) and deficit > largest_deficit:
+			largest_deficit = deficit
 			losing = String(id)
 	if not losing.is_empty():
 		retreat(losing)
@@ -289,11 +295,12 @@ func _hostile(a: String, b: String) -> bool:
 func _rivals_withdrawn(target: Vector3) -> bool:
 	for id in forces:
 		if id != winner and not living(id).all(func(c: Node3D) -> bool: return c.global_position.distance_to(target) > ATTACK_RANGE): return false
-	# Uncommitted, peaceful claimants also prevent exclusive military capture.
+	# A side's withdrawal against one rival does not surrender its peaceful claim
+	# to a different winner. Any living non-hostile claimant prevents exclusivity.
 	for id in world.territory.sites[site_id].contesting_civilizations:
-		if id == winner or forces.has(id): continue
+		if id == winner: continue
 		var runtime: Node = world.runtime_for(String(id))
-		if runtime != null and runtime.living_population() > 0: return false
+		if runtime != null and runtime.living_population() > 0 and world.territory.relations.get(world.territory.relation_key(winner,String(id)),"UNKNOWN") != "HOSTILE": return false
 	return true
 
 func _return_arrivals(id: String) -> void:
@@ -301,3 +308,14 @@ func _return_arrivals(id: String) -> void:
 		if citizen.combat_duty == "RETREAT" and citizen.combat_arrived:
 			citizen.end_combat_duty()
 			returned[id] = int(returned.get(id, 0)) + 1
+
+static func _valid_policy(value: Dictionary) -> bool:
+	var validation := preload("res://scripts/innovation_validation.gd")
+	for field in ["force_fraction", "min_force", "max_force", "retreat_threshold"]:
+		if value.has(field) and not validation.number(value[field]): return false
+	for field in ["min_force", "max_force"]:
+		if value.has(field) and (value[field] < 1 or value[field] > 150 or value[field] != floorf(value[field])): return false
+	if float(value.get("force_fraction",0.25)) < 0 or float(value.get("force_fraction",0.25)) > 1: return false
+	if int(value.get("max_force",6)) < int(value.get("min_force",2)): return false
+	if value.has("allow_retreat") and not value.allow_retreat is bool: return false
+	return float(value.get("retreat_threshold",0.7)) >= -1 and float(value.get("retreat_threshold",0.7)) <= 1

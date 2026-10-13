@@ -74,6 +74,7 @@ func set_problem(problem_id: String, source_id: String, severity: float, context
 	if not definitions.has(normalized):
 		return {"ok": false, "error": "unknown problem id: %s" % normalized}
 	var source := source_id.strip_edges()
+	if not is_finite(severity): return {"ok":false,"error":"problem severity must be finite"}
 	if source.is_empty():
 		return {"ok": false, "error": "problem source id must not be empty"}
 	var key := "%s::%s" % [normalized, source]
@@ -85,6 +86,8 @@ func set_problem(problem_id: String, source_id: String, severity: float, context
 		"source_id": source,
 		"severity": clampf(severity, 0.0, 1.0),
 		"observation_count": observations,
+		"awareness": 1.0,
+		"recognition_state": "RECOGNIZED",
 		"context": context.duplicate(true),
 	}
 	active[key] = instance
@@ -95,12 +98,52 @@ func clear_problem(problem_id: String, source_id: String) -> void:
 	active.erase("%s::%s" % [normalize_id(problem_id), source_id.strip_edges()])
 
 
-func active_problems() -> Array[Dictionary]:
+func observe_batch(observations: Array, seconds: float) -> void:
+	# Called once per fixed detector interval. Sorted strengths make contributions
+	# from several detectors order-independent; repeated calls at one time are inert.
+	if not is_finite(seconds) or seconds < 0: return
+	var grouped := {}
+	for raw in observations:
+		if not raw is Dictionary or not raw.get("type") is String or not Validation.nonempty_string(raw.get("source_id")): continue
+		if not Validation.number(raw.get("severity")) or not Validation.number(raw.get("strength",0.35)): continue
+		if float(raw.get("strength",0.35)) <= 0 or float(raw.severity) <= 0 or not raw.get("context",{}) is Dictionary: continue
+		var type := normalize_id(raw.type)
+		if not has_problem(type): continue
+		var key := type + "::" + String(raw.source_id).strip_edges()
+		if not grouped.has(key): grouped[key] = []
+		var observation: Dictionary = raw.duplicate(true)
+		observation.type = type
+		grouped[key].append(observation)
+	var keys: Array = grouped.keys(); keys.sort()
+	for key in keys:
+		var batch: Array = grouped[key]
+		batch.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return JSON.stringify(a, "", true) < JSON.stringify(b, "", true))
+		var prior: Dictionary = active.get(key,{})
+		if not prior.is_empty() and seconds <= float(prior.get("last_observed",-1)): continue
+		var strengths: Array[float] = []
+		var severity := 0.0
+		var context := {}
+		for observation in batch:
+			strengths.append(clampf(float(observation.get("strength",0.35)),0,1))
+			severity = maxf(severity,clampf(float(observation.severity),0,1))
+			context.merge(observation.get("context",{}),true)
+		strengths.sort()
+		var awareness := float(prior.get("awareness",0))
+		for strength in strengths: awareness = minf(1, awareness+strength)
+		var recognized := awareness >= 1.0 - 0.000001
+		active[key] = {"key":key,"type":batch[0].type,"source_id":String(batch[0].source_id).strip_edges(),"severity":severity,"observation_count":int(prior.get("observation_count",0))+batch.size(),"awareness":awareness,"first_observed":prior.get("first_observed",seconds),"last_observed":seconds,"recognized_at":prior.get("recognized_at",seconds) if recognized and prior.get("recognition_state","") == "RECOGNIZED" else (seconds if recognized else -1.0),"recognition_state":"RECOGNIZED" if recognized else "EMERGING","context":context}
+	# Missing/solved opportunities disappear, including their evidence. A later
+	# reappearance is a new recognition episode, never stale perfect knowledge.
+	for key in active.keys():
+		if not grouped.has(key): active.erase(key)
+
+func active_problems(recognized_only: bool = true) -> Array[Dictionary]:
 	var keys := active.keys()
 	keys.sort()
 	var result: Array[Dictionary] = []
 	for key in keys:
 		var instance: Dictionary = active[key]
+		if recognized_only and instance.get("recognition_state","RECOGNIZED") != "RECOGNIZED": continue
 		if float(instance.get("severity", 0.0)) > 0.0:
 			result.append(instance.duplicate(true))
 	return result

@@ -50,20 +50,22 @@ func tick(sim: Node) -> void:
 		for resource in shortage: shortage[resource] += float(development_shortage[resource])
 	if sim.get("innovation") != null:
 		var innovation_shortage: Dictionary = sim.innovation.shortage()
-		for resource in shortage: shortage[resource] += float(innovation_shortage[resource])
+		for resource in innovation_shortage:
+			shortage[resource] = float(shortage.get(resource,0))+float(innovation_shortage[resource])
+			if float(innovation_shortage[resource]) > 0: sim.secure_resource(resource)
 	sim.planner.set_priority("Survival", 4 if danger else 3)
 	sim.planner.set_priority("Resources", 3)
 	sim.planner.set_priority("Construction", 3)
 	sim.planner.set_priority("Exploration", 1)
-	if float(shortage.wood) + float(shortage.metal) > 0:
-		transition(sim, "MATERIALS", "Approved project needs wood/metal: " + str(shortage), state)
+	if shortage.values().any(func(amount: Variant) -> bool: return float(amount) > 0):
+		transition(sim, "MATERIALS", "Approved project material shortage: " + str(shortage), state)
 		authorize_safe_salvage(sim, shortage)
 	elif danger:
 		transition(sim, "SURVIVAL", "Reserve below safety threshold; development restrained", state)
 	else:
 		transition(sim, "STABLE", "Reserves recovered; assess shelter and finite carrying capacity", state)
 		if sim.get("development") != null and not (sim.get("innovation") != null and sim.innovation.busy()): sim.development.consider(state)
-	if sim.get("population") != null: sim.population.evaluate(sim, state, danger, float(shortage.wood) + float(shortage.metal) > 0)
+	if sim.get("population") != null: sim.population.evaluate(sim, state, danger, shortage.values().any(func(amount: Variant) -> bool: return float(amount) > 0))
 
 func candidates(sim: Node, shortage: Dictionary) -> Array[Dictionary]:
 	var ranked: Array[Dictionary] = []

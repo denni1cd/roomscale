@@ -78,3 +78,33 @@ industrial meshes with its own palette and rope solution; it has no combat bonus
 The extension still uses one authored contested site and one resolved encounter,
 with a cooldown. Trade, treaties, coalition ownership, recurrent campaigns, civilian
 combat and fighting on elevated links are outside this milestone.
+
+## Mixed-intensity policy (POC 5.3 stabilization)
+
+Commitment follows Model A: each society uses the strongest bilateral hostility in
+which it personally participates. A survival pair beside a limited pair therefore
+produces survival/survival/limited policies, not a universal survival war. Per-side
+force fraction/minimum/maximum, retreat permission and threshold are captured at
+commitment; the encounter's greatest intensity is only a summary label. Force formation
+validates every side before any commitment. No mid-battle automatic conscription occurs.
+Ongoing bilateral relations still govern targets and whether fighting has a live cause.
+
+`pair_benefits` optionally scopes a site's contested benefits to canonical instance-pair
+keys; schema validation rejects unknown/noncanonical pairs. This permits legitimate
+mixed causes rather than injecting intensities. The mixed fixture has severe space
+pressure for Clockwork/Verdant, moderate shared pressure for Verdant/Scavenger and no
+contested benefit between Clockwork/Scavenger. Its authored founder counts are 4/12/8:
+the first two commit their entire own rosters, while Scavenger commits two citizens and
+retreats with a survivor. The survival side's elimination is terminal, not an ordinary
+morale retreat. Different pair benefits describe contested relevance, not treaty logic.
+
+Participants, startup rosters, fixed society steps, policy folding and target initiative
+use stable IDs. Reversing participant/runtime order is tested against the complete
+physical engagement fingerprint. A surviving peaceful claimant prevents exclusive
+capture even if it previously fought a different rival in the engagement.
+
+The three-society combined innovation room now includes a visible 24-unit finite scrap
+tray. Its stock comes from two real salvage stages, not depot grants. That extra authored
+supply funds the larger new structure after three ordinary settlements. This does not
+prove a global affordability allocator: prototypes can wait when legitimate finite
+materials are exhausted, as ordinary settlement projects can.

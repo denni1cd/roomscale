@@ -246,3 +246,13 @@ Actual arriving scouts create overlapping claims and one UNKNOWN → CONTACT →
 relation keyed by instance IDs. The winner must remain present while all retreating
 opponents physically clear attack range, then hold for ten seconds. Capture changes the
 shared site record and its industrial/organic marker. It never deletes traversal links.
+
+## POC 5.3 extensibility boundary
+
+Recognized problem evidence and globally ranked construction choices feed an owned
+innovation project. Physical planning/rendering/effects dispatch through a data-registered
+adapter; canonical materials and opt-in depot recipes have independent authorities.
+The live runtime does not branch on civilization, technology or solution IDs and does not
+enumerate three construction materials. See [innovation contracts](INNOVATION_ARCHITECTURE.md)
+and [per-side encounter policies](POC5.md). Existing settlement blueprints and food/water
+self-care remain specialized prototype systems outside this refactor.

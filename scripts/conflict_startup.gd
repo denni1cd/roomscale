@@ -16,6 +16,7 @@ static func start(scene: Node3D) -> Node:
 		scene.get_tree().quit(1)
 		return null
 	var scenario: Dictionary = result.scenario
+	result.prepared.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return a.participant.instance_id < b.participant.instance_id)
 	var world := World.new()
 	world.name = "WorldSimulation"
 	scene.add_child(world)

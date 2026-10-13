@@ -22,3 +22,14 @@ static func vertical_access(resources: RefCounted, navigation: Node) -> Array[Di
 	var result: Array[Dictionary] = []
 	for region in regions: result.append(by_region[region])
 	return result
+
+static func shelter(sim: Node, navigation: Node) -> Array[Dictionary]:
+	var population: int = sim.living_population()
+	if population <= sim.needs.shelter_capacity or population <= 0: return []
+	return [{"type":"INSUFFICIENT_SHELTER","source_id":"settlement","severity":clampf(float(population-sim.needs.shelter_capacity)/population,0,1),"context":{"region":navigation.goal_surface_id}}]
+
+static func observe(sim: Node) -> Array[Dictionary]:
+	var navigation: Node = sim.coordinator.surface_navigation
+	var observations := vertical_access(sim.resources,navigation)
+	observations.append_array(shelter(sim,navigation))
+	return observations

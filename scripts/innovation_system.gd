@@ -139,6 +139,45 @@ func solution_options(problem_instance: Dictionary) -> Array[Dictionary]:
 	return result
 
 
+func solution_candidates(problem_instances: Array, applicable_solution: Callable = Callable()) -> Array[Dictionary]:
+	# One strongest representative per problem type: duplicate detector/source
+	# instances do not manufacture pressure. Distinct addressed types accumulate.
+	var pressure := {}
+	for raw in problem_instances:
+		if not raw is Dictionary or not raw.get("type") is String or not Validation.number(raw.get("severity")): continue
+		if raw.get("recognition_state", "RECOGNIZED") != "RECOGNIZED": continue
+		var type := ProblemRegistry.normalize_id(raw.type)
+		if not problem_registry.has_problem(type): continue
+		var severity := clampf(float(raw.severity), 0, 1)
+		if severity <= 0: continue
+		var previous: Dictionary = pressure.get(type, {})
+		if previous.is_empty() or severity > float(previous.severity) or (severity == float(previous.severity) and String(raw.get("source_id", "")) < String(previous.get("source_id", ""))):
+			pressure[type] = raw.duplicate(true)
+			pressure[type].type = type
+			pressure[type].severity = severity
+	var types: Array = pressure.keys()
+	types.sort()
+	var solutions: Array[Dictionary] = []
+	var scale := 1.0
+	for solution in catalog.solution_list():
+		if not capability_registry.satisfies(known_capabilities(), solution.requires_capabilities): continue
+		if applicable_solution.is_valid() and not applicable_solution.call(solution): continue
+		solutions.append(solution)
+		scale = maxf(scale, float(solution.get("priority", 1)))
+	var candidates: Array[Dictionary] = []
+	for solution in solutions:
+		var addressed: Array[Dictionary] = []
+		var score := 0.0
+		for type in types:
+			if solution.addresses.has(type):
+				addressed.append(pressure[type])
+				score += float(pressure[type].severity) * (float(solution.get("priority", 1)) / scale)
+		if addressed.is_empty() or score <= 0: continue
+		addressed.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return a.severity > b.severity if a.severity != b.severity else (a.type < b.type if a.type != b.type else String(a.get("source_id", "")) < String(b.get("source_id", ""))))
+		candidates.append({"id":solution.id,"solution":solution,"score":score,"problems":addressed,"problem":addressed[0]})
+	_sort_scored(candidates)
+	return candidates
+
 func research_candidates(problem_instances: Array, applicable_solution: Callable = Callable()) -> Array[Dictionary]:
 	var known := known_capabilities()
 	var researchable := researchable_technologies()
@@ -158,6 +197,7 @@ func research_candidates(problem_instances: Array, applicable_solution: Callable
 		if not (raw_problem is Dictionary):
 			continue
 		var problem: Dictionary = raw_problem
+		if problem.get("recognition_state", "RECOGNIZED") != "RECOGNIZED": continue
 		if not (problem.get("type") is String) or not Validation.number(problem.get("severity", 0.0)):
 			continue
 		var problem_type := ProblemRegistry.normalize_id(problem.type)

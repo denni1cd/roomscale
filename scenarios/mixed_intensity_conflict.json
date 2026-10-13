@@ -1,0 +1,37 @@
+{
+  "id": "mixed_intensity_conflict",
+  "participants": [
+    {
+      "instance_id": "clockwork_alpha",
+      "definition_id": "clockwork",
+      "start_slot": "frontier_1",
+      "home_space_capacity": 0.5
+    },
+    {
+      "instance_id": "verdant_alpha",
+      "definition_id": "verdant",
+      "start_slot": "frontier_2",
+      "home_space_capacity": 0.5
+    },
+    {
+      "instance_id": "scavenger_alpha",
+      "definition_id": "scavenger",
+      "start_slot": "frontier_3",
+      "home_space_capacity": 7.33
+    }
+  ],
+  "strategic_site": "frontier_cache",
+  "site_benefits": {
+    "space_capacity": 12
+  },
+  "pre_contact_seconds": 0,
+  "pair_benefits": {
+    "clockwork_alpha:verdant_alpha": {
+      "space_capacity": 12
+    },
+    "scavenger_alpha:verdant_alpha": {
+      "space_capacity": 12
+    },
+    "clockwork_alpha:scavenger_alpha": {}
+  }
+}

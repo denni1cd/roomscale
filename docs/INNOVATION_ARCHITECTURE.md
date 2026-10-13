@@ -136,10 +136,10 @@ including paid construction, traversal, pause and rejected forged work; its
 
 ## Supported deployment boundary
 
-The current live slice detects vertical access and implements `climb_route`, styled
-as cable, vine or rope. `deployment` is optional catalog metadata; entries without it
-remain resolver examples and are excluded from live research. Declared unsupported
-adapters/styles fail startup rather than promising an undeployable solution. Authored
+The live slice detects vertical access and insufficient shelter. It implements
+`climb_route` (cable/vine/rope) and `living_structure` (tree with real shelter). `deployment` is optional catalog metadata; entries without it
+remain resolver examples and are excluded from live research. Unknown physical classes
+are excluded; invalid properties on a registered adapter fail live startup. Authored
 live solutions require finite positive construction work and supported resource costs.
 Catalogs may also be loaded through an explicit validated `innovation_catalog_path`.
 
@@ -147,7 +147,87 @@ The route climbs from a legal floor base to the real furniture edge, then lies o
 the supported surface. Exact segment tests reject intersections with rotated furniture
 volumes. It is visible, progressively constructed geometry and a bounded kinematic path.
 It does not simulate structural loading, cable sag, growth biology or powered lift
-operation. Automatic water/shelter/logistics detectors, fuel-consuming lifts, bridges,
+operation. Automatic water/logistics detectors, fuel-consuming lifts, bridges,
 reservoirs and route upgrades remain additional adapters; their catalog capabilities
 and dependency composition are covered by foundation tests. Legacy launches retain
 the accepted workshop/grapple progression when innovation is disabled.
+
+## POC 5.3 stabilization contracts
+
+### Global construction selection
+
+`solution_candidates` ranks all recognized active pressures against all viable,
+registered physical classes. It keeps the maximum severity per generic problem type;
+additional sources/detectors of the same type do not multiply construction priority.
+A candidate score sums `severity × priority / common_max_priority` across distinct
+addressed types. Stable solution IDs break exact ties. Representatives use greatest
+severity then source ID; types and contributions have canonical order. The scale
+bounds finite priorities without changing ranking. Unsupported adapters are excluded.
+The runtime walks this ranking for a physically legal, connected, unclaimed plan and
+starts one project. It does not choose the first problem in the registry. Existing
+research scoring still accumulates distinct source instances, as the earlier documented
+experience-pressure mechanic; alternative inventions contribute their strongest value.
+Active work is not automatically preempted solely because another severity changes.
+
+### Experience and recognition
+
+Detectors return generic evidence through `WorldProblemDetector.observe`, currently
+vertical access and insufficient shelter. `ProblemRegistry.observe_batch` receives
+one batch at each five-second production-clock observation. Strength defaults to 0.35;
+awareness saturates at 1.0 after three ordinary observations. Absence is UNSEEN,
+then EMERGING and RECOGNIZED. Count, first/last observation, awareness, severity and
+recognition time remain inspectable. Contributions/context are sorted before folding;
+repeating the same batch at the same time is inert. Solved/disappeared instances are
+removed; reappearance begins fresh evidence. Manual elevated targets supply strength
+1.0. The legacy `set_problem` API is an explicit authoritative recognized report,
+retained for contracts/integrators. The resolver skips explicit EMERGING instances.
+Recognition grants no technology, resources, work or link.
+
+### Physical adapter boundary
+
+`innovation/deployment_adapters.json` maps generic adapter IDs to implementations.
+`DeploymentAdapterRegistry` validates and instantiates them; runtime code has no
+adapter-ID switch. Each adapter supplies:
+
+- `supports(solution)`: validate its own authored properties;
+- `prepare(sim, solution, problem)`: pure planning returning a legal work target,
+  site, stable exclusive claim key and opaque deployment payload;
+- `status(sim, project)`: target validity/redundancy;
+- `render(root, project, fraction, color)`: presentation only;
+- `finish(sim, project)`: atomic domain effect after full delivered cost and labor;
+- optional `advance(sim, project, delta)`: persistent effects on each fixed production
+  tick, including pause behavior.
+
+The runtime owns materials, citizen jobs, effort, claims, cancellation and completion.
+Adapters own geometry, target-specific validity and domain effects. Before completion,
+planning/rendering must not mutate domain state, so generic cancellation can release
+claims/jobs/tickets and recover physical material without adapter-specific rollback.
+Adapters must keep completion effects idempotent. Required API shape and behavior are
+an in-repository trusted-code contract, not a sandbox for arbitrary scripts.
+
+`climb_route` wraps the existing cable/vine/rope path. `living_structure` builds a
+permanent climb structure and applies authored integer `shelter_capacity` once to
+its owner's real needs/population-admission capacity. It can use an already-shared
+route and cannot stack another structure/benefit at the same region across societies.
+The authored Verdant tree adds four shelter places, after its larger bill and labor.
+Throughput, maintenance and operating-cost catalog fields remain metadata.
+
+### Resource and recipe boundary
+
+`ResourceVocabulary` is the single canonical material authority shared by catalogs,
+economy and world resources. Current IDs remain food, water, wood, metal and
+mechanical_parts. Innovation projects iterate the authored bill, excluding `work`;
+food/water construction and a non-navigation adapter are tested through actual jobs.
+Unknown materials are rejected rather than silently discarded by the catalog loader.
+Presentation aliases such as resin/fiber do not create new canonical resources.
+A genuinely new material requires extending the economy/resource authority and its
+supply/presentation contract, but no innovation-resolver/material-loop change.
+
+`production_recipes` is an explicit catalog opt-in list. Recipes in
+`innovation/production_recipes.json` describe one input, one output, finite positive
+quantities/work and workshop eligibility. Shipped catalogs opt into `metal_parts`;
+another catalog can omit it. The generic recipe service performs the depot transform
+only through real owned citizen work and reserved input. Outputs are preflighted before
+consuming input, including finite ledger/bundle capacity. Recipe jobs belong to their
+project and cancel normally. Recipe chains, multiple simultaneous inputs, arbitrary
+exotic material systems and world resource generators are not implemented.

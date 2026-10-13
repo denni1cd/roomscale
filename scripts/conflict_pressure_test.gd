@@ -128,7 +128,7 @@ func run() -> void:
 			check(not rejected.ok and rejected.get("prepared", []).is_empty(), "invalid scenario publishes no staged roster: " + field)
 		check(multi_world.citizens.size() == 36 and multi_world.tick == 0, "scenario validation leaves real actors untouched")
 		multi_world.scenario.participants[2].home_space_capacity = 150
-		var outsider: Node = multi_world.runtimes[2]
+		var outsider: Node = multi_world.runtime_for(multi_world.scenario.participants[2].instance_id)
 		var third_health := {}
 		for citizen in outsider.citizens: third_health[citizen.citizen_id] = citizen.health
 		for iteration in range(4500):

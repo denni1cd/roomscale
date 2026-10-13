@@ -14,7 +14,7 @@ func set_priority(family: String, level: int) -> bool:
 	return true
 
 func secure(resource: String) -> bool:
-	if resource not in ["food", "water"]: return false
+	if not preload("res://scripts/resource_vocabulary.gd").supports(resource): return false
 	directives[resource] = "Secure " + resource.capitalize()
 	return true
 

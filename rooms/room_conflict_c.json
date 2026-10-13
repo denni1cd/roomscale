@@ -276,6 +276,49 @@
         "work_seconds": 2,
         "region_id": "BENCH_SURFACE"
       }
+    },
+    {
+      "id": "frontier_metal_tray",
+      "name": "Finite Scrap Metal Tray",
+      "kind": "box",
+      "position": [
+        42,
+        0,
+        -35
+      ],
+      "dimensions": [
+        12,
+        1,
+        4
+      ],
+      "blocks_navigation": true,
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "color": "6d858f",
+      "resource_profile": {
+        "material": "metal",
+        "harvestable": true,
+        "protected": false,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 12,
+            "yields": {
+              "metal": 12
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 18,
+            "yields": {
+              "metal": 12
+            }
+          }
+        ]
+      }
     }
   ],
   "construction": {

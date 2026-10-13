@@ -46,6 +46,12 @@ jobs:
       - name: Innovation material recovery
         shell: pwsh
         run: ./TEST_ROOM_SCALE_INNOVATION_LIVE.ps1 -Civilizations clockwork -RunCount 1 -CancellationProbe -OutputDirectory verification/stabilization/runs/innovation-cancel
+      - name: Innovation extensibility and awareness
+        shell: pwsh
+        run: ./TEST_ROOM_SCALE_EXTENSIBILITY.ps1 -Checks innovation_extensibility -RunCount 3
+      - name: Living structure mechanics and determinism
+        shell: pwsh
+        run: ./TEST_ROOM_SCALE_INNOVATION_LIVE.ps1 -Civilizations verdant -Room room_poc53_tree -RequireLivingStructure -RunCount 3 -OutputDirectory verification/stabilization/runs/innovation-tree
       - name: Focused and startup regressions
         shell: pwsh
         run: ./TEST_ROOM_SCALE.ps1 -Mode Fast
@@ -104,6 +110,9 @@ jobs:
       - name: Scarcity-driven conflict pressure
         shell: pwsh
         run: ./TEST_ROOM_SCALE_CONFLICT_PRESSURE.ps1
+      - name: Mixed-intensity policy and determinism
+        shell: pwsh
+        run: ./TEST_ROOM_SCALE_EXTENSIBILITY.ps1 -Checks combat_mixed -RunCount 3
       - name: Shared-world conflict and determinism
         shell: pwsh
         run: ./TEST_ROOM_SCALE_CONFLICT.ps1 -RunCount 5
@@ -120,5 +129,5 @@ jobs:
         if: failure()
         with:
           name: conflict-failure-evidence
-          path: verification/stabilization/runs/poc5
+          path: verification/stabilization/runs
           if-no-files-found: ignore
