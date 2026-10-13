@@ -174,7 +174,7 @@ func run() -> void:
 	if not dead_positions.is_empty(): await capture("09-casualty",dead_positions.values()[0] + Vector3(0,0.25,0),2.2)
 	if world.runtimes.size() > 2:
 		check(first_retreat_continued, "multi-party battle continues after first retreat")
-		check(world.combat.retreated_sides.size() == world.runtimes.size()-1, "every losing side independently withdraws")
+		check(world.combat.retreated_sides.size() + world.combat.eliminated_sides.size() == world.runtimes.size()-1, "every losing force independently withdraws or is eliminated")
 		check(world.combat.initial_sizes.size() == world.runtimes.size(), "all hostile parties committed")
 	if OS.get_environment("ROOMSCALE_INNOVATION") == "1":
 		var completed_projects := 0
@@ -191,7 +191,7 @@ func run() -> void:
 	for runtime in world.runtimes:
 		societies[runtime.instance_id] = {"status":runtime.status(),"projects":runtime.development.projects,"deliveries":runtime.haul_deliveries,"innovation":runtime.innovation.status(),"innovation_projects":runtime.innovation.projects,"research":runtime.innovation.research_history}
 		populations[runtime.instance_id] = runtime.living_population()
-	var result := {"result":"PASS" if failures.is_empty() else "FAIL","failures":failures,"room":world.room_definition.id,"first_contact_tick":world.first_contact_tick,"battle_start_tick":world.combat.battle_start_tick,"force_sizes":world.combat.initial_sizes,"casualties":world.combat.casualties,"retreating_side":world.combat.retreating_side,"winner":world.combat.winner,"site_capture_tick":world.combat.site_capture_tick,"attacks":world.combat.attacks,"morale":world.combat.morale,"returned":world.combat.returned,"max_step":max_step,"societies":societies,"events":world.journal.events,"captures":captures,"final_tick":world.tick,"living_populations":populations,"retreated_sides":world.combat.retreated_sides}
+	var result := {"result":"PASS" if failures.is_empty() else "FAIL","failures":failures,"room":world.room_definition.id,"first_contact_tick":world.first_contact_tick,"battle_start_tick":world.combat.battle_start_tick,"force_sizes":world.combat.initial_sizes,"casualties":world.combat.casualties,"retreating_side":world.combat.retreating_side,"winner":world.combat.winner,"site_capture_tick":world.combat.site_capture_tick,"attacks":world.combat.attacks,"morale":world.combat.morale,"returned":world.combat.returned,"max_step":max_step,"societies":societies,"events":world.journal.events,"captures":captures,"final_tick":world.tick,"living_populations":populations,"retreated_sides":world.combat.retreated_sides,"eliminated_sides":world.combat.eliminated_sides}
 	if not output.is_empty():
 		var file := FileAccess.open(output,FileAccess.WRITE)
 		if file == null: check(false,"result write failed")

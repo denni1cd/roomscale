@@ -208,6 +208,14 @@ pair non-targeting, atomic rejection of an unavailable force, terminal casualtie
 identical outcomes with reversed participant/runtime order. Separate pressure scenarios
 retain the peaceful third-claimant capture test.
 
+The mixed gate records Clockwork elimination separately from Scavenger's surviving
+morale withdrawal, validates distinct journal events and idempotent transitions,
+continues through physical return, and checks terminal citizens and peaceful claims.
+A separate physical survival-only engagement verifies secure/capture after the final
+rival is eliminated without setting retreat metadata. Both engagements repeat with
+reversed runtime/participant order; the wrapper requires three identical receipts.
+Conflict receipts and repeatability fingerprints include both departure sets.
+
 The six-founder Verdant scenario earns every technology/material/work unit. It must
 complete the living structure, gain the authored four real shelter places only at
 completion and reject duplicate benefit/structure application. Renderer runs require

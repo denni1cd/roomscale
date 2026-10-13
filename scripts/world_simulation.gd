@@ -238,6 +238,11 @@ func _process(delta: float) -> void:
 		sides.sort()
 		for id in sides: withdrawn.append(String(runtime_for(String(id)).definition.display_name))
 		outcome = String(runtime_for(combat.winner).definition.display_name) + (" controls the frontier" if controlled else " is securing the site") + " · Withdrawn: " + ", ".join(withdrawn)
+		var eliminated: PackedStringArray = []
+		var eliminated_ids: Array = combat.eliminated_sides.keys()
+		eliminated_ids.sort()
+		for id in eliminated_ids: eliminated.append(String(runtime_for(String(id)).definition.display_name))
+		if not eliminated.is_empty(): outcome += " · Eliminated forces: " + ", ".join(eliminated)
 	status_label.text = "%s     %s · %s\n%s\n%s" % [CivilizationVisuals.society_summary(runtimes),site.claim_state,combat.phase,pressure_text,outcome]
 
 	if combat.phase in ["MARCH","FIGHT"]:

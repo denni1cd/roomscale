@@ -33,7 +33,20 @@
     "result": "PASS"
   },
   "mixed": {
-    "assertions": 3815,
+    "assertions": 5772,
+    "elimination_only": {
+      "attacks": 72,
+      "casualties": {
+        "clockwork_alpha": 4,
+        "verdant_alpha": 1
+      },
+      "eliminated_sides": {
+        "clockwork_alpha": 387
+      },
+      "retreated_sides": {},
+      "site_capture_tick": 487,
+      "winner": "verdant_alpha"
+    },
     "engagement": {
       "attack_pairs": {
         "clockwork_alpha:verdant_alpha": 56,
@@ -45,14 +58,57 @@
         "scavenger_alpha": 1,
         "verdant_alpha": 2
       },
+      "eliminated_sides": {
+        "clockwork_alpha": 362
+      },
+      "elimination_events": {
+        "clockwork_alpha": {
+          "day": 0.0603333333333337,
+          "evidence": {
+            "casualties": 4,
+            "cause": "SPACE",
+            "initial_committed_force": 4,
+            "instance_id": "clockwork_alpha",
+            "intensity": "SURVIVAL_WAR",
+            "objective": "REMOVE_EXISTENTIAL_BLOCKER",
+            "tick": 362
+          },
+          "focus": "(26.0, 0.0, -38.0)",
+          "id": 21,
+          "kind": "FORCE_ELIMINATED",
+          "major": false,
+          "message": "clockwork_alpha committed force eliminated",
+          "seconds": 36.2000000000002
+        }
+      },
       "initial_sizes": {
         "clockwork_alpha": 4,
         "scavenger_alpha": 2,
         "verdant_alpha": 12
       },
       "max_step": 0.650002360343933,
-      "retreats": {
-        "clockwork_alpha": 362,
+      "retreat_events": {
+        "scavenger_alpha": {
+          "day": 0.0620000000000004,
+          "evidence": {
+            "instance_id": "scavenger_alpha",
+            "intensity": "LIMITED_WAR",
+            "morale": {
+              "clockwork_alpha": 0.1975,
+              "scavenger_alpha": 0.465,
+              "verdant_alpha": 0.878166666666667
+            },
+            "survivors": 1
+          },
+          "focus": "(26.0, 0.0, -38.0)",
+          "id": 25,
+          "kind": "RETREAT",
+          "major": false,
+          "message": "scavenger_alpha morale broke; returning to rally",
+          "seconds": 37.2000000000003
+        }
+      },
+      "retreated_sides": {
         "scavenger_alpha": 372
       },
       "side_policies": {
@@ -91,7 +147,6 @@
         }
       },
       "survivors_at_retreat": {
-        "clockwork_alpha": 0,
         "scavenger_alpha": 1
       },
       "tick": 372,

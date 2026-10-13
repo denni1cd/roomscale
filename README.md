@@ -160,7 +160,8 @@ deliberately selected evidence, following
 Citizens earn a workshop, research their own access technology, haul real materials,
 construct a visible route and use it. The three-society scenario shares finite room
 resources while retaining independent task boards, knowledge and depots. Scarcity
-sets bilateral hostility; combat tracks every side's retreat before secure capture.
+sets bilateral hostility; combat tracks surviving withdrawals and force eliminations
+separately before secure capture.
 Verdant can also research a living structure that provides real shelter after paid
 construction. Evidence recognition, globally ranked solutions and per-society war policies
 are covered by the POC 5.3 stabilization gates. See [innovation architecture](docs/INNOVATION_ARCHITECTURE.md),

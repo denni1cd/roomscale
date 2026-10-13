@@ -15,6 +15,7 @@ var phase := "DORMANT"
 var winner := ""
 var retreating_side := ""
 var retreated_sides: Dictionary = {}
+var eliminated_sides: Dictionary = {}
 var attacks := 0
 var attack_pairs: Dictionary = {}
 var retreat_tick := -1
@@ -140,6 +141,7 @@ func _reset_battle_state() -> void:
 	winner = ""
 	retreating_side = ""
 	retreated_sides.clear()
+	eliminated_sides.clear()
 	attacks = 0
 	attack_pairs.clear()
 	retreat_tick = -1
@@ -174,10 +176,10 @@ func update() -> void:
 			return
 		var ordered: Array = []
 		for id in forces:
-			if not retreated_sides.has(id): ordered.append_array(living(id))
+			if not _departed(String(id)): ordered.append_array(living(id))
 		ordered.sort_custom(func(a: Node3D, b: Node3D) -> bool: return a.citizen_id < b.citizen_id)
 		for citizen in ordered:
-			if retreated_sides.has(citizen.civilization_id) or citizen.life_state != "ALIVE" or not citizen.combat_arrived or world.seconds < float(next_attack[citizen.citizen_id]): continue
+			if _departed(citizen.civilization_id) or citizen.life_state != "ALIVE" or not citizen.combat_arrived or world.seconds < float(next_attack[citizen.citizen_id]): continue
 			var opponents: Array = []
 			for id in forces:
 				if _hostile(citizen.civilization_id, String(id)): opponents.append_array(living(id).filter(func(c: Node3D) -> bool: return c.combat_arrived and c.global_position.distance_to(citizen.global_position) <= ATTACK_RANGE))
@@ -230,14 +232,30 @@ func update() -> void:
 			world.territory.sites[site_id].hold_progress = 0.0
 
 func retreat(id: String) -> void:
-	if retreated_sides.has(id): return
+	if _departed(id) or living(id).is_empty() or not bool(side_policies[id].get("allow_retreat", true)): return
 	retreat_tick = world.tick
 	retreating_side = id
 	retreated_sides[id] = world.tick
-	var remaining: Array = forces.keys().filter(func(side: Variant) -> bool: return not retreated_sides.has(side) and not living(String(side)).is_empty())
+	_resolve_departure(true)
+	cooldown_until[id] = world.seconds + 600.0
+	for citizen in living(id): citizen.assign_combat_duty("RETREAT", world.runtime_for(id).coordinator.housing_station)
+	world.journal.record(world.seconds, "RETREAT", id + " morale broke; returning to rally", {"instance_id":id,"morale":morale.duplicate(),"intensity":side_policies[id].get("intensity_name", conflict_intensity),"survivors":living(id).size()}, world.territory.sites[site_id].position, id + ":retreat")
+
+func eliminate(id: String) -> void:
+	if not forces.has(id) or _departed(id) or not living(id).is_empty(): return
+	eliminated_sides[id] = world.tick
+	cooldown_until[id] = world.seconds + 600.0
+	_resolve_departure(false)
+	world.journal.record(world.seconds, "FORCE_ELIMINATED", id + " committed force eliminated", {"instance_id":id,"casualties":casualties[id],"initial_committed_force":initial_sizes[id],"intensity":side_policies[id].get("intensity_name", conflict_intensity),"cause":side_policies[id].get("cause", conflict_cause),"objective":side_policies[id].get("objective", conflict_objective),"tick":world.tick}, world.territory.sites[site_id].position, id + ":eliminated")
+
+func _departed(id: String) -> bool:
+	return retreated_sides.has(id) or eliminated_sides.has(id)
+
+func _resolve_departure(withdrawing: bool) -> void:
+	var remaining: Array = forces.keys().filter(func(side: Variant) -> bool: return not _departed(String(side)) and not living(String(side)).is_empty())
 	if remaining.size() == 1:
 		winner = String(remaining[0])
-		phase = "RETREAT"
+		phase = "RETREAT" if withdrawing else "SECURE"
 		var at: Vector3 = world.territory.sites[site_id].position
 		if not living(winner).any(func(c: Node3D) -> bool: return c.global_position.distance_to(at) <= ATTACK_RANGE):
 			for citizen in living(winner): citizen.assign_combat_duty("MARCH", at)
@@ -248,9 +266,6 @@ func retreat(id: String) -> void:
 		winner = ""
 		phase = "FIGHT"
 	world.territory.sites[site_id].hold_progress = 0.0
-	cooldown_until[id] = world.seconds + 600.0
-	for citizen in living(id): citizen.assign_combat_duty("RETREAT", world.runtime_for(id).coordinator.housing_station)
-	world.journal.record(world.seconds, "RETREAT", id + " morale broke; returning to rally", {"instance_id":id,"morale":morale.duplicate(),"intensity":side_policies[id].get("intensity_name", conflict_intensity),"survivors":living(id).size()}, world.territory.sites[site_id].position, id + ":retreat")
 
 func stand_down(reason: String) -> void:
 	if phase not in ["MARCH", "FIGHT"]: return
@@ -267,10 +282,10 @@ func evaluate_morale() -> bool:
 	var losing := ""
 	var largest_deficit := 0.0
 	for id in forces:
-		if retreated_sides.has(id): continue
+		if _departed(String(id)): continue
 		var survivors := living(id)
 		if survivors.is_empty():
-			retreat(String(id))
+			eliminate(String(id))
 			return true
 		var other := 0
 		for rival in forces:
@@ -290,7 +305,7 @@ func evaluate_morale() -> bool:
 	return false
 
 func _hostile(a: String, b: String) -> bool:
-	return a != b and not retreated_sides.has(a) and not retreated_sides.has(b) and world.territory.relations.get(world.territory.relation_key(a,b), "UNKNOWN") == "HOSTILE"
+	return a != b and not _departed(a) and not _departed(b) and world.territory.relations.get(world.territory.relation_key(a,b), "UNKNOWN") == "HOSTILE"
 
 func _rivals_withdrawn(target: Vector3) -> bool:
 	for id in forces:

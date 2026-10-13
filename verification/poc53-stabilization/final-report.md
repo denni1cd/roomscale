@@ -31,7 +31,10 @@ curated; raw runs remain ignored under `verification/stabilization/runs/poc53-st
    Clockwork and 12 Verdant citizens under survival policies,
    while Scavenger commits 2 of eight under a limited policy.
    It physically retreats with 1 survivor; the
-   survival side is eliminated rather than receiving an ordinary morale retreat.
+   survival side is recorded in `eliminated_sides` rather than receiving an ordinary
+   morale retreat. Only the living Scavenger withdrawal enters `retreated_sides`.
+   The [targeted cleanup receipt and regressions](elimination-cleanup.md) document
+   the explicit state/event distinction and elimination-only secure/capture gate.
    Peaceful pairs never target each other. An unavailable required force rejects the
    entire engagement without touching tasks. A peaceful living claimant blocks exclusive
    capture even after fighting another opponent. Pair-specific contested benefits are

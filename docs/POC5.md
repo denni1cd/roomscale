@@ -98,6 +98,18 @@ the first two commit their entire own rosters, while Scavenger commits two citiz
 retreats with a survivor. The survival side's elimination is terminal, not an ordinary
 morale retreat. Different pair benefits describe contested relevance, not treaty logic.
 
+`retreated_sides` maps surviving morale withdrawals to their fixed tick;
+`eliminated_sides` separately maps zero-survivor committed forces to their fixed tick.
+The sets are disjoint and reset with each new engagement. Elimination emits
+`FORCE_ELIMINATED` with instance ID, casualties, initial commitment, per-side intensity,
+cause, objective and tick (the journal also records simulation seconds). It assigns no
+return path and leaves retreat metadata untouched. Both departures exclude the side
+from targeting and winner selection and apply the existing battle cooldown. Remaining
+hostile forces continue fighting; a last elimination enters secure directly, while a
+last morale withdrawal retains the physical retreat phase. Secure hold still requires
+uncontested presence and respects living peaceful claimants. Elimination describes the
+committed force, not necessarily the society's entire population.
+
 Participants, startup rosters, fixed society steps, policy folding and target initiative
 use stable IDs. Reversing participant/runtime order is tested against the complete
 physical engagement fingerprint. A surviving peaceful claimant prevents exclusive
