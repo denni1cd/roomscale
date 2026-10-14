@@ -55,7 +55,7 @@ func assign_combat_duty(duty: String, target: Vector3) -> bool:
 	combat_arrived = false
 	state = "TRAVEL"
 	if _combat_weapon == null:
-		var organic: bool = coordinator.civilization.definition.citizen_style == "verdant_folk"
+		var organic: bool = preload("res://scripts/civilization_presentation.gd").uses_organic_combat(coordinator.civilization.definition)
 		_combat_weapon = CombatPresentation.weapon(get_node("Figure"),organic)
 		_combat_indicators = CombatPresentation.indicators(self,organic)
 	_combat_weapon.show()
@@ -97,6 +97,7 @@ var _delivery_resource := ""
 var _path: Array[Vector3] = []
 var _path_cursor := 0
 var _work_timer := 0.0
+var production_work_active := false
 var _animation_time := 0.0
 var _body: MeshInstance3D
 var _left_arm: MeshInstance3D
@@ -148,7 +149,8 @@ func advance_simulation(delta: float) -> void:
 	_animation_time += delta
 	if not needs.is_empty():
 		var civilization: Node = coordinator.civilization
-		if task_type in ["WORKSHOP_MAINTENANCE", "DEPOT_RUN", "HOUSING_CHECK", "WORK_AREA_JOB", "FLOOR_PATROL"] and civilization.should_interrupt(self):
+		var innovation_work: bool = task_type.begins_with("INNOVATION_") or (task_type == "CONSTRUCTION_BUILD" and bool(coordinator.get_task(task_id).get("innovation_project", false)))
+		if (innovation_work or task_type in ["WORKSHOP_MAINTENANCE", "DEPOT_RUN", "HOUSING_CHECK", "WORK_AREA_JOB", "FLOOR_PATROL"]) and civilization.should_interrupt(self):
 			coordinator.cancel_task(task_id, "urgent self-care")
 			_assign_next_task()
 		if state in ["IDLE", "ON_SURFACE"]:
@@ -167,7 +169,18 @@ func advance_simulation(delta: float) -> void:
 				_assign_next_task()
 		elif task_type == "CONSTRUCTION_BUILD":
 			var effort: float = delta if needs.is_empty() else delta * coordinator.civilization.needs.work_factor(needs)
-			if coordinator.advance_construction_work(task_id, citizen_id, effort):
+			production_work_active = true
+			var finished: bool = coordinator.advance_construction_work(task_id, citizen_id, effort)
+			production_work_active = false
+			if finished:
+				coordinator.complete_task(task_id)
+				_assign_next_task()
+		elif task_type.begins_with("INNOVATION_"):
+			var effort: float = delta if needs.is_empty() else delta * coordinator.civilization.needs.work_factor(needs)
+			production_work_active = true
+			var finished: bool = coordinator.advance_innovation_work(task_id, citizen_id, effort)
+			production_work_active = false
+			if finished:
 				coordinator.complete_task(task_id)
 				_assign_next_task()
 		elif task_type == "STRATEGIC_SCOUT":

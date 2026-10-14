@@ -51,6 +51,15 @@ func run() -> void:
 		var result: Dictionary = resource_world.conflict_pressure.evaluate(resource_world,site_id)
 		check(result.cause == "RESOURCE" and result.resource == "food","scarce contested food produces explicit resource reason")
 		check(result.intensity == Pressure.SURVIVAL_WAR,"zero secured food with sole contested source is survival pressure")
+		var probe := preload("res://scripts/combat_system.gd").new()
+		var before_tasks := {}
+		for citizen in resource_world.citizens: before_tasks[citizen.citizen_id] = citizen.task_id
+		var sides: Array = resource_world.territory.sites[site_id].contesting_civilizations
+		resource_world.territory.set_relation(sides[0], sides[1], "HOSTILE", 0, site_id)
+		check(not probe.start(resource_world, site_id, {"participants":"invalid"}), "invalid battle participant type fails closed")
+		check(not probe.start(resource_world, site_id, {"min_force":150,"max_force":150}), "unavailable complete force rejects commitment")
+		check(probe.world == null and probe.forces.is_empty() and probe.phase == "DORMANT", "rejected battle publishes no partial authority")
+		for citizen in resource_world.citizens: check(citizen.task_id == before_tasks[citizen.citizen_id] and citizen.combat_duty.is_empty(), "rejected battle leaves citizen work unchanged")
 	resource_scene.queue_free()
 	await process_frame
 
@@ -90,6 +99,50 @@ func run() -> void:
 		check(war_world.combat.conflict_intensity == "LIMITED_WAR" and war_world.combat.conflict_cause == "SPACE","combat receives pressure policy")
 		for size in war_world.combat.initial_sizes.values(): check(int(size) <= 6,"limited war keeps bounded POC5 force size")
 	war_scene.queue_free()
+	await process_frame
+
+	# Three real runtime instances: invalid setup is atomic and a comfortable
+	# third claimant neither suppresses the scarce pair nor joins their force.
+	OS.set_environment("ROOMSCALE_ROOM", "room_conflict_c")
+	OS.set_environment("ROOMSCALE_CONFLICT_SCENARIO", "three_party_conflict")
+	var multi_fixture := spawn_world()
+	var multi_scene: Node3D = multi_fixture[0]
+	var multi_world: Node = multi_fixture[1]
+	if multi_world != null:
+		var navigation: Node = multi_scene.get_node("FloorNavigation")
+		var validator := preload("res://scripts/conflict_scenario.gd")
+		for invalid in [null, {}, {"participants":"wrong"}]: check(not validator.prepare(invalid, multi_world.room_definition, navigation).ok, "malformed scenario fails closed")
+		for field in ["duplicate_id", "duplicate_slot", "unknown_slot", "unknown_definition", "numeric_time", "bad_capacity", "ambiguous_namespace", "bad_benefits", "unknown_source"]:
+			var bad: Dictionary = multi_world.scenario.duplicate(true)
+			match field:
+				"duplicate_id": bad.participants[2].instance_id = bad.participants[0].instance_id
+				"duplicate_slot": bad.participants[2].start_slot = bad.participants[0].start_slot
+				"unknown_slot": bad.participants[2].start_slot = "missing"
+				"unknown_definition": bad.participants[2].definition_id = "missing"
+				"numeric_time": bad.pre_contact_seconds = "120"
+				"bad_capacity": bad.participants[2].home_space_capacity = -1
+				"ambiguous_namespace": bad.participants[2].instance_id = "a:b"
+				"bad_benefits": bad.site_benefits = {"resource_sources":{"food":[42]}}
+				"unknown_source": bad.site_benefits = {"resource_sources":{"food":["missing"]}}
+			var rejected: Dictionary = validator.prepare(bad, multi_world.room_definition, navigation)
+			check(not rejected.ok and rejected.get("prepared", []).is_empty(), "invalid scenario publishes no staged roster: " + field)
+		check(multi_world.citizens.size() == 36 and multi_world.tick == 0, "scenario validation leaves real actors untouched")
+		multi_world.scenario.participants[2].home_space_capacity = 150
+		var outsider: Node = multi_world.runtime_for(multi_world.scenario.participants[2].instance_id)
+		var third_health := {}
+		for citizen in outsider.citizens: third_health[citizen.citizen_id] = citizen.health
+		for iteration in range(4500):
+			multi_world.step()
+			check(not multi_world.combat.forces.has(outsider.instance_id), "peaceful third society excluded from military selection")
+			for citizen in outsider.citizens: check(citizen.health == third_health[citizen.citizen_id] and citizen.combat_duty.is_empty(), "peaceful third citizens never attacked or recruited")
+			check(multi_world.resources.audit().is_empty(), "multi-party conservation")
+			if iteration % 200 == 0: await process_frame
+		check(multi_world.combat.attacks > 0 and multi_world.combat.initial_sizes.size() == 2, "scarce pair still fights despite comfortable third")
+		check(multi_world.combat.site_capture_tick < 0, "surviving peaceful claim prevents exclusive military capture")
+		check(multi_world.conflict_state.pairs.size() == 3, "all bilateral pressures evaluated")
+		check(not multi_world.combat.start(multi_world, multi_world.scenario.strategic_site), "cannot overwrite an active battle")
+	else: check(false, "three-party production world available")
+	multi_scene.queue_free()
 	await process_frame
 
 	var result := {"result":"PASS" if failures.is_empty() else "FAIL","failures":failures}

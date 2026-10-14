@@ -7,6 +7,28 @@ extends Node
 
 const CivilizationDefinition := preload("res://scripts/civilization_definition.gd")
 
+
+static func uses_organic_combat(civilization: Dictionary) -> bool:
+	return civilization.get("combat_style", "industrial") == "organic"
+
+
+static func society_summary(runtimes: Array) -> String:
+	var labels: PackedStringArray = []
+	for runtime in runtimes:
+		labels.append("%s %d" % [String(runtime.definition.display_name).to_upper(), runtime.living_population()])
+	return "  /  ".join(labels)
+
+
+func refresh_runtime(runtime: Node) -> void:
+	if runtime.definition.citizen_style != "verdant_folk":
+		return
+	for citizen in runtime.citizens:
+		_style_verdant_citizen(citizen)
+		_refresh_verdant_cargo(citizen)
+	var growth_presenter: Node = get_tree().root.get_node("VerdantDevelopmentPresentation")
+	for module in runtime.development.visuals.values():
+		growth_presenter._style_module(module)
+
 var definition: Dictionary = {}
 var _scene_instance_id := 0
 var _scene_applied := false

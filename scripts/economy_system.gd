@@ -1,7 +1,7 @@
 extends RefCounted
 ## Exclusive inventory states and bounded transaction records. No stock at pickup twice.
 
-const RESOURCES := ["food", "water", "wood", "metal"]
+const RESOURCES := preload("res://scripts/resource_vocabulary.gd").IDS
 var instance_id := "legacy"
 var available: Dictionary = {}
 var initial: Dictionary = {}
@@ -14,6 +14,7 @@ var _next_ticket := 1
 
 func configure(stock: Dictionary) -> void:
 	for resource in RESOURCES:
+		if resource == "mechanical_parts" and not stock.has(resource): continue
 		available[resource] = float(stock.get(resource, 0))
 		initial[resource] = available[resource]
 		received[resource] = 0.0
@@ -43,6 +44,8 @@ func deliver(id: int) -> bool:
 func consume(id: int, project: bool = false) -> bool:
 	if not tickets.has(id) or tickets[id].state not in ["reserved", "delivered"]: return false
 	var ticket: Dictionary = tickets[id]
+	if not is_finite(float(consumed[ticket.resource])+float(ticket.amount)): return false
+	if project and not is_finite(float(project_consumed[ticket.resource])+float(ticket.amount)): return false
 	consumed[ticket.resource] += float(ticket.amount)
 	if project: project_consumed[ticket.resource] += float(ticket.amount)
 	tickets.erase(id)
@@ -61,11 +64,21 @@ func drop(id: int) -> Dictionary:
 	tickets.erase(id)
 	return ticket
 
+func recover_delivered(id: int) -> Dictionary:
+	if not tickets.has(id) or tickets[id].state != "delivered": return {}
+	var ticket: Dictionary = tickets[id].duplicate(true)
+	exported[ticket.resource] += float(ticket.amount)
+	tickets.erase(id)
+	return ticket
+
 func receive(resource: String, amount: float) -> bool:
-	if not available.has(resource) or amount <= 0 or not is_finite(amount): return false
+	if not can_receive(resource,amount): return false
 	available[resource] += amount
 	received[resource] += amount
 	return true
+
+func can_receive(resource: String, amount: float) -> bool:
+	return available.has(resource) and amount > 0 and is_finite(amount) and is_finite(float(available[resource])+amount) and is_finite(float(initial[resource])+float(received[resource])+amount)
 
 func state_total(resource: String, state: String) -> float:
 	var total := 0.0
@@ -80,14 +93,16 @@ func forecast(resource: String, population: int) -> float:
 func audit() -> Array[String]:
 	var errors: Array[String] = []
 	for resource in RESOURCES:
+		if not available.has(resource): continue
 		var total := float(available[resource]) + float(consumed[resource])
 		for state in ["reserved", "in_transit", "delivered"]: total += state_total(resource, state)
-		if float(available[resource]) < -0.0001 or absf(total - float(initial[resource]) - float(received[resource]) + float(exported[resource])) > 0.0001:
+		if not is_finite(total) or not is_finite(float(available[resource])) or not is_finite(float(initial[resource])) or not is_finite(float(received[resource])) or not is_finite(float(exported[resource])) or float(available[resource]) < -0.0001 or absf(total - float(initial[resource]) - float(received[resource]) + float(exported[resource])) > 0.0001:
 			errors.append("%s accounting mismatch: %s" % [resource, snapshot()])
 	return errors
 
 func snapshot() -> Dictionary:
 	var result := {}
 	for resource in RESOURCES:
+		if not available.has(resource): continue
 		result[resource] = {"available": available[resource], "reserved": state_total(resource, "reserved"), "in_transit": state_total(resource, "in_transit"), "delivered": state_total(resource, "delivered"), "consumed": consumed[resource], "received": received[resource]}
 	return result

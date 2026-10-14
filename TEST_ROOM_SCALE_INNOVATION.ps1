@@ -13,26 +13,19 @@ if (-not $GodotExecutable -or -not (Test-Path -LiteralPath $GodotExecutable)) {
     throw 'Godot setup did not return a valid executable path.'
 }
 
-$logPath = Join-Path $OutputDirectory 'innovation-system.log'
-$run = Invoke-RoomScaleProcess `
-    -FilePath $GodotExecutable `
-    -ArgumentList @('--headless', '--path', $ProjectRoot, '--script', 'res://scripts/innovation_system_test.gd') `
-    -ProjectRoot $ProjectRoot `
-    -LogPath $logPath `
-    -TimeoutSeconds $TimeoutSeconds
-
-Write-Output $run.Content
-if ($run.TimedOut) {
-    throw "Innovation system check timed out after $TimeoutSeconds seconds. See $($run.LogPath)"
+$checks = @(
+    @{Name='innovation-system'; Script='res://scripts/innovation_system_test.gd'; Marker='ROOMSCALE_INNOVATION_SYSTEM_PASS'},
+    @{Name='innovation-robustness'; Script='res://scripts/innovation_robustness_test.gd'; Marker='ROOMSCALE_INNOVATION_ROBUSTNESS_PASS'}
+)
+foreach ($check in $checks) {
+    $logPath = Join-Path $OutputDirectory ($check.Name + '.log')
+    $run = Invoke-RoomScaleProcess -FilePath $GodotExecutable `
+        -ArgumentList @('--headless', '--path', $ProjectRoot, '--script', $check.Script) `
+        -ProjectRoot $ProjectRoot -LogPath $logPath -TimeoutSeconds $TimeoutSeconds
+    if ($run.TimedOut -or $run.ExitCode -ne 0 -or $run.Content -notmatch $check.Marker -or $run.Content -match 'ERROR:|SCRIPT ERROR:|ROOMSCALE_INNOVATION_\w+_FAIL') {
+        Write-Output $run.Content
+        throw "Innovation check failed: $($check.Name). See $logPath"
+    }
+    Write-Output "$($check.Marker) log=$logPath"
 }
-if ($run.ExitCode -ne 0) {
-    throw "Innovation system check exited $($run.ExitCode). See $($run.LogPath)"
-}
-if ($run.Content -notmatch 'ROOMSCALE_INNOVATION_SYSTEM_PASS') {
-    throw "Innovation system check omitted pass marker. See $($run.LogPath)"
-}
-if ($run.Content -match 'SCRIPT ERROR:|ROOMSCALE_INNOVATION_SYSTEM_FAIL') {
-    throw "Innovation system check emitted an error. See $($run.LogPath)"
-}
-
-Write-Output "ROOMSCALE_INNOVATION_CHECKS_PASS log=$($run.LogPath)"
+Write-Output "ROOMSCALE_INNOVATION_CHECKS_PASS output=$OutputDirectory"

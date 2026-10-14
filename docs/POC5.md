@@ -39,5 +39,84 @@ Combat does not target civilians. Forces stay on stable floor space; no fighting
 or mid-cable. Projected cosmetic bolts/pollen have no physics. The presenter remains
 procedural, and far room views intentionally keep half-inch citizens tiny. Society task
 boards and traversal project nodes remain scoped services; physical links, source state,
-salvage and occupancy checks remain shared. General multi-instance HUD/tool selection
-and automatic recurring wars remain future work.
+salvage and occupancy checks remain shared. Interactive selection of another society and automatic recurring wars remain future work.
+
+## Multi-party extension
+
+`room_conflict_c` adds a third generic start slot and a finite elevated water cup to
+Maker Loft. `scenarios/three_party_conflict.json` composes Clockwork, Verdant and
+Scavenger through data. Startup validates every participant, namespace, definition,
+slot and complete non-overlapping roster before replacing the scene's startup actors.
+The number of participants is determined by scenario data and available legal stations.
+
+Every living society must physically establish its claim before battle commitment.
+Contact and scarcity are evaluated for every bilateral relation. The greatest pressure
+sets the encounter policy, while only endpoints of hostile relations join its forces.
+A comfortable third claimant neither blocks a scarce pair's war nor becomes its enemy.
+Target selection and morale consider only living, non-retreated hostile forces.
+
+Multi-party stations use deterministic radial rows and ordinary navigation. Fighters
+outside attack range close distance through that navigation; damage never teleports
+actors. Each side withdraws independently. The first retreat in a three-party battle
+leaves two contenders fighting and chooses no winner. Only one remaining force can
+secure the site; all rivals must physically withdraw, and a living peaceful claimant's
+unresolved claim prevents exclusive military capture. Remaining non-hostile forces
+stand down instead of inventing a winner. Ten seconds of uninterrupted physical hold
+are still required, and survivors return to ordinary production jobs.
+
+Two-party station placement and shared damage/initiative rules are preserved. The
+shared HUD lists every society's population, forces and losses; optional `combat_style`
+selects industrial or organic presentation through data. Scavenger currently reuses
+industrial meshes with its own palette and rope solution; it has no combat bonus.
+
+```powershell
+./RUN_ROOM_SCALE_CONFLICT.ps1 -Room room_conflict_c -Scenario three_party_conflict
+# The same world can also research and construct shared access after conflict:
+./RUN_ROOM_SCALE_CONFLICT.ps1 -Room room_conflict_c -Scenario three_party_conflict -Innovation
+```
+
+The extension still uses one authored contested site and one resolved encounter,
+with a cooldown. Trade, treaties, coalition ownership, recurrent campaigns, civilian
+combat and fighting on elevated links are outside this milestone.
+
+## Mixed-intensity policy (POC 5.3 stabilization)
+
+Commitment follows Model A: each society uses the strongest bilateral hostility in
+which it personally participates. A survival pair beside a limited pair therefore
+produces survival/survival/limited policies, not a universal survival war. Per-side
+force fraction/minimum/maximum, retreat permission and threshold are captured at
+commitment; the encounter's greatest intensity is only a summary label. Force formation
+validates every side before any commitment. No mid-battle automatic conscription occurs.
+Ongoing bilateral relations still govern targets and whether fighting has a live cause.
+
+`pair_benefits` optionally scopes a site's contested benefits to canonical instance-pair
+keys; schema validation rejects unknown/noncanonical pairs. This permits legitimate
+mixed causes rather than injecting intensities. The mixed fixture has severe space
+pressure for Clockwork/Verdant, moderate shared pressure for Verdant/Scavenger and no
+contested benefit between Clockwork/Scavenger. Its authored founder counts are 4/12/8:
+the first two commit their entire own rosters, while Scavenger commits two citizens and
+retreats with a survivor. The survival side's elimination is terminal, not an ordinary
+morale retreat. Different pair benefits describe contested relevance, not treaty logic.
+
+`retreated_sides` maps surviving morale withdrawals to their fixed tick;
+`eliminated_sides` separately maps zero-survivor committed forces to their fixed tick.
+The sets are disjoint and reset with each new engagement. Elimination emits
+`FORCE_ELIMINATED` with instance ID, casualties, initial commitment, per-side intensity,
+cause, objective and tick (the journal also records simulation seconds). It assigns no
+return path and leaves retreat metadata untouched. Both departures exclude the side
+from targeting and winner selection and apply the existing battle cooldown. Remaining
+hostile forces continue fighting; a last elimination enters secure directly, while a
+last morale withdrawal retains the physical retreat phase. Secure hold still requires
+uncontested presence and respects living peaceful claimants. Elimination describes the
+committed force, not necessarily the society's entire population.
+
+Participants, startup rosters, fixed society steps, policy folding and target initiative
+use stable IDs. Reversing participant/runtime order is tested against the complete
+physical engagement fingerprint. A surviving peaceful claimant prevents exclusive
+capture even if it previously fought a different rival in the engagement.
+
+The three-society combined innovation room now includes a visible 24-unit finite scrap
+tray. Its stock comes from two real salvage stages, not depot grants. That extra authored
+supply funds the larger new structure after three ordinary settlements. This does not
+prove a global affordability allocator: prototypes can wait when legitimate finite
+materials are exhausted, as ordinary settlement projects can.

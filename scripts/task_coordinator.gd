@@ -209,7 +209,9 @@ func confirm_project_pickup(task_id: int, citizen: Node3D, resource: String) -> 
 	if int(task.citizen_id) != int(citizen.citizen_id) or String(task.resource) != resource or bool(task.picked_up):
 		return false
 	if citizen.global_position.distance_to(task.source) > 1.6: return false
-	var accepted: bool = civilization.development.pickup(task) if task.has("project_id") else construction_system.take_stock(resource, int(task.amount), int(task.get("ticket", -1)))
+	var accepted: bool
+	if task.get("innovation_project", false): accepted = civilization.innovation.pickup(task)
+	else: accepted = civilization.development.pickup(task) if task.has("project_id") else construction_system.take_stock(resource, int(task.amount), int(task.get("ticket", -1)))
 	if not accepted:
 		return false
 	task.picked_up = true
@@ -233,7 +235,9 @@ func confirm_project_delivery(task_id: int, citizen: Node3D, resource: String, c
 	var required_travel := _path_length(route) * 0.9
 	if route.is_empty() or citizen.travelled_distance - float(task.pickup_travelled_distance) < required_travel:
 		return false
-	var accepted: bool = civilization.development.deliver(task, citizen) if task.has("project_id") else construction_system.accept_delivery(resource, int(task.amount), citizen.global_position, int(task.get("ticket", -1)))
+	var accepted: bool
+	if task.get("innovation_project", false): accepted = civilization.innovation.deliver(task, citizen)
+	else: accepted = civilization.development.deliver(task, citizen) if task.has("project_id") else construction_system.accept_delivery(resource, int(task.amount), citizen.global_position, int(task.get("ticket", -1)))
 	if not accepted:
 		return false
 	task.delivered = true
@@ -251,20 +255,35 @@ func advance_construction_work(task_id: int, citizen_id: int, delta: float) -> b
 	var worker := get_parent().get_node_or_null("Citizen%02d" % (citizen_id + 1)) as Node3D
 	if not is_instance_valid(worker) or worker.civilization_id != instance_id or worker.life_state != "ALIVE" or worker.state != "WORK" or worker.global_position.distance_to(task.target) > 1.6:
 		return false
-	var result: bool = civilization.development.work(task, worker, delta) if task.has("project_id") else construction_system.perform_builder_work(int(task.stage), delta, task_id)
-	task.work_seconds = float(task.get("work_seconds", 0.0)) + delta
+	var result: bool
+	if task.get("innovation_project", false):
+		var project: Dictionary = civilization.innovation.active
+		var previous_work: float = project.get("work", 0.0)
+		result = civilization.innovation.build(task, worker, delta)
+		task.work_seconds = float(task.get("work_seconds", 0.0)) + maxf(0.0, float(project.get("work", 0.0)) - previous_work)
+	else:
+		result = civilization.development.work(task, worker, delta) if task.has("project_id") else construction_system.perform_builder_work(int(task.stage), delta, task_id)
+		task.work_seconds = float(task.get("work_seconds", 0.0)) + delta
 	if result:
 		task.progress = 1.0
 	elif task.has("project_id"):
-		var active: Dictionary = civilization.development.active
+		var active: Dictionary = civilization.innovation.active if task.get("innovation_project", false) else civilization.development.active
 		task.progress = float(active.work) / float(active.required_work) if not active.is_empty() and active.id == task.project_id else 0.0
 	else:
 		task.progress = float(construction_system.status().stage_progress)
 	task_board_updated.emit(summary())
 	return result
 
+func advance_innovation_work(task_id: int, citizen_id: int, effort: float) -> bool:
+	var task := _find_task(task_id)
+	if task.is_empty() or not task.task_type.begins_with("INNOVATION_") or task.state != "active" or int(task.citizen_id) != citizen_id or not is_instance_valid(civilization): return false
+	var worker: Node3D = civilization.citizen_for(citizen_id)
+	if worker == null: return false
+	return civilization.innovation.work(task, worker, effort)
+
 
 func issue_reach_explore(surface_id: String, citizens: Array) -> Dictionary:
+	if is_instance_valid(civilization) and civilization.innovation.enabled: return civilization.innovation.request_surface(surface_id)
 	if is_instance_valid(civilization) and civilization.world_simulation != null:
 		var authority: Node = civilization.world_simulation
 		for runtime in authority.runtimes:

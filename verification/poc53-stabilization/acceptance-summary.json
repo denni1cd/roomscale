@@ -1,0 +1,495 @@
+{
+  "verification_date": "2026-10-13",
+  "baseline_branch_commit": "e0acddfd92f56535af37adc0db60cf15864cac88",
+  "baseline_main": "71a2d1a96d8024e95e18e051e2e8632ee360ac1c",
+  "verdict": "PASS WITH CONCERNS",
+  "local_gates": {
+    "python_ruff_fast": "PASS",
+    "civilization_contracts": "PASS",
+    "innovation_foundation": "PASS; original contracts plus 97 robustness checks",
+    "focused_extensibility": "PASS; 3 identical fresh runs",
+    "mixed_war": "PASS; 3 identical fresh runs, each also repeats reversed runtime/participant order",
+    "live_catalogs": "PASS; Clockwork/Verdant/Scavenger 3 identical runs each",
+    "living_structure": "PASS; 3 identical earned-founder runs",
+    "cancellation": "PASS; 3 identical recovery/retry runs",
+    "two_party": "PASS; 5 identical runs and full pre-stabilization gameplay fingerprint reproduced",
+    "second_conflict_room": "PASS",
+    "three_party": "PASS; 3 identical runs",
+    "combined": "PASS; 3 matching combat fingerprints and actual invention/access",
+    "canonical": "PASS; 3 identical founder repeats",
+    "historical_regression": "PASS; all gates and 20/20 exploration cases",
+    "original_smokes": "PASS; Clockwork/Verdant x Room A/B",
+    "renderer": "PASS; all 3 curated images inspected"
+  },
+  "focused": {
+    "assertions": 38,
+    "completion_time": 45.9000000000004,
+    "failures": [],
+    "generic_project": {
+      "food": 2.0,
+      "water": 3.0
+    },
+    "recognition_time": 10,
+    "result": "PASS"
+  },
+  "mixed": {
+    "assertions": 5772,
+    "elimination_only": {
+      "attacks": 72,
+      "casualties": {
+        "clockwork_alpha": 4,
+        "verdant_alpha": 1
+      },
+      "eliminated_sides": {
+        "clockwork_alpha": 387
+      },
+      "retreated_sides": {},
+      "site_capture_tick": 487,
+      "winner": "verdant_alpha"
+    },
+    "engagement": {
+      "attack_pairs": {
+        "clockwork_alpha:verdant_alpha": 56,
+        "scavenger_alpha:verdant_alpha": 25
+      },
+      "attacks": 81,
+      "casualties": {
+        "clockwork_alpha": 4,
+        "scavenger_alpha": 1,
+        "verdant_alpha": 2
+      },
+      "eliminated_sides": {
+        "clockwork_alpha": 362
+      },
+      "elimination_events": {
+        "clockwork_alpha": {
+          "day": 0.0603333333333337,
+          "evidence": {
+            "casualties": 4,
+            "cause": "SPACE",
+            "initial_committed_force": 4,
+            "instance_id": "clockwork_alpha",
+            "intensity": "SURVIVAL_WAR",
+            "objective": "REMOVE_EXISTENTIAL_BLOCKER",
+            "tick": 362
+          },
+          "focus": "(26.0, 0.0, -38.0)",
+          "id": 21,
+          "kind": "FORCE_ELIMINATED",
+          "major": false,
+          "message": "clockwork_alpha committed force eliminated",
+          "seconds": 36.2000000000002
+        }
+      },
+      "initial_sizes": {
+        "clockwork_alpha": 4,
+        "scavenger_alpha": 2,
+        "verdant_alpha": 12
+      },
+      "max_step": 0.650002360343933,
+      "retreat_events": {
+        "scavenger_alpha": {
+          "day": 0.0620000000000004,
+          "evidence": {
+            "instance_id": "scavenger_alpha",
+            "intensity": "LIMITED_WAR",
+            "morale": {
+              "clockwork_alpha": 0.1975,
+              "scavenger_alpha": 0.465,
+              "verdant_alpha": 0.878166666666667
+            },
+            "survivors": 1
+          },
+          "focus": "(26.0, 0.0, -38.0)",
+          "id": 25,
+          "kind": "RETREAT",
+          "major": false,
+          "message": "scavenger_alpha morale broke; returning to rally",
+          "seconds": 37.2000000000003
+        }
+      },
+      "retreated_sides": {
+        "scavenger_alpha": 372
+      },
+      "side_policies": {
+        "clockwork_alpha": {
+          "allow_retreat": false,
+          "cause": "SPACE",
+          "force_fraction": 1.0,
+          "intensity": 4,
+          "intensity_name": "SURVIVAL_WAR",
+          "max_force": 150,
+          "min_force": 2,
+          "objective": "REMOVE_EXISTENTIAL_BLOCKER",
+          "retreat_threshold": -1.0
+        },
+        "scavenger_alpha": {
+          "allow_retreat": true,
+          "cause": "SPACE",
+          "force_fraction": 0.25,
+          "intensity": 2,
+          "intensity_name": "LIMITED_WAR",
+          "max_force": 6,
+          "min_force": 2,
+          "objective": "SECURE_TERRITORY",
+          "retreat_threshold": 0.7
+        },
+        "verdant_alpha": {
+          "allow_retreat": false,
+          "cause": "SPACE",
+          "force_fraction": 1.0,
+          "intensity": 4,
+          "intensity_name": "SURVIVAL_WAR",
+          "max_force": 150,
+          "min_force": 2,
+          "objective": "REMOVE_EXISTENTIAL_BLOCKER",
+          "retreat_threshold": -1.0
+        }
+      },
+      "survivors_at_retreat": {
+        "scavenger_alpha": 1
+      },
+      "tick": 372,
+      "winner": "verdant_alpha"
+    },
+    "failures": [],
+    "result": "PASS"
+  },
+  "live": {
+    "clockwork": {
+      "civilization": "clockwork",
+      "failures": [],
+      "projects": [
+        {
+          "completed": 529.200000000052,
+          "contributors": {
+            "0": 19.4,
+            "2": 40.5999999999997
+          },
+          "delivered": {
+            "mechanical_parts": 1.0,
+            "metal": 2.0,
+            "wood": 1.0
+          },
+          "delivery_distance": 447.195877409042,
+          "region": "STUDY_SURFACE",
+          "required": {
+            "mechanical_parts": 1.0,
+            "metal": 2.0,
+            "wood": 1.0
+          },
+          "shelter_added": 0,
+          "solution": "grapple_route",
+          "style": "cable",
+          "work": 60.0
+        }
+      ],
+      "reason": "Known access problems solved",
+      "recognition_time": 10.1,
+      "research": [
+        {
+          "completed": 443.200000000032,
+          "contributors": {
+            "0": 53.0000000000005,
+            "3": 47.0000000000004
+          },
+          "id": "grapple_engineering",
+          "work": 99.9999999999986
+        }
+      ],
+      "result": "PASS",
+      "seconds": 1370.89999999985,
+      "shelter_bonus_verified": false,
+      "source_visits": {
+        "food": 5,
+        "water": 9
+      }
+    },
+    "verdant": {
+      "civilization": "verdant",
+      "failures": [],
+      "projects": [
+        {
+          "completed": 527.300000000051,
+          "contributors": {
+            "0": 23.2,
+            "2": 51.8000000000005
+          },
+          "delivered": {
+            "mechanical_parts": 0.0,
+            "metal": 1.0,
+            "wood": 3.0
+          },
+          "delivery_distance": 447.195877409042,
+          "region": "STUDY_SURFACE",
+          "required": {
+            "mechanical_parts": 0.0,
+            "metal": 1.0,
+            "wood": 3.0
+          },
+          "shelter_added": 0,
+          "solution": "climbing_vine",
+          "style": "vine",
+          "work": 75.0
+        }
+      ],
+      "reason": "Known access problems solved",
+      "recognition_time": 10.1,
+      "research": [
+        {
+          "completed": 443.200000000032,
+          "contributors": {
+            "0": 53.0000000000005,
+            "3": 47.0000000000004
+          },
+          "id": "cultivated_vines",
+          "work": 99.9999999999986
+        }
+      ],
+      "result": "PASS",
+      "seconds": 1372.99999999985,
+      "shelter_bonus_verified": false,
+      "source_visits": {
+        "food": 5,
+        "water": 9
+      }
+    },
+    "scavenger": {
+      "civilization": "scavenger",
+      "failures": [],
+      "projects": [
+        {
+          "completed": 535.100000000053,
+          "contributors": {
+            "0": 34.5999999999999,
+            "4": 10.4
+          },
+          "delivered": {
+            "mechanical_parts": 1.0,
+            "metal": 1.0,
+            "wood": 2.0
+          },
+          "delivery_distance": 447.195877409042,
+          "region": "STUDY_SURFACE",
+          "required": {
+            "mechanical_parts": 1.0,
+            "metal": 1.0,
+            "wood": 2.0
+          },
+          "shelter_added": 0,
+          "solution": "scrap_ladder",
+          "style": "rope",
+          "work": 45.0
+        }
+      ],
+      "reason": "Known access problems solved",
+      "recognition_time": 10.1,
+      "research": [
+        {
+          "completed": 405.700000000024,
+          "contributors": {
+            "0": 15.4999999999999,
+            "3": 9.49999999999998
+          },
+          "id": "salvage_cable",
+          "work": 25.0
+        },
+        {
+          "completed": 427.100000000029,
+          "contributors": {
+            "3": 13.5999999999998,
+            "4": 16.4
+          },
+          "id": "scrap_frames",
+          "work": 30.0
+        },
+        {
+          "completed": 452.700000000034,
+          "contributors": {
+            "1": 16.8,
+            "4": 18.1999999999998
+          },
+          "id": "pressure_craft",
+          "work": 35.0
+        }
+      ],
+      "result": "PASS",
+      "seconds": 1372.49999999985,
+      "shelter_bonus_verified": false,
+      "source_visits": {
+        "food": 5,
+        "water": 9
+      }
+    }
+  },
+  "tree": {
+    "civilization": "verdant",
+    "failures": [],
+    "projects": [
+      {
+        "completed": 492.600000000044,
+        "contributors": {
+          "1": 24.8000000000001,
+          "2": 50.2000000000004
+        },
+        "delivered": {
+          "mechanical_parts": 0.0,
+          "metal": 1.0,
+          "wood": 3.0
+        },
+        "delivery_distance": 447.195877409042,
+        "region": "STUDY_SURFACE",
+        "required": {
+          "mechanical_parts": 0.0,
+          "metal": 1.0,
+          "wood": 3.0
+        },
+        "shelter_added": 0,
+        "solution": "climbing_vine",
+        "style": "vine",
+        "work": 75.0
+      },
+      {
+        "completed": 994.600000000158,
+        "contributors": {
+          "1": 107.799999999998,
+          "2": 63.1000000000006,
+          "3": 21.2,
+          "4": 37.9000000000003
+        },
+        "delivered": {
+          "mechanical_parts": 2.0,
+          "metal": 2.0,
+          "wood": 10.0
+        },
+        "delivery_distance": 1565.18557093165,
+        "region": "STUDY_SURFACE",
+        "required": {
+          "mechanical_parts": 2.0,
+          "metal": 2.0,
+          "wood": 10.0
+        },
+        "shelter_added": 4.0,
+        "solution": "climbing_tree",
+        "style": "tree",
+        "work": 229.999999999991
+      }
+    ],
+    "reason": "Known access problems solved",
+    "recognition_time": 10.1,
+    "research": [
+      {
+        "completed": 407.000000000024,
+        "contributors": {
+          "1": 51.1000000000005,
+          "4": 48.9000000000004
+        },
+        "id": "cultivated_vines",
+        "work": 99.9999999999986
+      },
+      {
+        "completed": 570.100000000061,
+        "contributors": {
+          "0": 65.2000000000006,
+          "3": 42.1000000000003,
+          "5": 27.7000000000001
+        },
+        "id": "root_architecture",
+        "work": 134.999999999997
+      },
+      {
+        "completed": 655.00000000008,
+        "contributors": {
+          "1": 77.6999999999999,
+          "5": 77.2999999999999
+        },
+        "id": "accelerated_growth",
+        "work": 154.999999999995
+      }
+    ],
+    "result": "PASS",
+    "seconds": 1332.29999999988,
+    "shelter_bonus_verified": true,
+    "source_visits": {
+      "food": 6,
+      "water": 9
+    }
+  },
+  "cancellation": {
+    "civilization": "clockwork",
+    "failures": [],
+    "projects": [
+      {
+        "completed": 591.700000000066,
+        "contributors": {
+          "3": 28.5000000000001,
+          "4": 31.4999999999996
+        },
+        "delivered": {
+          "mechanical_parts": 1.0,
+          "metal": 2.0,
+          "wood": 1.0
+        },
+        "delivery_distance": 447.195877409041,
+        "region": "STUDY_SURFACE",
+        "required": {
+          "mechanical_parts": 1.0,
+          "metal": 2.0,
+          "wood": 1.0
+        },
+        "shelter_added": 0,
+        "solution": "grapple_route",
+        "style": "cable",
+        "work": 60.0
+      }
+    ],
+    "reason": "Known access problems solved",
+    "recognition_time": 10.1,
+    "research": [
+      {
+        "completed": 443.200000000032,
+        "contributors": {
+          "0": 53.0000000000005,
+          "3": 47.0000000000004
+        },
+        "id": "grapple_engineering",
+        "work": 99.9999999999986
+      }
+    ],
+    "result": "PASS",
+    "seconds": 1376.09999999984,
+    "shelter_bonus_verified": false,
+    "source_visits": {
+      "food": 5,
+      "water": 9
+    }
+  },
+  "three_party": {
+    "winner": "verdant_alpha",
+    "site_capture_tick": 1868,
+    "force_sizes": {
+      "clockwork_alpha": 3,
+      "scavenger_alpha": 3,
+      "verdant_alpha": 3
+    },
+    "casualties": {
+      "clockwork_alpha": 1,
+      "scavenger_alpha": 1,
+      "verdant_alpha": 0
+    },
+    "retreated_sides": {
+      "clockwork_alpha": 1728,
+      "scavenger_alpha": 1762
+    }
+  },
+  "combined": {
+    "winner": "verdant_alpha",
+    "site_capture_tick": 1868,
+    "final_tick": 18809
+  },
+  "images_sha256": {
+    "clockwork-climb.png": "17a042b9a637f60633739c527b7f1969b875f71c2f036a20aae6238ac09f2fe0",
+    "verdant-living-structure.png": "9beb61b8b0bd69bac65352cc901ea422af310603a315d39817f2555fcd0aa5ce",
+    "three-party-battle.png": "2fd9b9d7cbcf3b3b1aadd7a2161a247fa7ef7eb1823c22533772e59d35c1bcb9"
+  }
+}

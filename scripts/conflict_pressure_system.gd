@@ -55,17 +55,32 @@ static func policy_for(intensity: int) -> Dictionary:
 			return {"force_fraction":1.0,"min_force":2,"max_force":150,"retreat_threshold":-1.0,"allow_retreat":false,"objective":"REMOVE_EXISTENTIAL_BLOCKER"}
 	return {"force_fraction":0.0,"min_force":0,"max_force":0,"retreat_threshold":1.0,"allow_retreat":true,"objective":"COEXIST"}
 
-func evaluate(world: Node, site_id: String) -> Dictionary:
+func evaluate(world: Node, site_id: String, selected: Array = []) -> Dictionary:
 	evaluations += 1
 	if not world.territory.sites.has(site_id):
 		return _store({"site_id":site_id,"score":0.0,"intensity":PEACE,"intensity_name":"PEACE","cause":"NONE","resource":"","objective":"COEXIST","per_civilization":{}})
 	var site: Dictionary = world.territory.sites[site_id]
-	var participants: Array = site.contesting_civilizations.duplicate()
+	var participants: Array = site.contesting_civilizations.duplicate() if selected.is_empty() else selected.duplicate()
 	participants.sort()
+	# Scarcity is bilateral. A comfortable bystander must not veto or join a war.
+	if selected.is_empty() and participants.size() > 2:
+		var pairs: Array[Dictionary] = []
+		var strongest: Dictionary = {}
+		for i in range(participants.size()):
+			for j in range(i + 1, participants.size()):
+				var pair := evaluate(world, site_id, [participants[i], participants[j]])
+				pair["participants"] = [participants[i], participants[j]]
+				pairs.append(pair)
+				if strongest.is_empty() or float(pair.score) > float(strongest.score): strongest = pair
+		var combined := strongest.duplicate(true)
+		combined["pairs"] = pairs
+		return _store(combined)
 	if participants.size() < 2:
 		return _store({"site_id":site_id,"score":0.0,"intensity":PEACE,"intensity_name":"PEACE","cause":"NONE","resource":"","objective":"COEXIST","per_civilization":{}})
 
 	var benefits: Dictionary = world.scenario.get("site_benefits", site.get("benefits", {}))
+	var pair_key: String = world.territory.relation_key(String(participants[0]),String(participants[1]))
+	benefits = world.scenario.get("pair_benefits",{}).get(pair_key,benefits)
 	var per_civilization := {}
 	for id in participants:
 		per_civilization[id] = {"space":0.0,"resources":{},"secured_space":0.0}
@@ -173,3 +188,22 @@ func _secured_space_capacity(world: Node, instance_id: String, population: int) 
 			benefits = world.scenario.get("site_benefits", benefits)
 		capacity += float(benefits.get("space_capacity", 0.0))
 	return capacity
+
+static func commitment_policies(pairs: Array, participants: Array) -> Dictionary:
+	var ordered: Array = pairs.duplicate(true)
+	ordered.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		var ap: Array = a.get("participants", []).duplicate(); ap.sort()
+		var bp: Array = b.get("participants", []).duplicate(); bp.sort()
+		return str(ap) < str(bp))
+	var result := {}
+	var ids: Array = participants.duplicate(); ids.sort()
+	for id in ids:
+		var strongest: Dictionary = {}
+		for pair in ordered:
+			if not pair.get("participants", []).has(id) or int(pair.intensity) < LIMITED_WAR: continue
+			if strongest.is_empty() or int(pair.intensity) > int(strongest.intensity): strongest = pair
+		if strongest.is_empty(): continue
+		var own := policy_for(int(strongest.intensity))
+		own.merge({"intensity":strongest.intensity,"intensity_name":intensity_name(int(strongest.intensity)),"cause":strongest.get("cause", ""),"objective":strongest.get("objective",own.objective)},true)
+		result[id] = own
+	return result

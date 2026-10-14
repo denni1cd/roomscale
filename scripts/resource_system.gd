@@ -1,7 +1,7 @@
 extends RefCounted
 ## Semantic/material profiles and finite source state use ordinary RoomDefinition objects.
 
-const RESOURCES := ["food", "water", "wood", "metal"]
+const RESOURCES := preload("res://scripts/resource_vocabulary.gd").IDS
 var objects: Dictionary = {}
 var sources: Dictionary = {}
 var bundles: Dictionary = {}
@@ -42,12 +42,18 @@ func configure(definition: Dictionary) -> void:
 			sources[String(object.id)] = {"position": Vector3(float(position[0]), float(position[1]), float(position[2])), "region": String(profile.region_id), "remaining": profile.contents.duplicate(true), "initial": profile.contents.duplicate(true), "reserved": {}, "reservations": {}, "extracted": {}, "work": float(profile.work_seconds)}
 
 func create_bundle(resource: String, amount: float, position: Vector3, source: String) -> int:
-	if not resource in RESOURCES or amount <= 0: return -1
+	if not can_create_bundle(resource,amount) or not position.is_finite(): return -1
+	if not generated.has(resource):
+		generated[resource] = 0.0
+		delivered[resource] = 0.0
 	var id := _next_bundle
 	_next_bundle += 1
 	bundles[id] = {"id": id, "resource": resource, "amount": amount, "position": position, "source": source, "state": "available", "citizen_id": -1}
 	generated[resource] += amount
 	return id
+
+func can_create_bundle(resource: String, amount: float) -> bool:
+	return resource in RESOURCES and amount > 0 and is_finite(amount) and is_finite(float(generated.get(resource,0))+amount)
 
 func reserve_bundle(id: int, citizen_id: int, instance_id: String = "legacy") -> bool:
 	if not bundles.has(id) or bundles[id].state != "available": return false
@@ -64,10 +70,12 @@ func pickup_bundle(id: int, citizen_id: int, position: Vector3) -> bool:
 	return true
 
 func deliver_bundle(id: int, citizen_id: int, position: Vector3, depot: Vector3, economy: RefCounted) -> bool:
+	if not position.is_finite() or not depot.is_finite(): return false
 	if not bundles.has(id): return false
 	var bundle: Dictionary = bundles[id]
 	if bundle.state != "in_transit" or int(bundle.citizen_id) != citizen_id or position.distance_to(depot) > 1.6: return false
 	if bundle.get("instance_id", "legacy") != economy.instance_id: return false
+	if not is_finite(float(delivered[bundle.resource])+float(bundle.amount)): return false
 	if not economy.receive(String(bundle.resource), float(bundle.amount)): return false
 	delivered[bundle.resource] += float(bundle.amount)
 	bundles.erase(id)
@@ -84,7 +92,7 @@ func source_available(id: String, resource: String) -> float:
 	return float(sources[id].remaining.get(resource, 0)) - float(sources[id].reserved.get(resource, 0))
 
 func reserve_source(id: String, resource: String, amount: float, instance_id: String = "legacy") -> bool:
-	if amount <= 0 or source_available(id, resource) < amount: return false
+	if not is_finite(amount) or amount <= 0 or source_available(id, resource) < amount: return false
 	sources[id].reserved[resource] = float(sources[id].reserved.get(resource, 0)) + amount
 	if not sources[id].reservations.has(instance_id): sources[id].reservations[instance_id] = {}
 	var owner: Dictionary = sources[id].reservations[instance_id]
@@ -92,14 +100,14 @@ func reserve_source(id: String, resource: String, amount: float, instance_id: St
 	return true
 
 func release_source(id: String, resource: String, amount: float, instance_id: String = "legacy") -> void:
-	if not sources.has(id): return
+	if not sources.has(id) or not is_finite(amount) or amount <= 0: return
 	var owner: Dictionary = sources[id].reservations.get(instance_id,{})
 	var released := minf(amount,float(owner.get(resource,0)))
 	owner[resource] = float(owner.get(resource,0)) - released
 	sources[id].reserved[resource] = maxf(0,float(sources[id].reserved.get(resource,0)) - released)
 
 func extract(id: String, resource: String, amount: float, position: Vector3, instance_id: String = "legacy") -> int:
-	if not sources.has(id): return -1
+	if not sources.has(id) or not is_finite(amount) or not position.is_finite() or not can_create_bundle(resource,amount): return -1
 	var source: Dictionary = sources[id]
 	var owner: Dictionary = source.reservations.get(instance_id,{})
 	if amount <= 0 or float(owner.get(resource,0)) < amount or float(source.reserved.get(resource, 0)) < amount or float(source.remaining.get(resource, 0)) < amount or position.distance_to(source.position) > 1.6: return -1
@@ -111,11 +119,11 @@ func extract(id: String, resource: String, amount: float, position: Vector3, ins
 
 func audit() -> Array[String]:
 	var errors: Array[String] = []
-	for resource in RESOURCES:
+	for resource in generated:
 		var outstanding := 0.0
 		for bundle in bundles.values():
 			if bundle.resource == resource: outstanding += float(bundle.amount)
-		if absf(float(generated[resource]) - float(delivered[resource]) - outstanding) > 0.0001: errors.append("bundle conservation: " + resource)
+		if not is_finite(float(generated[resource])) or not is_finite(float(delivered[resource])) or not is_finite(outstanding) or absf(float(generated[resource]) - float(delivered[resource]) - outstanding) > 0.0001: errors.append("bundle conservation: " + resource)
 	for source in sources.values():
 		for resource in source.initial:
 			var reserved_by_owners := 0.0

@@ -24,12 +24,14 @@ var scenario: Dictionary = {}
 var scouts: Dictionary = {}
 var first_contact_tick := -1
 var conflict_enabled := false
+var innovation_claims: Dictionary = {}
 var objective_marker: Node3D
 var status_label: Label
 var camera_phase := ""
 var attack_effects: Array[Dictionary] = []
 const G := preload("res://scripts/visuals/visual_geometry.gd")
 const CombatPresentation := preload("res://scripts/combat_presentation.gd")
+const CivilizationVisuals := preload("res://scripts/civilization_presentation.gd")
 
 func configure(root: Node3D) -> void:
 	scene = root
@@ -53,7 +55,7 @@ func advance(delta: float) -> void:
 func step() -> void:
 	tick += 1
 	seconds += STEP
-	for runtime in runtimes:
+	for runtime in ordered_runtimes():
 		runtime.seconds = seconds
 		runtime.step_society()
 	if conflict_enabled:
@@ -102,7 +104,7 @@ func enable_conflict(config: Dictionary) -> void:
 	for index in range(4):
 		var button := Button.new()
 		button.text = ["Pause","1x","4x","10x"][index]
-		button.position = Vector2(20 + index * 72,110)
+		button.position = Vector2(20 + index * 72,110 + (runtimes.size() * 28 if runtimes.any(func(runtime: Node) -> bool: return runtime.innovation.enabled) else 0))
 		var rate: float = [0.0,1.0,4.0,10.0][index]
 		button.pressed.connect(func() -> void: runtimes[0].speed = rate)
 		scene.get_node("Overlay").add_child(button)
@@ -114,7 +116,7 @@ func advance_conflict() -> void:
 	var site_id := String(scenario.strategic_site)
 	var at: Vector3 = territory.sites[site_id].position
 	if scouts.size() < runtimes.size():
-		for runtime in runtimes:
+		for runtime in ordered_runtimes():
 			if scouts.has(runtime.instance_id) or runtime.haul_deliveries == 0: continue
 			for citizen in runtime.citizens:
 				if not citizen.eligible_for_combat(at): continue
@@ -139,16 +141,28 @@ func advance_conflict() -> void:
 	if intensity != previous_intensity or cause != previous_cause:
 		journal.record(seconds,"CONFLICT_PRESSURE_CHANGED","Conflict pressure is %s because of %s" % [conflict_state.intensity_name,cause],conflict_state,at,site_id + ":pressure:" + String(conflict_state.intensity_name) + ":" + cause)
 	var participants: Array = territory.sites[site_id].contesting_civilizations
-	if participants.size() < 2: return
-	var a := String(participants[0])
-	var b := String(participants[1])
+	var pairs: Array = conflict_state.get("pairs", [conflict_state])
+	var engaged: Array = []
+	for pair in pairs:
+		var ids: Array = pair.get("participants", participants)
+		if ids.size() != 2: continue
+		var pair_intensity := int(pair.intensity)
+		territory.set_relation(String(ids[0]), String(ids[1]), "HOSTILE" if pair_intensity >= conflict_pressure.LIMITED_WAR else ("COMPETITION" if pair_intensity == conflict_pressure.COMPETITION else "CONTACT"), seconds, site_id, pair)
+		if pair_intensity >= conflict_pressure.LIMITED_WAR:
+			for id in ids:
+				if not engaged.has(id): engaged.append(id)
 	if intensity < conflict_pressure.LIMITED_WAR:
-		territory.set_relation(a,b,"COMPETITION" if intensity == conflict_pressure.COMPETITION else "CONTACT",seconds,site_id,conflict_state)
 		if combat.phase in ["MARCH","FIGHT"]: combat.stand_down("scarcity pressure resolved")
 		return
-	territory.set_relation(a,b,"HOSTILE",seconds,site_id,conflict_state)
+	# Allow every living society to make physical contact before forming a battle.
+	# A late scout cannot silently disappear from the initial contest.
+	if runtimes.any(func(runtime: Node) -> bool: return runtime.living_population() > 0 and not participants.has(runtime.instance_id)): return
 	if combat.phase == "DORMANT":
 		var war_policy: Dictionary = conflict_state.policy.duplicate(true)
+		war_policy["participants"] = engaged
+		var bilateral: Array = pairs.duplicate(true)
+		if bilateral.size() == 1 and not bilateral[0].has("participants"): bilateral[0]["participants"] = participants.duplicate()
+		war_policy["side_policies"] = conflict_pressure.commitment_policies(bilateral, engaged)
 		war_policy["intensity_name"] = conflict_state.intensity_name
 		war_policy["cause"] = conflict_state.cause
 		war_policy["resource"] = conflict_state.resource
@@ -181,7 +195,7 @@ func present_attack(attacker: Node3D, victim: Node3D) -> void:
 	attacker.present_combat_shot()
 	var start: Vector3 = attacker.global_position + attacker.global_basis * Vector3(0.08,0.28,0.43)
 	var finish: Vector3 = victim.global_position + Vector3(0,0.3,0)
-	var organic: bool = runtime_for(attacker.civilization_id).definition.citizen_style == "verdant_folk"
+	var organic: bool = CivilizationVisuals.uses_organic_combat(runtime_for(attacker.civilization_id).definition)
 	attack_effects.append(CombatPresentation.shot(scene,start,finish,organic))
 
 func _process(delta: float) -> void:
@@ -202,19 +216,14 @@ func _process(delta: float) -> void:
 		elif combat.phase == "RETREAT": camera.focus_at((objective + runtime_for(combat.retreating_side).coordinator.housing_station)/2,80)
 		elif combat.phase == "COMPLETE": camera.set_view_mode(0)
 	var presenter: Node = get_tree().root.get_node("CivilizationPresentation")
-	var growth_presenter: Node = get_tree().root.get_node("VerdantDevelopmentPresentation")
 	for runtime in runtimes:
-		if runtime.definition.citizen_style != "verdant_folk": continue
-		for citizen in runtime.citizens:
-			presenter._style_verdant_citizen(citizen)
-			presenter._refresh_verdant_cargo(citizen)
-		for module in runtime.development.visuals.values(): growth_presenter._style_module(module)
+		presenter.refresh_runtime(runtime)
 	var site: Dictionary = territory.sites[scenario.strategic_site]
 	var control_color := Color("a8a395")
 	if not String(site.owner_civilization_id).is_empty(): control_color = Color(String(runtime_for(site.owner_civilization_id).definition.palette.primary))
 	elif site.claim_state == "CONTESTED": control_color = Color("d5814d")
 	var controlled: bool = site.claim_state == "CONTROLLED"
-	var owner_organic: bool = controlled and runtime_for(site.owner_civilization_id).definition.citizen_style == "verdant_folk"
+	var owner_organic: bool = controlled and CivilizationVisuals.uses_organic_combat(runtime_for(site.owner_civilization_id).definition)
 	objective_marker.get_node("IndustrialControl").visible = controlled and not owner_organic
 	objective_marker.get_node("OrganicControl").visible = owner_organic
 	objective_marker.get_node("ObjectiveLabel").visible = scene.get_node("CameraRig").distance >= 40
@@ -222,6 +231,35 @@ func _process(delta: float) -> void:
 	var pressure_text := "No conflict pressure yet"
 	if not conflict_state.is_empty():
 		pressure_text = "%s %.0f%% · %s%s" % [String(conflict_state.intensity_name),float(conflict_state.score) * 100.0,String(conflict_state.cause),(" / " + String(conflict_state.resource)) if not String(conflict_state.resource).is_empty() else ""]
-	status_label.text = "CLOCKWORK %d  /  VERDANT %d     %s · %s\n%s\n%s" % [runtimes[0].living_population(),runtimes[1].living_population(),site.claim_state,combat.phase,pressure_text,"Shared finite world · autonomous societies" if combat.winner.is_empty() else (combat.winner + " controls the frontier; " + combat.retreating_side + " survives" if site.claim_state == "CONTROLLED" else combat.retreating_side + " retreats to home; securing site")]
+	var outcome := "Shared finite world · autonomous societies"
+	if not combat.winner.is_empty():
+		var withdrawn: PackedStringArray = []
+		var sides: Array = combat.retreated_sides.keys()
+		sides.sort()
+		for id in sides: withdrawn.append(String(runtime_for(String(id)).definition.display_name))
+		outcome = String(runtime_for(combat.winner).definition.display_name) + (" controls the frontier" if controlled else " is securing the site") + " · Withdrawn: " + ", ".join(withdrawn)
+		var eliminated: PackedStringArray = []
+		var eliminated_ids: Array = combat.eliminated_sides.keys()
+		eliminated_ids.sort()
+		for id in eliminated_ids: eliminated.append(String(runtime_for(String(id)).definition.display_name))
+		if not eliminated.is_empty(): outcome += " · Eliminated forces: " + ", ".join(eliminated)
+	status_label.text = "%s     %s · %s\n%s\n%s" % [CivilizationVisuals.society_summary(runtimes),site.claim_state,combat.phase,pressure_text,outcome]
+
 	if combat.phase in ["MARCH","FIGHT"]:
-		status_label.text = status_label.text.get_slice("\n",0) + "\n" + pressure_text + "\nSecure territory · Forces %d / %d · Losses %d / %d" % [int(combat.initial_sizes.get(runtimes[0].instance_id,0)),int(combat.initial_sizes.get(runtimes[1].instance_id,0)),int(combat.casualties.get(runtimes[0].instance_id,0)),int(combat.casualties.get(runtimes[1].instance_id,0))]
+		var counts: PackedStringArray = []
+		for runtime in runtimes:
+			var id: String = runtime.instance_id
+			counts.append("%s %d / losses %d" % [runtime.definition.display_name, int(combat.initial_sizes.get(id,0)), int(combat.casualties.get(id,0))])
+		status_label.text = status_label.text.get_slice("\n",0) + "\n" + pressure_text + "\nForces · " + " · ".join(counts)
+	for runtime in runtimes:
+		if not runtime.innovation.enabled: continue
+		var state: Dictionary = runtime.innovation.status()
+		var activity: String = state.reason
+		if not state.research.is_empty(): activity = "%s research %.0f%%" % [state.research.name, float(state.research.work) / float(state.research.required_work) * 100]
+		elif not state.project.is_empty(): activity = "%s · %s" % [state.project.solution.get("display_name", state.project.solution.id), state.project.state.replace("_", " ").to_lower()]
+		status_label.text += "\n%s · %s" % [runtime.definition.display_name, activity]
+
+func ordered_runtimes() -> Array:
+	var ordered: Array = runtimes.duplicate()
+	ordered.sort_custom(func(a: Node,b: Node) -> bool: return a.instance_id < b.instance_id)
+	return ordered

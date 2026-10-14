@@ -6,7 +6,9 @@ extends RefCounted
 ## problem and capability ids.
 
 const ROOT := "res://innovation/civilizations"
+const Validation := preload("res://scripts/innovation_validation.gd")
 
+var production_recipes: Array[String] = []
 var civilization_id: String = ""
 var technologies: Dictionary = {}
 var solutions: Dictionary = {}
@@ -24,6 +26,12 @@ static func load_id(civ_id: String) -> Dictionary:
 			errors.append("innovation civilization id contains invalid path characters: %s" % normalized)
 			return {"ok": false, "catalog": null, "errors": errors}
 	var path := "%s/%s.json" % [ROOT, normalized]
+	return load_path(path, normalized)
+
+
+static func load_path(path: String, civ_id: String) -> Dictionary:
+	var normalized := civ_id.strip_edges().to_lower()
+	var errors: Array[String] = []
 	if not FileAccess.file_exists(path):
 		errors.append("innovation catalog not found for civilization '%s' (expected %s)" % [normalized, path])
 		return {"ok": false, "catalog": null, "errors": errors}
@@ -38,30 +46,34 @@ static func load_id(civ_id: String) -> Dictionary:
 	var catalog := new()
 	catalog.civilization_id = normalized
 	catalog.load_errors = catalog._load(parsed)
-	return {"ok": catalog.load_errors.is_empty(), "catalog": catalog, "errors": catalog.load_errors}
+	return {"ok": catalog.load_errors.is_empty(), "catalog": catalog if catalog.load_errors.is_empty() else null, "errors": catalog.load_errors}
 
 
 func _load(data: Dictionary) -> Array[String]:
 	var errors: Array[String] = []
-	if int(data.get("schema_version", 0)) != 1:
-		errors.append("unsupported innovation schema_version %s" % data.get("schema_version", 0))
-	var file_civ := String(data.get("civilization_id", "")).strip_edges().to_lower()
+	Validation.schema(data.get("schema_version"), errors)
+	var file_civ := Validation.id(data.get("civilization_id"), "civilization_id", errors, true)
 	if file_civ != civilization_id:
 		errors.append("innovation catalog civilization_id '%s' does not match requested id '%s'" % [file_civ, civilization_id])
-	_load_entries(data.get("technologies", []), "technology", technologies, errors)
-	_load_entries(data.get("solutions", []), "solution", solutions, errors)
-	for technology_id in technologies:
-		var technology: Dictionary = technologies[technology_id]
-		if not (technology.get("grants", []) is Array):
-			errors.append("technology %s grants must be an array" % technology_id)
-		if not (technology.get("requires_capabilities", []) is Array):
-			errors.append("technology %s requires_capabilities must be an array" % technology_id)
-	for solution_id in solutions:
-		var solution: Dictionary = solutions[solution_id]
-		if not (solution.get("addresses", []) is Array) or solution.get("addresses", []).is_empty():
-			errors.append("solution %s addresses must be a non-empty array" % solution_id)
-		if not (solution.get("requires_capabilities", []) is Array):
-			errors.append("solution %s requires_capabilities must be an array" % solution_id)
+	var staged_recipes: Array[String] = []
+	if not data.get("production_recipes",[]) is Array: errors.append("production_recipes must be an array")
+	else:
+		for raw in data.get("production_recipes",[]):
+			var id := Validation.id(raw,"production recipe",errors,true)
+			if not id.is_empty() and not staged_recipes.has(id): staged_recipes.append(id)
+	staged_recipes.sort()
+	var recipes := preload("res://scripts/production_recipe_registry.gd").new()
+	errors.append_array(recipes.errors)
+	for id in staged_recipes:
+		if not recipes.recipes.has(id): errors.append("unknown production recipe: " + id)
+	var staged_technologies: Dictionary = {}
+	var staged_solutions: Dictionary = {}
+	_load_entries(data.get("technologies"), "technology", staged_technologies, errors)
+	_load_entries(data.get("solutions"), "solution", staged_solutions, errors)
+	if errors.is_empty():
+		technologies = staged_technologies
+		solutions = staged_solutions
+		production_recipes = staged_recipes
 	return errors
 
 
@@ -74,7 +86,7 @@ func _load_entries(raw_entries: Variant, label: String, target: Dictionary, erro
 			errors.append("%s entry must be an object" % label)
 			continue
 		var entry: Dictionary = raw_entry
-		var entry_id := String(entry.get("id", "")).strip_edges().to_lower()
+		var entry_id := Validation.id(entry.get("id"), "%s id" % label, errors, true)
 		if entry_id.is_empty():
 			errors.append("%s id must not be empty" % label)
 			continue
@@ -83,16 +95,35 @@ func _load_entries(raw_entries: Variant, label: String, target: Dictionary, erro
 			continue
 		var normalized := entry.duplicate(true)
 		normalized["id"] = entry_id
+		Validation.text_fields(entry, "%s %s" % [label, entry_id], errors)
 		for field in ["grants", "requires_capabilities", "addresses"]:
-			if normalized.get(field, []) is Array:
-				var values: Array = normalized.get(field, [])
-				var normalized_values: Array[String] = []
-				for value in values:
-					var item := String(value).strip_edges().to_upper()
-					if not item.is_empty() and not normalized_values.has(item):
-						normalized_values.append(item)
-				normalized_values.sort()
-				normalized[field] = normalized_values
+			normalized[field] = Validation.ids(entry.get(field, []), "%s %s %s" % [label, entry_id, field], errors)
+		if label == "solution" and normalized.addresses.is_empty():
+			errors.append("solution %s addresses must be a non-empty array" % entry_id)
+		if label == "technology" and normalized.grants.is_empty():
+			errors.append("technology %s grants must be a non-empty array" % entry_id)
+		Validation.numeric_field(entry, "priority", "%s %s" % [label, entry_id], errors)
+		Validation.numeric_field(entry, "research_work", "%s %s" % [label, entry_id], errors, true)
+		if entry.has("construction"):
+			if not (entry.construction is Dictionary):
+				errors.append("%s %s construction must be an object" % [label, entry_id])
+			else:
+				for field in entry.construction:
+					Validation.numeric_field(entry.construction, field, "%s %s construction" % [label, entry_id], errors)
+		if entry.has("properties") and not (entry.properties is Dictionary):
+			errors.append("%s %s properties must be an object" % [label, entry_id])
+		if entry.has("deployment"):
+			if label != "solution" or not (entry.deployment is Dictionary):
+				errors.append("solution %s deployment must be an object" % entry_id)
+			else:
+				normalized.deployment["adapter"] = Validation.id(entry.deployment.get("adapter"), "solution %s deployment adapter" % entry_id, errors, true)
+				if entry.deployment.has("style"): normalized.deployment["style"] = Validation.id(entry.deployment.style, "solution %s deployment style" % entry_id, errors, true)
+				if not (entry.get("construction") is Dictionary) or not entry.construction.has("work"):
+					errors.append("deployable solution %s requires construction work" % entry_id)
+				else:
+					Validation.numeric_field(entry.construction, "work", "solution %s construction" % entry_id, errors, true)
+					for resource in entry.construction:
+						if resource != "work" and not preload("res://scripts/resource_vocabulary.gd").supports(resource): errors.append("solution %s unsupported construction resource %s" % [entry_id, resource])
 		target[entry_id] = normalized
 
 

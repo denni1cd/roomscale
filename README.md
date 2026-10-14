@@ -148,6 +148,25 @@ rather than running on every edit. Raw runs are ignored; publish compact receipt
 deliberately selected evidence, following
 [artifact policy](verification/stabilization/artifact-review.md).
 
+## Live innovation and three societies
+
+```powershell
+./RUN_ROOM_SCALE_FISHBOWL.ps1 -Civilization clockwork -Innovation
+./RUN_ROOM_SCALE_FISHBOWL.ps1 -Civilization verdant -Innovation
+./RUN_ROOM_SCALE_FISHBOWL.ps1 -Civilization scavenger -Innovation
+./RUN_ROOM_SCALE_CONFLICT.ps1 -Room room_conflict_c -Scenario three_party_conflict -Innovation
+```
+
+Citizens earn a workshop, research their own access technology, haul real materials,
+construct a visible route and use it. The three-society scenario shares finite room
+resources while retaining independent task boards, knowledge and depots. Scarcity
+sets bilateral hostility; combat tracks surviving withdrawals and force eliminations
+separately before secure capture.
+Verdant can also research a living structure that provides real shelter after paid
+construction. Evidence recognition, globally ranked solutions and per-society war policies
+are covered by the POC 5.3 stabilization gates. See [innovation architecture](docs/INNOVATION_ARCHITECTURE.md),
+[conflict scope](docs/POC5.md) and [verification commands](docs/TESTING.md).
+
 ## Architecture and repository
 
 `CivilizationSimulation` owns the shared 0.1-second deterministic society tick. Need decay,
@@ -179,15 +198,14 @@ See [architecture and authority](docs/ARCHITECTURE.md) for contracts and current
 ## Limits and historical evidence
 
 Current supported worlds use rectangular floor bounds, conservative furniture footprints,
-one initial elevated target and deterministic single-active-civilization ordering. POC472
+one initial elevated target and deterministic society/citizen ordering. POC472
 founding uses bounded connected layout search, downstream site reservations and planned
 rest positions; it does not prove arbitrary layouts. Verdant and Clockwork currently share
-production resource slots and pacing; civilization-specific economy bonuses, asymmetric
-technology and multi-civilization world authority are not claimed.
+production resource slots and pacing. Optional live innovation uses separate catalogs
+and shared physical deployment; economy/combat bonuses and asymmetric balance are not claimed.
 
 Legacy established-room interior activity anchors are a documented compatibility contract.
-Citizen IDs are contiguous and append-only. No lifetime/deletion or shared-world authority
-model is claimed. Large scene composition, raw task dictionaries and some camera internals
+Citizen IDs are contiguous and append-only. Dead citizens persist as terminal nodes; deleting or recycling their IDs is unsupported. Large scene composition, raw task dictionaries and some camera internals
 remain documented maintainability debt.
 
 [POC472 report](verification/poc472/final-report.md) records 127 main expected

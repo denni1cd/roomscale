@@ -6,6 +6,8 @@ extends RefCounted
 ## solutions require them. This keeps simulation logic independent of any one
 ## civilization's tech tree.
 
+const Validation := preload("res://scripts/innovation_validation.gd")
+
 const DEFAULT_PATH := "res://innovation/capabilities.json"
 
 var definitions: Dictionary = {}
@@ -31,14 +33,14 @@ static func load_path(path: String) -> Dictionary:
 		return {"ok": false, "registry": null, "errors": errors}
 	var registry := new()
 	registry.load_errors = registry._load(parsed)
-	return {"ok": registry.load_errors.is_empty(), "registry": registry, "errors": registry.load_errors}
+	return {"ok": registry.load_errors.is_empty(), "registry": registry if registry.load_errors.is_empty() else null, "errors": registry.load_errors}
 
 
 func _load(data: Dictionary) -> Array[String]:
 	var errors: Array[String] = []
-	if int(data.get("schema_version", 0)) != 1:
-		errors.append("unsupported capability schema_version %s" % data.get("schema_version", 0))
-	var entries: Variant = data.get("capabilities", [])
+	Validation.schema(data.get("schema_version"), errors)
+	var staged: Dictionary = {}
+	var entries: Variant = data.get("capabilities")
 	if not (entries is Array):
 		errors.append("capabilities must be an array")
 		return errors
@@ -47,11 +49,11 @@ func _load(data: Dictionary) -> Array[String]:
 			errors.append("capability entry must be an object")
 			continue
 		var entry: Dictionary = raw_entry
-		var capability_id := _normalize(String(entry.get("id", "")))
+		var capability_id := Validation.id(entry.get("id"), "capability id", errors)
 		if capability_id.is_empty():
 			errors.append("capability id must not be empty")
 			continue
-		if definitions.has(capability_id):
+		if staged.has(capability_id):
 			errors.append("duplicate capability id: %s" % capability_id)
 			continue
 		var implies: Variant = entry.get("implies", [])
@@ -60,12 +62,15 @@ func _load(data: Dictionary) -> Array[String]:
 			continue
 		var normalized := entry.duplicate(true)
 		normalized["id"] = capability_id
-		normalized["implies"] = _normalize_list(implies)
-		definitions[capability_id] = normalized
-	for capability_id in definitions:
-		for implied in definitions[capability_id].get("implies", []):
-			if not definitions.has(implied):
+		Validation.text_fields(entry, "capability %s" % capability_id, errors)
+		normalized["implies"] = Validation.ids(implies, "capability %s implies" % capability_id, errors)
+		staged[capability_id] = normalized
+	for capability_id in staged:
+		for implied in staged[capability_id].get("implies", []):
+			if not staged.has(implied):
 				errors.append("capability %s implies unknown capability %s" % [capability_id, implied])
+	if errors.is_empty():
+		definitions = staged
 	return errors
 
 

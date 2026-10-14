@@ -149,3 +149,75 @@ CI runs the five canonical repeats and second-room gate alongside existing Fast,
 civilization contracts and the unchanged four single-civilization smokes. Long soaks
 remain explicit. Curated evidence and reports live under `verification/poc5/`; raw logs
 and rejected framing iterations remain ignored.
+
+## Live innovation and multi-party integration
+
+```powershell
+./TEST_ROOM_SCALE_INNOVATION.ps1
+./TEST_ROOM_SCALE_INNOVATION_LIVE.ps1 -RunCount 2
+./TEST_ROOM_SCALE_INNOVATION_LIVE.ps1 -Civilizations clockwork -RunCount 1 -CancellationProbe
+./TEST_ROOM_SCALE_INNOVATION_LIVE.ps1 -Civilizations verdant -RunCount 1 -CaptureVisuals
+./TEST_ROOM_SCALE_CONFLICT_PRESSURE.ps1
+./TEST_ROOM_SCALE_CONFLICT.ps1 -Room room_conflict_c -Scenario three_party_conflict -RunCount 3
+./TEST_ROOM_SCALE_CONFLICT.ps1 -Room room_conflict_c -Scenario three_party_conflict -Innovation -TimeoutSeconds 300
+```
+
+The live innovation observer uses the production five-founder scene without granting
+stock, capabilities, labor or links. It checks physical research travel and effort,
+rejected manufactured/duplicate work, pause, actual material hauling, paid build,
+real deployed traversal and elevated resource access. Repeatability includes technology
+completion times, contributors, project costs/work, route style and source visits.
+The explicit cancellation fixture invokes cancellation after a real delivery, checks
+physical recovery and resumes the ordinary clock until a rebuilt solution succeeds.
+Graphical mode saves real renderer snapshots of research, route deployment and access.
+
+The conflict observer covers any configured participant count and checks every roster,
+board and economy each tick. Three-party acceptance requires the battle to continue
+after its first retreat, separate withdrawal of both losing sides and one physical
+capture. Pressure fixtures exercise malformed/duplicate/unknown scenario data before
+startup mutation and a comfortable third claimant excluded from actual fighting.
+The combined gate enables both features, requires exactly one paid shared route,
+released construction claims and actual elevated access by surviving citizens.
+
+CI configuration includes foundation/live/recovery gates and the three-party and
+combined gates. Only a remote Actions run establishes remote CI success. Long soaks,
+arbitrary large-party layouts and subjective visual acceptance remain explicit.
+
+## POC 5.3 stabilization gates
+
+```powershell
+./TEST_ROOM_SCALE_EXTENSIBILITY.ps1 -RunCount 3
+./TEST_ROOM_SCALE_INNOVATION_LIVE.ps1 -RunCount 3
+./TEST_ROOM_SCALE_INNOVATION_LIVE.ps1 -Civilizations verdant -Room room_poc53_tree -RequireLivingStructure -RunCount 3
+./TEST_ROOM_SCALE_INNOVATION_LIVE.ps1 -Civilizations clockwork -CancellationProbe -RunCount 3
+./TEST_ROOM_SCALE_CONFLICT.ps1 -Room room_conflict_c -Scenario three_party_conflict -Innovation -RunCount 3 -TimeoutSeconds 300
+```
+
+Focused ranking/evidence tests cover water versus access, reversed input, exact ties,
+duplicate mild sources, combined benefits, unsupported classes, unrecognized pressure,
+repeated/same-time/order-independent observations and disappeared/reappearing episodes.
+An established-room fixture registers a new non-route adapter without runtime edits and
+pays food/water materials with actual delivery/build jobs. Its optional ongoing callback
+runs on the fixed clock and freezes when paused. Numeric rejection/audits cover overflow.
+
+Mixed combat uses authored unequal founder counts and pair-specific space relevance.
+A contested-claim fixture invokes normal pressure/orchestration; it seeds no actors,
+health, materials, movement, damage, work or technology. Ordinary ticks drive commitment,
+travel, combat and withdrawal. The test checks per-side force/retreat rules, peaceful
+pair non-targeting, atomic rejection of an unavailable force, terminal casualties and
+identical outcomes with reversed participant/runtime order. Separate pressure scenarios
+retain the peaceful third-claimant capture test.
+
+The mixed gate records Clockwork elimination separately from Scavenger's surviving
+morale withdrawal, validates distinct journal events and idempotent transitions,
+continues through physical return, and checks terminal citizens and peaceful claims.
+A separate physical survival-only engagement verifies secure/capture after the final
+rival is eliminated without setting retreat metadata. Both engagements repeat with
+reversed runtime/participant order; the wrapper requires three identical receipts.
+Conflict receipts and repeatability fingerprints include both departure sets.
+
+The six-founder Verdant scenario earns every technology/material/work unit. It must
+complete the living structure, gain the authored four real shelter places only at
+completion and reject duplicate benefit/structure application. Renderer runs require
+Clockwork access, this living structure and three-party combat. Curated images and
+compact summaries accompany the stabilization report; bulk output stays ignored.

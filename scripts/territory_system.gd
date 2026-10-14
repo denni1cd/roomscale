@@ -20,10 +20,12 @@ func claim(site_id: String, instance_id: String, seconds: float) -> void:
 	site.contesting_civilizations.sort()
 	site.claim_state = "CLAIMED"
 	if site.contesting_civilizations.size() < 2: return
-	var key := relation_key(site.contesting_civilizations[0], site.contesting_civilizations[1])
-	if relations.get(key, "UNKNOWN") == "UNKNOWN":
-		relations[key] = "CONTACT"
-		journal.record(seconds, "FIRST_CONTACT", "Territorial encounter at " + site_id, {"participants": site.contesting_civilizations}, site.position, key + ":contact")
+	for rival in site.contesting_civilizations:
+		if rival == instance_id: continue
+		var key := relation_key(rival, instance_id)
+		if relations.get(key, "UNKNOWN") == "UNKNOWN":
+			relations[key] = "CONTACT"
+			journal.record(seconds, "FIRST_CONTACT", "Territorial encounter at " + site_id, {"participants": [rival, instance_id]}, site.position, key + ":contact")
 	site.claim_state = "CONTESTED"
 	journal.record(seconds, "SITE_CONTESTED", "Strategic site contested", {"site_id": site_id}, site.position, site_id + ":contested")
 

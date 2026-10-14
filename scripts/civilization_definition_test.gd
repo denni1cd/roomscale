@@ -31,6 +31,7 @@ func run() -> void:
 		_check(CivilizationDefinition.stage_name(verdant, "launcher") == "Bloom Anchor", "Verdant launcher stage must present as Bloom Anchor")
 		_check(bool(verdant.world_influence.enabled), "Verdant reclamation must be enabled")
 		_check(not bool(clockwork.world_influence.enabled), "Clockwork must not receive Verdant reclamation")
+	_check(CivilizationDefinition.load_id("scavenger").ok, "Scavenger production definition validates")
 	var invalid := CivilizationDefinition.load_id("not_a_real_civilization")
 	_check(not bool(invalid.ok), "Unknown civilization ids must be rejected")
 	if failures.is_empty():

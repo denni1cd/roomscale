@@ -1,7 +1,7 @@
 # RoomScale architecture
 
 POC 5 builds on accepted `8621b08`. Normal launches preserve the original society
-runtime. The conflict launch composes two instance-owned society runtimes over one
+runtime. Conflict scenarios compose multiple instance-owned society runtimes over one
 finite room. Citizen IDs are globally append-only and casualties remain terminal nodes.
 See [POC 5](POC5.md) for the scenario, evidence and current limitations.
 
@@ -20,7 +20,7 @@ Runtime navigation validation is a separate gate from structural JSON validation
 civilization identity, presentation vocabulary, palette/style identifiers and player-facing
 construction/resource terminology. It does **not** own room coordinates, economy ledgers,
 navigation links or citizen decision state. `clockwork.json` remains the compatibility
-default; `verdant.json` is the second implementation.
+default; Verdant and Scavenger are additional data-defined implementations.
 
 Environment variables select room/file, civilization, autonomous mode and capture/test
 outputs at launch. Test runners isolate them and restore parent process configuration. A
@@ -68,6 +68,9 @@ initialized from that view a second time. Production navigation nodes remain sha
 | Settlement projects/capabilities | SettlementDevelopmentSystem | Site checks, real deliveries/labor, once-only completed benefits and navigation obstacles. |
 | Admission of citizens | PopulationSystem | Reserves/shelter/stability/cooldown/cap checks, then normal entities at safe connected positions. |
 | Intent and priorities | Governor / CivilizationPlanner | Policies choose production requests/tasks, never grant materials/completion/citizens/links. |
+| Innovation selection | InnovationSystem / catalogs | Generic problems, capability implication and deterministic prerequisite-aware research ranking; no physical or inventory authority. |
+| Live research / solution project | InnovationRuntime | Owned citizen work, economy-backed delivery/fabrication and adapter construction; connects the shared navigation graph only on completion. |
+| Encounter policy / forces | ConflictPressure / CombatSystem | Bilateral scarcity, hostile participant selection, legal movement, deterministic damage, independent retreats and uncontested secure hold. |
 | Events / viewing | EventJournal / HUD / narrative / camera | Bounded diagnostic events and state presentation; no domain ownership. |
 
 Task, ticket and project dictionaries stay inspectable. A task copy given to a citizen
@@ -243,3 +246,13 @@ Actual arriving scouts create overlapping claims and one UNKNOWN → CONTACT →
 relation keyed by instance IDs. The winner must remain present while all retreating
 opponents physically clear attack range, then hold for ten seconds. Capture changes the
 shared site record and its industrial/organic marker. It never deletes traversal links.
+
+## POC 5.3 extensibility boundary
+
+Recognized problem evidence and globally ranked construction choices feed an owned
+innovation project. Physical planning/rendering/effects dispatch through a data-registered
+adapter; canonical materials and opt-in depot recipes have independent authorities.
+The live runtime does not branch on civilization, technology or solution IDs and does not
+enumerate three construction materials. See [innovation contracts](INNOVATION_ARCHITECTURE.md)
+and [per-side encounter policies](POC5.md). Existing settlement blueprints and food/water
+self-care remain specialized prototype systems outside this refactor.

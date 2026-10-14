@@ -74,7 +74,7 @@ func run() -> void:
 	strategic.seconds = 55
 	strategic.construction.project_created = true
 	decision.tick(strategic)
-	check(decision.mode == "MATERIALS" and decision.reason.contains("wood/metal"), "material blocker selects resource acquisition")
+	check(decision.mode == "MATERIALS" and decision.reason.contains("material"), "material blocker selects resource acquisition")
 	strategic.free()
 	var population := Population.new()
 	var growth := {"population": 50, "shelter": 50, "food_days": 3.0, "water_days": 3.0, "urgent": 0}

@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "civilization_id": "scavenger",
+  "technologies": [
+    {
+      "id": "salvage_cable",
+      "display_name": "Salvaged Cable",
+      "grants": [
+        "CABLE_ENGINEERING"
+      ],
+      "research_work": 25
+    },
+    {
+      "id": "scrap_frames",
+      "display_name": "Scrap Frames",
+      "grants": [
+        "LOAD_BEARING_FRAMES"
+      ],
+      "requires_capabilities": [
+        "CABLE_ENGINEERING"
+      ],
+      "research_work": 30
+    },
+    {
+      "id": "pressure_craft",
+      "display_name": "Pressure Craft",
+      "grants": [
+        "STEAM_POWER"
+      ],
+      "requires_capabilities": [
+        "LOAD_BEARING_FRAMES"
+      ],
+      "research_work": 35
+    }
+  ],
+  "solutions": [
+    {
+      "id": "scrap_ladder",
+      "display_name": "Scrap Ladder",
+      "addresses": [
+        "VERTICAL_ACCESS"
+      ],
+      "requires_capabilities": [
+        "LOAD_BEARING_FRAMES",
+        "POWER_SOURCE"
+      ],
+      "construction": {
+        "wood": 2,
+        "metal": 1,
+        "mechanical_parts": 1,
+        "work": 45
+      },
+      "deployment": {
+        "adapter": "climb_route",
+        "style": "rope"
+      }
+    }
+  ],
+  "production_recipes": [
+    "metal_parts"
+  ]
+}

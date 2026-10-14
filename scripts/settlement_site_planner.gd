@@ -74,12 +74,16 @@ func _prepare(rebuild_positions: bool = true) -> void:
 			_anchors.append(runtime.coordinator.work_area_station)
 			_anchors.append_array(runtime.development.site_planner.rest_targets)
 			for project in runtime.development.projects: _anchors.append(project.target)
+			for project in runtime.innovation.projects:
+				if project.state != "CANCELLED": _anchors.append(project.target)
 		for site in sim.world_simulation.territory.sites.values(): _anchors.append(site.position)
 	var traversal: Vector3 = sim.coordinator.get_construction_site()
 	if traversal.is_finite() and not nav.is_obstacle_position(traversal): _anchors.append(traversal)
 	for approach in sim.coordinator.surface_navigation.investigation_candidates():
 		if not nav.is_obstacle_position(approach): _anchors.append(approach)
 	for project in sim.development.projects: _anchors.append(project.target)
+	for project in sim.innovation.projects:
+		if project.state != "CANCELLED": _anchors.append(project.target)
 	for bundle in sim.resources.bundles.values():
 		if bundle.state == "available": _anchors.append(bundle.position)
 	if not rebuild_positions: return
