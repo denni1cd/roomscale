@@ -86,6 +86,20 @@ func prepared() -> void:
 	# Ability is attached to capability, independent of definition identity.
 	sim.definition = sim.definition.duplicate(true); sim.definition.id = "synthetic_society"
 	Abilities.update(citizen,4.3); check(citizen.prepared,"synthetic prepared-fire capability")
+	var local: Dictionary = Catalog.CAPABILITIES.PREPARED_FIRE.duplicate(true)
+	local.roles = ["line"]; local.seconds = 0.6; local.tolerance = 0.1; local.interval = 0.7
+	citizen.equip_combat(Catalog.Roles.loadout(sim.definition,"line"))
+	citizen.preparation_initialized = false; citizen.prepared = false
+	Abilities.update(citizen,10,local); Abilities.update(citizen,10.5,local)
+	check(not citizen.prepared,"local catalog duration not yet elapsed")
+	Abilities.update(citizen,10.6,local)
+	check(citizen.prepared and is_equal_approx(Abilities.interval(citizen,local),citizen.combat_stats.interval*0.7),"local roles duration and multiplier consumed")
+	citizen.position.x += 0.11; Abilities.update(citizen,10.7,local)
+	check(not citizen.prepared,"local catalog tolerance consumed")
+	citizen.equip_combat(Catalog.Roles.loadout(sim.definition,"ranged"))
+	Abilities.update(citizen,20,local); Abilities.update(citizen,22,local)
+	check(not citizen.prepared,"local role eligibility consumed")
+	check(Catalog.CAPABILITIES.PREPARED_FIRE == {"roles":["ranged","artillery"],"seconds":2.0,"tolerance":0.25,"interval":0.85},"production capability unchanged")
 	evidence.prepared = rows
 	scene.queue_free(); await process_frame
 
@@ -184,7 +198,19 @@ func muster_cancel() -> void:
 	survivor.suffer_combat_damage(7)
 	var health_fraction: float = survivor.health/survivor.max_health
 	var ids: Array = sim.armory.kits.keys()
+	# Simulate loss of the normal return connection after equipment issue.
+	var nav: Node = survivor.navigation
+	var blocked_nav := MusterBlockedNavigation.new(); blocked_nav.delegate = nav; blocked_nav.depot = sim.coordinator.depot_station
+	root.add_child(blocked_nav); survivor.navigation = blocked_nav
+	survivor.global_position += Vector3(2,0,0)
+	var stranded_at: Vector3 = survivor.global_position
+	var issued_id: String = survivor.combat_kit
 	sim.military.cancel()
+	for tick in range(10): world.step()
+	check(survivor.combat_state == "RETURN_BLOCKED" and not survivor.combat_arrived,"failed cancellation return inspectably blocked")
+	check(survivor.global_position == stranded_at and survivor.combat_kit == issued_id and sim.armory.kits[issued_id].state == "ISSUED","blocked return retains position and issued ownership")
+	check(sim.military.state == "CANCELLING" and sim.armory.audit().is_empty(),"blocked cancellation remains pending and audited")
+	survivor.navigation = nav; blocked_nav.queue_free()
 	for tick in range(100): world.step()
 	check(is_equal_approx(survivor.health/survivor.max_health,health_fraction),"demobilization preserves health fraction")
 	check(sim.military.state == "PEACE" and sim.armory.kits.values().all(func(k: Dictionary) -> bool: return k.state == "STOCKED"),"cancelled equipped muster returns assets physically")
@@ -198,6 +224,52 @@ func muster_cancel() -> void:
 	sim.military.cancel(); for tick in range(100): world.step()
 	evidence.muster = {"kits":sim.armory.kits,"events":sim.armory.events,"max_step":max_step}
 	scene.queue_free(); await process_frame
+
+func blocked_battle_return(mode: String) -> void:
+	var scene := spawn(); var world: Node = scene.get_node("WorldSimulation")
+	var ids := ["clockwork_alpha","verdant_alpha"]; var policies := {}
+	for id in ids:
+		world.territory.claim(world.scenario.strategic_site,id,0)
+		policies[id] = {"min_force":1,"max_force":1,"allow_retreat":true,"retreat_threshold":0,"roles":["line"]}
+	world.territory.set_relation(ids[0],ids[1],"HOSTILE",0,world.scenario.strategic_site)
+	preload("res://scripts/verification/prepared_armory_fixture.gd").prepare(world,ids,policies)
+	check(world.combat.start(world,world.scenario.strategic_site,{"participants":ids,"side_policies":policies}),"blocked return battle starts " + mode)
+	var citizen: Node3D = world.combat.forces[ids[0]][0]
+	var nav: Node = citizen.navigation
+	var blocked_nav := MusterBlockedNavigation.new(); blocked_nav.delegate = nav; blocked_nav.depot = citizen.coordinator.depot_station
+	root.add_child(blocked_nav)
+	citizen.global_position = world.territory.sites[world.scenario.strategic_site].position
+	citizen.combat_arrived = true; citizen.navigation = blocked_nav
+	var at: Vector3 = citizen.global_position; var kit: String = citizen.combat_kit
+	world.combat.phase = "FIGHT"
+	if mode == "victory":
+		world.combat.phase = "SECURE"; world.combat.winner = ids[0]
+		world.territory.sites[world.scenario.strategic_site].contesting_civilizations = ids.duplicate()
+		world.territory.sites[world.scenario.strategic_site].hold_progress = world.territory.SECURE_HOLD_SECONDS
+		var rival: Node3D = world.combat.forces[ids[1]][0]
+		rival.global_position = rival.coordinator.depot_station
+		world.combat.update()
+		check(world.combat.phase == "COMPLETE","victory triggers demobilization")
+	elif mode == "stand_down": world.combat.stand_down("failure-path fixture")
+	else: world.combat.retreat(ids[0])
+	for tick in range(10): citizen.advance_simulation(0.1); world.combat.update()
+	check(citizen.combat_state == "RETURN_BLOCKED" and not citizen.combat_arrived and citizen.global_position == at,"battle return blocked without teleport " + mode)
+	check(citizen.coordinator.civilization.armory.kits[kit].state == "ISSUED" and citizen.combat_kit == kit,"battle return retains issue " + mode)
+	citizen.navigation = nav
+	citizen.advance_simulation(0.1)
+	check(citizen.combat_state == "RETREAT" and citizen.state == "TRAVEL","return resumes original navigation " + mode)
+	# A later normal navigation replan can fail too, retaining the same ownership.
+	citizen.navigation = blocked_nav; citizen.replan_current_route()
+	check(citizen.combat_state == "RETURN_BLOCKED" and not citizen.combat_arrived,"mid-return replan safely blocks " + mode)
+	citizen.navigation = nav
+	for tick in range(2000):
+		citizen.advance_simulation(0.1)
+		if citizen.combat_arrived: break
+	check(citizen.global_position.distance_to(citizen.coordinator.depot_station) <= 0.1,"recovered return physically arrives " + mode)
+	citizen.end_combat_duty()
+	check(citizen.combat_duty.is_empty() and citizen.coordinator.civilization.armory.kits[kit].state == "STOCKED","recovered return stocks once " + mode)
+	evidence["blocked_return_"+mode] = {"kit":kit,"state":"STOCKED"}
+	blocked_nav.queue_free(); scene.queue_free(); await process_frame
 
 func prepared_attacks(role: String) -> void:
 	var scene := spawn(); var world: Node = scene.get_node("WorldSimulation")
@@ -231,6 +303,7 @@ func prepared_attacks(role: String) -> void:
 
 func run() -> void:
 	await scarcity(); await prepared(); await pathfinder(); await muster_cancel()
+	await blocked_battle_return("stand_down"); await blocked_battle_return("retreat"); await blocked_battle_return("victory")
 	await prepared_attacks("ranged"); await prepared_attacks("artillery")
 	var result := {"result":"PASS" if failures.is_empty() else "FAIL","failures":failures,"evidence":evidence}
 	var path := OS.get_environment("ROOMSCALE_FOCUSED_RESULT")

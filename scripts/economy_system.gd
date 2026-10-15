@@ -31,18 +31,21 @@ func reserve(resource: String, amount: float, owner: String) -> int:
 	tickets[id] = {"resource": resource, "amount": amount, "owner": owner, "instance_id": instance_id, "state": "reserved"}
 	return id
 
-func pickup(id: int) -> bool:
-	if not tickets.has(id) or tickets[id].state != "reserved": return false
+func _owned(id: int, expected_owner: String) -> bool:
+	return tickets.has(id) and tickets[id].owner == expected_owner
+
+func pickup(id: int, expected_owner: String) -> bool:
+	if not _owned(id, expected_owner) or tickets[id].state != "reserved": return false
 	tickets[id].state = "in_transit"
 	return true
 
-func deliver(id: int) -> bool:
-	if not tickets.has(id) or tickets[id].state != "in_transit": return false
+func deliver(id: int, expected_owner: String) -> bool:
+	if not _owned(id, expected_owner) or tickets[id].state != "in_transit": return false
 	tickets[id].state = "delivered"
 	return true
 
-func consume(id: int, project: bool = false) -> bool:
-	if not tickets.has(id) or tickets[id].state not in ["reserved", "delivered"]: return false
+func consume(id: int, expected_owner: String, project: bool = false) -> bool:
+	if not _owned(id, expected_owner) or tickets[id].state not in ["reserved", "delivered"]: return false
 	var ticket: Dictionary = tickets[id]
 	if not is_finite(float(consumed[ticket.resource])+float(ticket.amount)): return false
 	if project and not is_finite(float(project_consumed[ticket.resource])+float(ticket.amount)): return false
@@ -51,21 +54,22 @@ func consume(id: int, project: bool = false) -> bool:
 	tickets.erase(id)
 	return true
 
-func release(id: int) -> void:
-	if not tickets.has(id): return
+func release(id: int, expected_owner: String) -> bool:
+	if not _owned(id, expected_owner) or tickets[id].state not in ["reserved", "in_transit", "delivered"]: return false
 	var ticket: Dictionary = tickets[id]
 	available[ticket.resource] += float(ticket.amount)
 	tickets.erase(id)
+	return true
 
-func drop(id: int) -> Dictionary:
-	if not tickets.has(id) or tickets[id].state != "in_transit": return {}
+func drop(id: int, expected_owner: String) -> Dictionary:
+	if not _owned(id, expected_owner) or tickets[id].state != "in_transit": return {}
 	var ticket: Dictionary = tickets[id].duplicate(true)
 	exported[ticket.resource] += float(ticket.amount)
 	tickets.erase(id)
 	return ticket
 
-func recover_delivered(id: int) -> Dictionary:
-	if not tickets.has(id) or tickets[id].state != "delivered": return {}
+func recover_delivered(id: int, expected_owner: String) -> Dictionary:
+	if not _owned(id, expected_owner) or tickets[id].state != "delivered": return {}
 	var ticket: Dictionary = tickets[id].duplicate(true)
 	exported[ticket.resource] += float(ticket.amount)
 	tickets.erase(id)

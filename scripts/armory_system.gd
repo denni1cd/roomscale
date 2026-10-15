@@ -57,7 +57,7 @@ func order(role: String) -> bool:
 		if cost[resource] <= 0: continue
 		var ticket: int = sim.economy.reserve(resource,float(cost[resource]),id)
 		if ticket < 0:
-			for prior in tickets: sim.economy.release(prior)
+			for prior in tickets: sim.economy.release(prior,id)
 			blocked = "reservation failed"
 			return false
 		tickets.append(ticket)
@@ -90,7 +90,7 @@ func work(citizen: Node3D, effort: float) -> bool:
 	if project.work+0.00001 < project.required_work: return false
 	for ticket in project.tickets:
 		if not sim.economy.tickets.has(ticket) or sim.economy.tickets[ticket].owner != project.id or sim.economy.tickets[ticket].state != "reserved": return false
-	for ticket in project.tickets: sim.economy.consume(ticket,true)
+	for ticket in project.tickets: sim.economy.consume(ticket,project.id,true)
 	project.state = "COMPLETE"
 	var kit := _create_kit(project)
 	record("KIT_COMPLETED",{"id":kit,"project":project.id})

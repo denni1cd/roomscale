@@ -64,14 +64,23 @@ func combat_inspection() -> String:
 	var role: String = combat_role if not combat_role.is_empty() else String(kit.get("role",""))
 	var stats: Dictionary = combat_stats
 	if stats.is_empty() and not role.is_empty(): stats = preload("res://scripts/combat_roles.gd").loadout(coordinator.civilization.definition,role)
-	return "%s · %s (%s)\nKit %s · %s · Prepared %s\nHP %.1f/%.1f · Armor %.1f · Damage %.1f\nRange %.1f · Cycle %.3fs · Move %.2fx\n%s / %s" % [civilization_id,role,stats.get("grade",""),kit.get("id","unissued"),kit.get("variant",""),prepared,health,max_health,stats.get("armor",0),stats.get("damage",0),stats.get("range",0),float(stats.get("interval",0))*(0.85 if prepared else 1.0),stats.get("movement",1),combat_duty,combat_state]
+	return "%s · %s (%s)\nKit %s · %s · Prepared %s\nHP %.1f/%.1f · Armor %.1f · Damage %.1f\nRange %.1f · Cycle %.3fs · Move %.2fx\n%s / %s" % [civilization_id,role,stats.get("grade",""),kit.get("id","unissued"),kit.get("variant",""),prepared,health,max_health,stats.get("armor",0),stats.get("damage",0),stats.get("range",0),preload("res://scripts/military_abilities.gd").interval(self) if not combat_stats.is_empty() else float(stats.get("interval",0)),stats.get("movement",1),combat_duty,combat_state]
 
 func combat_speed() -> float:
 	return WALK_SPEED * float(combat_stats.get("movement",1.0)) if not combat_duty.is_empty() else WALK_SPEED
 
 func assign_combat_duty(duty: String, target: Vector3) -> bool:
 	var route: Array[Vector3] = navigation.combat_path_between(global_position, target) if duty == "MANEUVER" else navigation.path_between(global_position, target)
-	if life_state != "ALIVE" or carrying or route.is_empty(): return false
+	if life_state != "ALIVE" or carrying: return false
+	if route.is_empty():
+		if duty == "RETREAT":
+			combat_duty = "RETREAT"
+			combat_state = "RETURN_BLOCKED"
+			combat_arrived = false
+			_destination = target
+			_path.clear()
+			state = "HOLD"
+		return false
 	combat_duty = duty
 	combat_state = duty
 	if task_id > 0: coordinator.cancel_task(task_id, "strategic military commitment")
@@ -187,6 +196,7 @@ func _process(delta: float) -> void:
 func advance_simulation(delta: float) -> void:
 	if life_state == "DEAD": return
 	if not combat_duty.is_empty():
+		if combat_state == "RETURN_BLOCKED": assign_combat_duty("RETREAT",_destination)
 		_animation_time += delta
 		if state == "TRAVEL": _advance_path(delta)
 		_update_animation()
@@ -400,6 +410,9 @@ func _navigate_to(destination: Vector3) -> void:
 
 
 func replan_current_route() -> void:
+	if not combat_duty.is_empty():
+		assign_combat_duty(combat_duty,_destination)
+		return
 	_navigate_to(_destination)
 
 

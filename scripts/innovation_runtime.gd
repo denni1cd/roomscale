@@ -202,7 +202,7 @@ func pickup(task: Dictionary) -> bool:
 	var worker: Node3D = _task_worker(task)
 	if worker == null or worker.global_position.distance_to(task.source) > 1.6: return false
 	var ticket: Dictionary = sim.economy.tickets[task.ticket]
-	return ticket.owner == active.id and ticket.instance_id == sim.instance_id and ticket.resource == task.resource and ticket.amount == task.amount and sim.economy.pickup(task.ticket)
+	return ticket.owner == active.id and ticket.instance_id == sim.instance_id and ticket.resource == task.resource and ticket.amount == task.amount and sim.economy.pickup(task.ticket,active.id)
 
 func deliver(task: Dictionary, citizen: Node3D) -> bool:
 	if active.is_empty() or task.project_id != active.id or citizen.global_position.distance_to(active.target) > 1.6 or not sim.economy.tickets.has(task.ticket): return false
@@ -210,7 +210,7 @@ func deliver(task: Dictionary, citizen: Node3D) -> bool:
 	var ticket: Dictionary = sim.economy.tickets[task.ticket]
 	if ticket.owner != active.id or ticket.instance_id != sim.instance_id or ticket.resource != task.resource or ticket.amount != task.amount: return false
 	if float(active.delivered[task.resource]) + float(task.amount) > float(active.required[task.resource]) + 0.00001: return false
-	if not sim.economy.deliver(task.ticket): return false
+	if not sim.economy.deliver(task.ticket,active.id): return false
 	active.delivered[task.resource] += float(task.amount)
 	active.delivery_distance += citizen.travelled_distance - float(task.pickup_travelled_distance)
 	_update_supplied()
@@ -275,7 +275,7 @@ func build(task: Dictionary, citizen: Node3D, effort: float) -> bool:
 	# state so floating-point accumulation cannot leave the last segment/canopy out.
 	adapter.render(_visuals[active.id],active,1.0,Color(String(sim.definition.palette.primary)))
 	for ticket_id in sim.economy.tickets.keys():
-		if sim.economy.tickets[ticket_id].owner == active.id: sim.economy.consume(ticket_id, true)
+		if sim.economy.tickets[ticket_id].owner == active.id: sim.economy.consume(ticket_id, active.id, true)
 	active.state = "COMPLETE"
 	active.completed = sim.seconds
 	sim.world_simulation.innovation_claims.erase(active.claim_key)
@@ -315,9 +315,9 @@ func _cancel_project(why: String) -> void:
 			if worker != null: worker.cancel_task_and_resume(task.id)
 	for ticket_id in sim.economy.tickets.keys():
 		if sim.economy.tickets[ticket_id].owner != id: continue
-		var recovered: Dictionary = sim.economy.recover_delivered(ticket_id)
+		var recovered: Dictionary = sim.economy.recover_delivered(ticket_id,id)
 		if not recovered.is_empty(): sim.show_bundle(sim.resources.create_bundle(recovered.resource, recovered.amount, target, id))
-		else: sim.economy.release(ticket_id)
+		else: sim.economy.release(ticket_id,id)
 	if sim.world_simulation.innovation_claims.get(claim, "") == sim.instance_id: sim.world_simulation.innovation_claims.erase(claim)
 	if _visuals.has(id): _visuals[id].queue_free(); _visuals.erase(id)
 	reason = why

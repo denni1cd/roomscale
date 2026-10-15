@@ -115,7 +115,7 @@ func take_stock(resource: String, amount: int, ticket_id: int = -1) -> bool:
 		if not economy.tickets.has(ticket_id): return false
 		var ticket: Dictionary = economy.tickets[ticket_id]
 		if ticket.resource != resource or float(ticket.amount) != amount or ticket.owner != "traversal": return false
-		if not economy.pickup(ticket_id): return false
+		if not economy.pickup(ticket_id,"traversal"): return false
 		picked_up[resource] += amount
 		return true
 	if not project_created or not stockpile.has(resource) or amount <= 0 or int(stockpile[resource]) < amount:
@@ -136,7 +136,7 @@ func accept_delivery(resource: String, amount: int, destination: Vector3, ticket
 	if economy != null:
 		if not economy.tickets.has(ticket_id): return false
 		var ticket: Dictionary = economy.tickets[ticket_id]
-		if ticket.resource != resource or float(ticket.amount) != amount or ticket.owner != "traversal" or not economy.deliver(ticket_id): return false
+		if ticket.resource != resource or float(ticket.amount) != amount or ticket.owner != "traversal" or not economy.deliver(ticket_id,"traversal"): return false
 	delivered[resource] = int(delivered[resource]) + amount
 	_emit_update()
 	_update_build_unlocks()
@@ -293,7 +293,7 @@ func _complete_component(stage_index: int, completing_task_id: int) -> void:
 	if _completed_stages >= STAGES.size():
 		if economy != null:
 			for ticket_id in economy.tickets.keys():
-				if economy.tickets[ticket_id].owner == "traversal" and economy.tickets[ticket_id].state == "delivered": economy.consume(ticket_id, true)
+				if economy.tickets[ticket_id].owner == "traversal" and economy.tickets[ticket_id].state == "delivered": economy.consume(ticket_id, "traversal", true)
 		project_state = "CONSTRUCTION_COMPLETE"
 		_delivery_citizen_ids.clear()
 		_construction_worker_ids.clear()
