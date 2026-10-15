@@ -1,0 +1,548 @@
+{
+  "source_commit": "428afeb73b6f73d2d2e45ebb9e1543bef3fb50f7",
+  "result": "PASS",
+  "gates": {
+    "economy_ownership": "PASS six operations, three states, wrong owners, missing tickets and full accounting snapshots",
+    "POC54_data": "PASS",
+    "POC54_armory": "PASS 3/3",
+    "POC54_behavior": "PASS 3/3 including local capability and all blocked returns",
+    "POC54_aggregate_live": "PASS 3/3 identical, exact pre-hardening fingerprint",
+    "combat_roles": "PASS 3/3",
+    "conflict": "PASS 3/3 identical, exact pre-hardening fingerprint",
+    "conflict_pressure": "PASS",
+    "innovation": "PASS foundation and robustness",
+    "Fast": "PASS",
+    "Canonical": "PASS 3 identical fresh runs",
+    "Regression": "PASS"
+  },
+  "exploration": {
+    "total_scenarios": 20,
+    "valid_passes": 20,
+    "valid_failures": 0,
+    "unexpected_negative_outcomes": 0,
+    "invariant_violation_count": 0,
+    "deadlock_count": 0
+  },
+  "log_receipts": [
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/fast/combat_roles_test.log",
+      "sha256": "ef7716aedb2e96e94cd6a5f89086a6eccea7fb6a1aa23bf84da0ff7515786c41",
+      "pass_markers": [
+        "ROOMSCALE_ROLES_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/fast/founder/fast.log",
+      "sha256": "1eb9a913957e3b88a3a7f0a1eee605428d07b1684a46051fe763ac66317fd8c1",
+      "pass_markers": [
+        "POC47_FAST_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/fast/placement/poc471_midlink_test.log",
+      "sha256": "41364f6749cafc7108eb788ba7bcf3fc5d235570084c30b33b4e5b3fe9a515f3",
+      "pass_markers": [
+        "POC471_MIDLINK_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/fast/placement/poc471_navigation_test.log",
+      "sha256": "c0d4c6f048f9ab67a4cc83783fcb1a5ff58043d60e0ad4b9bd1716b365611d9b",
+      "pass_markers": [
+        "POC471_NAVIGATION_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/fast/placement/poc471_unreachable_task_test.log",
+      "sha256": "933d5f2e39c00b329fdfc195216d3cad70a69b90c489d48f7539784f57e333e9",
+      "pass_markers": [
+        "POC471_UNREACHABLE_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/fast/placement/poc472_packing_test.log",
+      "sha256": "576ded8d732446a24e30c2bb7d3bed7f132c89ed96b4c2eef02425ae4b7e644e",
+      "pass_markers": [
+        "POC472_PACKING_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/fast/placement/poc472_planner_test.log",
+      "sha256": "9c23a1000a78c9a170b8b6b57fb0522512ec7209c7cb79e07413e4dddcdbd0bc",
+      "pass_markers": [
+        "POC472_PLANNER_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/fast/poc54_data_test.log",
+      "sha256": "ecf11b99d17e63e254e4545a9547ed3731971ee3b46d04d246dcc931cdff59e1",
+      "pass_markers": [
+        "ROOMSCALE_POC54_DATA_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/fast/room-definition.log",
+      "sha256": "699d129194dd993585c7d535325ecb5f2d17d95a5a7ba1e684e3bb832aecea1a",
+      "pass_markers": [
+        "ROOMSCALE_FAST_TEST_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/fast/stabilization_core_test.log",
+      "sha256": "9acf21963ee20cdb7554d4b7eef3f9c208e8f363c58897180f90808e62e72673",
+      "pass_markers": [
+        "STABILIZATION_CORE_CHECK_PASS",
+        "STABILIZATION_CORE_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/fast/verification/evidence_io_test.log",
+      "sha256": "e7f38946206f8e27c3d2d006c36e04fc826dd8b4dd471320966258a94ceada5d",
+      "pass_markers": [
+        "ROOMSCALE_EVIDENCE_IO_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/canonical/repeat-01.log",
+      "sha256": "b056f4c20b609038a233266ed28420d089141862fdb111cbdf3cae5a67634033",
+      "pass_markers": [
+        "POC47_SCENARIO_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/canonical/repeat-02.log",
+      "sha256": "b056f4c20b609038a233266ed28420d089141862fdb111cbdf3cae5a67634033",
+      "pass_markers": [
+        "POC47_SCENARIO_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/canonical/repeat-03.log",
+      "sha256": "b056f4c20b609038a233266ed28420d089141862fdb111cbdf3cae5a67634033",
+      "pass_markers": [
+        "POC47_SCENARIO_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/placement/poc471_midlink_test.log",
+      "sha256": "41364f6749cafc7108eb788ba7bcf3fc5d235570084c30b33b4e5b3fe9a515f3",
+      "pass_markers": [
+        "POC471_MIDLINK_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/placement/poc471_navigation_test.log",
+      "sha256": "c0d4c6f048f9ab67a4cc83783fcb1a5ff58043d60e0ad4b9bd1716b365611d9b",
+      "pass_markers": [
+        "POC471_NAVIGATION_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/placement/poc471_unreachable_task_test.log",
+      "sha256": "933d5f2e39c00b329fdfc195216d3cad70a69b90c489d48f7539784f57e333e9",
+      "pass_markers": [
+        "POC471_UNREACHABLE_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/placement/poc472_packing_test.log",
+      "sha256": "576ded8d732446a24e30c2bb7d3bed7f132c89ed96b4c2eef02425ae4b7e644e",
+      "pass_markers": [
+        "POC472_PACKING_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/placement/poc472_planner_test.log",
+      "sha256": "9c23a1000a78c9a170b8b6b57fb0522512ec7209c7cb79e07413e4dddcdbd0bc",
+      "pass_markers": [
+        "POC472_PLANNER_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/poc4-fast/cleanup.log",
+      "sha256": "c036e1f22185fa3aa37accde261d592dc50b2e222fcd8519179cc19723a6da8c",
+      "pass_markers": [
+        "POC4_CLEANUP_CHECK_PASS",
+        "POC4_CLEANUP_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/poc4-fast/contract.log",
+      "sha256": "839968c6fa0426152808318499ede78d86efdb38287fba8b9994a04c903ee0c3",
+      "pass_markers": [
+        "POC4_CONTRACT_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/poc4-fast/fast.log",
+      "sha256": "5db94e16893265c4a855c4472d1b17bfd953cbb7ede675acf0927c8c69174bc3",
+      "pass_markers": [
+        "POC4_FAST_PASS",
+        "POC4_M1_PASS",
+        "POC4_M2_PASS",
+        "POC4_M3_PASS",
+        "POC4_M4_PASS",
+        "POC4_M5_PASS",
+        "POC4_SPEED_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/poc4-sustained/sustained-7days.log",
+      "sha256": "50530a4d1897a0b2361f56466113400a74b53abe1c7b3b97dbb69c0ff3e462fb",
+      "pass_markers": [
+        "POC4_CHECK_PASS",
+        "POC4_M6_PASS",
+        "POC4_SCENARIO_PASS",
+        "POC4_SUSTAINED_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/poc45-fast/fast.log",
+      "sha256": "34d9b068e3b5e8327bc27ba737b074672819b637c629823101a131feee49ad65",
+      "pass_markers": [
+        "POC45_FAST_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/poc45-scenario/scenario.log",
+      "sha256": "f29b7badb4bd838f30a3bc4a7aac4698f2683024433709aadf89327b430cd6b5",
+      "pass_markers": [
+        "POC45_SCENARIO_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/poc45-survival/survival.log",
+      "sha256": "eb8079486975ddb573f808c2964b72ff6ef92d9184572999ae9cbe4eea73b7f0",
+      "pass_markers": [
+        "POC45_SURVIVAL_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/poc46-fast/fast.log",
+      "sha256": "4cb22d43c8bc55780c280ca267860933a9417c2b440e7292e4c849f8110b7ed4",
+      "pass_markers": [
+        "POC46_FAST_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/poc46-scenario/scenario.log",
+      "sha256": "e188226a0325df4d5c9536f3d7db639488a2eb17ac9667cf4b8a3730522550a1",
+      "pass_markers": [
+        "POC45_SCENARIO_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/poc471-positive-exploration/EXP-IDENTITY-00/run.log",
+      "sha256": "13f1998a6fb404b8e40d671f01dbea81b4c2471994ee2ef1a3430fdf8854de25",
+      "pass_markers": [
+        "POC471_OBSERVER_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/poc471-positive-exploration/EXP-IDENTITY-01/run.log",
+      "sha256": "880db85a7bd050bc67db3fd93d7ebdf25d644e6a9b0f2e0654acf3be0503498c",
+      "pass_markers": [
+        "POC471_OBSERVER_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/poc471-positive-exploration/EXP-ORIGIN-00/run.log",
+      "sha256": "7a938b35425167cd6b7278ea9e49633b92fd355146bb86a52bba837204b62195",
+      "pass_markers": [
+        "POC471_OBSERVER_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/poc471-positive-exploration/EXP-ORIGIN-01/run.log",
+      "sha256": "7f58c08b31c9c837bd73f13c379b8b8896b1ec3af6c464179800810cd9b31eb2",
+      "pass_markers": [
+        "POC471_OBSERVER_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/poc471-positive-exploration/EXP-ORIGIN-02/run.log",
+      "sha256": "bc90651e41c26ec22e279329e7fa5de5220bf2d8032cc86758351450d155b336",
+      "pass_markers": [
+        "POC471_OBSERVER_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/poc471-positive-exploration/EXP-ORIGIN-03/run.log",
+      "sha256": "1960f2754c139c91b3f25b7855b91a384d923be4abed631f315a071ed57038db",
+      "pass_markers": [
+        "POC471_OBSERVER_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/poc471-positive-exploration/EXP-ORIGIN-04/run.log",
+      "sha256": "71363e34673ba61cb543fee2f01e569267bab1b3dbf859c86535581fb9ff81c6",
+      "pass_markers": [
+        "POC471_OBSERVER_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/poc471-positive-exploration/EXP-ORIGIN-05/run.log",
+      "sha256": "1ba0ddc64656f52298eb86f708d1178a26d9f3119cc0267f7b8d71e5f1c515ae",
+      "pass_markers": [
+        "POC471_OBSERVER_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/poc471-positive-exploration/EXP-ROUTING-00/run.log",
+      "sha256": "2e2c49d5c551e448df1d553214de35d752471569bdc84c055557f407a089f7cc",
+      "pass_markers": [
+        "POC471_OBSERVER_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/poc471-positive-exploration/EXP-ROUTING-01/run.log",
+      "sha256": "cc25d659539ff20f5ace91c0e33f2b1bfee7c20a1e35a1e6fc234e799ab08686",
+      "pass_markers": [
+        "POC471_OBSERVER_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/poc471-positive-exploration/EXP-ROUTING-02/run.log",
+      "sha256": "66824c04ebb4a60d3fb00cd4979dffb4c0b1db111d5f705fbe963b7bb0e7a4ff",
+      "pass_markers": [
+        "POC471_OBSERVER_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/poc471-positive-exploration/EXP-ROUTING-03/run.log",
+      "sha256": "d4dbba5cfa4c47d8989969150cfc0f3b707fa5b2ee38024adbea8237cf7eca1d",
+      "pass_markers": [
+        "POC471_OBSERVER_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/poc471-positive-exploration/EXP-ROUTING-04/run.log",
+      "sha256": "a5e3973649bab4c1bd78507b9140a0a4fdc62266dea314694dac24f1bc68a7eb",
+      "pass_markers": [
+        "POC471_OBSERVER_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/poc471-positive-exploration/EXP-ROUTING-05/run.log",
+      "sha256": "ed7d59bfe1ce20114db014142b70d38f98b3100b994116d087210f45b9be60ec",
+      "pass_markers": [
+        "POC471_OBSERVER_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/poc471-positive-exploration/EXP-WATER-00/run.log",
+      "sha256": "d3af6461aa9cf62852e47639b18fe4172c62e3da7fab99b1df449f9545e4d658",
+      "pass_markers": [
+        "POC471_OBSERVER_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/poc471-positive-exploration/EXP-WATER-01/run.log",
+      "sha256": "2e50dc3f4db94e4059b0d21356060a936f37bfc90a16248cf1ba1696278acbcf",
+      "pass_markers": [
+        "POC471_OBSERVER_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/poc471-positive-exploration/EXP-WATER-02/run.log",
+      "sha256": "2e50dc3f4db94e4059b0d21356060a936f37bfc90a16248cf1ba1696278acbcf",
+      "pass_markers": [
+        "POC471_OBSERVER_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/poc471-positive-exploration/EXP-WATER-03/run.log",
+      "sha256": "2e50dc3f4db94e4059b0d21356060a936f37bfc90a16248cf1ba1696278acbcf",
+      "pass_markers": [
+        "POC471_OBSERVER_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/poc471-positive-exploration/EXP-WATER-04/run.log",
+      "sha256": "2e50dc3f4db94e4059b0d21356060a936f37bfc90a16248cf1ba1696278acbcf",
+      "pass_markers": [
+        "POC471_OBSERVER_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/poc471-positive-exploration/EXP-WATER-05/run.log",
+      "sha256": "2e50dc3f4db94e4059b0d21356060a936f37bfc90a16248cf1ba1696278acbcf",
+      "pass_markers": [
+        "POC471_OBSERVER_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/room_a.log",
+      "sha256": "9ec605c7b4a3241df21bbc9f12d1caf704abb3a879781f8796ff7d1bdb1d8d19",
+      "pass_markers": [
+        "ROOMSCALE_CIVILIZATION_SMOKE_PASS",
+        "ROOMSCALE_M2_SMOKE_PASS",
+        "ROOMSCALE_M3_SMOKE_PASS",
+        "ROOMSCALE_M4_SMOKE_PASS",
+        "ROOMSCALE_M5_SMOKE_PASS",
+        "ROOMSCALE_M6_SMOKE_PASS",
+        "ROOMSCALE_M8_SMOKE_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/regression/room_b.log",
+      "sha256": "cb4c6fc246b1db2db2671e9b9448d8835811b725d5604308ad98d4c98f99b2ff",
+      "pass_markers": [
+        "ROOMSCALE_CIVILIZATION_SMOKE_PASS",
+        "ROOMSCALE_M2_SMOKE_PASS",
+        "ROOMSCALE_M3_SMOKE_PASS",
+        "ROOMSCALE_M4_SMOKE_PASS",
+        "ROOMSCALE_M5_SMOKE_PASS",
+        "ROOMSCALE_M6_SMOKE_PASS",
+        "ROOMSCALE_M8_SMOKE_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/roles/combat_role_behavior-1.log",
+      "sha256": "b090778d60127c8b7580450134ddc96378d74640d9c53da856ee067add1033a0",
+      "pass_markers": [
+        "ROOMSCALE_ROLE_BEHAVIOR_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/roles/combat_role_behavior-2.log",
+      "sha256": "b090778d60127c8b7580450134ddc96378d74640d9c53da856ee067add1033a0",
+      "pass_markers": [
+        "ROOMSCALE_ROLE_BEHAVIOR_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/roles/combat_role_behavior-3.log",
+      "sha256": "b090778d60127c8b7580450134ddc96378d74640d9c53da856ee067add1033a0",
+      "pass_markers": [
+        "ROOMSCALE_ROLE_BEHAVIOR_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/roles/combat_roles-1.log",
+      "sha256": "ef7716aedb2e96e94cd6a5f89086a6eccea7fb6a1aa23bf84da0ff7515786c41",
+      "pass_markers": [
+        "ROOMSCALE_ROLES_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/conflict/room_conflict-1/run.log",
+      "sha256": "47eee81f2a924f013267a44af26ecad09ef395b9bb4bfe054c98ddcfc76a8418",
+      "pass_markers": [
+        "ROOMSCALE_CONFLICT_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/conflict/room_conflict-2/run.log",
+      "sha256": "47eee81f2a924f013267a44af26ecad09ef395b9bb4bfe054c98ddcfc76a8418",
+      "pass_markers": [
+        "ROOMSCALE_CONFLICT_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/conflict/room_conflict-3/run.log",
+      "sha256": "47eee81f2a924f013267a44af26ecad09ef395b9bb4bfe054c98ddcfc76a8418",
+      "pass_markers": [
+        "ROOMSCALE_CONFLICT_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/pressure/conflict-pressure.log",
+      "sha256": "25d1d4b41aad37f2e08aefbae5e1e0c933266ce9a31a68261d6175182712ff77",
+      "pass_markers": [
+        "ROOMSCALE_CONFLICT_PRESSURE_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/innovation/innovation-robustness.log",
+      "sha256": "cd803a4fcf339b477622043a37eeeef47c2ff954f81528be4ebeed0e1fd68acb",
+      "pass_markers": [
+        "ROOMSCALE_INNOVATION_ROBUSTNESS_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/innovation/innovation-system.log",
+      "sha256": "e86dfbaa48ba87119cd9aa5ca025d8aab37b4ecf4d622e6a7a9f3abd3854305a",
+      "pass_markers": [
+        "ROOMSCALE_INNOVATION_SYSTEM_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/final-poc54/armory-1.log",
+      "sha256": "85cbb9d1f812f7fd9024f54351052d50ac978b4a25e660c7a92fa8568d4a0501",
+      "pass_markers": [
+        "ROOMSCALE_POC54_ARMORY_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/final-poc54/armory-2.log",
+      "sha256": "85cbb9d1f812f7fd9024f54351052d50ac978b4a25e660c7a92fa8568d4a0501",
+      "pass_markers": [
+        "ROOMSCALE_POC54_ARMORY_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/final-poc54/armory-3.log",
+      "sha256": "85cbb9d1f812f7fd9024f54351052d50ac978b4a25e660c7a92fa8568d4a0501",
+      "pass_markers": [
+        "ROOMSCALE_POC54_ARMORY_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/final-poc54/behavior-1.log",
+      "sha256": "7d37dbfa66c9c502b9b680d089c999ce5fbb21c42056f728a5c9e3317cf4e3a0",
+      "pass_markers": [
+        "ROOMSCALE_POC54_BEHAVIOR_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/final-poc54/behavior-2.log",
+      "sha256": "7d37dbfa66c9c502b9b680d089c999ce5fbb21c42056f728a5c9e3317cf4e3a0",
+      "pass_markers": [
+        "ROOMSCALE_POC54_BEHAVIOR_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/final-poc54/behavior-3.log",
+      "sha256": "7d37dbfa66c9c502b9b680d089c999ce5fbb21c42056f728a5c9e3317cf4e3a0",
+      "pass_markers": [
+        "ROOMSCALE_POC54_BEHAVIOR_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/final-poc54/data-1.log",
+      "sha256": "ecf11b99d17e63e254e4545a9547ed3731971ee3b46d04d246dcc931cdff59e1",
+      "pass_markers": [
+        "ROOMSCALE_POC54_DATA_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/final-poc54/live/room_conflict_c-1/run.log",
+      "sha256": "eff7e4b2328826b4df86667d53bdff919fb874c9b18247b77805659fb7cd9427",
+      "pass_markers": [
+        "ROOMSCALE_CONFLICT_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/final-poc54/live/room_conflict_c-2/run.log",
+      "sha256": "eff7e4b2328826b4df86667d53bdff919fb874c9b18247b77805659fb7cd9427",
+      "pass_markers": [
+        "ROOMSCALE_CONFLICT_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/final-poc54/live/room_conflict_c-3/run.log",
+      "sha256": "eff7e4b2328826b4df86667d53bdff919fb874c9b18247b77805659fb7cd9427",
+      "pass_markers": [
+        "ROOMSCALE_CONFLICT_PASS"
+      ]
+    },
+    {
+      "path": "verification/stabilization/runs/poc54-hardening/final-poc54/ownership-1.log",
+      "sha256": "b139775c73a2c0f74e1593d0c87b8f8d16d06dae19f0af87eebacd9467d34af8",
+      "pass_markers": [
+        "ROOMSCALE_ECONOMY_OWNERSHIP_PASS"
+      ]
+    }
+  ]
+}

@@ -37,6 +37,10 @@ than the desired maximum once the minimum is equipped; no reinforcement follows.
 Each society owns one `ArmorySystem`, its projects, stable kit IDs, state transitions
 and EconomySystem reservation tickets. Equipment is an asset, **not** a new canonical
 ResourceVocabulary material. EconomySystem alone owns all material balances.
+Every reservation mutation (`pickup`, `deliver`, `consume`, `release`, `drop`,
+`recover_delivered`) requires an exact expected owner at the ledger boundary.
+Unknown tickets, wrong owners and illegal states fail without ledger changes.
+Armory project ownership preflight remains in place as an additional check.
 
 | Equipment | Role | Wood | Metal | Citizen work |
 |---|---|---:|---:|---:|
@@ -201,3 +205,19 @@ autonomous recurring campaign, tactical control, standing soldiers, opponent cou
 matrix, upkeep, ammo, durability, wounds, medics, officers, veterancy, pursuit,
 prisoners, fortifications, diplomacy/trade, salvage or captured technology. Balance
 perfection and globally optimal formation/path selection are not claimed.
+
+## Pre-merge hardening
+
+Prepared Fire update, interval calculation and citizen inspection consume the
+canonical PREPARED_FIRE catalog definition; its roles, duration, tolerance and
+multiplier have one production source. Focused verification also uses an isolated
+synthetic definition without modifying approved catalog values.
+
+If the ordinary depot return route is unavailable, CitizenAgent retains RETREAT
+duty with inspectable `RETURN_BLOCKED` state and `combat_arrived = false`. It stops
+its previous route and retains the issued kit. Each native simulation step makes
+at most one retry through existing FloorNavigation. Existing geometry-triggered
+replanning preserves military duty and applies the same return failure handling.
+A permanently unavailable route remains blocked; no kit is stocked until actual
+depot arrival. Cancellation, stand-down, morale retreat and post-victory return all
+use this shared path. No alternate navigation or resource recovery is introduced.

@@ -1,0 +1,41 @@
+{
+  "source_commit": "428afeb73b6f73d2d2e45ebb9e1543bef3fb50f7",
+  "result": "PASS",
+  "cases": [
+    {
+      "scenario": "final-poc54/live",
+      "fresh_runs": 3,
+      "identical": true,
+      "equals_pre_hardening_fingerprint": true,
+      "capture_tick": 4339,
+      "attack_digest": "c7847e27ffedeb53938fe077f4425e8468ccb1cd7cdfe82929a67ce7ecf207b2",
+      "result_files": [
+        "verification/stabilization/runs/poc54-hardening/final-poc54/live/room_conflict_c-1/result.json",
+        "verification/stabilization/runs/poc54-hardening/final-poc54/live/room_conflict_c-2/result.json",
+        "verification/stabilization/runs/poc54-hardening/final-poc54/live/room_conflict_c-3/result.json"
+      ]
+    },
+    {
+      "scenario": "conflict",
+      "fresh_runs": 3,
+      "identical": true,
+      "equals_pre_hardening_fingerprint": true,
+      "capture_tick": 2255,
+      "attack_digest": "93431f222fba02451e5a548628c0eb98bbb39696413b7f620b9a76ef50e0eaae",
+      "result_files": [
+        "verification/stabilization/runs/poc54-hardening/conflict/room_conflict-1/result.json",
+        "verification/stabilization/runs/poc54-hardening/conflict/room_conflict-2/result.json",
+        "verification/stabilization/runs/poc54-hardening/conflict/room_conflict-3/result.json"
+      ]
+    }
+  ],
+  "focused_behavior_fresh_runs": 3,
+  "focused_behavior_identical": true,
+  "blocked_return_cases": [
+    "cancellation",
+    "stand_down",
+    "retreat",
+    "victory",
+    "mid_return_replan"
+  ]
+}

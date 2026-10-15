@@ -157,3 +157,9 @@ battlefield salvage, captured equipment/technology, diplomacy, treaties and trad
 All intentional source/documentation/evidence are committed and pushed on the
 milestone branch. Main is not merged. Pre-existing unrelated untracked plans, UID
 files and poc51 visuals are preserved.
+
+## Subsequent pre-merge hardening
+
+Reservation ownership, Prepared Fire catalog consumption and blocked military
+returns were hardened after this acceptance baseline. See
+[hardening-report.md](hardening-report.md) for source audit, new tests and rerun evidence.
