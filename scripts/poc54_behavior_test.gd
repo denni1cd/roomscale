@@ -187,6 +187,8 @@ func muster_cancel() -> void:
 	for tick in range(100): world.step()
 	check(is_equal_approx(survivor.health/survivor.max_health,health_fraction),"demobilization preserves health fraction")
 	check(sim.military.state == "PEACE" and sim.armory.kits.values().all(func(k: Dictionary) -> bool: return k.state == "STOCKED"),"cancelled equipped muster returns assets physically")
+	# Reuse also accepts the finished state left by a completed battle.
+	sim.military.state = "COMPLETE"
 	sim.military.authorize({"min_force":2,"max_force":3,"force_fraction":0.25},at)
 	for tick in range(1000):
 		world.step()

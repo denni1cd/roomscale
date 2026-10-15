@@ -22,7 +22,7 @@ func profile() -> Dictionary:
 func authorize(own: Dictionary, at: Vector3) -> void:
 	policy = own.duplicate(true)
 	objective = at
-	if state == "PEACE":
+	if state in ["PEACE","COMPLETE"]:
 		state = "PREPARING"
 		sim.armory.record("READINESS_TARGET",{"id":sim.instance_id,"policy":policy})
 	refresh()
