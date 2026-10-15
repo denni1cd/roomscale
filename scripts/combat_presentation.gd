@@ -78,6 +78,10 @@ static func indicators(citizen: Node3D, organic: bool) -> Node3D:
 		bar.mesh = quad
 		var mat := glow(Color("91da6b") if name == "HealthFill" else Color("202b32"))
 		mat.billboard_mode = BaseMaterial3D.BILLBOARD_ENABLED
+		# Billboard quads must sort independently of the actor's facing direction.
+		mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		mat.no_depth_test = true
+		mat.render_priority = 11 if name == "HealthFill" else 10
 		bar.material_override = mat
 		bar.position = Vector3(0,0.65,0.005 if name == "HealthFill" else 0)
 		bar.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF

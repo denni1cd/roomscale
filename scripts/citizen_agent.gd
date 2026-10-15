@@ -31,8 +31,8 @@ func refresh_combat_presentation(delta: float) -> void:
 	if _combat_indicators != null:
 		_combat_indicators.visible = life_state == "ALIVE" and not combat_duty.is_empty()
 		_combat_indicators.get_node("HealthFill").scale.x = maxf(0.01,health/max_health)
-		_combat_indicators.get_node("HealthFill").material_override.albedo_color = Color("ec7357") if health < 40 else Color("91da6b")
-		_combat_indicators.get_node("HealthFill").material_override.emission = Color("ec7357") if health < 40 else Color("91da6b")
+		_combat_indicators.get_node("HealthFill").material_override.albedo_color = Color("ec7357") if health/max_health < 0.4 else Color("91da6b")
+		_combat_indicators.get_node("HealthFill").material_override.emission = Color("ec7357") if health/max_health < 0.4 else Color("91da6b")
 	if _combat_weapon != null and life_state == "ALIVE" and not combat_duty.is_empty():
 		_combat_weapon.position.z = 0.10-_combat_recoil*0.04
 		_combat_weapon.rotation.x = -_combat_recoil*0.12
