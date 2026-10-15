@@ -266,3 +266,15 @@ identity and waypoint motion. FloorNavigation owns short precise combat connecto
 as well as A*. Morale uses normalized role health. Retreat clearance uses individual
 role range; an explicit surviving capturer physically secures the existing site.
 Presentation and inspection consume those states without driving the battle.
+
+## POC 5.4 military preparation
+
+[Military doctrine and mobilization](MILITARY_DOCTRINE_MOBILIZATION.md) extends the
+existing authority chain: conflict policy authorizes; MilitaryReadiness/Doctrine
+choose equipment composition; the society-owned ArmorySystem reserves through
+EconomySystem and exposes real TaskCoordinator/CitizenAgent WORK jobs. Kits are
+persistent assets, not canonical resources. Physical muster precedes issue; equipped
+forces enter the existing CombatSystem. Real depot return stocks surviving kits;
+terminal CitizenAgent deaths lose them. Generic capability handlers provide Prepared
+Fire, Pathfinder Maneuvers and Jury-Rig Equipment. InnovationRuntime alone resolves
+optional learned gates. Governor decisions never move actors or perform production.

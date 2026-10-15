@@ -1,0 +1,505 @@
+{
+  "source_commit": "7621e2a79e324e9bf68a021df00ee3566deea4c7",
+  "fresh_processes": 3,
+  "identical": true,
+  "armory": {
+    "blocked": "survival crisis",
+    "kits": {
+      "clockwork_alpha:kit:1": {
+        "citizen_id": -1,
+        "equipment_id": "ranged_kit",
+        "id": "clockwork_alpha:kit:1",
+        "owner": "clockwork_alpha",
+        "role": "ranged",
+        "state": "STOCKED",
+        "variant": "normal"
+      },
+      "clockwork_alpha:kit:2": {
+        "citizen_id": -1,
+        "equipment_id": "heavy_kit",
+        "id": "clockwork_alpha:kit:2",
+        "owner": "clockwork_alpha",
+        "role": "heavy",
+        "state": "STOCKED",
+        "variant": "normal"
+      }
+    },
+    "projects": {
+      "clockwork_alpha:equipment:1": {
+        "cost": {
+          "metal": 3,
+          "wood": 1
+        },
+        "equipment_id": "heavy_kit",
+        "evaluation": 1,
+        "id": "clockwork_alpha:equipment:1",
+        "kit": "clockwork_alpha:kit:2",
+        "required_work": 12.0,
+        "role": "heavy",
+        "state": "COMPLETE",
+        "tickets": [
+          2,
+          3
+        ],
+        "variant": "normal",
+        "work": 12.0,
+        "workers": {
+          "0": 12.0
+        }
+      },
+      "clockwork_alpha:equipment:2": {
+        "cost": {
+          "metal": 1,
+          "wood": 1
+        },
+        "equipment_id": "ranged_kit",
+        "evaluation": 2,
+        "id": "clockwork_alpha:equipment:2",
+        "kit": "clockwork_alpha:kit:1",
+        "required_work": 8.0,
+        "role": "ranged",
+        "state": "COMPLETE",
+        "tickets": [
+          4,
+          5
+        ],
+        "variant": "normal",
+        "work": 7.99999999999999,
+        "workers": {
+          "9": 7.99999999999999
+        }
+      }
+    },
+    "stock": {
+      "artillery": 0,
+      "heavy": 1,
+      "line": 0,
+      "ranged": 1,
+      "skirmisher": 0
+    }
+  },
+  "economy": {
+    "food": {
+      "available": 20.0,
+      "consumed": 0.0,
+      "delivered": 0.0,
+      "in_transit": 0.0,
+      "received": 0.0,
+      "reserved": 0.0
+    },
+    "metal": {
+      "available": 13.0,
+      "consumed": 4.0,
+      "delivered": 0.0,
+      "in_transit": 0.0,
+      "received": 20.0,
+      "reserved": 3.0
+    },
+    "water": {
+      "available": 29.0,
+      "consumed": 1.0,
+      "delivered": 0.0,
+      "in_transit": 0.0,
+      "received": 0.0,
+      "reserved": 0.0
+    },
+    "wood": {
+      "available": 18.0,
+      "consumed": 2.0,
+      "delivered": 0.0,
+      "in_transit": 0.0,
+      "received": 20.0,
+      "reserved": 0.0
+    }
+  },
+  "failures": [],
+  "result": "PASS",
+  "live": {
+    "military_totals": {
+      "wood": 11.0,
+      "metal": 11.0,
+      "work": 64.5
+    },
+    "kit_states": {
+      "STOCKED": 4,
+      "LOST": 2
+    },
+    "societies": {
+      "clockwork_alpha": {
+        "military_materials_and_labor": {
+          "wood": 3.0,
+          "metal": 7.0,
+          "work": 30.0
+        },
+        "armory": {
+          "blocked": "two active equipment projects",
+          "kits": {
+            "clockwork_alpha:kit:1": {
+              "citizen_id": -1,
+              "equipment_id": "artillery_kit",
+              "id": "clockwork_alpha:kit:1",
+              "owner": "clockwork_alpha",
+              "role": "artillery",
+              "state": "STOCKED",
+              "variant": "normal"
+            },
+            "clockwork_alpha:kit:2": {
+              "citizen_id": -1,
+              "equipment_id": "heavy_kit",
+              "id": "clockwork_alpha:kit:2",
+              "owner": "clockwork_alpha",
+              "role": "heavy",
+              "state": "STOCKED",
+              "variant": "normal"
+            }
+          },
+          "projects": {
+            "clockwork_alpha:equipment:1": {
+              "cost": {
+                "metal": 4,
+                "wood": 2
+              },
+              "equipment_id": "artillery_kit",
+              "evaluation": 66,
+              "id": "clockwork_alpha:equipment:1",
+              "kit": "clockwork_alpha:kit:1",
+              "required_work": 18.0,
+              "role": "artillery",
+              "state": "COMPLETE",
+              "tickets": [
+                36,
+                37
+              ],
+              "variant": "normal",
+              "work": 18.0,
+              "workers": {
+                "1": 18.0
+              }
+            },
+            "clockwork_alpha:equipment:2": {
+              "cost": {
+                "metal": 3,
+                "wood": 1
+              },
+              "equipment_id": "heavy_kit",
+              "evaluation": 67,
+              "id": "clockwork_alpha:equipment:2",
+              "kit": "clockwork_alpha:kit:2",
+              "required_work": 12.0,
+              "role": "heavy",
+              "state": "COMPLETE",
+              "tickets": [
+                38,
+                39
+              ],
+              "variant": "normal",
+              "work": 12.0,
+              "workers": {
+                "2": 12.0
+              }
+            }
+          },
+          "stock": {
+            "artillery": 1,
+            "heavy": 1,
+            "line": 0,
+            "ranged": 0,
+            "skirmisher": 0
+          }
+        },
+        "economy": {
+          "food": {
+            "available": 71.0,
+            "consumed": 77.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 128.0,
+            "reserved": 0.0
+          },
+          "mechanical_parts": {
+            "available": 0.0,
+            "consumed": 0.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 0.0,
+            "reserved": 0.0
+          },
+          "metal": {
+            "available": 21.0,
+            "consumed": 7.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 28.0,
+            "reserved": 0.0
+          },
+          "water": {
+            "available": 103.0,
+            "consumed": 119.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 192.0,
+            "reserved": 0.0
+          },
+          "wood": {
+            "available": 0.0,
+            "consumed": 7.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 7.0,
+            "reserved": 0.0
+          }
+        }
+      },
+      "scavenger_alpha": {
+        "military_materials_and_labor": {
+          "wood": 6.0,
+          "metal": 2.0,
+          "work": 22.5
+        },
+        "armory": {
+          "blocked": "missing metal",
+          "kits": {
+            "scavenger_alpha:kit:1": {
+              "citizen_id": 23,
+              "equipment_id": "line_kit",
+              "id": "scavenger_alpha:kit:1",
+              "owner": "scavenger_alpha",
+              "role": "line",
+              "state": "LOST",
+              "variant": "jury_rigged"
+            },
+            "scavenger_alpha:kit:2": {
+              "citizen_id": -1,
+              "equipment_id": "heavy_kit",
+              "id": "scavenger_alpha:kit:2",
+              "owner": "scavenger_alpha",
+              "role": "heavy",
+              "state": "STOCKED",
+              "variant": "jury_rigged"
+            }
+          },
+          "projects": {
+            "scavenger_alpha:equipment:1": {
+              "cost": {
+                "metal": 2,
+                "wood": 3
+              },
+              "equipment_id": "heavy_kit",
+              "evaluation": 35,
+              "id": "scavenger_alpha:equipment:1",
+              "kit": "scavenger_alpha:kit:2",
+              "required_work": 15.0,
+              "role": "heavy",
+              "state": "COMPLETE",
+              "tickets": [
+                18,
+                19
+              ],
+              "variant": "jury_rigged",
+              "work": 15.0,
+              "workers": {
+                "22": 15.0
+              }
+            },
+            "scavenger_alpha:equipment:2": {
+              "cost": {
+                "metal": 0,
+                "wood": 3
+              },
+              "equipment_id": "line_kit",
+              "evaluation": 36,
+              "id": "scavenger_alpha:equipment:2",
+              "kit": "scavenger_alpha:kit:1",
+              "required_work": 7.5,
+              "role": "line",
+              "state": "COMPLETE",
+              "tickets": [
+                21
+              ],
+              "variant": "jury_rigged",
+              "work": 7.49999999999999,
+              "workers": {
+                "15": 7.49999999999999
+              }
+            }
+          },
+          "stock": {
+            "artillery": 0,
+            "heavy": 1,
+            "line": 0,
+            "ranged": 0,
+            "skirmisher": 0
+          }
+        },
+        "economy": {
+          "food": {
+            "available": 80.0,
+            "consumed": 76.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 136.0,
+            "reserved": 0.0
+          },
+          "mechanical_parts": {
+            "available": 0.0,
+            "consumed": 0.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 0.0,
+            "reserved": 0.0
+          },
+          "metal": {
+            "available": 1.0,
+            "consumed": 9.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 10.0,
+            "reserved": 0.0
+          },
+          "water": {
+            "available": 113.0,
+            "consumed": 117.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 200.0,
+            "reserved": 0.0
+          },
+          "wood": {
+            "available": 14.0,
+            "consumed": 32.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 46.0,
+            "reserved": 0.0
+          }
+        }
+      },
+      "verdant_alpha": {
+        "military_materials_and_labor": {
+          "wood": 2.0,
+          "metal": 2.0,
+          "work": 12.0
+        },
+        "armory": {
+          "blocked": "missing metal",
+          "kits": {
+            "verdant_alpha:kit:1": {
+              "citizen_id": 25,
+              "equipment_id": "skirmisher_kit",
+              "id": "verdant_alpha:kit:1",
+              "owner": "verdant_alpha",
+              "role": "skirmisher",
+              "state": "LOST",
+              "variant": "normal"
+            },
+            "verdant_alpha:kit:2": {
+              "citizen_id": -1,
+              "equipment_id": "line_kit",
+              "id": "verdant_alpha:kit:2",
+              "owner": "verdant_alpha",
+              "role": "line",
+              "state": "STOCKED",
+              "variant": "normal"
+            }
+          },
+          "projects": {
+            "verdant_alpha:equipment:1": {
+              "cost": {
+                "metal": 1,
+                "wood": 1
+              },
+              "equipment_id": "skirmisher_kit",
+              "evaluation": 29,
+              "id": "verdant_alpha:equipment:1",
+              "kit": "verdant_alpha:kit:1",
+              "required_work": 6.0,
+              "role": "skirmisher",
+              "state": "COMPLETE",
+              "tickets": [
+                16,
+                17
+              ],
+              "variant": "normal",
+              "work": 5.99999999999999,
+              "workers": {
+                "24": 5.99999999999999
+              }
+            },
+            "verdant_alpha:equipment:2": {
+              "cost": {
+                "metal": 1,
+                "wood": 1
+              },
+              "equipment_id": "line_kit",
+              "evaluation": 30,
+              "id": "verdant_alpha:equipment:2",
+              "kit": "verdant_alpha:kit:2",
+              "required_work": 6.0,
+              "role": "line",
+              "state": "COMPLETE",
+              "tickets": [
+                19,
+                20
+              ],
+              "variant": "normal",
+              "work": 5.99999999999999,
+              "workers": {
+                "35": 5.99999999999999
+              }
+            }
+          },
+          "stock": {
+            "artillery": 0,
+            "heavy": 0,
+            "line": 1,
+            "ranged": 0,
+            "skirmisher": 0
+          }
+        },
+        "economy": {
+          "food": {
+            "available": 79.0,
+            "consumed": 77.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 136.0,
+            "reserved": 0.0
+          },
+          "mechanical_parts": {
+            "available": 0.0,
+            "consumed": 0.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 0.0,
+            "reserved": 0.0
+          },
+          "metal": {
+            "available": 20.0,
+            "consumed": 10.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 30.0,
+            "reserved": 0.0
+          },
+          "water": {
+            "available": 120.0,
+            "consumed": 118.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 208.0,
+            "reserved": 0.0
+          },
+          "wood": {
+            "available": 40.0,
+            "consumed": 31.0,
+            "delivered": 0.0,
+            "in_transit": 0.0,
+            "received": 71.0,
+            "reserved": 0.0
+          }
+        }
+      }
+    }
+  },
+  "verification_harness_commit": "524e35098140f0c64ce4d1c18f664bf5167c6b45"
+}

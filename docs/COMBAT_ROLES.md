@@ -43,23 +43,15 @@ other than one Great, one Good, two Neutral and one Bad.
 
 ## Commitment and identity
 
-Existing bilateral pressure and per-side war policies determine force size. No
-mid-battle conscription occurs. Eligible citizens retain the existing distance/ID
-selection order. Their roles cycle through Line, Ranged, Heavy, Artillery,
-Skirmisher. Smaller forces use the corresponding prefix; the default three-citizen
-limited force does not demonstrate all five roles. A policy can author `roles`,
-or a civilization can declare optional `combat.composition`; the list cycles to
-fill the already-authorized size. These lists are validated, not army optimizers.
-The focused all-role battle authors five citizens per side, with all three actual
-civilization profiles, through the production commitment API.
-
-Each civilization's `combat.roles` supplies a grade and an implementation ID per
-role. CombatSystem snapshots the resolved loadout and original ID at commitment.
-CitizenAgent owns `combat_role`, `combat_stats`, health, maximum health, duty,
-positioning state and its ordinary waypoint traversal. Equipment changes preserve
-health fraction. Returning survivors remove the assignment and restore ordinary
-movement, retaining their health fraction; there is no healing mechanic. Death
-remains terminal and keeps the same node/ID, with no work or population recycling.
+POC 5.4 replaces the live role cycle and free loadouts with deterministic doctrine,
+real equipment manufacture, physical muster, kit issue and demobilization. See
+[MILITARY_DOCTRINE_MOBILIZATION.md](MILITARY_DOCTRINE_MOBILIZATION.md) for the current
+composition/equipment contract. War policy still authorizes sizes and retreat.
+Citizens remain the same persistent actors; equipment changes preserve health fraction.
+Death remains terminal with the same ID/node and loses the issued kit. Survivors
+physically return equipment before removing the assignment and resuming work.
+Focused tactical fixtures explicitly author prepared initial armory assets to isolate
+five-role behavior; live acceptance requires zero initial kits and paid manufacture.
 
 ## Deterministic behavior and targeting
 
@@ -134,14 +126,13 @@ A new role with existing behavior extends catalog/order and the standard-profile
 validator; a new behavior adds a generic behavior implementation. The standard
 five-role distribution deliberately remains a five-role schema contract.
 
-Implementation IDs reserve the seam for multiple equipment/presentation variants;
+Implementation IDs distinguish equipment/presentation variants;
 the current renderer uses shared role geometry and existing civilization style.
-The validated `combat.capabilities` list is reserved and grants no gameplay effects.
+The validated `combat.capabilities` list now supplies the POC 5.4 signature handlers.
 Future faction abilities can consume that seam through generic capabilities;
 technology prerequisites should resolve at commitment through InnovationRuntime;
-equipment bills should reserve through EconomySystem before commitment. Neither
-research gates, equipment manufacturing/costs nor an ability execution system is
-implemented. Diplomacy, trade, suppression, wounds, medics, veterancy, prisoners,
+equipment bills should reserve through EconomySystem before commitment. Equipment manufacture/costs and optional learned gates are implemented by POC 5.4;
+no military research tree or general ability framework is authored. Diplomacy, trade, suppression, wounds, medics, veterancy, prisoners,
 pursuit, fortifications, salvage and captured technology remain later milestones.
 
 The acceptance matrix and implementation report document verification and the

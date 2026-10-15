@@ -1,3 +1,6 @@
+> POC 5.4 adds paid equipment manufacture, doctrine and physical muster before battle.
+> [Military doctrine](MILITARY_DOCTRINE_MOBILIZATION.md) supersedes historical free-commitment timing below.
+
 > Current combat roles extend this historical POC 5 description. See
 > [COMBAT_ROLES.md](COMBAT_ROLES.md) for current stats, mixed-role movement,
 > civilization grades, targeting, morale normalization and capture clearance.

@@ -101,15 +101,22 @@ and explicit salvage authorization. F12 saves a local capture under `verificatio
 ./TEST_ROOM_SCALE_CONFLICT.ps1 -Room room_conflict_b
 ./TEST_ROOM_SCALE_CONFLICT.ps1 -CaptureVisuals
 ./TEST_ROOM_SCALE_COMBAT_ROLES.ps1 -RunCount 3 -CaptureVisuals
+./TEST_ROOM_SCALE_POC54.ps1 -RunCount 3 -CaptureVisuals
 ```
 
 Two twelve-citizen founder societies gather from the same finite sources and earn
 settlements. After peaceful work, real scouts discover the shared supply approach.
-Competing claims produce contact and hostility; each governor commits three ordinary
-citizens. They physically march, fight using mixed combat roles, suffer a real
+Competing claims produce contact and hostility. Governors derive doctrine, order real
+finite-material equipment production, and physically muster an equipped force before
+deployment. They physically march, fight using mixed combat roles, suffer a real
 casualty, retreat on morale, hold the objective for ten seconds, then resume work.
 Pause/1x/4x/10x remain available. Default camera follows conflict phases; manual mode
 retains the usual camera controls. See [POC 5 architecture and limits](docs/POC5.md).
+
+See [military doctrine and mobilization](docs/MILITARY_DOCTRINE_MOBILIZATION.md) for
+the exact doctrine formula, equipment bills, persistent kit lifecycle, signature
+capabilities and future learned-capability gates. War now consumes finite materials
+and citizen work before combat; surviving kits return and casualties lose their kits.
 
 ## Development and quality gates
 
