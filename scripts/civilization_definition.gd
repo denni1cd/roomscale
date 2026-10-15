@@ -92,6 +92,7 @@ static func validate(definition: Dictionary, expected_id: String = "") -> Array[
 			errors.append("construction.traversal_name is required")
 	if not (definition.world_influence is Dictionary):
 		errors.append("world_influence must be an object")
+	errors.append_array(preload("res://scripts/combat_roles.gd").validate_profile(definition.get("combat")))
 	return errors
 
 

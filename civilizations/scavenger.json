@@ -40,5 +40,30 @@
   "world_influence": {
     "enabled": false,
     "style": "industrial"
+  },
+  "combat": {
+    "roles": {
+      "line": {
+        "grade": "Good",
+        "implementation": "scavenger_line"
+      },
+      "ranged": {
+        "grade": "Bad",
+        "implementation": "scavenger_ranged"
+      },
+      "heavy": {
+        "grade": "Great",
+        "implementation": "scavenger_heavy"
+      },
+      "artillery": {
+        "grade": "Neutral",
+        "implementation": "scavenger_artillery"
+      },
+      "skirmisher": {
+        "grade": "Neutral",
+        "implementation": "scavenger_skirmisher"
+      }
+    },
+    "capabilities": []
   }
 }
