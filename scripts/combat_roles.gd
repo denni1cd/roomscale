@@ -38,6 +38,8 @@ static func validate_profile(profile: Variant) -> Array[String]:
 		else: counts[entry.grade] += 1
 		if not preload("res://scripts/innovation_validation.gd").nonempty_string(entry.get("implementation")): errors.append("missing implementation " + role)
 	if counts != {"Great":1,"Good":1,"Neutral":2,"Bad":1}: errors.append("profile requires 1 Great / 1 Good / 2 Neutral / 1 Bad")
+	if profile.has("composition"):
+		if not profile.composition is Array or profile.composition.is_empty() or not profile.composition.all(func(role: Variant) -> bool: return role is String and role in BASE): errors.append("invalid force composition")
 	if not profile.get("capabilities", []) is Array: errors.append("combat.capabilities must be an array")
 	return errors
 

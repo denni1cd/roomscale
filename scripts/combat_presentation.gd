@@ -24,11 +24,18 @@ static func orb(parent: Node3D, at: Vector3, radius: float, color: Color) -> Mes
 	item.position = at
 	return item
 
-static func weapon(parent: Node3D, organic: bool) -> Node3D:
+static func weapon(parent: Node3D, organic: bool, role: String = "ranged") -> Node3D:
 	var root := Node3D.new()
 	root.name = "RangedWeapon"
 	parent.add_child(root)
 	root.position = Vector3(0.08,0.24,0.10)
+	if role in ["line","heavy"]:
+		G.box(root,"Shield",Vector3(0.24,0.30,0.05) if role == "heavy" else Vector3(0.16,0.20,0.035),Vector3(-0.16,0.02,0.12),"wood" if organic else "iron",Color("64853c") if organic else Color("657783"),0.01)
+		G.box(root,"Spear",Vector3(0.025,0.025,0.60),Vector3(0.10,0,0.20),"wood",Color("b4a476"),0.005)
+		if role == "heavy": G.box(root,"Armor",Vector3(0.25,0.25,0.16),Vector3(-0.08,-0.08,-0.05),"wood" if organic else "iron",Color("597141") if organic else Color("566571"),0.02)
+		return root
+	if role == "artillery": root.scale = Vector3(1.7,1.5,2.2)
+	elif role == "skirmisher": root.scale = Vector3.ONE * 0.7
 	if organic:
 		G.box(root,"LivingStock",Vector3(0.055,0.06,0.28),Vector3(0,0,0.05),"wood",Color("57482d"),0.015)
 		for side in [-1.0,1.0]:

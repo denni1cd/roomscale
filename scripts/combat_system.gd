@@ -1,8 +1,7 @@
 extends RefCounted
-## Shared battle authority. Deterministic citizen ID initiative, distance/ID targets.
-const ATTACK_DAMAGE := 10.0
-const ATTACK_INTERVAL := 1.0
-const ATTACK_RANGE := 6.0
+## Shared battle authority. Generic loadouts, legal role movement, stable ID initiative.
+const Roles := preload("res://scripts/combat_roles.gd")
+const SITE_CONTROL_RADIUS := 6.0
 const DEFAULT_RETREAT_THRESHOLD := 0.70
 var world: Node
 var site_id := ""
@@ -17,6 +16,10 @@ var retreating_side := ""
 var retreated_sides: Dictionary = {}
 var eliminated_sides: Dictionary = {}
 var attacks := 0
+var commitments: Array = []
+var attack_digest := ""
+var attack_history: Array = []
+var next_position: Dictionary = {}
 var attack_pairs: Dictionary = {}
 var retreat_tick := -1
 var battle_start_tick := -1
@@ -74,11 +77,15 @@ func start(controller: Node, objective: String, war_policy: Dictionary = {}) -> 
 	# 4-inch navigation-grid spacing, expanding into additional depth rows for
 	# larger wars instead of shrinking the proven POC5 formation.
 	var planned_targets := {}
+	var planned_loadouts := {}
 	var occupied: Array[Vector3] = []
 	for runtime in participants:
 		var force_size: int = staged_forces[runtime.instance_id].size()
 		for index in range(force_size):
 			var citizen: Node3D = staged_forces[runtime.instance_id][index]
+			var composition: Array = staged_policies[runtime.instance_id].get("roles",runtime.definition.combat.get("composition",Roles.ORDER))
+			var role: String = composition[index % composition.size()]
+			planned_loadouts[citizen.citizen_id] = Roles.loadout(runtime.definition,role)
 			var sign_x := -1.0 if runtime == participants[0] else 1.0
 			var depth := floori(index / 5.0)
 			var slot_in_row := index % 5
@@ -89,10 +96,16 @@ func start(controller: Node, objective: String, war_policy: Dictionary = {}) -> 
 				var angle := TAU * float(participants.find(runtime)) / participants.size()
 				var radial := Vector3(cos(angle), 0, sin(angle))
 				desired = target + radial * (3.0 + floori(index / 2.0) * 4.0) + radial.rotated(Vector3.UP, PI / 2) * (-2.0 if index % 2 == 0 else 2.0)
+			var rear := 0.0
+			if planned_loadouts[citizen.citizen_id].behavior == "support": rear = 8.0
+			elif planned_loadouts[citizen.citizen_id].behavior == "ranged": rear = 4.0
+			if rear > 0:
+				var outward := (desired-target).normalized()
+				desired += outward * rear
 			var at: Vector3 = runtime.coordinator.navigation.nearest_walkable_position(desired)
-			if participants.size() > 2 and occupied.any(func(point: Vector3) -> bool: return point.distance_to(at) < 1.0):
+			if occupied.any(func(point: Vector3) -> bool: return point.distance_to(at) < 1.0):
 				var found := false
-				for offset in [Vector3(4,0,0),Vector3(-4,0,0),Vector3(0,0,4),Vector3(0,0,-4)]:
+				for offset in [Vector3(4,0,0),Vector3(-4,0,0),Vector3(0,0,4),Vector3(0,0,-4),Vector3(4,0,4),Vector3(-4,0,-4),Vector3(8,0,0),Vector3(-8,0,0),Vector3(0,0,8),Vector3(0,0,-8)]:
 					var candidate: Vector3 = runtime.coordinator.navigation.nearest_walkable_position(desired + offset)
 					if not occupied.any(func(point: Vector3) -> bool: return point.distance_to(candidate) < 1.0) and not runtime.coordinator.navigation.is_obstacle_position(candidate) and not runtime.coordinator.navigation.path_between(citizen.global_position,candidate).is_empty():
 						at = candidate
@@ -121,6 +134,9 @@ func start(controller: Node, objective: String, war_policy: Dictionary = {}) -> 
 		returned[id] = 0
 		for index in range(forces[id].size()):
 			var citizen: Node3D = forces[id][index]
+			citizen.equip_combat(planned_loadouts[citizen.citizen_id])
+			commitments.append({"id":citizen.citizen_id,"side":id,"role":citizen.combat_role,"stats":citizen.combat_stats.duplicate(true)})
+			next_position[citizen.citizen_id] = 0.0
 			# Distinct legal station points keep the tiny force readable.
 			if not citizen.assign_combat_duty("MARCH", planned_targets[citizen.citizen_id]): return false
 			next_attack[citizen.citizen_id] = 0.0
@@ -130,6 +146,10 @@ func start(controller: Node, objective: String, war_policy: Dictionary = {}) -> 
 	return true
 
 func _reset_battle_state() -> void:
+	commitments.clear()
+	attack_digest = ""
+	attack_history.clear()
+	next_position.clear()
 	forces.clear()
 	side_policies.clear()
 	initial_sizes.clear()
@@ -153,6 +173,73 @@ func _reset_battle_state() -> void:
 func living(id: String) -> Array:
 	if not forces.has(id): return []
 	return forces[id].filter(func(c: Node3D) -> bool: return c.life_state == "ALIVE")
+
+func targets_for(citizen: Node3D) -> Array:
+	var candidates: Array = []
+	for id in forces:
+		if _hostile(citizen.civilization_id,String(id)): candidates.append_array(living(id))
+	candidates = candidates.filter(func(enemy: Node3D) -> bool:
+		return citizen.global_position.distance_to(enemy.global_position) <= float(citizen.combat_stats.range) or not citizen.navigation.combat_path_between(citizen.global_position,enemy.global_position).is_empty())
+	candidates.sort_custom(func(a: Node3D,b: Node3D) -> bool:
+		var pa := target_priority(citizen,a)
+		var pb := target_priority(citizen,b)
+		if pa != pb: return pa < pb
+		var da := citizen.global_position.distance_squared_to(a.global_position)
+		var db := citizen.global_position.distance_squared_to(b.global_position)
+		return da < db if da != db else a.citizen_id < b.citizen_id)
+	return candidates
+
+func target_priority(citizen: Node3D, enemy: Node3D) -> int:
+	var behavior: String = citizen.combat_stats.behavior
+	if behavior == "screen":
+		for friend in living(citizen.civilization_id):
+			if friend.combat_stats.get("behavior", "") in ["ranged","support"] and enemy.global_position.distance_to(friend.global_position) <= 3.0: return 0
+		return 1
+	if behavior == "assault" and enemy.global_position.distance_to(citizen.global_position) <= float(citizen.combat_stats.range): return -1
+	if behavior == "harass": return 0 if float(enemy.combat_stats.armor) <= 1 else 1
+	if behavior == "assault": return 0 if float(enemy.combat_stats.armor) <= 1 and enemy.global_position.distance_to(citizen.global_position) <= 3.0 else 1
+	return 0 if enemy.global_position.distance_to(citizen.global_position) <= float(citizen.combat_stats.range) else 1
+
+func position_combatant(citizen: Node3D, enemies: Array) -> void:
+	if world.seconds < float(next_position[citizen.citizen_id]): return
+	next_position[citizen.citizen_id] = world.seconds + float(citizen.combat_stats.reposition)
+	var victim: Node3D = enemies[0]
+	var nearest: Node3D = victim
+	for enemy in enemies:
+		if citizen.global_position.distance_squared_to(enemy.global_position) < citizen.global_position.distance_squared_to(nearest.global_position): nearest = enemy
+	var at: Vector3 = citizen.global_position
+	var behavior: String = citizen.combat_stats.behavior
+	var separation := at.distance_to(nearest.global_position)
+	var away: Vector3 = (at - nearest.global_position).normalized()
+	if away.length() < 0.01: away = Vector3.RIGHT if citizen.citizen_id < nearest.citizen_id else Vector3.LEFT
+	var desired := at
+	var mode := "HOLD_RANGE"
+	if behavior in ["screen","assault"]:
+		if at.distance_to(victim.global_position) <= float(citizen.combat_stats.range):
+			citizen.combat_state = "MELEE"
+			return
+		desired = victim.global_position + (at-victim.global_position).normalized() * float(citizen.combat_stats.preferred)
+		mode = "SCREEN" if behavior == "screen" else "ASSAULT"
+	elif separation < float(citizen.combat_stats.preferred) * 0.65:
+		desired = nearest.global_position + away * float(citizen.combat_stats.preferred)
+		mode = "WITHDRAW"
+	elif at.distance_to(victim.global_position) > float(citizen.combat_stats.range) * 0.95:
+		desired = victim.global_position + (at-victim.global_position).normalized() * float(citizen.combat_stats.preferred)
+		mode = "SUPPORT" if behavior == "support" else "ADVANCE"
+	elif behavior == "harass":
+		var flank := away.rotated(Vector3.UP, PI/2 if citizen.citizen_id % 2 == 0 else -PI/2)
+		desired = at + flank * 2.0
+		mode = "FLANK"
+	else:
+		citizen.combat_state = mode
+		return
+	# Fixed alternative directions, legal routes only. No clamping through walls.
+	for candidate in [desired, at + (desired-at).rotated(Vector3.UP,PI/4), at + (desired-at).rotated(Vector3.UP,-PI/4)]:
+		if citizen.navigation.combat_path_between(at,candidate).is_empty(): continue
+		if citizen.state == "TRAVEL" and citizen._destination.distance_to(candidate) < 0.3: return
+		if citizen.assign_combat_duty("MANEUVER",candidate): citizen.combat_state = mode
+		return
+	citizen.combat_state = "BLOCKED"
 
 func update() -> void:
 	if phase == "DORMANT": return
@@ -179,36 +266,25 @@ func update() -> void:
 			if not _departed(String(id)): ordered.append_array(living(id))
 		ordered.sort_custom(func(a: Node3D, b: Node3D) -> bool: return a.citizen_id < b.citizen_id)
 		for citizen in ordered:
-			if _departed(citizen.civilization_id) or citizen.life_state != "ALIVE" or not citizen.combat_arrived or world.seconds < float(next_attack[citizen.citizen_id]): continue
-			var opponents: Array = []
-			for id in forces:
-				if _hostile(citizen.civilization_id, String(id)): opponents.append_array(living(id).filter(func(c: Node3D) -> bool: return c.combat_arrived and c.global_position.distance_to(citizen.global_position) <= ATTACK_RANGE))
-			if opponents.is_empty():
-				# Larger formations close distance through ordinary floor navigation.
-				if forces.size() > 2:
-					var distant: Array = []
-					for id in forces:
-						if _hostile(citizen.civilization_id, String(id)): distant.append_array(living(id))
-					distant.sort_custom(func(a: Node3D, b: Node3D) -> bool:
-						var da := a.global_position.distance_squared_to(citizen.global_position)
-						var db := b.global_position.distance_squared_to(citizen.global_position)
-						return da < db if da != db else a.citizen_id < b.citizen_id)
-					if not distant.is_empty():
-						var at: Vector3 = citizen.navigation.nearest_walkable_position(distant[0].global_position)
-						if not citizen.navigation.path_between(citizen.global_position, at).is_empty(): citizen.assign_combat_duty("MARCH", at)
-				continue
-			opponents.sort_custom(func(a: Node3D, b: Node3D) -> bool:
-				var da := a.global_position.distance_squared_to(citizen.global_position)
-				var db := b.global_position.distance_squared_to(citizen.global_position)
-				return da < db if da != db else a.citizen_id < b.citizen_id)
+			if _departed(citizen.civilization_id) or citizen.life_state != "ALIVE": continue
+			var enemies := targets_for(citizen)
+			if enemies.is_empty(): continue
+			position_combatant(citizen,enemies)
+			if world.seconds < float(next_attack[citizen.citizen_id]): continue
+			var opponents: Array = enemies.filter(func(c: Node3D) -> bool: return c.global_position.distance_to(citizen.global_position) <= float(citizen.combat_stats.range))
+			if opponents.is_empty(): continue
 			var victim: Node3D = opponents[0]
 			phase = "FIGHT"
-			next_attack[citizen.citizen_id] = world.seconds + ATTACK_INTERVAL
+			next_attack[citizen.citizen_id] = world.seconds + float(citizen.combat_stats.interval)
 			attacks += 1
 			var pair_key: String = world.territory.relation_key(citizen.civilization_id,victim.civilization_id)
 			attack_pairs[pair_key] = int(attack_pairs.get(pair_key,0))+1
 			world.present_attack(citizen, victim)
-			if victim.suffer_combat_damage(ATTACK_DAMAGE):
+			var amount := Roles.damage(float(citizen.combat_stats.damage),float(victim.combat_stats.armor))
+			var event := {"tick":world.tick,"attacker":citizen.citizen_id,"target":victim.citizen_id,"damage":amount,"role":citizen.combat_role}
+			attack_digest = (attack_digest + JSON.stringify(event)).sha256_text()
+			if attack_history.size() < 256: attack_history.append(event)
+			if victim.suffer_combat_damage(amount):
 				casualties[victim.civilization_id] += 1
 				world.journal.record(world.seconds, "COMBAT_CASUALTY", "Citizen %d fell" % victim.citizen_id, {"citizen_id":victim.citizen_id,"instance_id":victim.civilization_id}, victim.global_position, "casualty:%d" % victim.citizen_id)
 			if evaluate_morale(): return
@@ -223,7 +299,7 @@ func update() -> void:
 				phase = "DORMANT"
 			return
 		if phase == "RETREAT" and _rivals_withdrawn(target): phase = "SECURE"
-		if phase == "SECURE" and _rivals_withdrawn(target) and living(winner).any(func(c: Node3D) -> bool: return c.combat_arrived and c.global_position.distance_to(target) <= ATTACK_RANGE):
+		if phase == "SECURE" and _rivals_withdrawn(target) and living(winner).any(func(c: Node3D) -> bool: return c.combat_arrived and c.global_position.distance_to(target) <= SITE_CONTROL_RADIUS):
 			if world.territory.hold(site_id, winner, world.seconds, world.STEP):
 				site_capture_tick = world.tick
 				phase = "COMPLETE"
@@ -257,8 +333,14 @@ func _resolve_departure(withdrawing: bool) -> void:
 		winner = String(remaining[0])
 		phase = "RETREAT" if withdrawing else "SECURE"
 		var at: Vector3 = world.territory.sites[site_id].position
-		if not living(winner).any(func(c: Node3D) -> bool: return c.global_position.distance_to(at) <= ATTACK_RANGE):
-			for citizen in living(winner): citizen.assign_combat_duty("MARCH", at)
+		# Role maneuvers can leave support outside the objective. Assign a real
+		# capturer explicitly so a stale attack path cannot carry the winner away.
+		var holders := living(winner)
+		holders.sort_custom(func(a: Node3D,b: Node3D) -> bool:
+			var da := a.global_position.distance_squared_to(at)
+			var db := b.global_position.distance_squared_to(at)
+			return da < db if da != db else a.citizen_id < b.citizen_id)
+		if not holders.is_empty(): holders[0].assign_combat_duty("MARCH",at)
 	elif remaining.is_empty():
 		winner = ""
 		phase = "STAND_DOWN"
@@ -291,9 +373,9 @@ func evaluate_morale() -> bool:
 		for rival in forces:
 			if _hostile(String(id), String(rival)): other += living(rival).size()
 		var average := 0.0
-		for survivor in survivors: average += survivor.health / maxf(1, survivors.size())
+		for survivor in survivors: average += (survivor.health / survivor.max_health) / maxf(1, survivors.size())
 		var disadvantage := maxf(0, 1.0 - float(survivors.size()) / maxf(1, other))
-		morale[id] = 1.0 - float(casualties[id]) / initial_sizes[id] * 0.65 - disadvantage * 0.20 - (1.0 - average / 100.0) * 0.15
+		morale[id] = 1.0 - float(casualties[id]) / initial_sizes[id] * 0.65 - disadvantage * 0.20 - (1.0 - average) * 0.15
 		var own: Dictionary = side_policies[id]
 		var deficit := float(own.get("retreat_threshold", DEFAULT_RETREAT_THRESHOLD)) - float(morale[id])
 		if bool(own.get("allow_retreat", true)) and deficit > largest_deficit:
@@ -309,7 +391,7 @@ func _hostile(a: String, b: String) -> bool:
 
 func _rivals_withdrawn(target: Vector3) -> bool:
 	for id in forces:
-		if id != winner and not living(id).all(func(c: Node3D) -> bool: return c.global_position.distance_to(target) > ATTACK_RANGE): return false
+		if id != winner and not living(id).all(func(c: Node3D) -> bool: return c.global_position.distance_to(target) > maxf(SITE_CONTROL_RADIUS,float(c.combat_stats.get("range",0)))): return false
 	# A side's withdrawal against one rival does not surrender its peaceful claim
 	# to a different winner. Any living non-hostile claimant prevents exclusivity.
 	for id in world.territory.sites[site_id].contesting_civilizations:
@@ -325,6 +407,8 @@ func _return_arrivals(id: String) -> void:
 			returned[id] = int(returned.get(id, 0)) + 1
 
 static func _valid_policy(value: Dictionary) -> bool:
+	if value.has("roles"):
+		if not value.roles is Array or value.roles.is_empty() or not value.roles.all(func(role: Variant) -> bool: return role is String and role in Roles.BASE): return false
 	var validation := preload("res://scripts/innovation_validation.gd")
 	for field in ["force_fraction", "min_force", "max_force", "retreat_threshold"]:
 		if value.has(field) and not validation.number(value[field]): return false

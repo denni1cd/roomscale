@@ -66,7 +66,10 @@ func run() -> void:
 	var dead_distance: Dictionary = {}
 	for iteration in range(24000 if OS.get_environment("ROOMSCALE_INNOVATION") == "1" else 9000):
 		var positions: Dictionary = {}
-		for citizen in world.citizens: positions[citizen.citizen_id] = citizen.global_position
+		var speeds := {}
+		for citizen in world.citizens:
+			positions[citizen.citizen_id] = citizen.global_position
+			speeds[citizen.citizen_id] = citizen.combat_speed()
 		world.step()
 		if world.combat.retreated_sides.size() == 1 and world.combat.forces.size() > 2:
 			check(world.combat.winner.is_empty() and world.combat.phase == "FIGHT", "first retreat cannot choose a multi-party winner")
@@ -96,7 +99,9 @@ func run() -> void:
 			for citizen in runtime.citizens:
 				check(citizen.civilization_id == runtime.instance_id,"roster ownership")
 				if positions.has(citizen.citizen_id):
-					max_step = maxf(max_step,citizen.global_position.distance_to(positions[citizen.citizen_id]))
+					var movement: float = citizen.global_position.distance_to(positions[citizen.citizen_id])
+					max_step = maxf(max_step,movement)
+					check(movement <= float(speeds[citizen.citizen_id])*world.STEP+0.00003,"each military actor respects its actual role speed")
 				if citizen.life_state == "DEAD":
 					if not dead_positions.has(citizen.citizen_id):
 						dead_positions[citizen.citizen_id] = citizen.global_position
@@ -148,7 +153,7 @@ func run() -> void:
 				if OS.get_environment("ROOMSCALE_INNOVATION") != "1" or world.runtimes.any(func(runtime: Node) -> bool: return runtime.journal.events.any(func(e: Dictionary) -> bool: return e.kind == "territory_reached")): break
 		if iteration % 100 == 0: await process_frame
 	check(complete_at > 0,"production battle and secure capture complete")
-	check(max_step <= 0.65001,"all military and retreat movement respects production speed")
+	check(max_step <= 0.87751,"all military and retreat movement respects maximum role speed")
 	for kind in ["SITE_TARGETED","FIRST_CONTACT","HOSTILITY_DECLARED","SITE_CONTESTED","FORCE_COMMITTED","FORCE_ARRIVED","COMBAT_CASUALTY","RETREAT","SITE_CAPTURED"]:
 		check(world.journal.events.any(func(e: Dictionary) -> bool: return e.kind == kind),"event " + kind)
 	check(military_assignment_checked,"manual military reassignment boundary exercised")
@@ -191,7 +196,7 @@ func run() -> void:
 	for runtime in world.runtimes:
 		societies[runtime.instance_id] = {"status":runtime.status(),"projects":runtime.development.projects,"deliveries":runtime.haul_deliveries,"innovation":runtime.innovation.status(),"innovation_projects":runtime.innovation.projects,"research":runtime.innovation.research_history}
 		populations[runtime.instance_id] = runtime.living_population()
-	var result := {"result":"PASS" if failures.is_empty() else "FAIL","failures":failures,"room":world.room_definition.id,"first_contact_tick":world.first_contact_tick,"battle_start_tick":world.combat.battle_start_tick,"force_sizes":world.combat.initial_sizes,"casualties":world.combat.casualties,"retreating_side":world.combat.retreating_side,"winner":world.combat.winner,"site_capture_tick":world.combat.site_capture_tick,"attacks":world.combat.attacks,"morale":world.combat.morale,"returned":world.combat.returned,"max_step":max_step,"societies":societies,"events":world.journal.events,"captures":captures,"final_tick":world.tick,"living_populations":populations,"retreated_sides":world.combat.retreated_sides,"eliminated_sides":world.combat.eliminated_sides}
+	var result := {"result":"PASS" if failures.is_empty() else "FAIL","failures":failures,"room":world.room_definition.id,"first_contact_tick":world.first_contact_tick,"battle_start_tick":world.combat.battle_start_tick,"force_sizes":world.combat.initial_sizes,"casualties":world.combat.casualties,"retreating_side":world.combat.retreating_side,"winner":world.combat.winner,"site_capture_tick":world.combat.site_capture_tick,"attacks":world.combat.attacks,"commitments":world.combat.commitments,"attack_digest":world.combat.attack_digest,"attack_history":world.combat.attack_history,"morale":world.combat.morale,"returned":world.combat.returned,"max_step":max_step,"societies":societies,"events":world.journal.events,"captures":captures,"final_tick":world.tick,"living_populations":populations,"retreated_sides":world.combat.retreated_sides,"eliminated_sides":world.combat.eliminated_sides}
 	if not output.is_empty():
 		var file := FileAccess.open(output,FileAccess.WRITE)
 		if file == null: check(false,"result write failed")

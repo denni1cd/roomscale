@@ -26,7 +26,7 @@ for ($runIndex = 1; $runIndex -le $RunCount; $runIndex++) {
     if ($execution.TimedOut -or $execution.ExitCode -ne 0 -or $execution.Content -match 'ERROR:|SCRIPT ERROR:|ROOMSCALE_CONFLICT_FAIL' -or $execution.Content -notmatch 'ROOMSCALE_CONFLICT_PASS' -or -not (Test-Path -LiteralPath $resultPath)) { throw "Conflict failed; inspect $($execution.LogPath)" }
     $result = Get-Content -LiteralPath $resultPath -Raw | ConvertFrom-Json
     if ($result.result -ne 'PASS') { throw "Conflict result failed: $($result.failures)" }
-    $fingerprint = $result | Select-Object first_contact_tick,battle_start_tick,force_sizes,casualties,retreating_side,winner,site_capture_tick,attacks,morale,returned,living_populations,retreated_sides,eliminated_sides | ConvertTo-Json -Depth 8 -Compress
+    $fingerprint = $result | Select-Object first_contact_tick,battle_start_tick,force_sizes,casualties,retreating_side,winner,site_capture_tick,attacks,morale,returned,living_populations,retreated_sides,eliminated_sides,commitments,attack_digest | ConvertTo-Json -Depth 15 -Compress
     $fingerprints += $fingerprint
     if ($fingerprint -ne $fingerprints[0]) { throw 'Conflict determinism mismatch.' }
     Write-Output "ROOMSCALE_CONFLICT_PASS room=$Room run=$runIndex winner=$($result.winner) capture_tick=$($result.site_capture_tick) result=$resultPath"
