@@ -94,10 +94,10 @@ func pathfinder() -> void:
 	var sim: Node = world.runtime_for("verdant_alpha"); var citizen: Node3D = sim.citizens[0]
 	var proved := false
 	for rect in citizen.navigation.obstacle_rects:
-		var origin := Vector3(rect.center.x-rect.half.x-2,0,rect.center.y-rect.half.y-2)
+		var origin := Vector3(rect.center.x-rect.half.x-2,0,rect.center.y)
 		if not citizen.navigation.room_bounds().has_point(Vector2(origin.x,origin.z)) or citizen.navigation.is_obstacle_position(origin): continue
 		citizen.global_position = origin
-		var desired := Vector3(rect.center.x,0,rect.center.y)
+		var desired := Vector3(rect.center.x+rect.half.x+2,0,rect.center.y)
 		var choice := Abilities.endpoint(citizen,desired)
 		if choice.is_empty(): continue
 		check(choice.angle in [0,30,-30,60,-60,90,-90],"exact pathfinder candidate set")
@@ -115,6 +115,7 @@ func pathfinder() -> void:
 		sim.definition = sim.definition.duplicate(true); sim.definition.combat.capabilities = []
 		var normal := Abilities.endpoint(citizen,desired)
 		check(normal.is_empty() or normal.angle in [0,45,-45],"baseline candidate behavior preserved")
+		check(not normal.is_empty() and choice.length < normal.length,"Pathfinder improves real route length in clutter")
 		sim.definition.combat.capabilities = ["PATHFINDER_MANEUVERS"]; sim.definition.id = "synthetic_society"
 		check(Abilities.endpoint(citizen,desired) == choice and citizen.combat_speed() == speed,"synthetic pathfinder, unchanged speed")
 		citizen.equip_combat(Catalog.Roles.loadout(sim.definition,"skirmisher"))
@@ -129,7 +130,7 @@ func pathfinder() -> void:
 			var segment: Node3D = preload("res://scripts/visuals/visual_geometry.gd").box(scene,"LegalRouteSegment",Vector3(0.25,0.06,start.distance_to(finish)),(start+finish)/2+Vector3(0,0.06,0),"paint",Color("38dce6"),0.01)
 			segment.rotation.y = atan2(finish.x-start.x,finish.z-start.z)
 		var explanation := Label.new(); explanation.position = Vector2(20,20); explanation.add_theme_font_size_override("font_size",20); explanation.add_theme_color_override("font_color",Color.BLACK)
-		explanation.text = "PATHFINDER: %s degrees / %.2f inches legal route\nDirect endpoint is inside the blocked workbench footprint.\nCyan line: real navigation route; motion: 8.775 in/s." % [choice.angle,choice.length]
+		explanation.text = "PATHFINDER: %s degrees / %.2f inches legal route\nDirect route crosses the blocked workbench footprint.\nCyan line: real navigation route; motion: 8.775 in/s." % [choice.angle,choice.length]
 		scene.get_node("Overlay").add_child(explanation)
 		var label := Label3D.new(); label.text = "PATHFINDER %s deg / %.2f in legal route" % [choice.angle,choice.length]; label.position = origin+Vector3(0,2,0); label.font_size = 28; label.pixel_size = 0.02; label.billboard = BaseMaterial3D.BILLBOARD_ENABLED; scene.add_child(label)
 		var overview: Vector3 = (origin+Vector3(choice.target))/2
