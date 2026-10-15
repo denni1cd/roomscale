@@ -93,6 +93,9 @@ static func validate(definition: Dictionary, expected_id: String = "") -> Array[
 	if not (definition.world_influence is Dictionary):
 		errors.append("world_influence must be an object")
 	errors.append_array(preload("res://scripts/combat_roles.gd").validate_profile(definition.get("combat")))
+	if definition.get("combat",{}).get("capabilities",[]) is Array:
+		for capability in definition.combat.get("capabilities",[]):
+			if capability not in preload("res://scripts/military_catalog.gd").CAPABILITIES: errors.append("unknown combat capability")
 	return errors
 
 
