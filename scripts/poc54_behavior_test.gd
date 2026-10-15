@@ -123,6 +123,14 @@ func pathfinder() -> void:
 		var route: Array[Vector3] = citizen.navigation.combat_path_between(origin,choice.target)
 		for point in [origin]+route:
 			preload("res://scripts/visuals/visual_geometry.gd").box(scene,"LegalRouteMarker",Vector3(0.5,0.06,0.5),point+Vector3(0,0.04,0),"paint",Color("38dce6"),0.01)
+		var route_points: Array = [origin]+route
+		for index in range(1,route_points.size()):
+			var start: Vector3 = route_points[index-1]; var finish: Vector3 = route_points[index]
+			var segment: Node3D = preload("res://scripts/visuals/visual_geometry.gd").box(scene,"LegalRouteSegment",Vector3(0.25,0.06,start.distance_to(finish)),(start+finish)/2+Vector3(0,0.06,0),"paint",Color("38dce6"),0.01)
+			segment.rotation.y = atan2(finish.x-start.x,finish.z-start.z)
+		var explanation := Label.new(); explanation.position = Vector2(20,20); explanation.add_theme_font_size_override("font_size",20); explanation.add_theme_color_override("font_color",Color.BLACK)
+		explanation.text = "PATHFINDER: %s degrees / %.2f inches legal route\nDirect endpoint is inside the blocked workbench footprint.\nCyan line: real navigation route; motion: 8.775 in/s." % [choice.angle,choice.length]
+		scene.get_node("Overlay").add_child(explanation)
 		var label := Label3D.new(); label.text = "PATHFINDER %s deg / %.2f in legal route" % [choice.angle,choice.length]; label.position = origin+Vector3(0,2,0); label.font_size = 28; label.pixel_size = 0.02; label.billboard = BaseMaterial3D.BILLBOARD_ENABLED; scene.add_child(label)
 		var overview: Vector3 = (origin+Vector3(choice.target))/2
 		await capture(scene,"pathfinder-before",overview,70)

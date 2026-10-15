@@ -137,7 +137,11 @@ func run() -> void:
 		for iteration in range(9000):
 			multi_world.step()
 			check(not multi_world.combat.forces.has(outsider.instance_id), "peaceful third society excluded from military selection")
-			for citizen in outsider.citizens: check(citizen.health == third_health[citizen.citizen_id] and citizen.combat_duty.is_empty(), "peaceful third citizens never attacked or recruited")
+			for citizen in outsider.citizens:
+				if not third_health.has(citizen.citizen_id):
+					check(citizen.health == 100.0,"new peaceful citizen starts unharmed")
+					third_health[citizen.citizen_id] = citizen.health
+				check(citizen.health == third_health[citizen.citizen_id] and citizen.combat_duty.is_empty(), "peaceful third citizens never attacked or recruited")
 			check(multi_world.resources.audit().is_empty(), "multi-party conservation")
 			if iteration % 200 == 0: await process_frame
 		check(multi_world.combat.attacks > 0 and multi_world.combat.initial_sizes.size() == 2, "scarce pair still fights despite comfortable third")
