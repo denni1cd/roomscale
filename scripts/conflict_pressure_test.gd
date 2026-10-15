@@ -131,10 +131,23 @@ func run() -> void:
 		var outsider: Node = multi_world.runtime_for(multi_world.scenario.participants[2].instance_id)
 		var third_health := {}
 		for citizen in outsider.citizens: third_health[citizen.citizen_id] = citizen.health
+		# Authored prepared armory stock isolates bilateral policy from affordability.
+		# Live POC54 acceptance separately requires zero-stock real manufacture.
+		for runtime in multi_world.runtimes:
+			if runtime == outsider: continue
+			for role in preload("res://scripts/combat_roles.gd").ORDER:
+				for copy_index in range(3):
+					var kit := "%s:kit:%d" % [runtime.instance_id,runtime.armory._next_kit]
+					runtime.armory._next_kit += 1
+					runtime.armory.kits[kit] = {"id":kit,"equipment_id":role+"_kit","role":role,"owner":runtime.instance_id,"variant":"normal","state":"STOCKED","citizen_id":-1}
 		for iteration in range(4500):
 			multi_world.step()
 			check(not multi_world.combat.forces.has(outsider.instance_id), "peaceful third society excluded from military selection")
-			for citizen in outsider.citizens: check(citizen.health == third_health[citizen.citizen_id] and citizen.combat_duty.is_empty(), "peaceful third citizens never attacked or recruited")
+			for citizen in outsider.citizens:
+				if not third_health.has(citizen.citizen_id):
+					check(citizen.health == 100.0,"new peaceful citizen starts unharmed")
+					third_health[citizen.citizen_id] = citizen.health
+				check(citizen.health == third_health[citizen.citizen_id] and citizen.combat_duty.is_empty(), "peaceful third citizens never attacked or recruited")
 			check(multi_world.resources.audit().is_empty(), "multi-party conservation")
 			if iteration % 200 == 0: await process_frame
 		check(multi_world.combat.attacks > 0 and multi_world.combat.initial_sizes.size() == 2, "scarce pair still fights despite comfortable third")

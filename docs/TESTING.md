@@ -221,3 +221,29 @@ complete the living structure, gain the authored four real shelter places only a
 completion and reject duplicate benefit/structure application. Renderer runs require
 Clockwork access, this living structure and three-party combat. Curated images and
 compact summaries accompany the stabilization report; bulk output stays ignored.
+
+## Combat-role milestone
+
+`./TEST_ROOM_SCALE_COMBAT_ROLES.ps1 -RunCount 3 -CaptureVisuals` runs the shared
+stat/grade contracts, actual CitizenAgent grade mortality assays, role targeting and
+movement fixtures, and a real fifteen-citizen all-role three-civilization battle.
+The first run uses the real renderer and captures before/one-second/after/detail
+evidence; subsequent fresh processes must match its simulation fingerprint.
+`TEST_ROOM_SCALE_CONFLICT.ps1` now fingerprints committed IDs/loadouts and all
+attack ordering as well as outcomes. `TEST_ROOM_SCALE_EXTENSIBILITY.ps1` retains
+mixed-policy elimination, survivor retreat and peaceful-claim coverage and adds a
+three-survival-party continuation-after-elimination fixture. Fast includes role
+data contracts. See `verification/combat-roles/` for acceptance receipts.
+
+## POC 5.4 doctrine and mobilization
+
+`./TEST_ROOM_SCALE_POC54.ps1 -RunCount 3 -CaptureVisuals` runs shared data contracts,
+real armory labor/interruption/accounting, scarcity and capability fixtures, physical
+muster/cancellation/reuse, Prepared Fire timestamp cadence, cluttered Pathfinder
+movement, and zero-stock three-party live manufacture/muster/battle/demobilization.
+Live conflict fingerprints include final economic and armory state and every military
+event. Focused tactical/policy tests explicitly author prepared initial kit stock;
+the live conflict driver rejects preseeded stock and verifies one paid native-work
+project per kit. Fast includes POC54 data validation. Relevant acceptance gates remain
+Fast, Canonical, Regression, roles, conflict/pressure, extensibility, civilizations,
+innovation and innovation live. Curated evidence is in `verification/poc54/`.

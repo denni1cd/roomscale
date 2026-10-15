@@ -12,6 +12,16 @@ static var _shared_meshes: Dictionary = {}
 var citizen_id := -1
 var civilization_id := "legacy"
 var health := 100.0
+var max_health := 100.0
+var combat_role := ""
+var combat_kit := ""
+var pending_kit := ""
+var prepared := false
+var preparation_initialized := false
+var preparation_anchor := Vector3.ZERO
+var preparation_started := 0.0
+var combat_stats: Dictionary = {}
+var combat_state := ""
 var life_state := "ALIVE"
 var combat_duty := ""
 var combat_arrived := false
@@ -26,9 +36,9 @@ func refresh_combat_presentation(delta: float) -> void:
 	_combat_recoil = maxf(0.0,_combat_recoil-delta*6.0)
 	if _combat_indicators != null:
 		_combat_indicators.visible = life_state == "ALIVE" and not combat_duty.is_empty()
-		_combat_indicators.get_node("HealthFill").scale.x = maxf(0.01,health/100.0)
-		_combat_indicators.get_node("HealthFill").material_override.albedo_color = Color("ec7357") if health < 40 else Color("91da6b")
-		_combat_indicators.get_node("HealthFill").material_override.emission = Color("ec7357") if health < 40 else Color("91da6b")
+		_combat_indicators.get_node("HealthFill").scale.x = maxf(0.01,health/max_health)
+		_combat_indicators.get_node("HealthFill").material_override.albedo_color = Color("ec7357") if health/max_health < 0.4 else Color("91da6b")
+		_combat_indicators.get_node("HealthFill").material_override.emission = Color("ec7357") if health/max_health < 0.4 else Color("91da6b")
 	if _combat_weapon != null and life_state == "ALIVE" and not combat_duty.is_empty():
 		_combat_weapon.position.z = 0.10-_combat_recoil*0.04
 		_combat_weapon.rotation.x = -_combat_recoil*0.12
@@ -41,10 +51,38 @@ func eligible_for_combat(target: Vector3) -> bool:
 	if absf(global_position.y - navigation._floor_height) > 0.1: return false
 	return not navigation.path_between(global_position, target).is_empty()
 
+func equip_combat(loadout: Dictionary) -> void:
+	# Preserve health fraction when assigning/removing equipment; never resurrect.
+	var fraction := health / max_health
+	combat_stats = loadout.duplicate(true)
+	combat_role = String(loadout.role)
+	max_health = float(loadout.health)
+	health = max_health * fraction
+
+func combat_inspection() -> String:
+	var kit: Dictionary = coordinator.civilization.armory.kits.get(combat_kit if not combat_kit.is_empty() else pending_kit,{})
+	var role: String = combat_role if not combat_role.is_empty() else String(kit.get("role",""))
+	var stats: Dictionary = combat_stats
+	if stats.is_empty() and not role.is_empty(): stats = preload("res://scripts/combat_roles.gd").loadout(coordinator.civilization.definition,role)
+	return "%s · %s (%s)\nKit %s · %s · Prepared %s\nHP %.1f/%.1f · Armor %.1f · Damage %.1f\nRange %.1f · Cycle %.3fs · Move %.2fx\n%s / %s" % [civilization_id,role,stats.get("grade",""),kit.get("id","unissued"),kit.get("variant",""),prepared,health,max_health,stats.get("armor",0),stats.get("damage",0),stats.get("range",0),preload("res://scripts/military_abilities.gd").interval(self) if not combat_stats.is_empty() else float(stats.get("interval",0)),stats.get("movement",1),combat_duty,combat_state]
+
+func combat_speed() -> float:
+	return WALK_SPEED * float(combat_stats.get("movement",1.0)) if not combat_duty.is_empty() else WALK_SPEED
+
 func assign_combat_duty(duty: String, target: Vector3) -> bool:
-	var route: Array[Vector3] = navigation.path_between(global_position, target)
-	if life_state != "ALIVE" or carrying or route.is_empty(): return false
+	var route: Array[Vector3] = navigation.combat_path_between(global_position, target) if duty == "MANEUVER" else navigation.path_between(global_position, target)
+	if life_state != "ALIVE" or carrying: return false
+	if route.is_empty():
+		if duty == "RETREAT":
+			combat_duty = "RETREAT"
+			combat_state = "RETURN_BLOCKED"
+			combat_arrived = false
+			_destination = target
+			_path.clear()
+			state = "HOLD"
+		return false
 	combat_duty = duty
+	combat_state = duty
 	if task_id > 0: coordinator.cancel_task(task_id, "strategic military commitment")
 	task_id = -1
 	task_type = "COMBAT"
@@ -54,16 +92,39 @@ func assign_combat_duty(duty: String, target: Vector3) -> bool:
 	_path_cursor = 0
 	combat_arrived = false
 	state = "TRAVEL"
+	if duty == "MUSTER" and combat_kit.is_empty(): return true
 	if _combat_weapon == null:
 		var organic: bool = preload("res://scripts/civilization_presentation.gd").uses_organic_combat(coordinator.civilization.definition)
-		_combat_weapon = CombatPresentation.weapon(get_node("Figure"),organic)
+		_combat_weapon = CombatPresentation.weapon(get_node("Figure"),organic,combat_role)
 		_combat_indicators = CombatPresentation.indicators(self,organic)
+		var label := Label3D.new()
+		label.name = "CombatRole"
+		label.text = combat_role.capitalize()
+		label.font_size = 36
+		label.pixel_size = 0.004
+		label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+		label.position.y = 0.85
+		_combat_indicators.add_child(label)
 	_combat_weapon.show()
 	return true
 
 func end_combat_duty() -> void:
+	if not combat_kit.is_empty():
+		if not coordinator.civilization.armory.return_kit(self): return
 	combat_duty = ""
-	if _combat_weapon != null: _combat_weapon.hide()
+	combat_state = ""
+	pending_kit = ""
+	prepared = false
+	preparation_initialized = false
+	health = health / max_health * 100.0
+	max_health = 100.0
+	combat_role = ""
+	combat_stats.clear()
+	if _combat_weapon != null:
+		_combat_weapon.queue_free()
+		_combat_weapon = null
+		_combat_indicators.queue_free()
+		_combat_indicators = null
 	task_type = "IDLE"
 	state = "IDLE"
 	_assign_next_task()
@@ -73,6 +134,7 @@ func suffer_combat_damage(amount: float) -> bool:
 	health = maxf(0, health - amount)
 	if health > 0: return false
 	life_state = "DEAD"
+	coordinator.civilization.armory.lose(self)
 	if task_id > 0: coordinator.cancel_task(task_id, "combat casualty")
 	task_id = -1
 	task_type = "DEAD"
@@ -134,6 +196,7 @@ func _process(delta: float) -> void:
 func advance_simulation(delta: float) -> void:
 	if life_state == "DEAD": return
 	if not combat_duty.is_empty():
+		if combat_state == "RETURN_BLOCKED": assign_combat_duty("RETREAT",_destination)
 		_animation_time += delta
 		if state == "TRAVEL": _advance_path(delta)
 		_update_animation()
@@ -149,7 +212,7 @@ func advance_simulation(delta: float) -> void:
 	_animation_time += delta
 	if not needs.is_empty():
 		var civilization: Node = coordinator.civilization
-		var innovation_work: bool = task_type.begins_with("INNOVATION_") or (task_type == "CONSTRUCTION_BUILD" and bool(coordinator.get_task(task_id).get("innovation_project", false)))
+		var innovation_work: bool = task_type.begins_with("ARMORY_") or task_type.begins_with("INNOVATION_") or (task_type == "CONSTRUCTION_BUILD" and bool(coordinator.get_task(task_id).get("innovation_project", false)))
 		if (innovation_work or task_type in ["WORKSHOP_MAINTENANCE", "DEPOT_RUN", "HOUSING_CHECK", "WORK_AREA_JOB", "FLOOR_PATROL"]) and civilization.should_interrupt(self):
 			coordinator.cancel_task(task_id, "urgent self-care")
 			_assign_next_task()
@@ -179,6 +242,14 @@ func advance_simulation(delta: float) -> void:
 			var effort: float = delta if needs.is_empty() else delta * coordinator.civilization.needs.work_factor(needs)
 			production_work_active = true
 			var finished: bool = coordinator.advance_innovation_work(task_id, citizen_id, effort)
+			production_work_active = false
+			if finished:
+				coordinator.complete_task(task_id)
+				_assign_next_task()
+		elif task_type == "ARMORY_BUILD":
+			var effort: float = delta if needs.is_empty() else delta * coordinator.civilization.needs.work_factor(needs)
+			production_work_active = true
+			var finished: bool = coordinator.civilization.armory.work(self,effort)
 			production_work_active = false
 			if finished:
 				coordinator.complete_task(task_id)
@@ -291,7 +362,7 @@ func cancel_task_and_resume(cancelled_task_id: int) -> void:
 
 
 func get_inspection_status() -> Dictionary:
-	return {"id": citizen_id, "state": state, "task": task_type, "target": _destination, "needs": needs.duplicate(true)}
+	return {"id": citizen_id, "state": state, "task": task_type, "target": _destination, "needs": needs.duplicate(true), "civilization":civilization_id,"role":combat_role,"combat_stats":combat_stats.duplicate(true),"health":health,"max_health":max_health,"combat_state":combat_state,"kit_id":combat_kit,"prepared":prepared}
 
 
 func _assign_next_task() -> void:
@@ -339,6 +410,9 @@ func _navigate_to(destination: Vector3) -> void:
 
 
 func replan_current_route() -> void:
+	if not combat_duty.is_empty():
+		assign_combat_duty(combat_duty,_destination)
+		return
 	_navigate_to(_destination)
 
 
@@ -354,7 +428,7 @@ func _advance_path(delta: float) -> void:
 			_arrive_at_destination()
 		return
 	var direction := remaining.normalized()
-	var step := minf(WALK_SPEED * delta, remaining.length())
+	var step := minf(combat_speed() * delta, remaining.length())
 	global_position += direction * step
 	rotation.y = atan2(direction.x, direction.z)
 	travelled_distance += step

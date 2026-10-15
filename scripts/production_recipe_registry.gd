@@ -42,7 +42,7 @@ func perform(sim: Node, task: Dictionary, citizen: Node3D, effort: float) -> boo
 	# Preflight output capacity before consuming input, so even extreme authored
 	# quantities cannot overflow a ledger or consume input without an output.
 	if not sim.resources.can_create_bundle(recipe.output,float(recipe.output_amount)) or not sim.economy.can_receive(recipe.output,float(recipe.output_amount)): return false
-	if not sim.economy.consume(task.ticket,true): return false
+	if not sim.economy.consume(task.ticket,task.fabrication_owner,true): return false
 	var bundle: int = sim.resources.create_bundle(recipe.output,float(recipe.output_amount),citizen.global_position,"fabrication:"+sim.instance_id)
 	if bundle < 0: return false
 	sim.resources.reserve_bundle(bundle,citizen.citizen_id,sim.instance_id)

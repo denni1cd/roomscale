@@ -1,0 +1,3194 @@
+{
+  "source_commit": "7621e2a79e324e9bf68a021df00ee3566deea4c7",
+  "result": "PASS",
+  "cases": [
+    {
+      "room": "room_conflict_c",
+      "fresh_processes": 3,
+      "identical": true,
+      "fingerprint_sha256": "22b3a16686ecc05714071dc4101e01a6e539785b5eb2e154a209b455a8a9b41e",
+      "fingerprint": {
+        "first_contact_tick": 1351,
+        "battle_start_tick": 3741,
+        "force_sizes": {
+          "clockwork_alpha": 2,
+          "scavenger_alpha": 2,
+          "verdant_alpha": 2
+        },
+        "casualties": {
+          "clockwork_alpha": 0,
+          "scavenger_alpha": 1,
+          "verdant_alpha": 1
+        },
+        "retreating_side": "scavenger_alpha",
+        "winner": "clockwork_alpha",
+        "site_capture_tick": 4339,
+        "attacks": 21,
+        "morale": {
+          "clockwork_alpha": 0.939875,
+          "scavenger_alpha": 0.554166666666667,
+          "verdant_alpha": 0.4725
+        },
+        "returned": {
+          "clockwork_alpha": 2,
+          "scavenger_alpha": 1,
+          "verdant_alpha": 1
+        },
+        "living_populations": {
+          "clockwork_alpha": 12,
+          "scavenger_alpha": 13,
+          "verdant_alpha": 13
+        },
+        "retreated_sides": {
+          "scavenger_alpha": 4218,
+          "verdant_alpha": 4217
+        },
+        "eliminated_sides": {},
+        "commitments": [
+          {
+            "id": 7,
+            "kit": "clockwork_alpha:kit:1",
+            "role": "artillery",
+            "side": "clockwork_alpha",
+            "stats": {
+              "armor": 0.0,
+              "behavior": "support",
+              "damage": 54.0,
+              "grade": "Great",
+              "health": 80.0,
+              "implementation": "clockwork_artillery",
+              "interval": 3.5,
+              "movement": 0.55,
+              "preferred": 12.0,
+              "range": 15.0,
+              "reposition": 2.0,
+              "role": "artillery"
+            }
+          },
+          {
+            "id": 9,
+            "kit": "clockwork_alpha:kit:2",
+            "role": "heavy",
+            "side": "clockwork_alpha",
+            "stats": {
+              "armor": 8.0,
+              "behavior": "assault",
+              "damage": 24.0,
+              "grade": "Neutral",
+              "health": 180.0,
+              "implementation": "clockwork_heavy",
+              "interval": 1.5,
+              "movement": 0.7,
+              "preferred": 0.5,
+              "range": 0.6,
+              "reposition": 1.0,
+              "role": "heavy"
+            }
+          },
+          {
+            "id": 17,
+            "kit": "scavenger_alpha:kit:2",
+            "role": "heavy",
+            "side": "scavenger_alpha",
+            "stats": {
+              "armor": 8.0,
+              "behavior": "assault",
+              "damage": 24.0,
+              "grade": "Great",
+              "health": 216.0,
+              "implementation": "scavenger_heavy",
+              "interval": 1.5,
+              "movement": 0.7,
+              "preferred": 0.5,
+              "range": 0.6,
+              "reposition": 1.0,
+              "role": "heavy"
+            }
+          },
+          {
+            "id": 23,
+            "kit": "scavenger_alpha:kit:1",
+            "role": "line",
+            "side": "scavenger_alpha",
+            "stats": {
+              "armor": 3.0,
+              "behavior": "screen",
+              "damage": 18.0,
+              "grade": "Good",
+              "health": 132.0,
+              "implementation": "scavenger_line",
+              "interval": 1.0,
+              "movement": 1.0,
+              "preferred": 0.5,
+              "range": 0.6,
+              "reposition": 1.0,
+              "role": "line"
+            }
+          },
+          {
+            "id": 25,
+            "kit": "verdant_alpha:kit:1",
+            "role": "skirmisher",
+            "side": "verdant_alpha",
+            "stats": {
+              "armor": 0.0,
+              "behavior": "harass",
+              "damage": 13.2,
+              "grade": "Great",
+              "health": 80.0,
+              "implementation": "verdant_skirmisher",
+              "interval": 0.9,
+              "movement": 1.35,
+              "preferred": 4.0,
+              "range": 5.0,
+              "reposition": 0.7,
+              "role": "skirmisher"
+            }
+          },
+          {
+            "id": 34,
+            "kit": "verdant_alpha:kit:2",
+            "role": "line",
+            "side": "verdant_alpha",
+            "stats": {
+              "armor": 3.0,
+              "behavior": "screen",
+              "damage": 18.0,
+              "grade": "Neutral",
+              "health": 120.0,
+              "implementation": "verdant_line",
+              "interval": 1.0,
+              "movement": 1.0,
+              "preferred": 0.5,
+              "range": 0.6,
+              "reposition": 1.0,
+              "role": "line"
+            }
+          }
+        ],
+        "attack_digest": "c7847e27ffedeb53938fe077f4425e8468ccb1cd7cdfe82929a67ce7ecf207b2",
+        "military_fingerprint": {
+          "clockwork_alpha": {
+            "armory": {
+              "blocked": "two active equipment projects",
+              "kits": {
+                "clockwork_alpha:kit:1": {
+                  "citizen_id": -1,
+                  "equipment_id": "artillery_kit",
+                  "id": "clockwork_alpha:kit:1",
+                  "owner": "clockwork_alpha",
+                  "role": "artillery",
+                  "state": "STOCKED",
+                  "variant": "normal"
+                },
+                "clockwork_alpha:kit:2": {
+                  "citizen_id": -1,
+                  "equipment_id": "heavy_kit",
+                  "id": "clockwork_alpha:kit:2",
+                  "owner": "clockwork_alpha",
+                  "role": "heavy",
+                  "state": "STOCKED",
+                  "variant": "normal"
+                }
+              },
+              "projects": {
+                "clockwork_alpha:equipment:1": {
+                  "cost": {
+                    "metal": 4,
+                    "wood": 2
+                  },
+                  "equipment_id": "artillery_kit",
+                  "evaluation": 66,
+                  "id": "clockwork_alpha:equipment:1",
+                  "kit": "clockwork_alpha:kit:1",
+                  "required_work": 18.0,
+                  "role": "artillery",
+                  "state": "COMPLETE",
+                  "tickets": [
+                    36,
+                    37
+                  ],
+                  "variant": "normal",
+                  "work": 18.0,
+                  "workers": {
+                    "1": 18.0
+                  }
+                },
+                "clockwork_alpha:equipment:2": {
+                  "cost": {
+                    "metal": 3,
+                    "wood": 1
+                  },
+                  "equipment_id": "heavy_kit",
+                  "evaluation": 67,
+                  "id": "clockwork_alpha:equipment:2",
+                  "kit": "clockwork_alpha:kit:2",
+                  "required_work": 12.0,
+                  "role": "heavy",
+                  "state": "COMPLETE",
+                  "tickets": [
+                    38,
+                    39
+                  ],
+                  "variant": "normal",
+                  "work": 12.0,
+                  "workers": {
+                    "2": 12.0
+                  }
+                }
+              },
+              "stock": {
+                "artillery": 1,
+                "heavy": 1,
+                "line": 0,
+                "ranged": 0,
+                "skirmisher": 0
+              }
+            },
+            "economy": {
+              "food": {
+                "available": 71.0,
+                "consumed": 77.0,
+                "delivered": 0.0,
+                "in_transit": 0.0,
+                "received": 128.0,
+                "reserved": 0.0
+              },
+              "mechanical_parts": {
+                "available": 0.0,
+                "consumed": 0.0,
+                "delivered": 0.0,
+                "in_transit": 0.0,
+                "received": 0.0,
+                "reserved": 0.0
+              },
+              "metal": {
+                "available": 21.0,
+                "consumed": 7.0,
+                "delivered": 0.0,
+                "in_transit": 0.0,
+                "received": 28.0,
+                "reserved": 0.0
+              },
+              "water": {
+                "available": 103.0,
+                "consumed": 119.0,
+                "delivered": 0.0,
+                "in_transit": 0.0,
+                "received": 192.0,
+                "reserved": 0.0
+              },
+              "wood": {
+                "available": 0.0,
+                "consumed": 7.0,
+                "delivered": 0.0,
+                "in_transit": 0.0,
+                "received": 7.0,
+                "reserved": 0.0
+              }
+            },
+            "events": [
+              {
+                "data": {
+                  "id": "clockwork_alpha",
+                  "policy": {
+                    "allow_retreat": true,
+                    "cause": "SPACE",
+                    "force_fraction": 0.25,
+                    "intensity": 2,
+                    "intensity_name": "LIMITED_WAR",
+                    "max_force": 6,
+                    "min_force": 2,
+                    "objective": "SECURE_TERRITORY",
+                    "retreat_threshold": 0.7
+                  }
+                },
+                "kind": "READINESS_TARGET",
+                "tick": 1441
+              },
+              {
+                "data": {
+                  "cost": {
+                    "metal": 4,
+                    "wood": 2
+                  },
+                  "equipment_id": "artillery_kit",
+                  "evaluation": 66,
+                  "id": "clockwork_alpha:equipment:1",
+                  "required_work": 18.0,
+                  "role": "artillery",
+                  "state": "BUILDING",
+                  "tickets": [
+                    36,
+                    37
+                  ],
+                  "variant": "normal",
+                  "work": 0.0,
+                  "workers": {}
+                },
+                "kind": "KIT_ORDERED",
+                "tick": 3300
+              },
+              {
+                "data": {
+                  "cost": {
+                    "metal": 3,
+                    "wood": 1
+                  },
+                  "equipment_id": "heavy_kit",
+                  "evaluation": 67,
+                  "id": "clockwork_alpha:equipment:2",
+                  "required_work": 12.0,
+                  "role": "heavy",
+                  "state": "BUILDING",
+                  "tickets": [
+                    38,
+                    39
+                  ],
+                  "variant": "normal",
+                  "work": 0.0,
+                  "workers": {}
+                },
+                "kind": "KIT_ORDERED",
+                "tick": 3350
+              },
+              {
+                "data": {
+                  "id": "clockwork_alpha:kit:1",
+                  "project": "clockwork_alpha:equipment:1"
+                },
+                "kind": "KIT_COMPLETED",
+                "tick": 3494
+              },
+              {
+                "data": {
+                  "id": "clockwork_alpha:kit:2",
+                  "project": "clockwork_alpha:equipment:2"
+                },
+                "kind": "KIT_COMPLETED",
+                "tick": 3496
+              },
+              {
+                "data": {
+                  "citizen_id": 7,
+                  "equipment_id": "artillery_kit",
+                  "id": "clockwork_alpha:kit:1",
+                  "owner": "clockwork_alpha",
+                  "role": "artillery",
+                  "state": "RESERVED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_RESERVED",
+                "tick": 3496
+              },
+              {
+                "data": {
+                  "citizen_id": 9,
+                  "equipment_id": "heavy_kit",
+                  "id": "clockwork_alpha:kit:2",
+                  "owner": "clockwork_alpha",
+                  "role": "heavy",
+                  "state": "RESERVED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_RESERVED",
+                "tick": 3496
+              },
+              {
+                "data": {
+                  "id": 7,
+                  "kit": "clockwork_alpha:kit:1",
+                  "role": "artillery"
+                },
+                "kind": "CITIZEN_MUSTERING",
+                "tick": 3496
+              },
+              {
+                "data": {
+                  "id": 9,
+                  "kit": "clockwork_alpha:kit:2",
+                  "role": "heavy"
+                },
+                "kind": "CITIZEN_MUSTERING",
+                "tick": 3496
+              },
+              {
+                "data": {
+                  "citizen_id": 9,
+                  "equipment_id": "heavy_kit",
+                  "id": "clockwork_alpha:kit:2",
+                  "owner": "clockwork_alpha",
+                  "role": "heavy",
+                  "state": "ISSUED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_ISSUED",
+                "tick": 3690
+              },
+              {
+                "data": {
+                  "citizen_id": 7,
+                  "equipment_id": "artillery_kit",
+                  "id": "clockwork_alpha:kit:1",
+                  "owner": "clockwork_alpha",
+                  "role": "artillery",
+                  "state": "ISSUED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_ISSUED",
+                "tick": 3716
+              },
+              {
+                "data": {
+                  "id": "clockwork_alpha",
+                  "size": 2
+                },
+                "kind": "MOBILIZATION_READY",
+                "tick": 3734
+              },
+              {
+                "data": {
+                  "authorized": 3,
+                  "blocked": "",
+                  "capabilities": [
+                    "PREPARED_FIRE"
+                  ],
+                  "members": [
+                    {
+                      "citizen_id": 7,
+                      "kit": "clockwork_alpha:kit:1",
+                      "role": "artillery"
+                    },
+                    {
+                      "citizen_id": 9,
+                      "kit": "clockwork_alpha:kit:2",
+                      "role": "heavy"
+                    }
+                  ],
+                  "minimum": 2,
+                  "missing": [
+                    "ranged"
+                  ],
+                  "planned": [
+                    "artillery",
+                    "heavy",
+                    "ranged"
+                  ],
+                  "projects": 0,
+                  "state": "DEPLOYED",
+                  "stock": {
+                    "artillery": 0,
+                    "heavy": 0,
+                    "line": 0,
+                    "ranged": 0,
+                    "skirmisher": 0
+                  }
+                },
+                "kind": "FORCE_DEPLOYED",
+                "tick": 3741
+              },
+              {
+                "data": {
+                  "capability": "PREPARED_FIRE",
+                  "id": 7,
+                  "prepared": true
+                },
+                "kind": "ABILITY_STATE",
+                "tick": 4247
+              },
+              {
+                "data": {
+                  "capability": "PREPARED_FIRE",
+                  "id": 7,
+                  "prepared": false
+                },
+                "kind": "ABILITY_STATE",
+                "tick": 4340
+              },
+              {
+                "data": {
+                  "citizen_id": -1,
+                  "equipment_id": "heavy_kit",
+                  "id": "clockwork_alpha:kit:2",
+                  "owner": "clockwork_alpha",
+                  "role": "heavy",
+                  "state": "STOCKED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_RETURNED",
+                "tick": 4673
+              },
+              {
+                "data": {
+                  "citizen_id": -1,
+                  "equipment_id": "artillery_kit",
+                  "id": "clockwork_alpha:kit:1",
+                  "owner": "clockwork_alpha",
+                  "role": "artillery",
+                  "state": "STOCKED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_RETURNED",
+                "tick": 4844
+              }
+            ],
+            "readiness": {
+              "authorized": 3,
+              "blocked": "",
+              "capabilities": [
+                "PREPARED_FIRE"
+              ],
+              "members": [
+                {
+                  "citizen_id": 7,
+                  "kit": "clockwork_alpha:kit:1",
+                  "role": "artillery"
+                },
+                {
+                  "citizen_id": 9,
+                  "kit": "clockwork_alpha:kit:2",
+                  "role": "heavy"
+                }
+              ],
+              "minimum": 0,
+              "missing": [],
+              "planned": [
+                "artillery",
+                "heavy",
+                "ranged"
+              ],
+              "projects": 0,
+              "state": "COMPLETE",
+              "stock": {
+                "artillery": 1,
+                "heavy": 1,
+                "line": 0,
+                "ranged": 0,
+                "skirmisher": 0
+              }
+            }
+          },
+          "scavenger_alpha": {
+            "armory": {
+              "blocked": "missing metal",
+              "kits": {
+                "scavenger_alpha:kit:1": {
+                  "citizen_id": 23,
+                  "equipment_id": "line_kit",
+                  "id": "scavenger_alpha:kit:1",
+                  "owner": "scavenger_alpha",
+                  "role": "line",
+                  "state": "LOST",
+                  "variant": "jury_rigged"
+                },
+                "scavenger_alpha:kit:2": {
+                  "citizen_id": -1,
+                  "equipment_id": "heavy_kit",
+                  "id": "scavenger_alpha:kit:2",
+                  "owner": "scavenger_alpha",
+                  "role": "heavy",
+                  "state": "STOCKED",
+                  "variant": "jury_rigged"
+                }
+              },
+              "projects": {
+                "scavenger_alpha:equipment:1": {
+                  "cost": {
+                    "metal": 2,
+                    "wood": 3
+                  },
+                  "equipment_id": "heavy_kit",
+                  "evaluation": 35,
+                  "id": "scavenger_alpha:equipment:1",
+                  "kit": "scavenger_alpha:kit:2",
+                  "required_work": 15.0,
+                  "role": "heavy",
+                  "state": "COMPLETE",
+                  "tickets": [
+                    18,
+                    19
+                  ],
+                  "variant": "jury_rigged",
+                  "work": 15.0,
+                  "workers": {
+                    "22": 15.0
+                  }
+                },
+                "scavenger_alpha:equipment:2": {
+                  "cost": {
+                    "metal": 0,
+                    "wood": 3
+                  },
+                  "equipment_id": "line_kit",
+                  "evaluation": 36,
+                  "id": "scavenger_alpha:equipment:2",
+                  "kit": "scavenger_alpha:kit:1",
+                  "required_work": 7.5,
+                  "role": "line",
+                  "state": "COMPLETE",
+                  "tickets": [
+                    21
+                  ],
+                  "variant": "jury_rigged",
+                  "work": 7.49999999999999,
+                  "workers": {
+                    "15": 7.49999999999999
+                  }
+                }
+              },
+              "stock": {
+                "artillery": 0,
+                "heavy": 1,
+                "line": 0,
+                "ranged": 0,
+                "skirmisher": 0
+              }
+            },
+            "economy": {
+              "food": {
+                "available": 80.0,
+                "consumed": 76.0,
+                "delivered": 0.0,
+                "in_transit": 0.0,
+                "received": 136.0,
+                "reserved": 0.0
+              },
+              "mechanical_parts": {
+                "available": 0.0,
+                "consumed": 0.0,
+                "delivered": 0.0,
+                "in_transit": 0.0,
+                "received": 0.0,
+                "reserved": 0.0
+              },
+              "metal": {
+                "available": 1.0,
+                "consumed": 9.0,
+                "delivered": 0.0,
+                "in_transit": 0.0,
+                "received": 10.0,
+                "reserved": 0.0
+              },
+              "water": {
+                "available": 113.0,
+                "consumed": 117.0,
+                "delivered": 0.0,
+                "in_transit": 0.0,
+                "received": 200.0,
+                "reserved": 0.0
+              },
+              "wood": {
+                "available": 14.0,
+                "consumed": 32.0,
+                "delivered": 0.0,
+                "in_transit": 0.0,
+                "received": 46.0,
+                "reserved": 0.0
+              }
+            },
+            "events": [
+              {
+                "data": {
+                  "id": "scavenger_alpha",
+                  "policy": {
+                    "allow_retreat": true,
+                    "cause": "SPACE",
+                    "force_fraction": 0.25,
+                    "intensity": 2,
+                    "intensity_name": "LIMITED_WAR",
+                    "max_force": 6,
+                    "min_force": 2,
+                    "objective": "SECURE_TERRITORY",
+                    "retreat_threshold": 0.7
+                  }
+                },
+                "kind": "READINESS_TARGET",
+                "tick": 1441
+              },
+              {
+                "data": {
+                  "cost": {
+                    "metal": 2,
+                    "wood": 3
+                  },
+                  "equipment_id": "heavy_kit",
+                  "evaluation": 35,
+                  "id": "scavenger_alpha:equipment:1",
+                  "required_work": 15.0,
+                  "role": "heavy",
+                  "state": "BUILDING",
+                  "tickets": [
+                    18,
+                    19
+                  ],
+                  "variant": "jury_rigged",
+                  "work": 0.0,
+                  "workers": {}
+                },
+                "kind": "KIT_ORDERED",
+                "tick": 1750
+              },
+              {
+                "data": {
+                  "cost": {
+                    "metal": 0,
+                    "wood": 3
+                  },
+                  "equipment_id": "line_kit",
+                  "evaluation": 36,
+                  "id": "scavenger_alpha:equipment:2",
+                  "required_work": 7.5,
+                  "role": "line",
+                  "state": "BUILDING",
+                  "tickets": [
+                    21
+                  ],
+                  "variant": "jury_rigged",
+                  "work": 0.0,
+                  "workers": {}
+                },
+                "kind": "KIT_ORDERED",
+                "tick": 1800
+              },
+              {
+                "data": {
+                  "id": "scavenger_alpha:kit:1",
+                  "project": "scavenger_alpha:equipment:2"
+                },
+                "kind": "KIT_COMPLETED",
+                "tick": 1893
+              },
+              {
+                "data": {
+                  "id": "scavenger_alpha:kit:2",
+                  "project": "scavenger_alpha:equipment:1"
+                },
+                "kind": "KIT_COMPLETED",
+                "tick": 1920
+              },
+              {
+                "data": {
+                  "citizen_id": 17,
+                  "equipment_id": "heavy_kit",
+                  "id": "scavenger_alpha:kit:2",
+                  "owner": "scavenger_alpha",
+                  "role": "heavy",
+                  "state": "RESERVED",
+                  "variant": "jury_rigged"
+                },
+                "kind": "KIT_RESERVED",
+                "tick": 1920
+              },
+              {
+                "data": {
+                  "citizen_id": 23,
+                  "equipment_id": "line_kit",
+                  "id": "scavenger_alpha:kit:1",
+                  "owner": "scavenger_alpha",
+                  "role": "line",
+                  "state": "RESERVED",
+                  "variant": "jury_rigged"
+                },
+                "kind": "KIT_RESERVED",
+                "tick": 1920
+              },
+              {
+                "data": {
+                  "id": 17,
+                  "kit": "scavenger_alpha:kit:2",
+                  "role": "heavy"
+                },
+                "kind": "CITIZEN_MUSTERING",
+                "tick": 1920
+              },
+              {
+                "data": {
+                  "id": 23,
+                  "kit": "scavenger_alpha:kit:1",
+                  "role": "line"
+                },
+                "kind": "CITIZEN_MUSTERING",
+                "tick": 1920
+              },
+              {
+                "data": {
+                  "citizen_id": 17,
+                  "equipment_id": "heavy_kit",
+                  "id": "scavenger_alpha:kit:2",
+                  "owner": "scavenger_alpha",
+                  "role": "heavy",
+                  "state": "ISSUED",
+                  "variant": "jury_rigged"
+                },
+                "kind": "KIT_ISSUED",
+                "tick": 1991
+              },
+              {
+                "data": {
+                  "citizen_id": 23,
+                  "equipment_id": "line_kit",
+                  "id": "scavenger_alpha:kit:1",
+                  "owner": "scavenger_alpha",
+                  "role": "line",
+                  "state": "ISSUED",
+                  "variant": "jury_rigged"
+                },
+                "kind": "KIT_ISSUED",
+                "tick": 1993
+              },
+              {
+                "data": {
+                  "id": "scavenger_alpha",
+                  "size": 2
+                },
+                "kind": "MOBILIZATION_READY",
+                "tick": 2007
+              },
+              {
+                "data": {
+                  "authorized": 3,
+                  "blocked": "",
+                  "capabilities": [
+                    "JURY_RIG_EQUIPMENT"
+                  ],
+                  "members": [
+                    {
+                      "citizen_id": 17,
+                      "kit": "scavenger_alpha:kit:2",
+                      "role": "heavy"
+                    },
+                    {
+                      "citizen_id": 23,
+                      "kit": "scavenger_alpha:kit:1",
+                      "role": "line"
+                    }
+                  ],
+                  "minimum": 2,
+                  "missing": [
+                    "artillery"
+                  ],
+                  "planned": [
+                    "heavy",
+                    "line",
+                    "artillery"
+                  ],
+                  "projects": 0,
+                  "state": "DEPLOYED",
+                  "stock": {
+                    "artillery": 0,
+                    "heavy": 0,
+                    "line": 0,
+                    "ranged": 0,
+                    "skirmisher": 0
+                  }
+                },
+                "kind": "FORCE_DEPLOYED",
+                "tick": 3741
+              },
+              {
+                "data": {
+                  "citizen_id": 23,
+                  "equipment_id": "line_kit",
+                  "id": "scavenger_alpha:kit:1",
+                  "owner": "scavenger_alpha",
+                  "role": "line",
+                  "state": "LOST",
+                  "variant": "jury_rigged"
+                },
+                "kind": "KIT_LOST",
+                "tick": 4218
+              },
+              {
+                "data": {
+                  "citizen_id": -1,
+                  "equipment_id": "heavy_kit",
+                  "id": "scavenger_alpha:kit:2",
+                  "owner": "scavenger_alpha",
+                  "role": "heavy",
+                  "state": "STOCKED",
+                  "variant": "jury_rigged"
+                },
+                "kind": "KIT_RETURNED",
+                "tick": 4391
+              }
+            ],
+            "readiness": {
+              "authorized": 3,
+              "blocked": "",
+              "capabilities": [
+                "JURY_RIG_EQUIPMENT"
+              ],
+              "members": [
+                {
+                  "citizen_id": 17,
+                  "kit": "scavenger_alpha:kit:2",
+                  "role": "heavy"
+                },
+                {
+                  "citizen_id": 23,
+                  "kit": "scavenger_alpha:kit:1",
+                  "role": "line"
+                }
+              ],
+              "minimum": 0,
+              "missing": [],
+              "planned": [
+                "heavy",
+                "line",
+                "artillery"
+              ],
+              "projects": 0,
+              "state": "COMPLETE",
+              "stock": {
+                "artillery": 0,
+                "heavy": 1,
+                "line": 0,
+                "ranged": 0,
+                "skirmisher": 0
+              }
+            }
+          },
+          "verdant_alpha": {
+            "armory": {
+              "blocked": "missing metal",
+              "kits": {
+                "verdant_alpha:kit:1": {
+                  "citizen_id": 25,
+                  "equipment_id": "skirmisher_kit",
+                  "id": "verdant_alpha:kit:1",
+                  "owner": "verdant_alpha",
+                  "role": "skirmisher",
+                  "state": "LOST",
+                  "variant": "normal"
+                },
+                "verdant_alpha:kit:2": {
+                  "citizen_id": -1,
+                  "equipment_id": "line_kit",
+                  "id": "verdant_alpha:kit:2",
+                  "owner": "verdant_alpha",
+                  "role": "line",
+                  "state": "STOCKED",
+                  "variant": "normal"
+                }
+              },
+              "projects": {
+                "verdant_alpha:equipment:1": {
+                  "cost": {
+                    "metal": 1,
+                    "wood": 1
+                  },
+                  "equipment_id": "skirmisher_kit",
+                  "evaluation": 29,
+                  "id": "verdant_alpha:equipment:1",
+                  "kit": "verdant_alpha:kit:1",
+                  "required_work": 6.0,
+                  "role": "skirmisher",
+                  "state": "COMPLETE",
+                  "tickets": [
+                    16,
+                    17
+                  ],
+                  "variant": "normal",
+                  "work": 5.99999999999999,
+                  "workers": {
+                    "24": 5.99999999999999
+                  }
+                },
+                "verdant_alpha:equipment:2": {
+                  "cost": {
+                    "metal": 1,
+                    "wood": 1
+                  },
+                  "equipment_id": "line_kit",
+                  "evaluation": 30,
+                  "id": "verdant_alpha:equipment:2",
+                  "kit": "verdant_alpha:kit:2",
+                  "required_work": 6.0,
+                  "role": "line",
+                  "state": "COMPLETE",
+                  "tickets": [
+                    19,
+                    20
+                  ],
+                  "variant": "normal",
+                  "work": 5.99999999999999,
+                  "workers": {
+                    "35": 5.99999999999999
+                  }
+                }
+              },
+              "stock": {
+                "artillery": 0,
+                "heavy": 0,
+                "line": 1,
+                "ranged": 0,
+                "skirmisher": 0
+              }
+            },
+            "economy": {
+              "food": {
+                "available": 79.0,
+                "consumed": 77.0,
+                "delivered": 0.0,
+                "in_transit": 0.0,
+                "received": 136.0,
+                "reserved": 0.0
+              },
+              "mechanical_parts": {
+                "available": 0.0,
+                "consumed": 0.0,
+                "delivered": 0.0,
+                "in_transit": 0.0,
+                "received": 0.0,
+                "reserved": 0.0
+              },
+              "metal": {
+                "available": 20.0,
+                "consumed": 10.0,
+                "delivered": 0.0,
+                "in_transit": 0.0,
+                "received": 30.0,
+                "reserved": 0.0
+              },
+              "water": {
+                "available": 120.0,
+                "consumed": 118.0,
+                "delivered": 0.0,
+                "in_transit": 0.0,
+                "received": 208.0,
+                "reserved": 0.0
+              },
+              "wood": {
+                "available": 40.0,
+                "consumed": 31.0,
+                "delivered": 0.0,
+                "in_transit": 0.0,
+                "received": 71.0,
+                "reserved": 0.0
+              }
+            },
+            "events": [
+              {
+                "data": {
+                  "id": "verdant_alpha",
+                  "policy": {
+                    "allow_retreat": true,
+                    "cause": "SPACE",
+                    "force_fraction": 0.25,
+                    "intensity": 2,
+                    "intensity_name": "LIMITED_WAR",
+                    "max_force": 6,
+                    "min_force": 2,
+                    "objective": "SECURE_TERRITORY",
+                    "retreat_threshold": 0.7
+                  }
+                },
+                "kind": "READINESS_TARGET",
+                "tick": 1441
+              },
+              {
+                "data": {
+                  "cost": {
+                    "metal": 1,
+                    "wood": 1
+                  },
+                  "equipment_id": "skirmisher_kit",
+                  "evaluation": 29,
+                  "id": "verdant_alpha:equipment:1",
+                  "required_work": 6.0,
+                  "role": "skirmisher",
+                  "state": "BUILDING",
+                  "tickets": [
+                    16,
+                    17
+                  ],
+                  "variant": "normal",
+                  "work": 0.0,
+                  "workers": {}
+                },
+                "kind": "KIT_ORDERED",
+                "tick": 1450
+              },
+              {
+                "data": {
+                  "cost": {
+                    "metal": 1,
+                    "wood": 1
+                  },
+                  "equipment_id": "line_kit",
+                  "evaluation": 30,
+                  "id": "verdant_alpha:equipment:2",
+                  "required_work": 6.0,
+                  "role": "line",
+                  "state": "BUILDING",
+                  "tickets": [
+                    19,
+                    20
+                  ],
+                  "variant": "normal",
+                  "work": 0.0,
+                  "workers": {}
+                },
+                "kind": "KIT_ORDERED",
+                "tick": 1500
+              },
+              {
+                "data": {
+                  "id": "verdant_alpha:kit:1",
+                  "project": "verdant_alpha:equipment:1"
+                },
+                "kind": "KIT_COMPLETED",
+                "tick": 1520
+              },
+              {
+                "data": {
+                  "id": "verdant_alpha:kit:2",
+                  "project": "verdant_alpha:equipment:2"
+                },
+                "kind": "KIT_COMPLETED",
+                "tick": 1570
+              },
+              {
+                "data": {
+                  "citizen_id": 25,
+                  "equipment_id": "skirmisher_kit",
+                  "id": "verdant_alpha:kit:1",
+                  "owner": "verdant_alpha",
+                  "role": "skirmisher",
+                  "state": "RESERVED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_RESERVED",
+                "tick": 1570
+              },
+              {
+                "data": {
+                  "citizen_id": 34,
+                  "equipment_id": "line_kit",
+                  "id": "verdant_alpha:kit:2",
+                  "owner": "verdant_alpha",
+                  "role": "line",
+                  "state": "RESERVED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_RESERVED",
+                "tick": 1570
+              },
+              {
+                "data": {
+                  "id": 25,
+                  "kit": "verdant_alpha:kit:1",
+                  "role": "skirmisher"
+                },
+                "kind": "CITIZEN_MUSTERING",
+                "tick": 1570
+              },
+              {
+                "data": {
+                  "id": 34,
+                  "kit": "verdant_alpha:kit:2",
+                  "role": "line"
+                },
+                "kind": "CITIZEN_MUSTERING",
+                "tick": 1570
+              },
+              {
+                "data": {
+                  "citizen_id": 34,
+                  "equipment_id": "line_kit",
+                  "id": "verdant_alpha:kit:2",
+                  "owner": "verdant_alpha",
+                  "role": "line",
+                  "state": "ISSUED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_ISSUED",
+                "tick": 1752
+              },
+              {
+                "data": {
+                  "citizen_id": 25,
+                  "equipment_id": "skirmisher_kit",
+                  "id": "verdant_alpha:kit:1",
+                  "owner": "verdant_alpha",
+                  "role": "skirmisher",
+                  "state": "ISSUED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_ISSUED",
+                "tick": 1772
+              },
+              {
+                "data": {
+                  "id": "verdant_alpha",
+                  "size": 2
+                },
+                "kind": "MOBILIZATION_READY",
+                "tick": 1780
+              },
+              {
+                "data": {
+                  "authorized": 3,
+                  "blocked": "",
+                  "capabilities": [
+                    "PATHFINDER_MANEUVERS"
+                  ],
+                  "members": [
+                    {
+                      "citizen_id": 25,
+                      "kit": "verdant_alpha:kit:1",
+                      "role": "skirmisher"
+                    },
+                    {
+                      "citizen_id": 34,
+                      "kit": "verdant_alpha:kit:2",
+                      "role": "line"
+                    }
+                  ],
+                  "minimum": 2,
+                  "missing": [
+                    "ranged"
+                  ],
+                  "planned": [
+                    "skirmisher",
+                    "line",
+                    "ranged"
+                  ],
+                  "projects": 0,
+                  "state": "DEPLOYED",
+                  "stock": {
+                    "artillery": 0,
+                    "heavy": 0,
+                    "line": 0,
+                    "ranged": 0,
+                    "skirmisher": 0
+                  }
+                },
+                "kind": "FORCE_DEPLOYED",
+                "tick": 3741
+              },
+              {
+                "data": {
+                  "citizen_id": 25,
+                  "equipment_id": "skirmisher_kit",
+                  "id": "verdant_alpha:kit:1",
+                  "owner": "verdant_alpha",
+                  "role": "skirmisher",
+                  "state": "LOST",
+                  "variant": "normal"
+                },
+                "kind": "KIT_LOST",
+                "tick": 4217
+              },
+              {
+                "data": {
+                  "citizen_id": -1,
+                  "equipment_id": "line_kit",
+                  "id": "verdant_alpha:kit:2",
+                  "owner": "verdant_alpha",
+                  "role": "line",
+                  "state": "STOCKED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_RETURNED",
+                "tick": 4409
+              }
+            ],
+            "readiness": {
+              "authorized": 3,
+              "blocked": "",
+              "capabilities": [
+                "PATHFINDER_MANEUVERS"
+              ],
+              "members": [
+                {
+                  "citizen_id": 25,
+                  "kit": "verdant_alpha:kit:1",
+                  "role": "skirmisher"
+                },
+                {
+                  "citizen_id": 34,
+                  "kit": "verdant_alpha:kit:2",
+                  "role": "line"
+                }
+              ],
+              "minimum": 0,
+              "missing": [],
+              "planned": [
+                "skirmisher",
+                "line",
+                "ranged"
+              ],
+              "projects": 0,
+              "state": "COMPLETE",
+              "stock": {
+                "artillery": 0,
+                "heavy": 0,
+                "line": 1,
+                "ranged": 0,
+                "skirmisher": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "room": "room_conflict",
+      "fresh_processes": 3,
+      "identical": true,
+      "fingerprint_sha256": "15c7913aad3b4551d86f944d45841dca7d3eecdbc8b0882f262a9df2d434e416",
+      "fingerprint": {
+        "first_contact_tick": 1316,
+        "battle_start_tick": 1916,
+        "force_sizes": {
+          "clockwork_alpha": 2,
+          "verdant_alpha": 2
+        },
+        "casualties": {
+          "clockwork_alpha": 0,
+          "verdant_alpha": 1
+        },
+        "retreating_side": "verdant_alpha",
+        "winner": "clockwork_alpha",
+        "site_capture_tick": 2255,
+        "attacks": 3,
+        "morale": {
+          "clockwork_alpha": 0.987625,
+          "verdant_alpha": 0.575
+        },
+        "returned": {
+          "clockwork_alpha": 2,
+          "verdant_alpha": 1
+        },
+        "living_populations": {
+          "clockwork_alpha": 12,
+          "verdant_alpha": 11
+        },
+        "retreated_sides": {
+          "verdant_alpha": 2145
+        },
+        "eliminated_sides": {},
+        "commitments": [
+          {
+            "id": 4,
+            "kit": "clockwork_alpha:kit:2",
+            "role": "artillery",
+            "side": "clockwork_alpha",
+            "stats": {
+              "armor": 0.0,
+              "behavior": "support",
+              "damage": 54.0,
+              "grade": "Great",
+              "health": 80.0,
+              "implementation": "clockwork_artillery",
+              "interval": 3.5,
+              "movement": 0.55,
+              "preferred": 12.0,
+              "range": 15.0,
+              "reposition": 2.0,
+              "role": "artillery"
+            }
+          },
+          {
+            "id": 5,
+            "kit": "clockwork_alpha:kit:1",
+            "role": "heavy",
+            "side": "clockwork_alpha",
+            "stats": {
+              "armor": 8.0,
+              "behavior": "assault",
+              "damage": 24.0,
+              "grade": "Neutral",
+              "health": 180.0,
+              "implementation": "clockwork_heavy",
+              "interval": 1.5,
+              "movement": 0.7,
+              "preferred": 0.5,
+              "range": 0.6,
+              "reposition": 1.0,
+              "role": "heavy"
+            }
+          },
+          {
+            "id": 13,
+            "kit": "verdant_alpha:kit:1",
+            "role": "skirmisher",
+            "side": "verdant_alpha",
+            "stats": {
+              "armor": 0.0,
+              "behavior": "harass",
+              "damage": 13.2,
+              "grade": "Great",
+              "health": 80.0,
+              "implementation": "verdant_skirmisher",
+              "interval": 0.9,
+              "movement": 1.35,
+              "preferred": 4.0,
+              "range": 5.0,
+              "reposition": 0.7,
+              "role": "skirmisher"
+            }
+          },
+          {
+            "id": 14,
+            "kit": "verdant_alpha:kit:2",
+            "role": "line",
+            "side": "verdant_alpha",
+            "stats": {
+              "armor": 3.0,
+              "behavior": "screen",
+              "damage": 18.0,
+              "grade": "Neutral",
+              "health": 120.0,
+              "implementation": "verdant_line",
+              "interval": 1.0,
+              "movement": 1.0,
+              "preferred": 0.5,
+              "range": 0.6,
+              "reposition": 1.0,
+              "role": "line"
+            }
+          }
+        ],
+        "attack_digest": "93431f222fba02451e5a548628c0eb98bbb39696413b7f620b9a76ef50e0eaae",
+        "military_fingerprint": {
+          "clockwork_alpha": {
+            "armory": {
+              "blocked": "two active equipment projects",
+              "kits": {
+                "clockwork_alpha:kit:1": {
+                  "citizen_id": -1,
+                  "equipment_id": "heavy_kit",
+                  "id": "clockwork_alpha:kit:1",
+                  "owner": "clockwork_alpha",
+                  "role": "heavy",
+                  "state": "STOCKED",
+                  "variant": "normal"
+                },
+                "clockwork_alpha:kit:2": {
+                  "citizen_id": -1,
+                  "equipment_id": "artillery_kit",
+                  "id": "clockwork_alpha:kit:2",
+                  "owner": "clockwork_alpha",
+                  "role": "artillery",
+                  "state": "STOCKED",
+                  "variant": "normal"
+                }
+              },
+              "projects": {
+                "clockwork_alpha:equipment:1": {
+                  "cost": {
+                    "metal": 4,
+                    "wood": 2
+                  },
+                  "equipment_id": "artillery_kit",
+                  "evaluation": 34,
+                  "id": "clockwork_alpha:equipment:1",
+                  "kit": "clockwork_alpha:kit:2",
+                  "required_work": 18.0,
+                  "role": "artillery",
+                  "state": "COMPLETE",
+                  "tickets": [
+                    18,
+                    19
+                  ],
+                  "variant": "normal",
+                  "work": 18.0,
+                  "workers": {
+                    "10": 18.0
+                  }
+                },
+                "clockwork_alpha:equipment:2": {
+                  "cost": {
+                    "metal": 3,
+                    "wood": 1
+                  },
+                  "equipment_id": "heavy_kit",
+                  "evaluation": 35,
+                  "id": "clockwork_alpha:equipment:2",
+                  "kit": "clockwork_alpha:kit:1",
+                  "required_work": 12.0,
+                  "role": "heavy",
+                  "state": "COMPLETE",
+                  "tickets": [
+                    20,
+                    21
+                  ],
+                  "variant": "normal",
+                  "work": 12.0,
+                  "workers": {
+                    "4": 12.0
+                  }
+                }
+              },
+              "stock": {
+                "artillery": 1,
+                "heavy": 1,
+                "line": 0,
+                "ranged": 0,
+                "skirmisher": 0
+              }
+            },
+            "economy": {
+              "food": {
+                "available": 72.0,
+                "consumed": 12.0,
+                "delivered": 0.0,
+                "in_transit": 0.0,
+                "received": 64.0,
+                "reserved": 0.0
+              },
+              "metal": {
+                "available": 41.0,
+                "consumed": 7.0,
+                "delivered": 0.0,
+                "in_transit": 0.0,
+                "received": 48.0,
+                "reserved": 0.0
+              },
+              "water": {
+                "available": 107.0,
+                "consumed": 19.0,
+                "delivered": 0.0,
+                "in_transit": 0.0,
+                "received": 96.0,
+                "reserved": 0.0
+              },
+              "wood": {
+                "available": 21.0,
+                "consumed": 7.0,
+                "delivered": 0.0,
+                "in_transit": 0.0,
+                "received": 28.0,
+                "reserved": 0.0
+              }
+            },
+            "events": [
+              {
+                "data": {
+                  "id": "clockwork_alpha",
+                  "policy": {
+                    "allow_retreat": true,
+                    "cause": "SPACE",
+                    "force_fraction": 0.25,
+                    "intensity": 2,
+                    "intensity_name": "LIMITED_WAR",
+                    "max_force": 6,
+                    "min_force": 2,
+                    "objective": "SECURE_TERRITORY",
+                    "retreat_threshold": 0.7
+                  }
+                },
+                "kind": "READINESS_TARGET",
+                "tick": 1316
+              },
+              {
+                "data": {
+                  "cost": {
+                    "metal": 4,
+                    "wood": 2
+                  },
+                  "equipment_id": "artillery_kit",
+                  "evaluation": 34,
+                  "id": "clockwork_alpha:equipment:1",
+                  "required_work": 18.0,
+                  "role": "artillery",
+                  "state": "BUILDING",
+                  "tickets": [
+                    18,
+                    19
+                  ],
+                  "variant": "normal",
+                  "work": 0.0,
+                  "workers": {}
+                },
+                "kind": "KIT_ORDERED",
+                "tick": 1700
+              },
+              {
+                "data": {
+                  "cost": {
+                    "metal": 3,
+                    "wood": 1
+                  },
+                  "equipment_id": "heavy_kit",
+                  "evaluation": 35,
+                  "id": "clockwork_alpha:equipment:2",
+                  "required_work": 12.0,
+                  "role": "heavy",
+                  "state": "BUILDING",
+                  "tickets": [
+                    20,
+                    21
+                  ],
+                  "variant": "normal",
+                  "work": 0.0,
+                  "workers": {}
+                },
+                "kind": "KIT_ORDERED",
+                "tick": 1750
+              },
+              {
+                "data": {
+                  "id": "clockwork_alpha:kit:1",
+                  "project": "clockwork_alpha:equipment:2"
+                },
+                "kind": "KIT_COMPLETED",
+                "tick": 1878
+              },
+              {
+                "data": {
+                  "id": "clockwork_alpha:kit:2",
+                  "project": "clockwork_alpha:equipment:1"
+                },
+                "kind": "KIT_COMPLETED",
+                "tick": 1892
+              },
+              {
+                "data": {
+                  "citizen_id": 4,
+                  "equipment_id": "artillery_kit",
+                  "id": "clockwork_alpha:kit:2",
+                  "owner": "clockwork_alpha",
+                  "role": "artillery",
+                  "state": "RESERVED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_RESERVED",
+                "tick": 1892
+              },
+              {
+                "data": {
+                  "citizen_id": 5,
+                  "equipment_id": "heavy_kit",
+                  "id": "clockwork_alpha:kit:1",
+                  "owner": "clockwork_alpha",
+                  "role": "heavy",
+                  "state": "RESERVED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_RESERVED",
+                "tick": 1892
+              },
+              {
+                "data": {
+                  "id": 4,
+                  "kit": "clockwork_alpha:kit:2",
+                  "role": "artillery"
+                },
+                "kind": "CITIZEN_MUSTERING",
+                "tick": 1892
+              },
+              {
+                "data": {
+                  "id": 5,
+                  "kit": "clockwork_alpha:kit:1",
+                  "role": "heavy"
+                },
+                "kind": "CITIZEN_MUSTERING",
+                "tick": 1892
+              },
+              {
+                "data": {
+                  "citizen_id": 4,
+                  "equipment_id": "artillery_kit",
+                  "id": "clockwork_alpha:kit:2",
+                  "owner": "clockwork_alpha",
+                  "role": "artillery",
+                  "state": "ISSUED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_ISSUED",
+                "tick": 1900
+              },
+              {
+                "data": {
+                  "citizen_id": 5,
+                  "equipment_id": "heavy_kit",
+                  "id": "clockwork_alpha:kit:1",
+                  "owner": "clockwork_alpha",
+                  "role": "heavy",
+                  "state": "ISSUED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_ISSUED",
+                "tick": 1900
+              },
+              {
+                "data": {
+                  "id": "clockwork_alpha",
+                  "size": 2
+                },
+                "kind": "MOBILIZATION_READY",
+                "tick": 1914
+              },
+              {
+                "data": {
+                  "authorized": 3,
+                  "blocked": "",
+                  "capabilities": [
+                    "PREPARED_FIRE"
+                  ],
+                  "members": [
+                    {
+                      "citizen_id": 4,
+                      "kit": "clockwork_alpha:kit:2",
+                      "role": "artillery"
+                    },
+                    {
+                      "citizen_id": 5,
+                      "kit": "clockwork_alpha:kit:1",
+                      "role": "heavy"
+                    }
+                  ],
+                  "minimum": 2,
+                  "missing": [
+                    "ranged"
+                  ],
+                  "planned": [
+                    "artillery",
+                    "heavy",
+                    "ranged"
+                  ],
+                  "projects": 0,
+                  "state": "DEPLOYED",
+                  "stock": {
+                    "artillery": 0,
+                    "heavy": 0,
+                    "line": 0,
+                    "ranged": 0,
+                    "skirmisher": 0
+                  }
+                },
+                "kind": "FORCE_DEPLOYED",
+                "tick": 1916
+              },
+              {
+                "data": {
+                  "capability": "PREPARED_FIRE",
+                  "id": 4,
+                  "prepared": true
+                },
+                "kind": "ABILITY_STATE",
+                "tick": 2127
+              },
+              {
+                "data": {
+                  "capability": "PREPARED_FIRE",
+                  "id": 4,
+                  "prepared": false
+                },
+                "kind": "ABILITY_STATE",
+                "tick": 2257
+              },
+              {
+                "data": {
+                  "citizen_id": -1,
+                  "equipment_id": "heavy_kit",
+                  "id": "clockwork_alpha:kit:1",
+                  "owner": "clockwork_alpha",
+                  "role": "heavy",
+                  "state": "STOCKED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_RETURNED",
+                "tick": 2393
+              },
+              {
+                "data": {
+                  "citizen_id": -1,
+                  "equipment_id": "artillery_kit",
+                  "id": "clockwork_alpha:kit:2",
+                  "owner": "clockwork_alpha",
+                  "role": "artillery",
+                  "state": "STOCKED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_RETURNED",
+                "tick": 2440
+              }
+            ],
+            "readiness": {
+              "authorized": 3,
+              "blocked": "",
+              "capabilities": [
+                "PREPARED_FIRE"
+              ],
+              "members": [
+                {
+                  "citizen_id": 4,
+                  "kit": "clockwork_alpha:kit:2",
+                  "role": "artillery"
+                },
+                {
+                  "citizen_id": 5,
+                  "kit": "clockwork_alpha:kit:1",
+                  "role": "heavy"
+                }
+              ],
+              "minimum": 0,
+              "missing": [],
+              "planned": [
+                "artillery",
+                "heavy",
+                "ranged"
+              ],
+              "projects": 0,
+              "state": "COMPLETE",
+              "stock": {
+                "artillery": 1,
+                "heavy": 1,
+                "line": 0,
+                "ranged": 0,
+                "skirmisher": 0
+              }
+            }
+          },
+          "verdant_alpha": {
+            "armory": {
+              "blocked": "",
+              "kits": {
+                "verdant_alpha:kit:1": {
+                  "citizen_id": 13,
+                  "equipment_id": "skirmisher_kit",
+                  "id": "verdant_alpha:kit:1",
+                  "owner": "verdant_alpha",
+                  "role": "skirmisher",
+                  "state": "LOST",
+                  "variant": "normal"
+                },
+                "verdant_alpha:kit:2": {
+                  "citizen_id": -1,
+                  "equipment_id": "line_kit",
+                  "id": "verdant_alpha:kit:2",
+                  "owner": "verdant_alpha",
+                  "role": "line",
+                  "state": "STOCKED",
+                  "variant": "normal"
+                },
+                "verdant_alpha:kit:3": {
+                  "citizen_id": -1,
+                  "equipment_id": "ranged_kit",
+                  "id": "verdant_alpha:kit:3",
+                  "owner": "verdant_alpha",
+                  "role": "ranged",
+                  "state": "STOCKED",
+                  "variant": "normal"
+                }
+              },
+              "projects": {
+                "verdant_alpha:equipment:1": {
+                  "cost": {
+                    "metal": 1,
+                    "wood": 1
+                  },
+                  "equipment_id": "skirmisher_kit",
+                  "evaluation": 33,
+                  "id": "verdant_alpha:equipment:1",
+                  "kit": "verdant_alpha:kit:1",
+                  "required_work": 6.0,
+                  "role": "skirmisher",
+                  "state": "COMPLETE",
+                  "tickets": [
+                    20,
+                    21
+                  ],
+                  "variant": "normal",
+                  "work": 5.99999999999999,
+                  "workers": {
+                    "23": 5.99999999999999
+                  }
+                },
+                "verdant_alpha:equipment:2": {
+                  "cost": {
+                    "metal": 1,
+                    "wood": 1
+                  },
+                  "equipment_id": "line_kit",
+                  "evaluation": 34,
+                  "id": "verdant_alpha:equipment:2",
+                  "kit": "verdant_alpha:kit:2",
+                  "required_work": 6.0,
+                  "role": "line",
+                  "state": "COMPLETE",
+                  "tickets": [
+                    22,
+                    23
+                  ],
+                  "variant": "normal",
+                  "work": 5.99999999999999,
+                  "workers": {
+                    "18": 5.99999999999999
+                  }
+                },
+                "verdant_alpha:equipment:3": {
+                  "cost": {
+                    "metal": 1,
+                    "wood": 1
+                  },
+                  "equipment_id": "ranged_kit",
+                  "evaluation": 35,
+                  "id": "verdant_alpha:equipment:3",
+                  "kit": "verdant_alpha:kit:3",
+                  "required_work": 8.0,
+                  "role": "ranged",
+                  "state": "COMPLETE",
+                  "tickets": [
+                    24,
+                    25
+                  ],
+                  "variant": "normal",
+                  "work": 7.99999999999999,
+                  "workers": {
+                    "12": 7.99999999999999
+                  }
+                }
+              },
+              "stock": {
+                "artillery": 0,
+                "heavy": 0,
+                "line": 1,
+                "ranged": 1,
+                "skirmisher": 0
+              }
+            },
+            "economy": {
+              "food": {
+                "available": 73.0,
+                "consumed": 11.0,
+                "delivered": 0.0,
+                "in_transit": 0.0,
+                "received": 64.0,
+                "reserved": 0.0
+              },
+              "metal": {
+                "available": 0.0,
+                "consumed": 4.0,
+                "delivered": 0.0,
+                "in_transit": 0.0,
+                "received": 4.0,
+                "reserved": 0.0
+              },
+              "water": {
+                "available": 107.0,
+                "consumed": 19.0,
+                "delivered": 0.0,
+                "in_transit": 0.0,
+                "received": 96.0,
+                "reserved": 0.0
+              },
+              "wood": {
+                "available": 3.0,
+                "consumed": 11.0,
+                "delivered": 0.0,
+                "in_transit": 0.0,
+                "received": 14.0,
+                "reserved": 0.0
+              }
+            },
+            "events": [
+              {
+                "data": {
+                  "id": "verdant_alpha",
+                  "policy": {
+                    "allow_retreat": true,
+                    "cause": "SPACE",
+                    "force_fraction": 0.25,
+                    "intensity": 2,
+                    "intensity_name": "LIMITED_WAR",
+                    "max_force": 6,
+                    "min_force": 2,
+                    "objective": "SECURE_TERRITORY",
+                    "retreat_threshold": 0.7
+                  }
+                },
+                "kind": "READINESS_TARGET",
+                "tick": 1316
+              },
+              {
+                "data": {
+                  "cost": {
+                    "metal": 1,
+                    "wood": 1
+                  },
+                  "equipment_id": "skirmisher_kit",
+                  "evaluation": 33,
+                  "id": "verdant_alpha:equipment:1",
+                  "required_work": 6.0,
+                  "role": "skirmisher",
+                  "state": "BUILDING",
+                  "tickets": [
+                    20,
+                    21
+                  ],
+                  "variant": "normal",
+                  "work": 0.0,
+                  "workers": {}
+                },
+                "kind": "KIT_ORDERED",
+                "tick": 1650
+              },
+              {
+                "data": {
+                  "cost": {
+                    "metal": 1,
+                    "wood": 1
+                  },
+                  "equipment_id": "line_kit",
+                  "evaluation": 34,
+                  "id": "verdant_alpha:equipment:2",
+                  "required_work": 6.0,
+                  "role": "line",
+                  "state": "BUILDING",
+                  "tickets": [
+                    22,
+                    23
+                  ],
+                  "variant": "normal",
+                  "work": 0.0,
+                  "workers": {}
+                },
+                "kind": "KIT_ORDERED",
+                "tick": 1700
+              },
+              {
+                "data": {
+                  "id": "verdant_alpha:kit:1",
+                  "project": "verdant_alpha:equipment:1"
+                },
+                "kind": "KIT_COMPLETED",
+                "tick": 1722
+              },
+              {
+                "data": {
+                  "cost": {
+                    "metal": 1,
+                    "wood": 1
+                  },
+                  "equipment_id": "ranged_kit",
+                  "evaluation": 35,
+                  "id": "verdant_alpha:equipment:3",
+                  "required_work": 8.0,
+                  "role": "ranged",
+                  "state": "BUILDING",
+                  "tickets": [
+                    24,
+                    25
+                  ],
+                  "variant": "normal",
+                  "work": 0.0,
+                  "workers": {}
+                },
+                "kind": "KIT_ORDERED",
+                "tick": 1750
+              },
+              {
+                "data": {
+                  "id": "verdant_alpha:kit:2",
+                  "project": "verdant_alpha:equipment:2"
+                },
+                "kind": "KIT_COMPLETED",
+                "tick": 1768
+              },
+              {
+                "data": {
+                  "citizen_id": 13,
+                  "equipment_id": "skirmisher_kit",
+                  "id": "verdant_alpha:kit:1",
+                  "owner": "verdant_alpha",
+                  "role": "skirmisher",
+                  "state": "RESERVED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_RESERVED",
+                "tick": 1768
+              },
+              {
+                "data": {
+                  "citizen_id": 14,
+                  "equipment_id": "line_kit",
+                  "id": "verdant_alpha:kit:2",
+                  "owner": "verdant_alpha",
+                  "role": "line",
+                  "state": "RESERVED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_RESERVED",
+                "tick": 1768
+              },
+              {
+                "data": {
+                  "id": 13,
+                  "kit": "verdant_alpha:kit:1",
+                  "role": "skirmisher"
+                },
+                "kind": "CITIZEN_MUSTERING",
+                "tick": 1768
+              },
+              {
+                "data": {
+                  "id": 14,
+                  "kit": "verdant_alpha:kit:2",
+                  "role": "line"
+                },
+                "kind": "CITIZEN_MUSTERING",
+                "tick": 1768
+              },
+              {
+                "data": {
+                  "citizen_id": 14,
+                  "equipment_id": "line_kit",
+                  "id": "verdant_alpha:kit:2",
+                  "owner": "verdant_alpha",
+                  "role": "line",
+                  "state": "ISSUED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_ISSUED",
+                "tick": 1783
+              },
+              {
+                "data": {
+                  "id": "verdant_alpha:kit:3",
+                  "project": "verdant_alpha:equipment:3"
+                },
+                "kind": "KIT_COMPLETED",
+                "tick": 1838
+              },
+              {
+                "data": {
+                  "citizen_id": 13,
+                  "equipment_id": "skirmisher_kit",
+                  "id": "verdant_alpha:kit:1",
+                  "owner": "verdant_alpha",
+                  "role": "skirmisher",
+                  "state": "ISSUED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_ISSUED",
+                "tick": 1883
+              },
+              {
+                "data": {
+                  "id": "verdant_alpha",
+                  "size": 2
+                },
+                "kind": "MOBILIZATION_READY",
+                "tick": 1891
+              },
+              {
+                "data": {
+                  "authorized": 3,
+                  "blocked": "",
+                  "capabilities": [
+                    "PATHFINDER_MANEUVERS"
+                  ],
+                  "members": [
+                    {
+                      "citizen_id": 13,
+                      "kit": "verdant_alpha:kit:1",
+                      "role": "skirmisher"
+                    },
+                    {
+                      "citizen_id": 14,
+                      "kit": "verdant_alpha:kit:2",
+                      "role": "line"
+                    }
+                  ],
+                  "minimum": 2,
+                  "missing": [],
+                  "planned": [
+                    "skirmisher",
+                    "line",
+                    "ranged"
+                  ],
+                  "projects": 0,
+                  "state": "DEPLOYED",
+                  "stock": {
+                    "artillery": 0,
+                    "heavy": 0,
+                    "line": 0,
+                    "ranged": 1,
+                    "skirmisher": 0
+                  }
+                },
+                "kind": "FORCE_DEPLOYED",
+                "tick": 1916
+              },
+              {
+                "data": {
+                  "citizen_id": 13,
+                  "equipment_id": "skirmisher_kit",
+                  "id": "verdant_alpha:kit:1",
+                  "owner": "verdant_alpha",
+                  "role": "skirmisher",
+                  "state": "LOST",
+                  "variant": "normal"
+                },
+                "kind": "KIT_LOST",
+                "tick": 2145
+              },
+              {
+                "data": {
+                  "citizen_id": -1,
+                  "equipment_id": "line_kit",
+                  "id": "verdant_alpha:kit:2",
+                  "owner": "verdant_alpha",
+                  "role": "line",
+                  "state": "STOCKED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_RETURNED",
+                "tick": 2259
+              }
+            ],
+            "readiness": {
+              "authorized": 3,
+              "blocked": "",
+              "capabilities": [
+                "PATHFINDER_MANEUVERS"
+              ],
+              "members": [
+                {
+                  "citizen_id": 13,
+                  "kit": "verdant_alpha:kit:1",
+                  "role": "skirmisher"
+                },
+                {
+                  "citizen_id": 14,
+                  "kit": "verdant_alpha:kit:2",
+                  "role": "line"
+                }
+              ],
+              "minimum": 0,
+              "missing": [],
+              "planned": [
+                "skirmisher",
+                "line",
+                "ranged"
+              ],
+              "projects": 0,
+              "state": "COMPLETE",
+              "stock": {
+                "artillery": 0,
+                "heavy": 0,
+                "line": 1,
+                "ranged": 1,
+                "skirmisher": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "room": "room_conflict_b",
+      "fresh_processes": 2,
+      "identical": true,
+      "fingerprint_sha256": "c344c466cd3bdd791cdad3c56b108f87218966a387f7dfa9215aa448425b70ee",
+      "fingerprint": {
+        "first_contact_tick": 1485,
+        "battle_start_tick": 2605,
+        "force_sizes": {
+          "clockwork_alpha": 2,
+          "verdant_alpha": 2
+        },
+        "casualties": {
+          "clockwork_alpha": 0,
+          "verdant_alpha": 1
+        },
+        "retreating_side": "verdant_alpha",
+        "winner": "clockwork_alpha",
+        "site_capture_tick": 3245,
+        "attacks": 7,
+        "morale": {
+          "clockwork_alpha": 0.958708333333333,
+          "verdant_alpha": 0.54875
+        },
+        "returned": {
+          "clockwork_alpha": 2,
+          "verdant_alpha": 1
+        },
+        "living_populations": {
+          "clockwork_alpha": 12,
+          "verdant_alpha": 11
+        },
+        "retreated_sides": {
+          "verdant_alpha": 3123
+        },
+        "eliminated_sides": {},
+        "commitments": [
+          {
+            "id": 3,
+            "kit": "clockwork_alpha:kit:2",
+            "role": "artillery",
+            "side": "clockwork_alpha",
+            "stats": {
+              "armor": 0.0,
+              "behavior": "support",
+              "damage": 54.0,
+              "grade": "Great",
+              "health": 80.0,
+              "implementation": "clockwork_artillery",
+              "interval": 3.5,
+              "movement": 0.55,
+              "preferred": 12.0,
+              "range": 15.0,
+              "reposition": 2.0,
+              "role": "artillery"
+            }
+          },
+          {
+            "id": 2,
+            "kit": "clockwork_alpha:kit:1",
+            "role": "heavy",
+            "side": "clockwork_alpha",
+            "stats": {
+              "armor": 8.0,
+              "behavior": "assault",
+              "damage": 24.0,
+              "grade": "Neutral",
+              "health": 180.0,
+              "implementation": "clockwork_heavy",
+              "interval": 1.5,
+              "movement": 0.7,
+              "preferred": 0.5,
+              "range": 0.6,
+              "reposition": 1.0,
+              "role": "heavy"
+            }
+          },
+          {
+            "id": 22,
+            "kit": "verdant_alpha:kit:1",
+            "role": "skirmisher",
+            "side": "verdant_alpha",
+            "stats": {
+              "armor": 0.0,
+              "behavior": "harass",
+              "damage": 13.2,
+              "grade": "Great",
+              "health": 80.0,
+              "implementation": "verdant_skirmisher",
+              "interval": 0.9,
+              "movement": 1.35,
+              "preferred": 4.0,
+              "range": 5.0,
+              "reposition": 0.7,
+              "role": "skirmisher"
+            }
+          },
+          {
+            "id": 13,
+            "kit": "verdant_alpha:kit:2",
+            "role": "line",
+            "side": "verdant_alpha",
+            "stats": {
+              "armor": 3.0,
+              "behavior": "screen",
+              "damage": 18.0,
+              "grade": "Neutral",
+              "health": 120.0,
+              "implementation": "verdant_line",
+              "interval": 1.0,
+              "movement": 1.0,
+              "preferred": 0.5,
+              "range": 0.6,
+              "reposition": 1.0,
+              "role": "line"
+            }
+          }
+        ],
+        "attack_digest": "d640052a78ade44eab535b885a1565070b85e270e1dfd3277dcb0766cc638322",
+        "military_fingerprint": {
+          "clockwork_alpha": {
+            "armory": {
+              "blocked": "two active equipment projects",
+              "kits": {
+                "clockwork_alpha:kit:1": {
+                  "citizen_id": -1,
+                  "equipment_id": "heavy_kit",
+                  "id": "clockwork_alpha:kit:1",
+                  "owner": "clockwork_alpha",
+                  "role": "heavy",
+                  "state": "STOCKED",
+                  "variant": "normal"
+                },
+                "clockwork_alpha:kit:2": {
+                  "citizen_id": -1,
+                  "equipment_id": "artillery_kit",
+                  "id": "clockwork_alpha:kit:2",
+                  "owner": "clockwork_alpha",
+                  "role": "artillery",
+                  "state": "STOCKED",
+                  "variant": "normal"
+                }
+              },
+              "projects": {
+                "clockwork_alpha:equipment:1": {
+                  "cost": {
+                    "metal": 4,
+                    "wood": 2
+                  },
+                  "equipment_id": "artillery_kit",
+                  "evaluation": 42,
+                  "id": "clockwork_alpha:equipment:1",
+                  "kit": "clockwork_alpha:kit:2",
+                  "required_work": 18.0,
+                  "role": "artillery",
+                  "state": "COMPLETE",
+                  "tickets": [
+                    23,
+                    24
+                  ],
+                  "variant": "normal",
+                  "work": 18.0,
+                  "workers": {
+                    "4": 18.0
+                  }
+                },
+                "clockwork_alpha:equipment:2": {
+                  "cost": {
+                    "metal": 3,
+                    "wood": 1
+                  },
+                  "equipment_id": "heavy_kit",
+                  "evaluation": 43,
+                  "id": "clockwork_alpha:equipment:2",
+                  "kit": "clockwork_alpha:kit:1",
+                  "required_work": 12.0,
+                  "role": "heavy",
+                  "state": "COMPLETE",
+                  "tickets": [
+                    25,
+                    26
+                  ],
+                  "variant": "normal",
+                  "work": 12.0,
+                  "workers": {
+                    "0": 12.0
+                  }
+                }
+              },
+              "stock": {
+                "artillery": 1,
+                "heavy": 1,
+                "line": 0,
+                "ranged": 0,
+                "skirmisher": 0
+              }
+            },
+            "economy": {
+              "food": {
+                "available": 71.0,
+                "consumed": 13.0,
+                "delivered": 0.0,
+                "in_transit": 0.0,
+                "received": 64.0,
+                "reserved": 0.0
+              },
+              "metal": {
+                "available": 42.0,
+                "consumed": 7.0,
+                "delivered": 1.0,
+                "in_transit": 0.0,
+                "received": 50.0,
+                "reserved": 0.0
+              },
+              "water": {
+                "available": 110.0,
+                "consumed": 24.0,
+                "delivered": 0.0,
+                "in_transit": 0.0,
+                "received": 104.0,
+                "reserved": 0.0
+              },
+              "wood": {
+                "available": 11.0,
+                "consumed": 7.0,
+                "delivered": 4.0,
+                "in_transit": 0.0,
+                "received": 22.0,
+                "reserved": 0.0
+              }
+            },
+            "events": [
+              {
+                "data": {
+                  "id": "clockwork_alpha",
+                  "policy": {
+                    "allow_retreat": true,
+                    "cause": "SPACE",
+                    "force_fraction": 0.25,
+                    "intensity": 2,
+                    "intensity_name": "LIMITED_WAR",
+                    "max_force": 6,
+                    "min_force": 2,
+                    "objective": "SECURE_TERRITORY",
+                    "retreat_threshold": 0.7
+                  }
+                },
+                "kind": "READINESS_TARGET",
+                "tick": 1485
+              },
+              {
+                "data": {
+                  "cost": {
+                    "metal": 4,
+                    "wood": 2
+                  },
+                  "equipment_id": "artillery_kit",
+                  "evaluation": 42,
+                  "id": "clockwork_alpha:equipment:1",
+                  "required_work": 18.0,
+                  "role": "artillery",
+                  "state": "BUILDING",
+                  "tickets": [
+                    23,
+                    24
+                  ],
+                  "variant": "normal",
+                  "work": 0.0,
+                  "workers": {}
+                },
+                "kind": "KIT_ORDERED",
+                "tick": 2100
+              },
+              {
+                "data": {
+                  "cost": {
+                    "metal": 3,
+                    "wood": 1
+                  },
+                  "equipment_id": "heavy_kit",
+                  "evaluation": 43,
+                  "id": "clockwork_alpha:equipment:2",
+                  "required_work": 12.0,
+                  "role": "heavy",
+                  "state": "BUILDING",
+                  "tickets": [
+                    25,
+                    26
+                  ],
+                  "variant": "normal",
+                  "work": 0.0,
+                  "workers": {}
+                },
+                "kind": "KIT_ORDERED",
+                "tick": 2150
+              },
+              {
+                "data": {
+                  "id": "clockwork_alpha:kit:1",
+                  "project": "clockwork_alpha:equipment:2"
+                },
+                "kind": "KIT_COMPLETED",
+                "tick": 2283
+              },
+              {
+                "data": {
+                  "id": "clockwork_alpha:kit:2",
+                  "project": "clockwork_alpha:equipment:1"
+                },
+                "kind": "KIT_COMPLETED",
+                "tick": 2297
+              },
+              {
+                "data": {
+                  "citizen_id": 3,
+                  "equipment_id": "artillery_kit",
+                  "id": "clockwork_alpha:kit:2",
+                  "owner": "clockwork_alpha",
+                  "role": "artillery",
+                  "state": "RESERVED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_RESERVED",
+                "tick": 2297
+              },
+              {
+                "data": {
+                  "citizen_id": 2,
+                  "equipment_id": "heavy_kit",
+                  "id": "clockwork_alpha:kit:1",
+                  "owner": "clockwork_alpha",
+                  "role": "heavy",
+                  "state": "RESERVED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_RESERVED",
+                "tick": 2297
+              },
+              {
+                "data": {
+                  "id": 3,
+                  "kit": "clockwork_alpha:kit:2",
+                  "role": "artillery"
+                },
+                "kind": "CITIZEN_MUSTERING",
+                "tick": 2297
+              },
+              {
+                "data": {
+                  "id": 2,
+                  "kit": "clockwork_alpha:kit:1",
+                  "role": "heavy"
+                },
+                "kind": "CITIZEN_MUSTERING",
+                "tick": 2297
+              },
+              {
+                "data": {
+                  "citizen_id": 2,
+                  "equipment_id": "heavy_kit",
+                  "id": "clockwork_alpha:kit:1",
+                  "owner": "clockwork_alpha",
+                  "role": "heavy",
+                  "state": "ISSUED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_ISSUED",
+                "tick": 2507
+              },
+              {
+                "data": {
+                  "citizen_id": 3,
+                  "equipment_id": "artillery_kit",
+                  "id": "clockwork_alpha:kit:2",
+                  "owner": "clockwork_alpha",
+                  "role": "artillery",
+                  "state": "ISSUED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_ISSUED",
+                "tick": 2585
+              },
+              {
+                "data": {
+                  "id": "clockwork_alpha",
+                  "size": 2
+                },
+                "kind": "MOBILIZATION_READY",
+                "tick": 2603
+              },
+              {
+                "data": {
+                  "authorized": 3,
+                  "blocked": "",
+                  "capabilities": [
+                    "PREPARED_FIRE"
+                  ],
+                  "members": [
+                    {
+                      "citizen_id": 3,
+                      "kit": "clockwork_alpha:kit:2",
+                      "role": "artillery"
+                    },
+                    {
+                      "citizen_id": 2,
+                      "kit": "clockwork_alpha:kit:1",
+                      "role": "heavy"
+                    }
+                  ],
+                  "minimum": 2,
+                  "missing": [
+                    "ranged"
+                  ],
+                  "planned": [
+                    "artillery",
+                    "heavy",
+                    "ranged"
+                  ],
+                  "projects": 0,
+                  "state": "DEPLOYED",
+                  "stock": {
+                    "artillery": 0,
+                    "heavy": 0,
+                    "line": 0,
+                    "ranged": 0,
+                    "skirmisher": 0
+                  }
+                },
+                "kind": "FORCE_DEPLOYED",
+                "tick": 2605
+              },
+              {
+                "data": {
+                  "capability": "PREPARED_FIRE",
+                  "id": 3,
+                  "prepared": true
+                },
+                "kind": "ABILITY_STATE",
+                "tick": 3106
+              },
+              {
+                "data": {
+                  "capability": "PREPARED_FIRE",
+                  "id": 3,
+                  "prepared": false
+                },
+                "kind": "ABILITY_STATE",
+                "tick": 3109
+              },
+              {
+                "data": {
+                  "capability": "PREPARED_FIRE",
+                  "id": 3,
+                  "prepared": true
+                },
+                "kind": "ABILITY_STATE",
+                "tick": 3148
+              },
+              {
+                "data": {
+                  "capability": "PREPARED_FIRE",
+                  "id": 3,
+                  "prepared": false
+                },
+                "kind": "ABILITY_STATE",
+                "tick": 3246
+              },
+              {
+                "data": {
+                  "citizen_id": -1,
+                  "equipment_id": "heavy_kit",
+                  "id": "clockwork_alpha:kit:1",
+                  "owner": "clockwork_alpha",
+                  "role": "heavy",
+                  "state": "STOCKED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_RETURNED",
+                "tick": 3621
+              },
+              {
+                "data": {
+                  "citizen_id": -1,
+                  "equipment_id": "artillery_kit",
+                  "id": "clockwork_alpha:kit:2",
+                  "owner": "clockwork_alpha",
+                  "role": "artillery",
+                  "state": "STOCKED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_RETURNED",
+                "tick": 3731
+              }
+            ],
+            "readiness": {
+              "authorized": 3,
+              "blocked": "",
+              "capabilities": [
+                "PREPARED_FIRE"
+              ],
+              "members": [
+                {
+                  "citizen_id": 3,
+                  "kit": "clockwork_alpha:kit:2",
+                  "role": "artillery"
+                },
+                {
+                  "citizen_id": 2,
+                  "kit": "clockwork_alpha:kit:1",
+                  "role": "heavy"
+                }
+              ],
+              "minimum": 0,
+              "missing": [],
+              "planned": [
+                "artillery",
+                "heavy",
+                "ranged"
+              ],
+              "projects": 0,
+              "state": "COMPLETE",
+              "stock": {
+                "artillery": 1,
+                "heavy": 1,
+                "line": 0,
+                "ranged": 0,
+                "skirmisher": 0
+              }
+            }
+          },
+          "verdant_alpha": {
+            "armory": {
+              "blocked": "missing wood",
+              "kits": {
+                "verdant_alpha:kit:1": {
+                  "citizen_id": 22,
+                  "equipment_id": "skirmisher_kit",
+                  "id": "verdant_alpha:kit:1",
+                  "owner": "verdant_alpha",
+                  "role": "skirmisher",
+                  "state": "LOST",
+                  "variant": "normal"
+                },
+                "verdant_alpha:kit:2": {
+                  "citizen_id": -1,
+                  "equipment_id": "line_kit",
+                  "id": "verdant_alpha:kit:2",
+                  "owner": "verdant_alpha",
+                  "role": "line",
+                  "state": "STOCKED",
+                  "variant": "normal"
+                }
+              },
+              "projects": {
+                "verdant_alpha:equipment:1": {
+                  "cost": {
+                    "metal": 1,
+                    "wood": 1
+                  },
+                  "equipment_id": "skirmisher_kit",
+                  "evaluation": 30,
+                  "id": "verdant_alpha:equipment:1",
+                  "kit": "verdant_alpha:kit:1",
+                  "required_work": 6.0,
+                  "role": "skirmisher",
+                  "state": "COMPLETE",
+                  "tickets": [
+                    17,
+                    18
+                  ],
+                  "variant": "normal",
+                  "work": 5.99999999999999,
+                  "workers": {
+                    "14": 5.99999999999999
+                  }
+                },
+                "verdant_alpha:equipment:2": {
+                  "cost": {
+                    "metal": 1,
+                    "wood": 1
+                  },
+                  "equipment_id": "line_kit",
+                  "evaluation": 31,
+                  "id": "verdant_alpha:equipment:2",
+                  "kit": "verdant_alpha:kit:2",
+                  "required_work": 6.0,
+                  "role": "line",
+                  "state": "COMPLETE",
+                  "tickets": [
+                    20,
+                    21
+                  ],
+                  "variant": "normal",
+                  "work": 5.99999999999999,
+                  "workers": {
+                    "21": 5.99999999999999
+                  }
+                }
+              },
+              "stock": {
+                "artillery": 0,
+                "heavy": 0,
+                "line": 1,
+                "ranged": 0,
+                "skirmisher": 0
+              }
+            },
+            "economy": {
+              "food": {
+                "available": 72.0,
+                "consumed": 12.0,
+                "delivered": 0.0,
+                "in_transit": 0.0,
+                "received": 64.0,
+                "reserved": 0.0
+              },
+              "metal": {
+                "available": 3.0,
+                "consumed": 3.0,
+                "delivered": 0.0,
+                "in_transit": 0.0,
+                "received": 6.0,
+                "reserved": 0.0
+              },
+              "water": {
+                "available": 110.0,
+                "consumed": 23.0,
+                "delivered": 0.0,
+                "in_transit": 0.0,
+                "received": 104.0,
+                "reserved": 1.0
+              },
+              "wood": {
+                "available": 24.0,
+                "consumed": 10.0,
+                "delivered": 0.0,
+                "in_transit": 0.0,
+                "received": 34.0,
+                "reserved": 0.0
+              }
+            },
+            "events": [
+              {
+                "data": {
+                  "id": "verdant_alpha",
+                  "policy": {
+                    "allow_retreat": true,
+                    "cause": "SPACE",
+                    "force_fraction": 0.25,
+                    "intensity": 2,
+                    "intensity_name": "LIMITED_WAR",
+                    "max_force": 6,
+                    "min_force": 2,
+                    "objective": "SECURE_TERRITORY",
+                    "retreat_threshold": 0.7
+                  }
+                },
+                "kind": "READINESS_TARGET",
+                "tick": 1485
+              },
+              {
+                "data": {
+                  "cost": {
+                    "metal": 1,
+                    "wood": 1
+                  },
+                  "equipment_id": "skirmisher_kit",
+                  "evaluation": 30,
+                  "id": "verdant_alpha:equipment:1",
+                  "required_work": 6.0,
+                  "role": "skirmisher",
+                  "state": "BUILDING",
+                  "tickets": [
+                    17,
+                    18
+                  ],
+                  "variant": "normal",
+                  "work": 0.0,
+                  "workers": {}
+                },
+                "kind": "KIT_ORDERED",
+                "tick": 1500
+              },
+              {
+                "data": {
+                  "cost": {
+                    "metal": 1,
+                    "wood": 1
+                  },
+                  "equipment_id": "line_kit",
+                  "evaluation": 31,
+                  "id": "verdant_alpha:equipment:2",
+                  "required_work": 6.0,
+                  "role": "line",
+                  "state": "BUILDING",
+                  "tickets": [
+                    20,
+                    21
+                  ],
+                  "variant": "normal",
+                  "work": 0.0,
+                  "workers": {}
+                },
+                "kind": "KIT_ORDERED",
+                "tick": 1550
+              },
+              {
+                "data": {
+                  "id": "verdant_alpha:kit:1",
+                  "project": "verdant_alpha:equipment:1"
+                },
+                "kind": "KIT_COMPLETED",
+                "tick": 1568
+              },
+              {
+                "data": {
+                  "id": "verdant_alpha:kit:2",
+                  "project": "verdant_alpha:equipment:2"
+                },
+                "kind": "KIT_COMPLETED",
+                "tick": 1618
+              },
+              {
+                "data": {
+                  "citizen_id": 22,
+                  "equipment_id": "skirmisher_kit",
+                  "id": "verdant_alpha:kit:1",
+                  "owner": "verdant_alpha",
+                  "role": "skirmisher",
+                  "state": "RESERVED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_RESERVED",
+                "tick": 1618
+              },
+              {
+                "data": {
+                  "citizen_id": 13,
+                  "equipment_id": "line_kit",
+                  "id": "verdant_alpha:kit:2",
+                  "owner": "verdant_alpha",
+                  "role": "line",
+                  "state": "RESERVED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_RESERVED",
+                "tick": 1618
+              },
+              {
+                "data": {
+                  "id": 22,
+                  "kit": "verdant_alpha:kit:1",
+                  "role": "skirmisher"
+                },
+                "kind": "CITIZEN_MUSTERING",
+                "tick": 1618
+              },
+              {
+                "data": {
+                  "id": 13,
+                  "kit": "verdant_alpha:kit:2",
+                  "role": "line"
+                },
+                "kind": "CITIZEN_MUSTERING",
+                "tick": 1618
+              },
+              {
+                "data": {
+                  "citizen_id": 22,
+                  "equipment_id": "skirmisher_kit",
+                  "id": "verdant_alpha:kit:1",
+                  "owner": "verdant_alpha",
+                  "role": "skirmisher",
+                  "state": "ISSUED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_ISSUED",
+                "tick": 1740
+              },
+              {
+                "data": {
+                  "citizen_id": 13,
+                  "equipment_id": "line_kit",
+                  "id": "verdant_alpha:kit:2",
+                  "owner": "verdant_alpha",
+                  "role": "line",
+                  "state": "ISSUED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_ISSUED",
+                "tick": 1741
+              },
+              {
+                "data": {
+                  "id": "verdant_alpha",
+                  "size": 2
+                },
+                "kind": "MOBILIZATION_READY",
+                "tick": 1749
+              },
+              {
+                "data": {
+                  "authorized": 3,
+                  "blocked": "",
+                  "capabilities": [
+                    "PATHFINDER_MANEUVERS"
+                  ],
+                  "members": [
+                    {
+                      "citizen_id": 22,
+                      "kit": "verdant_alpha:kit:1",
+                      "role": "skirmisher"
+                    },
+                    {
+                      "citizen_id": 13,
+                      "kit": "verdant_alpha:kit:2",
+                      "role": "line"
+                    }
+                  ],
+                  "minimum": 2,
+                  "missing": [
+                    "ranged"
+                  ],
+                  "planned": [
+                    "skirmisher",
+                    "line",
+                    "ranged"
+                  ],
+                  "projects": 0,
+                  "state": "DEPLOYED",
+                  "stock": {
+                    "artillery": 0,
+                    "heavy": 0,
+                    "line": 0,
+                    "ranged": 0,
+                    "skirmisher": 0
+                  }
+                },
+                "kind": "FORCE_DEPLOYED",
+                "tick": 2605
+              },
+              {
+                "data": {
+                  "citizen_id": 22,
+                  "equipment_id": "skirmisher_kit",
+                  "id": "verdant_alpha:kit:1",
+                  "owner": "verdant_alpha",
+                  "role": "skirmisher",
+                  "state": "LOST",
+                  "variant": "normal"
+                },
+                "kind": "KIT_LOST",
+                "tick": 3123
+              },
+              {
+                "data": {
+                  "citizen_id": -1,
+                  "equipment_id": "line_kit",
+                  "id": "verdant_alpha:kit:2",
+                  "owner": "verdant_alpha",
+                  "role": "line",
+                  "state": "STOCKED",
+                  "variant": "normal"
+                },
+                "kind": "KIT_RETURNED",
+                "tick": 3307
+              }
+            ],
+            "readiness": {
+              "authorized": 3,
+              "blocked": "",
+              "capabilities": [
+                "PATHFINDER_MANEUVERS"
+              ],
+              "members": [
+                {
+                  "citizen_id": 22,
+                  "kit": "verdant_alpha:kit:1",
+                  "role": "skirmisher"
+                },
+                {
+                  "citizen_id": 13,
+                  "kit": "verdant_alpha:kit:2",
+                  "role": "line"
+                }
+              ],
+              "minimum": 0,
+              "missing": [],
+              "planned": [
+                "skirmisher",
+                "line",
+                "ranged"
+              ],
+              "projects": 0,
+              "state": "COMPLETE",
+              "stock": {
+                "artillery": 0,
+                "heavy": 0,
+                "line": 1,
+                "ranged": 0,
+                "skirmisher": 0
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "verification_harness_commit": "524e35098140f0c64ce4d1c18f664bf5167c6b45"
+}

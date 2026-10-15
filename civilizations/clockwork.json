@@ -15,9 +15,18 @@
     "glow": "e6ab59"
   },
   "resource_vocabulary": {
-    "wood": {"display_name": "Wood", "visual_style": "timber_bundle"},
-    "metal": {"display_name": "Metal", "visual_style": "metal_ingots"},
-    "mechanical_parts": {"display_name": "Mechanical Parts", "visual_style": "gear_crate"}
+    "wood": {
+      "display_name": "Wood",
+      "visual_style": "timber_bundle"
+    },
+    "metal": {
+      "display_name": "Metal",
+      "visual_style": "metal_ingots"
+    },
+    "mechanical_parts": {
+      "display_name": "Mechanical Parts",
+      "visual_style": "gear_crate"
+    }
   },
   "construction": {
     "project_name": "Grapple Project",
@@ -31,5 +40,37 @@
   "world_influence": {
     "enabled": false,
     "style": "industrial"
+  },
+  "combat": {
+    "roles": {
+      "line": {
+        "grade": "Bad",
+        "implementation": "clockwork_line",
+        "equipment": "line_kit"
+      },
+      "ranged": {
+        "grade": "Good",
+        "implementation": "clockwork_ranged",
+        "equipment": "ranged_kit"
+      },
+      "heavy": {
+        "grade": "Neutral",
+        "implementation": "clockwork_heavy",
+        "equipment": "heavy_kit"
+      },
+      "artillery": {
+        "grade": "Great",
+        "implementation": "clockwork_artillery",
+        "equipment": "artillery_kit"
+      },
+      "skirmisher": {
+        "grade": "Neutral",
+        "implementation": "clockwork_skirmisher",
+        "equipment": "skirmisher_kit"
+      }
+    },
+    "capabilities": [
+      "PREPARED_FIRE"
+    ]
   }
 }

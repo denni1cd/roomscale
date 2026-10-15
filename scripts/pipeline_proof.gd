@@ -1501,9 +1501,9 @@ func _build_ui() -> void:
 	_focus_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_focus_label.custom_minimum_size = Vector2(255.0, 26.0)
 	overlay.add_child(_focus_label)
-	_inspection_label = _make_label("CitizenInspection", Vector2(1000.0, 90.0), 13, Color("d7e4db"))
+	_inspection_label = _make_label("CitizenInspection", Vector2(860.0, 90.0), 13, Color("d7e4db"))
 	_inspection_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	_inspection_label.custom_minimum_size = Vector2(255.0, 72.0)
+	_inspection_label.custom_minimum_size = Vector2(400.0, 72.0)
 	_inspection_label.text = "CITIZEN INSPECTION\nClick a citizen"
 	overlay.add_child(_inspection_label)
 	_add_ui_panel(overlay, "PresentationPanel", Rect2(20, 18, 420, 74), Color(0.035, 0.052, 0.068, 0.72))
@@ -1561,6 +1561,7 @@ func _update_population_ui() -> void:
 	if is_instance_valid(_selected_citizen) and is_instance_valid(_inspection_label):
 		var inspection: Dictionary = _selected_citizen.get_inspection_status()
 		_inspection_label.text = "CITIZEN %02d  ·  %s\nTASK %s\nTARGET (%.0f, %.0f, %.0f)" % [int(inspection.id) + 1, inspection.state, String(inspection.task).replace("_", " "), inspection.target.x, inspection.target.y, inspection.target.z]
+		if not _selected_citizen.combat_duty.is_empty(): _inspection_label.text += "\n" + _selected_citizen.combat_inspection()
 		_inspection_label.text = CivilizationVocabulary.presentation_text(_inspection_label.text)
 	var m6: Dictionary = _task_coordinator.get_m6_status()
 	_m6_status_label.text = "%s  ARRIVED %d · EXPLORED %d · REUSES %d/2 · LINK %s" % [_goal_surface_name().to_upper(), m6.target_arrivals, m6.target_explorations_completed, m6.autonomous_reuses_assigned, "LIVE" if m6.infrastructure_operational else "WAITING"]
@@ -1681,6 +1682,7 @@ func select_citizen_at_screen_position(screen_position: Vector2) -> bool:
 	if not is_instance_valid(closest):
 		return false
 	_selected_citizen = closest
+	_inspection_label.show()
 	_update_population_ui()
 	return true
 

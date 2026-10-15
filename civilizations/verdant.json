@@ -15,9 +15,18 @@
     "glow": "d9cf72"
   },
   "resource_vocabulary": {
-    "wood": {"display_name": "Living Fiber", "visual_style": "fiber_bundle"},
-    "metal": {"display_name": "Resin", "visual_style": "resin_pod"},
-    "mechanical_parts": {"display_name": "Growth Spores", "visual_style": "spore_pods"}
+    "wood": {
+      "display_name": "Living Fiber",
+      "visual_style": "fiber_bundle"
+    },
+    "metal": {
+      "display_name": "Resin",
+      "visual_style": "resin_pod"
+    },
+    "mechanical_parts": {
+      "display_name": "Growth Spores",
+      "visual_style": "spore_pods"
+    }
   },
   "construction": {
     "project_name": "Living Vine Project",
@@ -34,5 +43,37 @@
     "settlement_patch_budget": 18,
     "lower_anchor_patch_budget": 10,
     "surface_patch_budget": 12
+  },
+  "combat": {
+    "roles": {
+      "line": {
+        "grade": "Neutral",
+        "implementation": "verdant_line",
+        "equipment": "line_kit"
+      },
+      "ranged": {
+        "grade": "Good",
+        "implementation": "verdant_ranged",
+        "equipment": "ranged_kit"
+      },
+      "heavy": {
+        "grade": "Bad",
+        "implementation": "verdant_heavy",
+        "equipment": "heavy_kit"
+      },
+      "artillery": {
+        "grade": "Neutral",
+        "implementation": "verdant_artillery",
+        "equipment": "artillery_kit"
+      },
+      "skirmisher": {
+        "grade": "Great",
+        "implementation": "verdant_skirmisher",
+        "equipment": "skirmisher_kit"
+      }
+    },
+    "capabilities": [
+      "PATHFINDER_MANEUVERS"
+    ]
   }
 }

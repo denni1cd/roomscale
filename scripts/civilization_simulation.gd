@@ -16,6 +16,8 @@ const Population := preload("res://scripts/population_system.gd")
 const CameraDirector := preload("res://scripts/fishbowl_camera_director.gd")
 const InnovationRuntime := preload("res://scripts/innovation_runtime.gd")
 var innovation := InnovationRuntime.new()
+var military := preload("res://scripts/military_readiness.gd").new()
+var armory := preload("res://scripts/armory_system.gd").new()
 var camera_director: Node
 var journal := Journal.new()
 var governor := Governor.new()
@@ -101,6 +103,8 @@ func configure(world: Node3D, config: Dictionary) -> void:
 	if governor.enabled:
 		governor.mode = "OBSERVING"
 		governor.reason = "Evaluating civilization state every five simulation seconds"
+	armory.configure(self)
+	military.configure(self)
 	development = Development.new()
 	development.configure(self)
 	population = Population.new()
@@ -205,6 +209,7 @@ func claim(citizen: Node3D) -> Dictionary:
 
 func work_options(citizen: Node3D) -> Array[Dictionary]:
 	var options: Array[Dictionary] = []
+	options.append_array(armory.options())
 	options.append_array(development.options())
 	options.append_array(innovation.options(citizen))
 	if construction.economy != null and construction.project_created and not construction.traversal_deployed:
@@ -318,18 +323,22 @@ func work(citizen: Node3D, delta: float) -> bool:
 		citizen.needs.rest_slot = -1
 	else:
 		if citizen._work_timer < 1: return false
-		if not economy.consume(int(task.ticket)): return false
+		if not economy.consume(int(task.ticket),"citizen:%d" % citizen.citizen_id): return false
 		needs.satisfy(citizen.needs, String(task.resource))
 	self_care_completed[citizen.citizen_id] = int(self_care_completed.get(citizen.citizen_id, 0)) + 1
 	return true
 
+func reservation_owner(task: Dictionary) -> String:
+	if String(task.task_type).begins_with("NEED_"): return "citizen:%d" % int(task.citizen_id)
+	return String(task.get("fabrication_owner",task.get("project_id","traversal")))
+
 func release(task: Dictionary) -> void:
 	if task.has("ticket"):
-		var dropped := economy.drop(int(task.ticket))
+		var dropped := economy.drop(int(task.ticket),reservation_owner(task))
 		if not dropped.is_empty():
 			var at: Vector3 = citizen_for(int(task.citizen_id)).global_position
 			show_bundle(resources.create_bundle(String(dropped.resource), float(dropped.amount), at, "interrupted_delivery"))
-		else: economy.release(int(task.ticket))
+		else: economy.release(int(task.ticket),reservation_owner(task))
 	if task.has("slot"):
 		needs.release_rest(int(task.slot), false)
 		citizen_for(int(task.citizen_id)).needs.rest_slot = -1

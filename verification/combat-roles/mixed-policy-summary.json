@@ -1,0 +1,132 @@
+{
+  "assertions": 52472,
+  "elimination_only": {
+    "attacks": 41,
+    "casualties": {
+      "clockwork_alpha": 4,
+      "verdant_alpha": 1
+    },
+    "eliminated_sides": {
+      "clockwork_alpha": 495
+    },
+    "retreated_sides": {},
+    "site_capture_tick": 595,
+    "winner": "verdant_alpha"
+  },
+  "engagement": {
+    "attack_pairs": {
+      "clockwork_alpha:verdant_alpha": 59,
+      "scavenger_alpha:verdant_alpha": 10
+    },
+    "attacks": 69,
+    "casualties": {
+      "clockwork_alpha": 4,
+      "scavenger_alpha": 1,
+      "verdant_alpha": 3
+    },
+    "eliminated_sides": {
+      "clockwork_alpha": 902
+    },
+    "elimination_events": {
+      "clockwork_alpha": {
+        "day": 0.150333333333332,
+        "evidence": {
+          "casualties": 4,
+          "cause": "SPACE",
+          "initial_committed_force": 4,
+          "instance_id": "clockwork_alpha",
+          "intensity": "SURVIVAL_WAR",
+          "objective": "REMOVE_EXISTENTIAL_BLOCKER",
+          "tick": 902
+        },
+        "focus": "(26.0, 0.0, -38.0)",
+        "id": 24,
+        "kind": "FORCE_ELIMINATED",
+        "major": false,
+        "message": "clockwork_alpha committed force eliminated",
+        "seconds": 90.1999999999992
+      }
+    },
+    "initial_sizes": {
+      "clockwork_alpha": 4,
+      "scavenger_alpha": 2,
+      "verdant_alpha": 12
+    },
+    "max_step": 0.877503156661987,
+    "retreat_events": {
+      "scavenger_alpha": {
+        "day": 0.0900000000000008,
+        "evidence": {
+          "instance_id": "scavenger_alpha",
+          "intensity": "LIMITED_WAR",
+          "morale": {
+            "clockwork_alpha": 0.668934343434343,
+            "scavenger_alpha": 0.493181818181818,
+            "verdant_alpha": 0.93104389483066
+          },
+          "survivors": 1
+        },
+        "focus": "(26.0, 0.0, -38.0)",
+        "id": 18,
+        "kind": "RETREAT",
+        "major": false,
+        "message": "scavenger_alpha morale broke; returning to rally",
+        "seconds": 54.0000000000005
+      }
+    },
+    "retreated_sides": {
+      "scavenger_alpha": 540
+    },
+    "side_policies": {
+      "clockwork_alpha": {
+        "allow_retreat": false,
+        "cause": "SPACE",
+        "force_fraction": 1.0,
+        "intensity": 4,
+        "intensity_name": "SURVIVAL_WAR",
+        "max_force": 150,
+        "min_force": 2,
+        "objective": "REMOVE_EXISTENTIAL_BLOCKER",
+        "retreat_threshold": -1.0
+      },
+      "scavenger_alpha": {
+        "allow_retreat": true,
+        "cause": "SPACE",
+        "force_fraction": 0.25,
+        "intensity": 2,
+        "intensity_name": "LIMITED_WAR",
+        "max_force": 6,
+        "min_force": 2,
+        "objective": "SECURE_TERRITORY",
+        "retreat_threshold": 0.7
+      },
+      "verdant_alpha": {
+        "allow_retreat": false,
+        "cause": "SPACE",
+        "force_fraction": 1.0,
+        "intensity": 4,
+        "intensity_name": "SURVIVAL_WAR",
+        "max_force": 150,
+        "min_force": 2,
+        "objective": "REMOVE_EXISTENTIAL_BLOCKER",
+        "retreat_threshold": -1.0
+      }
+    },
+    "survivors_at_retreat": {
+      "scavenger_alpha": 1
+    },
+    "tick": 902,
+    "winner": "verdant_alpha"
+  },
+  "failures": [],
+  "result": "PASS",
+  "three_survival": {
+    "attacks": 78,
+    "capture": 1198,
+    "eliminated": {
+      "clockwork_alpha": 515,
+      "verdant_alpha": 782
+    },
+    "winner": "scavenger_alpha"
+  }
+}

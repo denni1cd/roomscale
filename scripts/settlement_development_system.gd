@@ -193,7 +193,7 @@ func options() -> Array[Dictionary]:
 func pickup(task: Dictionary) -> bool:
 	if active.is_empty() or task.project_id != active.id or not sim.economy.tickets.has(task.ticket): return false
 	var ticket: Dictionary = sim.economy.tickets[task.ticket]
-	return ticket.owner == active.id and ticket.resource == task.resource and ticket.amount == task.amount and sim.economy.pickup(task.ticket)
+	return ticket.owner == active.id and ticket.resource == task.resource and ticket.amount == task.amount and sim.economy.pickup(task.ticket,active.id)
 
 func deliver(task: Dictionary, citizen: Node3D) -> bool:
 	if active.is_empty() or task.project_id != active.id or citizen.global_position.distance_to(active.target) > 1.6: return false
@@ -201,7 +201,7 @@ func deliver(task: Dictionary, citizen: Node3D) -> bool:
 	var ticket: Dictionary = sim.economy.tickets[task.ticket]
 	if ticket.owner != active.id or ticket.resource != task.resource or ticket.amount != task.amount: return false
 	if float(active.delivered[task.resource]) + float(task.amount) > float(active.required[task.resource]): return false
-	if not sim.economy.deliver(task.ticket): return false
+	if not sim.economy.deliver(task.ticket,active.id): return false
 	active.delivered[task.resource] += float(task.amount)
 	active.delivery_distance += citizen.travelled_distance - float(task.pickup_travelled_distance)
 	if active.delivered.wood == active.required.wood and active.delivered.metal == active.required.metal:
@@ -229,7 +229,7 @@ func work(task: Dictionary, citizen: Node3D, effort: float) -> bool:
 	active.stage = "COMPLETE"
 	active.completed = sim.seconds
 	for id in sim.economy.tickets.keys():
-		if sim.economy.tickets[id].owner == active.id: sim.economy.consume(id, true)
+		if sim.economy.tickets[id].owner == active.id: sim.economy.consume(id, active.id, true)
 	apply_effect(active)
 	sim.coordinator.navigation.room_definition.objects.append(obstacle(active.site, active.id))
 	sim.coordinator.navigation.refresh_navigation()

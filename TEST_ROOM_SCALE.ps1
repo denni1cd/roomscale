@@ -50,7 +50,7 @@ foreach ($category in $categories) {
             & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_FAST.ps1') -LogPath (Join-Path $out 'room-definition.log')
             & (Join-Path $ProjectRoot 'TEST_ROOM_SCALE_POC47.ps1') -Mode Fast -OutputDirectory (Join-Path $out 'founder') -TimeoutSeconds $TimeoutSeconds
             $godot = & (Join-Path $ProjectRoot 'SETUP_ROOM_SCALE.ps1') | Select-Object -Last 1
-            foreach ($check in @(@{Script='verification/evidence_io_test'; Marker='ROOMSCALE_EVIDENCE_IO_PASS'}, @{Script='stabilization_core_test'; Marker='STABILIZATION_CORE_PASS'})) {
+            foreach ($check in @(@{Script='verification/evidence_io_test'; Marker='ROOMSCALE_EVIDENCE_IO_PASS'}, @{Script='stabilization_core_test'; Marker='STABILIZATION_CORE_PASS'}, @{Script='combat_roles_test'; Marker='ROOMSCALE_ROLES_PASS'}, @{Script='poc54_data_test'; Marker='ROOMSCALE_POC54_DATA_PASS'})) {
                 $run = Invoke-RoomScaleProcess -FilePath $godot -ArgumentList @('--headless','--path',$ProjectRoot,'--script',("res://scripts/" + $check.Script + '.gd')) -ProjectRoot $ProjectRoot -LogPath (Join-Path $out ($check.Script + '.log')) -TimeoutSeconds $TimeoutSeconds
                 if ($run.TimedOut -or $run.ExitCode -ne 0 -or $run.Content -notmatch $check.Marker -or $run.Content -match 'ERROR:|SCRIPT ERROR:') { throw "Focused regression failed: $($check.Script). See $($run.LogPath)" }
                 Write-Output "$($check.Marker) log=$($run.LogPath)"

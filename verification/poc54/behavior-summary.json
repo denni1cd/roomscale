@@ -1,0 +1,597 @@
+{
+  "source_commit": "524e35098140f0c64ce4d1c18f664bf5167c6b45",
+  "fresh_processes": 3,
+  "identical": true,
+  "evidence": {
+    "muster": {
+      "events": [
+        {
+          "data": {
+            "id": "clockwork_alpha",
+            "policy": {
+              "force_fraction": 0.25,
+              "max_force": 3,
+              "min_force": 2
+            }
+          },
+          "kind": "READINESS_TARGET",
+          "tick": 0
+        },
+        {
+          "data": {
+            "citizen_id": 7,
+            "equipment_id": "ranged_kit",
+            "id": "clockwork_alpha:kit:2",
+            "owner": "clockwork_alpha",
+            "role": "ranged",
+            "state": "RESERVED",
+            "variant": "normal"
+          },
+          "kind": "KIT_RESERVED",
+          "tick": 0
+        },
+        {
+          "data": {
+            "citizen_id": 5,
+            "equipment_id": "line_kit",
+            "id": "clockwork_alpha:kit:1",
+            "owner": "clockwork_alpha",
+            "role": "line",
+            "state": "RESERVED",
+            "variant": "normal"
+          },
+          "kind": "KIT_RESERVED",
+          "tick": 0
+        },
+        {
+          "data": {
+            "id": 7,
+            "kit": "clockwork_alpha:kit:2",
+            "role": "ranged"
+          },
+          "kind": "CITIZEN_MUSTERING",
+          "tick": 0
+        },
+        {
+          "data": {
+            "id": 5,
+            "kit": "clockwork_alpha:kit:1",
+            "role": "line"
+          },
+          "kind": "CITIZEN_MUSTERING",
+          "tick": 0
+        },
+        {
+          "data": {
+            "citizen_id": 5,
+            "equipment_id": "line_kit",
+            "id": "clockwork_alpha:kit:1",
+            "owner": "clockwork_alpha",
+            "role": "line",
+            "state": "ISSUED",
+            "variant": "normal"
+          },
+          "kind": "KIT_ISSUED",
+          "tick": 15
+        },
+        {
+          "data": {
+            "citizen_id": 7,
+            "equipment_id": "ranged_kit",
+            "id": "clockwork_alpha:kit:2",
+            "owner": "clockwork_alpha",
+            "role": "ranged",
+            "state": "ISSUED",
+            "variant": "normal"
+          },
+          "kind": "KIT_ISSUED",
+          "tick": 17
+        },
+        {
+          "data": {
+            "id": "clockwork_alpha",
+            "size": 2
+          },
+          "kind": "MOBILIZATION_READY",
+          "tick": 29
+        },
+        {
+          "data": {
+            "citizen_id": -1,
+            "equipment_id": "ranged_kit",
+            "id": "clockwork_alpha:kit:2",
+            "owner": "clockwork_alpha",
+            "role": "ranged",
+            "state": "STOCKED",
+            "variant": "normal"
+          },
+          "kind": "KIT_RETURNED",
+          "tick": 41
+        },
+        {
+          "data": {
+            "citizen_id": -1,
+            "equipment_id": "line_kit",
+            "id": "clockwork_alpha:kit:1",
+            "owner": "clockwork_alpha",
+            "role": "line",
+            "state": "STOCKED",
+            "variant": "normal"
+          },
+          "kind": "KIT_RETURNED",
+          "tick": 41
+        },
+        {
+          "data": {
+            "id": "clockwork_alpha",
+            "policy": {
+              "force_fraction": 0.25,
+              "max_force": 3,
+              "min_force": 2
+            }
+          },
+          "kind": "READINESS_TARGET",
+          "tick": 129
+        },
+        {
+          "data": {
+            "citizen_id": 6,
+            "equipment_id": "ranged_kit",
+            "id": "clockwork_alpha:kit:2",
+            "owner": "clockwork_alpha",
+            "role": "ranged",
+            "state": "RESERVED",
+            "variant": "normal"
+          },
+          "kind": "KIT_RESERVED",
+          "tick": 130
+        },
+        {
+          "data": {
+            "citizen_id": 4,
+            "equipment_id": "line_kit",
+            "id": "clockwork_alpha:kit:1",
+            "owner": "clockwork_alpha",
+            "role": "line",
+            "state": "RESERVED",
+            "variant": "normal"
+          },
+          "kind": "KIT_RESERVED",
+          "tick": 130
+        },
+        {
+          "data": {
+            "id": 6,
+            "kit": "clockwork_alpha:kit:2",
+            "role": "ranged"
+          },
+          "kind": "CITIZEN_MUSTERING",
+          "tick": 130
+        },
+        {
+          "data": {
+            "id": 4,
+            "kit": "clockwork_alpha:kit:1",
+            "role": "line"
+          },
+          "kind": "CITIZEN_MUSTERING",
+          "tick": 130
+        },
+        {
+          "data": {
+            "citizen_id": 6,
+            "equipment_id": "ranged_kit",
+            "id": "clockwork_alpha:kit:2",
+            "owner": "clockwork_alpha",
+            "role": "ranged",
+            "state": "ISSUED",
+            "variant": "normal"
+          },
+          "kind": "KIT_ISSUED",
+          "tick": 244
+        },
+        {
+          "data": {
+            "citizen_id": 4,
+            "equipment_id": "line_kit",
+            "id": "clockwork_alpha:kit:1",
+            "owner": "clockwork_alpha",
+            "role": "line",
+            "state": "ISSUED",
+            "variant": "normal"
+          },
+          "kind": "KIT_ISSUED",
+          "tick": 246
+        },
+        {
+          "data": {
+            "id": "clockwork_alpha",
+            "size": 2
+          },
+          "kind": "MOBILIZATION_READY",
+          "tick": 258
+        },
+        {
+          "data": {
+            "citizen_id": -1,
+            "equipment_id": "ranged_kit",
+            "id": "clockwork_alpha:kit:2",
+            "owner": "clockwork_alpha",
+            "role": "ranged",
+            "state": "STOCKED",
+            "variant": "normal"
+          },
+          "kind": "KIT_RETURNED",
+          "tick": 270
+        },
+        {
+          "data": {
+            "citizen_id": -1,
+            "equipment_id": "line_kit",
+            "id": "clockwork_alpha:kit:1",
+            "owner": "clockwork_alpha",
+            "role": "line",
+            "state": "STOCKED",
+            "variant": "normal"
+          },
+          "kind": "KIT_RETURNED",
+          "tick": 270
+        }
+      ],
+      "kits": {
+        "clockwork_alpha:kit:1": {
+          "citizen_id": -1,
+          "equipment_id": "line_kit",
+          "id": "clockwork_alpha:kit:1",
+          "owner": "clockwork_alpha",
+          "role": "line",
+          "state": "STOCKED",
+          "variant": "normal"
+        },
+        "clockwork_alpha:kit:2": {
+          "citizen_id": -1,
+          "equipment_id": "ranged_kit",
+          "id": "clockwork_alpha:kit:2",
+          "owner": "clockwork_alpha",
+          "role": "ranged",
+          "state": "STOCKED",
+          "variant": "normal"
+        }
+      },
+      "max_step": 0.650001525878906
+    },
+    "pathfinder": {
+      "baseline": {
+        "angle": 0,
+        "length": 138.82842707634,
+        "pathfinder": false,
+        "target": "(111.0, 0.0, -65.0)"
+      },
+      "desired": "(111.0, 0.0, -65.0)",
+      "origin": "(33.0, 0.0, -65.0)",
+      "selected": {
+        "angle": -60,
+        "length": 94.4622048139572,
+        "pathfinder": true,
+        "target": "(72.0, 0.0, 2.549988)"
+      },
+      "speed": 6.5
+    },
+    "prepared": [
+      {
+        "base": 1.2,
+        "prepared": 1.02,
+        "role": "ranged"
+      },
+      {
+        "base": 3.5,
+        "prepared": 2.975,
+        "role": "artillery"
+      }
+    ],
+    "prepared_attacks_artillery": [
+      {
+        "attacker": 9,
+        "damage": 46.0,
+        "interval": 2.975,
+        "kit": "clockwork_alpha:kit:1",
+        "prepared": true,
+        "role": "artillery",
+        "target": 24,
+        "tick": 36
+      },
+      {
+        "attacker": 9,
+        "damage": 46.0,
+        "interval": 2.975,
+        "kit": "clockwork_alpha:kit:1",
+        "prepared": true,
+        "role": "artillery",
+        "target": 24,
+        "tick": 66
+      },
+      {
+        "attacker": 9,
+        "damage": 46.0,
+        "interval": 2.975,
+        "kit": "clockwork_alpha:kit:1",
+        "prepared": true,
+        "role": "artillery",
+        "target": 24,
+        "tick": 96
+      }
+    ],
+    "prepared_attacks_ranged": [
+      {
+        "attacker": 9,
+        "damage": 7.4,
+        "interval": 1.02,
+        "kit": "clockwork_alpha:kit:1",
+        "prepared": true,
+        "role": "ranged",
+        "target": 24,
+        "tick": 25
+      },
+      {
+        "attacker": 9,
+        "damage": 7.4,
+        "interval": 1.02,
+        "kit": "clockwork_alpha:kit:1",
+        "prepared": true,
+        "role": "ranged",
+        "target": 24,
+        "tick": 36
+      },
+      {
+        "attacker": 9,
+        "damage": 7.4,
+        "interval": 1.02,
+        "kit": "clockwork_alpha:kit:1",
+        "prepared": true,
+        "role": "ranged",
+        "target": 24,
+        "tick": 47
+      },
+      {
+        "attacker": 9,
+        "damage": 7.4,
+        "interval": 1.02,
+        "kit": "clockwork_alpha:kit:1",
+        "prepared": true,
+        "role": "ranged",
+        "target": 24,
+        "tick": 58
+      },
+      {
+        "attacker": 9,
+        "damage": 7.4,
+        "interval": 1.02,
+        "kit": "clockwork_alpha:kit:1",
+        "prepared": true,
+        "role": "ranged",
+        "target": 24,
+        "tick": 69
+      },
+      {
+        "attacker": 9,
+        "damage": 7.4,
+        "interval": 1.02,
+        "kit": "clockwork_alpha:kit:1",
+        "prepared": true,
+        "role": "ranged",
+        "target": 24,
+        "tick": 80
+      },
+      {
+        "attacker": 9,
+        "damage": 7.4,
+        "interval": 1.02,
+        "kit": "clockwork_alpha:kit:1",
+        "prepared": true,
+        "role": "ranged",
+        "target": 24,
+        "tick": 91
+      },
+      {
+        "attacker": 9,
+        "damage": 7.4,
+        "interval": 1.02,
+        "kit": "clockwork_alpha:kit:1",
+        "prepared": true,
+        "role": "ranged",
+        "target": 24,
+        "tick": 102
+      },
+      {
+        "attacker": 9,
+        "damage": 7.4,
+        "interval": 1.02,
+        "kit": "clockwork_alpha:kit:1",
+        "prepared": true,
+        "role": "ranged",
+        "target": 24,
+        "tick": 113
+      },
+      {
+        "attacker": 9,
+        "damage": 7.4,
+        "interval": 1.02,
+        "kit": "clockwork_alpha:kit:1",
+        "prepared": true,
+        "role": "ranged",
+        "target": 24,
+        "tick": 124
+      },
+      {
+        "attacker": 9,
+        "damage": 7.4,
+        "interval": 1.02,
+        "kit": "clockwork_alpha:kit:1",
+        "prepared": true,
+        "role": "ranged",
+        "target": 24,
+        "tick": 135
+      },
+      {
+        "attacker": 9,
+        "damage": 7.4,
+        "interval": 1.02,
+        "kit": "clockwork_alpha:kit:1",
+        "prepared": true,
+        "role": "ranged",
+        "target": 24,
+        "tick": 146
+      },
+      {
+        "attacker": 9,
+        "damage": 7.4,
+        "interval": 1.02,
+        "kit": "clockwork_alpha:kit:1",
+        "prepared": true,
+        "role": "ranged",
+        "target": 24,
+        "tick": 157
+      },
+      {
+        "attacker": 9,
+        "damage": 7.4,
+        "interval": 1.02,
+        "kit": "clockwork_alpha:kit:1",
+        "prepared": true,
+        "role": "ranged",
+        "target": 24,
+        "tick": 168
+      },
+      {
+        "attacker": 9,
+        "damage": 7.4,
+        "interval": 1.02,
+        "kit": "clockwork_alpha:kit:1",
+        "prepared": true,
+        "role": "ranged",
+        "target": 24,
+        "tick": 179
+      },
+      {
+        "attacker": 9,
+        "damage": 7.4,
+        "interval": 1.02,
+        "kit": "clockwork_alpha:kit:1",
+        "prepared": true,
+        "role": "ranged",
+        "target": 24,
+        "tick": 190
+      },
+      {
+        "attacker": 9,
+        "damage": 7.4,
+        "interval": 1.02,
+        "kit": "clockwork_alpha:kit:1",
+        "prepared": true,
+        "role": "ranged",
+        "target": 24,
+        "tick": 201
+      },
+      {
+        "attacker": 9,
+        "damage": 7.4,
+        "interval": 1.02,
+        "kit": "clockwork_alpha:kit:1",
+        "prepared": true,
+        "role": "ranged",
+        "target": 24,
+        "tick": 212
+      },
+      {
+        "attacker": 9,
+        "damage": 7.4,
+        "interval": 1.02,
+        "kit": "clockwork_alpha:kit:1",
+        "prepared": true,
+        "role": "ranged",
+        "target": 24,
+        "tick": 223
+      }
+    ],
+    "scarcity": [
+      {
+        "cost": {
+          "metal": 3,
+          "wood": 1
+        },
+        "equipment_id": "heavy_kit",
+        "evaluation": 0,
+        "id": "clockwork_alpha:equipment:1",
+        "required_work": 12.0,
+        "role": "heavy",
+        "state": "BUILDING",
+        "tickets": [
+          1,
+          2
+        ],
+        "variant": "normal",
+        "work": 0.0,
+        "workers": {}
+      },
+      {
+        "cost": {
+          "metal": 3,
+          "wood": 1
+        },
+        "equipment_id": "heavy_kit",
+        "evaluation": 0,
+        "id": "scavenger_alpha:equipment:1",
+        "required_work": 12.0,
+        "role": "heavy",
+        "state": "BUILDING",
+        "tickets": [
+          1,
+          2
+        ],
+        "variant": "normal",
+        "work": 0.0,
+        "workers": {}
+      },
+      {
+        "cost": {
+          "metal": 2,
+          "wood": 3
+        },
+        "equipment_id": "heavy_kit",
+        "evaluation": 0,
+        "id": "scavenger_alpha:equipment:1",
+        "required_work": 15.0,
+        "role": "heavy",
+        "state": "BUILDING",
+        "tickets": [
+          1,
+          2
+        ],
+        "variant": "jury_rigged",
+        "work": 0.0,
+        "workers": {}
+      },
+      {
+        "cost": {
+          "metal": 3,
+          "wood": 1
+        },
+        "equipment_id": "heavy_kit",
+        "evaluation": 0,
+        "id": "verdant_alpha:equipment:1",
+        "required_work": 12.0,
+        "role": "heavy",
+        "state": "BUILDING",
+        "tickets": [
+          1,
+          2
+        ],
+        "variant": "normal",
+        "work": 0.0,
+        "workers": {}
+      }
+    ]
+  },
+  "failures": [],
+  "result": "PASS"
+}

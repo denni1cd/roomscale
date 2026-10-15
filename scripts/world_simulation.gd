@@ -58,6 +58,8 @@ func step() -> void:
 	for runtime in ordered_runtimes():
 		runtime.seconds = seconds
 		runtime.step_society()
+	for runtime in ordered_runtimes(): runtime.military.update()
+	for citizen in citizens: preload("res://scripts/military_abilities.gd").update(citizen,seconds)
 	if conflict_enabled:
 		advance_conflict()
 		combat.update()
@@ -96,7 +98,7 @@ func enable_conflict(config: Dictionary) -> void:
 	objective_marker.add_child(label)
 	status_label = Label.new()
 	status_label.position = Vector2(20,20)
-	status_label.add_theme_font_size_override("font_size",20)
+	status_label.add_theme_font_size_override("font_size",16)
 	status_label.add_theme_color_override("font_shadow_color",Color.BLACK)
 	status_label.add_theme_constant_override("shadow_offset_x",2)
 	status_label.add_theme_constant_override("shadow_offset_y",2)
@@ -104,7 +106,7 @@ func enable_conflict(config: Dictionary) -> void:
 	for index in range(4):
 		var button := Button.new()
 		button.text = ["Pause","1x","4x","10x"][index]
-		button.position = Vector2(20 + index * 72,110 + (runtimes.size() * 28 if runtimes.any(func(runtime: Node) -> bool: return runtime.innovation.enabled) else 0))
+		button.position = Vector2(20 + index * 72,330 + (runtimes.size() * 28 if runtimes.any(func(runtime: Node) -> bool: return runtime.innovation.enabled) else 0))
 		var rate: float = [0.0,1.0,4.0,10.0][index]
 		button.pressed.connect(func() -> void: runtimes[0].speed = rate)
 		scene.get_node("Overlay").add_child(button)
@@ -129,7 +131,9 @@ func advance_conflict() -> void:
 		var scout: Node3D = scouts[id]
 		if scout.task_type == "STRATEGIC_SCOUT" and scout.state == "WORK" and scout.global_position.distance_to(at) < 1.6:
 			territory.claim(site_id,id,seconds)
-	if territory.sites[site_id].claim_state != "CONTESTED": return
+	if territory.sites[site_id].claim_state != "CONTESTED":
+		for runtime in ordered_runtimes(): runtime.military.cancel()
+		return
 	if first_contact_tick < 0: first_contact_tick = tick
 	if seconds + 0.000001 < next_pressure_evaluation: return
 	next_pressure_evaluation = seconds + 1.0
@@ -152,6 +156,7 @@ func advance_conflict() -> void:
 			for id in ids:
 				if not engaged.has(id): engaged.append(id)
 	if intensity < conflict_pressure.LIMITED_WAR:
+		for runtime in ordered_runtimes(): runtime.military.cancel()
 		if combat.phase in ["MARCH","FIGHT"]: combat.stand_down("scarcity pressure resolved")
 		return
 	# Allow every living society to make physical contact before forming a battle.
@@ -167,7 +172,15 @@ func advance_conflict() -> void:
 		war_policy["cause"] = conflict_state.cause
 		war_policy["resource"] = conflict_state.resource
 		war_policy["objective"] = conflict_state.objective
+		for runtime in ordered_runtimes():
+			if engaged.has(runtime.instance_id): runtime.military.authorize(war_policy.side_policies[runtime.instance_id],at)
+			else: runtime.military.cancel()
+		if not engaged.all(func(id: String) -> bool: return runtime_for(id).military.state == "READY"): return
 		if combat.start(self,site_id,war_policy):
+			for id in engaged:
+				runtime_for(id).military.state = "DEPLOYED"
+				runtime_for(id).military.blocked = ""
+				runtime_for(id).armory.record("FORCE_DEPLOYED",runtime_for(id).military.snapshot())
 			for id in scouts:
 				var scout: Node3D = scouts[id]
 				if scout.combat_duty.is_empty():
@@ -182,6 +195,7 @@ func present_home(runtime: Node, at: Vector3) -> void:
 	var color := Color(String(runtime.definition.palette.primary))
 	G.box(marker,"SupplyCache",Vector3(1.8,0.45,1.0),Vector3(0,0.225,0),"wood",color,0.08)
 	var label := Label3D.new()
+	label.name = "HomeLabel"
 	label.text = String(runtime.definition.display_name).to_upper() + " HOME / RALLY"
 	label.font_size = 32
 	label.pixel_size = 0.02
@@ -206,6 +220,8 @@ func _process(delta: float) -> void:
 			attack_effects.erase(effect)
 	if not conflict_enabled: return
 	for citizen in citizens: citizen.refresh_combat_presentation(delta)
+	for runtime in runtimes:
+		scene.get_node(runtime.instance_id+"_Home/HomeLabel").visible = scene.get_node("CameraRig").distance >= 40
 	if OS.get_environment("ROOMSCALE_MANUAL_CAMERA") != "1" and camera_phase != combat.phase:
 		camera_phase = combat.phase
 		var camera: Node = scene.get_node("CameraRig")
@@ -252,6 +268,8 @@ func _process(delta: float) -> void:
 			counts.append("%s %d / losses %d" % [runtime.definition.display_name, int(combat.initial_sizes.get(id,0)), int(combat.casualties.get(id,0))])
 		status_label.text = status_label.text.get_slice("\n",0) + "\n" + pressure_text + "\nForces · " + " · ".join(counts)
 	for runtime in runtimes:
+		var military: Dictionary = runtime.military.snapshot()
+		status_label.text += "\n%s · %s · plan %s · missing %s\nKits L%d R%d H%d A%d S%d · projects %d · %s · %s" % [runtime.definition.display_name,military.state,", ".join(military.planned),", ".join(military.missing),military.stock.line,military.stock.ranged,military.stock.heavy,military.stock.artillery,military.stock.skirmisher,military.projects,military.blocked,", ".join(military.capabilities)]
 		if not runtime.innovation.enabled: continue
 		var state: Dictionary = runtime.innovation.status()
 		var activity: String = state.reason

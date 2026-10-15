@@ -40,6 +40,7 @@ func run() -> void:
 		return
 	for runtime in world.runtimes: runtime.set_process(false)
 	check(world.runtimes.size() == world.scenario.participants.size(),"all scenario instances")
+	for runtime in world.runtimes: check(runtime.armory.kits.is_empty() and runtime.armory.projects.is_empty(),"live conflict starts with zero military equipment")
 	var a: Node = world.runtimes[0]
 	var b: Node = world.runtimes[1]
 	check(a.economy != b.economy and a.needs != b.needs and a.population != b.population and a.development != b.development,"independent society authorities")
@@ -66,8 +67,30 @@ func run() -> void:
 	var dead_distance: Dictionary = {}
 	for iteration in range(24000 if OS.get_environment("ROOMSCALE_INNOVATION") == "1" else 9000):
 		var positions: Dictionary = {}
-		for citizen in world.citizens: positions[citizen.citizen_id] = citizen.global_position
+		var speeds := {}
+		for citizen in world.citizens:
+			positions[citizen.citizen_id] = citizen.global_position
+			speeds[citizen.citizen_id] = citizen.combat_speed()
 		world.step()
+		for runtime in world.runtimes:
+			check(runtime.armory.audit().is_empty(),"armory issue ownership audit")
+			check(runtime.armory.active_count() <= 2,"two active armory projects maximum")
+			if not OS.get_environment("ROOMSCALE_VISUAL_DIR").is_empty():
+				if runtime.armory.active_count() > 0 and not captures.has("military-"+runtime.instance_id+"-production"):
+					await capture("military-"+runtime.instance_id+"-production",runtime.coordinator.depot_station,7)
+				if runtime.military.state == "MUSTERING" and not runtime.military.members.is_empty() and not captures.has("military-"+runtime.instance_id+"-muster"):
+					var muster_actor: Node3D = runtime.military.members[0].citizen
+					scene._selected_citizen = muster_actor; scene._inspection_label.show()
+					await capture("military-"+runtime.instance_id+"-muster",muster_actor.global_position,4)
+				if runtime.military.state == "READY" and not captures.has("military-"+runtime.instance_id+"-equipped"):
+					await capture("military-"+runtime.instance_id+"-equipped",runtime.coordinator.depot_station,4)
+				for citizen in runtime.citizens:
+					if citizen.prepared and not captures.has("military-prepared-fire"):
+						scene._selected_citizen = citizen; scene._inspection_label.show()
+						await capture("military-prepared-fire",citizen.global_position,2.2)
+					if world.combat.phase == "FIGHT" and citizen.global_position.distance_to(runtime.coordinator.depot_station)>2 and not citizen.combat_kit.is_empty() and runtime.armory.kits[citizen.combat_kit].variant == "jury_rigged" and not captures.has("military-jury-rigged"):
+						scene._selected_citizen = citizen; scene._inspection_label.show()
+						await capture("military-jury-rigged",citizen.global_position,2.2)
 		if world.combat.retreated_sides.size() == 1 and world.combat.forces.size() > 2:
 			check(world.combat.winner.is_empty() and world.combat.phase == "FIGHT", "first retreat cannot choose a multi-party winner")
 			first_retreat_continued = true
@@ -96,7 +119,9 @@ func run() -> void:
 			for citizen in runtime.citizens:
 				check(citizen.civilization_id == runtime.instance_id,"roster ownership")
 				if positions.has(citizen.citizen_id):
-					max_step = maxf(max_step,citizen.global_position.distance_to(positions[citizen.citizen_id]))
+					var movement: float = citizen.global_position.distance_to(positions[citizen.citizen_id])
+					max_step = maxf(max_step,movement)
+					check(movement <= float(speeds[citizen.citizen_id])*world.STEP+0.00003,"each military actor respects its actual role speed")
 				if citizen.life_state == "DEAD":
 					if not dead_positions.has(citizen.citizen_id):
 						dead_positions[citizen.citizen_id] = citizen.global_position
@@ -148,7 +173,7 @@ func run() -> void:
 				if OS.get_environment("ROOMSCALE_INNOVATION") != "1" or world.runtimes.any(func(runtime: Node) -> bool: return runtime.journal.events.any(func(e: Dictionary) -> bool: return e.kind == "territory_reached")): break
 		if iteration % 100 == 0: await process_frame
 	check(complete_at > 0,"production battle and secure capture complete")
-	check(max_step <= 0.65001,"all military and retreat movement respects production speed")
+	check(max_step <= 0.87751,"all military and retreat movement respects maximum role speed")
 	for kind in ["SITE_TARGETED","FIRST_CONTACT","HOSTILITY_DECLARED","SITE_CONTESTED","FORCE_COMMITTED","FORCE_ARRIVED","COMBAT_CASUALTY","RETREAT","SITE_CAPTURED"]:
 		check(world.journal.events.any(func(e: Dictionary) -> bool: return e.kind == kind),"event " + kind)
 	check(military_assignment_checked,"manual military reassignment boundary exercised")
@@ -186,12 +211,29 @@ func run() -> void:
 					check(project.delivered == project.required and project.work >= project.required_work - 0.00001 and project.delivery_distance > 0, "shared route funded and built by its owner")
 		check(completed_projects == 1 and world.runtimes[0].coordinator.surface_navigation.connections.size() == 1 and world.innovation_claims.is_empty(), "one physical shared route; no duplicate construction or stale claims")
 		check(world.runtimes.any(func(runtime: Node) -> bool: return runtime.journal.events.any(func(e: Dictionary) -> bool: return e.kind == "territory_reached")), "multi-party survivors physically use invented access")
+	for runtime in world.runtimes:
+		var evaluations := {}
+		var completed := 0
+		for project in runtime.armory.projects.values():
+			check(not evaluations.has(project.evaluation),"one order per actual governor evaluation")
+			evaluations[project.evaluation] = true
+			if project.state == "COMPLETE":
+				completed += 1
+				check(project.workers.size()>0 and project.work+0.00001>=project.required_work,"every live kit required citizen effort")
+				for ticket in project.tickets: check(not runtime.economy.tickets.has(ticket),"completed military materials consumed once")
+		check(completed == runtime.armory.kits.size(),"one paid completed project per persistent kit")
+		check(completed >= 2,"each live society manufactures its own force")
+		for kit in runtime.armory.kits.values():
+			if kit.state == "LOST": check(runtime.citizen_for(kit.citizen_id).life_state == "DEAD","lost kit remains attached to terminal casualty")
+			else: check(kit.state == "STOCKED" and kit.citizen_id == -1,"every surviving kit physically returned")
 	var societies := {}
 	var populations := {}
 	for runtime in world.runtimes:
-		societies[runtime.instance_id] = {"status":runtime.status(),"projects":runtime.development.projects,"deliveries":runtime.haul_deliveries,"innovation":runtime.innovation.status(),"innovation_projects":runtime.innovation.projects,"research":runtime.innovation.research_history}
+		societies[runtime.instance_id] = {"status":runtime.status(),"military":runtime.military.snapshot(),"armory":runtime.armory.snapshot(),"military_events":runtime.armory.events,"projects":runtime.development.projects,"deliveries":runtime.haul_deliveries,"innovation":runtime.innovation.status(),"innovation_projects":runtime.innovation.projects,"research":runtime.innovation.research_history}
 		populations[runtime.instance_id] = runtime.living_population()
-	var result := {"result":"PASS" if failures.is_empty() else "FAIL","failures":failures,"room":world.room_definition.id,"first_contact_tick":world.first_contact_tick,"battle_start_tick":world.combat.battle_start_tick,"force_sizes":world.combat.initial_sizes,"casualties":world.combat.casualties,"retreating_side":world.combat.retreating_side,"winner":world.combat.winner,"site_capture_tick":world.combat.site_capture_tick,"attacks":world.combat.attacks,"morale":world.combat.morale,"returned":world.combat.returned,"max_step":max_step,"societies":societies,"events":world.journal.events,"captures":captures,"final_tick":world.tick,"living_populations":populations,"retreated_sides":world.combat.retreated_sides,"eliminated_sides":world.combat.eliminated_sides}
+	var military_fingerprint := {}
+	for runtime in world.runtimes: military_fingerprint[runtime.instance_id] = {"readiness":runtime.military.snapshot(),"armory":runtime.armory.snapshot(),"events":runtime.armory.events,"economy":runtime.economy.snapshot()}
+	var result := {"military_fingerprint":military_fingerprint,"result":"PASS" if failures.is_empty() else "FAIL","failures":failures,"room":world.room_definition.id,"first_contact_tick":world.first_contact_tick,"battle_start_tick":world.combat.battle_start_tick,"force_sizes":world.combat.initial_sizes,"casualties":world.combat.casualties,"retreating_side":world.combat.retreating_side,"winner":world.combat.winner,"site_capture_tick":world.combat.site_capture_tick,"attacks":world.combat.attacks,"commitments":world.combat.commitments,"attack_digest":world.combat.attack_digest,"attack_history":world.combat.attack_history,"morale":world.combat.morale,"returned":world.combat.returned,"max_step":max_step,"societies":societies,"events":world.journal.events,"captures":captures,"final_tick":world.tick,"living_populations":populations,"retreated_sides":world.combat.retreated_sides,"eliminated_sides":world.combat.eliminated_sides}
 	if not output.is_empty():
 		var file := FileAccess.open(output,FileAccess.WRITE)
 		if file == null: check(false,"result write failed")

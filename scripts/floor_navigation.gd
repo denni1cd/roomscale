@@ -93,6 +93,15 @@ func _mark_obstacle_cells() -> void:
 				grid.set_point_solid(Vector2i(x, z), true)
 
 
+func combat_path_between(start: Vector3, finish: Vector3) -> Array[Vector3]:
+	# Short physical endpoints need not detour back through a four-inch cell.
+	# Use the same room bounds and obstacle segment authority, then ordinary A*.
+	var bounds := room_bounds()
+	if not bounds.has_point(Vector2(finish.x,finish.z)) or is_obstacle_position(start) or is_obstacle_position(finish): return []
+	if absf(start.y-_floor_height) > 0.1 or absf(finish.y-_floor_height) > 0.1: return []
+	if _segment_is_clear(Vector2(start.x,start.z),Vector2(finish.x,finish.z)): return [finish]
+	return path_between(start,finish)
+
 func path_between(start: Vector3, finish: Vector3) -> Array[Vector3]:
 	# Grid cells alone do not validate the physical connector from an off-grid
 	# citizen. After a new obstacle, the nearest cell can be across its corner.

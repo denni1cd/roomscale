@@ -41,7 +41,11 @@ func tick(sim: Node) -> void:
 		if float(state[resource + "_days"]) < RECOVERY_DAYS and not sim.planner.directives.has(resource):
 			sim.secure_resource(resource)
 			sim.journal.record(sim.seconds, "directive", "Secure " + resource.capitalize(), state, sim.coordinator.depot_station, "directive:" + resource)
-	var shortage := {"wood": 0.0, "metal": 0.0}
+	var military: RefCounted = sim.get("military")
+	if military != null: military.govern()
+	var shortage: Dictionary = military.shortage() if military != null else {"wood":0.0,"metal":0.0}
+	for resource in shortage:
+		if shortage[resource] > 0: sim.secure_resource(resource)
 	if sim.construction.project_created and not sim.construction.traversal_deployed:
 		for resource in shortage:
 			shortage[resource] = maxf(0, float(sim.construction.requirements()[resource]) - float(sim.construction.delivered[resource]) - sim.economy.state_total(resource, "reserved") - sim.economy.state_total(resource, "in_transit") - float(sim.economy.available[resource]))
@@ -64,7 +68,7 @@ func tick(sim: Node) -> void:
 		transition(sim, "SURVIVAL", "Reserve below safety threshold; development restrained", state)
 	else:
 		transition(sim, "STABLE", "Reserves recovered; assess shelter and finite carrying capacity", state)
-		if sim.get("development") != null and not (sim.get("innovation") != null and sim.innovation.busy()): sim.development.consider(state)
+		if sim.get("development") != null and (military == null or military.state in ["PEACE","COMPLETE"]) and not (sim.get("innovation") != null and sim.innovation.busy()): sim.development.consider(state)
 	if sim.get("population") != null: sim.population.evaluate(sim, state, danger, shortage.values().any(func(amount: Variant) -> bool: return float(amount) > 0))
 
 func candidates(sim: Node, shortage: Dictionary) -> Array[Dictionary]:

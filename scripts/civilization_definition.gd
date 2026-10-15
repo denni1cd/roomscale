@@ -92,6 +92,18 @@ static func validate(definition: Dictionary, expected_id: String = "") -> Array[
 			errors.append("construction.traversal_name is required")
 	if not (definition.world_influence is Dictionary):
 		errors.append("world_influence must be an object")
+	errors.append_array(preload("res://scripts/combat_roles.gd").validate_profile(definition.get("combat")))
+	if not errors.is_empty(): return errors
+	if definition.get("combat",{}).get("capabilities",[]) is Array:
+		for role in definition.combat.get("roles",{}):
+			var entry: Variant = definition.combat.roles[role]
+			if entry is Dictionary and entry.has("equipment") and entry.equipment not in preload("res://scripts/military_catalog.gd").EQUIPMENT: errors.append("unknown equipment family")
+			if entry is Dictionary and entry.get("equipment","") in preload("res://scripts/military_catalog.gd").EQUIPMENT and preload("res://scripts/military_catalog.gd").EQUIPMENT[entry.equipment].role != role: errors.append("equipment role mismatch")
+			if entry is Dictionary and entry.has("requires"):
+				var synthetic := {"role":role,"cost":{"wood":1},"work":1,"requires":entry.requires}
+				errors.append_array(preload("res://scripts/military_catalog.gd").validate_equipment(synthetic))
+		for capability in definition.combat.get("capabilities",[]):
+			if capability not in preload("res://scripts/military_catalog.gd").CAPABILITIES: errors.append("unknown combat capability")
 	return errors
 
 

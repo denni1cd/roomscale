@@ -1,0 +1,531 @@
+{
+  "source_commit": "bca5c6a8603d3a394e0ff4573d4bed4a8111ec62",
+  "result": "PASS",
+  "replays": [
+    {
+      "room": "room_conflict",
+      "runs": 3,
+      "identical": true,
+      "fingerprint": {
+        "first_contact_tick": 1316,
+        "battle_start_tick": 1316,
+        "force_sizes": {
+          "clockwork_alpha": 3,
+          "verdant_alpha": 3
+        },
+        "casualties": {
+          "clockwork_alpha": 1,
+          "verdant_alpha": 0
+        },
+        "retreating_side": "clockwork_alpha",
+        "winner": "verdant_alpha",
+        "site_capture_tick": 1641,
+        "attacks": 32,
+        "morale": {
+          "clockwork_alpha": 0.674583333333333,
+          "verdant_alpha": 0.924326797385621
+        },
+        "returned": {
+          "clockwork_alpha": 2,
+          "verdant_alpha": 3
+        },
+        "living_populations": {
+          "clockwork_alpha": 11,
+          "verdant_alpha": 12
+        },
+        "retreated_sides": {
+          "clockwork_alpha": 1522
+        },
+        "eliminated_sides": {},
+        "commitments": [
+          {
+            "id": 1,
+            "role": "line",
+            "side": "clockwork_alpha",
+            "stats": {
+              "armor": 3.0,
+              "behavior": "screen",
+              "damage": 18.0,
+              "grade": "Bad",
+              "health": 102.0,
+              "implementation": "clockwork_line",
+              "interval": 1.0,
+              "movement": 1.0,
+              "preferred": 0.5,
+              "range": 0.6,
+              "reposition": 1.0,
+              "role": "line"
+            }
+          },
+          {
+            "id": 2,
+            "role": "ranged",
+            "side": "clockwork_alpha",
+            "stats": {
+              "armor": 1.0,
+              "behavior": "ranged",
+              "damage": 15.4,
+              "grade": "Good",
+              "health": 90.0,
+              "implementation": "clockwork_ranged",
+              "interval": 1.2,
+              "movement": 1.0,
+              "preferred": 5.5,
+              "range": 7.0,
+              "reposition": 1.0,
+              "role": "ranged"
+            }
+          },
+          {
+            "id": 6,
+            "role": "heavy",
+            "side": "clockwork_alpha",
+            "stats": {
+              "armor": 8.0,
+              "behavior": "assault",
+              "damage": 24.0,
+              "grade": "Neutral",
+              "health": 180.0,
+              "implementation": "clockwork_heavy",
+              "interval": 1.5,
+              "movement": 0.7,
+              "preferred": 0.5,
+              "range": 0.6,
+              "reposition": 1.0,
+              "role": "heavy"
+            }
+          },
+          {
+            "id": 13,
+            "role": "line",
+            "side": "verdant_alpha",
+            "stats": {
+              "armor": 3.0,
+              "behavior": "screen",
+              "damage": 18.0,
+              "grade": "Neutral",
+              "health": 120.0,
+              "implementation": "verdant_line",
+              "interval": 1.0,
+              "movement": 1.0,
+              "preferred": 0.5,
+              "range": 0.6,
+              "reposition": 1.0,
+              "role": "line"
+            }
+          },
+          {
+            "id": 17,
+            "role": "ranged",
+            "side": "verdant_alpha",
+            "stats": {
+              "armor": 1.0,
+              "behavior": "ranged",
+              "damage": 15.4,
+              "grade": "Good",
+              "health": 90.0,
+              "implementation": "verdant_ranged",
+              "interval": 1.2,
+              "movement": 1.0,
+              "preferred": 5.5,
+              "range": 7.0,
+              "reposition": 1.0,
+              "role": "ranged"
+            }
+          },
+          {
+            "id": 18,
+            "role": "heavy",
+            "side": "verdant_alpha",
+            "stats": {
+              "armor": 8.0,
+              "behavior": "assault",
+              "damage": 24.0,
+              "grade": "Bad",
+              "health": 153.0,
+              "implementation": "verdant_heavy",
+              "interval": 1.5,
+              "movement": 0.7,
+              "preferred": 0.5,
+              "range": 0.6,
+              "reposition": 1.0,
+              "role": "heavy"
+            }
+          }
+        ],
+        "attack_digest": "0c325efa358917595dff97697cfffbce8de14f047907099c1ca75ddc54b0083a"
+      }
+    },
+    {
+      "room": "room_conflict_c",
+      "runs": 3,
+      "identical": true,
+      "fingerprint": {
+        "first_contact_tick": 1351,
+        "battle_start_tick": 1441,
+        "force_sizes": {
+          "clockwork_alpha": 3,
+          "scavenger_alpha": 3,
+          "verdant_alpha": 3
+        },
+        "casualties": {
+          "clockwork_alpha": 1,
+          "scavenger_alpha": 1,
+          "verdant_alpha": 0
+        },
+        "retreating_side": "clockwork_alpha",
+        "winner": "verdant_alpha",
+        "site_capture_tick": 2005,
+        "attacks": 51,
+        "morale": {
+          "clockwork_alpha": 0.681916666666667,
+          "scavenger_alpha": 0.616319444444444,
+          "verdant_alpha": 0.932251633986928
+        },
+        "returned": {
+          "clockwork_alpha": 2,
+          "scavenger_alpha": 2,
+          "verdant_alpha": 3
+        },
+        "living_populations": {
+          "clockwork_alpha": 11,
+          "scavenger_alpha": 13,
+          "verdant_alpha": 14
+        },
+        "retreated_sides": {
+          "clockwork_alpha": 1871,
+          "scavenger_alpha": 1863
+        },
+        "eliminated_sides": {},
+        "commitments": [
+          {
+            "id": 3,
+            "role": "line",
+            "side": "clockwork_alpha",
+            "stats": {
+              "armor": 3.0,
+              "behavior": "screen",
+              "damage": 18.0,
+              "grade": "Bad",
+              "health": 102.0,
+              "implementation": "clockwork_line",
+              "interval": 1.0,
+              "movement": 1.0,
+              "preferred": 0.5,
+              "range": 0.6,
+              "reposition": 1.0,
+              "role": "line"
+            }
+          },
+          {
+            "id": 0,
+            "role": "ranged",
+            "side": "clockwork_alpha",
+            "stats": {
+              "armor": 1.0,
+              "behavior": "ranged",
+              "damage": 15.4,
+              "grade": "Good",
+              "health": 90.0,
+              "implementation": "clockwork_ranged",
+              "interval": 1.2,
+              "movement": 1.0,
+              "preferred": 5.5,
+              "range": 7.0,
+              "reposition": 1.0,
+              "role": "ranged"
+            }
+          },
+          {
+            "id": 4,
+            "role": "heavy",
+            "side": "clockwork_alpha",
+            "stats": {
+              "armor": 8.0,
+              "behavior": "assault",
+              "damage": 24.0,
+              "grade": "Neutral",
+              "health": 180.0,
+              "implementation": "clockwork_heavy",
+              "interval": 1.5,
+              "movement": 0.7,
+              "preferred": 0.5,
+              "range": 0.6,
+              "reposition": 1.0,
+              "role": "heavy"
+            }
+          },
+          {
+            "id": 12,
+            "role": "line",
+            "side": "scavenger_alpha",
+            "stats": {
+              "armor": 3.0,
+              "behavior": "screen",
+              "damage": 18.0,
+              "grade": "Good",
+              "health": 132.0,
+              "implementation": "scavenger_line",
+              "interval": 1.0,
+              "movement": 1.0,
+              "preferred": 0.5,
+              "range": 0.6,
+              "reposition": 1.0,
+              "role": "line"
+            }
+          },
+          {
+            "id": 20,
+            "role": "ranged",
+            "side": "scavenger_alpha",
+            "stats": {
+              "armor": 1.0,
+              "behavior": "ranged",
+              "damage": 11.9,
+              "grade": "Bad",
+              "health": 90.0,
+              "implementation": "scavenger_ranged",
+              "interval": 1.2,
+              "movement": 1.0,
+              "preferred": 5.5,
+              "range": 7.0,
+              "reposition": 1.0,
+              "role": "ranged"
+            }
+          },
+          {
+            "id": 13,
+            "role": "heavy",
+            "side": "scavenger_alpha",
+            "stats": {
+              "armor": 8.0,
+              "behavior": "assault",
+              "damage": 24.0,
+              "grade": "Great",
+              "health": 216.0,
+              "implementation": "scavenger_heavy",
+              "interval": 1.5,
+              "movement": 0.7,
+              "preferred": 0.5,
+              "range": 0.6,
+              "reposition": 1.0,
+              "role": "heavy"
+            }
+          },
+          {
+            "id": 25,
+            "role": "line",
+            "side": "verdant_alpha",
+            "stats": {
+              "armor": 3.0,
+              "behavior": "screen",
+              "damage": 18.0,
+              "grade": "Neutral",
+              "health": 120.0,
+              "implementation": "verdant_line",
+              "interval": 1.0,
+              "movement": 1.0,
+              "preferred": 0.5,
+              "range": 0.6,
+              "reposition": 1.0,
+              "role": "line"
+            }
+          },
+          {
+            "id": 34,
+            "role": "ranged",
+            "side": "verdant_alpha",
+            "stats": {
+              "armor": 1.0,
+              "behavior": "ranged",
+              "damage": 15.4,
+              "grade": "Good",
+              "health": 90.0,
+              "implementation": "verdant_ranged",
+              "interval": 1.2,
+              "movement": 1.0,
+              "preferred": 5.5,
+              "range": 7.0,
+              "reposition": 1.0,
+              "role": "ranged"
+            }
+          },
+          {
+            "id": 27,
+            "role": "heavy",
+            "side": "verdant_alpha",
+            "stats": {
+              "armor": 8.0,
+              "behavior": "assault",
+              "damage": 24.0,
+              "grade": "Bad",
+              "health": 153.0,
+              "implementation": "verdant_heavy",
+              "interval": 1.5,
+              "movement": 0.7,
+              "preferred": 0.5,
+              "range": 0.6,
+              "reposition": 1.0,
+              "role": "heavy"
+            }
+          }
+        ],
+        "attack_digest": "e65f1e2e9970bad35771e090a1e98356e77fc818b21cb52e446f6f4b89878b12"
+      }
+    },
+    {
+      "room": "room_conflict_b",
+      "runs": 2,
+      "identical": true,
+      "fingerprint": {
+        "first_contact_tick": 1485,
+        "battle_start_tick": 1485,
+        "force_sizes": {
+          "clockwork_alpha": 3,
+          "verdant_alpha": 3
+        },
+        "casualties": {
+          "clockwork_alpha": 1,
+          "verdant_alpha": 0
+        },
+        "retreating_side": "clockwork_alpha",
+        "winner": "verdant_alpha",
+        "site_capture_tick": 2013,
+        "attacks": 29,
+        "morale": {
+          "clockwork_alpha": 0.679666666666667,
+          "verdant_alpha": 0.927808823529412
+        },
+        "returned": {
+          "clockwork_alpha": 2,
+          "verdant_alpha": 3
+        },
+        "living_populations": {
+          "clockwork_alpha": 11,
+          "verdant_alpha": 12
+        },
+        "retreated_sides": {
+          "clockwork_alpha": 1907
+        },
+        "eliminated_sides": {},
+        "commitments": [
+          {
+            "id": 3,
+            "role": "line",
+            "side": "clockwork_alpha",
+            "stats": {
+              "armor": 3.0,
+              "behavior": "screen",
+              "damage": 18.0,
+              "grade": "Bad",
+              "health": 102.0,
+              "implementation": "clockwork_line",
+              "interval": 1.0,
+              "movement": 1.0,
+              "preferred": 0.5,
+              "range": 0.6,
+              "reposition": 1.0,
+              "role": "line"
+            }
+          },
+          {
+            "id": 1,
+            "role": "ranged",
+            "side": "clockwork_alpha",
+            "stats": {
+              "armor": 1.0,
+              "behavior": "ranged",
+              "damage": 15.4,
+              "grade": "Good",
+              "health": 90.0,
+              "implementation": "clockwork_ranged",
+              "interval": 1.2,
+              "movement": 1.0,
+              "preferred": 5.5,
+              "range": 7.0,
+              "reposition": 1.0,
+              "role": "ranged"
+            }
+          },
+          {
+            "id": 2,
+            "role": "heavy",
+            "side": "clockwork_alpha",
+            "stats": {
+              "armor": 8.0,
+              "behavior": "assault",
+              "damage": 24.0,
+              "grade": "Neutral",
+              "health": 180.0,
+              "implementation": "clockwork_heavy",
+              "interval": 1.5,
+              "movement": 0.7,
+              "preferred": 0.5,
+              "range": 0.6,
+              "reposition": 1.0,
+              "role": "heavy"
+            }
+          },
+          {
+            "id": 12,
+            "role": "line",
+            "side": "verdant_alpha",
+            "stats": {
+              "armor": 3.0,
+              "behavior": "screen",
+              "damage": 18.0,
+              "grade": "Neutral",
+              "health": 120.0,
+              "implementation": "verdant_line",
+              "interval": 1.0,
+              "movement": 1.0,
+              "preferred": 0.5,
+              "range": 0.6,
+              "reposition": 1.0,
+              "role": "line"
+            }
+          },
+          {
+            "id": 13,
+            "role": "ranged",
+            "side": "verdant_alpha",
+            "stats": {
+              "armor": 1.0,
+              "behavior": "ranged",
+              "damage": 15.4,
+              "grade": "Good",
+              "health": 90.0,
+              "implementation": "verdant_ranged",
+              "interval": 1.2,
+              "movement": 1.0,
+              "preferred": 5.5,
+              "range": 7.0,
+              "reposition": 1.0,
+              "role": "ranged"
+            }
+          },
+          {
+            "id": 16,
+            "role": "heavy",
+            "side": "verdant_alpha",
+            "stats": {
+              "armor": 8.0,
+              "behavior": "assault",
+              "damage": 24.0,
+              "grade": "Bad",
+              "health": 153.0,
+              "implementation": "verdant_heavy",
+              "interval": 1.5,
+              "movement": 0.7,
+              "preferred": 0.5,
+              "range": 0.6,
+              "reposition": 1.0,
+              "role": "heavy"
+            }
+          }
+        ],
+        "attack_digest": "edb70d82f32589ada4aaedd29701c272064b040e2e683bbd7babcf97e9c991cc"
+      }
+    }
+  ]
+}
