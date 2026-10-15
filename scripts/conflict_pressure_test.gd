@@ -131,10 +131,16 @@ func run() -> void:
 		var outsider: Node = multi_world.runtime_for(multi_world.scenario.participants[2].instance_id)
 		var third_health := {}
 		for citizen in outsider.citizens: third_health[citizen.citizen_id] = citizen.health
-		# Paid equipment manufacture and physical muster replace free commitment.
-		# Preserve the bilateral fight/peaceful-exclusion contracts with a bounded
-		# 900-second preparation window instead of the old 450-second free-loadout budget.
-		for iteration in range(9000):
+		# Authored prepared armory stock isolates bilateral policy from affordability.
+		# Live POC54 acceptance separately requires zero-stock real manufacture.
+		for runtime in multi_world.runtimes:
+			if runtime == outsider: continue
+			for role in preload("res://scripts/combat_roles.gd").ORDER:
+				for copy_index in range(3):
+					var kit := "%s:kit:%d" % [runtime.instance_id,runtime.armory._next_kit]
+					runtime.armory._next_kit += 1
+					runtime.armory.kits[kit] = {"id":kit,"equipment_id":role+"_kit","role":role,"owner":runtime.instance_id,"variant":"normal","state":"STOCKED","citizen_id":-1}
+		for iteration in range(4500):
 			multi_world.step()
 			check(not multi_world.combat.forces.has(outsider.instance_id), "peaceful third society excluded from military selection")
 			for citizen in outsider.citizens:

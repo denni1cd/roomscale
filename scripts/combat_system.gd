@@ -68,7 +68,7 @@ func start(controller: Node, objective: String, war_policy: Dictionary = {}) -> 
 		# All gameplay battles require previously issued physical armory assets.
 		for member in runtime.military.members:
 			var citizen: Node3D = member.citizen
-			if citizen.life_state != "ALIVE" or citizen.combat_kit != member.kit or not runtime.armory.kits.has(member.kit) or runtime.armory.kits[member.kit].state != "ISSUED" or not Roles.BASE.has(member.role): return false
+			if not preload("res://scripts/military_catalog.gd").permitted(runtime,member.role) or citizen.life_state != "ALIVE" or citizen.combat_kit != member.kit or not runtime.armory.kits.has(member.kit) or runtime.armory.kits[member.kit].state != "ISSUED" or not Roles.BASE.has(member.role): return false
 			selected.append(citizen)
 		if selected.size() < int(own.get("min_force",2)) or selected.size() > count: return false
 		staged_forces[runtime.instance_id] = selected
