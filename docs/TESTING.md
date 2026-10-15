@@ -221,3 +221,16 @@ complete the living structure, gain the authored four real shelter places only a
 completion and reject duplicate benefit/structure application. Renderer runs require
 Clockwork access, this living structure and three-party combat. Curated images and
 compact summaries accompany the stabilization report; bulk output stays ignored.
+
+## Combat-role milestone
+
+`./TEST_ROOM_SCALE_COMBAT_ROLES.ps1 -RunCount 3 -CaptureVisuals` runs the shared
+stat/grade contracts, actual CitizenAgent grade mortality assays, role targeting and
+movement fixtures, and a real fifteen-citizen all-role three-civilization battle.
+The first run uses the real renderer and captures before/one-second/after/detail
+evidence; subsequent fresh processes must match its simulation fingerprint.
+`TEST_ROOM_SCALE_CONFLICT.ps1` now fingerprints committed IDs/loadouts and all
+attack ordering as well as outcomes. `TEST_ROOM_SCALE_EXTENSIBILITY.ps1` retains
+mixed-policy elimination, survivor retreat and peaceful-claim coverage and adds a
+three-survival-party continuation-after-elimination fixture. Fast includes role
+data contracts. See `verification/combat-roles/` for acceptance receipts.

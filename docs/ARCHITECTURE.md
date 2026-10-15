@@ -230,7 +230,7 @@ by only one society at a time; either society can use its eventual shared link.
 Combat selects reachable living citizens without cargo, reserved tickets/bundles, urgent
 self-care or unstable vertical position. CitizenAgent owns terminal health/life state,
 physical paths and duty; CombatSystem alone authorizes damage at fixed ticks. Target
-selection is distance then citizen ID. Attacks resolve in global citizen ID order, with
+selection uses generic role priorities, distance then citizen ID (see [combat roles](COMBAT_ROLES.md)). Attacks resolve in global citizen ID order, with
 morale evaluated after each attack so the remaining force can retreat before a lethal
 volley destroys it. This initiative convention is deterministic and is not balanced.
 
@@ -256,3 +256,13 @@ The live runtime does not branch on civilization, technology or solution IDs and
 enumerate three construction materials. See [innovation contracts](INNOVATION_ARCHITECTURE.md)
 and [per-side encounter policies](POC5.md). Existing settlement blueprints and food/water
 self-care remain specialized prototype systems outside this refactor.
+
+## Combat-role extension
+
+[COMBAT_ROLES.md](COMBAT_ROLES.md) specifies the current loadouts, shared grade
+modifiers, target priorities, legal maneuvers and extension seams. CombatSystem
+resolves role data from civilization definitions; CitizenAgent retains health,
+identity and waypoint motion. FloorNavigation owns short precise combat connectors
+as well as A*. Morale uses normalized role health. Retreat clearance uses individual
+role range; an explicit surviving capturer physically secures the existing site.
+Presentation and inspection consume those states without driving the battle.

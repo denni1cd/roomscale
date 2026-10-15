@@ -33,7 +33,7 @@ identity, resource vocabulary and presentation while the same production simulat
 continues to own needs, economy, tasks, construction progress, legal movement and
 traversal state.
 
-Two civilizations are currently selectable:
+Three civilizations are currently selectable:
 
 - **Clockwork** — the existing brass, timber, steam, gears and grapple/cable society.
   Its traversal construction reads as Base → Winch → Launcher and uses Wood, Metal and
@@ -48,10 +48,11 @@ Two civilizations are currently selectable:
   changing collision or navigation. Earned founder structures grow roots, branches and
   canopies as their actual construction stages advance.
 
-Clockwork and Verdant intentionally share the same underlying pacing and gameplay
-capabilities at this stage. Civilization choice is not yet a difficulty or balance choice.
-The conflict scenario runs two instance-owned societies. Combat stats are identical;
-this milestone does not claim asymmetric balance or diplomacy.
+- **Scavenger** — improvised tools, repurposed materials and durable Heavy troops.
+
+All societies retain shared production pacing. Combat now assigns persistent citizens
+Line, Ranged, Heavy, Artillery and Skirmisher loadouts with data-defined civilization
+grades. See [combat roles, exact stats and behavior](docs/COMBAT_ROLES.md).
 
 Definitions live in `civilizations/`. Clockwork remains the default when no explicit
 civilization is supplied.
@@ -99,12 +100,13 @@ and explicit salvage authorization. F12 saves a local capture under `verificatio
 ./TEST_ROOM_SCALE_CONFLICT.ps1 -RunCount 5
 ./TEST_ROOM_SCALE_CONFLICT.ps1 -Room room_conflict_b
 ./TEST_ROOM_SCALE_CONFLICT.ps1 -CaptureVisuals
+./TEST_ROOM_SCALE_COMBAT_ROLES.ps1 -RunCount 3 -CaptureVisuals
 ```
 
 Two twelve-citizen founder societies gather from the same finite sources and earn
 settlements. After peaceful work, real scouts discover the shared supply approach.
 Competing claims produce contact and hostility; each governor commits three ordinary
-citizens. They physically march, exchange deterministic ranged attacks, suffer a real
+citizens. They physically march, fight using mixed combat roles, suffer a real
 casualty, retreat on morale, hold the objective for ten seconds, then resume work.
 Pause/1x/4x/10x remain available. Default camera follows conflict phases; manual mode
 retains the usual camera controls. See [POC 5 architecture and limits](docs/POC5.md).
@@ -202,7 +204,7 @@ one initial elevated target and deterministic society/citizen ordering. POC472
 founding uses bounded connected layout search, downstream site reservations and planned
 rest positions; it does not prove arbitrary layouts. Verdant and Clockwork currently share
 production resource slots and pacing. Optional live innovation uses separate catalogs
-and shared physical deployment; economy/combat bonuses and asymmetric balance are not claimed.
+and shared physical deployment; combat role grades are implemented, while innovation combat bonuses are deferred.
 
 Legacy established-room interior activity anchors are a documented compatibility contract.
 Citizen IDs are contiguous and append-only. Dead citizens persist as terminal nodes; deleting or recycling their IDs is unsupported. Large scene composition, raw task dictionaries and some camera internals

@@ -1,0 +1,550 @@
+{
+  "source_commit": "bca5c6a8603d3a394e0ff4573d4bed4a8111ec62",
+  "godot": "4.7.2.stable.official.ed1daf0bf",
+  "result": "PASS",
+  "fresh_processes": 3,
+  "first_renderer": "Windows graphical Godot",
+  "behavior_assertions": 131204,
+  "observations": {
+    "artillery": {
+      "final_gap": 12.0,
+      "finish": "(14.0, 0.0, -38.0)",
+      "initial_gap": 1.5,
+      "max_step": 0.357500076293945,
+      "speed": 3.575,
+      "start": "(24.5, 0.0, -38.0)",
+      "states": [
+        "WITHDRAW",
+        "HOLD_RANGE"
+      ]
+    },
+    "grades": {
+      "artillery": [
+        {
+          "damage_taken": 30.25,
+          "effectiveness": 8.64285714285714,
+          "grade": "Bad",
+          "hits_to_death": 8
+        },
+        {
+          "damage_taken": 37.0,
+          "effectiveness": 10.5714285714286,
+          "grade": "Neutral",
+          "hits_to_death": 6
+        },
+        {
+          "damage_taken": 41.5,
+          "effectiveness": 11.8571428571429,
+          "grade": "Good",
+          "hits_to_death": 6
+        },
+        {
+          "damage_taken": 46.0,
+          "effectiveness": 13.1428571428571,
+          "grade": "Great",
+          "hits_to_death": 5
+        }
+      ],
+      "heavy": [
+        {
+          "damage_taken": 6.0,
+          "effectiveness": 25.5,
+          "grade": "Bad",
+          "hits_to_death": 26
+        },
+        {
+          "damage_taken": 6.0,
+          "effectiveness": 30.0,
+          "grade": "Neutral",
+          "hits_to_death": 30
+        },
+        {
+          "damage_taken": 6.0,
+          "effectiveness": 33.0,
+          "grade": "Good",
+          "hits_to_death": 34
+        },
+        {
+          "damage_taken": 6.0,
+          "effectiveness": 36.0,
+          "grade": "Great",
+          "hits_to_death": 36
+        }
+      ],
+      "line": [
+        {
+          "damage_taken": 11.0,
+          "effectiveness": 9.27272727272727,
+          "grade": "Bad",
+          "hits_to_death": 10
+        },
+        {
+          "damage_taken": 11.0,
+          "effectiveness": 10.9090909090909,
+          "grade": "Neutral",
+          "hits_to_death": 11
+        },
+        {
+          "damage_taken": 11.0,
+          "effectiveness": 12.0,
+          "grade": "Good",
+          "hits_to_death": 12
+        },
+        {
+          "damage_taken": 11.0,
+          "effectiveness": 13.0909090909091,
+          "grade": "Great",
+          "hits_to_death": 14
+        }
+      ],
+      "ranged": [
+        {
+          "damage_taken": 3.9,
+          "effectiveness": 3.25,
+          "grade": "Bad",
+          "hits_to_death": 56
+        },
+        {
+          "damage_taken": 6.0,
+          "effectiveness": 5.0,
+          "grade": "Neutral",
+          "hits_to_death": 36
+        },
+        {
+          "damage_taken": 7.4,
+          "effectiveness": 6.16666666666667,
+          "grade": "Good",
+          "hits_to_death": 30
+        },
+        {
+          "damage_taken": 8.8,
+          "effectiveness": 7.33333333333333,
+          "grade": "Great",
+          "hits_to_death": 25
+        }
+      ],
+      "skirmisher": [
+        {
+          "damage_taken": 1.35,
+          "effectiveness": 1.5,
+          "grade": "Bad",
+          "hits_to_death": 161
+        },
+        {
+          "damage_taken": 3.0,
+          "effectiveness": 3.33333333333333,
+          "grade": "Neutral",
+          "hits_to_death": 72
+        },
+        {
+          "damage_taken": 4.1,
+          "effectiveness": 4.55555555555556,
+          "grade": "Good",
+          "hits_to_death": 53
+        },
+        {
+          "damage_taken": 5.2,
+          "effectiveness": 5.77777777777778,
+          "grade": "Great",
+          "hits_to_death": 42
+        }
+      ]
+    },
+    "heavy": {
+      "final_gap": 0.5,
+      "finish": "(25.5, 0.0, -38.0)",
+      "initial_gap": 10.0,
+      "max_step": 0.454999923706055,
+      "speed": 4.55,
+      "start": "(16.0, 0.0, -38.0)",
+      "states": [
+        "ASSAULT",
+        "MELEE"
+      ]
+    },
+    "line": {
+      "final_gap": 0.5,
+      "finish": "(25.5, 0.0, -38.0)",
+      "initial_gap": 10.0,
+      "max_step": 0.649999618530273,
+      "speed": 6.5,
+      "start": "(16.0, 0.0, -38.0)",
+      "states": [
+        "SCREEN",
+        "MELEE"
+      ]
+    },
+    "mixed": {
+      "attack_digest": "548f6d95034facb443e24899cfc40bc0e97290c182383530d12da4368ff6ba6b",
+      "attacks": 96,
+      "capture": 875,
+      "casualties": {
+        "clockwork_alpha": 4,
+        "scavenger_alpha": 3,
+        "verdant_alpha": 4
+      },
+      "commitments": [
+        {
+          "id": 9,
+          "role": "line",
+          "side": "clockwork_alpha",
+          "stats": {
+            "armor": 3.0,
+            "behavior": "screen",
+            "damage": 18.0,
+            "grade": "Bad",
+            "health": 102.0,
+            "implementation": "clockwork_line",
+            "interval": 1.0,
+            "movement": 1.0,
+            "preferred": 0.5,
+            "range": 0.6,
+            "reposition": 1.0,
+            "role": "line"
+          }
+        },
+        {
+          "id": 7,
+          "role": "ranged",
+          "side": "clockwork_alpha",
+          "stats": {
+            "armor": 1.0,
+            "behavior": "ranged",
+            "damage": 15.4,
+            "grade": "Good",
+            "health": 90.0,
+            "implementation": "clockwork_ranged",
+            "interval": 1.2,
+            "movement": 1.0,
+            "preferred": 5.5,
+            "range": 7.0,
+            "reposition": 1.0,
+            "role": "ranged"
+          }
+        },
+        {
+          "id": 5,
+          "role": "heavy",
+          "side": "clockwork_alpha",
+          "stats": {
+            "armor": 8.0,
+            "behavior": "assault",
+            "damage": 24.0,
+            "grade": "Neutral",
+            "health": 180.0,
+            "implementation": "clockwork_heavy",
+            "interval": 1.5,
+            "movement": 0.7,
+            "preferred": 0.5,
+            "range": 0.6,
+            "reposition": 1.0,
+            "role": "heavy"
+          }
+        },
+        {
+          "id": 8,
+          "role": "artillery",
+          "side": "clockwork_alpha",
+          "stats": {
+            "armor": 0.0,
+            "behavior": "support",
+            "damage": 54.0,
+            "grade": "Great",
+            "health": 80.0,
+            "implementation": "clockwork_artillery",
+            "interval": 3.5,
+            "movement": 0.55,
+            "preferred": 12.0,
+            "range": 15.0,
+            "reposition": 2.0,
+            "role": "artillery"
+          }
+        },
+        {
+          "id": 3,
+          "role": "skirmisher",
+          "side": "clockwork_alpha",
+          "stats": {
+            "armor": 0.0,
+            "behavior": "harass",
+            "damage": 11.0,
+            "grade": "Neutral",
+            "health": 80.0,
+            "implementation": "clockwork_skirmisher",
+            "interval": 0.9,
+            "movement": 1.35,
+            "preferred": 4.0,
+            "range": 5.0,
+            "reposition": 0.7,
+            "role": "skirmisher"
+          }
+        },
+        {
+          "id": 21,
+          "role": "line",
+          "side": "scavenger_alpha",
+          "stats": {
+            "armor": 3.0,
+            "behavior": "screen",
+            "damage": 18.0,
+            "grade": "Good",
+            "health": 132.0,
+            "implementation": "scavenger_line",
+            "interval": 1.0,
+            "movement": 1.0,
+            "preferred": 0.5,
+            "range": 0.6,
+            "reposition": 1.0,
+            "role": "line"
+          }
+        },
+        {
+          "id": 20,
+          "role": "ranged",
+          "side": "scavenger_alpha",
+          "stats": {
+            "armor": 1.0,
+            "behavior": "ranged",
+            "damage": 11.9,
+            "grade": "Bad",
+            "health": 90.0,
+            "implementation": "scavenger_ranged",
+            "interval": 1.2,
+            "movement": 1.0,
+            "preferred": 5.5,
+            "range": 7.0,
+            "reposition": 1.0,
+            "role": "ranged"
+          }
+        },
+        {
+          "id": 19,
+          "role": "heavy",
+          "side": "scavenger_alpha",
+          "stats": {
+            "armor": 8.0,
+            "behavior": "assault",
+            "damage": 24.0,
+            "grade": "Great",
+            "health": 216.0,
+            "implementation": "scavenger_heavy",
+            "interval": 1.5,
+            "movement": 0.7,
+            "preferred": 0.5,
+            "range": 0.6,
+            "reposition": 1.0,
+            "role": "heavy"
+          }
+        },
+        {
+          "id": 18,
+          "role": "artillery",
+          "side": "scavenger_alpha",
+          "stats": {
+            "armor": 0.0,
+            "behavior": "support",
+            "damage": 45.0,
+            "grade": "Neutral",
+            "health": 80.0,
+            "implementation": "scavenger_artillery",
+            "interval": 3.5,
+            "movement": 0.55,
+            "preferred": 12.0,
+            "range": 15.0,
+            "reposition": 2.0,
+            "role": "artillery"
+          }
+        },
+        {
+          "id": 17,
+          "role": "skirmisher",
+          "side": "scavenger_alpha",
+          "stats": {
+            "armor": 0.0,
+            "behavior": "harass",
+            "damage": 11.0,
+            "grade": "Neutral",
+            "health": 80.0,
+            "implementation": "scavenger_skirmisher",
+            "interval": 0.9,
+            "movement": 1.35,
+            "preferred": 4.0,
+            "range": 5.0,
+            "reposition": 0.7,
+            "role": "skirmisher"
+          }
+        },
+        {
+          "id": 24,
+          "role": "line",
+          "side": "verdant_alpha",
+          "stats": {
+            "armor": 3.0,
+            "behavior": "screen",
+            "damage": 18.0,
+            "grade": "Neutral",
+            "health": 120.0,
+            "implementation": "verdant_line",
+            "interval": 1.0,
+            "movement": 1.0,
+            "preferred": 0.5,
+            "range": 0.6,
+            "reposition": 1.0,
+            "role": "line"
+          }
+        },
+        {
+          "id": 25,
+          "role": "ranged",
+          "side": "verdant_alpha",
+          "stats": {
+            "armor": 1.0,
+            "behavior": "ranged",
+            "damage": 15.4,
+            "grade": "Good",
+            "health": 90.0,
+            "implementation": "verdant_ranged",
+            "interval": 1.2,
+            "movement": 1.0,
+            "preferred": 5.5,
+            "range": 7.0,
+            "reposition": 1.0,
+            "role": "ranged"
+          }
+        },
+        {
+          "id": 27,
+          "role": "heavy",
+          "side": "verdant_alpha",
+          "stats": {
+            "armor": 8.0,
+            "behavior": "assault",
+            "damage": 24.0,
+            "grade": "Bad",
+            "health": 153.0,
+            "implementation": "verdant_heavy",
+            "interval": 1.5,
+            "movement": 0.7,
+            "preferred": 0.5,
+            "range": 0.6,
+            "reposition": 1.0,
+            "role": "heavy"
+          }
+        },
+        {
+          "id": 34,
+          "role": "artillery",
+          "side": "verdant_alpha",
+          "stats": {
+            "armor": 0.0,
+            "behavior": "support",
+            "damage": 45.0,
+            "grade": "Neutral",
+            "health": 80.0,
+            "implementation": "verdant_artillery",
+            "interval": 3.5,
+            "movement": 0.55,
+            "preferred": 12.0,
+            "range": 15.0,
+            "reposition": 2.0,
+            "role": "artillery"
+          }
+        },
+        {
+          "id": 26,
+          "role": "skirmisher",
+          "side": "verdant_alpha",
+          "stats": {
+            "armor": 0.0,
+            "behavior": "harass",
+            "damage": 13.2,
+            "grade": "Great",
+            "health": 80.0,
+            "implementation": "verdant_skirmisher",
+            "interval": 0.9,
+            "movement": 1.35,
+            "preferred": 4.0,
+            "range": 5.0,
+            "reposition": 0.7,
+            "role": "skirmisher"
+          }
+        }
+      ],
+      "eliminated": {},
+      "fire_roles": {
+        "artillery": true,
+        "heavy": true,
+        "line": true,
+        "ranged": true,
+        "skirmisher": true
+      },
+      "max_step": 0.877501726150513,
+      "retreated": {
+        "clockwork_alpha": 677,
+        "verdant_alpha": 640
+      },
+      "returned": {
+        "clockwork_alpha": 1,
+        "scavenger_alpha": 2,
+        "verdant_alpha": 1
+      },
+      "states": {
+        "artillery": [
+          "MARCH",
+          "HOLD_RANGE",
+          "SUPPORT",
+          "WITHDRAW",
+          "RETREAT"
+        ],
+        "heavy": [
+          "MARCH",
+          "ASSAULT",
+          "MELEE",
+          "RETREAT"
+        ],
+        "line": [
+          "MARCH",
+          "SCREEN",
+          "MELEE"
+        ],
+        "ranged": [
+          "MARCH",
+          "HOLD_RANGE",
+          "WITHDRAW",
+          "ADVANCE"
+        ],
+        "skirmisher": [
+          "MARCH",
+          "ADVANCE",
+          "WITHDRAW",
+          "FLANK"
+        ]
+      },
+      "winner": "scavenger_alpha"
+    },
+    "ranged": {
+      "final_gap": 5.5,
+      "finish": "(20.5, 0.0, -38.0)",
+      "initial_gap": 1.5,
+      "max_step": 0.649999618530273,
+      "speed": 6.5,
+      "start": "(24.5, 0.0, -38.0)",
+      "states": [
+        "WITHDRAW",
+        "HOLD_RANGE"
+      ]
+    },
+    "skirmisher": {
+      "final_gap": 4.00000047683716,
+      "finish": "(24.90799, 0.0, -34.15195)",
+      "initial_gap": 4.5,
+      "max_step": 0.877501368522644,
+      "speed": 8.775,
+      "start": "(21.5, 0.0, -38.0)",
+      "states": [
+        "FLANK",
+        "ADVANCE"
+      ]
+    }
+  }
+}

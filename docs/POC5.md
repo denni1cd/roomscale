@@ -1,3 +1,9 @@
+> Current combat roles extend this historical POC 5 description. See
+> [COMBAT_ROLES.md](COMBAT_ROLES.md) for current stats, mixed-role movement,
+> civilization grades, targeting, morale normalization and capture clearance.
+> Historical identical-ranged balance/outcome descriptions below are superseded;
+> shared-world ownership, policy and identity boundaries remain current.
+
 # POC 5 — Multi-Civilization Conflict
 
 Clockwork Alpha and Verdant Alpha each start with twelve real founder citizens, 20 food,
