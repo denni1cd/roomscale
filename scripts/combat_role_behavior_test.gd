@@ -96,6 +96,7 @@ func mixed() -> void:
 	for a in ids:
 		for b in ids:
 			if a < b: world.territory.set_relation(a,b,"HOSTILE",0,site)
+	preload("res://scripts/verification/prepared_armory_fixture.gd").prepare(world,ids,policies)
 	check(battle.start(world,site,{"participants":ids,"side_policies":policies}),"all-role three-party battle starts")
 	if battle.phase == "DORMANT":
 		scene.queue_free(); await process_frame
@@ -145,9 +146,9 @@ func mixed() -> void:
 	var intervals := {}
 	for event in battle.attack_history:
 		if intervals.has(event.attacker):
-			var loadout: Dictionary = battle.commitments.filter(func(entry: Dictionary) -> bool: return entry.id == event.attacker)[0].stats
-			check(event.tick-int(intervals[event.attacker]) >= roundi(loadout.interval/0.1),"role attack cycle")
-		intervals[event.attacker] = event.tick
+			var previous: Dictionary = intervals[event.attacker]
+			check(event.tick-int(previous.tick) >= ceili(float(previous.interval)/0.1-0.000001),"role attack cycle including capability")
+		intervals[event.attacker] = event
 	for id in battle.forces:
 		for citizen in battle.living(id):
 			check(citizen.combat_duty.is_empty() and citizen.combat_role.is_empty(),"survivor sheds military role")

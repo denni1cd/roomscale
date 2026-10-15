@@ -16,6 +16,8 @@ const Population := preload("res://scripts/population_system.gd")
 const CameraDirector := preload("res://scripts/fishbowl_camera_director.gd")
 const InnovationRuntime := preload("res://scripts/innovation_runtime.gd")
 var innovation := InnovationRuntime.new()
+var military := preload("res://scripts/military_readiness.gd").new()
+var armory := preload("res://scripts/armory_system.gd").new()
 var camera_director: Node
 var journal := Journal.new()
 var governor := Governor.new()
@@ -101,6 +103,8 @@ func configure(world: Node3D, config: Dictionary) -> void:
 	if governor.enabled:
 		governor.mode = "OBSERVING"
 		governor.reason = "Evaluating civilization state every five simulation seconds"
+	armory.configure(self)
+	military.configure(self)
 	development = Development.new()
 	development.configure(self)
 	population = Population.new()
@@ -205,6 +209,7 @@ func claim(citizen: Node3D) -> Dictionary:
 
 func work_options(citizen: Node3D) -> Array[Dictionary]:
 	var options: Array[Dictionary] = []
+	options.append_array(armory.options())
 	options.append_array(development.options())
 	options.append_array(innovation.options(citizen))
 	if construction.economy != null and construction.project_created and not construction.traversal_deployed:

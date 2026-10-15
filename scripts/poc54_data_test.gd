@@ -17,6 +17,9 @@ func _initialize() -> void:
 		check(Doctrine.compose(profile,3,{"ranged":2,"line":0}) == ["ranged","ranged"],"bounded stock fallback")
 		loaded.definition.combat.capabilities = ["UNKNOWN"]
 		check(not Civ.validate(loaded.definition).is_empty(),"unknown capability rejected")
+	var malformed: Dictionary = Civ.load_id("clockwork").definition
+	malformed.combat = "bad"
+	check(not Civ.validate(malformed).is_empty(),"malformed combat object rejected safely")
 	var expected_costs := [[1,1,6],[1,1,8],[1,3,12],[2,4,18],[1,1,6]]
 	for index in Catalog.Roles.ORDER.size():
 		var role: String = Catalog.Roles.ORDER[index]

@@ -23,7 +23,7 @@ static func validate_equipment(data: Variant) -> Array[String]:
 	if not data.get("cost") is Dictionary or data.cost.is_empty(): errors.append("equipment requires a bill")
 	else:
 		for resource in data.cost:
-			if not preload("res://scripts/resource_vocabulary.gd").supports(resource) or not V.number(data.cost[resource]) or data.cost[resource] <= 0: errors.append("invalid equipment material/cost")
+			if not resource is String or not preload("res://scripts/resource_vocabulary.gd").supports(resource) or not V.number(data.cost[resource]) or data.cost[resource] <= 0: errors.append("invalid equipment material/cost")
 	if not V.string_array(data.get("requires",[])): errors.append("invalid equipment prerequisites")
 	else:
 		var known: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://innovation/capabilities.json"))
@@ -32,8 +32,11 @@ static func validate_equipment(data: Variant) -> Array[String]:
 			if not known.capabilities.any(func(item: Dictionary) -> bool: return item.id == requirement): errors.append("unknown innovation capability " + requirement)
 	return errors
 
+static func equipment_id(sim: Node,role: String) -> String:
+	return String(sim.definition.combat.roles.get(role,{}).get("equipment",role+"_kit"))
+
 static func permitted(sim: Node, role: String, equipment: Dictionary = {}) -> bool:
-	var entry: Dictionary = EQUIPMENT.get(role+"_kit",{}) if equipment.is_empty() else equipment
+	var entry: Dictionary = EQUIPMENT.get(equipment_id(sim,role),{}) if equipment.is_empty() else equipment
 	if entry.is_empty(): return false
 	var requirements: Array = entry.get("requires",[]).duplicate()
 	requirements.append_array(sim.definition.combat.roles[role].get("requires",[]))

@@ -131,7 +131,10 @@ func run() -> void:
 		var outsider: Node = multi_world.runtime_for(multi_world.scenario.participants[2].instance_id)
 		var third_health := {}
 		for citizen in outsider.citizens: third_health[citizen.citizen_id] = citizen.health
-		for iteration in range(4500):
+		# Paid equipment manufacture and physical muster replace free commitment.
+		# Preserve the bilateral fight/peaceful-exclusion contracts with a bounded
+		# 900-second preparation window instead of the old 450-second free-loadout budget.
+		for iteration in range(9000):
 			multi_world.step()
 			check(not multi_world.combat.forces.has(outsider.instance_id), "peaceful third society excluded from military selection")
 			for citizen in outsider.citizens: check(citizen.health == third_health[citizen.citizen_id] and citizen.combat_duty.is_empty(), "peaceful third citizens never attacked or recruited")

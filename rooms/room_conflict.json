@@ -315,6 +315,44 @@
         },
         "work_seconds": 2
       }
+    },
+    {
+      "id": "loose_metal_tray",
+      "name": "Finite Loose Metal Tray",
+      "kind": "box",
+      "position": [
+        4,
+        0,
+        24
+      ],
+      "dimensions": [
+        2,
+        0.5,
+        2
+      ],
+      "blocks_navigation": false,
+      "color": "8b9399",
+      "resource_profile": {
+        "material": "metal",
+        "harvestable": true,
+        "protected": false,
+        "stages": [
+          {
+            "name": "STRIPPED",
+            "work": 12,
+            "yields": {
+              "metal": 24
+            }
+          },
+          {
+            "name": "DEPLETED",
+            "work": 12,
+            "yields": {
+              "metal": 24
+            }
+          }
+        ]
+      }
     }
   ],
   "spawn": {

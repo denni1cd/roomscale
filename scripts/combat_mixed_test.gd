@@ -49,6 +49,7 @@ func exercise(reverse: bool) -> Dictionary:
 	for citizen in world.citizens: check(citizen.task_id == actor_tasks[citizen.citizen_id] and citizen.combat_duty.is_empty(),"rejected force preserves ordinary tasks")
 	world.conflict_enabled = false # Drive the normal orchestration explicitly per fixed tick below.
 	if reverse: world.runtimes.reverse(); ids.reverse()
+	preload("res://scripts/verification/prepared_armory_fixture.gd").prepare(world,ids,own)
 	world.advance_conflict()
 	check(world.combat.phase == "MARCH", "mixed physical engagement starts from actual bilateral pressure")
 	check(world.conflict_state.pairs.size() == 3, "all actual pair pressures evaluated")
@@ -137,6 +138,7 @@ func elimination_resolution(reverse: bool) -> Dictionary:
 	world.territory.set_relation(ids[0],ids[1],"HOSTILE",0,site)
 	var own := Pressure.commitment_policies([pair(ids[0],ids[1],Pressure.SURVIVAL_WAR)],ids)
 	if reverse: ids.reverse(); world.runtimes.reverse()
+	preload("res://scripts/verification/prepared_armory_fixture.gd").prepare(world,ids,own)
 	check(world.combat.start(world,site,{"participants":ids,"side_policies":own}),"survival-only physical engagement starts")
 	for tick in range(5000):
 		world.step(); world.combat.update()
@@ -162,6 +164,7 @@ func three_survival() -> Dictionary:
 	for a in ids:
 		for b in ids:
 			if a < b: world.territory.set_relation(a,b,"HOSTILE",0,site)
+	preload("res://scripts/verification/prepared_armory_fixture.gd").prepare(world,ids,policies)
 	check(world.combat.start(world,site,{"participants":ids,"side_policies":policies}),"three survival forces start")
 	var continued := false
 	var attacks_at_elimination := -1

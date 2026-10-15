@@ -14,6 +14,12 @@ var civilization_id := "legacy"
 var health := 100.0
 var max_health := 100.0
 var combat_role := ""
+var combat_kit := ""
+var pending_kit := ""
+var prepared := false
+var preparation_initialized := false
+var preparation_anchor := Vector3.ZERO
+var preparation_started := 0.0
 var combat_stats: Dictionary = {}
 var combat_state := ""
 var life_state := "ALIVE"
@@ -54,7 +60,11 @@ func equip_combat(loadout: Dictionary) -> void:
 	health = max_health * fraction
 
 func combat_inspection() -> String:
-	return "%s · %s (%s)\nHP %.1f/%.1f · Armor %.1f · Damage %.1f\nRange %.1f · Cycle %.1fs · Move %.2fx\n%s / %s" % [civilization_id,combat_role,combat_stats.get("grade",""),health,max_health,combat_stats.get("armor",0),combat_stats.get("damage",0),combat_stats.get("range",0),combat_stats.get("interval",0),combat_stats.get("movement",1),combat_duty,combat_state]
+	var kit: Dictionary = coordinator.civilization.armory.kits.get(combat_kit if not combat_kit.is_empty() else pending_kit,{})
+	var role: String = combat_role if not combat_role.is_empty() else String(kit.get("role",""))
+	var stats: Dictionary = combat_stats
+	if stats.is_empty() and not role.is_empty(): stats = preload("res://scripts/combat_roles.gd").loadout(coordinator.civilization.definition,role)
+	return "%s · %s (%s)\nKit %s · %s · Prepared %s\nHP %.1f/%.1f · Armor %.1f · Damage %.1f\nRange %.1f · Cycle %.3fs · Move %.2fx\n%s / %s" % [civilization_id,role,stats.get("grade",""),kit.get("id","unissued"),kit.get("variant",""),prepared,health,max_health,stats.get("armor",0),stats.get("damage",0),stats.get("range",0),float(stats.get("interval",0))*(0.85 if prepared else 1.0),stats.get("movement",1),combat_duty,combat_state]
 
 func combat_speed() -> float:
 	return WALK_SPEED * float(combat_stats.get("movement",1.0)) if not combat_duty.is_empty() else WALK_SPEED
@@ -73,6 +83,7 @@ func assign_combat_duty(duty: String, target: Vector3) -> bool:
 	_path_cursor = 0
 	combat_arrived = false
 	state = "TRAVEL"
+	if duty == "MUSTER" and combat_kit.is_empty(): return true
 	if _combat_weapon == null:
 		var organic: bool = preload("res://scripts/civilization_presentation.gd").uses_organic_combat(coordinator.civilization.definition)
 		_combat_weapon = CombatPresentation.weapon(get_node("Figure"),organic,combat_role)
@@ -89,8 +100,13 @@ func assign_combat_duty(duty: String, target: Vector3) -> bool:
 	return true
 
 func end_combat_duty() -> void:
+	if not combat_kit.is_empty():
+		if not coordinator.civilization.armory.return_kit(self): return
 	combat_duty = ""
 	combat_state = ""
+	pending_kit = ""
+	prepared = false
+	preparation_initialized = false
 	health = health / max_health * 100.0
 	max_health = 100.0
 	combat_role = ""
@@ -109,6 +125,7 @@ func suffer_combat_damage(amount: float) -> bool:
 	health = maxf(0, health - amount)
 	if health > 0: return false
 	life_state = "DEAD"
+	coordinator.civilization.armory.lose(self)
 	if task_id > 0: coordinator.cancel_task(task_id, "combat casualty")
 	task_id = -1
 	task_type = "DEAD"
@@ -185,7 +202,7 @@ func advance_simulation(delta: float) -> void:
 	_animation_time += delta
 	if not needs.is_empty():
 		var civilization: Node = coordinator.civilization
-		var innovation_work: bool = task_type.begins_with("INNOVATION_") or (task_type == "CONSTRUCTION_BUILD" and bool(coordinator.get_task(task_id).get("innovation_project", false)))
+		var innovation_work: bool = task_type.begins_with("ARMORY_") or task_type.begins_with("INNOVATION_") or (task_type == "CONSTRUCTION_BUILD" and bool(coordinator.get_task(task_id).get("innovation_project", false)))
 		if (innovation_work or task_type in ["WORKSHOP_MAINTENANCE", "DEPOT_RUN", "HOUSING_CHECK", "WORK_AREA_JOB", "FLOOR_PATROL"]) and civilization.should_interrupt(self):
 			coordinator.cancel_task(task_id, "urgent self-care")
 			_assign_next_task()
@@ -215,6 +232,14 @@ func advance_simulation(delta: float) -> void:
 			var effort: float = delta if needs.is_empty() else delta * coordinator.civilization.needs.work_factor(needs)
 			production_work_active = true
 			var finished: bool = coordinator.advance_innovation_work(task_id, citizen_id, effort)
+			production_work_active = false
+			if finished:
+				coordinator.complete_task(task_id)
+				_assign_next_task()
+		elif task_type == "ARMORY_BUILD":
+			var effort: float = delta if needs.is_empty() else delta * coordinator.civilization.needs.work_factor(needs)
+			production_work_active = true
+			var finished: bool = coordinator.civilization.armory.work(self,effort)
 			production_work_active = false
 			if finished:
 				coordinator.complete_task(task_id)
@@ -327,7 +352,7 @@ func cancel_task_and_resume(cancelled_task_id: int) -> void:
 
 
 func get_inspection_status() -> Dictionary:
-	return {"id": citizen_id, "state": state, "task": task_type, "target": _destination, "needs": needs.duplicate(true), "civilization":civilization_id,"role":combat_role,"combat_stats":combat_stats.duplicate(true),"health":health,"max_health":max_health,"combat_state":combat_state}
+	return {"id": citizen_id, "state": state, "task": task_type, "target": _destination, "needs": needs.duplicate(true), "civilization":civilization_id,"role":combat_role,"combat_stats":combat_stats.duplicate(true),"health":health,"max_health":max_health,"combat_state":combat_state,"kit_id":combat_kit,"prepared":prepared}
 
 
 func _assign_next_task() -> void:

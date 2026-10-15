@@ -65,14 +65,14 @@ func start(controller: Node, objective: String, war_policy: Dictionary = {}) -> 
 		var selected: Array = []
 		var own: Dictionary = staged_policies[runtime.instance_id]
 		var count := mini(int(own.get("max_force",6)), maxi(int(own.get("min_force",2)), ceili(runtime.living_population() * float(own.get("force_fraction",0.25)))))
-		for citizen in runtime.citizens:
-			if citizen.eligible_for_combat(target): selected.append(citizen)
-		selected.sort_custom(func(a: Node3D, b: Node3D) -> bool:
-			var da := a.global_position.distance_squared_to(target)
-			var db := b.global_position.distance_squared_to(target)
-			return da < db if da != db else a.citizen_id < b.citizen_id)
-		if selected.size() < count: return false
-		staged_forces[runtime.instance_id] = selected.slice(0, count)
+		# All gameplay battles require previously issued physical armory assets.
+		for member in runtime.military.members:
+			var citizen: Node3D = member.citizen
+			if citizen.life_state != "ALIVE" or citizen.combat_kit != member.kit or not runtime.armory.kits.has(member.kit) or runtime.armory.kits[member.kit].state != "ISSUED" or not Roles.BASE.has(member.role): return false
+			selected.append(citizen)
+		if selected.size() < int(own.get("min_force",2)) or selected.size() > count: return false
+		staged_forces[runtime.instance_id] = selected
+
 	# Validate every station before any citizen/task mutation. Keep the original
 	# 4-inch navigation-grid spacing, expanding into additional depth rows for
 	# larger wars instead of shrinking the proven POC5 formation.
@@ -83,9 +83,7 @@ func start(controller: Node, objective: String, war_policy: Dictionary = {}) -> 
 		var force_size: int = staged_forces[runtime.instance_id].size()
 		for index in range(force_size):
 			var citizen: Node3D = staged_forces[runtime.instance_id][index]
-			var composition: Array = staged_policies[runtime.instance_id].get("roles",runtime.definition.combat.get("composition",Roles.ORDER))
-			var role: String = composition[index % composition.size()]
-			planned_loadouts[citizen.citizen_id] = Roles.loadout(runtime.definition,role)
+			planned_loadouts[citizen.citizen_id] = citizen.combat_stats.duplicate(true)
 			var sign_x := -1.0 if runtime == participants[0] else 1.0
 			var depth := floori(index / 5.0)
 			var slot_in_row := index % 5
@@ -134,8 +132,8 @@ func start(controller: Node, objective: String, war_policy: Dictionary = {}) -> 
 		returned[id] = 0
 		for index in range(forces[id].size()):
 			var citizen: Node3D = forces[id][index]
-			citizen.equip_combat(planned_loadouts[citizen.citizen_id])
-			commitments.append({"id":citizen.citizen_id,"side":id,"role":citizen.combat_role,"stats":citizen.combat_stats.duplicate(true)})
+			# Loadout was issued by ArmorySystem at physical muster.
+			commitments.append({"id":citizen.citizen_id,"side":id,"role":citizen.combat_role,"kit":citizen.combat_kit,"stats":citizen.combat_stats.duplicate(true)})
 			next_position[citizen.citizen_id] = 0.0
 			# Distinct legal station points keep the tiny force readable.
 			if not citizen.assign_combat_duty("MARCH", planned_targets[citizen.citizen_id]): return false
@@ -233,13 +231,10 @@ func position_combatant(citizen: Node3D, enemies: Array) -> void:
 	else:
 		citizen.combat_state = mode
 		return
-	# Fixed alternative directions, legal routes only. No clamping through walls.
-	for candidate in [desired, at + (desired-at).rotated(Vector3.UP,PI/4), at + (desired-at).rotated(Vector3.UP,-PI/4)]:
-		if citizen.navigation.combat_path_between(at,candidate).is_empty(): continue
-		if citizen.state == "TRAVEL" and citizen._destination.distance_to(candidate) < 0.3: return
-		if citizen.assign_combat_duty("MANEUVER",candidate): citizen.combat_state = mode
-		return
-	citizen.combat_state = "BLOCKED"
+	var choice := preload("res://scripts/military_abilities.gd").endpoint(citizen,desired)
+	if choice.is_empty(): citizen.combat_state = "BLOCKED"; return
+	if citizen.state == "TRAVEL" and citizen._destination.distance_to(choice.target) < 0.3: return
+	if citizen.assign_combat_duty("MANEUVER",choice.target): citizen.combat_state = mode
 
 func update() -> void:
 	if phase == "DORMANT": return
@@ -275,13 +270,13 @@ func update() -> void:
 			if opponents.is_empty(): continue
 			var victim: Node3D = opponents[0]
 			phase = "FIGHT"
-			next_attack[citizen.citizen_id] = world.seconds + float(citizen.combat_stats.interval)
+			next_attack[citizen.citizen_id] = world.seconds + preload("res://scripts/military_abilities.gd").interval(citizen)
 			attacks += 1
 			var pair_key: String = world.territory.relation_key(citizen.civilization_id,victim.civilization_id)
 			attack_pairs[pair_key] = int(attack_pairs.get(pair_key,0))+1
 			world.present_attack(citizen, victim)
 			var amount := Roles.damage(float(citizen.combat_stats.damage),float(victim.combat_stats.armor))
-			var event := {"tick":world.tick,"attacker":citizen.citizen_id,"target":victim.citizen_id,"damage":amount,"role":citizen.combat_role}
+			var event := {"tick":world.tick,"attacker":citizen.citizen_id,"target":victim.citizen_id,"damage":amount,"role":citizen.combat_role,"interval":preload("res://scripts/military_abilities.gd").interval(citizen),"prepared":citizen.prepared,"kit":citizen.combat_kit}
 			attack_digest = (attack_digest + JSON.stringify(event)).sha256_text()
 			if attack_history.size() < 256: attack_history.append(event)
 			if victim.suffer_combat_damage(amount):
@@ -303,7 +298,7 @@ func update() -> void:
 			if world.territory.hold(site_id, winner, world.seconds, world.STEP):
 				site_capture_tick = world.tick
 				phase = "COMPLETE"
-				for citizen in living(winner): citizen.assign_combat_duty("RETREAT", world.runtime_for(winner).coordinator.housing_station)
+				for citizen in living(winner): citizen.assign_combat_duty("RETREAT", world.runtime_for(winner).coordinator.depot_station)
 		elif phase == "SECURE":
 			world.territory.sites[site_id].hold_progress = 0.0
 
@@ -314,7 +309,7 @@ func retreat(id: String) -> void:
 	retreated_sides[id] = world.tick
 	_resolve_departure(true)
 	cooldown_until[id] = world.seconds + 600.0
-	for citizen in living(id): citizen.assign_combat_duty("RETREAT", world.runtime_for(id).coordinator.housing_station)
+	for citizen in living(id): citizen.assign_combat_duty("RETREAT", world.runtime_for(id).coordinator.depot_station)
 	world.journal.record(world.seconds, "RETREAT", id + " morale broke; returning to rally", {"instance_id":id,"morale":morale.duplicate(),"intensity":side_policies[id].get("intensity_name", conflict_intensity),"survivors":living(id).size()}, world.territory.sites[site_id].position, id + ":retreat")
 
 func eliminate(id: String) -> void:
@@ -357,7 +352,7 @@ func stand_down(reason: String) -> void:
 	retreating_side = ""
 	phase = "STAND_DOWN"
 	for id in forces:
-		for citizen in living(id): citizen.assign_combat_duty("RETREAT", world.runtime_for(String(id)).coordinator.housing_station)
+		for citizen in living(id): citizen.assign_combat_duty("RETREAT", world.runtime_for(String(id)).coordinator.depot_station)
 	world.journal.record(world.seconds, "CONFLICT_STOOD_DOWN", "Conflict ended because its cause no longer justified war", {"reason":reason,"intensity":conflict_intensity,"cause":conflict_cause}, world.territory.sites[site_id].position, site_id + ":standdown:%d" % world.tick)
 
 func evaluate_morale() -> bool:
