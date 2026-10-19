@@ -58,6 +58,7 @@ func _resolved(target: Dictionary, focus: Vector3) -> Dictionary:
 func resolve_target(target: Dictionary) -> Dictionary:
  var type := String(target.get("type", ""))
  var id := str(target.get("id", ""))
+ if type == "conflict": id = id.trim_prefix("site:")
  for runtime in Sources.runtimes(simulation):
   if not String(target.get("society_id", "")).is_empty() and String(runtime.instance_id) != String(target.society_id): continue
   if type == "citizen":
@@ -88,9 +89,9 @@ func resolve_target(target: Dictionary) -> Dictionary:
  return {}
 func resolve_event(event: Dictionary) -> Dictionary:
  var descriptors: Array[Dictionary] = []
- if not str(event.get("subject_id", "")).is_empty(): descriptors.append(Target.make(String(event.get("subject_type","citizen")), event.subject_id, String(event.get("society_id",""))))
+ if not str(event.get("subject_id", "")).is_empty(): descriptors.append(Target.make(String(event.get("subject_type","citizen")), event.subject_id, String(event.get("society_id","")), "CITIZEN_CLOSE" if String(event.get("subject_type","")) == "citizen" else "SITE_MEDIUM"))
  for field in ["project_id", "site_id", "conflict_id"]:
-  if not str(event.get(field, "")).is_empty(): descriptors.append(Target.make(field.trim_suffix("_id"), event[field], String(event.get("society_id",""))))
+  if not str(event.get(field, "")).is_empty(): descriptors.append(Target.make(field.trim_suffix("_id"), event[field], String(event.get("society_id","")), "CONFLICT_WIDE" if field == "conflict_id" else "SITE_MEDIUM"))
  for descriptor in descriptors:
   var found := resolve_target(descriptor)
   if not found.is_empty(): return found
@@ -101,8 +102,15 @@ func focus_event(event: Dictionary) -> Dictionary:
  var result := resolve_event(event)
  if not result.is_empty(): rig.request_spectator_frame(result.focus, result.distance)
  return result
+func _follow_valid(target: Dictionary) -> bool:
+ var type := String(target.get("type",""))
+ if type not in ["citizen","project","site","conflict"]: return false
+ if type == "site":
+  var world := _world()
+  if not is_instance_valid(world) or world.combat.site_id != str(target.get("id","")) or world.combat.phase in ["DORMANT","COMPLETE","STAND_DOWN"]: return false
+ return not resolve_target(target).is_empty()
 func follow(target: Dictionary) -> bool:
- if resolve_target(target).is_empty(): return false
+ if not _follow_valid(target): return false
  followed = target.duplicate(true)
  set_mode(FOLLOW)
  return true
@@ -110,7 +118,7 @@ func follow_target(target: Dictionary) -> bool: return follow(target)
 func follow_choices() -> Array[Dictionary]:
  var result: Array[Dictionary] = []
  for candidate in collect_candidates():
-  if candidate.has("target") and not candidate.target.is_empty(): result.append(candidate.target)
+  if candidate.has("target") and _follow_valid(candidate.target): result.append(candidate.target)
  return result
 func _distance(framing: String) -> float:
  return float({"ROOM_WIDE":250.0,"SETTLEMENT_WIDE":115.0,"CITIZEN_CLOSE":7.0,"GROUP_MEDIUM":30.0,"CONFLICT_WIDE":70.0,"CONFLICT_DETAIL":25.0}.get(framing,35.0))
@@ -130,7 +138,7 @@ func collect_candidates() -> Array[Dictionary]:
   if resolved.is_empty(): continue
   var card := Adapter.event_card(event)
   var key := String(event.source_key)
-  resolved.merge({"key":key,"event":event.id,"headline":card.get("headline",event.message),"subtitle":card.get("subtitle",""),"priority":metadata.get("priority",0),"class":"event","society_id":event.get("society_id",""),"story_key":event.get("story_key",key),"subject_key":str(resolved.get("target",{})),"seconds":event.seconds})
+  resolved.merge({"key":key,"event":event.id,"headline":card.get("headline",event.message),"subtitle":card.get("subtitle",""),"priority":metadata.get("priority",0),"category":metadata.get("category","colony"),"class":"event","society_id":event.get("society_id",""),"story_key":event.get("story_key",key),"subject_key":str(resolved.get("target",{})),"seconds":event.seconds})
   resolved.distance = _distance(String(metadata.get("framing","SITE_MEDIUM")))
   result.append(resolved)
  for runtime in Sources.runtimes(simulation):
@@ -184,7 +192,10 @@ func _remember(candidate: Dictionary) -> void:
  for history in [cooldowns,seen,society_visits]:
   while history.size() > HISTORY_LIMIT: history.erase(history.keys()[0])
 func choose() -> Dictionary:
- if wide_elapsed >= WIDE_INTERVAL: return overview()
+ # Sustained conflict may defer context until the next safe normal dwell.
+ var world := _world()
+ var sustained_conflict: bool = is_instance_valid(world) and world.combat.phase in ["MARCH","FIGHT","RETREAT","SECURE"]
+ if wide_elapsed >= WIDE_INTERVAL and not sustained_conflict: return overview()
  var pool: Array[Dictionary] = []
  for candidate in collect_candidates():
   if _eligible(candidate) and (mode == RANDOM or int(candidate.priority) >= 1): pool.append(candidate)
@@ -219,6 +230,7 @@ func advance(delta: float) -> void:
  real_seconds += delta
  if mode == OFF or not is_instance_valid(simulation): return
  if mode == FOLLOW:
+  if not _follow_valid(followed): set_mode(OFF); return
   var resolved := resolve_target(followed)
   if resolved.is_empty(): set_mode(OFF); return
   last_focus = resolved.focus
