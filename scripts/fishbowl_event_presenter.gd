@@ -20,6 +20,12 @@ func ingest(events: Array) -> void:
 		cursor = maxi(cursor, int(event.id))
 		var card := Adapter.event_card(event)
 		if card.is_empty(): continue
+		var duplicate := false
+		for previous in recent:
+			if previous.event.get("source_id", "local") == card.event.get("source_id", "local") and previous.key == card.key:
+				duplicate = true
+				break
+		if duplicate: continue
 		recent.push_front(card)
 		while recent.size() > RECENT_LIMIT: recent.pop_back()
 		# Cards retain meaningful milestones; only exact adjacent repeats are quiet.
