@@ -38,6 +38,14 @@ func _initialize() -> void:
 	check(presenter.recent[0].headline == "UNKNOWN FUTURE EVENT", "unknown kinds readable")
 	check(presenter.recent[3].subtitle.contains("Growth Nursery"), "event-local civilization narrative")
 	check(not presenter.recent[3].subtitle.contains("Workshop"), "selected profile cannot leak into event")
+	var world_records: Array[Dictionary] = []
+	var civilizations := {"clockwork_alpha":"clockwork", "verdant_alpha":"verdant", "scavenger_alpha":"scavenger"}
+	for society_id in civilizations:
+		var world_fact := {"id":1,"seconds":1.0,"day":0.0,"kind":"FORCE_ARRIVED","message":"Forces have reached the contested ground.","evidence":{},"focus":Vector3.ZERO,"focus_valid":true,"society_id":society_id,"civilization_id":""}
+		Sources._append(world_records, [world_fact], "world", "", "", civilizations)
+	for event in world_records:
+		var society_card := preload("res://scripts/fishbowl_narrative_adapter.gd").event_card(event)
+		check(society_card.society_name == event.society_id.trim_suffix("_alpha").capitalize(), "world event resolves society " + event.society_id)
 	var adapter := preload("res://scripts/fishbowl_narrative_adapter.gd")
 	var technical := adapter.event_card({"kind":"governor", "message":"MATERIALS: shortage { wood:4.0 }", "civilization_id":"scavenger", "society_id":"scavenger_alpha"})
 	check(not technical.subtitle.contains("{") and not technical.subtitle.contains("wood:"), "normal narrative hides technical dictionaries")

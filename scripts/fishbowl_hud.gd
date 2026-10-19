@@ -326,10 +326,6 @@ func refresh_role_labels() -> void:
 	var director: Node = simulation.camera_director
 	var subject_id := -1
 	if director.mode == director.FOLLOW and director.followed.get("type", "") == "citizen": subject_id = int(director.followed.id)
-	elif director.enabled:
-		subject_id = int(director.current_shot.get("citizen", -1))
-		var target: Dictionary = director.current_shot.get("target", {})
-		if target.get("type", "") == "citizen": subject_id = int(target.id)
 	for runtime in preload("res://scripts/spectator_sources.gd").runtimes(simulation):
 		for citizen in runtime.citizens:
 			var role: Node3D = citizen.get_node_or_null("CombatIndicators/CombatRole")

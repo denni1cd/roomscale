@@ -153,6 +153,9 @@ func run() -> void:
 		role.text = "Line"
 		indicators.add_child(role)
 		cosmetic_nodes.append(indicators)
+	director.set_mode(director.PRIORITY)
+	hud.refresh_role_labels()
+	check(not cosmetic_nodes[0].get_node("CombatRole").visible and not cosmetic_nodes[1].get_node("CombatRole").visible, "automatic shots hide role text to prevent overlap")
 	director.follow(preload("res://scripts/spectator_target.gd").make("citizen", sim.citizens[0].citizen_id, sim.instance_id))
 	hud.refresh_role_labels()
 	check(cosmetic_nodes[0].get_node("CombatRole").visible and not cosmetic_nodes[1].get_node("CombatRole").visible, "normal view shows only followed military role")
