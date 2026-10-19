@@ -82,6 +82,7 @@ func configure(world: Node3D, config: Dictionary) -> void:
 	definition = config.get("definition", preload("res://scripts/civilization_definition.gd").load_requested().definition)
 	definition_id = String(definition.id)
 	instance_id = String(config.get("instance_id", definition_id + "_alpha"))
+	journal.configure_context(instance_id, definition_id)
 	coordinator = config.get("coordinator", scene.get_node("TaskCoordinator"))
 	construction = config.get("construction", scene.get_node("ConstructionSystem"))
 	citizens = config.get("citizens", scene.get("_citizens"))
@@ -113,7 +114,7 @@ func configure(world: Node3D, config: Dictionary) -> void:
 		get_tree().quit(2)
 		return
 	if founder_mode:
-		journal.record(0, "founders_arrived", "Founders arrived", {"population": living_population()}, coordinator.depot_station, "founders")
+		journal.record(0, "founders_arrived", "Founders arrived", {"population": living_population()}, coordinator.depot_station, "founders", preload("res://scripts/event_fact_context.gd").society(self, {"population": living_population()}))
 	for object_id in salvage.objects:
 		var object: Dictionary = resources.objects[object_id].data
 		var at: Array = object.position
@@ -129,17 +130,7 @@ func configure(world: Node3D, config: Dictionary) -> void:
 	hud = HUD.new()
 	scene.get_node("Overlay").add_child(hud)
 	hud.configure(self)
-	if governor.enabled:
-		camera_director = CameraDirector.new()
-		camera_director.name = "FishbowlCameraDirector"
-		scene.add_child(camera_director)
-		camera_director.configure(self)
-		hud.configure_fishbowl()
-		hud.hide()
-		spectator = preload("res://scripts/fishbowl_hud.gd").new()
-		scene.get_node("Overlay").add_child(spectator)
-		spectator.configure(self)
-		print("ROOMSCALE_FISHBOWL_READY governor=true population=%d camera=%s room=%s speed=%s" % [living_population(), camera_director.enabled, room_definition.id, speed])
+	if governor.enabled: configure_spectator()
 	print("ROOMSCALE_CIVILIZATION_READY speed=%s governor=%s spectator=%s" % [speed, governor.enabled, spectator != null])
 	scene.get_node("Overlay/PresentationPanel").hide()
 	scene.get_node("Overlay/PresentationStatus").hide()
@@ -299,7 +290,7 @@ func work(citizen: Node3D, delta: float) -> bool:
 			var bundle := resources.create_bundle(resource, float(yields[resource]), task.target, id)
 			show_bundle(bundle)
 		apply_salvage_stage(id)
-		if founder_mode: journal.record(seconds, "first_salvage", "First material recovered", {"object":id,"yields":yields}, citizen.global_position, "first_salvage")
+		if founder_mode: journal.record(seconds, "first_salvage", "First material recovered", {"object":id,"yields":yields}, citizen.global_position, "first_salvage", preload("res://scripts/event_fact_context.gd").society(self, {"object":id,"yields":yields}))
 		print("POC4_SALVAGE_STAGE object=%s state=%s work=%.1f yields=%s" % [id, salvage.objects[id].state, salvage.objects[id].work, yields])
 		return true
 	if citizen.task_type == "RESOURCE_COLLECT":
@@ -314,7 +305,7 @@ func work(citizen: Node3D, delta: float) -> bool:
 		show_bundle(bundle)
 		if not pickup_bundle(citizen): return false
 		source_visits[task.resource] = int(source_visits.get(task.resource,0))+1
-		if founder_mode and String(resources.sources[task.source_id].region) != "FLOOR": journal.record(seconds, "territory_reached", "Elevated resources reached", {"source":task.source_id}, citizen.global_position, "territory_reached")
+		if founder_mode and String(resources.sources[task.source_id].region) != "FLOOR": journal.record(seconds, "territory_reached", "Elevated resources reached", {"source":task.source_id}, citizen.global_position, "territory_reached", preload("res://scripts/event_fact_context.gd").society(self, {"source":task.source_id}))
 		citizen.begin_resource_return(String(task.resource))
 		return false
 	if citizen.task_type == "NEED_REST":
@@ -448,7 +439,7 @@ func apply_salvage_stage(id: String) -> void:
 	var state: Dictionary = salvage.objects[id]
 	root.set_meta("salvage_state", state.state)
 	if salvage.depleted(id):
-		if governor.enabled: journal.record(seconds, "object_depleted", "Object depleted: " + id, state, root.global_position, "depleted:" + id)
+		if governor.enabled: journal.record(seconds, "object_depleted", "Object depleted: " + id, state, root.global_position, "depleted:" + id, preload("res://scripts/event_fact_context.gd").society(self, state))
 		coordinator.navigation.remove_object_obstacle(id)
 		coordinator.surface_navigation.remove_object_surface(id)
 		root.hide()
@@ -504,3 +495,21 @@ func living_population() -> int:
 
 func world_citizens() -> Array:
 	return world_simulation.citizens if world_simulation != null else citizens
+
+
+func configure_spectator() -> void:
+	if camera_director != null: return
+	if hud == null:
+		hud = HUD.new()
+		scene.get_node("Overlay").add_child(hud)
+		hud.configure(self)
+	camera_director = CameraDirector.new()
+	camera_director.name = "SpectatorDirector"
+	scene.add_child(camera_director)
+	camera_director.configure(self)
+	hud.configure_fishbowl()
+	hud.hide()
+	spectator = preload("res://scripts/fishbowl_hud.gd").new()
+	scene.get_node("Overlay").add_child(spectator)
+	spectator.configure(self)
+	print("ROOMSCALE_FISHBOWL_READY governor=true population=%d camera=%s room=%s speed=%s" % [living_population(), camera_director.enabled, room_definition.id, speed])

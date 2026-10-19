@@ -44,7 +44,7 @@ func consider(state: Dictionary) -> void:
 	elif not kind.is_empty():
 		_retry_at = sim.seconds + 60
 		site_reason = "Finite safe materials cannot fund another " + kind
-		sim.journal.record(sim.seconds, "growth_paused", site_reason, state, center(), "finite_development")
+		sim.journal.record(sim.seconds, "growth_paused", site_reason, state, center(), "finite_development", preload("res://scripts/event_fact_context.gd").society(sim, state))
 
 func consider_founding(state: Dictionary) -> void:
 	if not active.is_empty() or sim.seconds < _retry_at or sim.governor.emergency: return
@@ -58,7 +58,7 @@ func consider_founding(state: Dictionary) -> void:
 	else:
 		_retry_at = sim.seconds + 60
 		site_reason = "Finite safe materials cannot fund another " + kind
-		sim.journal.record(sim.seconds, "growth_paused", site_reason, state, center(), "finite_development")
+		sim.journal.record(sim.seconds, "growth_paused", site_reason, state, center(), "finite_development", preload("res://scripts/event_fact_context.gd").society(sim, state))
 
 func can_supply(kind: String) -> bool:
 	var totals := {"wood": float(sim.economy.available.wood), "metal": float(sim.economy.available.metal)}
@@ -153,14 +153,14 @@ func request(kind: String) -> bool:
 		# at the next governor evaluation, without moving citizens or relaxing safety.
 		if sim.founder_mode and kind in ["shelter","depot","workshop"]: _retry_at = sim.seconds + 5
 		site_reason = "No safe connected build site; expansion paused"
-		sim.journal.record(sim.seconds, "growth_paused", site_reason, sim.status())
+		sim.journal.record(sim.seconds, "growth_paused", site_reason, sim.status(), null, "", preload("res://scripts/event_fact_context.gd").society(sim, sim.status()))
 		return false
 	var blueprint: Dictionary = BLUEPRINTS[kind]
 	var id := "%s_development_%03d" % [sim.instance_id, projects.size() + 1]
 	active = {"id": id, "kind": kind, "site": selected.position, "target": selected.get("target", selected.position + Vector3(0, 0, SIZE.z / 2 + 4)), "required": {"wood": blueprint.wood, "metal": blueprint.metal}, "delivered": {"wood": 0.0, "metal": 0.0}, "work": 0.0, "required_work": float(blueprint.work) * (0.85 if workshop_count > 0 else 1.0), "state": "PLANNED", "stage": "FOUNDATION", "effect_applied": false, "created": sim.seconds, "completed": -1.0, "work_by_citizen": {}, "delivery_distance": 0.0}
 	projects.append(active)
 	render(active)
-	sim.journal.record(sim.seconds, "development_started", kind.capitalize() + " project " + id, active, active.site, id + ":started")
+	sim.journal.record(sim.seconds, "development_started", kind.capitalize() + " project " + id, active, active.site, id + ":started", preload("res://scripts/event_fact_context.gd").society(sim, active))
 	active.state = "WAITING_FOR_MATERIALS"
 	return true
 
@@ -206,7 +206,7 @@ func deliver(task: Dictionary, citizen: Node3D) -> bool:
 	active.delivery_distance += citizen.travelled_distance - float(task.pickup_travelled_distance)
 	if active.delivered.wood == active.required.wood and active.delivered.metal == active.required.metal:
 		active.state = "SUPPLIED"
-		sim.journal.record(sim.seconds, "materials_supplied", "Materials supplied: " + String(active.id), active, active.site, String(active.id) + ":supplied")
+		sim.journal.record(sim.seconds, "materials_supplied", "Materials supplied: " + String(active.id), active, active.site, String(active.id) + ":supplied", preload("res://scripts/event_fact_context.gd").society(sim, active))
 	return true
 
 func work(task: Dictionary, citizen: Node3D, effort: float) -> bool:
@@ -237,7 +237,7 @@ func work(task: Dictionary, citizen: Node3D, effort: float) -> bool:
 	for worker in sim.world_citizens():
 		if worker.state in ["TRAVEL", "CARRY"]: worker.replan_current_route()
 	render(active)
-	sim.journal.record(sim.seconds, "structure_complete", active.kind.capitalize() + " complete: " + String(active.id), active, active.site, String(active.id) + ":complete")
+	sim.journal.record(sim.seconds, "structure_complete", active.kind.capitalize() + " complete: " + String(active.id), active, active.site, String(active.id) + ":complete", preload("res://scripts/event_fact_context.gd").society(sim, active))
 	active = {}
 	return true
 
@@ -252,10 +252,10 @@ func apply_effect(project: Dictionary) -> void:
 		for citizen in sim.citizens:
 			citizen.needs.sheltered = citizen.life_state == "ALIVE" and housed < sim.needs.shelter_capacity
 			if citizen.life_state == "ALIVE": housed += 1
-		sim.journal.record(sim.seconds, "shelter_increased", "Shelter capacity increased to %d" % sim.needs.shelter_capacity, {"project": project.id, "shelter": sim.needs.shelter_capacity}, project.site, String(project.id) + ":shelter")
+		sim.journal.record(sim.seconds, "shelter_increased", "Shelter capacity increased to %d" % sim.needs.shelter_capacity, {"project": project.id, "shelter": sim.needs.shelter_capacity}, project.site, String(project.id) + ":shelter", preload("res://scripts/event_fact_context.gd").society(sim, {"project": project.id, "shelter": sim.needs.shelter_capacity}))
 	elif project.kind == "workshop":
 		workshop_count = mini(workshop_count + 1, 1)
-		if sim.founder_mode: sim.journal.record(sim.seconds, "advanced_available", "Workshop enables advanced construction", {}, project.site, "advanced")
+		if sim.founder_mode: sim.journal.record(sim.seconds, "advanced_available", "Workshop enables advanced construction", {}, project.site, "advanced", preload("res://scripts/event_fact_context.gd").society(sim, {}))
 
 func render(project: Dictionary) -> void:
 	var id := String(project.id)

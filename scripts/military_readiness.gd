@@ -46,7 +46,7 @@ func govern() -> void:
 	if not missing.is_empty():
 		if not sim.armory.order(missing[0]):
 			blocked = sim.armory.blocked
-			sim.journal.record(sim.seconds,"KIT_BLOCKED",blocked,{"role":missing[0]},sim.coordinator.depot_station,"kit_blocked")
+			sim.journal.record(sim.seconds, "KIT_BLOCKED", blocked, {"role":missing[0]}, sim.coordinator.depot_station, "kit_blocked", preload("res://scripts/event_fact_context.gd").society(sim, {"role":missing[0]}))
 
 func shortage() -> Dictionary:
 	var result := {"wood":0.0,"metal":0.0}

@@ -25,9 +25,9 @@ func claim(site_id: String, instance_id: String, seconds: float) -> void:
 		var key := relation_key(rival, instance_id)
 		if relations.get(key, "UNKNOWN") == "UNKNOWN":
 			relations[key] = "CONTACT"
-			journal.record(seconds, "FIRST_CONTACT", "Territorial encounter at " + site_id, {"participants": [rival, instance_id]}, site.position, key + ":contact")
+			journal.record(seconds, "FIRST_CONTACT", "Territorial encounter at " + site_id, {"participants": [rival, instance_id]}, site.position, key + ":contact", preload("res://scripts/event_fact_context.gd").conflict(site_id, site.contesting_civilizations, ""))
 	site.claim_state = "CONTESTED"
-	journal.record(seconds, "SITE_CONTESTED", "Strategic site contested", {"site_id": site_id}, site.position, site_id + ":contested")
+	journal.record(seconds, "SITE_CONTESTED", "Strategic site contested", {"site_id": site_id}, site.position, site_id + ":contested", preload("res://scripts/event_fact_context.gd").conflict(site_id, site.contesting_civilizations, ""))
 
 func set_relation(a: String, b: String, state: String, seconds: float, site_id: String, context: Dictionary = {}) -> void:
 	var key := relation_key(a, b)
@@ -38,11 +38,11 @@ func set_relation(a: String, b: String, state: String, seconds: float, site_id: 
 	data["participants"] = [a,b]
 	data["site_id"] = site_id
 	if state == "HOSTILE":
-		journal.record(seconds, "HOSTILITY_DECLARED", "Scarcity escalates competing claims to hostility", data, site.position, key + ":hostile")
+		journal.record(seconds, "HOSTILITY_DECLARED", "Scarcity escalates competing claims to hostility", data, site.position, key + ":hostile", preload("res://scripts/event_fact_context.gd").conflict(site_id, site.contesting_civilizations, ""))
 	elif state == "COMPETITION":
-		journal.record(seconds, "COMPETITION_DECLARED", "Competing claims remain below the threshold for war", data, site.position, key + ":competition")
+		journal.record(seconds, "COMPETITION_DECLARED", "Competing claims remain below the threshold for war", data, site.position, key + ":competition", preload("res://scripts/event_fact_context.gd").conflict(site_id, site.contesting_civilizations, ""))
 	elif state == "CONTACT":
-		journal.record(seconds, "HOSTILITY_ENDED", "Conflict pressure fell below the threshold for war", data, site.position, key + ":standdown:%d" % int(seconds))
+		journal.record(seconds, "HOSTILITY_ENDED", "Conflict pressure fell below the threshold for war", data, site.position, key + ":standdown:%d" % int(seconds), preload("res://scripts/event_fact_context.gd").conflict(site_id, site.contesting_civilizations, ""))
 
 func hold(site_id: String, winner: String, seconds: float, delta: float) -> bool:
 	var site: Dictionary = sites[site_id]
@@ -52,5 +52,5 @@ func hold(site_id: String, winner: String, seconds: float, delta: float) -> bool
 	site.claim_state = "CONTROLLED"
 	site.contesting_civilizations = [winner]
 	site.last_battle_time = seconds
-	journal.record(seconds, "SITE_CAPTURED", winner + " secured " + site_id, {"site_id":site_id,"winner":winner}, site.position, site_id + ":captured")
+	journal.record(seconds, "SITE_CAPTURED", winner + " secured " + site_id, {"site_id":site_id,"winner":winner}, site.position, site_id + ":captured", preload("res://scripts/event_fact_context.gd").conflict(site_id, site.contesting_civilizations, winner))
 	return true

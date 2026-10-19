@@ -22,7 +22,7 @@ func transition(sim: Node, next_mode: String, why: String, state: Dictionary) ->
 	if mode != next_mode:
 		mode = next_mode
 		_changed = sim.seconds
-		sim.journal.record(sim.seconds, "governor", next_mode + ": " + why, state)
+		sim.journal.record(sim.seconds, "governor", next_mode + ": " + why, state, null, "", preload("res://scripts/event_fact_context.gd").society(sim, state))
 	reason = why
 
 func tick(sim: Node) -> void:
@@ -31,16 +31,16 @@ func tick(sim: Node) -> void:
 	evaluations += 1
 	var state: Dictionary = sim.status()
 	if sim.construction.project_created:
-		sim.journal.record(sim.seconds, "traversal_complete" if sim.construction.traversal_deployed else "traversal_started", "Traversal complete" if sim.construction.traversal_deployed else "Traversal project started", sim.construction.status(), sim.construction.site_position, "traversal_state")
+		sim.journal.record(sim.seconds, "traversal_complete" if sim.construction.traversal_deployed else "traversal_started", "Traversal complete" if sim.construction.traversal_deployed else "Traversal project started", sim.construction.status(), sim.construction.site_position, "traversal_state", preload("res://scripts/event_fact_context.gd").society(sim, sim.construction.status()))
 	for id in sim.resources.sources:
 		var source: Dictionary = sim.resources.sources[id]
 		for resource in source.remaining:
-			if float(source.remaining[resource]) <= 0: sim.journal.record(sim.seconds, "source_exhausted", "Finite source exhausted: " + String(id) + " / " + resource, source, source.position, "exhausted:" + String(id) + ":" + resource)
+			if float(source.remaining[resource]) <= 0: sim.journal.record(sim.seconds, "source_exhausted", "Finite source exhausted: " + String(id) + " / " + resource, source, source.position, "exhausted:" + String(id) + ":" + resource, preload("res://scripts/event_fact_context.gd").society(sim, source))
 	var danger := crisis(state, sim.seconds)
 	for resource in ["food", "water"]:
 		if float(state[resource + "_days"]) < RECOVERY_DAYS and not sim.planner.directives.has(resource):
 			sim.secure_resource(resource)
-			sim.journal.record(sim.seconds, "directive", "Secure " + resource.capitalize(), state, sim.coordinator.depot_station, "directive:" + resource)
+			sim.journal.record(sim.seconds, "directive", "Secure " + resource.capitalize(), state, sim.coordinator.depot_station, "directive:" + resource, preload("res://scripts/event_fact_context.gd").society(sim, state))
 	var military: RefCounted = sim.get("military")
 	if military != null: military.govern()
 	var shortage: Dictionary = military.shortage() if military != null else {"wood":0.0,"metal":0.0}
@@ -118,6 +118,6 @@ func authorize_safe_salvage(sim: Node, shortage: Dictionary) -> void:
 	for candidate in candidates(sim, shortage):
 		if sim.salvage.objects[candidate.id].authorized: continue
 		if sim.authorize_salvage(String(candidate.id)):
-			sim.journal.record(sim.seconds, "salvage_authorized", "Safe salvage authorized: " + String(candidate.id), {"shortage": shortage, "score": candidate.score, "rejections": rejections}, candidate.focus, "salvage:" + String(candidate.id))
+			sim.journal.record(sim.seconds, "salvage_authorized", "Safe salvage authorized: " + String(candidate.id), {"shortage": shortage, "score": candidate.score, "rejections": rejections}, candidate.focus, "salvage:" + String(candidate.id), preload("res://scripts/event_fact_context.gd").society(sim, {"shortage": shortage, "score": candidate.score, "rejections": rejections}))
 			return
 		rejections[candidate.id] = "workers cannot reach a valid physical edge"

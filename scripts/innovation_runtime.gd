@@ -65,7 +65,7 @@ func tick() -> void:
 			if not found: observations.append({"type":"VERTICAL_ACCESS","source_id":region,"severity":1.0,"strength":1.0,"context":{"region":region}})
 	resolver.problem_registry.observe_batch(observations, sim.seconds)
 	for problem in resolver.problem_registry.active_problems():
-		sim.journal.record(sim.seconds,"problem_detected","Problem recognized: " + problem.type,problem,sim.coordinator.depot_station,"problem:"+problem.key)
+		sim.journal.record(sim.seconds, "problem_detected", "Problem recognized: " + problem.type, problem, sim.coordinator.depot_station, "problem:"+problem.key, preload("res://scripts/event_fact_context.gd").society(sim, problem))
 	if sim.living_population() == 0:
 		if not active.is_empty(): _cancel_project("No surviving builders")
 		_cancel_research("No surviving researchers")
@@ -104,7 +104,7 @@ func tick() -> void:
 		return
 	research = {"id":String(choice.technology.id), "name":String(choice.technology.get("display_name", choice.technology.id)), "target":target, "required_work":float(choice.technology.get("research_work", 100.0)), "work":0.0, "work_by_citizen":{}, "started":sim.seconds, "completed":-1.0, "state":"RESEARCHING"}
 	reason = "Researching " + research.name
-	sim.journal.record(sim.seconds, "research_started", research.name + " research started", research, target, "research:"+research.id)
+	sim.journal.record(sim.seconds, "research_started", research.name + " research started", research, target, "research:"+research.id, preload("res://scripts/event_fact_context.gd").society(sim, research))
 
 func _research_target() -> Vector3:
 	for project in sim.development.projects:
@@ -194,7 +194,7 @@ func _start_project(candidate: Dictionary, plan: Dictionary) -> void:
 	sim.scene.add_child(root)
 	_visuals[active.id] = root
 	reason = "Building " + String(solution.get("display_name", solution.id))
-	sim.journal.record(sim.seconds, "solution_started", reason, {"solution_id":solution.id, "region":active.region}, active.site, active.id)
+	sim.journal.record(sim.seconds, "solution_started", reason, {"solution_id":solution.id, "region":active.region}, active.site, active.id, preload("res://scripts/event_fact_context.gd").society(sim, {"solution_id":solution.id, "region":active.region}))
 	_update_supplied()
 
 func pickup(task: Dictionary) -> bool:
@@ -249,7 +249,7 @@ func work(task: Dictionary, citizen: Node3D, effort: float) -> bool:
 		research.completed = sim.seconds
 		research.state = "COMPLETE"
 		research_history.append(research.duplicate(true))
-		sim.journal.record(sim.seconds, "technology_complete", research.name + " completed", research, research.target, "technology:"+research.id)
+		sim.journal.record(sim.seconds, "technology_complete", research.name + " completed", research, research.target, "technology:"+research.id, preload("res://scripts/event_fact_context.gd").society(sim, research))
 		research = {}
 		_cancel_peers("INNOVATION_RESEARCH", task.id)
 		_next = 0.0
@@ -279,7 +279,7 @@ func build(task: Dictionary, citizen: Node3D, effort: float) -> bool:
 	active.state = "COMPLETE"
 	active.completed = sim.seconds
 	sim.world_simulation.innovation_claims.erase(active.claim_key)
-	sim.journal.record(sim.seconds, "solution_complete", String(active.solution.get("display_name", active.solution.id)) + " deployed", {"solution_id":active.solution.id, "region":active.region}, active.site, active.id+":complete")
+	sim.journal.record(sim.seconds, "solution_complete", String(active.solution.get("display_name", active.solution.id)) + " deployed", {"solution_id":active.solution.id, "region":active.region}, active.site, active.id+":complete", preload("res://scripts/event_fact_context.gd").society(sim, {"solution_id":active.solution.id, "region":active.region}))
 	active = {}
 	_cancel_peers("CONSTRUCTION_BUILD", task.id, true)
 	_next = 0.0

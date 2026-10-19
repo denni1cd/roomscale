@@ -16,7 +16,15 @@ func configure(runtime: Node) -> void:
 func record(kind: String, data: Dictionary) -> void:
 	var event := {"tick":sim.world_simulation.tick,"kind":kind,"data":data.duplicate(true)}
 	events.append(event)
-	sim.journal.record(sim.seconds,kind,kind+": "+JSON.stringify(data),data,sim.coordinator.depot_station,kind+":"+str(data.get("id","readiness")))
+	var context := preload("res://scripts/event_fact_context.gd").society(sim,data)
+	if kind.begins_with("KIT_"):
+		context.subject_type = "equipment"
+		context.subject_id = str(data.get("id",data.get("project","")))
+		context.story_key = "equipment:"+sim.instance_id+":"+str(context.subject_id)
+	if kind in ["CITIZEN_MUSTERING","ABILITY_STATE"]:
+		context.subject_type = "citizen"
+		context.subject_id = str(data.get("id",""))
+	sim.journal.record(sim.seconds,kind,kind+": "+JSON.stringify(data),data,sim.coordinator.depot_station,kind+":"+str(data.get("id","readiness")),context)
 
 func active_count() -> int:
 	return projects.values().filter(func(p: Dictionary) -> bool: return p.state == "BUILDING").size()

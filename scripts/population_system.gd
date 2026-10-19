@@ -104,7 +104,7 @@ func evaluate(sim: Node, state: Dictionary, emergency: bool, blocked: bool) -> v
 	if not why.is_empty():
 		stable_since = -1
 		reason = why
-		sim.journal.record(sim.seconds, "growth_paused", why, state, sim.coordinator.housing_station, "growth_policy")
+		sim.journal.record(sim.seconds, "growth_paused", why, state, sim.coordinator.housing_station, "growth_policy", preload("res://scripts/event_fact_context.gd").society(sim, state))
 		return
 	if stable_since < 0: stable_since = sim.seconds
 	if sim.seconds - stable_since < STABILITY:
@@ -116,7 +116,7 @@ func evaluate(sim: Node, state: Dictionary, emergency: bool, blocked: bool) -> v
 	var positions := arrival_positions(sim)
 	if positions.size() != cohort_size:
 		reason = "No safe connected arrival position; new citizen waiting" if cohort_size == 1 else "No five safe connected arrival positions; entire cohort waiting"
-		sim.journal.record(sim.seconds, "growth_paused", reason, state, sim.coordinator.housing_station, "arrival_blocked")
+		sim.journal.record(sim.seconds, "growth_paused", reason, state, sim.coordinator.housing_station, "arrival_blocked", preload("res://scripts/event_fact_context.gd").society(sim, state))
 		return
 	# Ensure forecasts remain healthy immediately after the whole cohort joins.
 	for resource in ["food", "water"]:
@@ -150,4 +150,4 @@ func evaluate(sim: Node, state: Dictionary, emergency: bool, blocked: bool) -> v
 	for at in positions: centroid += at / cohort_size
 	cohort.centroid = centroid
 	cohorts.append(cohort)
-	sim.journal.record(sim.seconds, "cohort_joined", "New cohort joined: %d real citizens" % sim.living_population(), cohort, centroid, "cohort:%d" % cohorts.size())
+	sim.journal.record(sim.seconds, "cohort_joined", "New cohort joined: %d real citizens" % sim.living_population(), cohort, centroid, "cohort:%d" % cohorts.size(), preload("res://scripts/event_fact_context.gd").society(sim, cohort))
