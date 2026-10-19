@@ -69,5 +69,6 @@ static func start(scene: Node3D) -> Node:
 			scene.set("_construction_system",construction)
 		world.present_home(runtime, Vector3(slot.home[0],slot.home[1],slot.home[2]))
 	world.enable_conflict(scenario)
+	world.runtimes[0].configure_spectator()
 	scene.get_node("CameraRig").set_citizen_focus(world.citizens[0])
 	return world.runtimes[0]

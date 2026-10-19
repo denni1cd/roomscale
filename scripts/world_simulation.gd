@@ -103,13 +103,6 @@ func enable_conflict(config: Dictionary) -> void:
 	status_label.add_theme_constant_override("shadow_offset_x",2)
 	status_label.add_theme_constant_override("shadow_offset_y",2)
 	scene.get_node("Overlay").add_child(status_label)
-	for index in range(4):
-		var button := Button.new()
-		button.text = ["Pause","1x","4x","10x"][index]
-		button.position = Vector2(20 + index * 72,330 + (runtimes.size() * 28 if runtimes.any(func(runtime: Node) -> bool: return runtime.innovation.enabled) else 0))
-		var rate: float = [0.0,1.0,4.0,10.0][index]
-		button.pressed.connect(func() -> void: runtimes[0].speed = rate)
-		scene.get_node("Overlay").add_child(button)
 	for child in scene.get_node("Overlay").get_children():
 		if child != status_label and not child is Button: child.hide()
 
@@ -125,7 +118,7 @@ func advance_conflict() -> void:
 				var task: Dictionary = runtime.coordinator.create_construction_task({"task_type":"STRATEGIC_SCOUT","source":at,"target":at},citizen.citizen_id)
 				citizen.assign_player_goal_task(task)
 				scouts[runtime.instance_id] = citizen
-				journal.record(seconds,"SITE_TARGETED",runtime.instance_id + " explores the shared approach",{"instance_id":runtime.instance_id},at,runtime.instance_id + ":target")
+				journal.record(seconds, "SITE_TARGETED", runtime.instance_id + " explores the shared approach", {"instance_id":runtime.instance_id}, at, runtime.instance_id + ":target", preload("res://scripts/event_fact_context.gd").conflict(site_id, territory.sites[site_id].contesting_civilizations, runtime.instance_id))
 				break
 	for id in scouts:
 		var scout: Node3D = scouts[id]
@@ -143,7 +136,7 @@ func advance_conflict() -> void:
 	var intensity := int(conflict_state.intensity)
 	var cause := String(conflict_state.cause)
 	if intensity != previous_intensity or cause != previous_cause:
-		journal.record(seconds,"CONFLICT_PRESSURE_CHANGED","Conflict pressure is %s because of %s" % [conflict_state.intensity_name,cause],conflict_state,at,site_id + ":pressure:" + String(conflict_state.intensity_name) + ":" + cause)
+		journal.record(seconds, "CONFLICT_PRESSURE_CHANGED", "Conflict pressure is %s because of %s" % [conflict_state.intensity_name,cause], conflict_state, at, site_id + ":pressure:" + String(conflict_state.intensity_name) + ":" + cause, preload("res://scripts/event_fact_context.gd").conflict(site_id, territory.sites[site_id].contesting_civilizations, ""))
 	var participants: Array = territory.sites[site_id].contesting_civilizations
 	var pairs: Array = conflict_state.get("pairs", [conflict_state])
 	var engaged: Array = []
@@ -222,15 +215,6 @@ func _process(delta: float) -> void:
 	for citizen in citizens: citizen.refresh_combat_presentation(delta)
 	for runtime in runtimes:
 		scene.get_node(runtime.instance_id+"_Home/HomeLabel").visible = scene.get_node("CameraRig").distance >= 40
-	if OS.get_environment("ROOMSCALE_MANUAL_CAMERA") != "1" and camera_phase != combat.phase:
-		camera_phase = combat.phase
-		var camera: Node = scene.get_node("CameraRig")
-		var objective: Vector3 = territory.sites[scenario.strategic_site].position
-		if combat.phase == "DORMANT": camera.set_view_mode(0)
-		elif combat.phase == "MARCH": camera.focus_at(objective,75)
-		elif combat.phase == "FIGHT": camera.focus_detail_at(objective + Vector3(0,0.3,0),8)
-		elif combat.phase == "RETREAT": camera.focus_at((objective + runtime_for(combat.retreating_side).coordinator.housing_station)/2,80)
-		elif combat.phase == "COMPLETE": camera.set_view_mode(0)
 	var presenter: Node = get_tree().root.get_node("CivilizationPresentation")
 	for runtime in runtimes:
 		presenter.refresh_runtime(runtime)
@@ -244,6 +228,7 @@ func _process(delta: float) -> void:
 	objective_marker.get_node("OrganicControl").visible = owner_organic
 	objective_marker.get_node("ObjectiveLabel").visible = scene.get_node("CameraRig").distance >= 40
 	objective_marker.get_node("ControlMarker").material_override.albedo_color = control_color
+	status_label.visible = runtimes.is_empty() or runtimes[0].spectator == null or runtimes[0].spectator.diagnostics
 	var pressure_text := "No conflict pressure yet"
 	if not conflict_state.is_empty():
 		pressure_text = "%s %.0f%% · %s%s" % [String(conflict_state.intensity_name),float(conflict_state.score) * 100.0,String(conflict_state.cause),(" / " + String(conflict_state.resource)) if not String(conflict_state.resource).is_empty() else ""]

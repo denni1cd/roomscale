@@ -34,12 +34,12 @@ func run() -> void:
 	await process_frame
 	check(sim.speed == 10 and sim.governor.enabled and sim.camera_director.enabled, "fishbowl starts autonomous at 10x with camera on")
 	check(not hud.diagnostics and not sim.hud.visible and not hud.details_panel.visible, "diagnostics default off and dense HUD hidden")
-	check(not hud.event_panel.visible, "no empty event panel at startup")
+	check(hud.event_panel.visible and hud.feed_rows != null, "persistent event history visible at startup")
 	for viewport_size in [Vector2i(1920, 1080), Vector2i(2560, 1440)]:
 		root.size = viewport_size
 		await process_frame
 		check(not hud.event_panel.get_global_rect().intersects(hud.project_panel.get_global_rect()) and not hud.controls_panel.get_global_rect().intersects(hud.event_panel.get_global_rect()), "edge cards do not overlap at %s" % viewport_size)
-	check(hud.mouse_filter == Control.MOUSE_FILTER_IGNORE and hud.status_panel.mouse_filter == Control.MOUSE_FILTER_IGNORE and hud.project_panel.mouse_filter == Control.MOUSE_FILTER_IGNORE and hud.event_panel.mouse_filter == Control.MOUSE_FILTER_IGNORE, "decorative spectator controls pass world input through")
+	check(hud.mouse_filter == Control.MOUSE_FILTER_IGNORE and hud.status_panel.mouse_filter == Control.MOUSE_FILTER_IGNORE and hud.project_panel.mouse_filter == Control.MOUSE_FILTER_IGNORE and hud.event_panel.mouse_filter == Control.MOUSE_FILTER_STOP, "decorative panels pass input while interactive feed captures clicks")
 	var before := snapshot(sim)
 	var s := Adapter.status(sim)
 	check(s.days == sim.seconds / 600 and s.population == sim.citizens.size() and s.shelter == sim.needs.shelter_capacity and s.wood == sim.economy.available.wood and s.metal == sim.economy.available.metal and s.food_days == sim.economy.forecast("food", sim.citizens.size()) and s.water_days == sim.economy.forecast("water", sim.citizens.size()), "status values equal authoritative production values")
@@ -55,7 +55,7 @@ func run() -> void:
 	check(hud.diagnostics and not sim.hud.visible, "real F3 input toggles only spectator diagnostics")
 	hud.set_diagnostics(false)
 	for i in range(120): hud.advance(0.1)
-	check(hud.status_panel.modulate.a <= 0.77, "HUD fades after ten real seconds")
+	check(is_equal_approx(hud.status_panel.modulate.a, 1.0), "persistent feed retains readable HUD opacity after idle")
 	hud.wake()
 	hud.advance(1)
 	check(hud.status_panel.modulate.a == 1, "interaction restores readable HUD")
@@ -68,14 +68,14 @@ func run() -> void:
 	var presenter := Presenter.new()
 	var events := []
 	for i in range(20): events.append({"id": i + 1, "day": 1, "kind": "growth_paused", "message": "Reason %d" % i, "evidence": {}})
-	events.append({"id": 21, "day": 1, "kind": "cohort_joined", "message": "New cohort", "evidence": {"after": 65}})
+	events.append({"id": 21, "day": 1, "kind": "structure_complete", "message": "Shelter complete", "evidence": {}})
 	presenter.ingest(events)
-	check(presenter.pending.size() == Presenter.LIMIT and presenter.pending[0].headline == "NEW ARRIVALS", "bounded queue and major priority")
+	check(presenter.pending.size() == Presenter.LIMIT and presenter.pending[0].priority == preload("res://scripts/spectator_event_catalog.gd").HIGH, "bounded queue and major priority")
 	presenter.advance(0)
 	var card: Dictionary = presenter.current.duplicate()
 	presenter.ingest(events)
 	check(presenter.pending.size() == Presenter.LIMIT - 1, "journal cursor suppresses replay")
-	presenter.ingest([{"id": 22, "day": 1, "kind": "cohort_joined", "message": "New cohort", "evidence": {"after": 65}}])
+	presenter.ingest([{"id": 22, "day": 1, "kind": "structure_complete", "message": "Shelter complete", "evidence": {}}])
 	check(presenter.pending.size() == Presenter.LIMIT - 1, "equivalent duplicate suppressed across IDs")
 	presenter.advance(4)
 	check(presenter.current == card and presenter.alpha == 1, "major card remains readable after four real seconds")
@@ -98,7 +98,7 @@ func run() -> void:
 	sim.camera_director.advance(8)
 	check(sim.camera_director.shots == 1 and not sim.camera_director.current_shot.headline.is_empty(), "meaningful production shot has title")
 	var shots: int = sim.camera_director.shots
-	hud.camera_button.toggled.emit(false)
+	hud.camera_button.item_selected.emit(0)
 	var camera_at: Vector3 = sim.camera_director.rig.target
 	sim.camera_director.advance(50)
 	check(sim.camera_director.shots == shots and sim.camera_director.rig.target == camera_at, "camera off prevents automatic shots and movement")
@@ -107,19 +107,20 @@ func run() -> void:
 	sim.camera_director.wide_elapsed = 40
 	check(sim.camera_director.choose().key == "overview", "periodic overview")
 	var subject: Node3D = sim.citizens[0]
-	sim.camera_director.current_shot = sim.camera_director.activity(subject, "ACTIVITY", "Current task")
-	sim.camera_director.elapsed = 0
+	var target := preload("res://scripts/spectator_target.gd").make("citizen", subject.citizen_id, sim.instance_id, "CITIZEN_CLOSE", "Citizen")
+	check(sim.camera_director.follow(target), "explicit live citizen FOLLOW accepted")
 	sim.camera_director.advance(0.1)
-	var tracking_error: Vector3 = sim.camera_director.last_focus - sim.camera_director.rig.target
 	var original_position: Vector3 = subject.position
 	subject.position += Vector3(2, 0, 0)
 	sim.camera_director.advance(0.1)
-	check((sim.camera_director.last_focus - sim.camera_director.rig.target).length() < tracking_error.length(), "moving subject does not add tracking lag at fast speed")
+	check(sim.camera_director.last_focus.distance_to(subject.global_position + Vector3.UP * 0.25) < 0.01, "FOLLOW resolves moving stable citizen without selection lag")
+	for frame in range(120): sim.camera_director.rig._process(1.0 / 60.0)
+	check(sim.camera_director.rig.target.distance_to(sim.camera_director.last_focus) < 0.1, "existing physical rig converges to live FOLLOW target")
 	subject.position = original_position
-	sim.camera_director.current_shot.activity_task = "obsolete task"
-	check(not sim.camera_director.title_is_current(), "obsolete worker activity title is hidden")
-	sim.camera_director.current_shot = {"key": "settlement", "subtitle": "stale population"}
-	check(sim.camera_director.shot_subtitle().begins_with(str(sim.citizens.size())), "settlement subtitle uses live population")
+	sim.camera_director.rig.notify_manual_input("test_manual")
+	sim.camera_director.advance(600)
+	check(sim.camera_director.mode == 0, "manual input leaves FOLLOW permanently OFF")
+	check(not sim.camera_director.follow({"type":"citizen","id":"-999"}), "invalid FOLLOW rejected instead of silently replacing subject")
 	var points: Array[Vector3] = sim.population.arrival_positions(sim)
 	check(points.size() == 5 and points == sim.population.arrival_positions(sim), "five deterministic arrival points")
 	var nav: Node = sim.coordinator.navigation

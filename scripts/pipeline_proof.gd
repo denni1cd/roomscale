@@ -1681,6 +1681,7 @@ func select_citizen_at_screen_position(screen_position: Vector2) -> bool:
 			closest = citizen
 	if not is_instance_valid(closest):
 		return false
+	get_node("CameraRig").notify_manual_input("citizen_selection")
 	_selected_citizen = closest
 	_inspection_label.show()
 	_update_population_ui()
