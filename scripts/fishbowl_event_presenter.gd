@@ -1,9 +1,11 @@
 extends RefCounted
-## Only presentation state. advance receives unscaled real seconds, never sim ticks.
+## Real-time transient alerts plus a bounded recent view of authoritative journals.
 const Adapter := preload("res://scripts/fishbowl_narrative_adapter.gd")
 const LIMIT := 8
-var cursor := 0
+const RECENT_LIMIT := 64
+var cursor := 0 # Compatibility diagnostic; source_key controls ingestion.
 var pending: Array[Dictionary] = []
+var recent: Array[Dictionary] = []
 var current: Dictionary = {}
 var age := 0.0
 var seen: Array[String] = []
@@ -11,14 +13,19 @@ var alpha := 0.0
 
 func ingest(events: Array) -> void:
 	for event in events:
-		if int(event.id) <= cursor: continue
-		cursor = int(event.id)
+		var source_key := String(event.get("source_key", "local:" + str(event.id)))
+		if source_key in seen: continue
+		seen.append(source_key)
+		while seen.size() > 1024: seen.pop_front()
+		cursor = maxi(cursor, int(event.id))
 		var card := Adapter.event_card(event)
-		if card.is_empty() or card.key in seen: continue
-		seen.append(card.key)
-		while seen.size() > 128: seen.pop_front()
+		if card.is_empty(): continue
+		recent.push_front(card)
+		while recent.size() > RECENT_LIMIT: recent.pop_back()
+		# Cards retain meaningful milestones; only exact adjacent repeats are quiet.
+		if not pending.is_empty() and pending.back().key == card.key: continue
 		pending.append(card)
-		pending.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return a.priority > b.priority if a.priority != b.priority else a.id < b.id)
+		pending.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return a.priority > b.priority if a.priority != b.priority else float(a.seconds) < float(b.seconds))
 		while pending.size() > LIMIT: pending.pop_back()
 
 func advance(real_delta: float) -> void:

@@ -26,16 +26,17 @@ static func stage_name(stage: String) -> String:
 static func traversal_name() -> String:
 	return CivilizationDefinition.traversal_name(civilization_definition())
 
-static func presentation_text(value: String) -> String:
-	if not is_verdant(): return value
+static func presentation_text(value: String, definition: Dictionary = {}) -> String:
+	if definition.is_empty(): definition = civilization_definition()
+	if String(definition.get("id", "")) != "verdant": return value
 	var replacements := [
-		["mechanical_parts", resource_name("mechanical_parts")],
-		["mechanical parts", resource_name("mechanical_parts")],
-		["wood", resource_name("wood")], ["metal", resource_name("metal")],
-		["winch", stage_name("winch")], ["launcher", stage_name("launcher")],
-		["base", stage_name("base")],
-		["grapple cable", traversal_name()], ["grapple route", traversal_name()],
-		["steampunk grapple", traversal_name()], ["grapple", traversal_name()],
+		["mechanical_parts", CivilizationDefinition.resource_name(definition, "mechanical_parts")],
+		["mechanical parts", CivilizationDefinition.resource_name(definition, "mechanical_parts")],
+		["wood", CivilizationDefinition.resource_name(definition, "wood")], ["metal", CivilizationDefinition.resource_name(definition, "metal")],
+		["winch", CivilizationDefinition.stage_name(definition, "winch")], ["launcher", CivilizationDefinition.stage_name(definition, "launcher")],
+		["base", CivilizationDefinition.stage_name(definition, "base")],
+		["grapple cable", CivilizationDefinition.traversal_name(definition)], ["grapple route", CivilizationDefinition.traversal_name(definition)],
+		["steampunk grapple", CivilizationDefinition.traversal_name(definition)], ["grapple", CivilizationDefinition.traversal_name(definition)],
 		["cable", "vine"], ["founder shelter", "Grove Shelter"],
 		["shelter module", "Grove Shelter"], ["workshop", "Growth Nursery"],
 		["depot", "Seed Cache"], ["housing block", "Pod Homes"], ["housing", "Pod Homes"],
@@ -68,9 +69,10 @@ static func governor(sim: Node) -> String:
 static func status(sim: Node) -> Dictionary:
 	return {"days": sim.seconds / 600.0, "population": sim.citizens.size(), "shelter": sim.needs.shelter_capacity, "food_days": sim.economy.forecast("food", sim.citizens.size()), "water_days": sim.economy.forecast("water", sim.citizens.size()), "wood": sim.economy.available.wood, "metal": sim.economy.available.metal, "mechanical_parts": sim.economy.available.get("mechanical_parts", 0), "speed": sim.speed, "governor": governor(sim)}
 
-static func module_name(project: Dictionary) -> String:
+static func module_name(project: Dictionary, definition: Dictionary = {}) -> String:
+	if definition.is_empty(): definition = civilization_definition()
 	var names := {"shelter": "Founder Shelter ", "depot": "Depot ", "housing": "Housing Block ", "workshop": "Workshop "}
-	if is_verdant(): names = {"shelter": "Grove Shelter ", "depot": "Seed Cache ", "housing": "Pod Homes ", "workshop": "Growth Nursery "}
+	if String(definition.get("id", "")) == "verdant": names = {"shelter": "Grove Shelter ", "depot": "Seed Cache ", "housing": "Pod Homes ", "workshop": "Growth Nursery "}
 	return names.get(project.get("kind", ""), "Structure ") + String(project.get("id", "")).trim_prefix("development_").trim_prefix("0").trim_prefix("0")
 
 static func project(sim: Node) -> Dictionary:
@@ -97,7 +99,7 @@ static func project(sim: Node) -> Dictionary:
 		return {"name": name, "stage": stage, "progress": p.progress_percent / 100.0, "delivered": p.delivered.duplicate(), "required": p.required.duplicate()}
 	return {}
 
-static func event_card(event: Dictionary) -> Dictionary:
+static func _legacy_event_card(event: Dictionary, definition: Dictionary) -> Dictionary:
 	var kind: String = event.kind
 	var evidence: Dictionary = event.get("evidence", {})
 	var headline := ""
@@ -118,7 +120,7 @@ static func event_card(event: Dictionary) -> Dictionary:
 			priority = 5
 		"founders_arrived":
 			headline = "FOUNDERS ARRIVED"
-			subtitle = "%d citizens with portable supplies, ready to build a home." % int(evidence.population)
+			subtitle = "%d citizens with portable supplies, ready to build a home." % int(evidence.get("population", 0))
 			priority = 5
 		"advanced_available":
 			headline = "SETTLEMENT ESTABLISHED"
@@ -151,11 +153,11 @@ static func event_card(event: Dictionary) -> Dictionary:
 			priority = 5
 		"development_started":
 			headline = "SETTLEMENT EXPANSION"
-			subtitle = "Work began on " + module_name(evidence) + "."
+			subtitle = "Work began on " + module_name(evidence, definition) + "."
 			priority = 3
 		"structure_complete":
 			headline = {"shelter":"FIRST SHELTER COMPLETE", "depot":"DEPOT ESTABLISHED", "housing":"HOUSING COMPLETE", "workshop":"WORKSHOP COMPLETE"}.get(evidence.get("kind"), "STRUCTURE COMPLETE")
-			subtitle = module_name(evidence) + " is ready for the colony."
+			subtitle = module_name(evidence, definition) + " is ready for the colony."
 			priority = 4
 		"shelter_increased":
 			headline = "ROOM TO GROW"
@@ -164,7 +166,7 @@ static func event_card(event: Dictionary) -> Dictionary:
 		"cohort_joined":
 			var count := int(evidence.get("after", 0)) - int(evidence.get("before", 0))
 			headline = "NEW CITIZEN" if count == 1 else "NEW ARRIVALS"
-			subtitle = "One citizen joined the settlement · Population %d." % int(evidence.after) if count == 1 else "Five citizens joined the settlement · Population %d." % int(evidence.get("after", 0))
+			subtitle = "One citizen joined the settlement · Population %d." % int(evidence.get("after", 0)) if count == 1 else "Five citizens joined the settlement · Population %d." % int(evidence.get("after", 0))
 			priority = 5
 		"source_exhausted":
 			headline = "SOURCE EXHAUSTED"
@@ -177,6 +179,31 @@ static func event_card(event: Dictionary) -> Dictionary:
 			headline = "SALVAGE COMPLETE"
 			subtitle = "All usable material recovered from " + String(event.message).get_slice(": ", 1).replace("_", " ") + "."
 	if headline.is_empty(): return {}
-	headline = presentation_text(headline)
-	subtitle = presentation_text(subtitle)
+	headline = presentation_text(headline, definition)
+	subtitle = presentation_text(subtitle, definition)
 	return {"id": event.id, "kind": kind, "headline": headline, "subtitle": subtitle, "priority": priority, "duration": 8.0 if priority >= 3 else 5.0, "key": headline + subtitle, "day": event.day}
+
+static func event_card(event: Dictionary) -> Dictionary:
+	event = event.duplicate(true)
+	for field in ["id", "day", "seconds"]:
+		if not event.get(field, 0) is float and not event.get(field, 0) is int: event[field] = 0
+		elif not event.has(field): event[field] = 0
+	for field in ["kind", "message"]: event[field] = str(event.get(field, ""))
+	if not event.get("evidence", {}) is Dictionary: event["evidence"] = {}
+	var catalog := preload("res://scripts/spectator_event_catalog.gd").metadata(event)
+	var civilization := String(event.get("civilization_id", ""))
+	var definition: Dictionary = civilization_definition() if civilization.is_empty() else CivilizationDefinition.load_id(civilization).get("definition", {})
+	var card := _legacy_event_card(event, definition)
+	if card.is_empty():
+		card = {"headline":String(event.get("kind", "event")).replace("_", " ").to_upper(), "subtitle":String(event.get("message", "")), "key":String(event.get("kind", "")) + String(event.get("message", ""))}
+	card.merge(catalog, true)
+	card["id"] = int(event.get("id", 0))
+	card["day"] = float(event.get("day", 0))
+	card["seconds"] = float(event.get("seconds", 0))
+	card["source_key"] = String(event.get("source_key", "local:" + str(card.id)))
+	card["society_id"] = String(event.get("society_id", ""))
+	card["civilization_id"] = civilization
+	card["society_name"] = String(definition.get("display_name", card.society_id))
+	card["story_key"] = String(event.get("story_key", card.key))
+	card["event"] = event.duplicate(true)
+	return card
