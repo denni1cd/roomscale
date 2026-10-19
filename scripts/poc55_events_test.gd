@@ -26,6 +26,11 @@ func _initialize() -> void:
 	check(presenter.recent[0].headline == "UNKNOWN FUTURE EVENT", "unknown kinds readable")
 	check(presenter.recent[3].subtitle.contains("Growth Nursery"), "event-local civilization narrative")
 	check(not presenter.recent[3].subtitle.contains("Workshop"), "selected profile cannot leak into event")
+	var adapter := preload("res://scripts/fishbowl_narrative_adapter.gd")
+	var technical := adapter.event_card({"kind":"governor", "message":"MATERIALS: shortage { wood:4.0 }", "civilization_id":"scavenger", "society_id":"scavenger_alpha"})
+	check(not technical.subtitle.contains("{") and not technical.subtitle.contains("wood:"), "normal narrative hides technical dictionaries")
+	var project_card := adapter.event_card({"kind":"development_started", "evidence":{"id":"scavenger_alpha_development_001", "kind":"workshop"}, "civilization_id":"scavenger"})
+	check(not project_card.subtitle.contains("scavenger_alpha") and project_card.subtitle.contains("1"), "project display hides stable technical prefix")
 	var groups := [[Catalog.CRITICAL,Catalog.CRITICAL_KINDS], [Catalog.HIGH,Catalog.HIGH_KINDS], [Catalog.MEDIUM,Catalog.MEDIUM_KINDS]]
 	for group in groups:
 		for kind in group[1]: check(Catalog.metadata({"kind":kind}).priority == group[0], "priority " + kind)

@@ -73,7 +73,9 @@ static func module_name(project: Dictionary, definition: Dictionary = {}) -> Str
 	if definition.is_empty(): definition = civilization_definition()
 	var names := {"shelter": "Founder Shelter ", "depot": "Depot ", "housing": "Housing Block ", "workshop": "Workshop "}
 	if String(definition.get("id", "")) == "verdant": names = {"shelter": "Grove Shelter ", "depot": "Seed Cache ", "housing": "Pod Homes ", "workshop": "Growth Nursery "}
-	return names.get(project.get("kind", ""), "Structure ") + String(project.get("id", "")).trim_prefix("development_").trim_prefix("0").trim_prefix("0")
+	var id := String(project.get("id", ""))
+	var suffix := id.get_slice("development_", 1).lstrip("0") if id.contains("development_") else ""
+	return (String(names.get(project.get("kind", ""), "Structure ")) + suffix).strip_edges()
 
 static func project(sim: Node) -> Dictionary:
 	if sim.get("innovation") != null and sim.innovation.enabled:
@@ -196,6 +198,11 @@ static func event_card(event: Dictionary) -> Dictionary:
 	var card := _legacy_event_card(event, definition)
 	if card.is_empty():
 		card = {"headline":String(event.get("kind", "event")).replace("_", " ").to_upper(), "subtitle":String(event.get("message", "")), "key":String(event.get("kind", "")) + String(event.get("message", ""))}
+	if event.kind == "governor" and card.get("headline", "") == "GOVERNOR":
+		card.headline = "COLONY AT WORK"
+		card.subtitle = "Citizens gather supplies and maintain the settlement."
+	card.headline = readable_text(String(card.headline), event, definition)
+	card.subtitle = readable_text(String(card.subtitle), event, definition)
 	card.merge(catalog, true)
 	card["id"] = int(event.get("id", 0))
 	card["day"] = float(event.get("day", 0))
@@ -207,3 +214,15 @@ static func event_card(event: Dictionary) -> Dictionary:
 	card["story_key"] = String(event.get("story_key", card.key))
 	card["event"] = event.duplicate(true)
 	return card
+
+static func readable_text(value: String, event: Dictionary, definition: Dictionary) -> String:
+	# Technical dictionaries and stable IDs remain available through diagnostics.
+	var expression := RegEx.new()
+	expression.compile("\\{[^{}]*\\}")
+	for iteration in range(5): value = expression.sub(value, "", true)
+	expression.compile("[a-zA-Z0-9_]+_development_0*([0-9]+)")
+	value = expression.sub(value, "structure $1", true)
+	var society := String(event.get("society_id", ""))
+	if not society.is_empty(): value = value.replace(society, String(definition.get("display_name", "Society")))
+	value = value.replace("mechanical_parts", CivilizationDefinition.resource_name(definition, "mechanical_parts")) if not definition.is_empty() else value
+	return value.strip_edges().trim_suffix(":").strip_edges()
