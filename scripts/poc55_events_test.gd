@@ -43,6 +43,8 @@ func _initialize() -> void:
 	check(not technical.subtitle.contains("{") and not technical.subtitle.contains("wood:"), "normal narrative hides technical dictionaries")
 	var project_card := adapter.event_card({"kind":"development_started", "evidence":{"id":"scavenger_alpha_development_001", "kind":"workshop"}, "civilization_id":"scavenger"})
 	check(not project_card.subtitle.contains("scavenger_alpha") and project_card.subtitle.contains("1"), "project display hides stable technical prefix")
+	var military_card := adapter.event_card({"kind":"MOBILIZATION_READY", "message":"MOBILIZATION_READY"})
+	check(military_card.subtitle.contains("ready to march") and not military_card.subtitle.contains("_"), "military fallback is human narrative")
 	var groups := [[Catalog.CRITICAL,Catalog.CRITICAL_KINDS], [Catalog.HIGH,Catalog.HIGH_KINDS], [Catalog.MEDIUM,Catalog.MEDIUM_KINDS]]
 	for group in groups:
 		for kind in group[1]: check(Catalog.metadata({"kind":kind}).priority == group[0], "priority " + kind)

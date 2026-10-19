@@ -198,6 +198,7 @@ static func event_card(event: Dictionary) -> Dictionary:
 	var card := _legacy_event_card(event, definition)
 	if card.is_empty():
 		card = {"headline":String(event.get("kind", "event")).replace("_", " ").to_upper(), "subtitle":String(event.get("message", "")), "key":String(event.get("kind", "")) + String(event.get("message", ""))}
+	if not String(catalog.get("narrative_context", "")).is_empty(): card.subtitle = catalog.narrative_context
 	if event.kind == "governor" and card.get("headline", "") == "GOVERNOR":
 		card.headline = "COLONY AT WORK"
 		card.subtitle = "Citizens gather supplies and maintain the settlement."
