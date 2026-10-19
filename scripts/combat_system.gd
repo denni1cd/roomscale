@@ -295,6 +295,8 @@ func update() -> void:
 					returned[id] = int(returned.get(id, 0)) + 1
 		if phase == "STAND_DOWN":
 			if forces.keys().all(func(id: Variant) -> bool: return living(String(id)).all(func(c: Node3D) -> bool: return c.combat_duty.is_empty())):
+				for side in forces:
+					if int(returned.get(side,0)) > 0: story_event("DEMOBILIZATION_COMPLETE", "Surviving force returned", String(side))
 				phase = "DORMANT"
 			return
 		if phase == "RETREAT" and _rivals_withdrawn(target): phase = "SECURE"
