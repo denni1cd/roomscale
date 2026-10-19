@@ -3,6 +3,7 @@ extends SceneTree
 const Evidence := preload("res://scripts/verification/evidence_io.gd")
 var failures: Array[String] = []
 var checks: Array[String] = []
+var cadence_traces: Array[Dictionary] = []
 var capture_metadata: Array[Dictionary] = []
 var capture_dir := "res://verification/poc55/graphics"
 func _initialize() -> void: call_deferred("run")
@@ -143,7 +144,38 @@ func run() -> void:
 		await process_frame
 		check(not hud.event_panel.get_global_rect().intersects(hud.controls_panel.get_global_rect()), "feed controls disjoint at " + str(viewport_size))
 		check(not hud.event_panel.get_global_rect().intersects(hud.project_panel.get_global_rect()), "feed project disjoint at " + str(viewport_size))
-	Evidence.save_json({"result": "PASS" if failures.is_empty() else "FAIL", "checks": checks, "failures": failures, "captures":capture_metadata}, "res://verification/poc55/ui.json")
+		check(not hud.event_panel.get_global_rect().intersects(hud.title_panel.get_global_rect()), "feed title disjoint at " + str(viewport_size))
+	director.set_mode(0)
+	for automatic_mode in [2, 3]:
+		var baseline: Array = []
+		for rate in [1.0, 4.0, 10.0]:
+			hud.speed_buttons[rate].pressed.emit()
+			var observed := preload("res://scripts/fishbowl_camera_director.gd").new()
+			scene.add_child(observed)
+			observed.configure(sim)
+			observed.set_process(false)
+			observed.set_spectator_seed(5505)
+			observed.set_mode(automatic_mode)
+			var trace: Array[Dictionary] = []
+			var previous_shots := 0
+			var previous_cut := -100.0
+			for tick in range(384):
+				observed.advance(0.25)
+				rig._process(0.25)
+				if observed.shots != previous_shots:
+					var real_time := (tick + 1) * 0.25
+					check(real_time - previous_cut >= 5.0, "minimum actual shot dwell mode " + str(automatic_mode) + " speed " + str(rate))
+					trace.append({"real_seconds":real_time, "key":observed.current_shot.key})
+					previous_cut = real_time
+					previous_shots = observed.shots
+			check(trace.size() >= 8, "actual automatic shot trace is exercised mode " + str(automatic_mode))
+			if rate == 1.0: baseline = trace.duplicate(true)
+			else: check(trace == baseline, "actual shot timing and targets identical speed " + str(rate) + " mode " + str(automatic_mode))
+			cadence_traces.append({"mode":automatic_mode, "simulation_speed":rate, "spectator_seed":5505, "real_step":0.25, "real_horizon":96.0, "shots":trace})
+			observed.set_mode(0)
+			observed.free()
+	Evidence.save_json({"traces":cadence_traces}, "res://verification/poc55/cadence.json")
+	Evidence.save_json({"result": "PASS" if failures.is_empty() else "FAIL", "checks": checks, "failures": failures, "captures":capture_metadata}, "res://verification/poc55/ui-headless.json" if DisplayServer.get_name() == "headless" else "res://verification/poc55/ui.json")
 	scene.queue_free()
 	await process_frame
 	print("POC55_UI_" + ("PASS" if failures.is_empty() else "FAIL"))

@@ -95,7 +95,7 @@ func configure(sim: Node) -> void:
 	feed_rows.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	feed_scroll.add_child(feed_rows)
 	event_panel.show()
-	title_panel = panel_at(Vector2.ZERO, Rect2(20, 118 if Adapter.is_verdant() else 98, 500, 66))
+	title_panel = panel_at(Vector2(0.5, 0), Rect2(-220, 118 if Adapter.is_verdant() else 98, 440, 66))
 	title_label = label_for(title_panel, 17)
 	title_label.text = "ROOMSCALE\nAutonomous Colony · Fishbowl Mode"
 	controls_panel = panel_at(Vector2(0, 1), Rect2(20, -78, 1040, 60))
@@ -258,6 +258,7 @@ func refresh_feed() -> void:
 
 func refresh_follow_choices() -> void:
 	var choices: Array = simulation.camera_director.follow_choices()
+	if choices == follow_targets and follow_button.item_count > 0: return
 	var selected_id := ""
 	if follow_button.selected >= 0 and follow_button.selected < follow_targets.size(): selected_id = str(follow_targets[follow_button.selected])
 	follow_button.clear()
