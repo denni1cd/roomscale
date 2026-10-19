@@ -33,6 +33,15 @@ func run() -> void:
 		check(seen.has(kind),"live milestone "+kind)
 	for id in ["clockwork_alpha","verdant_alpha","scavenger_alpha"]: check(societies.has(id),"society "+id)
 	check(not seen.has("ATTACK"),"no attack journal spam")
+	# Conditional elimination fixture after the unmodified live campaign. Uses the
+	# existing damage/departure authority; no spectator-only gameplay is added.
+	var eliminated := String(world.combat.winner)
+	check(not eliminated.is_empty(),"live winner available for conditional elimination fixture")
+	if not eliminated.is_empty():
+		for citizen in world.combat.living(eliminated): citizen.suffer_combat_damage(citizen.max_health+1.0)
+		world.combat.eliminate(eliminated)
+		collect(world.journal)
+		check(seen.has("FORCE_ELIMINATED"),"conditional force elimination milestone")
 	var result := {"result":"PASS" if failures.is_empty() else "FAIL","failures":failures,"kinds":seen.keys(),"societies":societies.keys(),"attack_digest":world.combat.attack_digest,"final_tick":world.tick}
 	var output := OS.get_environment("ROOMSCALE_PRODUCER_RESULT")
 	if not output.is_empty():
