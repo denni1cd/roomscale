@@ -5,7 +5,7 @@ static func society(sim: Node, facts: Dictionary = {}) -> Dictionary:
 	var definition: Variant = sim.get("definition_id")
 	var society_id := str(identity) if identity != null else ""
 	var civilization_id := str(definition) if definition != null else ""
-	var context := {"society_id":society_id,"civilization_id":civilization_id,"subject_type":"society","subject_id":society_id,"story_key":"society:"+society_id}
+	var context := {"society_id":society_id,"civilization_id":civilization_id,"subject_type":"society","subject_id":society_id}
 	for field in ["project_id","site_id","conflict_id","participants","citizen_id"]:
 		if facts.has(field): context[field] = facts[field]
 	if facts.has("citizen_id") and int(facts.citizen_id) >= 0:
