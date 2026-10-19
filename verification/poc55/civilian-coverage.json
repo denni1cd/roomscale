@@ -1,0 +1,1030 @@
+{
+  "result": "PASS",
+  "coverage": {
+    "founders_arrived": {
+      "artifact": "verification/poc55/regression/innovation-event-history/clockwork-captured.json",
+      "event": {
+        "civilization_id": "clockwork",
+        "conflict_id": "",
+        "day": 0.0,
+        "evidence": {
+          "population": 5
+        },
+        "focus": "(0.0, 0.0, 46.0)",
+        "focus_valid": true,
+        "id": 1,
+        "kind": "founders_arrived",
+        "major": false,
+        "message": "Founders arrived",
+        "participants": [],
+        "project_id": "",
+        "related_entities": [],
+        "seconds": 0.0,
+        "severity": "",
+        "site_id": "",
+        "society_id": "clockwork_alpha",
+        "state": "",
+        "story_key": "clockwork_alpha:founders",
+        "subject_id": "clockwork_alpha",
+        "subject_type": "society"
+      }
+    },
+    "governor:SURVIVAL": {
+      "artifact": "verification/poc55/regression/accepted/regression/poc45-scenario/scenario.json",
+      "event": {
+        "civilization_id": "clockwork",
+        "conflict_id": "",
+        "day": 0.00833333333333333,
+        "evidence": {
+          "days": 0.00833333333333333,
+          "drinks": 0,
+          "economy": {
+            "food": {
+              "available": 300.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "metal": {
+              "available": 0.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "water": {
+              "available": 100.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "wood": {
+              "available": 0.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            }
+          },
+          "food_days": 3.0,
+          "meals": 0,
+          "population": 50,
+          "resting": 0,
+          "rests": 0,
+          "shelter": 50,
+          "urgent": 0,
+          "water_days": 0.666666666666667
+        },
+        "focus": "(0.0, 0.0, 0.0)",
+        "focus_valid": false,
+        "id": 2,
+        "kind": "governor",
+        "major": false,
+        "message": "SURVIVAL: Reserve below safety threshold; development restrained",
+        "participants": [],
+        "project_id": "",
+        "related_entities": [],
+        "seconds": 5.0,
+        "severity": "",
+        "site_id": "",
+        "society_id": "clockwork_alpha",
+        "state": "",
+        "story_key": "society:clockwork_alpha",
+        "subject_id": "clockwork_alpha",
+        "subject_type": "society"
+      }
+    },
+    "governor:STABLE": {
+      "artifact": "verification/poc55/regression/innovation-event-history/clockwork-captured.json",
+      "event": {
+        "civilization_id": "clockwork",
+        "conflict_id": "",
+        "day": 0.00833333333333333,
+        "evidence": {
+          "days": 0.00833333333333333,
+          "drinks": 0,
+          "economy": {
+            "food": {
+              "available": 20.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "mechanical_parts": {
+              "available": 0.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "metal": {
+              "available": 0.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "water": {
+              "available": 30.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "wood": {
+              "available": 0.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            }
+          },
+          "food_days": 2.0,
+          "meals": 0,
+          "population": 5,
+          "resting": 0,
+          "rests": 0,
+          "shelter": 0,
+          "urgent": 0,
+          "water_days": 2.0
+        },
+        "focus": "(0.0, 0.0, 0.0)",
+        "focus_valid": false,
+        "id": 2,
+        "kind": "governor",
+        "major": false,
+        "message": "STABLE: Reserves recovered; assess shelter and finite carrying capacity",
+        "participants": [],
+        "project_id": "",
+        "related_entities": [],
+        "seconds": 5.0,
+        "severity": "",
+        "site_id": "",
+        "society_id": "clockwork_alpha",
+        "state": "",
+        "story_key": "clockwork_alpha:governor",
+        "subject_id": "clockwork_alpha",
+        "subject_type": "society"
+      }
+    },
+    "salvage_authorized": {
+      "artifact": "verification/poc55/regression/innovation-event-history/clockwork-captured.json",
+      "event": {
+        "civilization_id": "clockwork",
+        "conflict_id": "",
+        "day": 0.0166666666666666,
+        "evidence": {
+          "rejections": {
+            "desk": "resource source support"
+          },
+          "score": 1177.40070495605,
+          "shortage": {
+            "metal": 0.0,
+            "wood": 4.0
+          }
+        },
+        "focus": "(91.0, 0.0, -63.0)",
+        "focus_valid": true,
+        "id": 6,
+        "kind": "salvage_authorized",
+        "major": true,
+        "message": "Safe salvage authorized: bookcase",
+        "participants": [],
+        "project_id": "",
+        "related_entities": [],
+        "seconds": 9.99999999999998,
+        "severity": "",
+        "site_id": "",
+        "society_id": "clockwork_alpha",
+        "state": "",
+        "story_key": "clockwork_alpha:salvage:bookcase",
+        "subject_id": "clockwork_alpha",
+        "subject_type": "society"
+      }
+    },
+    "first_salvage": {
+      "artifact": "verification/poc55/regression/innovation-event-history/clockwork-captured.json",
+      "event": {
+        "civilization_id": "clockwork",
+        "conflict_id": "",
+        "day": 0.0781666666666673,
+        "evidence": {
+          "object": "bookcase",
+          "yields": {
+            "metal": 2.0
+          }
+        },
+        "focus": "(74.78, 0.0, -63.0)",
+        "focus_valid": true,
+        "id": 9,
+        "kind": "first_salvage",
+        "major": false,
+        "message": "First material recovered",
+        "participants": [],
+        "project_id": "",
+        "related_entities": [],
+        "seconds": 46.9000000000004,
+        "severity": "",
+        "site_id": "",
+        "society_id": "clockwork_alpha",
+        "state": "",
+        "story_key": "clockwork_alpha:first_salvage",
+        "subject_id": "clockwork_alpha",
+        "subject_type": "society"
+      }
+    },
+    "source_exhausted": {
+      "artifact": "verification/poc55/regression/innovation-event-history/clockwork-captured.json",
+      "event": {
+        "civilization_id": "clockwork",
+        "conflict_id": "",
+        "day": 2.18333333333317,
+        "evidence": {
+          "extracted": {
+            "water": 60.0
+          },
+          "initial": {
+            "water": 60.0
+          },
+          "position": "(-24.0, 0.0, 20.0)",
+          "region": "FLOOR",
+          "remaining": {
+            "water": 0.0
+          },
+          "reservations": {
+            "clockwork_alpha": {
+              "water": 0.0
+            }
+          },
+          "reserved": {
+            "water": 0.0
+          },
+          "work": 2.0
+        },
+        "focus": "(-24.0, 0.0, 20.0)",
+        "focus_valid": true,
+        "id": 42,
+        "kind": "source_exhausted",
+        "major": true,
+        "message": "Finite source exhausted: spilled_water / water",
+        "participants": [],
+        "project_id": "",
+        "related_entities": [],
+        "seconds": 1309.9999999999,
+        "severity": "",
+        "site_id": "",
+        "society_id": "clockwork_alpha",
+        "state": "",
+        "story_key": "clockwork_alpha:exhausted:spilled_water:water",
+        "subject_id": "clockwork_alpha",
+        "subject_type": "society"
+      }
+    },
+    "object_depleted": {
+      "artifact": "verification/poc55/regression/innovation-event-history/clockwork-captured.json",
+      "event": {
+        "civilization_id": "clockwork",
+        "conflict_id": "",
+        "day": 0.173333333333331,
+        "evidence": {
+          "authorized": true,
+          "progress": 0.0,
+          "stage": 4,
+          "stages": [
+            {
+              "name": "STRIPPED",
+              "work": 8.0,
+              "yields": {
+                "metal": 2.0
+              }
+            },
+            {
+              "name": "PARTIAL",
+              "work": 12.0,
+              "yields": {
+                "metal": 2.0,
+                "wood": 16.0
+              }
+            },
+            {
+              "name": "FRAME",
+              "work": 12.0,
+              "yields": {
+                "wood": 12.0
+              }
+            },
+            {
+              "name": "DEPLETED",
+              "work": 10.0,
+              "yields": {
+                "wood": 14.0
+              }
+            }
+          ],
+          "state": "DEPLETED",
+          "work": 42.0000000000003,
+          "yielded": {
+            "metal": 4.0,
+            "wood": 42.0
+          }
+        },
+        "focus": "(91.0, 0.0, -63.0)",
+        "focus_valid": true,
+        "id": 12,
+        "kind": "object_depleted",
+        "major": false,
+        "message": "Object depleted: bookcase",
+        "participants": [],
+        "project_id": "",
+        "related_entities": [],
+        "seconds": 103.999999999998,
+        "severity": "",
+        "site_id": "",
+        "society_id": "clockwork_alpha",
+        "state": "DEPLETED",
+        "story_key": "clockwork_alpha:depleted:bookcase",
+        "subject_id": "clockwork_alpha",
+        "subject_type": "society"
+      }
+    },
+    "traversal_started": {
+      "artifact": "verification/poc55/regression/poc47/repeat-01.json",
+      "event": {
+        "civilization_id": "clockwork",
+        "conflict_id": "",
+        "day": 2.24166666666645,
+        "evidence": {
+          "active_stage": "locked",
+          "cable_deployed": false,
+          "completed_stages": 0,
+          "created": true,
+          "delivered": {
+            "mechanical_parts": 0,
+            "metal": 0,
+            "wood": 0
+          },
+          "floor_target_connected": false,
+          "picked_up": {
+            "mechanical_parts": 0,
+            "metal": 0,
+            "wood": 0
+          },
+          "progress_percent": 0.0,
+          "required": {
+            "mechanical_parts": 0,
+            "metal": 4,
+            "wood": 4
+          },
+          "site": "(2.0, 0.0, -52.0)",
+          "stage_gates": [],
+          "stage_progress": 0.0,
+          "state": "WAITING_FOR_MATERIALS",
+          "stockpile": {
+            "mechanical_parts": 0,
+            "metal": 1.0,
+            "wood": 21.0
+          },
+          "traversal": {}
+        },
+        "focus": "(2.0, 0.0, -52.0)",
+        "focus_valid": true,
+        "id": 33,
+        "kind": "traversal_started",
+        "major": false,
+        "message": "Traversal project started",
+        "participants": [],
+        "project_id": "",
+        "related_entities": [],
+        "seconds": 1344.99999999987,
+        "severity": "",
+        "site_id": "",
+        "society_id": "clockwork_alpha",
+        "state": "WAITING_FOR_MATERIALS",
+        "story_key": "society:clockwork_alpha",
+        "subject_id": "clockwork_alpha",
+        "subject_type": "society"
+      }
+    },
+    "traversal_complete": {
+      "artifact": "verification/poc55/regression/poc47/repeat-01.json",
+      "event": {
+        "civilization_id": "clockwork",
+        "conflict_id": "",
+        "day": 2.4833333333329,
+        "evidence": {
+          "active_stage": "complete",
+          "cable_deployed": true,
+          "completed_stages": 3,
+          "created": true,
+          "delivered": {
+            "mechanical_parts": 0,
+            "metal": 4,
+            "wood": 4
+          },
+          "floor_target_connected": true,
+          "picked_up": {
+            "mechanical_parts": 0,
+            "metal": 4,
+            "wood": 4
+          },
+          "progress_percent": 100.0,
+          "required": {
+            "mechanical_parts": 0,
+            "metal": 4,
+            "wood": 4
+          },
+          "site": "(2.0, 0.0, -52.0)",
+          "stage_gates": [
+            {
+              "mechanical_parts": 0,
+              "metal": 1,
+              "wood": 2
+            },
+            {
+              "mechanical_parts": 0,
+              "metal": 3,
+              "wood": 4
+            },
+            {
+              "mechanical_parts": 0,
+              "metal": 4,
+              "wood": 4
+            }
+          ],
+          "stage_progress": 0.0,
+          "state": "CABLE_DEPLOYED",
+          "stockpile": {
+            "mechanical_parts": 0,
+            "metal": 1.0,
+            "wood": 25.0
+          },
+          "traversal": {}
+        },
+        "focus": "(2.0, 0.0, -52.0)",
+        "focus_valid": true,
+        "id": 39,
+        "kind": "traversal_complete",
+        "major": true,
+        "message": "Traversal complete",
+        "participants": [],
+        "project_id": "",
+        "related_entities": [],
+        "seconds": 1489.99999999974,
+        "severity": "",
+        "site_id": "",
+        "society_id": "clockwork_alpha",
+        "state": "CABLE_DEPLOYED",
+        "story_key": "society:clockwork_alpha",
+        "subject_id": "clockwork_alpha",
+        "subject_type": "society"
+      }
+    },
+    "territory_reached": {
+      "artifact": "verification/poc55/regression/innovation-event-history/clockwork-captured.json",
+      "event": {
+        "civilization_id": "clockwork",
+        "conflict_id": "",
+        "day": 2.28483333333308,
+        "evidence": {
+          "source": "water_cup"
+        },
+        "focus": "(-58.0, 30.0, -50.05)",
+        "focus_valid": true,
+        "id": 43,
+        "kind": "territory_reached",
+        "major": false,
+        "message": "Elevated resources reached",
+        "participants": [],
+        "project_id": "",
+        "related_entities": [],
+        "seconds": 1370.89999999985,
+        "severity": "",
+        "site_id": "",
+        "society_id": "clockwork_alpha",
+        "state": "",
+        "story_key": "clockwork_alpha:territory_reached",
+        "subject_id": "clockwork_alpha",
+        "subject_type": "society"
+      }
+    },
+    "development_started": {
+      "artifact": "verification/poc55/regression/innovation-event-history/clockwork-captured.json",
+      "event": {
+        "civilization_id": "clockwork",
+        "conflict_id": "",
+        "day": 0.00833333333333333,
+        "evidence": {
+          "completed": -1.0,
+          "created": 5.0,
+          "delivered": {
+            "metal": 0.0,
+            "wood": 0.0
+          },
+          "delivery_distance": 0.0,
+          "effect_applied": false,
+          "id": "clockwork_alpha_development_001",
+          "kind": "shelter",
+          "required": {
+            "metal": 0,
+            "wood": 4
+          },
+          "required_work": 60.0,
+          "site": "(2.0, 0.0, 36.0)",
+          "stage": "FOUNDATION",
+          "state": "PLANNED",
+          "target": "(2.0, 0.0, 45.0)",
+          "work": 0.0,
+          "work_by_citizen": {}
+        },
+        "focus": "(2.0, 0.0, 36.0)",
+        "focus_valid": true,
+        "id": 3,
+        "kind": "development_started",
+        "major": false,
+        "message": "Shelter project clockwork_alpha_development_001",
+        "participants": [],
+        "project_id": "clockwork_alpha_development_001",
+        "related_entities": [],
+        "seconds": 5.0,
+        "severity": "",
+        "site_id": "",
+        "society_id": "clockwork_alpha",
+        "state": "PLANNED",
+        "story_key": "project:clockwork_alpha:clockwork_alpha_development_001",
+        "subject_id": "clockwork_alpha_development_001",
+        "subject_type": "project"
+      }
+    },
+    "structure_complete": {
+      "artifact": "verification/poc55/regression/innovation-event-history/clockwork-captured.json",
+      "event": {
+        "civilization_id": "clockwork",
+        "conflict_id": "",
+        "day": 0.24216666666666,
+        "evidence": {
+          "completed": 145.299999999996,
+          "created": 5.0,
+          "delivered": {
+            "metal": 0.0,
+            "wood": 4.0
+          },
+          "delivery_distance": 31.3136665582647,
+          "effect_applied": true,
+          "id": "clockwork_alpha_development_001",
+          "kind": "shelter",
+          "required": {
+            "metal": 0,
+            "wood": 4
+          },
+          "required_work": 60.0,
+          "site": "(2.0, 0.0, 36.0)",
+          "stage": "COMPLETE",
+          "state": "COMPLETE",
+          "target": "(2.0, 0.0, 45.0)",
+          "work": 60.0000000000007,
+          "work_by_citizen": {
+            "2": 12.1,
+            "4": 47.9000000000006
+          }
+        },
+        "focus": "(2.0, 0.0, 36.0)",
+        "focus_valid": true,
+        "id": 15,
+        "kind": "structure_complete",
+        "major": true,
+        "message": "Shelter complete: clockwork_alpha_development_001",
+        "participants": [],
+        "project_id": "clockwork_alpha_development_001",
+        "related_entities": [],
+        "seconds": 145.299999999996,
+        "severity": "",
+        "site_id": "",
+        "society_id": "clockwork_alpha",
+        "state": "COMPLETE",
+        "story_key": "project:clockwork_alpha:clockwork_alpha_development_001",
+        "subject_id": "clockwork_alpha_development_001",
+        "subject_type": "project"
+      }
+    },
+    "shelter_increased": {
+      "artifact": "verification/poc55/regression/innovation-event-history/clockwork-captured.json",
+      "event": {
+        "civilization_id": "clockwork",
+        "conflict_id": "",
+        "day": 0.24216666666666,
+        "evidence": {
+          "project": "clockwork_alpha_development_001",
+          "shelter": 5
+        },
+        "focus": "(2.0, 0.0, 36.0)",
+        "focus_valid": true,
+        "id": 14,
+        "kind": "shelter_increased",
+        "major": false,
+        "message": "Shelter capacity increased to 5",
+        "participants": [],
+        "project_id": "clockwork_alpha_development_001",
+        "related_entities": [],
+        "seconds": 145.299999999996,
+        "severity": "",
+        "site_id": "",
+        "society_id": "clockwork_alpha",
+        "state": "",
+        "story_key": "project:clockwork_alpha:clockwork_alpha_development_001",
+        "subject_id": "clockwork_alpha_development_001",
+        "subject_type": "project"
+      }
+    },
+    "cohort_joined": {
+      "artifact": "verification/poc55/regression/innovation-event-history/clockwork-captured.json",
+      "event": {
+        "civilization_id": "clockwork",
+        "conflict_id": "",
+        "day": 1.57500000000024,
+        "evidence": {
+          "after": 6,
+          "before": 5,
+          "centroid": "(2.0, 0.0, 64.0)",
+          "food_days_after": 3.08333333333333,
+          "food_days_before": 3.7,
+          "positions": [
+            "(2.0, 0.0, 64.0)"
+          ],
+          "seconds": 945.000000000146,
+          "shelter": 15,
+          "stable_seconds": 300.000000000068,
+          "water_days_after": 2.5,
+          "water_days_before": 3.0
+        },
+        "focus": "(2.0, 0.0, 64.0)",
+        "focus_valid": true,
+        "id": 41,
+        "kind": "cohort_joined",
+        "major": true,
+        "message": "New cohort joined: 6 real citizens",
+        "participants": [],
+        "project_id": "",
+        "related_entities": [],
+        "seconds": 945.000000000146,
+        "severity": "",
+        "site_id": "",
+        "society_id": "clockwork_alpha",
+        "state": "",
+        "story_key": "clockwork_alpha:cohort:1",
+        "subject_id": "clockwork_alpha",
+        "subject_type": "society"
+      }
+    },
+    "research_started": {
+      "artifact": "verification/poc55/regression/innovation-event-history/clockwork-captured.json",
+      "event": {
+        "civilization_id": "clockwork",
+        "conflict_id": "",
+        "day": 0.641833333333365,
+        "evidence": {
+          "completed": -1.0,
+          "id": "grapple_engineering",
+          "name": "Grapple Engineering",
+          "required_work": 100.0,
+          "started": 385.100000000019,
+          "state": "RESEARCHING",
+          "target": "(-8.0, 0.0, 44.0)",
+          "work": 0.0,
+          "work_by_citizen": {}
+        },
+        "focus": "(-8.0, 0.0, 44.0)",
+        "focus_valid": true,
+        "id": 29,
+        "kind": "research_started",
+        "major": false,
+        "message": "Grapple Engineering research started",
+        "participants": [],
+        "project_id": "grapple_engineering",
+        "related_entities": [],
+        "seconds": 385.100000000019,
+        "severity": "",
+        "site_id": "",
+        "society_id": "clockwork_alpha",
+        "state": "RESEARCHING",
+        "story_key": "project:clockwork_alpha:grapple_engineering",
+        "subject_id": "grapple_engineering",
+        "subject_type": "project"
+      }
+    },
+    "technology_complete": {
+      "artifact": "verification/poc55/regression/innovation-event-history/clockwork-captured.json",
+      "event": {
+        "civilization_id": "clockwork",
+        "conflict_id": "",
+        "day": 0.73866666666672,
+        "evidence": {
+          "completed": 443.200000000032,
+          "id": "grapple_engineering",
+          "name": "Grapple Engineering",
+          "required_work": 100.0,
+          "started": 385.100000000019,
+          "state": "COMPLETE",
+          "target": "(-8.0, 0.0, 44.0)",
+          "work": 99.9999999999986,
+          "work_by_citizen": {
+            "0": 53.0000000000005,
+            "3": 47.0000000000004
+          }
+        },
+        "focus": "(-8.0, 0.0, 44.0)",
+        "focus_valid": true,
+        "id": 30,
+        "kind": "technology_complete",
+        "major": true,
+        "message": "Grapple Engineering completed",
+        "participants": [],
+        "project_id": "grapple_engineering",
+        "related_entities": [],
+        "seconds": 443.200000000032,
+        "severity": "",
+        "site_id": "",
+        "society_id": "clockwork_alpha",
+        "state": "COMPLETE",
+        "story_key": "project:clockwork_alpha:grapple_engineering",
+        "subject_id": "grapple_engineering",
+        "subject_type": "project"
+      }
+    },
+    "solution_started": {
+      "artifact": "verification/poc55/regression/innovation-event-history/clockwork-captured.json",
+      "event": {
+        "civilization_id": "clockwork",
+        "conflict_id": "",
+        "day": 0.738833333333387,
+        "evidence": {
+          "region": "STUDY_SURFACE",
+          "solution_id": "grapple_route"
+        },
+        "focus": "(2.0, 0.0, -52.0)",
+        "focus_valid": true,
+        "id": 31,
+        "kind": "solution_started",
+        "major": false,
+        "message": "Building Grapple Route",
+        "participants": [],
+        "project_id": "clockwork_alpha_innovation_001",
+        "related_entities": [],
+        "seconds": 443.300000000032,
+        "severity": "",
+        "site_id": "",
+        "society_id": "clockwork_alpha",
+        "state": "",
+        "story_key": "project:clockwork_alpha:clockwork_alpha_innovation_001",
+        "subject_id": "clockwork_alpha_innovation_001",
+        "subject_type": "project"
+      }
+    },
+    "solution_complete": {
+      "artifact": "verification/poc55/regression/innovation-event-history/clockwork-captured.json",
+      "event": {
+        "civilization_id": "clockwork",
+        "conflict_id": "",
+        "day": 0.882000000000086,
+        "evidence": {
+          "region": "STUDY_SURFACE",
+          "solution_id": "grapple_route"
+        },
+        "focus": "(2.0, 0.0, -52.0)",
+        "focus_valid": true,
+        "id": 32,
+        "kind": "solution_complete",
+        "major": true,
+        "message": "Grapple Route deployed",
+        "participants": [],
+        "project_id": "clockwork_alpha_innovation_001",
+        "related_entities": [],
+        "seconds": 529.200000000052,
+        "severity": "",
+        "site_id": "",
+        "society_id": "clockwork_alpha",
+        "state": "",
+        "story_key": "project:clockwork_alpha:clockwork_alpha_innovation_001",
+        "subject_id": "clockwork_alpha_innovation_001",
+        "subject_type": "project"
+      }
+    },
+    "growth_paused": {
+      "artifact": "verification/poc55/regression/innovation-event-history/clockwork-captured.json",
+      "event": {
+        "civilization_id": "clockwork",
+        "conflict_id": "",
+        "day": 0.00833333333333333,
+        "evidence": {
+          "days": 0.00833333333333333,
+          "drinks": 0,
+          "economy": {
+            "food": {
+              "available": 20.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "mechanical_parts": {
+              "available": 0.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "metal": {
+              "available": 0.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "water": {
+              "available": 30.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "wood": {
+              "available": 0.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            }
+          },
+          "food_days": 2.0,
+          "meals": 0,
+          "population": 5,
+          "resting": 0,
+          "rests": 0,
+          "shelter": 0,
+          "urgent": 0,
+          "water_days": 2.0
+        },
+        "focus": "(0.0, 0.0, 46.0)",
+        "focus_valid": true,
+        "id": 4,
+        "kind": "growth_paused",
+        "major": false,
+        "message": "Settlement infrastructure not yet established",
+        "participants": [],
+        "project_id": "",
+        "related_entities": [],
+        "seconds": 5.0,
+        "severity": "",
+        "site_id": "",
+        "society_id": "clockwork_alpha",
+        "state": "",
+        "story_key": "clockwork_alpha:growth_policy",
+        "subject_id": "clockwork_alpha",
+        "subject_type": "society"
+      }
+    },
+    "governor:MATERIALS": {
+      "artifact": "verification/poc55/regression/innovation-event-history/clockwork-captured.json",
+      "event": {
+        "civilization_id": "clockwork",
+        "conflict_id": "",
+        "day": 0.0166666666666666,
+        "evidence": {
+          "days": 0.0166666666666666,
+          "drinks": 0,
+          "economy": {
+            "food": {
+              "available": 20.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "mechanical_parts": {
+              "available": 0.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "metal": {
+              "available": 0.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "water": {
+              "available": 30.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            },
+            "wood": {
+              "available": 0.0,
+              "consumed": 0.0,
+              "delivered": 0.0,
+              "in_transit": 0.0,
+              "received": 0.0,
+              "reserved": 0.0
+            }
+          },
+          "food_days": 2.0,
+          "meals": 0,
+          "population": 5,
+          "resting": 0,
+          "rests": 0,
+          "shelter": 0,
+          "urgent": 0,
+          "water_days": 2.0
+        },
+        "focus": "(0.0, 0.0, 0.0)",
+        "focus_valid": false,
+        "id": 5,
+        "kind": "governor",
+        "major": false,
+        "message": "MATERIALS: Approved project material shortage: { \"wood\": 4.0, \"metal\": 0.0 }",
+        "participants": [],
+        "project_id": "",
+        "related_entities": [],
+        "seconds": 9.99999999999998,
+        "severity": "",
+        "site_id": "",
+        "society_id": "clockwork_alpha",
+        "state": "",
+        "story_key": "clockwork_alpha:governor",
+        "subject_id": "clockwork_alpha",
+        "subject_type": "society"
+      }
+    },
+    "materials_supplied": {
+      "artifact": "verification/poc55/regression/innovation-event-history/clockwork-captured.json",
+      "event": {
+        "civilization_id": "clockwork",
+        "conflict_id": "",
+        "day": 0.154666666666665,
+        "evidence": {
+          "completed": -1.0,
+          "created": 5.0,
+          "delivered": {
+            "metal": 0.0,
+            "wood": 4.0
+          },
+          "delivery_distance": 31.3136665582647,
+          "effect_applied": false,
+          "id": "clockwork_alpha_development_001",
+          "kind": "shelter",
+          "required": {
+            "metal": 0,
+            "wood": 4
+          },
+          "required_work": 60.0,
+          "site": "(2.0, 0.0, 36.0)",
+          "stage": "FOUNDATION",
+          "state": "SUPPLIED",
+          "target": "(2.0, 0.0, 45.0)",
+          "work": 0.0,
+          "work_by_citizen": {}
+        },
+        "focus": "(2.0, 0.0, 36.0)",
+        "focus_valid": true,
+        "id": 11,
+        "kind": "materials_supplied",
+        "major": false,
+        "message": "Materials supplied: clockwork_alpha_development_001",
+        "participants": [],
+        "project_id": "clockwork_alpha_development_001",
+        "related_entities": [],
+        "seconds": 92.799999999999,
+        "severity": "",
+        "site_id": "",
+        "society_id": "clockwork_alpha",
+        "state": "SUPPLIED",
+        "story_key": "project:clockwork_alpha:clockwork_alpha_development_001",
+        "subject_id": "clockwork_alpha_development_001",
+        "subject_type": "project"
+      }
+    }
+  }
+}
