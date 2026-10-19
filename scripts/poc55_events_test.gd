@@ -11,6 +11,14 @@ func _initialize() -> void:
 	journal.configure_context("a", "verdant")
 	journal.record(1, "development_started", "Build", {"id":"p", "kind":"workshop"}, Vector3.ZERO, "p", {"project_id":"p", "subject_type":"project", "subject_id":"p"})
 	check(Journal.validate(journal.events[0]).is_empty(), "normalized contract valid")
+	var malformed := journal.events[0].duplicate(true)
+	malformed.id = "bad"
+	malformed.seconds = NAN
+	malformed.evidence = "not structured"
+	malformed.society_id = 12
+	malformed.participants = "not identities"
+	malformed.camera_priority = 7
+	check(Journal.validate(malformed).size() >= 6, "malformed schema and misplaced policy rejected")
 	check(journal.events[0].focus_valid and journal.events[0].focus == Vector3.ZERO, "explicit world origin valid")
 	journal.record(2, "unknown_future_event", "Readable future story")
 	check(not journal.events[1].focus_valid, "omitted focus not fabricated")
@@ -19,6 +27,10 @@ func _initialize() -> void:
 	var records: Array[Dictionary] = []
 	Sources._append(records, journal.events, "society:a", "a", "verdant")
 	Sources._append(records, journal.events, "society:b", "b", "clockwork")
+	var detached := records[0].duplicate(true)
+	records[0].evidence["mutated"] = true
+	check(not journal.events[0].evidence.has("mutated"), "source snapshot cannot mutate authoritative history")
+	records[0] = detached
 	presenter.ingest(records)
 	check(presenter.recent.size() == 4, "journal-local IDs never collide")
 	presenter.ingest(records)

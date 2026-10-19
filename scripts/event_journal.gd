@@ -36,6 +36,20 @@ static func validate(event: Dictionary) -> Array[String]:
 	var errors: Array[String] = []
 	for field in ["id", "seconds", "day", "kind", "message", "evidence", "focus"]:
 		if not event.has(field): errors.append("Missing " + field)
+	if event.has("id") and (not event.id is int or int(event.id) < 1): errors.append("Invalid id")
+	for field in ["seconds", "day"]:
+		if event.has(field):
+			if not event[field] is int and not event[field] is float: errors.append("Invalid " + field)
+			elif not is_finite(float(event[field])) or float(event[field]) < 0: errors.append("Invalid " + field)
+	for field in ["kind", "message"]:
+		if event.has(field) and not event[field] is String: errors.append("Invalid " + field)
 	if event.has("focus") and (not event.focus is Vector3 or not event.focus.is_finite()): errors.append("Invalid focus")
+	if event.has("focus_valid") and not event.focus_valid is bool: errors.append("Invalid focus_valid")
 	if event.has("evidence") and not event.evidence is Dictionary: errors.append("Invalid evidence")
+	for field in CONTEXT_FIELDS:
+		if event.has(field) and not event[field] is String: errors.append("Invalid " + field)
+	for field in ["participants", "related_entities"]:
+		if event.has(field) and not event[field] is Array: errors.append("Invalid " + field)
+	for field in ["shot_distance", "camera_priority", "dwell", "ui_color", "camera_mode", "shot_yaw", "shot_tilt", "interrupt_policy"]:
+		if event.has(field): errors.append("Presentation policy forbidden: " + field)
 	return errors
