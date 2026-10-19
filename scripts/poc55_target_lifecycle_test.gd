@@ -14,6 +14,12 @@ func observer(sim: Node) -> Node:
  d.set_process(false)
  d.set_mode(d.OFF)
  return d
+func frame_event(d: Node, event: Dictionary, expected: Vector3, label: String) -> void:
+ var resolved: Dictionary = d.focus_event(event)
+ check(resolved.get("valid",false),label + " resolves")
+ check(d.mode == d.OFF,label + " gives ownership to OFF")
+ for frame in 360: d.rig._process(1.0/60.0)
+ check(d.rig.target.distance_to(expected) < 0.05,label + " physically frames existing rig")
 func run() -> void:
  OS.set_environment("ROOMSCALE_ROOM","room_conflict_c")
  OS.set_environment("ROOMSCALE_CONFLICT","1")
@@ -58,12 +64,18 @@ func run() -> void:
    project_target = Target.make("project",sim.development.active.id,sim.instance_id)
    check(project_d.follow(project_target),"active development accepts FOLLOW")
    project_focus = project_d.resolve_target(project_target).focus
+   frame_event(project_d,{"subject_type":"project","subject_id":project_target.id,"society_id":sim.instance_id},project_focus,"active project click")
+   check(project_d.follow(project_target),"project FOLLOW resumes explicitly after click")
    timeline.append({"tick":world.tick,"state":"project_follow","id":project_target.id})
   if conflict_target.is_empty() and world.combat.phase in ["MARCH","FIGHT"]:
    conflict_target = Target.make("conflict","site:"+world.combat.site_id,"","CONFLICT_WIDE")
    check(conflict_d.follow(conflict_target),"moving conflict accepts FOLLOW")
    check(site_d.follow(Target.make("site",world.combat.site_id)),"active strategic site accepts FOLLOW")
    conflict_first = conflict_d.resolve_target(conflict_target).focus
+   frame_event(conflict_d,{"conflict_id":conflict_target.id},conflict_first,"conflict click")
+   check(conflict_d.follow(conflict_target),"conflict FOLLOW resumes explicitly after click")
+   frame_event(site_d,{"site_id":world.combat.site_id},world.territory.sites[world.combat.site_id].position,"active site click")
+   check(site_d.follow(Target.make("site",world.combat.site_id)),"site FOLLOW resumes explicitly after click")
    timeline.append({"tick":world.tick,"state":"conflict_follow","id":conflict_target.id})
   for d in [citizen_d,project_d,conflict_d,site_d]: d.advance(0.01)
   if citizen_d.mode == citizen_d.FOLLOW:
@@ -91,6 +103,7 @@ func run() -> void:
  check(project_ended and conflict_ended and site_ended,"all noncitizen target lifecycles exercised")
  var historical: Dictionary = project_d.resolve_event({"subject_type":"project","subject_id":project_target.get("id","missing"),"society_id":sim.instance_id,"focus":project_focus,"focus_valid":true})
  check(historical.get("valid",false) and historical.target.is_empty() and historical.focus == project_focus,"completed project retains historical navigation")
+ frame_event(project_d,{"subject_type":"project","subject_id":project_target.id,"society_id":sim.instance_id,"focus":project_focus,"focus_valid":true},project_focus,"historical project click")
  check(project_d.resolve_event({"subject_type":"citizen","subject_id":999999,"focus_valid":false}).is_empty(),"absent subject never fabricates focus")
  check(not project_d.valid_focus(Vector3(NAN,0,0)),"nonfinite focus rejected")
  check(not project_d.valid_focus(Vector3(999999,0,999999)),"out of room focus rejected")
@@ -101,5 +114,6 @@ func run() -> void:
  for d in [citizen_d,project_d,conflict_d,site_d]: d.free()
  scene.free()
  quit(0 if failures.is_empty() else 1)
+
 
 
