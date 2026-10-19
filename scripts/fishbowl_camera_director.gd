@@ -116,9 +116,16 @@ func follow(target: Dictionary) -> bool:
  return true
 func follow_target(target: Dictionary) -> bool: return follow(target)
 func follow_choices() -> Array[Dictionary]:
- var result: Array[Dictionary] = []
+ var unique: Dictionary = {}
  for candidate in collect_candidates():
-  if candidate.has("target") and _follow_valid(candidate.target): result.append(candidate.target)
+  if not candidate.has("target") or not _follow_valid(candidate.target): continue
+  var target: Dictionary = candidate.target.duplicate(true)
+  var key := String(target.type) + ":" + String(target.get("society_id","")) + ":" + str(target.id)
+  if not unique.has(key) or not String(target.get("display_name","")).is_empty(): unique[key] = target
+ var result: Array[Dictionary] = []
+ for target in unique.values():
+  if String(target.get("display_name","")).is_empty(): target.display_name = String(target.type).capitalize() + " activity"
+  result.append(target)
  return result
 func _distance(framing: String) -> float:
  return float({"ROOM_WIDE":250.0,"SETTLEMENT_WIDE":115.0,"CITIZEN_CLOSE":7.0,"GROUP_MEDIUM":30.0,"CONFLICT_WIDE":70.0,"CONFLICT_DETAIL":25.0}.get(framing,35.0))
@@ -260,5 +267,5 @@ func advance(delta: float) -> void:
  last_focus = focus
  rig.request_spectator_frame(focus,float(current_shot.distance))
 func title_is_current() -> bool:
- return not current_shot.has("target") or not resolve_target(current_shot.target).is_empty()
+ return not current_shot.has("target") or current_shot.target.is_empty() or not resolve_target(current_shot.target).is_empty()
 func shot_subtitle() -> String: return String(current_shot.get("subtitle",""))
