@@ -145,6 +145,22 @@ func run() -> void:
 		check(not hud.event_panel.get_global_rect().intersects(hud.controls_panel.get_global_rect()), "feed controls disjoint at " + str(viewport_size))
 		check(not hud.event_panel.get_global_rect().intersects(hud.project_panel.get_global_rect()), "feed project disjoint at " + str(viewport_size))
 		check(not hud.event_panel.get_global_rect().intersects(hud.title_panel.get_global_rect()), "feed title disjoint at " + str(viewport_size))
+	var cosmetic_nodes: Array[Node] = []
+	for subject in [sim.citizens[0], sim.citizens[1]]:
+		var indicators := preload("res://scripts/combat_presentation.gd").indicators(subject, false)
+		var role := Label3D.new()
+		role.name = "CombatRole"
+		role.text = "Line"
+		indicators.add_child(role)
+		cosmetic_nodes.append(indicators)
+	director.follow(preload("res://scripts/spectator_target.gd").make("citizen", sim.citizens[0].citizen_id, sim.instance_id))
+	hud.refresh_role_labels()
+	check(cosmetic_nodes[0].get_node("CombatRole").visible and not cosmetic_nodes[1].get_node("CombatRole").visible, "normal view shows only followed military role")
+	check(cosmetic_nodes[1].get_node("FactionRing").visible and cosmetic_nodes[1].get_node("HealthFill").visible, "declutter preserves faction and health indicators")
+	hud.set_diagnostics(true)
+	check(cosmetic_nodes[0].get_node("CombatRole").visible and cosmetic_nodes[1].get_node("CombatRole").visible, "diagnostics restores military role labels")
+	hud.set_diagnostics(false)
+	for cosmetic in cosmetic_nodes: cosmetic.free()
 	director.set_mode(0)
 	for automatic_mode in [2, 3]:
 		var baseline: Array = []

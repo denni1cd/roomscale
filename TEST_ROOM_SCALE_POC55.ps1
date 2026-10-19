@@ -18,7 +18,7 @@ function Invoke-Poc55([string]$Name, [string]$Script, [hashtable]$Environment, [
     Write-Output "POC55_VERIFIED $Name"
 }
 if ($Mode -in @('Focused','All')) {
-    foreach ($script in @('poc55_events_test','poc55_director_test','poc55_producer_test','poc55_ui_test')) {
+    foreach ($script in @('poc55_events_test','poc55_director_test','poc55_target_lifecycle_test','poc55_producer_test','poc55_ui_test')) {
         Invoke-Poc55 $script $script @{ROOMSCALE_PRODUCER_RESULT=(Join-Path $destination 'producers.json'); ROOMSCALE_VISUAL_DIR=''; ROOMSCALE_CONFLICT=''; ROOMSCALE_ROOM_FILE=''}
     }
 }

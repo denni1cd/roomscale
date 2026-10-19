@@ -148,6 +148,7 @@ func set_diagnostics(active: bool) -> void:
 	diagnostics = active
 	details_button.set_pressed_no_signal(active)
 	details_panel.visible = active
+	refresh_role_labels()
 	wake()
 	refresh()
 
@@ -167,6 +168,7 @@ func advance(real_delta: float) -> void:
 	refresh_age += real_delta
 	refresh_feed()
 	advance_highlight(real_delta)
+	refresh_role_labels()
 	event_panel.visible = not diagnostics
 	var director: Node = simulation.camera_director
 	if director.shots != last_shot:
@@ -189,9 +191,9 @@ func advance(real_delta: float) -> void:
 
 func refresh() -> void:
 	var s := Adapter.status(simulation)
-	status_label.text = "Day %.2f   ·   Population %d/%d   ·   Food %.1fd   ·   Water %.1fd   ·   Wood %.0f   ·   Metal %.0f   ·   %s" % [s.days, s.population, s.shelter, s.food_days, s.water_days, s.wood, s.metal, "Paused" if s.speed == 0 else "%d×" % int(s.speed)]
+	status_label.text = "Day %.2f   ·   Population %d   ·   Shelter %d   ·   Food %.1fd   ·   Water %.1fd   ·   Wood %.0f   ·   Metal %.0f   ·   %s" % [s.days, s.population, s.shelter, s.food_days, s.water_days, s.wood, s.metal, "Paused" if s.speed == 0 else "%d×" % int(s.speed)]
 	if Adapter.is_verdant():
-		status_label.text = "Day %.2f   ·   Population %d/%d   ·   Food %.1fd   ·   Water %.1fd   ·   %s\n%s %.0f   ·   %s %.0f   ·   %s %.0f" % [s.days, s.population, s.shelter, s.food_days, s.water_days, "Paused" if s.speed == 0 else "%d×" % int(s.speed), Adapter.resource_name("wood"), s.wood, Adapter.resource_name("metal"), s.metal, Adapter.resource_name("mechanical_parts"), s.mechanical_parts]
+		status_label.text = "Day %.2f   ·   Population %d   ·   Shelter %d   ·   Food %.1fd   ·   Water %.1fd   ·   %s\n%s %.0f   ·   %s %.0f   ·   %s %.0f" % [s.days, s.population, s.shelter, s.food_days, s.water_days, "Paused" if s.speed == 0 else "%d×" % int(s.speed), Adapter.resource_name("wood"), s.wood, Adapter.resource_name("metal"), s.metal, Adapter.resource_name("mechanical_parts"), s.mechanical_parts]
 	governor_label.text = s.governor
 	var p := Adapter.project(simulation)
 	project_panel.visible = not p.is_empty() and not diagnostics
@@ -317,3 +319,18 @@ func advance_highlight(delta: float) -> void:
 		if bool(resolved.get("valid", false)): highlight.global_position = resolved.focus
 	var pulse := 1.0 + sin(highlight_age * 5.0) * 0.12
 	highlight.scale = Vector3.ONE * pulse
+
+func refresh_role_labels() -> void:
+	# Role names are inspection detail; health and faction markers stay visible.
+	var selected: Node = simulation.scene.get("_selected_citizen")
+	var director: Node = simulation.camera_director
+	var subject_id := -1
+	if director.mode == director.FOLLOW and director.followed.get("type", "") == "citizen": subject_id = int(director.followed.id)
+	elif director.enabled:
+		subject_id = int(director.current_shot.get("citizen", -1))
+		var target: Dictionary = director.current_shot.get("target", {})
+		if target.get("type", "") == "citizen": subject_id = int(target.id)
+	for runtime in preload("res://scripts/spectator_sources.gd").runtimes(simulation):
+		for citizen in runtime.citizens:
+			var role: Node3D = citizen.get_node_or_null("CombatIndicators/CombatRole")
+			if role != null: role.visible = diagnostics or citizen == selected or citizen.citizen_id == subject_id
