@@ -48,6 +48,7 @@ func _initialize() -> void:
  d.followed["invalid"] = true
  d.advance(0.1)
  assert(d.mode == d.OFF)
+ priority_contract()
  assert(random_sequence(55) == random_sequence(55), "Isolated seed reproduces sequence")
  print("POC55_DIRECTOR PASS ", sequence)
  d.free()
@@ -106,3 +107,35 @@ func random_sequence(seed_value: int) -> Array:
  d.free()
  rig.free()
  return result
+func priority_contract() -> void:
+ var d := FixtureDirector.new()
+ var rig := Rig.new()
+ root.add_child(rig)
+ root.add_child(d)
+ d.simulation = rig
+ d.rig = rig
+ var older := candidate("older",2,"event","a")
+ older.seconds = 1.0
+ older.focus = Vector3(30,0,0)
+ var newer := candidate("newer",2,"event","b")
+ newer.seconds = 2.0
+ newer.focus = Vector3(60,0,0)
+ d.fixture = [older,newer]
+ d.set_mode(d.PRIORITY)
+ var rng_before := d.rng.state
+ d.advance(7.9)
+ assert(d.current_shot.is_empty(), "Ordinary stories cannot cut before eight real seconds")
+ d.advance(0.1)
+ assert(d.current_shot.key == "newer", "Newest unseen wins equal priority")
+ assert(d.rng.state == rng_before, "Priority never consumes spectator RNG")
+ d.advance(8)
+ assert(d.current_shot.key == "older", "Seen subject/story is cooled down")
+ var critical := candidate("breaking",3,"event","c")
+ critical.focus = Vector3(90,0,0)
+ d.fixture.append(critical)
+ d.advance(4.9)
+ assert(d.current_shot.key == "older")
+ d.advance(0.1)
+ assert(d.current_shot.key == "breaking", "Critical may preempt only after readable dwell")
+ d.free()
+ rig.free()
