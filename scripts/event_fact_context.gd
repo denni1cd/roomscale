@@ -15,7 +15,10 @@ static func society(sim: Node, facts: Dictionary = {}) -> Dictionary:
 		context.project_id = str(facts.get("project",facts.get("solution_id","")))
 	if facts.has("id") and (facts.has("site") or facts.has("required_work") or facts.has("solution")):
 		context.project_id = str(facts.id)
-	if context.has("project_id"): context.story_key = "project:"+society_id+":"+str(context.project_id)
+	if context.has("project_id"):
+		context.subject_type = "project"
+		context.subject_id = str(context.project_id)
+		context.story_key = "project:"+society_id+":"+str(context.project_id)
 	return context
 
 static func conflict(site_id: String, participants: Array = [], society_id: String = "") -> Dictionary:

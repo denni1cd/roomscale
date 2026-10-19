@@ -194,7 +194,7 @@ func _start_project(candidate: Dictionary, plan: Dictionary) -> void:
 	sim.scene.add_child(root)
 	_visuals[active.id] = root
 	reason = "Building " + String(solution.get("display_name", solution.id))
-	sim.journal.record(sim.seconds, "solution_started", reason, {"solution_id":solution.id, "region":active.region}, active.site, active.id, preload("res://scripts/event_fact_context.gd").society(sim, {"solution_id":solution.id, "region":active.region}))
+	sim.journal.record(sim.seconds, "solution_started", reason, {"solution_id":solution.id, "region":active.region}, active.site, active.id, preload("res://scripts/event_fact_context.gd").society(sim, active))
 	_update_supplied()
 
 func pickup(task: Dictionary) -> bool:
@@ -279,7 +279,7 @@ func build(task: Dictionary, citizen: Node3D, effort: float) -> bool:
 	active.state = "COMPLETE"
 	active.completed = sim.seconds
 	sim.world_simulation.innovation_claims.erase(active.claim_key)
-	sim.journal.record(sim.seconds, "solution_complete", String(active.solution.get("display_name", active.solution.id)) + " deployed", {"solution_id":active.solution.id, "region":active.region}, active.site, active.id+":complete", preload("res://scripts/event_fact_context.gd").society(sim, {"solution_id":active.solution.id, "region":active.region}))
+	sim.journal.record(sim.seconds, "solution_complete", String(active.solution.get("display_name", active.solution.id)) + " deployed", {"solution_id":active.solution.id, "region":active.region}, active.site, active.id+":complete", preload("res://scripts/event_fact_context.gd").society(sim, active))
 	active = {}
 	_cancel_peers("CONSTRUCTION_BUILD", task.id, true)
 	_next = 0.0
