@@ -74,7 +74,7 @@ The final focused and isolation receipts are retained with the branch. Existing 
 
 | ID | Status | Evidence |
 |---|---|---|
-| EC1 | PASS | User-approved contract v1.0 and “go ahead” authorization are preserved in the contract appendix; publication receipt will record the pushed branch and no-merge state. |
+| EC1 | PASS | User-approved contract v1.0 and “go ahead” authorization are preserved in the contract appendix; `FINAL_REVIEW.md` records verified branch publication and no-merge state. |
 | EC2 | PASS | `focused-reviewed/poc55_target_lifecycle_test.log`, `ui.json`, and `docs/SPECTATOR_DIRECTOR.md` cover physical camera ownership, valid identity, live resolution, and manual input. |
 | EC3 | PASS | Event and producer suites plus the world event trace in `EVIDENCE_BUNDLE.zip` verify journal schema and society-local civilization context across existing sources. |
 | EC4 | PASS | Director trace, `cadence.json`, and `isolation-final/isolation-summary.json` verify priority, seeded random sampling, cooldowns and mode isolation. |
@@ -83,4 +83,4 @@ The final focused and isolation receipts are retained with the branch. Existing 
 | EC7 | PASS | `regression/REGRESSION_RESULTS.md`, canonical summary files, and `EVIDENCE_BUNDLE.zip` retain accepted gameplay and determinism results. |
 | EC8 | PASS | Seven final reviewed screenshots in `graphics/` and renderer metadata in `ui.json`. |
 | EC9 | PASS | Milestone-to-commit table in `docs/POC55_IMPLEMENTATION_REPORT.md`, feature branch history, and exact evidence paths. |
-| EC10 | REVIEW | Report, matrix, test wrapper, logs, traces, captures, and docs are prepared. Final push and independent Rules Lawyer acceptance are pending. |
+| EC10 | PASS | `FINAL_REVIEW.md` records independent AC/EC acceptance at the reviewed code SHA; the evidence bundle and hashes are verified on the published branch. |
