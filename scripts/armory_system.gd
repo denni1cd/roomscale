@@ -13,10 +13,20 @@ var blocked := ""
 func configure(runtime: Node) -> void:
 	sim = runtime
 
-func record(kind: String, data: Dictionary) -> void:
+func record(kind: String, data: Dictionary, focus: Variant = null, publish_to_journal: bool = true) -> void:
 	var event := {"tick":sim.world_simulation.tick,"kind":kind,"data":data.duplicate(true)}
 	events.append(event)
-	sim.journal.record(sim.seconds,kind,kind+": "+JSON.stringify(data),data,sim.coordinator.depot_station,kind+":"+str(data.get("id","readiness")))
+	if not publish_to_journal: return
+	var context := preload("res://scripts/event_fact_context.gd").society(sim,data)
+	if kind.begins_with("KIT_"):
+		context.subject_type = "equipment"
+		context.subject_id = str(data.get("id",data.get("project","")))
+		context.story_key = "equipment:"+sim.instance_id+":"+str(context.subject_id)
+	if kind == "CITIZEN_MUSTERING":
+		context.subject_type = "citizen"
+		context.subject_id = str(data.get("id",""))
+	var event_focus: Variant = focus if focus is Vector3 else sim.coordinator.depot_station
+	sim.journal.record(sim.seconds,kind,kind+": "+JSON.stringify(data),data,event_focus,kind+":"+str(data.get("id","readiness")),context)
 
 func active_count() -> int:
 	return projects.values().filter(func(p: Dictionary) -> bool: return p.state == "BUILDING").size()
@@ -141,7 +151,7 @@ func lose(citizen: Node3D) -> void:
 	var id: String = citizen.combat_kit
 	if not kits.has(id) or kits[id].state != "ISSUED" or kits[id].citizen_id != citizen.citizen_id: return
 	kits[id].state = "LOST"
-	record("KIT_LOST",kits[id])
+	record("KIT_LOST",kits[id],citizen.global_position)
 
 func audit() -> Array[String]:
 	var errors: Array[String] = []

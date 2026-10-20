@@ -138,7 +138,7 @@ func start(controller: Node, objective: String, war_policy: Dictionary = {}) -> 
 			# Distinct legal station points keep the tiny force readable.
 			if not citizen.assign_combat_duty("MARCH", planned_targets[citizen.citizen_id]): return false
 			next_attack[citizen.citizen_id] = 0.0
-		world.journal.record(world.seconds, "FORCE_COMMITTED", id + " committed citizens", {"instance_id":id,"size":initial_sizes[id],"intensity":side_policies[id].get("intensity_name", conflict_intensity),"cause":side_policies[id].get("cause", conflict_cause),"objective":side_policies[id].get("objective", conflict_objective)}, target, id + ":force")
+		world.journal.record(world.seconds, "FORCE_COMMITTED", id + " committed citizens", {"instance_id":id,"size":initial_sizes[id],"intensity":side_policies[id].get("intensity_name", conflict_intensity),"cause":side_policies[id].get("cause", conflict_cause),"objective":side_policies[id].get("objective", conflict_objective)}, target, id + ":force", preload("res://scripts/event_fact_context.gd").conflict(site_id, forces.keys(), id))
 	phase = "MARCH"
 	battle_start_tick = world.tick
 	return true
@@ -240,14 +240,18 @@ func update() -> void:
 	if phase == "DORMANT": return
 	for id in retreated_sides:
 		_return_arrivals(String(id))
+	for side in forces:
+		if int(returned.get(side,0)) > 0 and living(String(side)).all(func(c: Node3D) -> bool: return c.combat_duty.is_empty()):
+			story_event("DEMOBILIZATION_COMPLETE", "Surviving force returned", String(side))
 	var target: Vector3 = world.territory.sites[site_id].position
 	for id in forces:
 		if not arrivals[id] and living(id).all(func(c: Node3D) -> bool: return c.combat_arrived):
 			arrivals[id] = true
-			world.journal.record(world.seconds, "FORCE_ARRIVED", id + " physically arrived", {"instance_id":id}, target, id + ":arrived")
+			world.journal.record(world.seconds, "FORCE_ARRIVED", id + " physically arrived", {"instance_id":id}, target, id + ":arrived", preload("res://scripts/event_fact_context.gd").conflict(site_id, forces.keys(), id))
 	if phase == "MARCH":
 		if not arrivals.values().all(func(value: bool) -> bool: return value): return
 		phase = "FIGHT"
+		story_event("BATTLE_BEGINS", "Forces begin engagement")
 	if phase == "FIGHT":
 		var has_rivals := false
 		for a in forces:
@@ -281,7 +285,7 @@ func update() -> void:
 			if attack_history.size() < 256: attack_history.append(event)
 			if victim.suffer_combat_damage(amount):
 				casualties[victim.civilization_id] += 1
-				world.journal.record(world.seconds, "COMBAT_CASUALTY", "Citizen %d fell" % victim.citizen_id, {"citizen_id":victim.citizen_id,"instance_id":victim.civilization_id}, victim.global_position, "casualty:%d" % victim.citizen_id)
+				world.journal.record(world.seconds, "COMBAT_CASUALTY", "Citizen %d fell" % victim.citizen_id, {"citizen_id":victim.citizen_id,"instance_id":victim.civilization_id}, victim.global_position, "casualty:%d" % victim.citizen_id, casualty_context(victim))
 			if evaluate_morale(): return
 	elif phase in ["RETREAT", "SECURE", "COMPLETE", "STAND_DOWN"]:
 		for id in forces:
@@ -291,6 +295,8 @@ func update() -> void:
 					returned[id] = int(returned.get(id, 0)) + 1
 		if phase == "STAND_DOWN":
 			if forces.keys().all(func(id: Variant) -> bool: return living(String(id)).all(func(c: Node3D) -> bool: return c.combat_duty.is_empty())):
+				for side in forces:
+					if int(returned.get(side,0)) > 0: story_event("DEMOBILIZATION_COMPLETE", "Surviving force returned", String(side))
 				phase = "DORMANT"
 			return
 		if phase == "RETREAT" and _rivals_withdrawn(target): phase = "SECURE"
@@ -298,26 +304,29 @@ func update() -> void:
 			if world.territory.hold(site_id, winner, world.seconds, world.STEP):
 				site_capture_tick = world.tick
 				phase = "COMPLETE"
+				story_event("DEMOBILIZATION_STARTED", "Securing force begins returning", winner)
 				for citizen in living(winner): citizen.assign_combat_duty("RETREAT", world.runtime_for(winner).coordinator.depot_station)
 		elif phase == "SECURE":
 			world.territory.sites[site_id].hold_progress = 0.0
 
 func retreat(id: String) -> void:
 	if _departed(id) or living(id).is_empty() or not bool(side_policies[id].get("allow_retreat", true)): return
+	story_event("MORALE_BREAK", "Force morale broke", id)
+	story_event("DEMOBILIZATION_STARTED", "Survivors begin returning", id)
 	retreat_tick = world.tick
 	retreating_side = id
 	retreated_sides[id] = world.tick
 	_resolve_departure(true)
 	cooldown_until[id] = world.seconds + 600.0
 	for citizen in living(id): citizen.assign_combat_duty("RETREAT", world.runtime_for(id).coordinator.depot_station)
-	world.journal.record(world.seconds, "RETREAT", id + " morale broke; returning to rally", {"instance_id":id,"morale":morale.duplicate(),"intensity":side_policies[id].get("intensity_name", conflict_intensity),"survivors":living(id).size()}, world.territory.sites[site_id].position, id + ":retreat")
+	world.journal.record(world.seconds, "RETREAT", id + " morale broke; returning to rally", {"instance_id":id,"morale":morale.duplicate(),"intensity":side_policies[id].get("intensity_name", conflict_intensity),"survivors":living(id).size()}, world.territory.sites[site_id].position, id + ":retreat", preload("res://scripts/event_fact_context.gd").conflict(site_id, forces.keys(), id))
 
 func eliminate(id: String) -> void:
 	if not forces.has(id) or _departed(id) or not living(id).is_empty(): return
 	eliminated_sides[id] = world.tick
 	cooldown_until[id] = world.seconds + 600.0
 	_resolve_departure(false)
-	world.journal.record(world.seconds, "FORCE_ELIMINATED", id + " committed force eliminated", {"instance_id":id,"casualties":casualties[id],"initial_committed_force":initial_sizes[id],"intensity":side_policies[id].get("intensity_name", conflict_intensity),"cause":side_policies[id].get("cause", conflict_cause),"objective":side_policies[id].get("objective", conflict_objective),"tick":world.tick}, world.territory.sites[site_id].position, id + ":eliminated")
+	world.journal.record(world.seconds, "FORCE_ELIMINATED", id + " committed force eliminated", {"instance_id":id,"casualties":casualties[id],"initial_committed_force":initial_sizes[id],"intensity":side_policies[id].get("intensity_name", conflict_intensity),"cause":side_policies[id].get("cause", conflict_cause),"objective":side_policies[id].get("objective", conflict_objective),"tick":world.tick}, world.territory.sites[site_id].position, id + ":eliminated", preload("res://scripts/event_fact_context.gd").conflict(site_id, forces.keys(), id))
 
 func _departed(id: String) -> bool:
 	return retreated_sides.has(id) or eliminated_sides.has(id)
@@ -352,8 +361,9 @@ func stand_down(reason: String) -> void:
 	retreating_side = ""
 	phase = "STAND_DOWN"
 	for id in forces:
+		story_event("DEMOBILIZATION_STARTED", "Force stands down and returns", String(id))
 		for citizen in living(id): citizen.assign_combat_duty("RETREAT", world.runtime_for(String(id)).coordinator.depot_station)
-	world.journal.record(world.seconds, "CONFLICT_STOOD_DOWN", "Conflict ended because its cause no longer justified war", {"reason":reason,"intensity":conflict_intensity,"cause":conflict_cause}, world.territory.sites[site_id].position, site_id + ":standdown:%d" % world.tick)
+	world.journal.record(world.seconds, "CONFLICT_STOOD_DOWN", "Conflict ended because its cause no longer justified war", {"reason":reason,"intensity":conflict_intensity,"cause":conflict_cause}, world.territory.sites[site_id].position, site_id + ":standdown:%d" % world.tick, preload("res://scripts/event_fact_context.gd").conflict(site_id, forces.keys(), ""))
 
 func evaluate_morale() -> bool:
 	var losing := ""
@@ -413,3 +423,12 @@ static func _valid_policy(value: Dictionary) -> bool:
 	if int(value.get("max_force",6)) < int(value.get("min_force",2)): return false
 	if value.has("allow_retreat") and not value.allow_retreat is bool: return false
 	return float(value.get("retreat_threshold",0.7)) >= -1 and float(value.get("retreat_threshold",0.7)) <= 1
+
+func casualty_context(victim: Node3D) -> Dictionary:
+	var context := preload("res://scripts/event_fact_context.gd").conflict(site_id, forces.keys(), victim.civilization_id)
+	context.subject_type = "citizen"
+	context.subject_id = str(victim.citizen_id)
+	return context
+
+func story_event(kind: String, message: String, society_id: String = "") -> void:
+	world.journal.record(world.seconds, kind, message, {"instance_id":society_id,"phase":phase}, world.territory.sites[site_id].position, site_id+":"+society_id+":"+kind+":"+str(battle_start_tick), preload("res://scripts/event_fact_context.gd").conflict(site_id,forces.keys(),society_id))

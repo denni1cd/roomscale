@@ -13,7 +13,7 @@ static func update(citizen: Node3D, seconds: float, definition: Dictionary = Cat
 		citizen.preparation_anchor = citizen.global_position
 		citizen.preparation_started = seconds
 	else: citizen.prepared = seconds-citizen.preparation_started+0.000001 >= float(definition.seconds)
-	if previous != citizen.prepared: sim.armory.record("ABILITY_STATE",{"id":citizen.citizen_id,"capability":"PREPARED_FIRE","prepared":citizen.prepared})
+	if previous != citizen.prepared: sim.armory.record("ABILITY_STATE",{"id":citizen.citizen_id,"capability":"PREPARED_FIRE","prepared":citizen.prepared},null,false)
 
 static func interval(citizen: Node3D, definition: Dictionary = Catalog.CAPABILITIES.PREPARED_FIRE) -> float:
 	return float(citizen.combat_stats.interval) * (float(definition.interval) if citizen.prepared else 1.0)

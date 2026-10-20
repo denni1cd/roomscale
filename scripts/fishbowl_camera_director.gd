@@ -1,147 +1,279 @@
 extends Node
-## Presentation only: real-time shots read journal and current production activity.
+## Read-only presentation selection. StrategyCamera alone owns physical movement.
 const Adapter := preload("res://scripts/fishbowl_narrative_adapter.gd")
+const Sources := preload("res://scripts/spectator_sources.gd")
+const Target := preload("res://scripts/spectator_target.gd")
+const Catalog := preload("res://scripts/spectator_event_catalog.gd")
+enum {OFF, FOLLOW, PRIORITY, RANDOM}
 const MIN_SHOT := 8.0
+const CRITICAL_DWELL := 5.0
 const WIDE_INTERVAL := 40.0
-var enabled := true
+const HISTORY_LIMIT := 128
+var mode := PRIORITY
+var enabled: bool:
+ get: return mode != OFF
+ set(value): set_mode(PRIORITY if value else OFF)
 var simulation: Node
 var rig: Node
 var elapsed := 0.0
 var wide_elapsed := 0.0
+var real_seconds := 0.0
 var event_id := 0
 var shots := 0
 var last_focus := Vector3.ZERO
 var current_shot: Dictionary = {}
-var tracked_citizen := -1
-var tracked_position := Vector3.ZERO
+var followed: Dictionary = {}
+var cooldowns: Dictionary = {}
+var seen: Dictionary = {}
+var society_visits: Dictionary = {}
+var rng := RandomNumberGenerator.new()
 
 func configure(sim: Node) -> void:
-	simulation = sim
-	rig = sim.scene.get_node("CameraRig")
-	enabled = OS.get_environment("ROOMSCALE_MANUAL_CAMERA") != "1"
-	if sim.founder_mode and enabled:
-		var focus := Vector3.ZERO
-		for citizen in sim.citizens: focus += citizen.global_position / sim.citizens.size()
-		current_shot = {"key":"founders", "focus":focus, "distance":22.0, "event":0, "headline":"FOUNDERS ARRIVED", "subtitle":"%d citizens · A new home begins here" % sim.citizens.size()}
-		shots = 1
-		rig.focus_at(focus, 22, 40, 0)
-		rig._camera_transition_active = false
-		rig._apply_transform()
+ simulation = sim
+ rig = sim.scene.get_node("CameraRig")
+ if not rig.manual_camera_input.is_connected(manual_override): rig.manual_camera_input.connect(manual_override)
+ rng.seed = 5505
+ set_mode(OFF if OS.get_environment("ROOMSCALE_MANUAL_CAMERA") == "1" else PRIORITY)
 
+func set_spectator_seed(value: int) -> void: rng.seed = value
+func mode_name() -> String: return ["OFF", "FOLLOW", "PRIORITY", "RANDOM"][mode]
+func set_mode(value: Variant) -> void:
+ var next: int = int(value) if value is int else ["OFF", "FOLLOW", "PRIORITY", "RANDOM"].find(String(value).to_upper())
+ if next < OFF or next > RANDOM: next = OFF
+ if next == FOLLOW and followed.is_empty(): next = OFF
+ mode = next
+ elapsed = 0.0
+ if mode == OFF and is_instance_valid(rig): rig.clear_spectator_frame()
+func manual_override(_action: String = "manual") -> void: set_mode(OFF)
 func _process(delta: float) -> void: advance(delta)
-
+func events() -> Array[Dictionary]: return Sources.events(simulation)
 func valid_focus(focus: Vector3) -> bool:
-	return focus.is_finite() and simulation.coordinator.navigation.room_bounds().has_point(Vector2(focus.x, focus.z))
-
+ return focus.is_finite() and simulation.coordinator.navigation.room_bounds().has_point(Vector2(focus.x, focus.z))
+func _world() -> Node: return simulation.get("world_simulation")
+func _descriptor(type: String, id: Variant, runtime: Node, framing := "SITE_MEDIUM", label := "") -> Dictionary:
+ return Target.make(type, id, String(runtime.instance_id), framing, label)
+func _resolved(target: Dictionary, focus: Vector3) -> Dictionary:
+ if not valid_focus(focus): return {}
+ return {"valid":true,"target":target.duplicate(true),"focus":focus,"framing":target.get("framing","SITE_MEDIUM"),"distance":_distance(String(target.get("framing","SITE_MEDIUM")))}
+func resolve_target(target: Dictionary) -> Dictionary:
+ var type := String(target.get("type", ""))
+ var id := str(target.get("id", ""))
+ if type == "conflict": id = id.trim_prefix("site:")
+ for runtime in Sources.runtimes(simulation):
+  if not String(target.get("society_id", "")).is_empty() and String(runtime.instance_id) != String(target.society_id): continue
+  if type == "citizen":
+   for citizen in runtime.citizens:
+    if str(citizen.citizen_id) == id and citizen.health > 0: return _resolved(target, citizen.global_position + Vector3.UP * 0.25)
+  if type == "settlement": return _resolved(target, runtime.development.center() + Vector3.UP * 3)
+  if type == "project":
+   for project in [runtime.development.active, runtime.innovation.active, runtime.innovation.research]:
+    if not project.is_empty() and str(project.get("id","")) == id:
+     var position: Variant = project.get("site", project.get("target"))
+     if position is Vector3: return _resolved(target, position + Vector3.UP * 2)
+   if id == "traversal" and runtime.construction.project_created and not runtime.construction.traversal_deployed: return _resolved(target, runtime.construction.site_position + Vector3.UP * 3)
+   for project in runtime.armory.projects.values():
+    if str(project.id) == id and project.state == "BUILDING": return _resolved(target, runtime.development.center() + Vector3.UP * 2)
+ var world := _world()
+ if is_instance_valid(world):
+  if type == "site" and world.territory.sites.has(id): return _resolved(target, world.territory.sites[id].position)
+  if type == "conflict" and world.combat.site_id == id and world.combat.phase not in ["DORMANT", "COMPLETE", "ENDED", "STAND_DOWN", "STOOD_DOWN"]:
+   var points: Array[Vector3] = []
+   for runtime in Sources.runtimes(simulation):
+    for citizen in runtime.citizens:
+     if citizen.health > 0 and not citizen.combat_duty.is_empty(): points.append(citizen.global_position)
+   var focus: Vector3 = world.territory.sites[id].position
+   if not points.is_empty():
+    focus = Vector3.ZERO
+    for point in points: focus += point / points.size()
+   return _resolved(target, focus)
+ return {}
+func resolve_event(event: Dictionary) -> Dictionary:
+ var descriptors: Array[Dictionary] = []
+ if not str(event.get("subject_id", "")).is_empty(): descriptors.append(Target.make(String(event.get("subject_type","citizen")), event.subject_id, String(event.get("society_id","")), "CITIZEN_CLOSE" if String(event.get("subject_type","")) == "citizen" else "SITE_MEDIUM"))
+ for field in ["project_id", "site_id", "conflict_id"]:
+  if not str(event.get(field, "")).is_empty(): descriptors.append(Target.make(field.trim_suffix("_id"), event[field], String(event.get("society_id","")), "CONFLICT_WIDE" if field == "conflict_id" else "SITE_MEDIUM"))
+ for descriptor in descriptors:
+  var found := resolve_target(descriptor)
+  if not found.is_empty(): return found
+ if event.get("focus_valid",false) and event.get("focus") is Vector3 and valid_focus(event.focus): return {"valid":true,"focus":event.focus,"target":{},"distance":32.0,"framing":"SITE_MEDIUM"}
+ return {}
+func focus_event(event: Dictionary) -> Dictionary:
+ set_mode(OFF)
+ var result := resolve_event(event)
+ if not result.is_empty(): rig.request_spectator_frame(result.focus, result.distance)
+ return result
+func _follow_valid(target: Dictionary) -> bool:
+ var type := String(target.get("type",""))
+ if type not in ["citizen","project","site","conflict"]: return false
+ if type == "site":
+  var world := _world()
+  if not is_instance_valid(world) or world.combat.site_id != str(target.get("id","")) or world.combat.phase in ["DORMANT","COMPLETE","STAND_DOWN"]: return false
+ return not resolve_target(target).is_empty()
+func follow(target: Dictionary) -> bool:
+ if not _follow_valid(target): return false
+ followed = target.duplicate(true)
+ set_mode(FOLLOW)
+ return true
+func follow_target(target: Dictionary) -> bool: return follow(target)
+func follow_choices() -> Array[Dictionary]:
+ var unique: Dictionary = {}
+ for candidate in collect_candidates():
+  if not candidate.has("target") or not _follow_valid(candidate.target): continue
+  var target: Dictionary = candidate.target.duplicate(true)
+  var key := String(target.type) + ":" + String(target.get("society_id","")) + ":" + str(target.id)
+  if not unique.has(key) or not String(target.get("display_name","")).is_empty(): unique[key] = target
+ var result: Array[Dictionary] = []
+ for target in unique.values():
+  if String(target.get("display_name","")).is_empty(): target.display_name = String(target.type).capitalize() + " activity"
+  result.append(target)
+ return result
+func _distance(framing: String) -> float:
+ return float({"ROOM_WIDE":250.0,"SETTLEMENT_WIDE":115.0,"CITIZEN_CLOSE":7.0,"GROUP_MEDIUM":30.0,"CONFLICT_WIDE":70.0,"CONFLICT_DETAIL":25.0}.get(framing,35.0))
 func overview() -> Dictionary:
-	return {"key": "overview", "focus": rig._room_focus, "distance": rig._room_width * 1.15, "event": event_id, "headline": "COLONY OVERVIEW", "subtitle": "Day %.1f · Population %d" % [simulation.seconds / 600, simulation.citizens.size()]}
-
+ var policy: Dictionary = Catalog.metadata({})
+ return {"key":"overview","focus":rig._room_focus,"distance":rig._room_width * 1.15,"event":event_id,"headline":"ROOM OVERVIEW","subtitle":"Life across the room","priority":0,"class":"overview","society_id":"","story_key":"overview","subject_key":"overview","story_cooldown":policy.story_cooldown,"subject_cooldown":policy.subject_cooldown,"location_cooldown":policy.location_cooldown}
+func _target_candidate(target: Dictionary, category: String, subtitle: String) -> Dictionary:
+ var result := resolve_target(target)
+ if result.is_empty(): return {}
+ var policy: Dictionary = Catalog.metadata({})
+ result.merge({"key":String(target.type)+":"+String(target.society_id)+":"+str(target.id),"event":event_id,"headline":String(target.get("display_name",category)).to_upper(),"subtitle":subtitle,"priority":0,"class":category,"society_id":target.society_id,"story_key":str(target.id),"subject_key":String(target.type)+":"+str(target.id),"story_cooldown":policy.story_cooldown,"subject_cooldown":policy.subject_cooldown,"location_cooldown":policy.location_cooldown})
+ return result
+func collect_candidates() -> Array[Dictionary]:
+ var result: Array[Dictionary] = []
+ for event in events():
+  var metadata: Dictionary = Catalog.metadata(event)
+  if mode != RANDOM and not metadata.get("eligible",true): continue
+  var resolved := resolve_event(event)
+  if resolved.is_empty(): continue
+  var card := Adapter.event_card(event)
+  var key := String(event.source_key)
+  resolved.merge({"key":key,"event":event.id,"headline":card.get("headline",event.message),"subtitle":card.get("subtitle",""),"priority":metadata.get("priority",0),"category":metadata.get("category","colony"),"class":"event","society_id":event.get("society_id",""),"story_key":event.get("story_key",key),"subject_key":str(resolved.get("target",{})),"seconds":event.seconds,"story_cooldown":metadata.story_cooldown,"subject_cooldown":metadata.subject_cooldown,"location_cooldown":metadata.location_cooldown})
+  resolved.distance = _distance(String(metadata.get("framing","SITE_MEDIUM")))
+  result.append(resolved)
+ for runtime in Sources.runtimes(simulation):
+  for citizen in runtime.citizens:
+   if citizen.health <= 0: continue
+   var target := _descriptor("citizen",citizen.citizen_id,runtime,"CITIZEN_CLOSE","Citizen %s" % citizen.citizen_id)
+   var task := String(citizen.task_type)
+   var category := "citizen"
+   if not citizen.combat_duty.is_empty(): category = "military"
+   elif task.contains("SALVAGE"): category = "salvage"
+   elif task.contains("CARRY") or task.contains("HAUL") or task.contains("DELIVER"): category = "hauling"
+   elif task.contains("CONSTRUCTION"): category = "construction"
+   elif task.contains("RESEARCH") or task.contains("INNOVATION"): category = "research"
+   elif task.contains("ARMORY"): category = "equipment"
+   elif citizen.state == "WORK": category = "work"
+   var shot := _target_candidate(target,category,task.replace("_"," ").capitalize())
+   if not shot.is_empty():
+    shot["citizen"] = citizen.citizen_id
+    shot["activity_task"] = citizen.task_type
+    result.append(shot)
+  var projects: Array = [runtime.development.active,runtime.innovation.active,runtime.innovation.research]
+  for project in runtime.armory.projects.values():
+   if project.state == "BUILDING": projects.append(project)
+  for project in projects:
+   if project.is_empty(): continue
+   var shot := _target_candidate(_descriptor("project",project.id,runtime,"SITE_MEDIUM","Active project"),"project","Construction, equipment or research in progress")
+   if not shot.is_empty(): result.append(shot)
+  if runtime.construction.project_created and not runtime.construction.traversal_deployed:
+   var shot := _target_candidate(_descriptor("project","traversal",runtime,"SITE_MEDIUM","Traversal"),"project","Building access")
+   if not shot.is_empty(): result.append(shot)
+  var settlement := _target_candidate(_descriptor("settlement",runtime.instance_id,runtime,"SETTLEMENT_WIDE","Settlement"),"settlement","Working, carrying and resting")
+  if not settlement.is_empty(): result.append(settlement)
+ var world := _world()
+ if is_instance_valid(world) and not world.combat.site_id.is_empty():
+  var shot := _target_candidate(Target.make("conflict",world.combat.site_id,"","CONFLICT_WIDE","Active conflict"),"conflict","Forces and contested ground")
+  if not shot.is_empty(): result.append(shot)
+ result.append(overview())
+ return result
+func _eligible(candidate: Dictionary) -> bool:
+ if not valid_focus(candidate.focus): return false
+ var policies := {
+  "story":float(candidate.story_cooldown),
+  "subject":float(candidate.subject_cooldown),
+  "place":float(candidate.location_cooldown),
+ }
+ for key in _cooldown_keys(candidate):
+  var scope := String(key).get_slice(":",0)
+  if real_seconds - float(cooldowns.get(key,-1000.0)) < float(policies[scope]): return false
+ return true
+func _cooldown_keys(candidate: Dictionary) -> Array:
+ var p: Vector3 = candidate.focus
+ return ["story:"+str(candidate.get("story_key",candidate.key)),"subject:"+str(candidate.get("subject_key",candidate.key)),"place:%d:%d" % [roundi(p.x / 8.0),roundi(p.z / 8.0)]]
+func _remember(candidate: Dictionary) -> void:
+ for key in _cooldown_keys(candidate): cooldowns[key] = real_seconds
+ seen[candidate.key] = real_seconds
+ society_visits[str(candidate.get("society_id",""))] = real_seconds
+ for history in [cooldowns,seen,society_visits]:
+  while history.size() > HISTORY_LIMIT: history.erase(history.keys()[0])
 func choose() -> Dictionary:
-	if wide_elapsed >= WIDE_INTERVAL: return overview()
-	var major: Dictionary = {}
-	var priority := 0
-	for event in simulation.journal.events:
-		if event.id <= event_id or not valid_focus(event.focus): continue
-		if event.kind not in ["salvage_authorized", "traversal_complete", "structure_complete", "cohort_joined", "development_started", "territory_reached", "research_started", "technology_complete", "solution_started", "solution_complete"]: continue
-		var card := Adapter.event_card(event)
-		if card.is_empty() or int(card.priority) < 3: continue
-		# Old arrivals have dispersed; current activity provides a truer subject.
-		if event.kind == "cohort_joined" and simulation.seconds - event.seconds > 30: continue
-		if int(card.priority) > priority:
-			major = event
-			priority = int(card.priority)
-	if not major.is_empty():
-		var card := Adapter.event_card(major)
-		var shot := {"key": "event:%d" % major.id, "focus": major.focus + Vector3.UP * 2, "distance": 32.0, "event": major.id, "headline": card.headline, "subtitle": card.subtitle}
-		if major.kind == "cohort_joined":
-			shot.focus = major.focus + Vector3.UP * 0.25
-			shot.distance = 13.0
-			shot.cohort_start = major.evidence.before
-			shot.cohort_size = int(major.evidence.after) - int(major.evidence.before)
-		elif major.kind == "salvage_authorized":
-			shot.headline = "SALVAGE OPERATION"
-			var id := String(major.message).get_slice(": ", 1)
-			if simulation.resources.objects.has(id):
-				var object: Dictionary = simulation.resources.objects[id].data
-				shot.focus = major.focus + Vector3.UP * float(object.dimensions[1]) * 0.35
-				shot.distance = maxf(35, float(object.dimensions[1]) * 2.1)
-		return shot
-	# Alternate a contextual view with actual worker detail, never move the worker.
-	if not String(current_shot.get("key", "")).begins_with("citizen:"):
-		for citizen in simulation.citizens:
-			if citizen.state == "WORK" and citizen.task_type == "INNOVATION_RESEARCH": return activity(citizen, "RESEARCH AT WORK", "A citizen tests the colony's next invention")
-			if citizen.state == "WORK" and citizen.task_type == "SALVAGE": return activity(citizen, "SALVAGE OPERATION", "Recovering finite construction materials")
-			if citizen.state == "WORK" and citizen.task_type == "CONSTRUCTION_BUILD":
-				return activity(citizen, "CONSTRUCTION AT WORK", "A citizen assembles the colony's infrastructure")
-	if simulation.get("innovation") != null and not simulation.innovation.active.is_empty():
-		var p: Dictionary = simulation.innovation.active
-		return {"key":p.id, "focus":p.site + Vector3.UP*3, "distance":45.0, "event":event_id, "headline":String(p.solution.get("display_name", p.solution.id)).to_upper(), "subtitle":"Citizens deliver materials and construct the chosen solution"}
-	if simulation.construction.project_created and not simulation.construction.traversal_deployed:
-		return {"key": "traversal", "focus": simulation.construction.site_position + Vector3.UP * 3, "distance": 45.0, "event": event_id, "headline": "EXPEDITION TO THE DESK", "subtitle": Adapter.presentation_text("Building a grapple route to the water supply")}
-	if not simulation.development.active.is_empty():
-		var p: Dictionary = simulation.development.active
-		return {"key": String(p.id), "focus": p.site + Vector3(0, 2, 3), "distance": 30.0, "event": event_id, "headline": Adapter.module_name(p).to_upper(), "subtitle": Adapter.module_name(p) + " under construction"}
-	for citizen in simulation.citizens:
-		if citizen.task_type == "RESOURCE_COLLECT" and citizen.global_position.y > 4:
-			return activity(citizen, "EXPEDITION TO THE DESK", "Collecting water for the colony")
-	for citizen in simulation.citizens:
-		if citizen.task_type == "SALVAGE" and citizen.state == "WORK": return activity(citizen, "SALVAGE OPERATION", "Recovering finite construction materials")
-	return {"key": "settlement", "focus": simulation.development.center() + Vector3.UP * 3, "distance": 115.0, "event": event_id, "headline": "LIFE IN THE SETTLEMENT", "subtitle": "%d citizens · Working, carrying and resting" % simulation.citizens.size()}
-
-func activity(citizen: Node3D, headline: String, subtitle: String) -> Dictionary:
-	return {"key": "citizen:%d:%s" % [citizen.citizen_id, citizen.task_type], "citizen": citizen.citizen_id, "activity_task": citizen.task_type, "focus": citizen.global_position + Vector3.UP * 0.25, "distance": 6.0, "event": event_id, "headline": Adapter.presentation_text(headline), "subtitle": Adapter.presentation_text(subtitle)}
-
+ # Sustained conflict may defer context until the next safe normal dwell.
+ var world := _world()
+ var sustained_conflict: bool = is_instance_valid(world) and world.combat.phase in ["MARCH","FIGHT","RETREAT","SECURE"]
+ if wide_elapsed >= WIDE_INTERVAL and not sustained_conflict: return overview()
+ var pool: Array[Dictionary] = []
+ for candidate in collect_candidates():
+  if _eligible(candidate) and (mode == RANDOM or int(candidate.priority) >= 1): pool.append(candidate)
+ if pool.is_empty(): return overview()
+ if mode == RANDOM:
+  # First sample society, then visual class, then subject: busy event streams cannot starve quiet societies or work.
+  var societies: Array = []
+  for candidate in pool:
+   var society := str(candidate.get("society_id",""))
+   if not societies.has(society): societies.append(society)
+  societies.sort_custom(func(a: String,b: String) -> bool: return float(society_visits.get(a,-1000)) < float(society_visits.get(b,-1000)))
+  var society: String = societies[0]
+  var classes: Array = []
+  for candidate in pool:
+   if str(candidate.get("society_id","")) == society and not classes.has(candidate["class"]): classes.append(candidate["class"])
+  var category: String = classes[rng.randi_range(0,classes.size()-1)]
+  var subset: Array[Dictionary] = []
+  for candidate in pool:
+   if str(candidate.get("society_id","")) == society and candidate["class"] == category: subset.append(candidate)
+  return subset[rng.randi_range(0,subset.size()-1)]
+ pool.sort_custom(func(a: Dictionary,b: Dictionary) -> bool:
+  if int(a.priority) != int(b.priority): return int(a.priority) > int(b.priority)
+  if seen.has(a.key) != seen.has(b.key): return not seen.has(a.key)
+  if float(a.get("seconds",0)) != float(b.get("seconds",0)): return float(a.get("seconds",0)) > float(b.get("seconds",0))
+  var a_different: bool = a.get("story_key",a.key) != current_shot.get("story_key","") and a.get("subject_key",a.key) != current_shot.get("subject_key","")
+  var b_different: bool = b.get("story_key",b.key) != current_shot.get("story_key","") and b.get("subject_key",b.key) != current_shot.get("subject_key","")
+  if a_different != b_different: return a_different
+  if int(a.get("event",0)) != int(b.get("event",0)): return int(a.get("event",0)) < int(b.get("event",0))
+  return String(a.key) < String(b.key))
+ return pool[0]
 func advance(delta: float) -> void:
-	if not enabled or not is_instance_valid(simulation): return
-	elapsed += delta
-	wide_elapsed += delta
-	if elapsed >= MIN_SHOT:
-		elapsed = 0
-		var shot := choose()
-		if not valid_focus(shot.focus): shot = overview()
-		if wide_elapsed >= WIDE_INTERVAL: wide_elapsed = 0
-		event_id = int(shot.event)
-		if current_shot.get("key", "") != shot.key:
-			current_shot = shot
-			shots += 1
-	if current_shot.is_empty(): return
-	var focus: Vector3 = current_shot.focus
-	var framing_distance: float = current_shot.distance
-	if current_shot.has("citizen"):
-		var citizen: Node3D = simulation.citizens[int(current_shot.citizen)]
-		focus = citizen.global_position + Vector3.UP * 0.25
-		# Match the subject's movement while easing the initial framing offset.
-		# At 10x, smoothing movement itself lets a walking citizen outrun the camera.
-		if tracked_citizen == int(current_shot.citizen): rig.target += focus - tracked_position
-		tracked_citizen = int(current_shot.citizen)
-		tracked_position = focus
-	else:
-		tracked_citizen = -1
-	if current_shot.has("cohort_start"):
-		focus = Vector3.UP * 0.25
-		for index in range(int(current_shot.cohort_start), int(current_shot.cohort_start) + int(current_shot.cohort_size)): focus += simulation.citizens[index].global_position / int(current_shot.cohort_size)
-		for index in range(int(current_shot.cohort_start), int(current_shot.cohort_start) + int(current_shot.cohort_size)): framing_distance = maxf(framing_distance, focus.distance_to(simulation.citizens[index].global_position) * 2.8)
-	if not valid_focus(focus):
-		current_shot = overview()
-		focus = current_shot.focus
-	last_focus = focus
-	# Existing rig applies the transform; interpolate target and distance in real time.
-	var weight := 1.0 - exp(-3.0 * delta)
-	rig._citizen_focus = null
-	rig.target = rig.target.lerp(focus, weight)
-	rig.distance = lerpf(rig.distance, framing_distance, weight)
-	rig.tilt_degrees = lerpf(rig.tilt_degrees, 55.0, weight)
-	rig.yaw = lerp_angle(rig.yaw, 0.0, weight)
-	rig._apply_transform()
-
+ real_seconds += delta
+ if mode == OFF or not is_instance_valid(simulation): return
+ if mode == FOLLOW:
+  if not _follow_valid(followed): set_mode(OFF); return
+  var resolved := resolve_target(followed)
+  if resolved.is_empty(): set_mode(OFF); return
+  last_focus = resolved.focus
+  rig.request_spectator_frame(last_focus,resolved.get("distance",35.0))
+  return
+ elapsed += delta
+ wide_elapsed += delta
+ var critical := false
+ if mode == PRIORITY and elapsed >= CRITICAL_DWELL and elapsed < MIN_SHOT:
+  for candidate in collect_candidates():
+   if int(candidate.priority) == 3 and not seen.has(candidate.key) and _eligible(candidate): critical = true; break
+ if elapsed >= MIN_SHOT or critical:
+  elapsed = 0.0
+  var shot := choose()
+  if shot.key == "overview": wide_elapsed = 0.0
+  if current_shot.get("key","") != shot.key:
+   current_shot = shot
+   shots += 1
+   _remember(shot)
+   event_id = int(shot.get("event",event_id))
+ if current_shot.is_empty(): return
+ var focus: Vector3 = current_shot.focus
+ if current_shot.has("target") and not current_shot.target.is_empty():
+  var resolved := resolve_target(current_shot.target)
+  if not resolved.is_empty(): focus = resolved.focus
+ if not valid_focus(focus): return
+ last_focus = focus
+ rig.request_spectator_frame(focus,float(current_shot.distance))
 func title_is_current() -> bool:
-	if current_shot.has("citizen"):
-		return simulation.citizens[int(current_shot.citizen)].task_type == current_shot.get("activity_task", "")
-	if String(current_shot.get("key", "")).contains("development_"):
-		return simulation.development.active.get("id", "") == current_shot.key
-	return true
-
-func shot_subtitle() -> String:
-	if current_shot.get("key", "") == "overview": return "Day %.1f · Population %d" % [simulation.seconds / 600, simulation.citizens.size()]
-	if current_shot.get("key", "") == "settlement": return "%d citizens · Working, carrying and resting" % simulation.citizens.size()
-	return current_shot.get("subtitle", "")
+ return not current_shot.has("target") or current_shot.target.is_empty() or not resolve_target(current_shot.target).is_empty()
+func shot_subtitle() -> String: return String(current_shot.get("subtitle",""))

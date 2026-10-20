@@ -54,5 +54,5 @@ func finish(sim: Node, project: Dictionary) -> bool:
 		if citizen.life_state != "ALIVE": continue
 		citizen.needs.sheltered = housed < sim.needs.shelter_capacity
 		housed += 1
-	sim.journal.record(sim.seconds,"shelter_increased","Living structure supplies shelter",{"project":project.id,"capacity":capacity,"total":sim.needs.shelter_capacity},project.site,project.id+":shelter")
+	sim.journal.record(sim.seconds, "shelter_increased", "Living structure supplies shelter", {"project":project.id,"capacity":capacity,"total":sim.needs.shelter_capacity}, project.site, project.id+":shelter", preload("res://scripts/event_fact_context.gd").society(sim, {"project":project.id,"capacity":capacity,"total":sim.needs.shelter_capacity}))
 	return true

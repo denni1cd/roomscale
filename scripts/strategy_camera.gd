@@ -2,6 +2,10 @@ extends Node3D
 class_name StrategyCamera
 ## Orbit/pan/tilt/zoom strategy camera; keyboard presets map to three useful scales.
 
+signal manual_camera_input(action: String)
+
+var _spectator_frame: Dictionary = {}
+
 const MIN_DISTANCE := 22.0
 const CITIZEN_MIN_DISTANCE := 1.5
 const MAX_DISTANCE := 520.0
@@ -18,6 +22,7 @@ var view_mode := 0
 var _orbit_dragging := false
 var _pan_dragging := false
 var _citizen_focus: Node3D
+var _selected_citizen: Node3D
 var _citizen_focus_offset := Vector3(0.0, 0.25, 0.0)
 var _camera_transition_active := false
 var _room_focus := Vector3.ZERO
@@ -65,22 +70,30 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif button.button_index == MOUSE_BUTTON_MIDDLE:
 			_pan_dragging = button.pressed
 		elif button.pressed and button.button_index == MOUSE_BUTTON_WHEEL_UP:
+			notify_manual_input("wheel_zoom")
 			zoom_by(0.88)
 		elif button.pressed and button.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			notify_manual_input("wheel_zoom")
 			zoom_by(1.14)
 	elif event is InputEventMouseMotion:
 		var motion := event as InputEventMouseMotion
 		if _orbit_dragging:
+			notify_manual_input("orbit")
 			orbit_by(motion.relative)
 		elif _pan_dragging:
+			notify_manual_input("pan")
 			pan_by(motion.relative)
 	elif event is InputEventKey and (event as InputEventKey).pressed and not (event as InputEventKey).echo:
 		match (event as InputEventKey).keycode:
 			KEY_1:
+				notify_manual_input("preset")
 				set_view_mode(0)
 			KEY_2:
+				notify_manual_input("preset")
 				set_view_mode(1)
 			KEY_3:
+				notify_manual_input("preset")
+				if is_instance_valid(_selected_citizen): _citizen_focus = _selected_citizen
 				set_view_mode(2)
 
 
@@ -95,6 +108,7 @@ func _process(delta: float) -> void:
 	if Input.is_key_pressed(KEY_S) or Input.is_key_pressed(KEY_DOWN):
 		movement.y -= 1.0
 	if movement.length_squared() > 0.0:
+		notify_manual_input("keyboard_pan")
 		_camera_transition_active = true
 		_citizen_focus = null
 		var right := Vector3(cos(yaw), 0.0, sin(yaw))
@@ -102,9 +116,11 @@ func _process(delta: float) -> void:
 		var pan_scale := maxf(12.0, distance * 0.8)
 		target += (right * movement.x + forward * movement.y).normalized() * pan_scale * delta
 	if Input.is_key_pressed(KEY_Q):
+		notify_manual_input("vertical")
 		_camera_transition_active = true
 		target.y += maxf(8.0, distance * 0.4) * delta
 	if Input.is_key_pressed(KEY_E):
+		notify_manual_input("vertical")
 		_camera_transition_active = true
 		target.y -= maxf(8.0, distance * 0.4) * delta
 	if view_mode == 2 and is_instance_valid(_citizen_focus):
@@ -112,6 +128,14 @@ func _process(delta: float) -> void:
 		if target.distance_to(focus_target) > 0.05:
 			_camera_transition_active = true
 		target = focus_target
+	if not _spectator_frame.is_empty():
+		var weight := 1.0 - exp(-5.0 * delta)
+		_citizen_focus = null
+		target = target.lerp(_spectator_frame.focus, weight)
+		distance = lerpf(distance, _spectator_frame.distance, weight)
+		tilt_degrees = lerpf(tilt_degrees, _spectator_frame.tilt, weight)
+		yaw = lerp_angle(yaw, _spectator_frame.yaw, weight)
+		_camera_transition_active = false
 	_apply_transform(delta)
 
 
@@ -170,6 +194,7 @@ func zoom_by(factor: float) -> void:
 
 func set_citizen_focus(citizen: Node3D, focus_offset: Vector3 = Vector3(0.0, 0.25, 0.0)) -> void:
 	_citizen_focus = citizen
+	_selected_citizen = citizen
 	_citizen_focus_offset = focus_offset
 	if view_mode == 2 and is_instance_valid(_citizen_focus):
 		target = _citizen_focus.global_position + _citizen_focus_offset
@@ -224,3 +249,19 @@ func focus_detail_at(world_position: Vector3, desired_distance: float, desired_t
 	focus_at(world_position,desired_distance,desired_tilt)
 	distance = clampf(desired_distance,CITIZEN_MIN_DISTANCE,MAX_DISTANCE)
 	_apply_transform()
+
+
+func notify_manual_input(action: String) -> void:
+	clear_spectator_frame()
+	_citizen_focus = null
+	manual_camera_input.emit(action)
+
+
+func request_spectator_frame(focus: Vector3, desired_distance: float, desired_tilt: float = 55.0, desired_yaw: float = 0.0) -> void:
+	# Presentation supplies a target; this rig alone owns physical interpolation.
+	if not focus.is_finite(): return
+	_spectator_frame = {"focus": focus, "distance": clampf(desired_distance, CITIZEN_MIN_DISTANCE, MAX_DISTANCE), "tilt": clampf(desired_tilt, MIN_TILT_DEGREES, MAX_TILT_DEGREES), "yaw": desired_yaw}
+
+
+func clear_spectator_frame() -> void:
+	_spectator_frame.clear()

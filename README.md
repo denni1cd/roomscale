@@ -232,3 +232,7 @@ The accepted POC2 photo workflow remains available. Its canonical input is
 [POC2 acceptance matrix](verification/poc2/acceptance-matrix.md) preserves its
 source-specific verification. Ordinary windows add no exterior scenery unless
 validated room data explicitly supplies exterior primitives.
+
+### Spectator Director (POC 5.5)
+
+The fishbowl and conflict views offer OFF/FREE, FOLLOW, PRIORITY and RANDOM, a recent-story feed and click navigation. Manual camera input leaves the Director OFF until explicitly re-enabled. See [controls, event extension and verification](docs/SPECTATOR_DIRECTOR.md). Run `./TEST_ROOM_SCALE_POC55.ps1 -Mode All` for focused, fresh-mode isolation and rendered checks.

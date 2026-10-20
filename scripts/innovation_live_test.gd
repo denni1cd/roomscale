@@ -14,6 +14,8 @@ var captures: Array[String] = []
 var tree_completed := false
 var shelter_bonus_verified := false
 var recognition_time := -1.0
+var spectator_event_history: Array[Dictionary] = []
+var spectator_event_cursor := 0
 
 func _initialize() -> void:
 	create_timer(90.0).timeout.connect(func() -> void: push_error("INNOVATION_LIVE_FAIL watchdog"); quit(1))
@@ -111,6 +113,11 @@ func run() -> void:
 			var project: Dictionary = sim.innovation.projects[-1]
 			if OS.get_environment("ROOMSCALE_REQUIRE_LIVING_STRUCTURE") != "1" or project.solution.deployment.adapter == "living_structure": await capture("deployed-route", (project.site + project.path.back()) / 2, project.path[0].distance_to(project.path.back()) * 1.4)
 		await process_frame
+		if OS.get_environment("ROOMSCALE_CAPTURE_EVENT_HISTORY") == "1":
+			for event in sim.journal.events:
+				if int(event.id) > spectator_event_cursor:
+					spectator_event_history.append(event.duplicate(true))
+					spectator_event_cursor = int(event.id)
 		var completed: bool = not sim.innovation.projects.is_empty() and sim.innovation.projects[-1].state == "COMPLETE"
 		if completed and (OS.get_environment("ROOMSCALE_REQUIRE_LIVING_STRUCTURE") != "1" or tree_completed) and sim.journal.events.any(func(e: Dictionary) -> bool: return e.kind == "territory_reached"): break
 	if OS.get_environment("ROOMSCALE_INNOVATION_CANCEL_PROBE") == "1": check(cancellation_checked, "Physical cancellation boundary exercised")
@@ -147,6 +154,7 @@ func run() -> void:
 			var duplicate: Dictionary = adapter.prepare(sim,project.solution,{"source_id":project.region,"context":{"region":project.region}})
 			check(not duplicate.get("valid",false),"Permanent structure cannot be duplicated into free capacity at the same region")
 	var receipt := {"result":"PASS" if failures.is_empty() else "FAIL", "failures":failures, "civilization":sim.definition_id,"recognition_time":recognition_time,"shelter_bonus_verified":shelter_bonus_verified, "research":research_receipts, "projects":project_receipts, "seconds":sim.seconds, "source_visits":sim.source_visits, "reason":sim.innovation.reason}
+	if OS.get_environment("ROOMSCALE_CAPTURE_EVENT_HISTORY") == "1": receipt["events"] = spectator_event_history
 	var destination := OS.get_environment("ROOMSCALE_INNOVATION_RESULT")
 	if not destination.is_empty():
 		var file := FileAccess.open(destination, FileAccess.WRITE)
