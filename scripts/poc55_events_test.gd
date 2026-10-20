@@ -3,6 +3,14 @@ const Journal := preload("res://scripts/event_journal.gd")
 const Catalog := preload("res://scripts/spectator_event_catalog.gd")
 const Presenter := preload("res://scripts/fishbowl_event_presenter.gd")
 const Sources := preload("res://scripts/spectator_sources.gd")
+const Armory := preload("res://scripts/armory_system.gd")
+class ArmoryFixture extends Node:
+	var instance_id := "fixture_alpha"
+	var definition_id := "clockwork"
+	var seconds := 3.0
+	var world_simulation := {"tick":9}
+	var coordinator := {"depot_station":Vector3(4,0,5)}
+	var journal := preload("res://scripts/event_journal.gd").new()
 var failures: Array[String] = []
 func check(value: bool, label: String) -> void:
 	if not value: failures.append(label)
@@ -58,6 +66,22 @@ func _initialize() -> void:
 		for kind in group[1]: check(Catalog.metadata({"kind":kind}).priority == group[0], "priority " + kind)
 	check(not preload("res://scripts/fishbowl_narrative_adapter.gd").event_card({"kind":"future", "id":"bad", "evidence":"bad"}).is_empty(), "malformed optional data degrades safely")
 	check(not Catalog.metadata({"kind":"routine_work"}).eligible, "routine not Priority interrupt")
+	var internal_sim := ArmoryFixture.new()
+	root.add_child(internal_sim)
+	var armory := Armory.new()
+	armory.configure(internal_sim)
+	armory.record("ABILITY_STATE", {"id":17,"capability":"PREPARED_FIRE","prepared":true},null,false)
+	check(armory.events.size() == 1 and armory.events[0].kind == "ABILITY_STATE", "mechanical ability evidence remains in Armory")
+	check(internal_sim.journal.events.is_empty(), "mechanical ability telemetry is not published to spectator history")
+	var internal_records: Array[Dictionary] = []
+	Sources._append(internal_records, internal_sim.journal.events, "society:fixture_alpha", "fixture_alpha", "clockwork")
+	var internal_presenter := Presenter.new()
+	internal_presenter.ingest(internal_records)
+	check(internal_presenter.recent.is_empty(), "mechanical ability telemetry is absent from recent story feed")
+	check(not internal_records.any(func(event: Dictionary) -> bool: return event.kind == "ABILITY_STATE"), "mechanical ability telemetry cannot enter spectator event candidates")
+	check(not Catalog.metadata({"kind":"ABILITY_STATE"}).eligible, "ability telemetry has no Priority eligibility")
+	# Armory is RefCounted; its internal trace remains retained on the fixture
+	# through the assertions above. The fixture node is reclaimed at test exit.
 	for i in range(300): journal.record(i, "work", str(i), {}, Vector3.ONE, str(i))
 	check(journal.events.size() == 128 and journal._states.size() <= 256, "journal/suppression bounds")
 	check(journal.events.back().id == 302, "monotonic ID")

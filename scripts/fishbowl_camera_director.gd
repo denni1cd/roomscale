@@ -130,11 +130,13 @@ func follow_choices() -> Array[Dictionary]:
 func _distance(framing: String) -> float:
  return float({"ROOM_WIDE":250.0,"SETTLEMENT_WIDE":115.0,"CITIZEN_CLOSE":7.0,"GROUP_MEDIUM":30.0,"CONFLICT_WIDE":70.0,"CONFLICT_DETAIL":25.0}.get(framing,35.0))
 func overview() -> Dictionary:
- return {"key":"overview","focus":rig._room_focus,"distance":rig._room_width * 1.15,"event":event_id,"headline":"ROOM OVERVIEW","subtitle":"Life across the room","priority":0,"class":"overview","society_id":"","story_key":"overview","subject_key":"overview"}
+ var policy: Dictionary = Catalog.metadata({})
+ return {"key":"overview","focus":rig._room_focus,"distance":rig._room_width * 1.15,"event":event_id,"headline":"ROOM OVERVIEW","subtitle":"Life across the room","priority":0,"class":"overview","society_id":"","story_key":"overview","subject_key":"overview","story_cooldown":policy.story_cooldown,"subject_cooldown":policy.subject_cooldown,"location_cooldown":policy.location_cooldown}
 func _target_candidate(target: Dictionary, category: String, subtitle: String) -> Dictionary:
  var result := resolve_target(target)
  if result.is_empty(): return {}
- result.merge({"key":String(target.type)+":"+String(target.society_id)+":"+str(target.id),"event":event_id,"headline":String(target.get("display_name",category)).to_upper(),"subtitle":subtitle,"priority":0,"class":category,"society_id":target.society_id,"story_key":str(target.id),"subject_key":String(target.type)+":"+str(target.id)})
+ var policy: Dictionary = Catalog.metadata({})
+ result.merge({"key":String(target.type)+":"+String(target.society_id)+":"+str(target.id),"event":event_id,"headline":String(target.get("display_name",category)).to_upper(),"subtitle":subtitle,"priority":0,"class":category,"society_id":target.society_id,"story_key":str(target.id),"subject_key":String(target.type)+":"+str(target.id),"story_cooldown":policy.story_cooldown,"subject_cooldown":policy.subject_cooldown,"location_cooldown":policy.location_cooldown})
  return result
 func collect_candidates() -> Array[Dictionary]:
  var result: Array[Dictionary] = []
@@ -145,7 +147,7 @@ func collect_candidates() -> Array[Dictionary]:
   if resolved.is_empty(): continue
   var card := Adapter.event_card(event)
   var key := String(event.source_key)
-  resolved.merge({"key":key,"event":event.id,"headline":card.get("headline",event.message),"subtitle":card.get("subtitle",""),"priority":metadata.get("priority",0),"category":metadata.get("category","colony"),"class":"event","society_id":event.get("society_id",""),"story_key":event.get("story_key",key),"subject_key":str(resolved.get("target",{})),"seconds":event.seconds})
+  resolved.merge({"key":key,"event":event.id,"headline":card.get("headline",event.message),"subtitle":card.get("subtitle",""),"priority":metadata.get("priority",0),"category":metadata.get("category","colony"),"class":"event","society_id":event.get("society_id",""),"story_key":event.get("story_key",key),"subject_key":str(resolved.get("target",{})),"seconds":event.seconds,"story_cooldown":metadata.story_cooldown,"subject_cooldown":metadata.subject_cooldown,"location_cooldown":metadata.location_cooldown})
   resolved.distance = _distance(String(metadata.get("framing","SITE_MEDIUM")))
   result.append(resolved)
  for runtime in Sources.runtimes(simulation):
@@ -186,12 +188,18 @@ func collect_candidates() -> Array[Dictionary]:
  return result
 func _eligible(candidate: Dictionary) -> bool:
  if not valid_focus(candidate.focus): return false
+ var policies := {
+  "story":float(candidate.story_cooldown),
+  "subject":float(candidate.subject_cooldown),
+  "place":float(candidate.location_cooldown),
+ }
  for key in _cooldown_keys(candidate):
-  if real_seconds - float(cooldowns.get(key,-1000.0)) < 20.0: return false
+  var scope := String(key).get_slice(":",0)
+  if real_seconds - float(cooldowns.get(key,-1000.0)) < float(policies[scope]): return false
  return true
 func _cooldown_keys(candidate: Dictionary) -> Array:
  var p: Vector3 = candidate.focus
- return ["shot:"+String(candidate.key),"story:"+str(candidate.get("story_key",candidate.key)),"subject:"+str(candidate.get("subject_key",candidate.key)),"place:%d:%d" % [roundi(p.x / 8.0),roundi(p.z / 8.0)]]
+ return ["story:"+str(candidate.get("story_key",candidate.key)),"subject:"+str(candidate.get("subject_key",candidate.key)),"place:%d:%d" % [roundi(p.x / 8.0),roundi(p.z / 8.0)]]
 func _remember(candidate: Dictionary) -> void:
  for key in _cooldown_keys(candidate): cooldowns[key] = real_seconds
  seen[candidate.key] = real_seconds

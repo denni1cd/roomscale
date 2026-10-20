@@ -1,6 +1,10 @@
 extends SceneTree
 ## Vampire executable seam: selections and manual ownership without simulation mutation.
 const Director = preload("res://scripts/fishbowl_camera_director.gd")
+const Catalog = preload("res://scripts/spectator_event_catalog.gd")
+var failures: Array[String] = []
+func check(value: bool, label: String) -> void:
+ if not value: failures.append(label)
 class Rig extends Node:
  signal manual_camera_input(action: String)
  var frames := 0
@@ -49,13 +53,19 @@ func _initialize() -> void:
  d.advance(0.1)
  assert(d.mode == d.OFF)
  priority_contract()
+ cooldown_contract()
  assert(random_sequence(55) == random_sequence(55), "Isolated seed reproduces sequence")
+ if not failures.is_empty():
+  push_error("POC55_DIRECTOR_FAIL " + JSON.stringify(failures))
+  quit(1)
+  return
  print("POC55_DIRECTOR PASS ", sequence)
  d.free()
  rig.free()
  call_deferred("live")
 func candidate(key: String, priority: int, category: String, society: String) -> Dictionary:
- return {"key":key,"focus":Vector3.ZERO,"distance":20.0,"priority":priority,"class":category,"society_id":society,"event":0,"headline":key,"subtitle":"fixture","seconds":1.0,"story_key":key,"subject_key":key}
+ var policy: Dictionary = Catalog.metadata({"kind":"COMBAT_CASUALTY"})
+ return {"key":key,"focus":Vector3.ZERO,"distance":20.0,"priority":priority,"class":category,"society_id":society,"event":0,"headline":key,"subtitle":"fixture","seconds":1.0,"story_key":key,"subject_key":key,"story_cooldown":policy.story_cooldown,"subject_cooldown":policy.subject_cooldown,"location_cooldown":policy.location_cooldown}
 func live() -> void:
  OS.set_environment("ROOMSCALE_ROOM", "room_poc45")
  OS.set_environment("ROOMSCALE_FISHBOWL", "1")
@@ -69,6 +79,16 @@ func live() -> void:
  director.set_process(false)
  director.set_mode(director.RANDOM)
  director.set_spectator_seed(55)
+ var published_events: Array[Dictionary] = director.events()
+ var policy_candidates := 0
+ for shot in director.collect_candidates():
+  if String(shot.get("class", "")) != "event": continue
+  var event: Dictionary = published_events.filter(func(item: Dictionary) -> bool: return int(item.id) == int(shot.event)).front() if published_events.any(func(item: Dictionary) -> bool: return int(item.id) == int(shot.event)) else {}
+  if event.is_empty(): continue
+  var policy: Dictionary = Catalog.metadata(event)
+  check(shot.has("story_cooldown") and shot.has("subject_cooldown") and shot.has("location_cooldown") and shot.story_cooldown == policy.story_cooldown and shot.subject_cooldown == policy.subject_cooldown and shot.location_cooldown == policy.location_cooldown, "live event candidate resolves cooldown policy from catalog")
+  policy_candidates += 1
+ check(policy_candidates > 0, "live event candidates expose presentation cooldown policy")
  var live_trace: Array = []
  for i in 24:
   for tick in 20: sim.step()
@@ -137,5 +157,40 @@ func priority_contract() -> void:
  assert(d.current_shot.key == "older")
  d.advance(0.1)
  assert(d.current_shot.key == "breaking", "Critical may preempt only after readable dwell")
+ d.free()
+ rig.free()
+
+func cooldown_contract() -> void:
+ var d := FixtureDirector.new()
+ var rig := Rig.new()
+ root.add_child(rig)
+ root.add_child(d)
+ d.simulation = rig
+ d.rig = rig
+ d.real_seconds = 100.0
+ var c := candidate("policy", 2, "event", "a")
+ c.focus = Vector3(200, 0, 0)
+ c.story_key = "story-policy"
+ c.subject_key = "citizen:policy"
+ # Deliberately distinct fixture values prove each catalog policy key controls
+ # eligibility independently instead of sharing one fixed duration.
+ c.story_cooldown = 30.0
+ c.subject_cooldown = 11.0
+ c.location_cooldown = 3.0
+ var place := "place:%d:%d" % [roundi(c.focus.x / 8.0), roundi(c.focus.z / 8.0)]
+ d.cooldowns["story:story-policy"] = 75.0
+ check(not d._eligible(c), "Story policy blocks until its own duration elapses")
+ d.cooldowns["story:story-policy"] = 69.0
+ d.cooldowns["subject:citizen:policy"] = 95.0
+ check(not d._eligible(c), "Subject policy has its distinct duration")
+ d.cooldowns["subject:citizen:policy"] = 88.0
+ d.cooldowns[place] = 98.0
+ check(not d._eligible(c), "Location policy has its distinct duration")
+ d.cooldowns[place] = 96.0
+ d.cooldowns["shot:policy"] = 99.0
+ check(d._eligible(c), "All candidate policy durations permit it after expiry")
+ var catalog_policy: Dictionary = Catalog.metadata({"kind":"COMBAT_CASUALTY"})
+ var from_catalog := candidate("from-catalog", 3, "event", "a")
+ check(from_catalog.story_cooldown == catalog_policy.story_cooldown and from_catalog.subject_cooldown == catalog_policy.subject_cooldown and from_catalog.location_cooldown == catalog_policy.location_cooldown, "candidate fixture carries catalog policy values")
  d.free()
  rig.free()

@@ -17,9 +17,9 @@ Evidence references are repository-relative and resolve against the branch. Focu
 | AC11 | PASS | Existing bounded journal, detached source snapshots and retention tests; `focused-reviewed/poc55_events_test.log`; `scripts/event_journal.gd`, `scripts/spectator_sources.gd`. |
 | AC12 | PASS | Schema, monotonic IDs, focus validity, malformed record and snapshot isolation; `focused-reviewed/poc55_events_test.log`; `scripts/event_journal.gd`. |
 | AC13 | PASS | Producer-policy audit and fixtures reject camera/editorial fields; `focused-reviewed/poc55_events_test.log`; producer sources listed in EC5/EC6. |
-| AC14 | PASS | Generic catalog, narrative adapter and extension docs; `focused-reviewed/poc55_events_test.log`; `scripts/spectator_event_catalog.gd`, `scripts/fishbowl_narrative_adapter.gd`. |
+| AC14 | PASS | Generic catalog, narrative adapter, extension docs, and hardening assertions that event candidates carry catalog policy values; `hardening-focused/poc55_events_test.log`, `hardening-focused/poc55_director_test.log`; `scripts/spectator_event_catalog.gd`, `scripts/fishbowl_narrative_adapter.gd`. |
 | AC15 | PASS | Unknown and malformed event consumers degrade safely; `focused-reviewed/poc55_events_test.log`. |
-| AC16 | PASS | 300-event retention, bounded presenter queues, suppression/milestone fixtures; `focused-reviewed/poc55_events_test.log`; `scripts/fishbowl_event_presenter.gd`. |
+| AC16 | PASS | 300-event retention, bounded presenter queues, suppression/milestone fixtures, and separate story/subject/place cooldown eligibility checks against catalog policy; `focused-reviewed/poc55_events_test.log`, `hardening-focused/poc55_director_test.log`; `scripts/fishbowl_event_presenter.gd`. |
 | AC17 | PASS | Four priority levels and rendered feed; `focused-reviewed/poc55_events_test.log`, `graphics/event-feed-priorities.png`. |
 | AC18 | PASS | Critical mappings for combat and survival classes; `focused-reviewed/poc55_events_test.log`; `scripts/spectator_event_catalog.gd`. |
 | AC19 | PASS | High mappings for deployment, conflict, completion and traversal; `focused-reviewed/poc55_events_test.log`. |
@@ -39,12 +39,12 @@ Evidence references are repository-relative and resolve against the branch. Focu
 | AC33 | PASS | Deterministic newest-unseen tie choice without RNG; `focused-reviewed/poc55_director_test.log`. |
 | AC34 | PASS | Dedicated Director RNG and four-mode state digest match; `EVIDENCE_BUNDLE.zip` (`isolation-final/isolation-*.json`), `scripts/fishbowl_camera_director.gd`. |
 | AC35 | PASS | Repeated fixed-seed Random sequence; `focused-reviewed/poc55_director_test.log`, `EVIDENCE_BUNDLE.zip` (`isolation-final/isolation-random.json`). |
-| AC36 | PASS | Story/subject/location cooldown and repeated-state checks; `focused-reviewed/poc55_director_test.log`. |
+| AC36 | PASS | Story/subject/location cooldown and repeated-state checks use each candidate’s catalog durations; hardening tests show no legacy fixed 20-second gate; `hardening-focused/poc55_director_test.log`. |
 | AC37 | PASS | Overview cadence and sustained-conflict exception; `focused-reviewed/poc55_director_test.log`, `docs/SPECTATOR_DIRECTOR.md`. |
 | AC38 | PASS | StrategyCamera owns physical transforms; rendered framing and source audit; `graphics/*.png`, `scripts/strategy_camera.gd`. |
 | AC39 | PASS | 21 live civilian milestones across accepted scenarios; `civilian-coverage.json`, `scripts/event_fact_context.gd`. |
-| AC40 | PASS | Three-party live production covers 39 kinds and conditional elimination; `live/producer-evidence.json`, `live/producer-conflict.json`. |
-| AC41 | PASS | 6,200-tick attack-order digest compared with journal milestone kinds; `live/producer-evidence.json`, `scripts/poc55_producer_test.gd`. |
+| AC40 | PASS | Three-party live production covers 38 spectator fact kinds and conditional elimination; `ABILITY_STATE` remains in Armory internals and is excluded from the spectator journal, feed, and event candidates; `hardening-focused/producers.json`, `hardening-focused/poc55_events_test.log`, `live/producer-evidence.json`, `live/producer-conflict.json`. |
+| AC41 | PASS | 6,200-tick attack-order digest remains `c7847e27ffedeb53938fe077f4425e8468ccb1cd7cdfe82929a67ce7ecf207b2` while journal milestone kinds exclude mechanical ability telemetry; `hardening-focused/producers.json`, `scripts/poc55_producer_test.gd`. |
 | AC42 | PASS | Priority/Random live military framing, Follow conflict target and rendered frame; `EVIDENCE_BUNDLE.zip` (`isolation-final/isolation-*.json`), `target-lifecycles.json`, `graphics/combat-mobilization-framing.png`. |
 | AC43 | PASS | Clockwork/Verdant/Scavenger identities in three-party producer trace, world-event identity assertions and final feed capture; `live/producer-evidence.json`, `focused-reviewed/poc55_events_test.log`, `graphics/combat-mobilization-framing.png`. |
 | AC44 | PASS | Fresh production snapshots match across all modes at 1,000/3,000/6,200 ticks; `EVIDENCE_BUNDLE.zip` (`isolation-final/isolation-*.json`); snapshot scope documented in `docs/SPECTATOR_DIRECTOR.md`. |
@@ -76,11 +76,11 @@ The final focused and isolation receipts are retained with the branch. Existing 
 |---|---|---|
 | EC1 | PASS | User-approved contract v1.0 and “go ahead” authorization are preserved in the contract appendix; `FINAL_REVIEW.md` records verified branch publication and no-merge state. |
 | EC2 | PASS | `focused-reviewed/poc55_target_lifecycle_test.log`, `ui.json`, and `docs/SPECTATOR_DIRECTOR.md` cover physical camera ownership, valid identity, live resolution, and manual input. |
-| EC3 | PASS | Event and producer suites plus the world event trace in `EVIDENCE_BUNDLE.zip` verify journal schema and society-local civilization context across existing sources. |
-| EC4 | PASS | Director trace, `cadence.json`, and `isolation-final/isolation-summary.json` verify priority, seeded random sampling, cooldowns and mode isolation. |
+| EC3 | PASS | Event and producer suites verify journal schema and society-local context; `ABILITY_STATE` remains in Armory evidence without being published to the journal/feed/candidate source; `hardening-focused/poc55_events_test.log`, `hardening-focused/producers.json`, `EVIDENCE_BUNDLE.zip`. |
+| EC4 | PASS | Director tests verify story/subject/location eligibility uses catalog durations; fresh isolation receipt verifies mode equality at ticks 1000/3000/6200; `hardening-focused/poc55_director_test.log`, `hardening-isolation/isolation-summary.json`, `cadence.json`. |
 | EC5 | PASS | `civilian-coverage.json` has 21 live accepted-scenario milestone records and source receipts. |
-| EC6 | PASS | `live/producer-evidence.json` and `live/producer-conflict.json` cover the three-party 6,200-tick military scenario and conditional elimination. |
+| EC6 | PASS | Live 6,200-tick production validates two KIT_LOST records against their dead citizens’ casualty positions and confirms event navigation, economy, Armory, and combat state; `hardening-focused/producers.json`, `hardening-focused/poc55_producer_test.log`, `live/producer-evidence.json`, `live/producer-conflict.json`. |
 | EC7 | PASS | `regression/REGRESSION_RESULTS.md`, canonical summary files, and `EVIDENCE_BUNDLE.zip` retain accepted gameplay and determinism results. |
-| EC8 | PASS | Seven final reviewed screenshots in `graphics/` and renderer metadata in `ui.json`. |
+| EC8 | PASS | Renderer evidence includes a readable KIT LOST card and post-click camera frame at the off-depot casualty location; `graphics/kit-lost-event-focus.png`, `ui.json`, `hardening-focused/poc55_ui_test.log`. |
 | EC9 | PASS | Milestone-to-commit table in `docs/POC55_IMPLEMENTATION_REPORT.md`, feature branch history, and exact evidence paths. |
 | EC10 | PASS | `FINAL_REVIEW.md` records independent AC/EC acceptance at the reviewed code SHA; the evidence bundle and hashes are verified on the published branch. |

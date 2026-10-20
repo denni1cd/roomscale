@@ -127,6 +127,31 @@ func run() -> void:
 	check(not director.resolve_event(invalid).get("valid", false), "invalid event has no invented focus")
 	invalid.focus_valid = true
 	check(director.resolve_event(invalid).get("valid", false), "historical focus fallback")
+	var bounds: Rect2 = sim.coordinator.navigation.room_bounds()
+	var loss_point: Vector2 = bounds.position + bounds.size * Vector2(0.75, 0.75)
+	var loss_focus := Vector3(loss_point.x, sim.coordinator.depot_station.y, loss_point.y)
+	check(director.valid_focus(loss_focus) and loss_focus.distance_to(sim.coordinator.depot_station) > 8.0, "KIT_LOST display fixture is a valid non-depot casualty location")
+	sim.journal.record(sim.seconds + 1.0, "KIT_LOST", "Issued equipment was lost with a fallen citizen.", {"id":"kit:ui-casualty","citizen_id":citizen.citizen_id,"state":"LOST"}, loss_focus, "ui-kit-loss", {"subject_type":"equipment","subject_id":"kit:ui-casualty","story_key":"equipment:ui-kit-loss"})
+	hud.advance(0.1)
+	await process_frame
+	var loss_row: Button = hud.feed_rows.get_child(1)
+	var loss_event: Dictionary = loss_row.get_meta("event")
+	check(loss_event.kind == "KIT_LOST" and loss_row.text.contains("KIT LOST") and loss_row.text.contains("fallen citizen"), "KIT_LOST appears as a readable story card")
+	director.set_mode(director.PRIORITY)
+	var loss_click := InputEventMouseButton.new()
+	loss_click.button_index = MOUSE_BUTTON_LEFT
+	loss_click.position = loss_row.get_global_rect().get_center()
+	loss_click.pressed = true
+	root.push_input(loss_click, true)
+	await process_frame
+	loss_click = loss_click.duplicate()
+	loss_click.pressed = false
+	root.push_input(loss_click, true)
+	await process_frame
+	settle(rig)
+	check(director.mode == director.OFF and rig.target.distance_to(loss_focus) < 4.0, "clicking KIT_LOST focuses casualty location")
+	check(rig.target.distance_to(sim.coordinator.depot_station) > 8.0, "KIT_LOST click does not frame depot")
+	await capture("kit-lost-event-focus")
 	var f3 := InputEventKey.new()
 	f3.keycode = KEY_F3
 	f3.pressed = true

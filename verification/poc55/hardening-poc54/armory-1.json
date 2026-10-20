@@ -1,0 +1,114 @@
+{
+  "armory": {
+    "blocked": "survival crisis",
+    "kits": {
+      "clockwork_alpha:kit:1": {
+        "citizen_id": -1,
+        "equipment_id": "ranged_kit",
+        "id": "clockwork_alpha:kit:1",
+        "owner": "clockwork_alpha",
+        "role": "ranged",
+        "state": "STOCKED",
+        "variant": "normal"
+      },
+      "clockwork_alpha:kit:2": {
+        "citizen_id": -1,
+        "equipment_id": "heavy_kit",
+        "id": "clockwork_alpha:kit:2",
+        "owner": "clockwork_alpha",
+        "role": "heavy",
+        "state": "STOCKED",
+        "variant": "normal"
+      }
+    },
+    "projects": {
+      "clockwork_alpha:equipment:1": {
+        "cost": {
+          "metal": 3,
+          "wood": 1
+        },
+        "equipment_id": "heavy_kit",
+        "evaluation": 1,
+        "id": "clockwork_alpha:equipment:1",
+        "kit": "clockwork_alpha:kit:2",
+        "required_work": 12.0,
+        "role": "heavy",
+        "state": "COMPLETE",
+        "tickets": [
+          2,
+          3
+        ],
+        "variant": "normal",
+        "work": 12.0,
+        "workers": {
+          "0": 12.0
+        }
+      },
+      "clockwork_alpha:equipment:2": {
+        "cost": {
+          "metal": 1,
+          "wood": 1
+        },
+        "equipment_id": "ranged_kit",
+        "evaluation": 2,
+        "id": "clockwork_alpha:equipment:2",
+        "kit": "clockwork_alpha:kit:1",
+        "required_work": 8.0,
+        "role": "ranged",
+        "state": "COMPLETE",
+        "tickets": [
+          4,
+          5
+        ],
+        "variant": "normal",
+        "work": 7.99999999999999,
+        "workers": {
+          "9": 7.99999999999999
+        }
+      }
+    },
+    "stock": {
+      "artillery": 0,
+      "heavy": 1,
+      "line": 0,
+      "ranged": 1,
+      "skirmisher": 0
+    }
+  },
+  "economy": {
+    "food": {
+      "available": 20.0,
+      "consumed": 0.0,
+      "delivered": 0.0,
+      "in_transit": 0.0,
+      "received": 0.0,
+      "reserved": 0.0
+    },
+    "metal": {
+      "available": 13.0,
+      "consumed": 4.0,
+      "delivered": 0.0,
+      "in_transit": 0.0,
+      "received": 20.0,
+      "reserved": 3.0
+    },
+    "water": {
+      "available": 29.0,
+      "consumed": 1.0,
+      "delivered": 0.0,
+      "in_transit": 0.0,
+      "received": 0.0,
+      "reserved": 0.0
+    },
+    "wood": {
+      "available": 18.0,
+      "consumed": 2.0,
+      "delivered": 0.0,
+      "in_transit": 0.0,
+      "received": 20.0,
+      "reserved": 0.0
+    }
+  },
+  "failures": [],
+  "result": "PASS"
+}
