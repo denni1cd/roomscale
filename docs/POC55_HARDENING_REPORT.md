@@ -40,4 +40,4 @@ git diff --check
 
 ## Publication and review
 
-The feature remains on `codex/spectator-director`; it has not been merged. Rules Lawyer’s independent AC/EC review and the final published branch SHA are recorded in `verification/poc55/FINAL_REVIEW.md` after review.
+Rules Lawyer reviewed implementation SHA `474d1f0ea77961c8201f0cd948478f1166dc2435` and returned COMPLETE for AC14/EC4; all other accepted AC/EC results remain valid. The branch remains `codex/spectator-director` and has not been merged. The final documentation/evidence refresh follows the reviewed code commit; its branch SHA is included in the delivery report.

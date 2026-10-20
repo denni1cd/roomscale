@@ -83,4 +83,4 @@ The final focused and isolation receipts are retained with the branch. Existing 
 | EC7 | PASS | `regression/REGRESSION_RESULTS.md`, canonical summary files, and `EVIDENCE_BUNDLE.zip` retain accepted gameplay and determinism results. |
 | EC8 | PASS | Renderer evidence includes a readable KIT LOST card and post-click camera frame at the off-depot casualty location; `graphics/kit-lost-event-focus.png`, `ui.json`, `hardening-focused/poc55_ui_test.log`. |
 | EC9 | PASS | Milestone-to-commit table in `docs/POC55_IMPLEMENTATION_REPORT.md`, feature branch history, and exact evidence paths. |
-| EC10 | PASS | `FINAL_REVIEW.md` records independent AC/EC acceptance at the reviewed code SHA; the evidence bundle and hashes are verified on the published branch. |
+| EC10 | PASS | `FINAL_REVIEW.md` records Rules Lawyer COMPLETE at hardening code SHA `474d1f0ea77961c8201f0cd948478f1166dc2435`; all AC01–AC50 and EC1–EC10 remain accepted and the 568-entry archive manifest/checksum were verified. |

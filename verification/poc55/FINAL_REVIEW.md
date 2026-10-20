@@ -1,9 +1,9 @@
-# POC 5.5 final independent review
+# POC 5.5 hardening final independent review
 
-The independent Rules Lawyer reviewed `codex/spectator-director` at code SHA `58fe00231bf6fb7250d15b87e0e58a00d0b95e75` and returned **COMPLETE**. All acceptance criteria AC01–AC50 and supplementary criteria EC1–EC10 passed. The review found no blocking gaps or unauthorized scope expansion.
+Rules Lawyer reviewed `codex/spectator-director` at hardening code SHA `474d1f0ea77961c8201f0cd948478f1166dc2435` and returned **COMPLETE**. AC14 and EC4 passed after the live cooldown-policy candidate assertions were moved until after the simulation had populated its event journal and their failure path was made fatal. All other previously accepted AC01–AC50 and EC1–EC10 results remain valid.
 
-The review confirmed that the world-event society-to-civilization lookup and automatic-shot role-label overlap findings were repaired, with focused assertions and seven regenerated renderer captures. It also verified the three-run canonical fingerprint `6a44ed56eb40fe9e92ee89b3b3037be4a7f66124b82f79a54f2ef204127c449a`, the passing accepted regression receipts, four-mode isolation snapshots, and evidence archive checksum.
+The bounded hardening verifies that KIT_LOST focuses and navigates to the dead citizen’s factual casualty position; mechanical `ABILITY_STATE` evidence remains internal to Armory and does not enter spectator stories; and Director cooldown eligibility consumes story, subject, and location durations supplied by the catalog. The accepted combat attack digest remains unchanged. No gameplay changes or unauthorized scope expansion were found.
 
-After that code review, commit `bcf636a` refreshed the evidence archive and per-file manifest so the bundled acceptance matrix matches the committed matrix. The final published branch tip is recorded by the branch itself; the package refresh changes no implementation code. The branch remains available for review and has not been merged into `main`.
+Rules Lawyer verified all 568 evidence manifest entries and the archive checksum `47c321bef2ee88c9d4ea4a36c318b40db956ca70968bb7bc821493922c0fd7ca`. Focused passes all five suites. Isolation, Graphics, two-run POC54, three-run Canonical, and full Regression receipts remain passing. The working tree and diff checks were clean at review.
 
-The reviewer documented these remaining behavior limits: overview fallback may hold when no eligible subject exists, and sustained conflict may defer a wide context shot. Both are documented product behaviors.
+The branch remains `codex/spectator-director` and has not been merged into `main`. The final documentation and evidence refresh is a separate review-record commit after the reviewed implementation SHA; its published branch SHA is supplied in the delivery report.
