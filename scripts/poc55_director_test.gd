@@ -79,6 +79,12 @@ func live() -> void:
  director.set_process(false)
  director.set_mode(director.RANDOM)
  director.set_spectator_seed(55)
+ var live_trace: Array = []
+ for i in 24:
+  for tick in 20: sim.step()
+  director.advance(8)
+  live_trace.append(director.current_shot.key)
+  assert(director.valid_focus(director.last_focus))
  var published_events: Array[Dictionary] = director.events()
  var policy_candidates := 0
  for shot in director.collect_candidates():
@@ -89,12 +95,6 @@ func live() -> void:
   check(shot.has("story_cooldown") and shot.has("subject_cooldown") and shot.has("location_cooldown") and shot.story_cooldown == policy.story_cooldown and shot.subject_cooldown == policy.subject_cooldown and shot.location_cooldown == policy.location_cooldown, "live event candidate resolves cooldown policy from catalog")
   policy_candidates += 1
  check(policy_candidates > 0, "live event candidates expose presentation cooldown policy")
- var live_trace: Array = []
- for i in 24:
-  for tick in 20: sim.step()
-  director.advance(8)
-  live_trace.append(director.current_shot.key)
-  assert(director.valid_focus(director.last_focus))
  var choices: Array = director.follow_choices()
  assert(not choices.is_empty())
  assert(director.follow(choices[0]))
@@ -104,6 +104,11 @@ func live() -> void:
  assert(director.mode == director.OFF)
  director.advance(90)
  assert(director.mode == director.OFF)
+ if not failures.is_empty():
+  push_error("POC55_DIRECTOR_LIVE_FAIL " + JSON.stringify(failures))
+  scene.free()
+  quit(1)
+  return
  print("POC55_DIRECTOR_LIVE PASS ", live_trace)
  scene.free()
  quit()
