@@ -7,7 +7,7 @@
 **Worktree:** `C:\Users\Zero\.codex\worktrees\poc56-stabilization\roomscale`
 
 **Starting `main` SHA:** `b4a0f7579379aceb0fd0e33fa8d2087e10f63614`
-**Current phase:** `READY FOR REVIEW` — WP1–WP7 implementation, real-renderer evidence, focused and cross-cutting regressions, and cleanup are complete. The independent Rules Lawyer review is pending; the branch remains unmerged.
+**Current phase:** `DELIVERED` — the Rules Lawyer returned `COMPLETE`; PR [#11](https://github.com/denni1cd/roomscale/pull/11) is open; the required GitHub Actions Fast check passes; the branch remains unmerged.
 **Selected pace:** `0.5x`, confirmed in a rendered live-feel probe after comparing it to the current 1x reference. Existing 1x remains the deterministic regression reference.
 
 This file is the compact implementation scaffold and running evidence index. The attached POC 5.6 plan and the user-approved Execution Contract remain authoritative for scope and acceptance.
@@ -160,12 +160,12 @@ Raw run outputs are ignored runtime evidence; curated renderer PNGs and the conc
 | 35 | All plan renderer evidence exists | 26-entry `renderer-evidence.json` manifest and PNGs under `verification/poc56/final/`, including actual menu launch, selected entities, highlight coexistence, construction, population, spacing, and motion captures. |
 | 36 | No manual user development/evidence work | Implementation, evidence capture, and regression gates are automated in branch scripts. |
 | 37 | Walls/defenses remain excluded | Final scope review against the approved out-of-scope boundary is part of independent review. |
-| 38 | Protected-main branch/PR workflow retained | Branch is based on the approved POC 5.5 SHA; the PR will remain unmerged. |
+| 38 | Protected-main branch/PR workflow retained | Branch is based on the approved POC 5.5 SHA; PR #11 is open and unmerged. |
 | 39 | Strategerium contract reached independent `CONTRACT APPROVED` | Approved contract retained in task history |
 | 40 | No target implementation before explicit user approval | Task history; approval received as “go for it!” before Adeptus invocation and branch changes |
 | 41 | Installed Adeptus workflow used after approval | Loaded skill path and WP gate/handoff record |
-| 42 | Adeptus `READY FOR REVIEW` then external Rules Lawyer review | Complete implementation/evidence packet is submitted for external final review; verdict remains pending. |
-| 43 | Push branch/open PR/run Fast; do not merge | Push, PR URL, branch SHA, CI Fast result, and unmerged state remain delivery steps after independent approval. |
+| 42 | Adeptus `READY FOR REVIEW` then external Rules Lawyer review | The complete implementation/evidence packet received the independent Rules Lawyer `COMPLETE` verdict before delivery. |
+| 43 | Push branch/open PR/run Fast; do not merge | PR [#11](https://github.com/denni1cd/roomscale/pull/11) is open from branch `codex/poc56-playtest-stabilization`; the required Fast check and all workflow jobs pass. PR remains unmerged. |
 | 44 | Approved WP0–WP7 boundaries retained | Source and diff scope review is included in final independent review. |
 | 45 | Baseline/reconciliation completed before product changes | WP0 baseline identity, gates, renderer receipts, source mapping, issue dispositions, launch map, and confirmed 0.5x decision above. |
 
