@@ -1675,7 +1675,6 @@ func select_resource_object_at_screen_position(screen_position: Vector2) -> bool
 	var hit: Dictionary = get_world_3d().direct_space_state.intersect_ray(query)
 	if hit.is_empty(): return false
 	var object_id := String(hit.collider.get_meta("object_id", ""))
-	if civilization.hud != null: civilization.hud.select_object(object_id)
 	return _select_world_entity("furniture", object_id)
 
 
@@ -1693,6 +1692,7 @@ func select_inspectable_entity_at_screen_position(screen_position: Vector2) -> b
 			candidates.append({"type":project_type, "id":String(project.id), "position":project.site + Vector3.UP * 1.0, "radius":54.0})
 	for object_id in simulation.resources.objects:
 		var object: Dictionary = simulation.resources.objects[object_id]
+		if not _furniture_is_selectable(simulation, String(object_id)): continue
 		var data: Dictionary = object.data
 		var at: Array = data.get("position", [0,0,0])
 		var dims: Array = data.get("dimensions", [0,0,0])
@@ -1728,8 +1728,10 @@ func select_inspectable_entity_at_screen_position(screen_position: Vector2) -> b
 func _select_world_entity(entity_type: String, entity_id: String) -> bool:
 	var simulation := get_node_or_null("CivilizationSimulation")
 	if simulation == null: return false
+	if entity_type == "furniture" and not _furniture_is_selectable(simulation, entity_id): return false
 	var descriptor: Dictionary = EntityInspector.describe(simulation, entity_type, entity_id)
 	if descriptor.is_empty(): return false
+	if entity_type == "furniture" and simulation.hud != null: simulation.hud.select_object(entity_id)
 	get_node("CameraRig").notify_manual_input("world_entity_selection")
 	_selected_citizen = simulation.citizen_for(int(entity_id)) if entity_type == "citizen" else null
 	if entity_type == "citizen" and _selected_citizen == null and simulation.world_simulation != null:
@@ -1742,6 +1744,28 @@ func _select_world_entity(entity_type: String, entity_id: String) -> bool:
 	if simulation.spectator != null: simulation.spectator.show_entity_selection(descriptor)
 	_update_population_ui()
 	return true
+
+
+func _furniture_is_selectable(simulation: Node, object_id: String) -> bool:
+	if not simulation.resources.objects.has(object_id): return false
+	if simulation.salvage.objects.has(object_id) and simulation.salvage.depleted(object_id): return false
+	var object_root: Node3D = simulation.scene.get_room_object(object_id) as Node3D
+	return object_root != null and object_root.is_visible_in_tree()
+
+
+func select_world_entity_from_ui(entity_type: String, entity_id: String) -> bool:
+	return _select_world_entity(entity_type, entity_id)
+
+
+func refresh_selected_world_entity() -> void:
+	var simulation := get_node_or_null("CivilizationSimulation")
+	if simulation == null or _selected_world_descriptor.is_empty(): return
+	var descriptor: Dictionary = EntityInspector.describe(simulation, String(_selected_world_descriptor.get("type", "")), String(_selected_world_descriptor.get("id", "")))
+	if descriptor.is_empty(): return
+	_selected_world_descriptor = descriptor.duplicate(true)
+	if simulation.hud != null: simulation.hud.show_world_inspection(descriptor)
+	if simulation.spectator != null: simulation.spectator.show_entity_selection(descriptor)
+	_update_population_ui()
 
 
 func select_citizen_at_screen_position(screen_position: Vector2) -> bool:

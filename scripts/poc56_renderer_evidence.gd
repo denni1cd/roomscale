@@ -195,7 +195,20 @@ func capture_production_world() -> void:
 	var intact_bookcase: Node3D = simulation.scene.get_room_object("bookcase")
 	camera.focus_at(intact_bookcase.global_position + Vector3.UP * 31.5, 90.0, 52.0, deg_to_rad(12.0))
 	await click_world_position(intact_bookcase.global_position + Vector3.UP * 31.5, "furniture", "bookcase", "viewport click selects intact furniture")
-	await capture("selected-bookcase-full", {"state":"AVAILABLE", "object_position":intact_bookcase.global_position, "descriptor":simulation.spectator.selection_label.text})
+	var salvage_choice_id: String = simulation.hud.object_ids[simulation.hud.object_choice.selected] if simulation.hud.object_choice.selected >= 0 else ""
+	check(salvage_choice_id == "bookcase" and not simulation.hud.authorize.disabled, "clicked bookcase matches the enabled production salvage action")
+	# The playtest uses the fishbowl presentation, which normally hides this legacy
+	# action row. Reveal it here so the real-renderer evidence proves both surfaces
+	# describe the same selected furniture and the matching action is available.
+	simulation.hud.show()
+	simulation.hud.inspection.show()
+	simulation.hud.object_choice.show()
+	simulation.hud.authorize.show()
+	if simulation.hud.fishbowl_events != null: simulation.hud.fishbowl_events.hide()
+	if simulation.hud.fishbowl_development != null: simulation.hud.fishbowl_development.hide()
+	simulation.hud.refresh()
+	await capture("selected-bookcase-full", {"state":"AVAILABLE", "object_position":intact_bookcase.global_position, "descriptor":simulation.spectator.selection_label.text, "salvage_choice":salvage_choice_id, "action":simulation.hud.authorize.text, "action_enabled":not simulation.hud.authorize.disabled, "hud_inspection":simulation.hud.inspection.text})
+	simulation.hud.hide()
 
 	if simulation.authorize_salvage("bookcase"):
 		var bookcase_state: Dictionary = simulation.salvage.objects.bookcase

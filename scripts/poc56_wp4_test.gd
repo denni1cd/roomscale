@@ -52,6 +52,7 @@ func run() -> void:
 	var bookcase: Node3D = sim.scene.get_room_object("bookcase")
 	await click_world_position(scene, sim, bookcase.global_position + Vector3.UP * 31.5, "furniture", "bookcase", "viewport click selects room furniture")
 	check(is_instance_valid(event_highlight) and is_instance_valid(sim.spectator.selection_highlight), "entity selection highlight coexists with POC 5.5 event highlight")
+	await test_furniture_salvage_selection(scene, sim)
 	await click_world_position(scene, sim, sim.citizens[0].global_position + Vector3.UP, "citizen", str(sim.citizens[0].citizen_id), "viewport click selects a citizen")
 	var resource_id := String(sim.resources.sources.keys()[0])
 	var resource: Dictionary = sim.resources.sources[resource_id]
@@ -65,6 +66,95 @@ func run() -> void:
 	await test_strategic_site_click()
 	print("POC56_WP4_" + ("PASS" if failures.is_empty() else "FAIL") + " " + JSON.stringify(failures))
 	quit(0 if failures.is_empty() else 1)
+
+func test_furniture_salvage_selection(scene: Node, sim: Node) -> void:
+	var salvageable: Array[String] = []
+	for object_id in sim.salvage.objects:
+		var id := String(object_id)
+		if sim.salvage.depleted(id) or bool(sim.salvage.objects[id].authorized): continue
+		if not sim.salvage_approaches(id).is_empty(): salvageable.append(id)
+	check(salvageable.size() >= 2, "production access checks expose at least two unapproved salvageable furniture objects")
+	if salvageable.size() < 2: return
+	var object_a := salvageable[0]
+	var object_b := salvageable[1]
+	check(sim.hud.select_object(object_a) and sim.hud.object_ids[sim.hud.object_choice.selected] == object_a, "existing salvage selector is explicitly set to object A")
+	check(not sim.salvage.objects[object_a].authorized and not sim.salvage.objects[object_b].authorized, "both selected test objects begin unauthorized")
+	var object_b_data: Dictionary = sim.resources.objects[object_b].data
+	var object_b_dimensions: Array = object_b_data.get("dimensions", [0, 0, 0])
+	var object_b_root: Node3D = sim.scene.get_room_object(object_b)
+	var object_b_focus := object_b_root.global_position + Vector3.UP * float(object_b_dimensions[1]) * 0.5
+	await click_world_position(scene, sim, object_b_focus, "furniture", object_b, "real viewport click selects furniture B after selector A")
+	var selected: Dictionary = scene.get("_selected_world_descriptor")
+	check(String(selected.get("id", "")) == object_b and String(selected.get("type", "")) == "furniture", "generalized inspector descriptor identifies clicked furniture B")
+	check(sim.hud.object_ids[sim.hud.object_choice.selected] == object_b and sim.hud.world_descriptor.get("id", "") == object_b, "existing salvage selector and HUD inspector both synchronize to furniture B")
+	check(not sim.hud.authorize.disabled, "Authorize Salvage action is enabled for the selected unapproved furniture")
+	check(int(sim.camera_director.mode) == sim.camera_director.OFF, "viewport furniture selection transfers camera ownership to manual control")
+	check(is_instance_valid(sim.spectator.highlight) and is_instance_valid(sim.spectator.selection_highlight), "furniture selection preserves the POC 5.5 event highlight")
+	# WP4 runs in fishbowl mode, where the normal HUD is intentionally hidden. Reveal
+	# the same production controls so this click still traverses the real Button path.
+	sim.hud.show()
+	sim.hud.inspection.show()
+	sim.hud.object_choice.show()
+	sim.hud.authorize.show()
+	if sim.hud.fishbowl_events != null: sim.hud.fishbowl_events.hide()
+	if sim.hud.fishbowl_development != null: sim.hud.fishbowl_development.hide()
+	await click_control(sim.hud.authorize)
+	check(bool(sim.salvage.objects[object_b].authorized), "normal Authorize Salvage button authorizes clicked furniture B")
+	check(not bool(sim.salvage.objects[object_a].authorized), "previously selected object A is not authorized by furniture B click")
+	selected = scene.get("_selected_world_descriptor")
+	check(String(selected.get("id", "")) == object_b and "Authorization: Authorized" in "\n".join(selected.get("details", [])), "world selection descriptor refreshes to authorized state after the action")
+	check(sim.hud.inspection.text.contains("Authorization: Authorized") and sim.hud.inspection.text.contains("Salvage authorized"), "HUD inspector shows authoritative authorization state and action result")
+	check(sim.spectator.selection_label.text.contains("Authorization: Authorized") and sim.hud.authorize.disabled, "spectator inspector and action availability refresh after authorization")
+	sim.hud.hide()
+
+	var non_salvageable_id := "rug"
+	var non_salvageable: Node3D = sim.scene.get_room_object(non_salvageable_id)
+	var non_salvageable_data: Dictionary = sim.resources.objects[non_salvageable_id].data
+	var non_salvageable_dimensions: Array = non_salvageable_data.get("dimensions", [0, 0, 0])
+	var non_salvageable_focus := non_salvageable.global_position + Vector3.UP * float(non_salvageable_dimensions[1]) * 0.5
+	await click_world_position(scene, sim, non_salvageable_focus, "furniture", non_salvageable_id, "non-salvageable furniture remains selectable for inspection")
+	selected = scene.get("_selected_world_descriptor")
+	check("Authorization: Not salvageable" in "\n".join(selected.get("details", [])) and sim.hud.object_choice.selected == -1 and sim.hud.authorize.disabled, "non-salvageable inspection clears stale salvage choice and disables its action")
+
+	check(sim.authorize_salvage(object_a), "production authorization accepts furniture A for depletion regression")
+	var worker: Node3D = sim.citizens[0]
+	var target: Vector3 = sim.salvage_targets[object_a]
+	worker.global_position = target
+	var state: Dictionary = sim.salvage.objects[object_a]
+	var root: Node3D = sim.scene.get_room_object(object_a)
+	for stage_index in range(state.stages.size()):
+		var stage: Dictionary = state.stages[stage_index]
+		var task: Dictionary = sim.coordinator.create_construction_task({"task_type":"SALVAGE", "object_id":object_a, "stage":stage_index, "source":target, "target":target}, worker.citizen_id)
+		worker.task_id = int(task.id)
+		worker.task_type = "SALVAGE"
+		worker.state = "WORK"
+		worker._destination = target
+		sim.coordinator.activate_task(int(task.id))
+		var completed: bool = sim.work(worker, float(stage.work) / sim.needs.work_factor(worker.needs))
+		check(completed, "real production salvage completes furniture A stage %d" % (stage_index + 1))
+		sim.coordinator.complete_task(int(task.id))
+	check(sim.salvage.depleted(object_a) and not root.visible, "furniture A is physically removed only after production salvage depletion")
+	var camera: Camera3D = scene.get_node("CameraRig/Camera")
+	scene.get_node("CameraRig").focus_at(root.global_position + Vector3.UP * float(sim.resources.objects[object_a].data.dimensions[1]) * 0.5, 90.0, 52.0, 0.0)
+	await process_frame
+	var removed_position := camera.unproject_position(root.global_position + Vector3.UP * float(sim.resources.objects[object_a].data.dimensions[1]) * 0.5)
+	scene.set("_selected_world_descriptor", {})
+	var selected_removed: bool = scene.select_inspectable_entity_at_screen_position(removed_position)
+	selected = scene.get("_selected_world_descriptor")
+	check(not selected_removed or selected.get("type", "") != "furniture" or selected.get("id", "") != object_a, "depleted furniture A cannot be selected through the generalized picker")
+
+
+func click_control(control: Control) -> void:
+	var press := InputEventMouseButton.new()
+	press.button_index = MOUSE_BUTTON_LEFT
+	press.position = control.get_global_rect().get_center()
+	press.pressed = true
+	root.push_input(press, true)
+	await process_frame
+	var release := press.duplicate() as InputEventMouseButton
+	release.pressed = false
+	root.push_input(release, true)
+	await process_frame
 
 func click_world_position(scene: Node, sim: Node, world_position: Vector3, expected_type: String, expected_id: String, label: String) -> void:
 	var camera: Camera3D = scene.get_node("CameraRig/Camera")

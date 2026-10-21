@@ -59,7 +59,15 @@ static func _furniture(sim: Node, object_id: String) -> Dictionary:
 	var object: Dictionary = sim.resources.objects[object_id]
 	var salvage: Dictionary = sim.salvage.objects.get(object_id, {})
 	var data: Dictionary = object.data
-	var details: Array[String] = ["Type: %s · Material: %s" % [String(data.get("kind", "object")).replace("_", " "), String(object.profile.material)], "Salvage: %s · Stage %d/%d" % [String(salvage.get("state", "PROTECTED")), int(salvage.get("stage", 0)), salvage.get("stages", []).size()], "Authorization: %s · Work: %.1f seconds" % ["Authorized" if salvage.get("authorized", false) else "Protected", float(salvage.get("progress", 0.0))]]
+	var details: Array[String] = ["Type: %s · Material: %s" % [String(data.get("kind", "object")).replace("_", " "), String(object.profile.material)]]
+	if salvage.is_empty():
+		details.append("Salvage: Not available")
+		details.append("Authorization: Not salvageable")
+	else:
+		var status := "Authorized" if salvage.get("authorized", false) else "Not authorized"
+		if sim.salvage.depleted(object_id): status = "Depleted"
+		details.append("Salvage: %s · Stage %d/%d" % [String(salvage.get("state", "INTACT")), int(salvage.get("stage", 0)), salvage.get("stages", []).size()])
+		details.append("Authorization: %s · Work: %.1f seconds" % [status, float(salvage.get("progress", 0.0))])
 	var remaining: Dictionary = {}
 	var stages: Array = salvage.get("stages", [])
 	for index in range(int(salvage.get("stage", 0)), stages.size()):
