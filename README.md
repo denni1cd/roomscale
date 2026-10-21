@@ -63,10 +63,17 @@ Use **PowerShell 7** (`pwsh`) on Windows. Setup downloads the repository-pinned 
 4.7.2 standard x86-64 runtime into ignored `.tools/` if absent. Python 3.13+ is needed
 for developer campaign tooling, not for normal gameplay. No API key is required.
 
+The normal graphical launch opens the setup menu before the simulation starts. Choose
+the founder room for one society, the shared frontier for two or three societies, select
+a valid civilization for each slot, and choose an initial pace. The menu's defaults are
+the five-founder Clockwork session at 0.5x. The two-society preset uses
+`room_conflict`; the three-society preset uses `room_conflict_c`. Those combinations
+match the existing production scenarios, and do not imply arbitrary-N support.
+
 ```powershell
 ./SETUP_ROOM_SCALE.ps1
 
-# Canonical five-founder fishbowl
+# Existing direct launch wrappers (bypass the graphical setup menu)
 ./RUN_ROOM_SCALE_FISHBOWL.ps1
 ./RUN_ROOM_SCALE_FISHBOWL.ps1 -Civilization verdant
 ./RUN_ROOM_SCALE_FISHBOWL.ps1 -Civilization verdant -ManualCamera
@@ -84,8 +91,9 @@ files do not contain Clockwork- or Verdant-specific traversal coordinates or pre
 See [RoomDefinition contract](docs/RoomDefinition_Contract.md) and
 [reconstruction workflow](skills/roomscale-room-reconstruction/SKILL.md).
 
-Pause/1x/4x/10x control time; F3/Details opens diagnostics. Click a citizen to inspect
-its work. Keys 1/2/3 select room/settlement/citizen views. WASD/arrows pan, right drag
+Pause/0.5x/1x/4x/10x control time; 1x remains the deterministic regression reference.
+F3/Details opens diagnostics. Click supported world entities to inspect their current
+identity and state. Keys 1/2/3 select room/settlement/citizen views. WASD/arrows pan, right drag
 orbits, middle drag pans, wheel zooms and Q/E change height. In manual mode select an
 elevated surface and choose Reach/Explore; POC4 also exposes priorities, Secure Water
 and explicit salvage authorization. F12 saves a local capture under `verification/`.

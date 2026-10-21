@@ -97,6 +97,12 @@ func eligibility(state: Dictionary, emergency: bool, blocked: bool) -> String:
 	if blocked: return "Critical material project blocked"
 	return ""
 
+
+func player_snapshot(sim: Node, state: Dictionary) -> Dictionary:
+	var stable_elapsed := maxf(0.0, sim.seconds - stable_since) if stable_since >= 0.0 else 0.0
+	var cooldown_remaining := maxf(0.0, COOLDOWN - (sim.seconds - last_growth))
+	return {"population":int(state.get("population", 0)), "shelter_capacity":int(state.get("shelter", 0)), "headroom":int(state.get("shelter", 0)) - int(state.get("population", 0)), "cohort_size":cohort_size, "reason":reason, "stable_seconds":stable_elapsed, "stability_required":STABILITY, "cooldown_remaining":cooldown_remaining, "cooldown_duration":COOLDOWN, "can_grow_now":reason.begins_with("Growth ready")}
+
 func evaluate(sim: Node, state: Dictionary, emergency: bool, blocked: bool) -> void:
 	var why := eligibility(state, emergency, blocked)
 	if sim.founder_mode and (not sim.has_capability("workshop") or not sim.has_capability("storage")): why = "Settlement infrastructure not yet established"
@@ -120,7 +126,10 @@ func evaluate(sim: Node, state: Dictionary, emergency: bool, blocked: bool) -> v
 		return
 	# Ensure forecasts remain healthy immediately after the whole cohort joins.
 	for resource in ["food", "water"]:
-		if sim.economy.forecast(resource, sim.living_population() + cohort_size) < 2: return
+		if sim.economy.forecast(resource, sim.living_population() + cohort_size) < 2:
+			reason = "Post-growth %s reserves would be unsafe" % resource
+			return
+	reason = "Growth ready; admitting a real cohort"
 	var before: int = sim.living_population()
 	var water_before: float = sim.economy.forecast("water", before)
 	var food_before: float = sim.economy.forecast("food", before)

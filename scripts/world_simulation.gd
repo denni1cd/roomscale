@@ -55,6 +55,8 @@ func advance(delta: float) -> void:
 func step() -> void:
 	tick += 1
 	seconds += STEP
+	for citizen in citizens:
+		if is_instance_valid(citizen): citizen.begin_presentation_step()
 	for runtime in ordered_runtimes():
 		runtime.seconds = seconds
 		runtime.step_society()
@@ -206,6 +208,9 @@ func present_attack(attacker: Node3D, victim: Node3D) -> void:
 	attack_effects.append(CombatPresentation.shot(scene,start,finish,organic))
 
 func _process(delta: float) -> void:
+	var interpolation := clampf(accumulator / STEP, 0.0, 1.0)
+	for citizen in citizens:
+		if is_instance_valid(citizen): citizen.advance_presentation(interpolation)
 	# Renderer timing affects only cosmetic flashes and state labels.
 	for effect in attack_effects.duplicate():
 		if CombatPresentation.advance(effect,delta):

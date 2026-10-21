@@ -14,6 +14,12 @@ static func load_requested(room: Dictionary, navigation: Node) -> Dictionary:
 	var path := "res://scenarios/%s.json" % id
 	if not FileAccess.file_exists(path): return {"ok":false,"errors":["Unknown scenario: " + id]}
 	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
+	var override_text := OS.get_environment("ROOMSCALE_SESSION_CIVILIZATIONS")
+	if not override_text.is_empty() and parsed is Dictionary and parsed.get("participants", []) is Array:
+		var overrides := override_text.split(",", false)
+		if overrides.size() != parsed.participants.size(): return {"ok":false,"errors":["Session civilization selection count does not match scenario participants"]}
+		for index in range(overrides.size()):
+			if parsed.participants[index] is Dictionary: parsed.participants[index].definition_id = overrides[index].strip_edges().to_lower()
 	return prepare(parsed, room, navigation)
 
 static func prepare(value: Variant, room: Dictionary, navigation: Node) -> Dictionary:

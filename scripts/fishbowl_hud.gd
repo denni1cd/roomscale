@@ -2,6 +2,7 @@ extends Control
 ## Fishbowl observer: reusable edge-anchored controls, no strategic writes.
 const Adapter := preload("res://scripts/fishbowl_narrative_adapter.gd")
 const Presenter := preload("res://scripts/fishbowl_event_presenter.gd")
+const EntityInspector := preload("res://scripts/world_entity_inspector.gd")
 var simulation: Node
 var presenter := Presenter.new()
 var diagnostics := false
@@ -34,6 +35,9 @@ var highlight_target: Dictionary = {}
 var highlight_age := 0.0
 var highlight_duration := 4.0
 var details_button: CheckButton
+var selection_panel: PanelContainer
+var selection_label: Label
+var selection_highlight: Node3D
 
 func label_for(panel: Control, font_size: int = 16) -> Label:
 	var label := Label.new()
@@ -74,7 +78,7 @@ func configure(sim: Node) -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	simulation.hud.set_process(false)
-	status_panel = panel_at(Vector2.ZERO, Rect2(20, 18, 1000, 58))
+	status_panel = panel_at(Vector2.ZERO, Rect2(20, 18, 1000, 82))
 	status_panel.anchor_right = 1
 	status_panel.offset_right = -20
 	var lines := VBoxContainer.new()
@@ -85,6 +89,9 @@ func configure(sim: Node) -> void:
 	governor_label.add_theme_color_override("font_color", Color("dbbc7f"))
 	project_panel = panel_at(Vector2(1, 1), Rect2(-384, -260, 364, 170) if Adapter.is_verdant() else Rect2(-324, -200, 304, 110))
 	project_label = label_for(project_panel)
+	selection_panel = panel_at(Vector2(1, 0), Rect2(-390, 118, 370, 210))
+	selection_label = label_for(selection_panel, 15)
+	selection_panel.hide()
 	event_panel = panel_at(Vector2(0, 1), Rect2(20, -630, 370, 530))
 	event_panel.mouse_filter = Control.MOUSE_FILTER_STOP
 	var feed_scroll := ScrollContainer.new()
@@ -103,9 +110,9 @@ func configure(sim: Node) -> void:
 	controls_panel.add_child(controls)
 	controls.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	controls.add_theme_constant_override("separation", 8)
-	for multiplier in [0.0, 1.0, 4.0, 10.0]:
+	for multiplier in [0.0, 0.5, 1.0, 4.0, 10.0]:
 		var button := Button.new()
-		button.text = "Pause" if multiplier == 0 else "%d×" % int(multiplier)
+		button.text = "Pause" if multiplier == 0 else _speed_text(multiplier)
 		button.custom_minimum_size = Vector2(65, 34)
 		button.pressed.connect(func() -> void: simulation.speed = multiplier; wake(); refresh())
 		controls.add_child(button)
@@ -191,10 +198,14 @@ func advance(real_delta: float) -> void:
 
 func refresh() -> void:
 	var s := Adapter.status(simulation)
-	status_label.text = "Day %.2f   ·   Population %d   ·   Shelter %d   ·   Food %.1fd   ·   Water %.1fd   ·   Wood %.0f   ·   Metal %.0f   ·   %s" % [s.days, s.population, s.shelter, s.food_days, s.water_days, s.wood, s.metal, "Paused" if s.speed == 0 else "%d×" % int(s.speed)]
+	status_label.text = "Day %.2f   ·   Population %d   ·   Shelter %d   ·   Food %.1fd   ·   Water %.1fd   ·   Wood %.0f   ·   Metal %.0f   ·   %s" % [s.days, s.population, s.shelter, s.food_days, s.water_days, s.wood, s.metal, "Paused" if s.speed == 0 else _speed_text(s.speed)]
 	if Adapter.is_verdant():
-		status_label.text = "Day %.2f   ·   Population %d   ·   Shelter %d   ·   Food %.1fd   ·   Water %.1fd   ·   %s\n%s %.0f   ·   %s %.0f   ·   %s %.0f" % [s.days, s.population, s.shelter, s.food_days, s.water_days, "Paused" if s.speed == 0 else "%d×" % int(s.speed), Adapter.resource_name("wood"), s.wood, Adapter.resource_name("metal"), s.metal, Adapter.resource_name("mechanical_parts"), s.mechanical_parts]
-	governor_label.text = s.governor
+		status_label.text = "Day %.2f   ·   Population %d   ·   Shelter %d   ·   Food %.1fd   ·   Water %.1fd   ·   %s\n%s %.0f   ·   %s %.0f   ·   %s %.0f" % [s.days, s.population, s.shelter, s.food_days, s.water_days, "Paused" if s.speed == 0 else _speed_text(s.speed), Adapter.resource_name("wood"), s.wood, Adapter.resource_name("metal"), s.metal, Adapter.resource_name("mechanical_parts"), s.mechanical_parts]
+	var growth: Dictionary = simulation.population.player_snapshot(simulation, simulation.status())
+	governor_label.text = s.governor + "  ·  Growth %d/%d shelter spaces  ·  %s" % [maxi(0, int(growth.headroom)), int(growth.cohort_size), String(growth.reason)]
+	if float(growth.stable_seconds) > 0.0: governor_label.text += "  ·  Stability %.0f/%.0f sec" % [float(growth.stable_seconds), float(growth.stability_required)]
+	if float(growth.cooldown_remaining) > 0.0 and float(growth.cooldown_remaining) < float(growth.cooldown_duration): governor_label.text += "  ·  Cooldown %.0f sec" % float(growth.cooldown_remaining)
+	governor_label.text = Adapter.presentation_text(governor_label.text)
 	var p := Adapter.project(simulation)
 	project_panel.visible = not p.is_empty() and not diagnostics
 	if not p.is_empty(): project_label.text = "%s\n%s · %.0f%%" % [p.name, p.stage, p.progress * 100]
@@ -305,6 +316,30 @@ func show_highlight(resolved: Dictionary) -> void:
 	highlight.add_child(ring)
 
 
+func show_entity_selection(descriptor: Dictionary) -> void:
+	if descriptor.is_empty() or not bool(descriptor.get("valid", false)): return
+	var lines: Array[String] = [String(descriptor.get("title", "World entity"))]
+	for line in descriptor.get("details", []): lines.append(String(line))
+	selection_label.text = "\n".join(lines)
+	selection_panel.show()
+	if is_instance_valid(selection_highlight): selection_highlight.queue_free()
+	selection_highlight = Node3D.new()
+	selection_highlight.name = "EntitySelectionHighlight"
+	simulation.scene.add_child(selection_highlight)
+	selection_highlight.global_position = descriptor.get("focus", Vector3.ZERO) + Vector3.UP * 0.06
+	var ring := MeshInstance3D.new()
+	var torus := TorusMesh.new()
+	torus.inner_radius = 0.55
+	torus.outer_radius = 0.68
+	ring.mesh = torus
+	var material := StandardMaterial3D.new()
+	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	material.albedo_color = Color(1.0, 0.78, 0.26, 0.9)
+	ring.material_override = material
+	selection_highlight.add_child(ring)
+	if is_instance_valid(simulation.hud): simulation.hud.show_world_inspection(descriptor)
+
 
 func advance_highlight(delta: float) -> void:
 	if not is_instance_valid(highlight): return
@@ -319,6 +354,10 @@ func advance_highlight(delta: float) -> void:
 		if bool(resolved.get("valid", false)): highlight.global_position = resolved.focus
 	var pulse := 1.0 + sin(highlight_age * 5.0) * 0.12
 	highlight.scale = Vector3.ONE * pulse
+
+
+func _speed_text(value: float) -> String:
+	return "%.1f×" % value if absf(value - roundf(value)) > 0.001 else "%d×" % roundi(value)
 
 func refresh_role_labels() -> void:
 	# Role names are inspection detail; health and faction markers stay visible.
