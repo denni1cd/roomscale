@@ -182,10 +182,13 @@ func create_construction_task(specification: Dictionary, citizen_id: int) -> Dic
 	if is_instance_valid(civilization):
 		var citizen: Node3D = civilization.citizen_for(citizen_id)
 		if citizen == null or citizen.civilization_id != instance_id or citizen.life_state != "ALIVE" or not citizen.combat_duty.is_empty(): return {}
+	var assigned := specification.duplicate(true)
+	if assigned.get("task_type", "") == "CONSTRUCTION_BUILD" and assigned.has("project_id") and not assigned.get("innovation_project", false):
+		assigned.standing_target = _construction_standing_target(assigned, citizen_id)
 	var task_id := _next_task_id
 	_next_task_id += 1
 	_created_count += 1
-	var task := specification.duplicate(true)
+	var task := assigned
 	task["instance_id"] = instance_id
 	task["id"] = task_id
 	task["state"] = "reserved"
@@ -199,6 +202,40 @@ func create_construction_task(specification: Dictionary, citizen_id: int) -> Dic
 	tasks.append(task)
 	_trim_history()
 	return task.duplicate(true)
+
+
+func _construction_standing_target(specification: Dictionary, citizen_id: int) -> Vector3:
+	var center: Vector3 = specification.get("target", Vector3.ZERO)
+	var worker: Node3D = civilization.citizen_for(citizen_id) if is_instance_valid(civilization) else null
+	if not is_instance_valid(worker): return center
+	var project_id := String(specification.get("project_id", ""))
+	var existing_builders: Array[Dictionary] = []
+	for task in tasks:
+		if String(task.get("project_id", "")) == project_id and String(task.get("task_type", "")) == "CONSTRUCTION_BUILD" and String(task.get("state", "")) in ["active", "reserved"]:
+			existing_builders.append(task)
+	# Preserve the established first-worker approach. Add nearby legal slots as
+	# additional builders join so the work face gains capacity without moving the
+	# primary builder or changing ordinary single-worker site timing.
+	if existing_builders.is_empty() and not navigation.is_obstacle_position(center) and navigation.is_walkable(center) and not navigation.path_between(worker.global_position, center).is_empty():
+		return center
+	var directions: Array[Vector2] = []
+	for index in range(8):
+		var angle := float(index) * TAU / 8.0
+		directions.append(Vector2(cos(angle), sin(angle)))
+	# Candidate order is stable per citizen; reserved workers keep separate slots.
+	var start := posmod(citizen_id, directions.size())
+	for step in range(directions.size()):
+		var direction := directions[(start + step) % directions.size()]
+		var candidate := center + Vector3(direction.x * 1.25, 0.0, direction.y * 1.25)
+		if candidate.distance_to(center) > 1.6 or navigation.is_obstacle_position(candidate) or not navigation.is_walkable(candidate): continue
+		if navigation.path_between(worker.global_position, candidate).is_empty(): continue
+		var occupied := false
+		for task in existing_builders:
+			if Vector3(task.get("target", center)).distance_to(candidate) < 0.5:
+				occupied = true
+				break
+		if not occupied: return candidate
+	return center
 
 
 func confirm_project_pickup(task_id: int, citizen: Node3D, resource: String) -> bool:

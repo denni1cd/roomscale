@@ -142,7 +142,7 @@ func suffer_combat_damage(amount: float) -> bool:
 	combat_duty = ""
 	_path.clear()
 	get_node("Figure").rotation.z = PI * 0.5
-	get_node("Figure").position.y = 0.09
+	_figure_pose_height = 0.09
 	return true
 var navigation: Node
 var coordinator: Node
@@ -174,6 +174,9 @@ var _traversal_clip: Node3D
 var _fine_details: Array[Node3D] = []
 var _detail_visible := true
 var _lod_timer := 0.0
+var _presentation_previous_position := Vector3.ZERO
+var _presentation_previous_yaw := 0.0
+var _figure_pose_height := 0.0
 var needs: Dictionary = {}
 var _idle_timer := 0.0
 
@@ -186,7 +189,26 @@ func initialize(id: int, start: Vector3, floor_navigation: Node, task_system: No
 	coordinator = task_system
 	civilization_id = coordinator.instance_id
 	_build_figure()
+	_presentation_previous_position = position
+	_presentation_previous_yaw = rotation.y
 	_assign_next_task()
+
+
+func begin_presentation_step() -> void:
+	_presentation_previous_position = global_position
+	_presentation_previous_yaw = rotation.y
+
+
+func advance_presentation(alpha: float) -> void:
+	var figure := get_node_or_null("Figure") as Node3D
+	if figure == null: return
+	var blend := clampf(alpha, 0.0, 1.0)
+	var current_position := global_position
+	var rendered_position := _presentation_previous_position.lerp(current_position, blend)
+	var local_offset := global_basis.inverse() * (rendered_position - current_position)
+	figure.position = local_offset + Vector3(0.0, _figure_pose_height, 0.0)
+	var rendered_yaw := lerp_angle(_presentation_previous_yaw, rotation.y, blend)
+	figure.rotation.y = wrapf(rendered_yaw - rotation.y, -PI, PI)
 
 
 func _process(delta: float) -> void:
@@ -305,7 +327,7 @@ func assign_project_task(task: Dictionary) -> void:
 		_destination = task.source
 		_second_destination = task.target
 	else:
-		_destination = task.target
+		_destination = task.get("standing_target", task.target) if task_type == "CONSTRUCTION_BUILD" else task.target
 		_second_destination = task.target
 	_navigate_to(_destination)
 

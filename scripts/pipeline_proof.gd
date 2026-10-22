@@ -15,6 +15,7 @@ const VisualResolver := preload("res://scripts/visuals/visual_resolver.gd")
 const MaterialLibrary := preload("res://scripts/visuals/material_library.gd")
 const SettlementDetails := preload("res://scripts/visuals/settlement_details.gd")
 const Evidence := preload("res://scripts/verification/evidence_io.gd")
+const EntityInspector := preload("res://scripts/world_entity_inspector.gd")
 const CITIZEN_HEIGHT_INCHES := 0.5
 const CROWN_INTERIOR_PROJECTION := 0.75
 
@@ -54,9 +55,13 @@ var _presentation_mode := true
 var _compact_status: Label
 var _selected_citizen: Node3D
 var _selected_surface := ""
+var _selected_world_descriptor: Dictionary = {}
 
 
 func _ready() -> void:
+	if OS.get_environment("ROOMSCALE_ROOM").is_empty() and DisplayServer.get_name() != "headless" and OS.get_environment("ROOMSCALE_NO_MENU") != "1":
+		get_tree().change_scene_to_file("res://scenes/setup_menu.tscn")
+		return
 	var room_id := OS.get_environment("ROOMSCALE_ROOM")
 	if room_id.is_empty():
 		room_id = "room_a"
@@ -1629,8 +1634,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		var mouse_button := event as InputEventMouseButton
 		if mouse_button.button_index == MOUSE_BUTTON_LEFT and mouse_button.pressed:
-			if not select_surface_at_screen_position(mouse_button.position):
-				if not select_resource_object_at_screen_position(mouse_button.position): select_citizen_at_screen_position(mouse_button.position)
+			if not select_inspectable_entity_at_screen_position(mouse_button.position):
+				if not select_resource_object_at_screen_position(mouse_button.position):
+					if not select_citizen_at_screen_position(mouse_button.position): select_surface_at_screen_position(mouse_button.position)
 	elif event is InputEventKey:
 		var key := event as InputEventKey
 		if key.pressed and not key.echo:
@@ -1653,7 +1659,10 @@ func select_surface_at_screen_position(screen_position: Vector2) -> bool:
 	var query := PhysicsRayQueryParameters3D.create(ray_origin, ray_end, 2)
 	var hit: Dictionary = get_world_3d().direct_space_state.intersect_ray(query)
 	if not hit.is_empty() and (hit.collider as Node).is_in_group("goal_surface"):
-		return select_goal_surface(String((hit.collider as Node).get_meta("region_id", "")))
+		var surface_id := String((hit.collider as Node).get_meta("region_id", ""))
+		if not select_goal_surface(surface_id): return false
+		_select_world_entity("surface", surface_id)
+		return true
 	return false
 
 
@@ -1664,7 +1673,99 @@ func select_resource_object_at_screen_position(screen_position: Vector2) -> bool
 	var origin := camera.project_ray_origin(screen_position)
 	var query := PhysicsRayQueryParameters3D.create(origin, origin + camera.project_ray_normal(screen_position) * 1000, 4)
 	var hit: Dictionary = get_world_3d().direct_space_state.intersect_ray(query)
-	return not hit.is_empty() and civilization.hud.select_object(String(hit.collider.get_meta("object_id", "")))
+	if hit.is_empty(): return false
+	var object_id := String(hit.collider.get_meta("object_id", ""))
+	return _select_world_entity("furniture", object_id)
+
+
+func select_inspectable_entity_at_screen_position(screen_position: Vector2) -> bool:
+	var simulation := get_node_or_null("CivilizationSimulation")
+	if simulation == null or simulation.world_simulation == null: return false
+	var camera := get_node("CameraRig/Camera") as Camera3D
+	var candidates: Array[Dictionary] = []
+	for citizen in simulation.world_simulation.citizens:
+		if not is_instance_valid(citizen) or citizen.life_state == "DEAD": continue
+		candidates.append({"type":"citizen", "id":str(citizen.citizen_id), "position":citizen.global_position + Vector3.UP * CITIZEN_HEIGHT_INCHES, "radius":28.0})
+	for runtime in simulation.world_simulation.runtimes:
+		for project in runtime.development.projects:
+			var project_type := "building" if project.state == "COMPLETE" else "project"
+			candidates.append({"type":project_type, "id":String(project.id), "position":project.site + Vector3.UP * 1.0, "radius":54.0})
+	for object_id in simulation.resources.objects:
+		var object: Dictionary = simulation.resources.objects[object_id]
+		if not _furniture_is_selectable(simulation, String(object_id)): continue
+		var data: Dictionary = object.data
+		var at: Array = data.get("position", [0,0,0])
+		var dims: Array = data.get("dimensions", [0,0,0])
+		candidates.append({"type":"furniture", "id":String(object_id), "position":Vector3(float(at[0]), float(at[1]) + float(dims[1]) * 0.5, float(at[2])), "radius":46.0})
+	for source_id in simulation.resources.sources:
+		var source: Dictionary = simulation.resources.sources[source_id]
+		candidates.append({"type":"resource", "id":String(source_id), "position":source.position, "radius":42.0})
+	for site_id in simulation.world_simulation.territory.sites:
+		var site: Dictionary = simulation.world_simulation.territory.sites[site_id]
+		candidates.append({"type":"site", "id":String(site_id), "position":site.position, "radius":44.0})
+	var surface_navigation := get_node_or_null("SurfaceNavigation")
+	if surface_navigation != null:
+		for region_id in surface_navigation.regions:
+			if String(region_id) == "FLOOR": continue
+			var surface: Dictionary = surface_navigation.regions[region_id]
+			candidates.append({"type":"surface", "id":String(region_id), "position":surface.get("center", Vector3.ZERO), "radius":46.0})
+	var selected: Dictionary = {}
+	var best_distance := INF
+	for candidate in candidates:
+		var at: Vector3 = candidate.position
+		if camera.is_position_behind(at): continue
+		var distance := camera.unproject_position(at).distance_to(screen_position)
+		if distance <= float(candidate.radius) and distance < best_distance:
+			best_distance = distance
+			selected = candidate
+	if selected.is_empty(): return false
+	var selected_type := String(selected.type)
+	var selected_id := String(selected.id)
+	if selected_type == "surface": select_goal_surface(selected_id)
+	return _select_world_entity(selected_type, selected_id)
+
+
+func _select_world_entity(entity_type: String, entity_id: String) -> bool:
+	var simulation := get_node_or_null("CivilizationSimulation")
+	if simulation == null: return false
+	if entity_type == "furniture" and not _furniture_is_selectable(simulation, entity_id): return false
+	var descriptor: Dictionary = EntityInspector.describe(simulation, entity_type, entity_id)
+	if descriptor.is_empty(): return false
+	if entity_type == "furniture" and simulation.hud != null: simulation.hud.select_object(entity_id)
+	get_node("CameraRig").notify_manual_input("world_entity_selection")
+	_selected_citizen = simulation.citizen_for(int(entity_id)) if entity_type == "citizen" else null
+	if entity_type == "citizen" and _selected_citizen == null and simulation.world_simulation != null:
+		for candidate in simulation.world_simulation.citizens:
+			if int(candidate.citizen_id) == int(entity_id):
+				_selected_citizen = candidate
+				break
+	_selected_world_descriptor = descriptor.duplicate(true)
+	if simulation.hud != null: simulation.hud.show_world_inspection(descriptor)
+	if simulation.spectator != null: simulation.spectator.show_entity_selection(descriptor)
+	_update_population_ui()
+	return true
+
+
+func _furniture_is_selectable(simulation: Node, object_id: String) -> bool:
+	if not simulation.resources.objects.has(object_id): return false
+	if simulation.salvage.objects.has(object_id) and simulation.salvage.depleted(object_id): return false
+	var object_root: Node3D = simulation.scene.get_room_object(object_id) as Node3D
+	return object_root != null and object_root.is_visible_in_tree()
+
+
+func select_world_entity_from_ui(entity_type: String, entity_id: String) -> bool:
+	return _select_world_entity(entity_type, entity_id)
+
+
+func refresh_selected_world_entity() -> void:
+	var simulation := get_node_or_null("CivilizationSimulation")
+	if simulation == null or _selected_world_descriptor.is_empty(): return
+	var descriptor: Dictionary = EntityInspector.describe(simulation, String(_selected_world_descriptor.get("type", "")), String(_selected_world_descriptor.get("id", "")))
+	if descriptor.is_empty(): return
+	_selected_world_descriptor = descriptor.duplicate(true)
+	if simulation.hud != null: simulation.hud.show_world_inspection(descriptor)
+	if simulation.spectator != null: simulation.spectator.show_entity_selection(descriptor)
+	_update_population_ui()
 
 
 func select_citizen_at_screen_position(screen_position: Vector2) -> bool:
@@ -1683,6 +1784,7 @@ func select_citizen_at_screen_position(screen_position: Vector2) -> bool:
 		return false
 	get_node("CameraRig").notify_manual_input("citizen_selection")
 	_selected_citizen = closest
+	_select_world_entity("citizen", str(closest.citizen_id))
 	_inspection_label.show()
 	_update_population_ui()
 	return true

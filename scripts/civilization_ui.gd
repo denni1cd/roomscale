@@ -1,6 +1,7 @@
 extends Control
 ## Normal gameplay HUD reads authoritative civilization state.
 const Vocabulary := preload("res://scripts/fishbowl_narrative_adapter.gd")
+const EntityInspector := preload("res://scripts/world_entity_inspector.gd")
 
 var simulation: Node
 var resources: Label
@@ -16,6 +17,7 @@ var action_feedback := ""
 var authorize: Button
 var fishbowl_events: Label
 var fishbowl_development: Label
+var world_descriptor: Dictionary = {}
 
 func configure_fishbowl() -> void:
 	get_child(0).custom_minimum_size = Vector2(395, 672)
@@ -112,15 +114,30 @@ func configure(controller: Node) -> void:
 	for id in simulation.salvage.objects:
 		object_ids.append(id)
 		object_choice.add_item(String(simulation.resources.objects[id].data.get("name", id)))
+	object_choice.item_selected.connect(func(index: int) -> void:
+		if index < 0 or index >= object_ids.size(): return
+		if simulation.scene != null and simulation.scene.has_method("select_world_entity_from_ui"):
+			simulation.scene.select_world_entity_from_ui("furniture", object_ids[index]))
 	add_child(object_choice)
 	authorize = Button.new()
 	authorize.text = "Authorize Salvage"
 	authorize.position = Vector2(305, 398)
 	authorize.size = Vector2(165, 32)
 	authorize.pressed.connect(func() -> void:
-		if not object_ids.is_empty():
-			var accepted: bool = simulation.authorize_salvage(object_ids[object_choice.selected])
-			action_feedback = "Salvage authorized" if accepted else "Preserved: supports a resource or active route"
+		var selected_id := _selected_object_id()
+		if selected_id.is_empty():
+			action_feedback = "No salvageable furniture selected"
+			refresh()
+			return
+		if world_descriptor.get("type", "") == "furniture" and String(world_descriptor.get("id", "")) != selected_id:
+			action_feedback = "Selection changed; select the furniture to authorize"
+			refresh()
+			return
+		var accepted: bool = simulation.authorize_salvage(selected_id)
+		action_feedback = "Salvage authorized" if accepted else "Preserved: supports a resource or active route"
+		if simulation.scene != null and simulation.scene.has_method("refresh_selected_world_entity"):
+			simulation.scene.refresh_selected_world_entity()
+		else:
 			refresh())
 	add_child(authorize)
 	var directives := Label.new()
@@ -132,10 +149,10 @@ func configure(controller: Node) -> void:
 	var speed_row := HBoxContainer.new()
 	speed_row.position = Vector2(14, 518)
 	add_child(speed_row)
-	for multiplier in [0.0, 1.0, 4.0, 10.0]:
+	for multiplier in [0.0, 0.5, 1.0, 4.0, 10.0]:
 		var button := Button.new()
-		button.text = "Pause" if multiplier == 0 else "%dx" % int(multiplier)
-		button.custom_minimum_size = Vector2(105, 28)
+		button.text = "Pause" if multiplier == 0 else _speed_text(multiplier)
+		button.custom_minimum_size = Vector2(82, 28)
 		button.pressed.connect(func() -> void: simulation.speed = multiplier)
 		speed_row.add_child(button)
 	citizen_panel = PanelContainer.new()
@@ -160,13 +177,17 @@ func refresh() -> void:
 	var in_transit: float = simulation.economy.state_total("wood", "in_transit") + simulation.economy.state_total("metal", "in_transit")
 	for bundle in simulation.resources.bundles.values():
 		if bundle.state == "in_transit" and bundle.resource in ["wood", "metal"]: in_transit += float(bundle.amount)
-	resources.text = "ROOMSCALE  ·  %d citizens  ·  Day %.2f  ·  %dx\nFood %.0f  ·  %.2f days  ·  use %d/day\nWater %.0f  ·  %.2f days  ·  use %d/day\nWood %.0f  ·  Metal %.0f  ·  %.0f materials in transit\nShelter %d/%d  ·  Rest %d/%d  ·  Urgent %d" % [state.population, state.days, int(simulation.speed), stock.food, state.food_days, state.population * 2, stock.water, state.water_days, state.population * 3, stock.wood, stock.metal, in_transit, state.shelter, state.population, state.resting, simulation.needs.rest_capacity, state.urgent]
+	resources.text = "ROOMSCALE  ·  %d citizens  ·  Day %.2f  ·  %s\nFood %.0f  ·  %.2f days  ·  use %d/day\nWater %.0f  ·  %.2f days  ·  use %d/day\nWood %.0f  ·  Metal %.0f  ·  %.0f materials in transit\nShelter %d/%d  ·  Rest %d/%d  ·  Urgent %d" % [state.population, state.days, _speed_text(simulation.speed), stock.food, state.food_days, state.population * 2, stock.water, state.water_days, state.population * 3, stock.wood, stock.metal, in_transit, state.shelter, state.population, state.resting, simulation.needs.rest_capacity, state.urgent]
 	if Vocabulary.is_verdant():
-		resources.text = "ROOMSCALE  ·  %d citizens  ·  Day %.2f  ·  %dx\nFood %.0f  ·  %.2f days  ·  use %d/day\nWater %.0f  ·  %.2f days  ·  use %d/day\n%s %.0f  ·  %s %.0f  ·  %s %.0f\nMaterials in transit %.0f\nShelter %d/%d  ·  Rest %d/%d  ·  Urgent %d" % [state.population, state.days, int(simulation.speed), stock.food, state.food_days, state.population * 2, stock.water, state.water_days, state.population * 3, Vocabulary.resource_name("wood"), stock.wood, Vocabulary.resource_name("metal"), stock.metal, Vocabulary.resource_name("mechanical_parts"), stock.get("mechanical_parts", 0), in_transit, state.shelter, state.population, state.resting, simulation.needs.rest_capacity, state.urgent]
+		resources.text = "ROOMSCALE  ·  %d citizens  ·  Day %.2f  ·  %s\nFood %.0f  ·  %.2f days  ·  use %d/day\nWater %.0f  ·  %.2f days  ·  use %d/day\n%s %.0f  ·  %s %.0f  ·  %s %.0f\nMaterials in transit %.0f\nShelter %d/%d  ·  Rest %d/%d  ·  Urgent %d" % [state.population, state.days, _speed_text(simulation.speed), stock.food, state.food_days, state.population * 2, stock.water, state.water_days, state.population * 3, Vocabulary.resource_name("wood"), stock.wood, Vocabulary.resource_name("metal"), stock.metal, Vocabulary.resource_name("mechanical_parts"), stock.get("mechanical_parts", 0), in_transit, state.shelter, state.population, state.resting, simulation.needs.rest_capacity, state.urgent]
 	var reasons: Array[String] = simulation.planner.reasons.duplicate()
 	reasons.sort_custom(func(a: String, b: String) -> bool: return a.contains("No authorized") and not b.contains("No authorized"))
 	strategy.text = "\n".join(reasons.slice(0, 4)) if not reasons.is_empty() else ("Water reserve critical — secure a water source" if state.water_days < 1 else "Food and water reserves stable")
 	if state.shelter < state.population and not strategy.text.contains("Shelter shortage"): strategy.text += "\nShelter shortage: %d citizens without housing" % (state.population - state.shelter)
+	var growth: Dictionary = simulation.population.player_snapshot(simulation, state)
+	strategy.text += "\nGrowth %d/%d shelter spaces · %s" % [maxi(0, int(growth.headroom)), int(growth.cohort_size), String(growth.reason)]
+	if float(growth.stable_seconds) > 0.0: strategy.text += " · Stable %.0f/%.0f sec" % [float(growth.stable_seconds), float(growth.stability_required)]
+	if float(growth.cooldown_remaining) > 0.0 and float(growth.cooldown_remaining) < float(growth.cooldown_duration): strategy.text += " · Cooldown %.0f sec" % float(growth.cooldown_remaining)
 	for family in priority_choices: priority_choices[family].select(int(simulation.planner.priorities[family]))
 	get_node("Directives").text = "Objectives: " + (" / ".join(simulation.planner.directives.values()) if not simulation.planner.directives.is_empty() else "Choose a civilization objective")
 	var project: Dictionary = simulation.construction.status()
@@ -182,18 +203,32 @@ func refresh() -> void:
 	if is_instance_valid(selected):
 		var info: Dictionary = selected.get_inspection_status()
 		citizen_label.text = " Citizen %02d · %s\n Food: %s (%.0f%%)\n Water: %s (%.0f%%)\n Fatigue: %s (%.0f%%)\n Shelter: %s · Rest slot %d\n Task: %s\n Target: (%.0f, %.0f, %.0f)" % [info.id + 1, info.state, simulation.needs.severity(info.needs.food), float(info.needs.food) * 100, simulation.needs.severity(info.needs.water), float(info.needs.water) * 100, simulation.needs.severity(info.needs.fatigue), float(info.needs.fatigue) * 100, "available" if info.needs.sheltered else "shortage", info.needs.rest_slot, String(info.task).replace("_", " "), info.target.x, info.target.y, info.target.z]
-	if object_choice != null and not object_ids.is_empty():
-		var id := object_ids[object_choice.selected]
+	if not world_descriptor.is_empty():
+		if world_descriptor.get("type", "") == "furniture":
+			var current_descriptor: Dictionary = EntityInspector.describe(simulation, "furniture", String(world_descriptor.get("id", "")))
+			if not current_descriptor.is_empty(): world_descriptor = current_descriptor
+			var selected_id := String(world_descriptor.get("id", ""))
+			var selected_salvage: Dictionary = simulation.salvage.objects.get(selected_id, {})
+			authorize.disabled = selected_salvage.is_empty() or simulation.salvage.depleted(selected_id) or bool(selected_salvage.get("authorized", false))
+		else:
+			authorize.disabled = true
+		inspection.text = String(world_descriptor.get("title", "World entity")) + "\n" + "\n".join(world_descriptor.get("details", []))
+		if not action_feedback.is_empty(): inspection.text += "\n" + action_feedback
+	elif object_choice != null and _selected_object_id() != "":
+		var id := _selected_object_id()
 		var object: Dictionary = simulation.resources.objects[id]
-		var salvage: Dictionary = simulation.salvage.objects[id]
+		var salvage: Dictionary = simulation.salvage.objects.get(id, {})
 		var remaining := {}
 		for index in range(int(salvage.stage), salvage.stages.size()):
 			for resource in salvage.stages[index].yields: remaining[resource] = float(remaining.get(resource, 0)) + float(salvage.stages[index].yields[resource])
 		inspection.text = "%s · %s · %s\n%s · stage %d/%d · work %.1fs\nRemaining yield: %s" % [String(object.data.get("name", id)), object.profile.material, "AUTHORIZED" if salvage.authorized else "PROTECTED — authorization required", salvage.state, salvage.stage, salvage.stages.size(), salvage.progress, remaining]
 		authorize.disabled = simulation.salvage.depleted(id) or bool(salvage.authorized)
 		if not action_feedback.is_empty(): inspection.text += "\n" + action_feedback
+	else:
+		authorize.disabled = true
+		inspection.text = ""
 	if fishbowl_events != null:
-		strategy.text = "Governor %s · %s\n%s\nGrowth: %s" % ["ON" if simulation.governor.enabled else "OFF", simulation.governor.mode, simulation.governor.reason, simulation.population.reason]
+		strategy.text = "Governor %s · %s\n%s\nGrowth %d/%d shelter spaces · %s · Stability %.0f/%.0f sec%s" % ["ON" if simulation.governor.enabled else "OFF", simulation.governor.mode, simulation.governor.reason, maxi(0, int(growth.headroom)), int(growth.cohort_size), String(growth.reason), float(growth.stable_seconds), float(growth.stability_required), (" · Cooldown %.0f sec" % float(growth.cooldown_remaining)) if float(growth.cooldown_remaining) > 0.0 and float(growth.cooldown_remaining) < float(growth.cooldown_duration) else ""]
 		var project_state := "No active development"
 		if not simulation.development.active.is_empty():
 			var active: Dictionary = simulation.development.active
@@ -218,8 +253,30 @@ func refresh() -> void:
 
 func select_object(object_id: String) -> bool:
 	var index := object_ids.find(object_id)
-	if index < 0: return false
+	if index < 0:
+		object_choice.select(-1)
+		action_feedback = ""
+		world_descriptor.clear()
+		refresh()
+		return false
 	object_choice.select(index)
 	action_feedback = ""
+	world_descriptor.clear()
 	refresh()
 	return true
+
+
+func show_world_inspection(descriptor: Dictionary) -> void:
+	var same_selection: bool = world_descriptor.get("type", "") == descriptor.get("type", "") and world_descriptor.get("id", "") == descriptor.get("id", "")
+	if not same_selection: action_feedback = ""
+	world_descriptor = descriptor.duplicate(true)
+	refresh()
+
+
+func _selected_object_id() -> String:
+	if object_choice == null or object_choice.selected < 0 or object_choice.selected >= object_ids.size(): return ""
+	return object_ids[object_choice.selected]
+
+
+func _speed_text(value: float) -> String:
+	return "%.1fx" % value if absf(value - roundf(value)) > 0.001 else "%dx" % roundi(value)

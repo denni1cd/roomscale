@@ -338,7 +338,13 @@ func can_complete(project: Dictionary) -> bool:
 	var rect := apron(project.site)
 	for citizen in sim.world_citizens():
 		if citizen.state in ["TRAVEL", "CARRY", "WORK"] and citizen._destination.y < project.site.y + 2 and rect.has_point(Vector2(citizen._destination.x, citizen._destination.z)):
-			# The project's own exterior work target is legal within its apron.
-			if not citizen._destination.is_equal_approx(project.target): return false
+			# The project's assigned builders may use deterministic standing slots
+			# around its exterior work target. Other task targets still reserve space.
+			var own_builder := false
+			if citizen.civilization_id == sim.instance_id and citizen.task_type == "CONSTRUCTION_BUILD":
+				var task: Dictionary = sim.coordinator.get_task(citizen.task_id)
+				var standing_target: Vector3 = task.get("standing_target", task.get("target", Vector3.INF))
+				own_builder = String(task.get("project_id", "")) == String(project.id) and standing_target.distance_to(project.target) <= 1.6
+			if not own_builder and not citizen._destination.is_equal_approx(project.target): return false
 	var chosen: Array[Dictionary] = [{"kind": project.kind, "position": project.site, "target": project.target}]
 	return _trial(chosen, sim.needs.rest_capacity).valid

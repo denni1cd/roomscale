@@ -100,7 +100,8 @@ func configure(world: Node3D, config: Dictionary) -> void:
 	for task in coordinator.tasks: task.instance_id = instance_id
 	for citizen in citizens: citizen.civilization_id = instance_id
 	governor.enabled = bool(config.get("autonomous", OS.get_environment("ROOMSCALE_FISHBOWL") == "1"))
-	speed = float(config.get("initial_speed", 10.0 if governor.enabled else 1.0))
+	var requested_speed := OS.get_environment("ROOMSCALE_INITIAL_SPEED")
+	speed = float(requested_speed) if not requested_speed.is_empty() else float(config.get("initial_speed", 10.0 if governor.enabled else 1.0))
 	if governor.enabled:
 		governor.mode = "OBSERVING"
 		governor.reason = "Evaluating civilization state every five simulation seconds"

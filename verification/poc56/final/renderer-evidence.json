@@ -1,0 +1,420 @@
+{
+	"captures": [
+		{
+			"context": {
+				"session": "Founder room · 1 society",
+				"simulation_started": false,
+				"speed": 0.5
+			},
+			"label": "start-menu",
+			"path": "res://verification/poc56/final/start-menu.png",
+			"pixels": [
+				1920,
+				1080
+			],
+			"renderer": "NVIDIA GeForce RTX 5090"
+		},
+		{
+			"context": {
+				"civilizations": [
+					"clockwork",
+					"verdant",
+					"scavenger"
+				],
+				"session": "Shared frontier · 3 societies"
+			},
+			"label": "start-menu-three-society-defaults",
+			"path": "res://verification/poc56/final/start-menu-three-society-defaults.png",
+			"pixels": [
+				1920,
+				1080
+			],
+			"renderer": "NVIDIA GeForce RTX 5090"
+		},
+		{
+			"context": {
+				"headroom": -5,
+				"population": 5,
+				"reason": "Waiting for sustained reserves and shelter",
+				"source": "PopulationSystem.player_snapshot"
+			},
+			"label": "population-growth-blocker",
+			"path": "res://verification/poc56/final/population-growth-blocker.png",
+			"pixels": [
+				1920,
+				1080
+			],
+			"renderer": "NVIDIA GeForce RTX 5090"
+		},
+		{
+			"context": {
+				"lifecycle": "WAITING_FOR_MATERIALS",
+				"project": "clockwork_alpha_development_001",
+				"required_work": 60.0,
+				"work": 0.0
+			},
+			"label": "planned-site-footprint-label",
+			"path": "res://verification/poc56/final/planned-site-footprint-label.png",
+			"pixels": [
+				1920,
+				1080
+			],
+			"renderer": "NVIDIA GeForce RTX 5090"
+		},
+		{
+			"context": {
+				"lifecycle": "UNDER_CONSTRUCTION",
+				"project": "clockwork_alpha_development_001",
+				"required_work": 60.0,
+				"work": 18.0
+			},
+			"label": "active-site-footprint-label",
+			"path": "res://verification/poc56/final/active-site-footprint-label.png",
+			"pixels": [
+				1920,
+				1080
+			],
+			"renderer": "NVIDIA GeForce RTX 5090"
+		},
+		{
+			"context": {
+				"builders": [
+					"(2.0, 0.0, 45.0)",
+					"(2.883883, 0.0, 45.88388)"
+				],
+				"standing_targets": [
+					"(2.0, 0.0, 45.0)",
+					"(2.883883, 0.0, 45.88388)"
+				]
+			},
+			"label": "spaced-worksite",
+			"path": "res://verification/poc56/final/spaced-worksite.png",
+			"pixels": [
+				1920,
+				1080
+			],
+			"renderer": "NVIDIA GeForce RTX 5090"
+		},
+		{
+			"context": {
+				"descriptor": "Shelter\nSociety: clockwork_alpha\nState: UNDER CONSTRUCTION · Stage: FRAME\nWork: 18.0 / 60.0 seconds (30%)\nMaterials: wood 4/4 · metal 0/0\nWorkers: 2",
+				"project": "clockwork_alpha_development_001"
+			},
+			"label": "selected-active-project",
+			"path": "res://verification/poc56/final/selected-active-project.png",
+			"pixels": [
+				1920,
+				1080
+			],
+			"renderer": "NVIDIA GeForce RTX 5090"
+		},
+		{
+			"context": {
+				"both_visible_nodes": true,
+				"event_highlight": "POC 5.5 spectator event marker",
+				"project": "clockwork_alpha_development_001",
+				"selection_highlight": "selected active project"
+			},
+			"label": "selection-event-highlight-coexistence",
+			"path": "res://verification/poc56/final/selection-event-highlight-coexistence.png",
+			"pixels": [
+				1920,
+				1080
+			],
+			"renderer": "NVIDIA GeForce RTX 5090"
+		},
+		{
+			"context": {
+				"citizen_id": 1,
+				"descriptor": "Citizen 02\nSociety: clockwork_alpha\nState: WORK · Task: CONSTRUCTION BUILD\nTarget: (3, 0, 46)\nCarrying: Nothing"
+			},
+			"label": "selected-citizen",
+			"path": "res://verification/poc56/final/selected-citizen.png",
+			"pixels": [
+				1920,
+				1080
+			],
+			"renderer": "NVIDIA GeForce RTX 5090"
+		},
+		{
+			"context": {
+				"blocker": "Waiting for citizen 3 to clear the reserved footprint",
+				"lifecycle": "WAITING_FOR_SITE",
+				"project": "clockwork_alpha_development_001",
+				"work_percent": 1.0
+			},
+			"label": "blocked-site-status",
+			"path": "res://verification/poc56/final/blocked-site-status.png",
+			"pixels": [
+				1920,
+				1080
+			],
+			"renderer": "NVIDIA GeForce RTX 5090"
+		},
+		{
+			"context": {
+				"descriptor": "Shelter\nSociety: clockwork_alpha\nFunction: Adds 5 shelter places\nWork: 60.0 / 60.0 seconds (100%)\nMaterials: wood 4/4 · metal 0/0\nWorkers: 2\nCompleted: 5.0 simulation seconds",
+				"project": "clockwork_alpha_development_001"
+			},
+			"label": "selected-completed-building",
+			"path": "res://verification/poc56/final/selected-completed-building.png",
+			"pixels": [
+				1920,
+				1080
+			],
+			"renderer": "NVIDIA GeForce RTX 5090"
+		},
+		{
+			"context": {
+				"descriptor": "Bookcase\nType: bookcase · Material: wood\nSalvage: INTACT · Stage 0/4\nAuthorization: Not authorized · Work: 0.0 seconds\nRemaining finite yield: { \"metal\": 4.0, \"wood\": 42.0 }",
+				"action": "Authorize Salvage",
+				"action_enabled": true,
+				"hud_inspection": "Bookcase\nType: bookcase · Material: wood\nSalvage: INTACT · Stage 0/4\nAuthorization: Not authorized · Work: 0.0 seconds\nRemaining finite yield: { \"metal\": 4.0, \"wood\": 42.0 }",
+				"salvage_choice": "bookcase",
+				"object_position": "(91.0, 0.0, -63.0)",
+				"state": "AVAILABLE"
+			},
+			"label": "selected-bookcase-full",
+			"path": "res://verification/poc56/final/selected-bookcase-full.png",
+			"pixels": [
+				1920,
+				1080
+			],
+			"renderer": "NVIDIA GeForce RTX 5090"
+		},
+		{
+			"context": {
+				"camera_target": "(91.0, 31.5, -63.0)",
+				"descriptor": "Bookcase\nType: bookcase · Material: wood\nSalvage: STRIPPED · Stage 1/4\nAuthorization: Authorized · Work: 0.0 seconds\nRemaining finite yield: { \"wood\": 42.0, \"metal\": 2.0 }",
+				"object_position": "(91.0, 0.0, -63.0)",
+				"stage": 1,
+				"stage_count": 4,
+				"state": "STRIPPED"
+			},
+			"label": "selected-partial-bookcase",
+			"path": "res://verification/poc56/final/selected-partial-bookcase.png",
+			"pixels": [
+				1920,
+				1080
+			],
+			"renderer": "NVIDIA GeForce RTX 5090"
+		},
+		{
+			"context": {
+				"descriptor": "Water Cup\nRegion: STUDY_SURFACE\nFinite resource remaining: { \"water\": 60000.0 }\nStatus: Available",
+				"resource": "water_cup"
+			},
+			"label": "selected-finite-resource",
+			"path": "res://verification/poc56/final/selected-finite-resource.png",
+			"pixels": [
+				1920,
+				1080
+			],
+			"renderer": "NVIDIA GeForce RTX 5090"
+		},
+		{
+			"context": {
+				"descriptor": "Desk\nType: elevated surface\nHeight: 30.0 inches\nAccess: Not connected to floor\nState: Selected exploration target",
+				"surface": "STUDY_SURFACE"
+			},
+			"label": "selected-inspectable-surface",
+			"path": "res://verification/poc56/final/selected-inspectable-surface.png",
+			"pixels": [
+				1920,
+				1080
+			],
+			"renderer": "NVIDIA GeForce RTX 5090"
+		},
+		{
+			"context": {
+				"authoritative": "(0.65, 0.0, 52.0)",
+				"authoritative_yaw": 1.57079637050629,
+				"frame": 0,
+				"simulation_seconds": 0.1,
+				"visual": "(0.43287, 0.0, 52.0)",
+				"visual_yaw": 1.04607713222504
+			},
+			"label": "smooth-motion-00",
+			"path": "res://verification/poc56/final/smooth-motion-00.png",
+			"pixels": [
+				1920,
+				1080
+			],
+			"renderer": "NVIDIA GeForce RTX 5090"
+		},
+		{
+			"context": {
+				"authoritative": "(1.3, 0.0, 52.0)",
+				"authoritative_yaw": 1.57079637050629,
+				"frame": 1,
+				"simulation_seconds": 0.2,
+				"visual": "(1.028708, 0.0, 52.0)",
+				"visual_yaw": 1.57079637050629
+			},
+			"label": "smooth-motion-01",
+			"path": "res://verification/poc56/final/smooth-motion-01.png",
+			"pixels": [
+				1920,
+				1080
+			],
+			"renderer": "NVIDIA GeForce RTX 5090"
+		},
+		{
+			"context": {
+				"authoritative": "(1.95, 0.0, 52.0)",
+				"authoritative_yaw": 1.57079637050629,
+				"frame": 2,
+				"simulation_seconds": 0.3,
+				"visual": "(1.624567, 0.0, 52.0)",
+				"visual_yaw": 1.57079637050629
+			},
+			"label": "smooth-motion-02",
+			"path": "res://verification/poc56/final/smooth-motion-02.png",
+			"pixels": [
+				1920,
+				1080
+			],
+			"renderer": "NVIDIA GeForce RTX 5090"
+		},
+		{
+			"context": {
+				"authoritative": "(2.0, 0.0, 52.0)",
+				"authoritative_yaw": 1.57079637050629,
+				"frame": 3,
+				"simulation_seconds": 0.4,
+				"visual": "(1.970798, 0.0, 52.0)",
+				"visual_yaw": 1.57079637050629
+			},
+			"label": "smooth-motion-03",
+			"path": "res://verification/poc56/final/smooth-motion-03.png",
+			"pixels": [
+				1920,
+				1080
+			],
+			"renderer": "NVIDIA GeForce RTX 5090"
+		},
+		{
+			"context": {
+				"authoritative": "(2.0, 0.0, 52.0)",
+				"authoritative_yaw": 1.57079637050629,
+				"frame": 4,
+				"simulation_seconds": 0.5,
+				"visual": "(2.0, 0.0, 52.0)",
+				"visual_yaw": 1.57079637050629
+			},
+			"label": "smooth-motion-04",
+			"path": "res://verification/poc56/final/smooth-motion-04.png",
+			"pixels": [
+				1920,
+				1080
+			],
+			"renderer": "NVIDIA GeForce RTX 5090"
+		},
+		{
+			"context": {
+				"authoritative": "(1.540381, 0.0, 52.45962)",
+				"authoritative_yaw": -0.785398185253143,
+				"frame": 5,
+				"simulation_seconds": 0.6,
+				"visual": "(1.885347, 0.0, 52.11465)",
+				"visual_yaw": 0.983039736747742
+			},
+			"label": "smooth-motion-05",
+			"path": "res://verification/poc56/final/smooth-motion-05.png",
+			"pixels": [
+				1920,
+				1080
+			],
+			"renderer": "NVIDIA GeForce RTX 5090"
+		},
+		{
+			"context": {
+				"authoritative": "(1.080761, 0.0, 52.91924)",
+				"authoritative_yaw": -0.785397887229919,
+				"frame": 6,
+				"simulation_seconds": 0.7,
+				"visual": "(1.463991, 0.0, 52.53601)",
+				"visual_yaw": -0.785398185253143
+			},
+			"label": "smooth-motion-06",
+			"path": "res://verification/poc56/final/smooth-motion-06.png",
+			"pixels": [
+				1920,
+				1080
+			],
+			"renderer": "NVIDIA GeForce RTX 5090"
+		},
+		{
+			"context": {
+				"authoritative": "(0.621142, 0.0, 53.37886)",
+				"authoritative_yaw": -0.785397589206696,
+				"frame": 7,
+				"simulation_seconds": 0.8,
+				"visual": "(1.042717, 0.0, 52.95728)",
+				"visual_yaw": -0.785397827625275
+			},
+			"label": "smooth-motion-07",
+			"path": "res://verification/poc56/final/smooth-motion-07.png",
+			"pixels": [
+				1920,
+				1080
+			],
+			"renderer": "NVIDIA GeForce RTX 5090"
+		},
+		{
+			"context": {
+				"citizen": 4,
+				"speed": 1.0,
+				"visual": "(1.004416, 0.0, 52.99558)"
+			},
+			"label": "speed-switch-1x",
+			"path": "res://verification/poc56/final/speed-switch-1x.png",
+			"pixels": [
+				1920,
+				1080
+			],
+			"renderer": "NVIDIA GeForce RTX 5090"
+		},
+		{
+			"context": {
+				"ratio": 0.505580087424909,
+				"result": "PASS",
+				"sim_seconds": 3.0,
+				"target_speed": 0.5,
+				"wall_seconds": 5.933778
+			},
+			"label": "pacing-probe",
+			"path": "res://verification/poc56/final/pacing-probe.png",
+			"pixels": [
+				1920,
+				1080
+			],
+			"renderer": "NVIDIA GeForce RTX 5090"
+		},
+		{
+			"context": {
+				"reference_speed": 1.0,
+				"speed": 1.0
+			},
+			"label": "pacing-1x-reference",
+			"path": "res://verification/poc56/final/pacing-1x-reference.png",
+			"pixels": [
+				1920,
+				1080
+			],
+			"renderer": "NVIDIA GeForce RTX 5090"
+		}
+	],
+	"display_server": "Windows",
+	"failures": [],
+	"one_x_reference": 1.0,
+	"pace_probe": {
+		"ratio": 0.505580087424909,
+		"result": "PASS",
+		"sim_seconds": 3.0,
+		"target_speed": 0.5,
+		"wall_seconds": 5.933778
+	},
+	"renderer": "NVIDIA GeForce RTX 5090",
+	"result": "PASS"
+}
