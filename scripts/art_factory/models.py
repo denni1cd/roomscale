@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from dataclasses import asdict, dataclass, field
 from typing import Any
 
@@ -23,6 +24,54 @@ RUBRIC_DIMENSIONS = (
 QUALITY_TIERS = {"A", "B", "C", "D"}
 CANDIDATE_STATES = {"challenger", "incumbent", "rejected", "accepted", "blocked"}
 EVALUATION_DECISIONS = {"continue", "promote", "reject", "blocked"}
+VISUAL_CRAFT_CHECKS = (
+    "edge_treatment",
+    "joins",
+    "thickness",
+    "hardware",
+    "material_response",
+    "surface_variation",
+    "manufacturing_detail",
+)
+VISUAL_STYLE_FLAGS = (
+    "low_poly",
+    "blocky_geometry",
+    "placeholder_geometry",
+    "primitive_geometry",
+    "simplified_programmer_art",
+    "materially_flat",
+    "substantially_stylized",
+)
+_UNACCEPTABLE_STYLE_PATTERNS = (
+    re.compile(r"\blow[ -]poly\b", re.IGNORECASE),
+    re.compile(r"\bblocky\b", re.IGNORECASE),
+    re.compile(r"\bplaceholder(?:[ -](?:art|geometry|asset|model|mesh|form|object))?\b", re.IGNORECASE),
+    re.compile(r"\b(?:obvious )?programmer[ -]art\b", re.IGNORECASE),
+    re.compile(r"\b(?:blocky|primitive) (?:geometry|geometr(?:y|ies)|forms?|construction)\b", re.IGNORECASE),
+    re.compile(r"\b(?:reads?|looks?|feels?) (?:as |like )?(?:a )?(?:primitive|blocky)\b", re.IGNORECASE),
+    re.compile(r"\bsimplified (?:programmer[ -]art )?(?:geometry|mesh|forms?|construction)\b", re.IGNORECASE),
+    re.compile(r"\bmaterially flat\b|\bflat (?:material|surface|appearance)\b", re.IGNORECASE),
+    re.compile(r"\b(?:substantially|intentionally|obviously|heavily) styl(?:i|y)z(?:ed|ed)\b", re.IGNORECASE),
+    re.compile(r"\bmore styl(?:i|y)z(?:ed|ed) than\b", re.IGNORECASE),
+    re.compile(r"\bsimple but deliberate\b", re.IGNORECASE),
+)
+
+
+def _has_unacceptable_style_language(text: str) -> bool:
+    """Catch affirmative style descriptions while allowing explicit negation."""
+    for pattern in _UNACCEPTABLE_STYLE_PATTERNS:
+        for match in pattern.finditer(text):
+            prefix = text[max(0, match.start() - 36) : match.start()]
+            if re.search(
+                r"\b(?:not|no|without|free of|rather than|avoid(?:s|ed)?)\s+"
+                r"(?:(?:obvious|any|a|an|the|does|do|did|is|are|be|being|read(?:s|ing)?|"
+                r"look(?:s|ing)?|feel(?:s|ing)?|have|has|show(?:s|ing)?|contain(?:s|ing)?|as)\s+){0,4}$",
+                prefix,
+                re.IGNORECASE,
+            ):
+                continue
+            return True
+    return False
 
 
 @dataclass(frozen=True)
@@ -43,6 +92,8 @@ class ArtBrief:
     iteration_budget: int
     source_room_definition: str = ""
     schema_version: int = SCHEMA_VERSION
+    allow_stylization: bool = False
+    stylization_rationale: str = ""
 
     @classmethod
     def from_dict(cls, value: dict[str, Any]) -> ArtBrief:
@@ -76,6 +127,8 @@ class ArtBrief:
             errors.append(f"quality_tier must be one of {sorted(QUALITY_TIERS)}")
         if self.iteration_budget < 0:
             errors.append("iteration_budget must be zero or greater")
+        if self.allow_stylization and not self.stylization_rationale.strip():
+            errors.append("allow_stylization requires an explicit stylization_rationale")
         if not self.required_features:
             errors.append("required_features must define recognizable features")
         if not self.prohibited_changes:
@@ -173,6 +226,7 @@ class ArtEvaluation:
     incumbent_candidate_id: str = ""
     incumbent_comparison_result: str = ""
     schema_version: int = SCHEMA_VERSION
+    visual_gate: dict[str, Any] = field(default_factory=dict)
 
     @classmethod
     def from_dict(cls, value: dict[str, Any]) -> ArtEvaluation:
@@ -181,12 +235,22 @@ class ArtEvaluation:
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
 
-    def validate(self, source_resemblance_required: bool = False) -> list[str]:
+    def validate(
+        self,
+        source_resemblance_required: bool = False,
+        allow_stylization: bool = False,
+    ) -> list[str]:
         errors: list[str] = []
         if self.schema_version != SCHEMA_VERSION:
             errors.append(f"unsupported evaluation schema_version={self.schema_version}")
         if self.decision not in EVALUATION_DECISIONS:
             errors.append(f"unknown evaluation decision={self.decision}")
+        errors.extend(
+            self._validate_visual_gate(
+                allow_stylization=allow_stylization,
+                photo_character_required=source_resemblance_required,
+            )
+        )
         if self.incumbent_comparison_result and self.incumbent_comparison_result not in {
             "first_pass",
             "better",
@@ -227,3 +291,112 @@ class ArtEvaluation:
                         f"promotion threshold not met: {dimension}={score}, requires {threshold}"
                     )
         return errors
+
+    def _validate_visual_gate(
+        self,
+        allow_stylization: bool,
+        photo_character_required: bool,
+    ) -> list[str]:
+        errors: list[str] = []
+        failures: list[str] = []
+        gate = self.visual_gate
+        if not gate:
+            return ["missing explicit visual_gate answers"]
+
+        def require_answer(name: str, description: str) -> None:
+            answer = gate.get(name)
+            if not isinstance(answer, dict):
+                errors.append(f"visual_gate.{name} must include an explicit answer, pass, and evidence")
+                return
+            if not str(answer.get("answer", "")).strip():
+                errors.append(f"visual_gate.{name}.answer must explicitly answer the review question")
+            if not isinstance(answer.get("pass"), bool):
+                errors.append(f"visual_gate.{name}.pass must be a boolean")
+            elif not answer["pass"]:
+                failures.append(f"visual gate failed: {description}")
+            if not str(answer.get("evidence", "")).strip():
+                errors.append(f"visual_gate.{name}.evidence is required")
+
+        require_answer(
+            "neutral_viewer_realism",
+            "a neutral viewer would read the asset as low-poly/stylized game geometry",
+        )
+        require_answer(
+            "close_inspection",
+            "the asset does not hold up at close inspection",
+        )
+        craft = gate.get("craftsmanship")
+        if not isinstance(craft, dict):
+            errors.append("visual_gate.craftsmanship must answer all seven manufacturing checks")
+        else:
+            if not str(craft.get("answer", "")).strip():
+                errors.append("visual_gate.craftsmanship.answer must explicitly answer whether all manufacturing details are believable")
+            for check in VISUAL_CRAFT_CHECKS:
+                value = craft.get(check)
+                if not isinstance(value, dict):
+                    errors.append(f"visual_gate.craftsmanship.{check} must include pass and evidence")
+                    continue
+                if not isinstance(value.get("pass"), bool):
+                    errors.append(f"visual_gate.craftsmanship.{check}.pass must be a boolean")
+                elif not value["pass"]:
+                    failures.append(f"visual gate failed: craftsmanship {check.replace('_', ' ')} is not believable")
+                if not str(value.get("evidence", "")).strip():
+                    errors.append(f"visual_gate.craftsmanship.{check}.evidence is required")
+
+        photo = gate.get("photo_character")
+        if not isinstance(photo, dict) or not isinstance(photo.get("applicable"), bool):
+            errors.append("visual_gate.photo_character must state applicability, pass, and evidence")
+        elif photo["applicable"] != photo_character_required:
+            errors.append(
+                "visual_gate.photo_character applicability must match whether the ArtBrief has source imagery"
+            )
+        elif photo["applicable"]:
+            if not str(photo.get("answer", "")).strip():
+                errors.append("visual_gate.photo_character.answer must explicitly answer the source-character question")
+            if not isinstance(photo.get("pass"), bool):
+                errors.append("visual_gate.photo_character.pass must be a boolean when a photograph exists")
+            elif not photo["pass"]:
+                failures.append("visual gate failed: render does not materially approach the photographed object's visual character")
+            if not str(photo.get("evidence", "")).strip():
+                errors.append("visual_gate.photo_character.evidence is required when applicable")
+        elif not str(photo.get("answer", "")).strip():
+            errors.append("visual_gate.photo_character.answer must explain why this question is not applicable")
+        elif photo.get("pass") is not None:
+            errors.append("visual_gate.photo_character.pass must be null when not applicable")
+        elif not str(photo.get("evidence", "")).strip():
+            errors.append("visual_gate.photo_character.evidence must explain why it is not applicable")
+
+        flags = gate.get("style_flags")
+        if not isinstance(flags, dict):
+            errors.append("visual_gate.style_flags must explicitly answer each hard style gate")
+        else:
+            for flag in VISUAL_STYLE_FLAGS:
+                value = flags.get(flag)
+                if not isinstance(value, bool):
+                    errors.append(f"visual_gate.style_flags.{flag} must be a boolean")
+                elif value and not allow_stylization:
+                    failures.append(f"unapproved stylization hard fail: {flag}")
+
+        if not allow_stylization:
+            evidence_text = " ".join(
+                [str(value) for value in self.observations.values()]
+                + _collect_strings(gate)
+            )
+            if _has_unacceptable_style_language(evidence_text):
+                failures.append("unapproved low-poly, primitive, simplified, flat, or substantially stylized appearance described in visual evidence")
+        if failures:
+            if self.decision == "promote":
+                errors.extend(failures)
+            elif not self.hard_fail_reasons:
+                errors.append("failed visual gate answers must be preserved in hard_fail_reasons")
+        return errors
+
+
+def _collect_strings(value: Any) -> list[str]:
+    if isinstance(value, str):
+        return [value]
+    if isinstance(value, dict):
+        return [part for nested in value.values() for part in _collect_strings(nested)]
+    if isinstance(value, (list, tuple)):
+        return [part for nested in value for part in _collect_strings(nested)]
+    return []

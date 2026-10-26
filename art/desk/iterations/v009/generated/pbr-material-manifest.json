@@ -1,0 +1,38 @@
+{
+  "candidate_method": "photo_grounded_cad_desk_pbr_v1",
+  "gameplay_geometry": "unchanged; RoomDefinition retains all obstacle, placement, and surface ownership",
+  "geometry": {
+    "approach": "CAD-like rounded panels, overlapping manufactured joins, flanges, countersunk fasteners, molded pads, cable pan, and routed leads.",
+    "mesh_parts": 136,
+    "triangles": 38160
+  },
+  "pbr_materials": [
+    {
+      "albedo": "128x128 deterministic image map",
+      "metallic": 0.38,
+      "name": "smoked_tempered_glass",
+      "normal": "128x128 deterministic map",
+      "roughness": "128x128 deterministic map",
+      "roughness_base": 0.16
+    },
+    {
+      "albedo": "128x128 deterministic image map",
+      "metallic": 0.72,
+      "name": "graphite_powder_coat",
+      "normal": "128x128 brushed normal map",
+      "roughness": "128x128 deterministic map",
+      "roughness_base": 0.38
+    },
+    {
+      "albedo": "128x128 deterministic image map",
+      "metallic": 0.86,
+      "name": "satin_machined_steel",
+      "normal": "128x128 radial brushed normal map",
+      "roughness": "128x128 deterministic map",
+      "roughness_base": 0.28
+    }
+  ],
+  "schema_version": 1,
+  "source_guidance": "Thin smoked glass top; two dark steel telescoping supports; T feet spanning the desktop depth.",
+  "source_reference": "photo_holder/Sample (2).jpg"
+}

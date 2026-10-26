@@ -7,6 +7,14 @@ const RIG_PARTS := ["Body", "LeftArm", "RightArm", "LeftLeg", "RightLeg"]
 
 
 static func apply(model: Node3D, preserve_names: PackedStringArray) -> Dictionary:
+	# The accepted ArtBrief describes the clockwork worker. Keep civic-specific
+	# Verdant and future presentation rigs on their own visual path.
+	var citizen := model.get_parent()
+	# This registered asset is the Clockwork Art Factory pilot. Other civilizations
+	# own their own visual transformation and must keep the legacy pose rig intact.
+	var civilization_id := String(citizen.get("civilization_id")) if citizen != null else ""
+	if civilization_id != "clockwork":
+		return {"registered": false, "skipped_for_civilization": true}
 	var registry := AssetRegistry.new()
 	if not registry.valid:
 		return _fail_closed(model, preserve_names, "registry could not be read")

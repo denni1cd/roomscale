@@ -52,14 +52,21 @@ func lookup(asset_id: String) -> Dictionary:
 		entry["resolution_error"] = "accepted asset cannot be read: %s" % project_path
 		_diagnose(asset_id, entry.resolution_error)
 		return entry
-	var hashing := HashingContext.new()
-	var start_error := hashing.start(HashingContext.HASH_SHA256)
-	if start_error != OK:
-		entry["resolution_error"] = "SHA-256 context could not start for %s" % project_path
-		_diagnose(asset_id, entry.resolution_error)
-		return entry
-	hashing.update(file.get_buffer(file.get_length()))
-	var actual_hash := hashing.finish().hex_encode()
+	var actual_hash := ""
+	var extension := source_path.get_extension().to_lower()
+	if extension in ["tscn", "tres", "gltf", "gdshader", "json"]:
+		# Windows checkouts may convert LF to CRLF. Line endings do not change a
+		# Godot text resource, so use the same canonical LF bytes as the offline registry.
+		actual_hash = file.get_as_text().replace("\r\n", "\n").sha256_text()
+	else:
+		var hashing := HashingContext.new()
+		var start_error := hashing.start(HashingContext.HASH_SHA256)
+		if start_error != OK:
+			entry["resolution_error"] = "SHA-256 context could not start for %s" % project_path
+			_diagnose(asset_id, entry.resolution_error)
+			return entry
+		hashing.update(file.get_buffer(file.get_length()))
+		actual_hash = hashing.finish().hex_encode()
 	if actual_hash != String(entry.sha256):
 		entry["resolution_error"] = "accepted asset SHA-256 mismatch for %s" % project_path
 		_diagnose(asset_id, entry.resolution_error)

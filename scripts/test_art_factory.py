@@ -9,10 +9,21 @@ import unittest
 from pathlib import Path
 
 from art_factory.factory import ArtFactory
-from art_factory.models import RUBRIC_DIMENSIONS, ArtBrief, ArtEvaluation, ArtRecipe
+from art_factory.models import (
+    RUBRIC_DIMENSIONS,
+    VISUAL_CRAFT_CHECKS,
+    VISUAL_STYLE_FLAGS,
+    ArtBrief,
+    ArtEvaluation,
+    ArtRecipe,
+)
+from art_factory.registry import sha256_file
 
 
-def make_brief(source_room_definition: str = "") -> ArtBrief:
+def make_brief(
+    source_room_definition: str = "",
+    allow_stylization: bool = False,
+) -> ArtBrief:
     return ArtBrief(
         asset_id="test-desk",
         semantic_type="desk",
@@ -20,7 +31,7 @@ def make_brief(source_room_definition: str = "") -> ArtBrief:
         category="human_furniture",
         intended_dimensions=(68.0, 30.0, 34.0),
         gameplay_invariants={"navigation_blocking": True, "obstacle_dimensions": [68, 30, 34]},
-        reference_images=["photo_holder/Sample (2).jpg"],
+        reference_images=["photo_holder/Sample (2).jpg"] if source_room_definition else [],
         visual_target="Black glass computer desk with visible construction details.",
         materials={"top": "black glass", "frame": "dark painted metal"},
         required_features=["wide top", "recognizable frame"],
@@ -29,6 +40,8 @@ def make_brief(source_room_definition: str = "") -> ArtBrief:
         quality_tier="B",
         iteration_budget=8,
         source_room_definition=source_room_definition,
+        allow_stylization=allow_stylization,
+        stylization_rationale="The requested target is intentionally stylized." if allow_stylization else "",
     )
 
 
@@ -54,6 +67,43 @@ def make_scores(raised: str = "semantic_recognizability") -> dict[str, int]:
     if raised in scores:
         scores[raised] = 5
     return scores
+
+
+def make_visual_gate(photo_applicable: bool = False) -> dict[str, object]:
+    return {
+        "neutral_viewer_realism": {
+            "answer": "Yes, the asset reads as realistic furniture.",
+            "pass": True,
+            "evidence": "The production render reads as a convincingly constructed physical asset.",
+        },
+        "close_inspection": {
+            "answer": "Yes, the close render holds up without primitive construction.",
+            "pass": True,
+            "evidence": "The close production render holds together without obvious primitive construction.",
+        },
+        "craftsmanship": {
+            "answer": "Yes, all seven listed manufacturing details look believable.",
+            **{
+                check: {
+                    "pass": True,
+                    "evidence": f"The close production render shows believable {check.replace('_', ' ')}.",
+                }
+                for check in VISUAL_CRAFT_CHECKS
+            },
+        },
+        "photo_character": {
+            "applicable": photo_applicable,
+            "answer": "Yes, the render approaches the source object's visual character."
+            if photo_applicable
+            else "Not applicable; the brief has no source photograph.",
+            "pass": True if photo_applicable else None,
+            "evidence": "The production render materially approaches the photographed object."
+            if photo_applicable
+            else "This asset brief has no source photograph.",
+        },
+        "style_flags": {flag: False for flag in VISUAL_STYLE_FLAGS},
+        "style_evidence": "The production evidence supports the stated physical-art direction and shows no prohibited style characteristics.",
+    }
 
 
 def make_evaluation(
@@ -85,6 +135,7 @@ def make_evaluation(
         decision=decision,
         render_evidence=[f"art/test-desk/iterations/{candidate_id[-4:]}/renders/close.png"],
         created_at_utc="2026-10-25T12:00:00+00:00",
+        visual_gate=make_visual_gate(source_resemblance),
     )
 
 
@@ -295,6 +346,52 @@ class ArtFactoryTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "source_resemblance"):
             self.factory.record_evaluation(evaluation)
 
+    def test_explicit_visual_gate_answers_are_required(self) -> None:
+        evaluation = make_evaluation("test-desk-v001")
+        evaluation.visual_gate = {}
+        self.assertIn("missing explicit visual_gate answers", evaluation.validate())
+
+        evaluation = make_evaluation("test-desk-v001")
+        del evaluation.visual_gate["close_inspection"]["answer"]
+        self.assertTrue(any("close_inspection.answer" in error for error in evaluation.validate()))
+
+    def test_low_poly_descriptions_and_style_flags_block_pass(self) -> None:
+        evaluation = make_evaluation("test-desk-v001")
+        evaluation.observations["geometric_detail"] = "The desk is polished low-poly geometry."
+        self.assertTrue(any("unapproved low-poly" in error for error in evaluation.validate()))
+
+        evaluation = make_evaluation("test-desk-v001")
+        evaluation.visual_gate["style_flags"]["primitive_geometry"] = True
+        self.assertTrue(any("unapproved stylization hard fail" in error for error in evaluation.validate()))
+
+        evaluation = make_evaluation("test-desk-v001")
+        evaluation.visual_gate["style_flags"]["blocky_geometry"] = True
+        self.assertTrue(any("unapproved stylization hard fail" in error for error in evaluation.validate()))
+
+        evaluation = make_evaluation("test-desk-v001")
+        evaluation.observations["geometric_detail"] = "The model still looks like a placeholder."
+        self.assertTrue(any("unapproved low-poly" in error for error in evaluation.validate()))
+
+        evaluation = make_evaluation("test-desk-v001")
+        evaluation.visual_gate["close_inspection"]["answer"] = "No, it still reads as low-poly construction."
+        self.assertTrue(any("unapproved low-poly" in error for error in evaluation.validate()))
+
+        repair = make_evaluation("test-desk-v001", decision="continue")
+        repair.visual_gate["neutral_viewer_realism"]["pass"] = False
+        repair.hard_fail_reasons = ["does not read as realistic furniture"]
+        self.assertEqual(repair.validate(), [])
+
+    def test_only_explicit_brief_stylization_allows_style_flags(self) -> None:
+        brief = make_brief(allow_stylization=True)
+        self.assertEqual(brief.validate(), [])
+        evaluation = make_evaluation("test-desk-v001")
+        evaluation.visual_gate["style_flags"]["substantially_stylized"] = True
+        self.assertEqual(evaluation.validate(allow_stylization=True), [])
+        self.assertIn(
+            "allow_stylization requires an explicit stylization_rationale",
+            make_brief().__class__(**{**make_brief().__dict__, "allow_stylization": True}).validate(),
+        )
+
     def test_comparison_result_is_validated(self) -> None:
         evaluation = make_evaluation("test-desk-v001", decision="continue", comparison="same")
         evaluation.incumbent_comparison_result = "probably_better"
@@ -303,6 +400,15 @@ class ArtFactoryTest(unittest.TestCase):
     def test_registry_rejects_paths_outside_project(self) -> None:
         with self.assertRaisesRegex(ValueError, "escapes the project root"):
             self.factory.registry.local_path({"path": "../../outside.glb"})
+
+    def test_text_asset_hash_ignores_windows_checkout_line_endings(self) -> None:
+        lf_file = self.root / "asset.tscn"
+        crlf_file = self.root / "asset-copy.tscn"
+        lf_file.write_bytes(b"[gd_scene format=4]\n[node name=\"Root\"]\n")
+        crlf_file.write_bytes(lf_file.read_bytes().replace(b"\n", b"\r\n"))
+        self.assertEqual(sha256_file(lf_file), sha256_file(crlf_file))
+        crlf_file.write_bytes(crlf_file.read_bytes().replace(b"Root", b"Other"))
+        self.assertNotEqual(sha256_file(lf_file), sha256_file(crlf_file))
 
 
 if __name__ == "__main__":

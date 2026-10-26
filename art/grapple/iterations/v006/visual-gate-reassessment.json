@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "asset_id": "grapple",
+  "candidate_id": "grapple-v006",
+  "review_type": "retroactive_visual_gate_reassessment",
+  "reviewed_at_utc": "2026-10-26T15:00:00+00:00",
+  "original_evaluation_preserved": true,
+  "registry_candidate_preserved": "grapple-v006",
+  "registry_mutated": false,
+  "decision": "pass_visual_gate",
+  "visual_gate": {
+    "neutral_viewer_realism": {
+      "pass": true,
+      "answer": "Yes. run-001 asset-three-quarter.png and asset-detail.png show a braced tower, rope winch, toothed gears, copper plumbing, enamel gauges, and distinct structural stages.",
+      "evidence": "run-001 asset-three-quarter.png and asset-detail.png show a braced tower, rope winch, toothed gears, copper plumbing, enamel gauges, and distinct structural stages."
+    },
+    "close_inspection": {
+      "pass": true,
+      "answer": "Yes. The matched close captures show gauge indices/needles, pipe fittings, collars, gear teeth, separate spokes, shaft, and rope turns.",
+      "evidence": "The matched close captures show gauge indices/needles, pipe fittings, collars, gear teeth, separate spokes, shaft, and rope turns."
+    },
+    "craftsmanship": {
+      "edge_treatment": {
+        "pass": true,
+        "evidence": "Timber edges, iron braces, boiler bands, and gauge rims are differentiated at the inspection scale."
+      },
+      "joins": {
+        "pass": true,
+        "evidence": "Rungs, collars, braces, and gear connections read as connected working assemblies."
+      },
+      "thickness": {
+        "pass": true,
+        "evidence": "Base boards, tower rails, spool wheels, and pipework have distinct plausible thicknesses."
+      },
+      "hardware": {
+        "pass": true,
+        "evidence": "Bolts, hubs, pulley, gauge bezels, ladder collars, and mechanical linkages are visible."
+      },
+      "material_response": {
+        "pass": true,
+        "evidence": "RoomScale production lighting distinguishes oiled timber, dark iron, brass, copper, rope, and enamel."
+      },
+      "surface_variation": {
+        "pass": true,
+        "evidence": "Wood and rope texture contrast with machined metal and enamel faces."
+      },
+      "manufacturing_detail": {
+        "pass": true,
+        "evidence": "The visible assembly has seams, fasteners, pipe joints, gauge faces, rope winding, and gear teeth."
+      },
+      "answer": "Yes. All seven manufacturing details were judged against the production close views."
+    },
+    "photo_character": {
+      "applicable": false,
+      "pass": null,
+      "answer": "Not applicable. The asset brief has no source photograph.",
+      "evidence": "art/grapple/brief.json reference_images is empty."
+    },
+    "style_flags": {
+      "low_poly": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "materially_flat": false,
+      "substantially_stylized": false,
+      "blocky_geometry": false,
+      "placeholder_geometry": false
+    },
+    "style_evidence": "The fantasy mechanism is steampunk-inspired, but the production render presents it as a detailed, buildable miniature machine, consistent with the brief's miniature-diorama target."
+  },
+  "production_evidence": [
+    "art/grapple/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+    "art/grapple/iterations/v006/render-runs/run-001/asset-profile.png",
+    "art/grapple/iterations/v006/render-runs/run-001/asset-detail.png",
+    "art/grapple/iterations/v006/render-runs/run-001/grapple-deployment.png",
+    "art/grapple/iterations/v006/render-runs/run-001/grapple-complete.png"
+  ],
+  "gameplay_status": "The new visual gate does not modify or replace the accepted asset; existing evidence records construction reveal, deployment, traversal connection, and a citizen traversal."
+}

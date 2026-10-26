@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "asset_id": "citizen",
+  "candidate_id": "citizen-v007",
+  "review_type": "retroactive_visual_gate_reassessment",
+  "reviewed_at_utc": "2026-10-26T15:00:00+00:00",
+  "original_evaluation_preserved": true,
+  "registry_candidate_preserved": "citizen-v007",
+  "registry_mutated": false,
+  "brief_allows_stylization": false,
+  "decision": "fail_visual_gate_keep_existing_registry_entry_pending_repair",
+  "visual_gate": {
+    "neutral_viewer_realism": {
+      "pass": false,
+      "answer": "No. run-002 asset-three-quarter.png shows a uniform rounded head, simple torso, tube-like limbs, and oversized block boots; the original evaluation itself says the face remains intentionally stylized.",
+      "evidence": "run-002 asset-three-quarter.png shows a uniform rounded head, simple torso, tube-like limbs, and oversized block boots; the original evaluation itself says the face remains intentionally stylized."
+    },
+    "close_inspection": {
+      "pass": false,
+      "answer": "No. The matched production image does not make the clothing layers, face, joints, and finish read as close-up crafted character work; the cap and goggles dominate recognition.",
+      "evidence": "The matched production image does not make the clothing layers, face, joints, and finish read as close-up crafted character work; the cap and goggles dominate recognition."
+    },
+    "craftsmanship": {
+      "edge_treatment": {
+        "pass": false,
+        "evidence": "Boots, cuffs, and torso boundaries retain simple hard transitions rather than tailored soft construction."
+      },
+      "joins": {
+        "pass": false,
+        "evidence": "Arms and legs meet the torso as obvious separate forms; attachment transitions are not convincingly finished."
+      },
+      "thickness": {
+        "pass": false,
+        "evidence": "The coat/lapel and limb volumes read as chunky layers at close inspection rather than fitted clothing over a body."
+      },
+      "hardware": {
+        "pass": false,
+        "evidence": "Brass goggles and buttons are readable motifs, but do not offset the primitive-looking body and face construction."
+      },
+      "material_response": {
+        "pass": false,
+        "evidence": "Cloth/leather colors are distinguishable, but the overall form/material response remains flat and game-stylized."
+      },
+      "surface_variation": {
+        "pass": true,
+        "evidence": "The close render resolves a woven pattern on the coat and cap, matching the recorded texture pass."
+      },
+      "manufacturing_detail": {
+        "pass": false,
+        "evidence": "The brief's seams, fitted boots, role-space tailoring, and refined miniature finish are not all convincingly resolved in the inspected production view."
+      },
+      "answer": "No. All seven manufacturing details were judged against the production close views."
+    },
+    "photo_character": {
+      "applicable": false,
+      "pass": null,
+      "answer": "Not applicable. The asset brief has no source photograph.",
+      "evidence": "art/citizen/brief.json reference_images is empty."
+    },
+    "style_flags": {
+      "low_poly": true,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "materially_flat": true,
+      "substantially_stylized": true,
+      "blocky_geometry": true,
+      "placeholder_geometry": false
+    },
+    "style_evidence": "The accepted evaluation describes the face as intentionally stylized, and the production render has simple rounded/cylindrical body forms. The clockwork miniature brief does not explicitly authorize a stylized geometry target."
+  },
+  "production_evidence": [
+    "art/citizen/iterations/v007/render-runs/run-002/asset-gameplay-distance.png",
+    "art/citizen/iterations/v007/render-runs/run-002/asset-three-quarter.png",
+    "art/citizen/iterations/v007/render-runs/run-002/asset-profile.png",
+    "art/citizen/iterations/v007/render-runs/run-002/asset-detail.png",
+    "art/citizen/iterations/v007/render-runs/run-005/receipt.json"
+  ],
+  "gameplay_status": "The visual reassessment does not delete or change citizen-v007; its prior 50-citizen animation/gameplay evidence remains preserved. The visual pilot gate is not satisfied."
+}

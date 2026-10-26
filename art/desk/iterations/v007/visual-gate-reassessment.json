@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "asset_id": "desk",
+  "candidate_id": "desk-v007",
+  "review_type": "retroactive_visual_gate_reassessment",
+  "reviewed_at_utc": "2026-10-26T15:00:00+00:00",
+  "original_evaluation_preserved": true,
+  "registry_candidate_preserved": "desk-v007",
+  "registry_mutated": false,
+  "decision": "fail_visual_gate_keep_best_so_far_incumbent",
+  "visual_gate": {
+    "neutral_viewer_realism": {
+      "pass": false,
+      "answer": "No. run-003 asset-three-quarter.png and asset-detail.png show one broad dark slab, plain box columns, and feet with little photographic material character.",
+      "evidence": "run-003 asset-three-quarter.png and asset-detail.png show one broad dark slab, plain box columns, and feet with little photographic material character."
+    },
+    "close_inspection": {
+      "pass": false,
+      "answer": "No. The profile/detail renders show hard-edged plate-like supports and few clearly resolved manufactured joins; the v007 evaluation itself calls the details 'simple but deliberate'.",
+      "evidence": "The profile/detail renders show hard-edged plate-like supports and few clearly resolved manufactured joins; the v007 evaluation itself calls the details 'simple but deliberate'."
+    },
+    "craftsmanship": {
+      "edge_treatment": {
+        "pass": false,
+        "evidence": "The desktop reads as a single sharp-edged slab instead of the softened, finished glass edge in the brief."
+      },
+      "joins": {
+        "pass": false,
+        "evidence": "The columns, feet, and rails read as adjoining box forms; their load-bearing joints are not convincingly finished."
+      },
+      "thickness": {
+        "pass": true,
+        "evidence": "The measured 0.72-inch desktop thickness is plausible, though its edge finish is not."
+      },
+      "hardware": {
+        "pass": false,
+        "evidence": "Mount discs are present but the production view does not resolve believable fasteners or fittings."
+      },
+      "material_response": {
+        "pass": false,
+        "evidence": "The broad top has weak, localized highlights and does not show the wide soft room/window reflections seen on the source glass."
+      },
+      "surface_variation": {
+        "pass": false,
+        "evidence": "Glass and frame read as broad uniform color fields; there is little credible glass or coating variation."
+      },
+      "manufacturing_detail": {
+        "pass": false,
+        "evidence": "The render lacks convincing edge finishing, fitted joins, wiring, fasteners, and visible production detail at close scale."
+      },
+      "answer": "No. All seven manufacturing details were judged against the production close views."
+    },
+    "photo_character": {
+      "applicable": true,
+      "pass": false,
+      "answer": "No. Source photo photo_holder/Sample (2).jpg shows broad window and monitor reflections in the smoked-glass top plus black T supports. v007's room render shows a mostly uniform dark plane and generic support geometry.",
+      "evidence": "Source photo photo_holder/Sample (2).jpg shows broad window and monitor reflections in the smoked-glass top plus black T supports. v007's room render shows a mostly uniform dark plane and generic support geometry."
+    },
+    "style_flags": {
+      "low_poly": true,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "materially_flat": true,
+      "substantially_stylized": true,
+      "blocky_geometry": true,
+      "placeholder_geometry": false
+    },
+    "style_evidence": "The v007 evaluation explicitly described restrained low-poly geometry, a more stylized result than the photo, and simple deliberate details; production images support that classification. The desk brief does not authorize stylization."
+  },
+  "production_evidence": [
+    "art/desk/iterations/v007/render-runs/run-003/asset-three-quarter.png",
+    "art/desk/iterations/v007/render-runs/run-003/asset-profile.png",
+    "art/desk/iterations/v007/render-runs/run-003/asset-detail.png",
+    "photo_holder/Sample (2).jpg"
+  ],
+  "challenger_context": {
+    "candidate_id": "desk-v009",
+    "decision": "continue",
+    "evaluation": "art/desk/iterations/v009/evaluation.json",
+    "summary": "A materially different CAD-like geometry plus procedural PBR map method was tested and did not yet pass; desk-v007 remains the best-so-far registry incumbent."
+  }
+}

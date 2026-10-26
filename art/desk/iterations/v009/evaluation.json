@@ -1,0 +1,118 @@
+{
+  "candidate_id": "desk-v009",
+  "created_at_utc": "2026-10-26T14:50:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "The top reads as a dark, evenly noisy surface with almost no broad reflection pattern from the photographed room.",
+    "Support columns, bolts, cable hardware, and edge construction are mostly lost behind the large slab in the matched production views.",
+    "The additional mesh count did not translate into materially better perceived source fidelity."
+  ],
+  "hard_fail_reasons": [
+    "The production render does not read as realistic furniture at neutral viewing distance.",
+    "The photographed glass-and-steel character is not materially approached; the render matches the broad bounding silhouette while missing the visible reflection/material character.",
+    "The glass appears materially flat and the support construction remains visually simplified in the production camera."
+  ],
+  "incumbent_candidate_id": "desk-v007",
+  "incumbent_comparison": "Compared against desk-v007 in the same production room and matched three-quarter/detail cameras. v009 increases geometry from 19 meshes/4,416 triangles to 136 meshes/38,160 triangles and introduces albedo, roughness, and normal maps, but the production output is visually worse at communicating smoked glass and still hides most manufactured detail. Keep desk-v007 as best-so-far.",
+  "incumbent_comparison_result": "worse",
+  "likely_causes": [
+    "The deterministic dark glass albedo and fine normal/roughness variation dominate the broad plane; the Compatibility renderer and room lighting provide little environmental reflection to establish a glass read.",
+    "The underside details are occluded by the desk top at the standardized close camera, so raw mesh density is not visible construction quality.",
+    "The support geometry uses nested rounded boxes without sufficiently legible material and joint boundaries from the production viewpoints."
+  ],
+  "next_action_hypothesis": "Replace only the procedural dark glass albedo with a recorded source-conditioned glass material map that carries broad subdued window/monitor reflections; keep roughness and normal as separate PBR maps, retain the v009 CAD geometry, and re-render under the identical room cameras. The target is a real glass read from the source photo, not a shader-only polish pass.",
+  "observations": {
+    "art_direction_fit": "The CAD construction is more considered than v007, but its in-room appearance still lacks the realistic smoked-glass-and-steel character in the desk brief.",
+    "close_up_quality": "In run-001 asset-detail.png the broad top resolves as uniform fine noise and black supports; the small join and controller details do not read clearly at the inspection camera.",
+    "gameplay_readability": "The desk remains legible beneath the two independent monitors and gameplay geometry is unchanged.",
+    "geometric_detail": "Technical capture reports 136 meshes and 38,160 triangles, but the production images show only a few of the additional support and fastener details.",
+    "material_realism": "The dark PBR top lacks the broad soft window and monitor reflections visible on the source desk; its actual render reads matte and materially flat.",
+    "proportion": "The source scene bounds are 66 x 30.01 x 30 inches, within the brief's 0.03-inch height tolerance.",
+    "scale_fidelity": "Godot measured 66 x 30.01 x 30 inches; no RoomDefinition object or gameplay dimensions were edited.",
+    "semantic_recognizability": "The production images identify a standing computer desk, though not yet a realistic furniture asset.",
+    "silhouette_quality": "The broad thin top and paired T supports preserve the photographed desk's general outline.",
+    "source_resemblance": "The broad silhouette is similar, but the top's window/monitor reflection character and visible finished support construction do not materially approach the photograph.",
+    "surface_variation": "The render has fine albedo noise but lacks believable glass variation; the noise reads as a uniform material overlay rather than surface character.",
+    "technical_integration": "desk-v009 loaded through the production resolver as the expected PackedScene; validation passed at 136 meshes, 136 surfaces, and 38,160 triangles."
+  },
+  "render_evidence": [
+    "art/desk/iterations/v009/render-runs/run-001/room-scale.png",
+    "art/desk/iterations/v009/render-runs/run-001/asset-three-quarter.png",
+    "art/desk/iterations/v009/render-runs/run-001/asset-profile.png",
+    "art/desk/iterations/v009/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 2,
+    "close_up_quality": 2,
+    "gameplay_readability": 5,
+    "geometric_detail": 3,
+    "material_realism": 2,
+    "proportion": 5,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 4,
+    "source_resemblance": 2,
+    "surface_variation": 2,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "evidence": "The detail render shows a uniform noisy top; most joins, controller components, and fastening detail are not legible at the close camera.",
+      "pass": false,
+      "answer": "No. The detail render shows a uniform noisy top; most joins, controller components, and fastening detail are not legible at the close camera."
+    },
+    "craftsmanship": {
+      "edge_treatment": {
+        "evidence": "The rounded desktop edge and separate laminate strip are visible in profile, though the finish remains simple.",
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "Mounting plates and fasteners are mostly occluded from the standardized production angles.",
+        "pass": false
+      },
+      "joins": {
+        "evidence": "The production renders do not make the layered column and rail joins legible.",
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "The photographed desk's visible frame and refined manufactured support details are not reproduced clearly.",
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "The rendered glass is dark and matte with little response resembling the broad source-photo reflections.",
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "Fine noise is present but reads as a uniform overlay, not believable glass or coated-steel surface variation.",
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "The 0.72-inch glass thickness is within a plausible manufactured desktop profile.",
+        "pass": true
+      },
+      "answer": "No. All seven manufacturing details were judged against the production close views."
+    },
+    "neutral_viewer_realism": {
+      "evidence": "The matched production three-quarter render remains a broad dark top and largely black supports, not convincing realistic furniture.",
+      "pass": false,
+      "answer": "No. The matched production three-quarter render remains a broad dark top and largely black supports, not convincing realistic furniture."
+    },
+    "photo_character": {
+      "applicable": true,
+      "evidence": "Source Sample (2).jpg shows dark reflective glass with broad window/monitor shapes and black T supports; the render only preserves the broad silhouette.",
+      "pass": false,
+      "answer": "No. Source Sample (2).jpg shows dark reflective glass with broad window/monitor shapes and black T supports; the render only preserves the broad silhouette."
+    },
+    "style_evidence": "Despite the higher mesh count, the top reads as a large flat dark field and the support assembly remains visually simplified in the actual production render.",
+    "style_flags": {
+      "low_poly": false,
+      "materially_flat": true,
+      "primitive_geometry": false,
+      "simplified_programmer_art": true,
+      "substantially_stylized": false,
+      "blocky_geometry": true,
+      "placeholder_geometry": false
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "asset_id": "desk",
+  "incumbent_candidate_id": "desk-v007",
+  "incumbent_preserved": true,
+  "registry_mutated": false,
+  "approved_challenger_budget": 8,
+  "challenger_versions": [
+    "desk-v002",
+    "desk-v003",
+    "desk-v004",
+    "desk-v005",
+    "desk-v006",
+    "desk-v007",
+    "desk-v008",
+    "desk-v009"
+  ],
+  "challenger_attempts_used": 8,
+  "challenger_attempts_remaining": 0,
+  "final_challenger_id": "desk-v009",
+  "final_challenger_decision": "continue_visual_gate_failed",
+  "materially_different_method_tested": "photo_grounded_cad_desk_pbr_v1",
+  "production_evidence": [
+    "art/desk/iterations/v009/render-runs/run-001/asset-three-quarter.png",
+    "art/desk/iterations/v009/render-runs/run-001/asset-detail.png",
+    "art/desk/iterations/v009/evaluation.json",
+    "art/desk/iterations/v009/technical-validation.json"
+  ],
+  "technical_result": {
+    "mesh_parts": 136,
+    "triangles": 38160,
+    "measured_dimensions_inches": [66.0, 30.01, 30.0],
+    "gameplay_geometry_changed": false
+  },
+  "visual_result": {
+    "decision": "fail",
+    "source_resemblance_score": 2,
+    "incumbent_comparison": "worse",
+    "defects": [
+      "Rendered smoked-glass top reads as a uniformly noisy dark plane and lacks the broad reflection character visible in the source photograph.",
+      "Additional CAD-like join and hardware geometry is largely occluded in production inspection views, so mesh density does not become visible craftsmanship.",
+      "The rendered supports still appear simplified relative to the realistic-furniture brief."
+    ]
+  },
+  "v008_attempt": "Preserved blocked parser attempt; counted within the approved eight-challenger budget.",
+  "disposition": "Stop at budget exhaustion. Preserve desk-v007 as incumbent and desk-v009 as failed challenger. A source-conditioned material experiment is only a future hypothesis and requires an approved new iteration budget before any further desk generation."
+}

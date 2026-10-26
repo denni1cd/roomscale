@@ -1,0 +1,20 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ROOMSCALE_CIVILIZATION_PROFILE id=verdant name=Verdant citizen_style=verdant_folk settlement_style=living_grove traversal_style=living_vine
+ROOMSCALE_VISUAL_ASSET object=desk source=res://assets/generated/writing_desk.glb normalization={ "source_bounds": [P: (-34.0, 0.0, -17.0), S: (68.0, 30.0, 34.0)], "fitted_dimensions": (68.0, 30.0, 34.0) }
+ROOMSCALE_VISUAL_ASSET object=side_table source=res://assets/generated/writing_desk.glb normalization={ "source_bounds": [P: (-34.0, 0.0, -17.0), S: (68.0, 30.0, 34.0)], "fitted_dimensions": (20.0, 20.0, 17.0) }
+ROOMSCALE_VISUAL_ASSET object=ArtPresentation source=res://art/settlement_workshop/iterations/v004/generated/settlement_workshop.tscn normalization={ "source_bounds": [P: (-13.0, 0.0, -10.0), S: (26.0, 19.94, 20.0)], "fitted_dimensions": (26.0, 20.0, 20.0) }
+ROOMSCALE_VISUAL_ASSET object=ArtPresentation source=res://art/settlement_depot/iterations/v003/generated/settlement_depot.tscn normalization={ "source_bounds": [P: (-12.0, 0.0, -10.15), S: (24.0, 13.08, 20.15)], "fitted_dimensions": (24.0, 13.0, 20.0) }
+ROOMSCALE_VISUAL_ASSET object=ArtPresentation source=res://art/settlement_housing/iterations/v002/generated/settlement_housing.tscn normalization={ "source_bounds": [P: (-8.5, 0.0, -4.5), S: (17.0, 7.09, 9.85)], "fitted_dimensions": (17.0, 7.0, 9.0) }
+ROOMSCALE_VISUAL_ASSET object=ArtPresentation source=res://art/settlement_workarea/iterations/v005/generated/settlement_workarea.tscn normalization={ "source_bounds": [P: (-11.5, 0.0, -6.0), S: (23.0, 9.0, 12.0)], "fitted_dimensions": (23.0, 9.0, 12.0) }
+ROOMSCALE_FLOOR_NAV_READY room=room_a grid=60x45 cell=4in obstacles=11
+ROOMSCALE_CITIZEN_SPAWN count=50 separate_nodes=true height=0.5in
+ROOMSCALE_M2_READY Godot=4.7.2-stable (official) room=room_a size=240x180 in citizens=50
+ROOMSCALE_CIVILIZATION_PRESENTATION_READY id=verdant citizens=50
+
+ERROR: ROOMSCALE_SMOKE_FAIL: living vine anchor does not match the real endpoint and deployment state
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _fail (res://scripts/smoke_test.gd:859)
+       [1] _verify_traversal_presentation (res://scripts/smoke_test.gd:718)
+       [2] _run (res://scripts/smoke_test.gd:356)

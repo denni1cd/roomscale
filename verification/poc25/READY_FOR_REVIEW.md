@@ -1,6 +1,7 @@
 # RoomScale POC 2.5 — READY FOR REVIEW
 
 **Review state:** READY FOR REVIEW
+**Pilot disposition:** Three-pilot acceptance is not satisfied. The independent review returned REPAIR REQUIRED; the evaluator and CI defects below have been repaired for follow-up review, while desk/citizen visual acceptance remains open.
 **Baseline:** `1d7388f` on `main` (recorded before POC 2.5 implementation)
 **Engine:** Godot 4.7.2, Compatibility renderer
 **Scope note:** Strategerium, Adeptus Necroneerium, the approval gate, work-package hierarchy, and Rules Lawyer review were used as existing execution infrastructure. They are not RoomScale POC 2.5 technology or acceptance targets. The product under review is the RoomScale Art Factory and its production asset workflow.
@@ -11,6 +12,14 @@ The repository now has a local, deterministic authoring pipeline under `scripts/
 
 The desk, grapple, and citizen pilots retain challenger histories and production captures. Four settlement structures and four major room-furniture assets were also promoted after measured bounds checks and rendered evaluation. The workshop v004 roof revision exposes the boiler; workarea v005 restores the missing tool rack, bins, and lathe details. The accepted registry now resolves eleven assets: desk v007, grapple v006, citizen v007, workshop v004, depot v003, housing v002, workarea v005, office chair v003, rocking chair v003, hammock-with-stand v005, and display cabinet v002.
 
+## Independent-review repair follow-up
+
+The POC 2.5 hard visual gate now requires explicit answers and production-render evidence for: realistic-furniture read; close-inspection construction; edge treatment, joins, thickness, hardware, material response, surface variation, and manufacturing detail; plus source-photo character when a photograph exists. Unapproved low-poly, blocky, placeholder, primitive, simplified programmer-art, materially flat, or substantially stylized descriptions/flags block PASS unless the brief explicitly opts into stylization with a rationale. The three pilot briefs do not opt in.
+
+Retroactive records are in `art/desk/iterations/v007/visual-gate-reassessment.json`, `art/grapple/iterations/v006/visual-gate-reassessment.json`, and `art/citizen/iterations/v007/visual-gate-reassessment.json`. `desk-v007` remains the best-so-far registry incumbent, but fails the repaired gate. The materially different CAD-like, 136-mesh/38,160-triangle PBR desk challenger `desk-v009` was production-rendered and rejected: its dark top reads flat/noisy, the photographed glass reflection character is not approached, and much of its added join/hardware detail is occluded. It is preserved as a failed challenger and did not replace v007. The eight-challenger desk budget is exhausted; `art/desk/iterations/v009/iteration-budget-disposition.json` records the cap and stop decision. Do not claim desk acceptance or create a ninth challenger without an approved budget change. `grapple-v006` passes the reassessed visual gate. `citizen-v007` remains in the registry but fails because its evaluation describes intentional stylization and its close render still reads as simplified block-form geometry. Keep incumbents and all history intact. No broad asset migration has begun.
+
+The GitHub run `40256472981` for `04e75d2842346ff7262ca9268c37cdb2c4d75807` is classified in `final/ci-04e75d2-classification.md`. It exposed a Verdant/Clockwork citizen-art integration regression and a Windows CRLF registry-hash portability regression; both have code repairs and local regression coverage. Local rerun logs are in `final/repair-rerun/`.
+
 ## Acceptance Criteria Evidence Map
 
 | Criterion | Status | Evidence / notes |
@@ -18,7 +27,7 @@ The desk, grapple, and citizen pilots retain challenger histories and production
 | AC-01 Approved Execution Contract | Satisfied by prior workflow | User authorized implementation with “Okay go for it” after the prior contract-review step. Contract workflow was not recreated here. |
 | AC-02 Baseline Preserved | PASS | `baseline/RoomScale_POC_2.5_Baseline.md`; baseline commit, fast suite, Room A/B, canonical room, screenshots, and the known pre-existing graphical-launch redirect failure are recorded. |
 | AC-03 No Manual Art Requirement | PASS | Candidates are produced by recorded local Godot recipes and scripts; see candidate `recipe.json` and `generation.log` files under `art/`. No user modeling, texturing, rigging, or cleanup is required. |
-| AC-04 Art Factory Exists | PASS | `scripts/art_factory/` and `scripts/test_art_factory.py`; 14 unit tests passed, including the zero-exit GDScript error regression. |
+| AC-04 Art Factory Exists | PASS | `scripts/art_factory/` and `scripts/test_art_factory.py`; 18 unit tests pass after the visual-gate repair, including low-poly, blocky, and placeholder description/flag regressions. |
 | AC-05 Durable Art Brief | PASS | Briefs are preserved under `art/` for the desk, grapple, citizen, four settlement structures, office chair, rocking chair, `hammock_with_stand`, and display cabinet. The hammock ID matches its stable RoomDefinition semantic identity. |
 | AC-06 Recipe Preservation | PASS | Candidate-local `recipe.json` files preserve method, instructions, tool/version, parameters, inputs, and import settings. Failed and blocked attempts remain in iteration folders. |
 | AC-07 Production Integration | PASS | `scripts/art_factory/render_harness.gd` resolves candidates through the production scene and records the exact path/candidate in receipts. |
@@ -29,14 +38,14 @@ The desk, grapple, and citizen pilots retain challenger histories and production
 | AC-12 Challenger vs Incumbent | PASS | Pilot evaluations identify best-so-far candidates; workshop v004 is compared with v002 and workarea v005 with v003 under equivalent current renderer/camera settings. Technically failed/blocked candidates are not mislabeled as visual incumbents. |
 | AC-13 Best-So-Far Preservation | PASS | `scripts/art_factory/factory.py` gates promotion against the registry incumbent, comparison result, and score regressions; rejected/blocked candidate folders remain. |
 | AC-14 Evidence-Based Scoring | PASS | Accepted and continued `evaluation.json` records provide an observation for each applicable rubric score and link registered production renders. |
-| AC-15 Hard Anti-Blockiness Gate | PASS for promoted assets | Promotion validation rejects below-threshold scores and hard-fail reasons. Accepted pilot/structure evaluations contain no hard visual fails. Broader room migration remains open under AC-29. |
-| AC-16 Desk Pilot Pass | PASS | `art/desk/iterations/v007/evaluation.json`, validation, final `render-runs/run-003/`, and `final/room-a-smoke.log` / canonical smoke. Desk dimensions and gameplay data remain RoomDefinition-owned. |
-| AC-17 Grapple Pilot Pass | PASS | `art/grapple/iterations/v006/evaluation.json`; final `render-runs/run-003/` includes construction, deployment, and completed views. Room A, Room B, and canonical smoke prove the real cable traversal. |
-| AC-18 Citizen Pilot Pass | PASS | `art/citizen/iterations/v007/evaluation.json`; final `render-runs/run-005/` includes gameplay-distance and detail views after promotion. Presentation test confirms all 50 production citizens use the accepted asset and animated pivots. |
+| AC-15 Hard Anti-Blockiness Gate | REPAIRED; pilot gate unresolved | Evaluator now requires explicit neutral-read, close-inspection, craftsmanship, and photo-character answers and blocks unapproved style flags or affirmative style descriptions. Reassessment: grapple passes; desk and citizen fail. |
+| AC-16 Desk Pilot Pass | FAIL — repair required | Preserve `desk-v007` as best-so-far. `desk-v009` is the distinct CAD/PBR challenger; its matched production renders and evaluation show no visual pass and score source resemblance 2/5. Eight challenger attempts are exhausted. Gameplay geometry remains RoomDefinition-owned. |
+| AC-17 Grapple Pilot Pass | PASS — visual gate reassessed | `art/grapple/iterations/v006/visual-gate-reassessment.json` records affirmative answers across the visual gate with matched close/deployment evidence. Production traversal is exercised by the recorded smoke evidence and current Room A/Room B reruns. |
+| AC-18 Citizen Pilot Pass | FAIL — repair required | `art/citizen/iterations/v007/visual-gate-reassessment.json` rejects the unapproved stylized/block-form read. Preserve the current registry entry and history; the pilot does not pass visual acceptance. |
 | AC-19 Factory Generality | PASS | Evidence spans photo-derived furniture, steampunk traversal machinery, miniature citizens, four settlement structures, and four major room-furniture types using shared factory contracts and production resolution. |
-| AC-20 Realistic Materials | PASS for promoted assets | Desk, grapple, citizen, structures, and furniture evaluations document distinct glass, cloth, wood, iron, brass, copper, stone, and glazing responses in production renders. |
+| AC-20 Realistic Materials | PARTIAL — pilot repair required | Grapple passes its reassessment. Desk v009 glass reads materially flat and citizen v007 still reads stylized; neither pilot may pass on material polish or polish scores alone. |
 | AC-21 Scale Fidelity | PASS | Godot bounds reports and accepted registry dimensions preserve all eleven asset brief envelopes; the rocking-chair runner bottom measures 0.032 inches above the floor, and the 50-citizen presentation smoke checks the half-inch limit. |
-| AC-22 Source Resemblance | PASS for desk | Desk v007 evaluation cites canonical source evidence and scores source resemblance 4/5, preserving the standing desk silhouette, dark glass, and T-frame. |
+| AC-22 Source Resemblance | FAIL for desk | The repaired reassessment and `desk-v009` matched render comparison show silhouette similarity without the source photo's reflected glass character; v009 scores source resemblance 2/5. |
 | AC-23 Gameplay Geometry Independence | PASS | Room A, Room B, and canonical smokes verify navigation, target surfaces, deliveries, construction, traversal, and citizen motion while generated visual scenes remain presentation-only. |
 | AC-24 No Room-Specific Gameplay Hack | PASS | Stable semantic IDs resolve through the general visual layer; the same production checks pass in Room A, Room B, and the reconstructed room. |
 | AC-25 Asset Resolution | PASS | `art/registry.json`; `final/presentation-test.log` confirms four settlement assets and the four canonical-room furniture assets resolve by stable ID and candidate ID. |
@@ -53,16 +62,16 @@ The desk, grapple, and citizen pilots retain challenger histories and production
 | AC-36 Runtime AI Independence | PASS | Runtime loads the accepted local `.tscn` scenes through `art/registry.json`; generation scripts and authoring tools are not runtime dependencies. |
 | AC-37 Performance Evidence | PASS with review note | Two real Godot 4.7.2 Compatibility-renderer runs with VSync disabled are recorded: standard Room A in `final/final-performance.json` and the furnished canonical `room_photo_luna` in `final/canonical-performance.json`. Each measured room, settlement, and citizen view with 50 citizens. Room A: 322/351/261 FPS, 1,091/1,243/3,092 draws, 469k/641k/1.18m primitives, and 3.743/3.421/4.714 ms p95 frame times. Canonical furnished room: 273/331/362 FPS, 1,397/1,560/1,059 draws, 620k/809k/698k primitives, and 4.347/3.523/3.392 ms p95. These are different scenes and camera/view configurations, so the counts are not a direct before/after comparison. Both runs stayed above 60 FPS on the test machine. |
 | AC-38 Durable History | PASS | `art/` preserves briefs, recipes, candidates, technical reports, renders, evaluations, registry, and rejected/blocked attempts, including the furniture scale, canvas, and parser failures. `final/` holds regression and performance logs. |
-| AC-39 Independent Completion Review | READY FOR REVIEW | This report stops at READY FOR REVIEW. No self-declared completion is made. |
+| AC-39 Independent Completion Review | READY FOR REVIEW | Follow-up review is requested after the repairs recorded here. Desk and citizen remain unresolved; no self-declared completion is made. |
 | AC-40 No Fake Pass | PASS | Promotion requires technical validation, recorded evaluation, registered production render, and passing rubric; smoke tests verify resolved candidate IDs and live gameplay behavior. |
 
 ## Final Verification Results
 
-- Art Factory unit tests: **14 passed** (`final/art-factory-unittest.log`).
+- Art Factory unit tests: **18 passed** after the repair (`final/repair-rerun/` test invocation; prior 14-test baseline log retained).
 - Repository fast deterministic suite: **PASS** (`final/fast-rerun/` and `final/fast-suite-rerun.log`). It was rerun after the Art Factory runtime-error guard was added, using the existing `.venv` Python because the shell's default Python does not have Ruff installed.
-- Visual resolver and presentation gates: **PASS** (`final/visual-resolver-test.log`, `final/presentation-test.log`).
+- Visual resolver including Windows CRLF canonical hashing: **PASS** (`final/repair-rerun/visual-resolver.log`).
 - Room A, Room B, canonical reconstructed room: **PASS** (`final/room-a-smoke.log`, `final/room-b-smoke.log`, `final/canonical-room-smoke.log`).
-- Accepted registry hashes: **11/11 verified** (`final/verify-*.log`).
+- Accepted registry hashes: **11/11 verified** after line-ending normalization (`final/repair-rerun/registry-verify.log`).
 - Final accepted captures: desk v007, grapple v006, citizen v007 (final production run-005), four settlement assets, and the four major room-furniture assets have production renders and recorded evaluations. `final/render-citizen-v007-final.log` records the post-promotion canonical-room capture.
 
 ## Known Review Items
@@ -73,3 +82,13 @@ The desk, grapple, and citizen pilots retain challenger histories and production
 4. The baseline report records a pre-existing graphical-launch redirect failure. It was not attributed to POC 2.5 and remains separate from the passing production smoke evidence.
 
 **Requested external disposition:** `COMPLETE`, `REPAIR REQUIRED`, `BLOCKED`, or `CONTRACT DEFECT`.
+
+### Repair rerun results
+
+- Art Factory unit suite: **18 passed**; Ruff checks pass after the explicit-answer and style-language gate changes.
+- Fast deterministic Godot suite: **PASS** (`final/repair-rerun/fast.log`).
+- Civilization definitions and Verdant presentation contract: **PASS** (`final/repair-rerun/civilizations/`).
+- Clockwork Room A smoke: **PASS**, 50 citizens, navigation, deliveries, construction, grapple traversal, and M6 exploration (`final/repair-rerun/smoke-room_a-clockwork.log`).
+- Verdant Room A smoke: **FAIL — prerequisite/out-of-scope dirty POC 3/5 worktree issue**, not a POC 2.5 regression. The modified construction code deploys to `current_project.destination_position` while the Verdant visual anchor follows `target_anchor`; CI run 40256472981 was on committed `04e75d2`, whose construction system does not contain that divergence. See `final/ci-04e75d2-classification.md`. The unrelated edits remain untouched.
+- Clockwork Room B smoke: rerun underway at report preparation; result will be recorded after completion.
+- GitHub remote rerun on the repair commit: required after push; not yet observed.

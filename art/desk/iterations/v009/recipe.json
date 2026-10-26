@@ -1,0 +1,52 @@
+{
+  "deterministic_seed": 8025,
+  "generator_command": [
+    "C:/Users/Zero/python_projects/ai/roomscale/.tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generate_desk_candidate.gd"
+  ],
+  "import_configuration": {
+    "candidate_root": "Node3D",
+    "format": "Godot PackedScene",
+    "materials": "embedded deterministic albedo, roughness, and tangent-space normal maps",
+    "native_materials": true,
+    "up_axis": "Y"
+  },
+  "instructions": "Respond to desk-v007's low-poly and source-characterity defects with a materially different CAD-like furniture construction method, not a shader adjustment. Ground the silhouette and material breaks in the supplied Sample (2) photograph: a thin smoked-glass top, two black telescoping steel supports, broad depth-spanning T feet, underside rails, visible mounts, and restrained cable hardware. Build layered rounded panels, manufactured edge laminates, nested lift columns, bolted flanges, cable pan with slot gaps, molded leveling pads, controller and leads. Embed deterministic 128x128 PBR albedo, roughness, and tangent-space normal maps for smoked glass, graphite coating, and satin steel. Preserve the exact 66x30x30-inch visual envelope and leave all placement, obstacle, navigation, and DESK_TOP surface geometry RoomDefinition-owned.",
+  "material_method": "Embedded deterministic PBR texture sets (albedo, roughness, tangent-space normal) on smoked glass, graphite powder coat, and machined satin steel; distinct molded rubber and edge laminate materials",
+  "method": "photo_grounded_cad_desk_pbr_v1",
+  "parameters": {
+    "frame_color": "191d1f",
+    "glass_color": "20272a",
+    "metal_color": "70787b",
+    "outputs": [
+      "desk.tscn",
+      "pbr-material-manifest.json"
+    ],
+    "pbr_texture_resolution": 128,
+    "reference_photo": "photo_holder/Sample (2).jpg",
+    "rubber_color": "111416",
+    "seed": 8025,
+    "top_thickness": 0.72
+  },
+  "post_processing": [
+    "Pack CAD-like geometry and embedded PBR texture maps into a native Godot PackedScene",
+    "Godot editor scan before technical bounds validation",
+    "Capture matched production RoomScale renders at room, three-quarter, profile, and close-detail views"
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "photo_holder/Sample (2).jpg",
+    "art/desk/brief.json",
+    "art/desk/iterations/v007/evaluation.json",
+    "art/desk/iterations/v007/render-runs/run-003/asset-detail.png",
+    "art/desk/iterations/v007/render-runs/run-003/asset-three-quarter.png",
+    "scripts/art_factory/generate_desk_candidate.gd",
+    "scripts/visuals/visual_geometry.gd"
+  ],
+  "tool": "Godot Engine",
+  "tool_version": "4.7.2.stable.official.ed1daf0bf"
+}

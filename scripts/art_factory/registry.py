@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any
 
 ASSET_ID_PATTERN = re.compile(r"^[a-z0-9][a-z0-9_-]*$")
+TEXT_ASSET_EXTENSIONS = {".tscn", ".tres", ".gltf", ".gdshader", ".json"}
 
 
 def validate_asset_id(asset_id: str) -> None:
@@ -19,6 +20,10 @@ def validate_asset_id(asset_id: str) -> None:
 
 
 def sha256_file(path: Path) -> str:
+    """Hash content, normalizing checkout-only CRLF changes in text resources."""
+    if path.suffix.lower() in TEXT_ASSET_EXTENSIONS:
+        payload = path.read_bytes().replace(b"\r\n", b"\n")
+        return hashlib.sha256(payload).hexdigest()
     digest = hashlib.sha256()
     with path.open("rb") as stream:
         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
