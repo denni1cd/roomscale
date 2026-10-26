@@ -1,0 +1,52 @@
+{
+  "asset_id": "grapple",
+  "camera_distances": [
+    12.0,
+    22.0,
+    74.0,
+    285.0
+  ],
+  "category": "civilization_infrastructure",
+  "display_name": "Miniature Steampunk Grapple Installation",
+  "gameplay_invariants": {
+    "construction_owner": "scripts/construction_system.gd",
+    "construction_site_and_stage_gates_are_unchanged": true,
+    "deployment_cable_is_gameplay_system_owned": true,
+    "traversal_anchors_navigation_connection_and_physics_are_unchanged": true,
+    "visual_asset_is_hidden_until_its_existing_construction_stage_is_revealed": true
+  },
+  "intended_dimensions": [
+    8.7,
+    11.67,
+    7.5
+  ],
+  "iteration_budget": 8,
+  "materials": {
+    "base": "oiled timber with bolted metal shoes",
+    "frame": "forged dark iron and aged steel",
+    "mechanisms": "machined brass gears, collars, pulleys, and fasteners",
+    "pressure_system": "aged copper pipework and enamel-faced gauges",
+    "winch": "layered rough rope wound on a metal drum"
+  },
+  "prohibited_changes": [
+    "do not change construction stage requirements, work duration, citizen assignments, or project site",
+    "do not change the gameplay-owned deployment cable, anchor, physics, or SurfaceNavigation connection",
+    "do not add generated render geometry to collision, navigation, selection, or traversal calculations",
+    "do not change RoomDefinition, construction destinations, or target-surface identity",
+    "do not fall back to an unregistered procedural grapple after an accepted asset fails to load"
+  ],
+  "quality_tier": "B",
+  "reference_images": [],
+  "required_features": [
+    "readable winch drum, rope winding, and meshing exposed gears",
+    "distinct structural base, winch, and launcher stage groups",
+    "braced vertical launcher with rung or ladder cues and a top pulley",
+    "small functional-looking pressure plumbing, controls, fasteners, and joints",
+    "materials remain distinguishable at citizen and close inspection distances",
+    "production-scale bounds fit the established construction footprint"
+  ],
+  "schema_version": 1,
+  "semantic_type": "grapple installation",
+  "source_room_definition": "",
+  "visual_target": "A believable hand-built miniature steampunk grappling installation: a planted timber and forged-iron base, exposed rope winch and readable gear train, copper pressure plumbing and controls, and a braced launcher tower with a top pulley. Materials must read as distinct wood, dark iron, brass, copper, and rope under the actual RoomScale room lighting. Preserve the existing construction-stage reveal and leave cable deployment to gameplay."
+}

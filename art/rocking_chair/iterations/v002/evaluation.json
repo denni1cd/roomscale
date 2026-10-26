@@ -1,0 +1,50 @@
+{
+  "candidate_id": "rocking_chair-v002",
+  "created_at_utc": "2026-10-25T15:26:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "The curved rocker rails visually float slightly above the floor; the measured asset minimum Y is 0.542 inches.",
+    "A separate RoomDefinition computer tower sits on the chair and remains visible beside or behind it in the production captures."
+  ],
+  "hard_fail_reasons": [],
+  "incumbent_candidate_id": "",
+  "incumbent_comparison": "The first technically valid candidate has a recognizable slatted rocker form and the corrected full-length rails, but a measured lower rail bound remains about 0.54 inches above the floor.",
+  "incumbent_comparison_result": "first_pass",
+  "likely_causes": [
+    "The rocker curve centerline is offset too high relative to the rail radius.",
+    "The room's computer-on-chair object is an independent gameplay prop, not part of the generated chair."
+  ],
+  "next_action_hypothesis": "Lower the rocker centerline by about half an inch to bring its lower rail surface to floor contact, keep the same camera focus behind the occupied seat, and revalidate bounds and visibility.",
+  "observations": {
+    "art_direction_fit": "The simple warm low-poly hardwood treatment fits the room's existing visual language.",
+    "close_up_quality": "The production detail view shows the slats, arms, seat, and curved runners, with the separate computer tower still occupying nearby space.",
+    "gameplay_readability": "The chair remains identifiable in the room and its obstacle continues to come from RoomDefinition; the unrelated tower is a real visual obstruction in some angles.",
+    "geometric_detail": "The capture shows a crest rail, seven back slats, paired arm caps, posts, and segmented curved rocker rails with brass pins.",
+    "material_realism": "Dark and warm hardwood surfaces are distinct, with grain visible across the back and arms.",
+    "proportion": "The revised candidate measures 20.5 x 36.76 x 27.97 inches against a 24 x 38 x 31-inch brief, within the factory's 20 percent bound tolerance.",
+    "scale_fidelity": "Godot measured 20.5 x 36.76 x 27.97 inches, all within 20 percent of the 24 x 38 x 31-inch target.",
+    "semantic_recognizability": "The production three-quarter view identifies a wooden rocking chair with slatted back, seat, arms, and paired curved runners.",
+    "silhouette_quality": "The tall slatted back and two long floor runners create the expected rocking-chair silhouette, though the runners' small floor gap is visible in the close views.",
+    "surface_variation": "The wood grain and alternating back slats create visible variation without departing from the room palette.",
+    "technical_integration": "Godot validation passed with 71 meshes, and the production resolver loaded rocking_chair-v002 for all six standardized captures."
+  },
+  "render_evidence": [
+    "art/rocking_chair/iterations/v002/render-runs/run-002/asset-three-quarter.png",
+    "art/rocking_chair/iterations/v002/render-runs/run-002/asset-profile.png",
+    "art/rocking_chair/iterations/v002/render-runs/run-002/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 4,
+    "gameplay_readability": 4,
+    "geometric_detail": 4,
+    "material_realism": 4,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 4,
+    "surface_variation": 4,
+    "technical_integration": 5
+  }
+}

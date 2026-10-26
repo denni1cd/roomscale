@@ -1,0 +1,48 @@
+{
+  "candidate_id": "settlement_workshop-v002",
+  "created_at_utc": "2026-10-25T14:53:33+00:00",
+  "decision": "continue",
+  "defects": [
+    "The paired roof wings obscure the boiler and reduce workshop readability at settlement distance."
+  ],
+  "hard_fail_reasons": [],
+  "incumbent_candidate_id": "",
+  "incumbent_comparison": "Best-so-far workshop-v002 is technically valid, but its run-004 three-quarter view hides the boiler. v004 under the same current renderer/camera settings opens a center slot and exposes the boiler, stack, gauge, and workbench while retaining roof coverage at the sides.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "The wings span too far across the centerline above the existing boiler and stack."
+  ],
+  "next_action_hypothesis": "Keep the workshop footprint, machinery, and outer-bay cover; pull both roof wings outward and narrow them so the boiler and stack remain visible from the same three-quarter settlement camera.",
+  "observations": {
+    "art_direction_fit": "Timber, iron, copper, and warm glazing fit the miniature steampunk target, though the closed-over machinery weakens the intended working-workshop read.",
+    "close_up_quality": "The boiler fittings and gear are visible in close view, but the chosen cover geometry masks much of the focal assembly in the production three-quarter view.",
+    "gameplay_readability": "The room-scale/settlement-scale captures preserve the open-front access and do not show render geometry blocking the nearby activity area.",
+    "geometric_detail": "Run-004 close and reverse views show board courses, standing seams, boiler hoops, pipework, a gauge, door straps, and a flywheel, but several important pieces are occluded from the settlement angle.",
+    "material_realism": "The close capture separates dark iron, copper, timber, and amber glazing with distinct roughness/reflectance; broad roof and wall faces still look smooth at this distance.",
+    "proportion": "The recorded bounds are within the 26 x 20 x 20 inch brief envelope, and the structure sits at the intended settlement site in the production render.",
+    "scale_fidelity": "The technical report measures a 26 x 19.94 x 20 inch asset; the candidate is rendered at the existing 0.6 presentation scale beside citizens.",
+    "semantic_recognizability": "The production three-quarter capture identifies a workshop from its boiler stack, timber frame, glazed opening, and workbench, but two broad roof wings hide most of the boiler and work face (run-004/asset-three-quarter.png).",
+    "silhouette_quality": "The roof-dominated outline reads as a shed before a clockwork workshop; the twin panels leave little space for the defining machinery in run-004/settlement-scale.png.",
+    "surface_variation": "Board color courses and metal seams vary across the rendered surfaces, although the roof panels remain visually uniform.",
+    "technical_integration": "Godot 4.7.2 import/bounds checks pass; the run-004 receipt reports this exact candidate/path through the normal RoomScale resolver with production_path=true."
+  },
+  "render_evidence": [
+    "art/settlement_workshop/iterations/v002/render-runs/run-004/asset-three-quarter.png",
+    "art/settlement_workshop/iterations/v002/render-runs/run-004/settlement-scale.png",
+    "art/settlement_workshop/iterations/v002/render-runs/run-004/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 3,
+    "gameplay_readability": 3,
+    "geometric_detail": 4,
+    "material_realism": 4,
+    "proportion": 4,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 3,
+    "surface_variation": 3,
+    "technical_integration": 5
+  }
+}

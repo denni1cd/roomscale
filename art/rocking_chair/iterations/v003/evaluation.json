@@ -1,0 +1,44 @@
+{
+  "candidate_id": "rocking_chair-v003",
+  "created_at_utc": "2026-10-25T15:31:00+00:00",
+  "decision": "promote",
+  "defects": [],
+  "hard_fail_reasons": [],
+  "incumbent_candidate_id": "rocking_chair-v002",
+  "incumbent_comparison": "Better than rocking_chair-v002: lowering the curved runners reduced the measured floor gap from 0.542 inches to 0.032 inches while retaining the full-depth sweep, slatted back, arms, and validated bounds.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [],
+  "next_action_hypothesis": "",
+  "observations": {
+    "art_direction_fit": "The simple warm low-poly hardwood form matches the existing room style and furniture palette.",
+    "close_up_quality": "The close view resolves the back slats, seat and runners; a separate computer tower from the RoomDefinition remains near the chair but does not erase the silhouette.",
+    "gameplay_readability": "The chair is legible in the production room; the independent RoomDefinition obstacle and the separate tower remain unchanged.",
+    "geometric_detail": "The captures show seven back slats, a crest rail, paired posts, arms, tenons, and segmented curved runners with brass pins.",
+    "material_realism": "Warm hardwood grain and alternating back slats remain visible in production lighting.",
+    "proportion": "The chair has a plausible traditional profile, and the updated runner position brings its bottom closer to the floor without crowding the seat.",
+    "scale_fidelity": "The scene measures 20.5 x 37.27 x 27.97 inches and is normalized to the existing 24 x 38 x 31-inch room object; the runner bottom is 0.032 inches above the floor.",
+    "semantic_recognizability": "The production three-quarter capture clearly shows a wood rocking chair with slatted back, arms, seat, and two curved runners.",
+    "silhouette_quality": "The revised long runners approach the floor and complete the expected rocker silhouette; the slatted back remains distinct.",
+    "surface_variation": "The hardwood texture and alternating slat tones provide restrained surface variation consistent with the room.",
+    "technical_integration": "Godot validates 71 meshes and the corrected bounds; the production resolver loads rocking_chair-v003 for all six standardized captures without fallback."
+  },
+  "render_evidence": [
+    "art/rocking_chair/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+    "art/rocking_chair/iterations/v003/render-runs/run-001/asset-profile.png",
+    "art/rocking_chair/iterations/v003/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 4,
+    "gameplay_readability": 4,
+    "geometric_detail": 4,
+    "material_realism": 4,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 5,
+    "surface_variation": 4,
+    "technical_integration": 5
+  }
+}

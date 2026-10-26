@@ -1,0 +1,69 @@
+{
+  "deterministic_seed": 35,
+  "generator_command": [
+    "C:/Users/Zero/python_projects/ai/roomscale/.tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generate_citizen_candidate.gd"
+  ],
+  "import_configuration": {
+    "candidate_root": "Node3D",
+    "embedded_materials": true,
+    "format": "Godot PackedScene",
+    "up_axis": "Y"
+  },
+  "instructions": "Repair citizen-v004's technical validation failure without discarding the v3/v4 visual improvements. The validator checks the ratio between the largest and smallest measured axes, not each axis independently. v4's depth-to-height ratio remained too small at 0.1686 inches, so enlarge the compact raised brim from 0.72 to 0.82 horizontal scale (0.0861-inch radius). Keep the brim raised to y=0.461 inches and 0.012 inches thick; do not lower it toward the goggles. Preserve the domed shoulders, scaled crown/band, side winding, animator pivots, role attachments, and unchanged cameras. The measured candidate must pass the unchanged ArtBrief proportions rule before it is rendered.",
+  "material_method": "Godot procedural miniature materials: woven fabric, leather, iron, brass, copper, warm skin, and dark teal glass",
+  "method": "tailored_clockwork_worker_v5",
+  "parameters": {
+    "outputs": [
+      "citizen.tscn"
+    ],
+    "pose_rig": [
+      "Body",
+      "LeftArm",
+      "RightArm",
+      "LeftLeg",
+      "RightLeg"
+    ],
+    "style": "tailored_clockwork_worker_v5",
+    "targeted_changes": {
+      "camera_conditions": "unchanged standardized RoomScale production capture",
+      "cap_brim_center_y_inches": 0.461,
+      "cap_brim_radius_inches": 0.0861,
+      "cap_brim_scale_xz": 0.82,
+      "cap_brim_thickness_inches": 0.012,
+      "dimension_rule": "max(axis_ratio) / min(axis_ratio) <= 1.20",
+      "preserved_v4_changes": [
+        "raised compact cap",
+        "small front gear",
+        "side winding",
+        "domed shoulder plates"
+      ]
+    }
+  },
+  "post_processing": [
+    "pack generated geometry into a native Godot PackedScene with embedded materials",
+    "preserve all candidate descendants under the scene root",
+    "import and verify dimensions before standardized production rendering"
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "art/citizen/brief.json",
+    "art/citizen/iterations/v004/recipe.json",
+    "art/citizen/iterations/v004/technical-validation.json",
+    "art/citizen/iterations/v004/technical-validation.log",
+    "art/citizen/iterations/v003/technical-validation.json",
+    "art/citizen/iterations/v002/evaluation.json",
+    "art/citizen/iterations/v002/render-runs/run-001/asset-three-quarter.png",
+    "art/citizen/iterations/v002/render-runs/run-001/asset-profile.png",
+    "art/citizen/iterations/v002/render-runs/run-001/asset-detail.png",
+    "scripts/art_factory/generate_citizen_candidate.gd",
+    "scripts/visuals/citizen_art_adapter.gd",
+    "scripts/citizen_agent.gd"
+  ],
+  "tool": "Godot Engine",
+  "tool_version": "4.7.2.stable.official.ed1daf0bf"
+}

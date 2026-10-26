@@ -1,0 +1,42 @@
+{
+  "deterministic_seed": 25,
+  "generator_command": [
+    "C:/Users/Zero/python_projects/ai/roomscale/.tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generate_desk_candidate.gd"
+  ],
+  "import_configuration": {
+    "candidate_root": "Node3D",
+    "embedded_materials": true,
+    "format": "GLB",
+    "up_axis": "Y"
+  },
+  "instructions": "Refine v2 to match the photographed adjustable standing desk in Sample (2): retain the thin dark glass top and replace four independent cylindrical legs with exactly two rectangular lift columns at the ends. Each column must meet one broad floor foot that runs almost the full 30-inch desk depth, forming a clear T-frame from front and side views. Add a single rear crossbar, small levelers, and a restrained front height-control pad. Use stronger but controlled glass specular/clearcoat so the top remains dark while showing broad edge and light highlights. No drawer box, wood grain, or oversized apron. Preserve exact bounds and leave room placement, navigation, collision, surface, monitors, and all other props unchanged.",
+  "material_method": "Separate clearcoated smoked-glass, graphite-steel, satin-metal, and rubber PBR materials",
+  "method": "standing_desk_t_frame_glass",
+  "parameters": {
+    "frame_color": "242a2c",
+    "glass_color": "424b50",
+    "metal_color": "929da2",
+    "outputs": [
+      "desk.glb"
+    ],
+    "rubber_color": "111416",
+    "top_thickness": 0.72
+  },
+  "post_processing": [
+    "Godot GLTFDocument export as a self-contained GLB",
+    "Godot editor import before technical validation"
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "photo_holder/Sample (2).jpg",
+    "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json",
+    "art/desk/iterations/v002/evaluation.json"
+  ],
+  "tool": "Godot Engine",
+  "tool_version": "4.7.2.stable.official.ed1daf0bf"
+}

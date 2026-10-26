@@ -1,0 +1,62 @@
+{
+  "asset_id": "desk",
+  "camera_distances": [
+    2.0,
+    12.0,
+    40.0,
+    300.0
+  ],
+  "category": "human_furniture",
+  "display_name": "Dark Glass Computer Desk",
+  "gameplay_invariants": {
+    "blocks_navigation": true,
+    "navigation_padding_inches": [
+      1.0,
+      0.0,
+      1.0
+    ],
+    "object_id": "computer-desk",
+    "obstacle_geometry_must_remain_room_definition_owned": true,
+    "position_inches": [
+      30.0,
+      0.0,
+      47.0
+    ],
+    "room_definition": "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json",
+    "rotation_degrees": 0,
+    "surface_height_inches": 30.0,
+    "surface_id": "DESK_TOP"
+  },
+  "intended_dimensions": [
+    66.0,
+    30.0,
+    30.0
+  ],
+  "iteration_budget": 8,
+  "materials": {
+    "feet": "black rubber",
+    "frame": "matte graphite powder-coated metal",
+    "mounts": "small satin steel fittings",
+    "top": "smoked dark glass, low roughness with readable edge highlights"
+  },
+  "prohibited_changes": [
+    "do not change the RoomDefinition object id, center, orientation, dimensions, navigation footprint, or surface anchor",
+    "do not embed or move the separately defined monitors, keyboard, or other room props into this asset",
+    "do not replace a failed accepted asset with procedural fallback"
+  ],
+  "quality_tier": "B",
+  "reference_images": [
+    "photo_holder/Sample (2).jpg"
+  ],
+  "required_features": [
+    "recognizable wide computer-desk silhouette",
+    "thin dark reflective tabletop",
+    "visible independent leg and support frame",
+    "beveled edge highlights",
+    "clean fit to the RoomDefinition bounds"
+  ],
+  "schema_version": 1,
+  "semantic_type": "desk",
+  "source_room_definition": "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json",
+  "visual_target": "A dark modern computer desk with a broad low rectangular smoked-glass top and a restrained graphite metal frame, faithful to the desk in Sample (2). The tabletop must read as a thin reflective glass plane; the supporting structure must remain visible from room and close cameras. The room's separately defined monitors and equipment remain separate assets."
+}

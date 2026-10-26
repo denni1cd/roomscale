@@ -1,0 +1,47 @@
+{
+  "candidate_id": "grapple-v006",
+  "created_at_utc": "2026-10-25T14:02:00+00:00",
+  "decision": "promote",
+  "defects": [],
+  "hard_fail_reasons": [],
+  "incumbent_candidate_id": "grapple-v004",
+  "incumbent_comparison": "Better than best-so-far grapple-v004: v006 renders the raised gauge indices and hands that were absent from v004 and v005, while retaining the supported winch, distinct material groups, footprint, construction reveal, and working cable traversal.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [],
+  "next_action_hypothesis": "",
+  "observations": {
+    "art_direction_fit": "The actual production render reads as a steampunk grapple: a braced launcher, exposed gear train, rope winch, copper boiler, and enamel instruments in the intended small-scale style.",
+    "close_up_quality": "The detail and three-quarter captures show two readable enamel dials with raised indices, contrasting needles, brass hubs, and visible boiler seams; the gear teeth, shaft, and winding are also distinguishable.",
+    "gameplay_readability": "All three construction stages completed through autonomous work, the live cable deployed, FLOOR-to-DESK_TOP activated, and the receipt records a citizen traversal in progress.",
+    "geometric_detail": "The render shows distinct supported spool wheels and hubs, individual spokes, nine cable wraps, a linked secondary gear, pipework, vessel bands, round tower rails, and ladder collars.",
+    "material_realism": "Oiled timber, rough tan rope, forged dark iron, brass gearwork, copper vessel and plumbing, and pale enamel dials remain visually distinct in the actual room lighting.",
+    "proportion": "The complete installation remains a compact base-and-tower assembly at 9.0 by 11.58 by 7.5 inches, with the winch and launcher visually balanced.",
+    "scale_fidelity": "Godot reports the established 9.0 by 11.58 by 7.5 inch bounds; the original construction base, target, and navigation geometry remain in force.",
+    "semantic_recognizability": "The standard three-quarter and profile captures identify a rope-driven grapple launcher, and the far view shows it in the real construction site.",
+    "silhouette_quality": "The narrow braced launch tower rises above the broad supported winch base, giving a recognizable grapple-installation outline in matched cameras.",
+    "surface_variation": "Textured timber and rope contrast against iron, brass, and copper; the boiler seam rings, dial faces, joints, collars, and rope turns break up the larger forms.",
+    "technical_integration": "The challenger loads as a native PackedScene through the real stable-ID override, passes bounds/import validation at 236 meshes and 74,016 triangles, and leaves construction and traversal state to their existing systems."
+  },
+  "render_evidence": [
+    "art/grapple/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+    "art/grapple/iterations/v006/render-runs/run-001/asset-profile.png",
+    "art/grapple/iterations/v006/render-runs/run-001/asset-detail.png",
+    "art/grapple/iterations/v006/render-runs/run-001/grapple-complete.png",
+    "art/grapple/iterations/v006/render-runs/run-001/grapple-deployment.png",
+    "art/grapple/iterations/v006/render-runs/run-001/room-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 4,
+    "gameplay_readability": 5,
+    "geometric_detail": 4,
+    "material_realism": 4,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 4,
+    "surface_variation": 4,
+    "technical_integration": 5
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "candidate_id": "display_cabinet-v002",
+  "created_at_utc": "2026-10-25T15:31:00+00:00",
+  "decision": "promote",
+  "defects": [],
+  "hard_fail_reasons": [],
+  "incumbent_candidate_id": "display_cabinet-v001",
+  "incumbent_comparison": "Better than display_cabinet-v001: two transparent framed doors, brass handles, hinge details, crown and base molding now read in the actual production captures, and the internal shelves remain visible behind the glass.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [],
+  "next_action_hypothesis": "",
+  "observations": {
+    "art_direction_fit": "The warm case and subtle brass fit the room's furniture style and maintain a low-poly silhouette.",
+    "close_up_quality": "The front three-quarter capture resolves the framed doors and visible shelving; the room's separate collectible blocks are seen above the cabinet in their unchanged RoomDefinition positions.",
+    "gameplay_readability": "The cabinet is easy to distinguish from the separate room collectibles and other tall furniture; no gameplay object definition changed.",
+    "geometric_detail": "Captured details include two framed glass doors, mullions, cross rails, brass handles, hinge hardware, three internal shelves, and finished moldings.",
+    "material_realism": "Warm textured wood and lightly tinted transparent glass are visually distinct; the interior shelves remain visible through the doors.",
+    "proportion": "The tall, narrow cabinet fits its wall placement and reads as a freestanding case.",
+    "scale_fidelity": "Godot technical bounds pass against the 33 x 76 x 18-inch target, and the production resolver normalizes to the existing RoomDefinition dimensions.",
+    "semantic_recognizability": "The production close views clearly show a tall wood and glass display cabinet with two doors and internal shelves.",
+    "silhouette_quality": "The full-height case, crown, base, and framed glass front create a recognizable display cabinet shape.",
+    "surface_variation": "Wood case, dark trim, brass fittings, transparent glass, and interior shelf surfaces form a varied but cohesive palette.",
+    "technical_integration": "The native scene passes Godot validation and the production resolver loads display_cabinet-v002 for all six standardized captures without fallback."
+  },
+  "render_evidence": [
+    "art/display_cabinet/iterations/v002/render-runs/run-001/asset-three-quarter.png",
+    "art/display_cabinet/iterations/v002/render-runs/run-001/asset-detail.png",
+    "art/display_cabinet/iterations/v002/render-runs/run-001/asset-profile.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 4,
+    "gameplay_readability": 4,
+    "geometric_detail": 5,
+    "material_realism": 4,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 5,
+    "surface_variation": 4,
+    "technical_integration": 5
+  }
+}

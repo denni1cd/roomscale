@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "method": "basic_rectangular_desk",
+  "instructions": "Create a stable, readable dark computer desk inside the RoomDefinition's 66 by 30 by 30 inch bounds. Keep its wide desk silhouette, centered origin, and floor contact. This first recipe uses the existing detailed furniture construction method as a controlled baseline; do not alter room collision or surface data.",
+  "parameters": {
+    "outputs": ["desk.glb"],
+    "color": "202427"
+  },
+  "source_inputs": [
+    "photo_holder/Sample (2).jpg",
+    "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json"
+  ],
+  "tool": "Godot Engine",
+  "tool_version": "4.7.2.stable.official.ed1daf0bf",
+  "post_processing": [
+    "Godot GLTFDocument export as a self-contained GLB",
+    "Godot editor import before technical validation"
+  ],
+  "material_method": "Existing detailed furniture recipe with dark material",
+  "import_configuration": {
+    "format": "GLB",
+    "up_axis": "Y",
+    "candidate_root": "Node3D",
+    "embedded_materials": true
+  },
+  "deterministic_seed": 25,
+  "generator_command": [
+    "C:/Users/Zero/python_projects/ai/roomscale/.tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generate_desk_candidate.gd"
+  ]
+}

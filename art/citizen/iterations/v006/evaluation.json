@@ -1,0 +1,57 @@
+{
+  "candidate_id": "citizen-v006",
+  "created_at_utc": "2026-10-25T14:25:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "The high-contrast back seams intersect in a cross and resemble a second equipment harness.",
+    "The procedural noise does not materially improve visible fabric texture at the standard close distance.",
+    "The cap-top seam is too light and reads as a white stripe.",
+    "The citizen still lacks enough sculpted clothing and face detail to pass close inspection."
+  ],
+  "hard_fail_reasons": [],
+  "incumbent_candidate_id": "citizen-v005",
+  "incumbent_comparison": "Compared with citizen-v005 under the same production camera conditions, v6 is worse overall: the back has a conspicuous cross-shaped seam and the new noise does not produce the intended visible weave. Retain v5 as best-so-far; use the v6 evidence to target the v7 repair.",
+  "incumbent_comparison_result": "worse",
+  "likely_causes": [
+    "The rear shoulder seam crosses the center seam, and both use a bright contrasting fabric color.",
+    "The generator creates the main Body with the shared fabric category, so the intended citizen_fabric material is not applied to the largest visible cloth surface.",
+    "The cap thread material has more luminance contrast than the blue cap fabric.",
+    "Most body shapes are still simple broad meshes with limited face and garment surface definition."
+  ],
+  "next_action_hypothesis": "Generate citizen-v007 from v006 with a deterministic tileable warp/weft texture local to citizen fabric and explicitly assign that category to the main Body mesh, use a low-contrast center-back seam and side darts only, omit the horizontal shoulder cross, and darken/thin the cap seam. Preserve the v5 geometry and same production cameras; compare front and reverse captures to v5 and do not promote if the weave or tailoring remains visibly artificial.",
+  "observations": {
+    "art_direction_fit": "The cap and brass detailing retain the clockwork style, while the rear seam cross resembles an unintended harness and the top seam is too bright for a cloth finish.",
+    "close_up_quality": "The front close view preserves the clearer goggles, but the reverse close view has a high-contrast cross on the coat back and the face remains visually simple.",
+    "gameplay_readability": "The settlement render shows the candidate in the normal 50-agent scene. The render harness confirms all agents use the v006 candidate path, without changing their simulation behavior.",
+    "geometric_detail": "The opposite three-quarter render reveals center, shoulder, and hem seams, but the bright intersecting lines form a cross rather than tailored garment construction. The cap seam is visible but stark.",
+    "material_realism": "The run-001 close capture does not show a meaningful weave improvement over v5; the main torso remains a smooth colored surface and the cap texture is too subtle to change its material read.",
+    "proportion": "v6 retains the v5 half-inch height, raised brim, and compact shoulder proportions; its 0.1791-inch depth remains within the configured axis-ratio tolerance.",
+    "scale_fidelity": "Godot validation reports 0.264 x 0.5016 x 0.1791 inches and passes the brief's relative-axis proportion tolerance.",
+    "semantic_recognizability": "The run-001 three-quarter capture still reads as the goggled clockwork worker established in v5, with no loss of the cap, coat, or miniature silhouette.",
+    "silhouette_quality": "The run-001 three-quarter and profile captures retain v5's improved cap and domed shoulders, but the back view adds a conspicuous seam cross that changes the outline into a harness-like shape.",
+    "surface_variation": "The close render retains the same subdued torso surface response as v5. The citizen-specific texture is not applied to the generator's main Body mesh.",
+    "technical_integration": "Technical validation passes with 80 meshes and 21,696 triangles. The production receipt verifies citizen-v006 was rendered through RoomScale for all 50 citizens."
+  },
+  "render_evidence": [
+    "art/citizen/iterations/v006/render-runs/run-001/room-scale.png",
+    "art/citizen/iterations/v006/render-runs/run-001/settlement-scale.png",
+    "art/citizen/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+    "art/citizen/iterations/v006/render-runs/run-001/asset-opposite-three-quarter.png",
+    "art/citizen/iterations/v006/render-runs/run-001/asset-profile.png",
+    "art/citizen/iterations/v006/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 3,
+    "gameplay_readability": 4,
+    "geometric_detail": 3,
+    "material_realism": 3,
+    "proportion": 4,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 4,
+    "surface_variation": 3,
+    "technical_integration": 5
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "candidate_id": "grapple-v001",
+  "created_at_utc": "2026-10-25T13:44:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "Solid 2.65-inch-radius brass spool cheeks dominate the front and conceal the rope drum.",
+    "The only prominent drive gear has no visible shaft bearing, gearbox, or connected control mechanism.",
+    "Pressure hardware is a featureless copper cylinder with no gauges, fittings, or copper pipe routing.",
+    "Wood and metal are not clearly separated in the frame, and the current flat colors offer little surface variation or miniature-scale hardware.",
+    "The production capture at room/settlement distance frames the scene poorly and loses the installation behind room surfaces; local close views remain usable for asset comparison."
+  ],
+  "hard_fail_reasons": [
+    "At close and three-quarter views the assembly visibly reads as unrefined primitive programmer art: a large solid brass disk, simple cylinder boiler, one disconnected-looking cog, and bare rectangular rails."
+  ],
+  "incumbent_candidate_id": "",
+  "incumbent_comparison": "First measured pass; no accepted grapple incumbent exists. This candidate is retained as the baseline challenger but fails the visual quality gate.",
+  "incumbent_comparison_result": "first_pass",
+  "likely_causes": [
+    "The spool flanges are exported as large filled cylinders instead of open rims around the wound rope.",
+    "The baseline procedure has only one exposed gear and no secondary drivetrain or dial geometry.",
+    "Large surfaces use uniform library colors without material-specific inset, edge, or hardware detail.",
+    "The standardized camera angles put the wide production camera outside the room shell and need an interior overhead framing adjustment."
+  ],
+  "next_action_hypothesis": "For grapple-v002, replace the filled spool cheeks with open torus rims that expose the rope, make the top element a sheave with a separate hub, add a shaft bearing and gearbox with a smaller governor gear, and add two enamel-faced pressure gauges with pointer needles and copper feed pipes. Separate the timber sole and forged foot shoes, then retest the production camera from inside the room. Do not alter gameplay deployment or stage logic.",
+  "observations": {
+    "art_direction_fit": "Brass, dark iron, copper, rope, and a pulley suggest steampunk, but the prominent smooth disk and bare bars read as programmer art rather than a buildable miniature machine.",
+    "close_up_quality": "The detail view is dominated by the featureless spool cheek and the very regular geometry of cylinders and boxes; no fine hardware or panel transitions improve scale cues.",
+    "gameplay_readability": "The receipt records all three construction stages completed, cable_deployed=true, and the production navigation edge active; visual stage logic remains attached to the existing live project.",
+    "geometric_detail": "The three-quarter and close captures show repeated rung blocks and one exposed cog, but most mechanism surfaces are large simple cylinders and rails with no readable drive train, bearings, or control details.",
+    "material_realism": "The actual render shows bright uniform brass faces, featureless copper cylinder, and dark rails; the materials read as flat colored primitives under the room lighting.",
+    "proportion": "Godot measured 8.699 x 11.670 x 7.500 inches, matching the ArtBrief within the 0.2 proportion gate and the existing floor footprint.",
+    "scale_fidelity": "The technical report measures 8.699 x 11.670 x 7.500 inches, and the candidate is loaded directly at the established construction site without runtime gameplay geometry changes.",
+    "semantic_recognizability": "The completed production view shows a recognizable miniature winch and launcher connected to the desk by the live traversal cable; receipt confirms TRAVERSAL_ACTIVATED.",
+    "silhouette_quality": "The full profile has a vertical launcher behind a squat winch, but the solid broad drum cheeks dominate the silhouette and obscure the winding assembly.",
+    "surface_variation": "The close capture shows no visible surface wear or fine material variation; the brass spool cheek is one uninterrupted flat face.",
+    "technical_integration": "The production harness loaded grapple-v001 from its accepted-override registry entry; Godot validated 80 meshes and 18,048 triangles, and the live grapple connected the target surface."
+  },
+  "render_evidence": [
+    "art/grapple/iterations/v001/render-runs/run-003/asset-three-quarter.png",
+    "art/grapple/iterations/v001/render-runs/run-003/asset-profile.png",
+    "art/grapple/iterations/v001/render-runs/run-003/asset-detail.png",
+    "art/grapple/iterations/v001/render-runs/run-003/grapple-complete.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 2,
+    "gameplay_readability": 5,
+    "geometric_detail": 2,
+    "material_realism": 2,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "surface_variation": 1,
+    "technical_integration": 5
+  }
+}

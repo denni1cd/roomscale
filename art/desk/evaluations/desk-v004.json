@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "candidate_id": "desk-v004",
+  "scores": {
+    "semantic_recognizability": 5,
+    "silhouette_quality": 5,
+    "proportion": 5,
+    "geometric_detail": 4,
+    "material_realism": 3,
+    "surface_variation": 4,
+    "close_up_quality": 4,
+    "gameplay_readability": 5,
+    "scale_fidelity": 5,
+    "art_direction_fit": 4,
+    "technical_integration": 5,
+    "source_resemblance": 4
+  },
+  "observations": {
+    "semantic_recognizability": "The T-frame base and broad desktop read as the standing computer desk in both room and close production views.",
+    "silhouette_quality": "Two rectangular columns, depth-spanning feet, and a thin top make the photographed desk profile clear.",
+    "proportion": "The technical report measured 66 x 29.97 x 30 inches, staying within the brief tolerance and preserving the room envelope.",
+    "geometric_detail": "The top has four separate mounts; columns, full-depth feet, crossbar, edge band, levelers, and control pad remain distinct.",
+    "material_realism": "The top is darker and shows support mounts through the surface, but still reads mostly as an opaque dark panel with only localized highlights.",
+    "surface_variation": "Glass, edge band, metal columns, feet, and rubber levelers are visibly separated by tone and roughness.",
+    "close_up_quality": "Close and profile views retain the T feet and thin tabletop; the surface transparency is visible but subtle.",
+    "gameplay_readability": "The desk remains readable as the monitor support, and adjacent monitors stay separate in the production scene.",
+    "scale_fidelity": "Asset bounds match the 66 x 30 x 30-inch obstacle within 0.03 inches vertically; its surface anchor remains at 30 inches.",
+    "art_direction_fit": "The restrained dark frame and simple shapes fit the stylized room while resembling a modern standing desk.",
+    "technical_integration": "The accepted-override resolver loaded desk-v004, no fallback was used, Godot technical validation passed, and the final detail capture measured 52 FPS.",
+    "source_resemblance": "The v4 T-frame and smoked top are closer to Sample (2), but the reference shows a more transparent broad glass plane and stronger window reflections."
+  },
+  "hard_fail_reasons": [],
+  "defects": [
+    "The desktop still reads close to opaque; support mounts show through only as small patches.",
+    "The broad tabletop has one localized highlight rather than a broad glass reflection."
+  ],
+  "likely_causes": [
+    "The saved alpha of 0.78 leaves the surface 78% opaque in the GL Compatibility render.",
+    "No reflection probe or environment map contributes a wide window reflection in the current room renderer."
+  ],
+  "next_action_hypothesis": "Reduce top opacity to 0.58 and add a modest Fresnel rim response while keeping the same T-frame geometry. Inspect whether the support and room are more legible through the tinted surface and whether the edge catches a coherent highlight in the production scene.",
+  "incumbent_comparison": "Better than desk-v003 on glass visibility and source resemblance; current best-so-far candidate, but material realism remains below the promotion threshold.",
+  "decision": "continue",
+  "render_evidence": [
+    "art/desk/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+    "art/desk/iterations/v004/render-runs/run-001/asset-profile.png",
+    "art/desk/iterations/v004/render-runs/run-001/asset-detail.png"
+  ],
+  "created_at_utc": "2026-10-25T13:30:43+00:00"
+}

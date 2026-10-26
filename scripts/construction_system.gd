@@ -462,6 +462,14 @@ func _create_visible_project() -> void:
 	_visuals["winch"] = [winch, gear]
 	_visuals["launcher"] = [launcher, arm]
 	_detail_groups = GrappleDetails.build(_site_root)
+	if bool(_site_root.get_meta("grapple_art_required", false)):
+		# A registered Art Factory candidate owns the full grapple presentation.
+		# Keep the existing stage gates, but don't overdraw it with legacy meshes.
+		for stage in ["base", "winch", "launcher"]:
+			for component in _visuals.get(stage, []):
+				if is_instance_valid(component):
+					component.visible = false
+			_visuals[stage] = []
 	scene_root.call("_add_steam_emitter", _detail_groups[1], "PressureSteam", Vector3(-3.0, 5.2, 0))
 	_work_steam = _detail_groups[1].get_node("PressureSteam") as GPUParticles3D
 	_work_steam.amount = 8

@@ -1,0 +1,47 @@
+{
+  "candidate_id": "hammock_with_stand-v002",
+  "created_at_utc": "2026-10-25T15:27:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "The sling remains completely absent from the three-quarter and detail production views."
+  ],
+  "hard_fail_reasons": [],
+  "incumbent_candidate_id": "hammock_with_stand-v001",
+  "incumbent_comparison": "No visible improvement over v001. The second candidate still contains the frame but lacks the sling because the generator stopped at the same typed-array error.",
+  "incumbent_comparison_result": "same",
+  "likely_causes": [
+    "The recipe added more stripes and hardware, but the generator's untyped color array still prevents the sling builder from running."
+  ],
+  "next_action_hypothesis": "Correct the typed color array and add an explicit minimum generated-mesh check so the next candidate cannot silently omit its main fabric sling.",
+  "observations": {
+    "art_direction_fit": "The neutral colors suit the room, but the missing central textile prevents the intended color pattern from appearing.",
+    "close_up_quality": "The detail view again captures mostly room wall and the empty frame instead of the intended sling.",
+    "gameplay_readability": "The incomplete object is visible but has no hammock surface; RoomDefinition navigation and collision are unchanged.",
+    "geometric_detail": "Support legs, braces, sling rods, rings, and eyelet geometry are present, but the major woven surface is not.",
+    "material_realism": "The steel frame reads as dark metal; the requested fabric cannot be judged because no canvas mesh was generated.",
+    "proportion": "The frame remains consistent with the intended 118 x 40 x 34-inch proportions.",
+    "scale_fidelity": "Godot measured 115.64 x 36.34 x 28.64 inches, within the factory's 20 percent tolerance of the target envelope.",
+    "semantic_recognizability": "The frame is visible, but the absent textile keeps this from reading as a complete hammock.",
+    "silhouette_quality": "The two supports and span remain clear; the expected sagging fabric silhouette is missing.",
+    "surface_variation": "The v2 stripe recipe has no visible effect while the canvas generator fails.",
+    "technical_integration": "The wrapper logged generator exit code zero, but the saved scene has only nine meshes and its generation log records a GDScript typed-array error."
+  },
+  "render_evidence": [
+    "art/hammock_with_stand/iterations/v002/render-runs/run-001/asset-three-quarter.png",
+    "art/hammock_with_stand/iterations/v002/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 2,
+    "gameplay_readability": 2,
+    "geometric_detail": 3,
+    "material_realism": 2,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 2,
+    "silhouette_quality": 3,
+    "surface_variation": 1,
+    "technical_integration": 2
+  }
+}

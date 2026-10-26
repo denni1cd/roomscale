@@ -1,0 +1,48 @@
+{
+  "candidate_id": "settlement_workarea-v003",
+  "created_at_utc": "2026-10-25T14:53:33+00:00",
+  "decision": "continue",
+  "defects": [
+    "The yard is visibly under-equipped: hanging tools, parts bins, a lathe drive assembly, and workbench-side storage are missing."
+  ],
+  "hard_fail_reasons": [],
+  "incumbent_candidate_id": "",
+  "incumbent_comparison": "Workarea-v003 is the current best valid candidate. Matched run-003/run-001 views show v005 adds a hanging tool set, right-side bins/workbench, and drive wheel while preserving the open center and corrected 23 x 9 x 12 inch footprint.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "The repaired footprint branch replaced rather than retained the v2 equipment/detail branch."
+  ],
+  "next_action_hypothesis": "Restore the v2 rack, bins, and lathe parts in the corrected v3 footprint branch; position bins and side storage at the rear/right edge so the activity and construction center stays clear.",
+  "observations": {
+    "art_direction_fit": "Timber and iron match the clockwork workshop family, but the sparse contents fall short of a believable working assembly yard.",
+    "close_up_quality": "At close range, the bench top and one gear are legible, but the missing tool set and bins make the work area feel incomplete.",
+    "gameplay_readability": "The live production view leaves the activity station and construction staging open; the hoist is presentation-only.",
+    "geometric_detail": "The run-003 close and three-quarter captures show a gear and rail, but the required tool rack, bins, and complete lathe assembly are absent.",
+    "material_realism": "The bench wood and iron parts are distinct under production light; the few large flat surfaces remain simple and lightly varied.",
+    "proportion": "The valid technical bounds match the 23 x 9 x 12 inch envelope and leave the activity station open.",
+    "scale_fidelity": "The technical report and settlement-scale render show the brief envelope and established 0.6 building scale beside citizens.",
+    "semantic_recognizability": "The production run-003 view reads as an assembly bench/work pad, but lacks the hanging tools, organized parts bins, and drive assembly specified by the brief.",
+    "silhouette_quality": "The open slab and single bench dominate the outline; the hoist and work equipment are too sparse to communicate a fully working yard at settlement view.",
+    "surface_variation": "Pavers and a small set of contrasting materials provide some variation; there are too few purpose-specific details to make the yard appear used.",
+    "technical_integration": "Godot import/bounds checks pass and run-003 records a production-path candidate render; the visual meshes remain outside gameplay collision/navigation."
+  },
+  "render_evidence": [
+    "art/settlement_workarea/iterations/v003/render-runs/run-003/settlement-scale.png",
+    "art/settlement_workarea/iterations/v003/render-runs/run-003/asset-three-quarter.png",
+    "art/settlement_workarea/iterations/v003/render-runs/run-003/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 3,
+    "gameplay_readability": 4,
+    "geometric_detail": 3,
+    "material_realism": 3,
+    "proportion": 4,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 3,
+    "surface_variation": 3,
+    "technical_integration": 5
+  }
+}

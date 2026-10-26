@@ -1,0 +1,57 @@
+{
+  "candidate_id": "citizen-v002",
+  "created_at_utc": "2026-10-25T14:20:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "The brim is still too broad and low, so it crowds the face and goggles in production close views.",
+    "The citizen still reads as a collection of simple geometric pieces at close scale.",
+    "Fabric and leather surfaces lack enough visible variation at the standard close camera distance.",
+    "The back view remains plain and the cap winding is small against the broad cap silhouette."
+  ],
+  "hard_fail_reasons": [],
+  "incumbent_candidate_id": "citizen-v001",
+  "incumbent_comparison": "Compared with citizen-v001 under the same production capture conditions, v2 is better: its brim and shoulder plates are smaller, the duplicate candidate harness is removed, and the side winding adds a clockwork cue. The close-view silhouette and material finish remain below the visual gate, so v2 is retained as the best-so-far challenger and iteration continues.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "The v2 brim is still about 0.088 inches in radius around a 0.066-inch head, and its center remains at y=0.448 inches near the upper face.",
+    "The generator uses simple rounded boxes, spheres, capsules, and cylinders for most of the body and outfit forms.",
+    "The current procedural fabric pattern has too little contrast at the 2-inch close view, while the other surfaces are nearly uniform.",
+    "The cap retains a flat wide brim and crown while only a few small clockwork details were added."
+  ],
+  "next_action_hypothesis": "Generate citizen-v003 with a compact brim radius near 0.074 inches, raise the brim to the crown seam and reduce its thickness, scale the cap and band to the head, replace square shoulder plates with small domed plates, and retain the side winding as a visible but restrained clockwork cue. Keep the same standardized cameras and all gameplay/animation invariants so the comparison remains direct.",
+  "observations": {
+    "art_direction_fit": "The miniature clockwork worker direction remains clear from the goggles, cap winding, tailored coat, and brass accents. The lowered broad cap keeps the face less legible than intended.",
+    "close_up_quality": "The run-001 detail and three-quarter views still show the brim overlapping the goggles' upper area and the cap band sitting close to eye level. The face and shoulders remain toy-like at close citizen distance.",
+    "gameplay_readability": "The run-001 settlement capture shows the candidate in the 50-agent production view with distinct green coat, blue cap, and dark boots. The render harness verifies the full population and resolves the candidate through the normal path.",
+    "geometric_detail": "The cap winding and finish ridge add one readable mechanical feature and the close capture keeps the goggles, seams, lapels, and buttons visible. Most forms still resolve as simple geometric pieces.",
+    "material_realism": "The in-engine close render separates fabric, leather, brass, iron, and glass by color and reflectance. Fabric remains smooth and hardware still reads as clean basic shapes.",
+    "proportion": "The smaller shoulder plates and narrower brim bring v2 closer to the head-and-body proportions seen in the production three-quarter view. The cap is still low and broad, so the face appears compressed.",
+    "scale_fidelity": "Godot measures 0.264 x 0.5005 x 0.1812 inches. Height and width remain on target; depth is narrower than the 0.21-inch brief after the oversized brim is reduced.",
+    "semantic_recognizability": "The production three-quarter and detail captures still read as a worker through the coat, boots, cap, twin goggles, and small cap winding. The face remains crowded by the brim.",
+    "silhouette_quality": "Compared under the same run-009/run-001 camera setup, v2 narrows the v1 brim and removes its static harness, but the hat remains wider than the head and dominates the upper silhouette.",
+    "surface_variation": "The close and profile captures show subdued woven variation on the coat but little visible wear or variation on the cap, leather, or metal.",
+    "technical_integration": "Godot import and bounds validation passed without issues. The run-001 receipt confirms citizen-v002 loaded from its candidate scene through the RoomScale production render path, with production_path=true."
+  },
+  "render_evidence": [
+    "art/citizen/iterations/v002/render-runs/run-001/room-scale.png",
+    "art/citizen/iterations/v002/render-runs/run-001/settlement-scale.png",
+    "art/citizen/iterations/v002/render-runs/run-001/asset-three-quarter.png",
+    "art/citizen/iterations/v002/render-runs/run-001/asset-opposite-three-quarter.png",
+    "art/citizen/iterations/v002/render-runs/run-001/asset-profile.png",
+    "art/citizen/iterations/v002/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 3,
+    "gameplay_readability": 4,
+    "geometric_detail": 3,
+    "material_realism": 3,
+    "proportion": 4,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "surface_variation": 3,
+    "technical_integration": 5
+  }
+}

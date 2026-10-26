@@ -1,0 +1,47 @@
+{
+  "candidate_id": "desk-v007",
+  "created_at_utc": "2026-10-25T13:34:08+00:00",
+  "decision": "promote",
+  "defects": [],
+  "hard_fail_reasons": [],
+  "incumbent_candidate_id": "desk-v005",
+  "incumbent_comparison": "Better than the previous best-so-far desk-v005: native scene serialization restores clearcoat and rim, producing visible edge reflection and translucent support details while retaining the proven T-frame geometry.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [],
+  "next_action_hypothesis": "",
+  "observations": {
+    "art_direction_fit": "The restrained low-poly geometry fits RoomScale while giving the modern workstation a more credible glass-and-steel finish.",
+    "close_up_quality": "The asset-detail and profile views show the full thin top and T-frame without clipping the desk; nearby room props remain in the real scene.",
+    "gameplay_readability": "The broad working surface remains easy to read under the independently defined monitors, and its navigation/surface data are unchanged.",
+    "geometric_detail": "Profile and underside views show the T frames, mounts, levelers, rear support, cable tray, edge band, and front control pad; details are simple but deliberate.",
+    "material_realism": "The native scene retains alpha 0.58, roughness 0.08, clearcoat 0.98, and rim 0.38. The production render shows a dark translucent plane, a bright glass edge, specular highlights, and visible hardware through the top.",
+    "proportion": "The imported scene measures 66 x 29.97 x 30 inches; the 0.03-inch vertical difference is within tolerance and the foot stays at floor level.",
+    "scale_fidelity": "Godot measured 66 x 29.97 x 30 inches against the 66 x 30 x 30-inch brief and RoomDefinition; no obstacle or surface anchor was edited.",
+    "semantic_recognizability": "The production room-scale and close views clearly identify a computer desk supporting the separate two-monitor setup.",
+    "silhouette_quality": "The broad thin top, two rectangular lift columns, and full-depth T feet match the photographed standing-desk silhouette.",
+    "source_resemblance": "The T-frame base and dark smoked top match the source photograph's standing desk. The production render is more stylized and has weaker broad window reflections than the photo, but the desk's defining form and material read carry through.",
+    "surface_variation": "The glass plane, graphite edge/frame, satin fittings, and rubber levelers remain visually distinct at detail scale.",
+    "technical_integration": "The accepted-override resolver loaded desk-v007 as a native PackedScene with no fallback; technical validation found 19 meshes, 19 surfaces, and 4,416 triangles. The final close view measured 45 FPS and 200 draw calls."
+  },
+  "render_evidence": [
+    "art/desk/iterations/v007/render-runs/run-001/room-scale.png",
+    "art/desk/iterations/v007/render-runs/run-001/asset-three-quarter.png",
+    "art/desk/iterations/v007/render-runs/run-001/asset-profile.png",
+    "art/desk/iterations/v007/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 4,
+    "gameplay_readability": 5,
+    "geometric_detail": 4,
+    "material_realism": 4,
+    "proportion": 5,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 5,
+    "source_resemblance": 4,
+    "surface_variation": 4,
+    "technical_integration": 5
+  }
+}

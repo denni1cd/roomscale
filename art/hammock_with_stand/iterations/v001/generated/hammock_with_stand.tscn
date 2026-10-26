@@ -1,0 +1,86 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y0so8"]
+albedo_color = Color(0.21568628, 0.26666668, 0.2784314, 1)
+metallic = 0.68
+roughness = 0.56
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_2hc6i"]
+top_radius = 0.82
+bottom_radius = 0.82
+height = 37.14485
+radial_segments = 24
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_1y4md"]
+top_radius = 0.78
+bottom_radius = 0.78
+height = 26.8
+radial_segments = 24
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mqnqj"]
+albedo_color = Color(0.3372549, 0.39215687, 0.3882353, 1)
+metallic = 0.68
+roughness = 0.56
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ak670"]
+height = 24.0
+radial_segments = 24
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vfwcv"]
+albedo_color = Color(0.29803923, 0.34901962, 0.3529412, 1)
+metallic = 0.68
+roughness = 0.56
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_48p7a"]
+top_radius = 0.2
+bottom_radius = 0.2
+height = 104.0
+radial_segments = 24
+
+[node name="Generated_hammock_with_stand" type="Node3D" unique_id=837729958]
+metadata/presentation_only = true
+
+[node name="AFrameLeg_-1_-1" type="MeshInstance3D" parent="." unique_id=1605805992]
+transform = Transform3D(0.9818908, 0.18845142, -0.019402685, -0.18845142, 0.96110225, -0.20191224, -0.019402685, 0.20191224, 0.9792114, -53.5, 18.65, -9.75)
+material_override = SubResource("StandardMaterial3D_y0so8")
+mesh = SubResource("CylinderMesh_2hc6i")
+
+[node name="AFrameLeg_-1_1" type="MeshInstance3D" parent="." unique_id=168635490]
+transform = Transform3D(0.9818908, 0.18845142, 0.019402685, -0.18845142, 0.96110225, 0.20191224, 0.019402685, -0.20191224, 0.9792114, -53.5, 18.65, 9.75)
+material_override = SubResource("StandardMaterial3D_y0so8")
+mesh = SubResource("CylinderMesh_2hc6i")
+
+[node name="EndBrace_-1" type="MeshInstance3D" parent="." unique_id=72659709]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, -48.8, 2.2, 0)
+material_override = SubResource("StandardMaterial3D_y0so8")
+mesh = SubResource("CylinderMesh_1y4md")
+
+[node name="SlingRod_-1" type="MeshInstance3D" parent="." unique_id=346321003]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, -45, 29.5, 0)
+material_override = SubResource("StandardMaterial3D_mqnqj")
+mesh = SubResource("CylinderMesh_ak670")
+
+[node name="AFrameLeg_1_-1" type="MeshInstance3D" parent="." unique_id=624667293]
+transform = Transform3D(0.9818908, -0.18845142, 0.019402685, 0.18845142, 0.96110225, -0.20191224, 0.019402685, 0.20191224, 0.9792114, 53.5, 18.65, -9.75)
+material_override = SubResource("StandardMaterial3D_y0so8")
+mesh = SubResource("CylinderMesh_2hc6i")
+
+[node name="AFrameLeg_1_1" type="MeshInstance3D" parent="." unique_id=821690415]
+transform = Transform3D(0.9818908, -0.18845142, -0.019402685, 0.18845142, 0.96110225, 0.20191224, -0.019402685, -0.20191224, 0.9792114, 53.5, 18.65, 9.75)
+material_override = SubResource("StandardMaterial3D_y0so8")
+mesh = SubResource("CylinderMesh_2hc6i")
+
+[node name="EndBrace_1" type="MeshInstance3D" parent="." unique_id=49860089]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 48.8, 2.2, 0)
+material_override = SubResource("StandardMaterial3D_y0so8")
+mesh = SubResource("CylinderMesh_1y4md")
+
+[node name="SlingRod_1" type="MeshInstance3D" parent="." unique_id=1826552134]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 45, 29.5, 0)
+material_override = SubResource("StandardMaterial3D_mqnqj")
+mesh = SubResource("CylinderMesh_ak670")
+
+[node name="TopTensionCable" type="MeshInstance3D" parent="." unique_id=675706412]
+transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, 0, 35.5, 0)
+material_override = SubResource("StandardMaterial3D_vfwcv")
+mesh = SubResource("CylinderMesh_48p7a")

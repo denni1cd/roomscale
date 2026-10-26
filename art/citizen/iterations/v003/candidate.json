@@ -1,0 +1,56 @@
+{
+  "asset_files": [
+    "art/citizen/iterations/v003/generated/citizen.tscn"
+  ],
+  "asset_id": "citizen",
+  "candidate_id": "citizen-v003",
+  "created_at_utc": "2026-10-25T14:19:37+00:00",
+  "evaluation_file": "",
+  "generation_result": {
+    "command": [
+      "C:/Users/Zero/python_projects/ai/roomscale/.tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+      "--headless",
+      "--path",
+      "C:\\Users\\Zero\\python_projects\\ai\\roomscale",
+      "--script",
+      "res://scripts/art_factory/generate_citizen_candidate.gd"
+    ],
+    "exit_code": 0,
+    "recorded_at_utc": "2026-10-25T14:19:37+00:00",
+    "status": "pass"
+  },
+  "parent_candidate_id": "citizen-v002",
+  "recipe_file": "art/citizen/iterations/v003/recipe.json",
+  "renders": [],
+  "schema_version": 1,
+  "status": "rejected",
+  "technical_validation": {
+    "asset_path": "res://art/citizen/iterations/v003/generated/citizen.tscn",
+    "bounds": {
+      "position": [
+        -0.131999999284744,
+        -0.000499999150633812,
+        -0.0734999999403954
+      ],
+      "size": [
+        0.263999998569489,
+        0.501586854457855,
+        0.166500002145767
+      ]
+    },
+    "engine": "4.7.2-stable (official)",
+    "import_exit_code": 0,
+    "issues": [
+      "source proportions exceed brief tolerance: ratios=(1.015385, 1.003174, 0.792857) tolerance=0.200"
+    ],
+    "log": "art/citizen/iterations/v003/technical-validation.log",
+    "mesh_count": 74,
+    "recorded_at_utc": "2026-10-25T14:19:43+00:00",
+    "report": "art/citizen/iterations/v003/technical-validation.json",
+    "status": "fail",
+    "surface_count": 74,
+    "triangle_count": 20352,
+    "validation_exit_code": 1
+  },
+  "version": 3
+}

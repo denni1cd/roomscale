@@ -332,11 +332,22 @@ func _run() -> void:
 		if citizen.task_type == "CONSTRUCTION_BUILD" or citizen.state == "WORK" and String(citizen.task_type).begins_with("CONSTRUCTION"):
 			_fail("construction worker did not return to normal autonomous work: %s" % citizen.name)
 			return
-	for component_name in ["GrappleBase", "BrassBasePlate", "WinchDrum", "WinchGear", "LauncherFrame", "LauncherArm"]:
-		var component := scene.get_node_or_null("GrappleConstructionSite/%s" % component_name) as MeshInstance3D
-		if component == null or not component.visible:
-			_fail("completed construction component is not visibly present: %s" % component_name)
+	var grapple_art := scene.get_node_or_null("GrappleConstructionSite/GrappleArtAsset") as Node3D
+	if grapple_art != null:
+		if String(grapple_art.get_meta("visual_asset_id", "")) != "grapple" or String(grapple_art.get_meta("visual_source", "")) != "res://art/grapple/iterations/v006/generated/grapple.tscn" or String(grapple_art.get_meta("visual_asset_candidate_id", "")) != "grapple-v006":
+			_fail("completed construction did not retain the accepted grapple asset identity and source")
 			return
+		for group_name in ["FoundationDetails", "MachineryDetails", "LauncherDetails"]:
+			var group := grapple_art.find_child(group_name, true, false) as Node3D
+			if group == null or not group.visible or group.get_child_count() == 0:
+				_fail("accepted grapple construction group is missing or hidden after completion: %s" % group_name)
+				return
+	else:
+		for component_name in ["GrappleBase", "BrassBasePlate", "WinchDrum", "WinchGear", "LauncherFrame", "LauncherArm"]:
+			var component := scene.get_node_or_null("GrappleConstructionSite/%s" % component_name) as MeshInstance3D
+			if component == null or not component.visible:
+				_fail("completed construction component is not visibly present: %s" % component_name)
+				return
 	var cable_root := scene.get_node_or_null("DeployedGrappleCable") as Node3D
 	var partial_deployment_seen := false
 	var grapple_visual_saved := false
@@ -395,7 +406,7 @@ func _run() -> void:
 		if index > 0:
 			maximum_route_gap = maxf(maximum_route_gap, deployed_route.path[index - 1].distance_to(deployed_route.path[index]))
 	if maximum_route_height < float(goal_surface.height) - 0.01 or maximum_route_gap > 8.0:
-		_fail("surface route does not join the floor and target height continuously")
+		_fail("surface route does not join the floor and target height continuously: points=%d max_gap=%.3f max_height=%.3f expected_height=%.3f" % [deployed_route.path.size(), maximum_route_gap, maximum_route_height, float(goal_surface.height)])
 		return
 	var traversal_goal: Dictionary = coordinator.get_traversal_goal_status()
 	if traversal_goal.state != "TRAVERSE_IN_PROGRESS":

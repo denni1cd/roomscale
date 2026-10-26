@@ -1,0 +1,50 @@
+{
+  "candidate_id": "office_chair-v002",
+  "created_at_utc": "2026-10-25T15:25:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "Back and seat upholstery blend into the dark shell in the production close views.",
+    "The broad padded surfaces look plain; the required seams and fabric panels are difficult to read at room scale."
+  ],
+  "hard_fail_reasons": [],
+  "incumbent_candidate_id": "",
+  "incumbent_comparison": "First visually reviewable candidate after the earlier generator parse failure. The silhouette and task-chair parts are clear, but close views show little separation between the near-black shell and upholstery.",
+  "incumbent_comparison_result": "first_pass",
+  "likely_causes": [
+    "The near-black color values are too close under the room's lighting.",
+    "Thin seam geometry and low-contrast noise do not create enough visible surface variation."
+  ],
+  "next_action_hypothesis": "Raise the slate-blue fabric values, divide the seat and back into padded panels, and add restrained piping while staying within the same RoomDefinition envelope.",
+  "observations": {
+    "art_direction_fit": "The restrained dark palette fits the room and the low-poly visual system, but the chair needs clearer material hierarchy to avoid reading as one dark block.",
+    "close_up_quality": "The full chair is framed in the detail render, but the upholstery is visually flat and the seams do not resolve clearly.",
+    "gameplay_readability": "The chair remains clearly visible beside the desk; the generated scene is presentation-only and the RoomDefinition obstacle remains authoritative.",
+    "geometric_detail": "The profile reveals five spokes, separate caster housings and wheels, arm pads, back rails, and tilt hardware, but few of these details read from the three-quarter view.",
+    "material_realism": "The dark metal frame and fabric are distinguishable by highlight only; the seat and back nearly merge into the shell in the inspected three-quarter and detail captures.",
+    "proportion": "The cushion, tall back, and wheeled base look plausible together, though the blocky back and seat lack shaped padding.",
+    "scale_fidelity": "Godot measured 20.2 x 41.15 x 16.83 inches, which the factory normalized to the 23 x 44 x 18-inch brief without changing RoomDefinition dimensions.",
+    "semantic_recognizability": "The room and three-quarter views clearly show an office task chair with a tall back, seat, armrests, lift, and five caster base.",
+    "silhouette_quality": "The upright back, seat, arms, center lift, and five spokes form a recognizable chair silhouette; the squared cushion shape is still plain.",
+    "surface_variation": "Back quilt channels and seat seam marks exist, but their dark, narrow lines are hard to see in the captured lighting.",
+    "technical_integration": "The native scene passes Godot validation and the production resolver reports office_chair-v002 with six real RoomScale production captures."
+  },
+  "render_evidence": [
+    "art/office_chair/iterations/v002/render-runs/run-002/asset-three-quarter.png",
+    "art/office_chair/iterations/v002/render-runs/run-002/asset-profile.png",
+    "art/office_chair/iterations/v002/render-runs/run-002/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 3,
+    "gameplay_readability": 4,
+    "geometric_detail": 3,
+    "material_realism": 3,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 4,
+    "surface_variation": 3,
+    "technical_integration": 5
+  }
+}

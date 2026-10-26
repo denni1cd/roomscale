@@ -1,0 +1,75 @@
+{
+  "deterministic_seed": 35,
+  "generator_command": [
+    "C:/Users/Zero/python_projects/ai/roomscale/.tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generate_citizen_candidate.gd"
+  ],
+  "import_configuration": {
+    "candidate_root": "Node3D",
+    "embedded_materials": true,
+    "format": "Godot PackedScene",
+    "up_axis": "Y"
+  },
+  "instructions": "Refine citizen-v005's close-up material and reverse-view finish. Preserve the v5 raised compact cap, clearer paired goggles, domed shoulders, proportions, coat silhouette, and all movement pivots. The current fabric looks smooth because the shared material's low-frequency noise is subtle at miniature scale; assign a dedicated citizen-fabric material with finer, slightly stronger woven variation, keeping the change local to this Art Factory asset. Add narrow tailored stitching seams and a restrained center-back seam so the opposite view is finished without adding a duplicated backpack or live role equipment. Add only subtle face cues below the raised brim. Keep the standardized production cameras and all gameplay systems unchanged.",
+  "material_method": "Godot procedural citizen-only fabric noise with distinct leather, iron, brass, copper, skin, and glass materials",
+  "method": "tailored_clockwork_worker_v6",
+  "parameters": {
+    "outputs": [
+      "citizen.tscn"
+    ],
+    "pose_rig": [
+      "Body",
+      "LeftArm",
+      "RightArm",
+      "LeftLeg",
+      "RightLeg"
+    ],
+    "style": "tailored_clockwork_worker_v6",
+    "targeted_changes": {
+      "camera_conditions": "unchanged standardized RoomScale production capture",
+      "fabric_material": "citizen-only high-frequency woven variation; no global material change",
+      "fabric_noise_frequency": 0.3,
+      "fabric_uv_scale": 1.4,
+      "fabric_value_range": [
+        0.78,
+        1.0
+      ],
+      "face_finish": "subtle cheek cues without changing head silhouette",
+      "preserved_v5_changes": [
+        "raised brim",
+        "cap winding",
+        "domed shoulder plates",
+        "no duplicate role pack"
+      ],
+      "rear_finish": [
+        "fine center-back seam",
+        "short hem stitching"
+      ]
+    }
+  },
+  "post_processing": [
+    "pack generated geometry into a native Godot PackedScene with embedded materials",
+    "preserve all candidate descendants under the scene root",
+    "import and verify dimensions before standardized production rendering"
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "art/citizen/brief.json",
+    "art/citizen/iterations/v005/recipe.json",
+    "art/citizen/iterations/v005/evaluation.json",
+    "art/citizen/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+    "art/citizen/iterations/v005/render-runs/run-001/asset-opposite-three-quarter.png",
+    "art/citizen/iterations/v005/render-runs/run-001/asset-profile.png",
+    "art/citizen/iterations/v005/render-runs/run-001/asset-detail.png",
+    "scripts/art_factory/generate_citizen_candidate.gd",
+    "scripts/visuals/material_library.gd",
+    "scripts/visuals/citizen_art_adapter.gd",
+    "scripts/citizen_agent.gd"
+  ],
+  "tool": "Godot Engine",
+  "tool_version": "4.7.2.stable.official.ed1daf0bf"
+}

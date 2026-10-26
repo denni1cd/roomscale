@@ -1,0 +1,44 @@
+{
+  "candidate_id": "hammock_with_stand-v005",
+  "created_at_utc": "2026-10-25T15:31:00+00:00",
+  "decision": "promote",
+  "defects": [],
+  "hard_fail_reasons": [],
+  "incumbent_candidate_id": "hammock_with_stand-v003",
+  "incumbent_comparison": "Clearly better than hammock_with_stand-v003: the actual production output now shows the sagging seven-stripe sling from room scale and two interior close views. The v003 mesh data existed but had been hidden by back-face culling.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [],
+  "next_action_hypothesis": "",
+  "observations": {
+    "art_direction_fit": "Neutral striped fabric and charcoal metal preserve the room's restrained palette and low-poly presentation.",
+    "close_up_quality": "The detail capture resolves the woven color bands and sag, while the three-quarter and interior-oblique captures keep both support ends visible.",
+    "gameplay_readability": "The sling and frame are clearly identifiable in the room; collision and navigation continue to come from the unchanged RoomDefinition.",
+    "geometric_detail": "The views show seven fabric bands, cross supports, angled stand legs, tension rail, sling rods, rings, and end hardware.",
+    "material_realism": "Matte fabric with neutral tonal bands reads separately from the dark steel frame in the actual room lighting; fabric weave remains subtle at this resolution.",
+    "proportion": "The long sling and low dip look plausible against the full-size room furnishings; source bounds stay within the brief tolerance.",
+    "scale_fidelity": "Godot measures 115.64 x 36.34 x 28.64 inches against the 118 x 40 x 34-inch brief; the production resolver fits the scene to the existing RoomDefinition envelope.",
+    "semantic_recognizability": "The production room view clearly reads as a striped hammock suspended on a freestanding dark metal stand.",
+    "silhouette_quality": "The broad curved sling visibly sags between raised end supports; the tension rail and splayed legs complete the freestanding silhouette.",
+    "surface_variation": "Seven light, sage, and gray stripes are clearly distinct across the sagging textile.",
+    "technical_integration": "The generator produced 22 meshes with all seven two-sided stripes, validation passes, and the resolver loads hammock_with_stand-v005; all close cameras remain inside the production room."
+  },
+  "render_evidence": [
+    "art/hammock_with_stand/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+    "art/hammock_with_stand/iterations/v005/render-runs/run-001/asset-interior-oblique.png",
+    "art/hammock_with_stand/iterations/v005/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 4,
+    "gameplay_readability": 4,
+    "geometric_detail": 4,
+    "material_realism": 4,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 5,
+    "surface_variation": 4,
+    "technical_integration": 5
+  }
+}

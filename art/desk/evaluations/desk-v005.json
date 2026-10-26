@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "candidate_id": "desk-v005",
+  "scores": {
+    "semantic_recognizability": 5,
+    "silhouette_quality": 5,
+    "proportion": 5,
+    "geometric_detail": 4,
+    "material_realism": 3,
+    "surface_variation": 4,
+    "close_up_quality": 4,
+    "gameplay_readability": 5,
+    "scale_fidelity": 5,
+    "art_direction_fit": 4,
+    "technical_integration": 5,
+    "source_resemblance": 4
+  },
+  "observations": {
+    "semantic_recognizability": "The production render shows the same standing desk identity as v4, with the two column-and-foot supports under the monitors.",
+    "silhouette_quality": "The full-width top, end columns, and depth-spanning T feet read as a modern standing desk.",
+    "proportion": "Godot reports 66 x 29.97 x 30 inches; no gameplay footprint or surface was changed.",
+    "geometric_detail": "Close view shows the T frames, feet, edge band, mounts, cable tray, and control pad; small mount discs appear through the top.",
+    "material_realism": "The v5 GLB stores alphaMode BLEND and base-color alpha 0.58; in the production render the top remains a dark plane with small specular spots and only modest support visibility.",
+    "surface_variation": "Graphite frame, lighter fittings, rubber pads, and the tinted top have distinct values; the broad plane remains uniform.",
+    "close_up_quality": "T feet and supports are clear in the profile and underside views; the tabletop still lacks a broad window reflection.",
+    "gameplay_readability": "The desk's surface and separately placed monitor objects remain readable at close and room scales.",
+    "scale_fidelity": "Bounds remain within 0.03 inches of the RoomDefinition dimensions; surface anchor is still 30 inches.",
+    "art_direction_fit": "The dark steel and tinted glass fit the low-poly room render and closely follow the photographed object silhouette.",
+    "technical_integration": "The candidate passes Godot bounds/material validation and the production resolver loads it without fallback; the final close view measured 45 FPS with about 203 draw calls.",
+    "source_resemblance": "The support architecture resembles the photo, but the photographed surface has broader environmental reflections that the v5 render does not show."
+  },
+  "hard_fail_reasons": [],
+  "defects": [
+    "Reducing alpha and adding a rim parameter did not create a broad environmental reflection in the production render.",
+    "The tabletop remains visually uniform across most of its area."
+  ],
+  "likely_causes": [
+    "The GLB inspection confirms only standard metallic/roughness factors and alpha are exported; clearcoat and rim settings are absent from its glTF material extensions.",
+    "The GL Compatibility room render provides only a small point-like specular highlight on the broad surface."
+  ],
+  "next_action_hypothesis": "Change the output method from GLB to a native Godot PackedScene so StandardMaterial3D clearcoat and rim settings survive serialization. Render through the same production scene and compare the tabletop response. If this still fails, record the limitation as the current renderer/material pipeline and defer promotion until the bounded rendering upgrade.",
+  "incumbent_comparison": "Best-so-far on source silhouette; the material change from v4 produces little visible gain, so v5 does not clearly beat v4 on overall visual quality.",
+  "decision": "continue",
+  "render_evidence": [
+    "art/desk/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+    "art/desk/iterations/v005/render-runs/run-001/asset-profile.png",
+    "art/desk/iterations/v005/render-runs/run-001/asset-detail.png"
+  ],
+  "created_at_utc": "2026-10-25T13:32:00+00:00"
+}

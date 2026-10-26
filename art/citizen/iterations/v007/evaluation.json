@@ -1,0 +1,48 @@
+{
+  "candidate_id": "citizen-v007",
+  "created_at_utc": "2026-10-25T14:30:00+00:00",
+  "decision": "promote",
+  "defects": [],
+  "hard_fail_reasons": [],
+  "incumbent_candidate_id": "citizen-v005",
+  "incumbent_comparison": "Compared directly with best-so-far citizen-v005 under the same seven RoomScale run-002 captures, v7 retains v5's improved proportions and face clearance while adding a visibly woven torso/cap material and tailored back details without the v6 cross seam. The 12-inch camera shows both candidates at the same scene scale and v7 keeps the same readable humanoid silhouette. The improvements are specific and the technical gate passes.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [],
+  "next_action_hypothesis": "Promote citizen-v007 as the accepted semantic citizen visual. Keep the current gameplay, selection, navigation, role equipment, and animator logic unchanged; preserve the earlier failed and superseded challengers for the iteration history.",
+  "observations": {
+    "art_direction_fit": "The compact cap, paired brass goggles, winding detail, woven coat, and hardware fit the miniature clockwork-worker direction at both close and gameplay scales.",
+    "close_up_quality": "The matched run-002 detail and profile views show the raised brim clear of the goggles, textured cloth, a thin cap seam, compact winding, and low-contrast back tailoring. The face remains intentionally stylized at this miniature scale but no longer reads as a blank primitive head.",
+    "gameplay_readability": "The run-002 12-inch production follow capture frames the selected citizen in the live room among other citizens; its torso, head, arms, and legs remain discernible by silhouette and uniform colors, while close-up-only details are not relied on for gameplay reading.",
+    "geometric_detail": "The run-002 front and reverse close captures show layered lapels and vest, badge, cap winding, paired goggles, cuffs, boot soles, and tailored reverse seams. The 81 meshes remain presentation-only and keep the established rig pivots.",
+    "material_realism": "The run-002 close renders show a deterministic woven fabric pattern on the coat and cap, distinct dark leather, brass/iron hardware, warm skin, and reflective dark glass under production lighting. The visible weave improves the formerly smooth torso material.",
+    "proportion": "Godot measures 0.264 x 0.5016 x 0.1791 inches. The figure fits the half-inch height and passes the ArtBrief's largest-to-smallest axis-ratio tolerance.",
+    "scale_fidelity": "Technical validation reports bounds 0.264 x 0.5016 x 0.1791 inches and no tolerance issues. The production presentation gate confirms citizens remain within the half-inch envelope.",
+    "semantic_recognizability": "The run-002 close three-quarter and detail renders clearly identify a miniature citizen/worker through the human silhouette, twin goggles, clockwork cap winding, tailored coat, and boots. The 12-inch follow view retains a readable humanoid figure among the 50 active agents.",
+    "silhouette_quality": "Against the matched run-002 v5 captures, v7 retains the narrower raised cap and domed shoulders, while the darker compact cap seam and restrained rear darts avoid the v6 cross-shaped harness read.",
+    "surface_variation": "The citizen-only tileable warp-and-weft texture is visibly resolved on both the torso and cap at the 2-inch production close view; its fine pattern naturally collapses at the 12-inch gameplay camera.",
+    "technical_integration": "Godot import/bounds validation passes with 81 meshes, 21,888 triangles, and no issues. The run-002 receipt identifies citizen-v007 and its exact scene path with production_path=true. The presentation gate confirms all 50 agents use it with animated pivots and independent role components."
+  },
+  "render_evidence": [
+    "art/citizen/iterations/v007/render-runs/run-002/room-scale.png",
+    "art/citizen/iterations/v007/render-runs/run-002/settlement-scale.png",
+    "art/citizen/iterations/v007/render-runs/run-002/asset-gameplay-distance.png",
+    "art/citizen/iterations/v007/render-runs/run-002/asset-three-quarter.png",
+    "art/citizen/iterations/v007/render-runs/run-002/asset-opposite-three-quarter.png",
+    "art/citizen/iterations/v007/render-runs/run-002/asset-profile.png",
+    "art/citizen/iterations/v007/render-runs/run-002/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 5,
+    "close_up_quality": 4,
+    "gameplay_readability": 4,
+    "geometric_detail": 4,
+    "material_realism": 4,
+    "proportion": 4,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 4,
+    "surface_variation": 4,
+    "technical_integration": 5
+  }
+}

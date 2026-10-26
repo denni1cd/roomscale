@@ -1,0 +1,49 @@
+{
+  "candidate_id": "hammock_with_stand-v003",
+  "created_at_utc": "2026-10-25T15:28:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "The sling is not visible in the production three-quarter, profile, or detail captures despite seven generated canvas meshes."
+  ],
+  "hard_fail_reasons": [],
+  "incumbent_candidate_id": "hammock_with_stand-v002",
+  "incumbent_comparison": "The typed-array correction generated all seven canvas meshes, but they remain absent in the actual production captures. The visual result is therefore still the same empty frame as v002.",
+  "incumbent_comparison_result": "same",
+  "likely_causes": [
+    "The mesh material still uses back-face culling, and the captured underside/front winding prevents the top-side camera from displaying the surface.",
+    "A true opposite camera angle for this wall-side object crosses the room boundary, leaving some views focused on a wall."
+  ],
+  "next_action_hypothesis": "Disable back-face culling on the fabric material and constrain both alternate camera views to interior room angles, then compare the resulting actual production capture.",
+  "observations": {
+    "art_direction_fit": "The steel palette fits the room, but the neutral textile treatment is invisible in the captured output.",
+    "close_up_quality": "The detail capture is dominated by the room wall and does not show the sling surface.",
+    "gameplay_readability": "The incomplete frame is visible, while RoomDefinition collision and navigation remain unchanged.",
+    "geometric_detail": "The generated scene contains 26 meshes, including the expected seven canvas stripes, metal supports, and suspension hardware.",
+    "material_realism": "The dark frame reads correctly; the woven fabric material cannot be judged while the canvas is culled.",
+    "proportion": "Godot measures 115.64 x 36.34 x 28.64 inches, within 20 percent of the 118 x 40 x 34-inch target.",
+    "scale_fidelity": "Godot validated the 115.64 x 36.34 x 28.64-inch source bounds against the intended 118 x 40 x 34-inch envelope.",
+    "semantic_recognizability": "The frame is still the only visible part in the room view, so this capture does not read as a complete hammock.",
+    "silhouette_quality": "The stand geometry is clear but the sagging sling silhouette is not visible.",
+    "surface_variation": "Seven color stripe meshes exist but do not appear in the production image.",
+    "technical_integration": "The resolver loaded hammock_with_stand-v003 and its scene contains 26 meshes; however, the production render shows the main sling missing, and the alternate view path is blocked by the room boundary."
+  },
+  "render_evidence": [
+    "art/hammock_with_stand/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+    "art/hammock_with_stand/iterations/v003/render-runs/run-001/asset-profile.png",
+    "art/hammock_with_stand/iterations/v003/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 2,
+    "gameplay_readability": 2,
+    "geometric_detail": 3,
+    "material_realism": 2,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 2,
+    "silhouette_quality": 3,
+    "surface_variation": 1,
+    "technical_integration": 3
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "method": "godot_procedural_clockwork_settlement",
+  "instructions": "Refine the blocked assembly yard after correcting the shared generator. Break the plain work pad into offset stone pavers, improve the bench with joined trestles and iron shoes, add organized hanging tools and pegs, sorted parts bins, and a small lathe with visible drive gear. Keep it open and preserve the RoomDefinition-owned activity stations and construction stages.",
+  "parameters": {
+    "refinement": "joinery_and_materials_v2",
+    "outputs": ["settlement_workarea.tscn"]
+  },
+  "source_inputs": ["art/settlement_workarea/brief.json", "scripts/art_factory/generate_settlement_candidate.gd", "scripts/visuals/visual_geometry.gd", "scripts/visuals/material_library.gd"],
+  "tool": "RoomScale Art Factory deterministic Godot generator",
+  "tool_version": "Godot 4.7.2-stable official",
+  "post_processing": ["Pack generated Node3D and owned descendants into a native PackedScene"],
+  "material_method": "Shared RoomScale PBR material library with deterministic procedural textures",
+  "import_configuration": {"format": "native .tscn PackedScene", "renderer": "gl_compatibility", "scale": "inches"},
+  "deterministic_seed": 2508,
+  "generator_command": [".tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe", "--headless", "--path", "{project_root}", "--script", "res://scripts/art_factory/generate_settlement_candidate.gd"]
+}

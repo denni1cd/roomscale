@@ -1,13 +1,28 @@
 extends RefCounted
 const G := preload("res://scripts/visuals/visual_geometry.gd")
 
-static func decorate(settlement: Node3D, definition: Dictionary) -> void:
+static func decorate(settlement: Node3D, definition: Dictionary, resolver: Variant = null) -> void:
 	for name in ["Workshop", "Depot", "Housing", "WorkArea"]:
 		var building := settlement.get_node(name) as Node3D
+		var asset_id := _asset_id(name)
+		var dimensions := _asset_dimensions(name)
+		var descriptor := {"kind": asset_id, "appearance": {"asset_id": asset_id}, "dimensions": dimensions}
+		var uses_registered_art := false
+		if resolver != null:
+			var recipe: Dictionary = resolver.resolve(descriptor)
+			uses_registered_art = bool(recipe.get("asset_registry_required", false))
+		if uses_registered_art:
+			_hide_legacy_meshes(building)
+			building.set_meta("accepted_art_visible", true)
+			var asset_root := Node3D.new()
+			asset_root.name = "ArtPresentation"
+			asset_root.set_meta("presentation_only", true)
+			building.add_child(asset_root)
+			resolver.render(asset_root, descriptor, func(_parent: Node3D, _object: Dictionary) -> void: pass)
 		var visual := Node3D.new()
 		visual.name = "ClockworkDetails"
 		building.add_child(visual)
-		if name in ["Workshop", "Depot"]:
+		if not uses_registered_art and name in ["Workshop", "Depot"]:
 			for side in [-1, 1]:
 				for end in [-1, 1]:
 					G.box(visual, "IronPost%d_%d" % [side, end], Vector3(0.7, 8.4, 0.7), Vector3(side * 10.5, 4.4, end * 7.5), "iron", Color("29363a"), 0.1)
@@ -22,17 +37,20 @@ static func decorate(settlement: Node3D, definition: Dictionary) -> void:
 			G.box(visual, "FrontStep", Vector3(6, 0.35, 2.0), Vector3(0, 0.65, 9.2), "wood", Color("987047"), 0.1)
 		if name == "Workshop":
 			for y in [1.4, 6.5]:
-				G.cylinder(visual, "BoilerHoop%s" % y, 2.85, 0.35, Vector3(-6.5, y, -2), "copper", Color("b17042"))
-			G.cylinder(visual, "SteamPipe", 0.35, 6, Vector3(-2.7, 4, -2), "copper", Color("b17042"))
-			G.cylinder(visual, "SteamElbow", 0.38, 3.5, Vector3(-4.5, 6.7, -2), "copper", Color("b17042")).rotation.z = PI * 0.5
+				if not uses_registered_art:
+					G.cylinder(visual, "BoilerHoop%s" % y, 2.85, 0.35, Vector3(-6.5, y, -2), "copper", Color("b17042"))
+			if not uses_registered_art:
+				G.cylinder(visual, "SteamPipe", 0.35, 6, Vector3(-2.7, 4, -2), "copper", Color("b17042"))
+				G.cylinder(visual, "SteamElbow", 0.38, 3.5, Vector3(-4.5, 6.7, -2), "copper", Color("b17042")).rotation.z = PI * 0.5
 			G.gear(visual, "Flywheel", 1.7, Vector3(3.5, 5, 2)).rotation.x = PI * 0.5
-			G.box(visual, "PistonHousing", Vector3(1.1, 0.7, 2.6), Vector3(5.5, 4.9, 2), "iron", Color("3f5155"), 0.16)
-			G.cylinder(visual, "Piston", 0.18, 2.1, Vector3(5.5, 4.9, 3.2), "brass", Color("b69b65")).rotation.x = PI * 0.5
-		if name == "Depot":
+			if not uses_registered_art:
+				G.box(visual, "PistonHousing", Vector3(1.1, 0.7, 2.6), Vector3(5.5, 4.9, 2), "iron", Color("3f5155"), 0.16)
+				G.cylinder(visual, "Piston", 0.18, 2.1, Vector3(5.5, 4.9, 3.2), "brass", Color("b69b65")).rotation.x = PI * 0.5
+		if name == "Depot" and not uses_registered_art:
 			for x in [-6, 0, 6]:
 				for y in [1.4, 4.0]:
 					G.box(visual, "CrateBrace%s_%s" % [x, y], Vector3(4.9, 0.28, 0.35), Vector3(x, y, 0.1), "iron", Color("384449"), 0.05)
-		if name == "Housing":
+		if name == "Housing" and not uses_registered_art:
 			for x in [-4.2, 4.2]:
 				G.box(visual, "TentRidge%s" % x, Vector3(0.3, 0.3, 8.3), Vector3(x, 5.25, 0), "wood", Color("675039"), 0.05)
 				G.box(visual, "Porch%s" % x, Vector3(6.3, 0.3, 2.0), Vector3(x, 0.4, 4.1), "wood", Color("80603b"), 0.06)
@@ -49,6 +67,25 @@ static func decorate(settlement: Node3D, definition: Dictionary) -> void:
 		for side in [-1, 1]:
 			G.box(settlement, "BenchLeg%d_%d" % [index, side], Vector3(0.08, 0.35, 0.5), at + Vector3(side * 0.47, 0.17, -0.5), "iron", Color("2f4147"), 0.02)
 	preload("res://scripts/visuals/settlement_composition.gd").build(settlement, definition)
+
+
+static func _asset_id(building_name: String) -> String:
+	return "settlement_%s" % building_name.to_lower()
+
+
+static func _asset_dimensions(building_name: String) -> Array[float]:
+	match building_name:
+		"Workshop": return [26.0, 20.0, 20.0]
+		"Depot": return [24.0, 13.0, 20.0]
+		"Housing": return [17.0, 7.0, 9.0]
+		"WorkArea": return [23.0, 9.0, 12.0]
+		_: return [1.0, 1.0, 1.0]
+
+
+static func _hide_legacy_meshes(building: Node3D) -> void:
+	for child in building.get_children():
+		if child is MeshInstance3D or child is Label3D:
+			child.visible = false
 
 static func animate(settlement: Node3D, clock: float) -> void:
 	var flywheel := settlement.get_node_or_null("Workshop/ClockworkDetails/Flywheel") as Node3D

@@ -1,0 +1,58 @@
+{
+  "candidate_id": "grapple-v002",
+  "created_at_utc": "2026-10-25T13:51:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "The two open rim toruses project as oversized gold hoops across the spool face rather than a restrained wheel rim with structural spokes.",
+    "The governor gear and shaft bearing sit behind the main drum/gear and are not legible in the standard close views.",
+    "The gauge bodies show as small bright circles, but the pointer geometry is oriented edge-on and cannot be read as an instrument dial.",
+    "The rope windings remain cool gray rather than weathered tan rope; the metal and boiler still have uniform unbroken surfaces.",
+    "The production overview captures are valid actual room images, but the cable and installation remain too small to judge from whole-room distance."
+  ],
+  "hard_fail_reasons": [
+    "The close render still reads as programmer art: a broad hoop crosses the front of the drum, the gear train does not read as connected, the gauges lack legible hands, and major surfaces remain plain primitive shapes."
+  ],
+  "incumbent_candidate_id": "grapple-v001",
+  "incumbent_comparison": "Better than grapple-v001: the open rims reveal rope winding, the top gear is a sheave, and the production capture has timber/iron separation and gauge plumbing. It still fails the hard visual gate.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "The spool treatment adds a ring but no face spokes or strong central axle, so the rim appears detached from the layered winding.",
+    "The secondary gear lies in the drum's projected footprint and its connection path is occluded.",
+    "The dial needle dimensions and rotation axes place the pointer outside the visible face plane.",
+    "The v2 material values preserve the original cool rope color and the base materials have no differentiated edge/wear cues."
+  ],
+  "next_action_hypothesis": "For grapple-v003, replace the gold loops with darker iron wheel rims and add eight face spokes plus visible central hubs on each spool side. Move the secondary governor gear above and to the side of the main drive wheel with an exposed linkage, orient the gauge needles in the dial face plane and use a contrasting enamel face, and shift the rope to a rough tan material. Add a restrained tower X-brace. Keep all parts within the established site bounds and make no gameplay change.",
+  "observations": {
+    "art_direction_fit": "The open spool, iron/brass/copper/wood separation, and top sheave move toward the intended buildable steampunk machine, but the camera still exposes block-like rails and simple cylinders.",
+    "close_up_quality": "The camera reveals winding grooves and added hardware, though the front rim forms an oversized crossing hoop and hides part of the winch face.",
+    "gameplay_readability": "The normal investigation and construction path reaches TRAVERSAL_ACTIVATED; the receipt records cable_deployed=true and the floor-to-desk navigation edge active.",
+    "geometric_detail": "The render adds a distinct wooden sole, iron shoes, second gear, pipe-fed gauges, drum bolts, and a sheave. The secondary gear is obscured behind the drum and the dial hands are not visible.",
+    "material_realism": "The open winding and timber patches improve separation, but brass remains a single bright response and the iron/copper parts still read as smooth untextured primitives.",
+    "proportion": "The technical report measures 9.000 x 11.580 x 7.500 inches; this stays inside the brief's proportional tolerance and the same construction footprint as v001.",
+    "scale_fidelity": "Measured dimensions remain 9.000 x 11.580 x 7.500 inches and the additional foot detail remains inside the ten-inch project base.",
+    "semantic_recognizability": "Three-quarter and profile captures show the winch, vertical launcher, top sheave, copper vessel, and actual deployed cable in the production room.",
+    "silhouette_quality": "The open spool exposes the winding and the two-stage tower is readable, but the large gold loop crossing the winch front competes with the drum silhouette.",
+    "surface_variation": "The close render distinguishes tan wood patches, dark frame, copper boiler, brass rim, and rope, but shows little wear or fine material response.",
+    "technical_integration": "The live construction hook loads grapple-v002 from the accepted override, suppresses duplicate legacy stage meshes, and preserves the existing construction gates and cable deployment. Godot reports 125 meshes and 31,968 triangles."
+  },
+  "render_evidence": [
+    "art/grapple/iterations/v002/render-runs/run-002/asset-three-quarter.png",
+    "art/grapple/iterations/v002/render-runs/run-002/asset-profile.png",
+    "art/grapple/iterations/v002/render-runs/run-002/asset-detail.png",
+    "art/grapple/iterations/v002/render-runs/run-002/grapple-complete.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 2,
+    "gameplay_readability": 5,
+    "geometric_detail": 3,
+    "material_realism": 3,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "surface_variation": 2,
+    "technical_integration": 5
+  }
+}

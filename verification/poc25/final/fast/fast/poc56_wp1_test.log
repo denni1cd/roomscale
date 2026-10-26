@@ -1,0 +1,117 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ROOMSCALE_CIVILIZATION_PROFILE id=clockwork name=Clockwork citizen_style=clockwork settlement_style=clockwork traversal_style=grapple_cable
+ROOMSCALE_VISUAL_ASSET object=desk source=res://assets/generated/writing_desk.glb normalization={ "source_bounds": [P: (-34.0, 0.0, -17.0), S: (68.0, 30.0, 34.0)], "fitted_dimensions": (68.0, 30.0, 34.0) }
+ROOMSCALE_VISUAL_ASSET object=side_table source=res://assets/generated/writing_desk.glb normalization={ "source_bounds": [P: (-34.0, 0.0, -17.0), S: (68.0, 30.0, 34.0)], "fitted_dimensions": (20.0, 20.0, 17.0) }
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+ROOMSCALE_CITIZEN_SPAWN count=5 separate_nodes=true height=0.5in
+ROOMSCALE_FISHBOWL_READY governor=true population=5 camera=true room=room_poc47 speed=1.0
+ROOMSCALE_CIVILIZATION_READY speed=1.0 governor=true spectator=true
+ROOMSCALE_M2_READY Godot=4.7.2-stable (official) room=room_poc47 size=240x180 in citizens=5
+POC56_WP1_CHECK_PASS canonical bookcase has production salvage state
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+POC56_WP1_CHECK_PASS bookcase can be authorized through production access checks
+POC56_WP1_CHECK_PASS bookcase worker has positive production work factor
+POC4_SALVAGE_STAGE object=bookcase state=STRIPPED work=8.0 yields={ "metal": 2.0 }
+POC56_WP1_CHECK_PASS real salvage task completes stage 1
+POC56_WP1_CHECK_PASS first pull advances exactly one salvage stage
+POC56_WP1_CHECK_PASS full-size bookcase remains visibly present after first pull
+POC56_WP1_CHECK_PASS partial bookcase remains a navigation obstacle
+POC56_WP1_CHECK_PASS bookcase worker has positive production work factor
+POC4_SALVAGE_STAGE object=bookcase state=PARTIAL work=20.0 yields={ "wood": 16.0, "metal": 2.0 }
+POC56_WP1_CHECK_PASS real salvage task completes stage 2
+POC56_WP1_CHECK_PASS bookcase worker has positive production work factor
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+POC4_SALVAGE_STAGE object=bookcase state=FRAME work=32.0 yields={ "wood": 12.0 }
+POC56_WP1_CHECK_PASS real salvage task completes stage 3
+POC56_WP1_CHECK_PASS bookcase worker has positive production work factor
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=8
+POC4_SALVAGE_STAGE object=bookcase state=DEPLETED work=42.0 yields={ "wood": 14.0 }
+POC56_WP1_CHECK_PASS real salvage task completes stage 4
+POC56_WP1_CHECK_PASS bookcase depletion requires every finite stage
+POC56_WP1_CHECK_PASS bookcase is removed only after the final real stage
+POC56_WP1_CHECK_PASS depleted bookcase releases its navigation obstacle
+POC56_WP1_CHECK_PASS salvage bundles preserve resource conservation
+POC56_WP1_CHECK_PASS salvage does not corrupt economy accounting
+POC56_WP1_CHECK_PASS production development system accepts a valid shelter request
+POC56_WP1_CHECK_PASS project exposes truthful waiting-for-materials state
+POC56_WP1_CHECK_PASS waiting project explains its current blocker
+POC56_WP1_CHECK_PASS focused delivery fixture funds real economy tickets
+POC56_WP1_CHECK_PASS project delivery reservation is owned by the real project
+POC56_WP1_CHECK_PASS project reservation is represented by a coordinator task
+POC56_WP1_CHECK_PASS available or reserved project materials report waiting for delivery
+POC56_WP1_CHECK_PASS real project delivery pickup 1 validates
+POC56_WP1_CHECK_PASS real project delivery arrival 1 validates
+POC56_WP1_CHECK_PASS real project delivery pickup 2 validates
+POC56_WP1_CHECK_PASS real project delivery arrival 2 validates
+POC56_WP1_CHECK_PASS real project delivery pickup 3 validates
+POC56_WP1_CHECK_PASS real project delivery arrival 3 validates
+POC56_WP1_CHECK_PASS real project delivery pickup 4 validates
+POC56_WP1_CHECK_PASS real project delivery arrival 4 validates
+POC56_WP1_CHECK_PASS fully delivered project reports that it needs a builder
+POC56_WP1_CHECK_PASS project status counts its assigned real builder task
+POC56_WP1_CHECK_PASS real builder advances project work without completing early
+POC56_WP1_CHECK_PASS in-progress status exposes authoritative work progress
+POC56_WP1_CHECK_PASS builder waits when a citizen occupies the reserved footprint
+POC56_WP1_CHECK_PASS completed work reports a truthful site blocker
+POC56_WP1_CHECK_PASS site blocker retains full work and a visible reason
+POC56_WP1_CHECK_PASS active project cancellation is accepted
+POC56_WP1_CHECK_PASS cancelled project leaves no active project
+POC56_WP1_CHECK_PASS terminal project status remains inspectable in history
+POC56_WP1_CHECK_PASS project history retains each authoritative lifecycle transition
+POC56_WP1_CHECK_PASS cancellation releases its delivered ticket
+POC56_WP1_CHECK_PASS all delivered project materials return to available stock
+POC56_WP1_CHECK_PASS delivered project task keeps its completed coordinator history
+POC56_WP1_CHECK_PASS cancellation cancels its active builder task
+POC56_WP1_CHECK_PASS project cancellation preserves economy conservation
+POC56_WP1_CHECK_PASS cached transient site conflict rejects a new placement attempt
+POC56_WP1_CHECK_PASS site rejection is exposed with a truthful blocker
+POC56_WP1_CHECK_PASS first site retry uses a bounded visible delay
+POC56_WP1_CHECK_PASS repeated transient site failures back off within the 60-second bound
+ROOMSCALE_VISUAL_ASSET object=desk source=res://assets/generated/writing_desk.glb normalization={ "source_bounds": [P: (-34.0, 0.0, -17.0), S: (68.0, 30.0, 34.0)], "fitted_dimensions": (68.0, 30.0, 34.0) }
+ROOMSCALE_VISUAL_ASSET object=side_table source=res://assets/generated/writing_desk.glb normalization={ "source_bounds": [P: (-34.0, 0.0, -17.0), S: (68.0, 30.0, 34.0)], "fitted_dimensions": (20.0, 20.0, 17.0) }
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+ROOMSCALE_CITIZEN_SPAWN count=5 separate_nodes=true height=0.5in
+ROOMSCALE_FISHBOWL_READY governor=true population=5 camera=true room=room_poc47 speed=1.0
+ROOMSCALE_CIVILIZATION_READY speed=1.0 governor=true spectator=true
+ROOMSCALE_M2_READY Godot=4.7.2-stable (official) room=room_poc47 size=240x180 in citizens=5
+POC56_WP1_CHECK_PASS fresh production world accepts a shelter for reservation cleanup
+POC56_WP1_CHECK_PASS reserved-ticket cleanup fixture receives finite stock
+POC56_WP1_CHECK_PASS real project creates an outstanding reserved delivery
+POC56_WP1_CHECK_PASS project with reserved delivery can be cancelled
+POC56_WP1_CHECK_PASS cancellation returns the undelivered project reservation
+POC56_WP1_CHECK_PASS cancellation cancels the reserved delivery task
+POC56_WP1_CHECK_PASS reserved-task cancellation preserves economy conservation
+ROOMSCALE_VISUAL_ASSET object=desk source=res://assets/generated/writing_desk.glb normalization={ "source_bounds": [P: (-34.0, 0.0, -17.0), S: (68.0, 30.0, 34.0)], "fitted_dimensions": (68.0, 30.0, 34.0) }
+ROOMSCALE_VISUAL_ASSET object=side_table source=res://assets/generated/writing_desk.glb normalization={ "source_bounds": [P: (-34.0, 0.0, -17.0), S: (68.0, 30.0, 34.0)], "fitted_dimensions": (20.0, 20.0, 17.0) }
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+ROOMSCALE_CITIZEN_SPAWN count=5 separate_nodes=true height=0.5in
+ROOMSCALE_FISHBOWL_READY governor=true population=5 camera=true room=room_poc47 speed=1.0
+ROOMSCALE_CIVILIZATION_READY speed=1.0 governor=true spectator=true
+ROOMSCALE_M2_READY Godot=4.7.2-stable (official) room=room_poc47 size=240x180 in citizens=5
+POC56_WP1_CHECK_PASS FAILED fixture creates a production project
+POC56_WP1_CHECK_PASS FAILED fixture receives finite delivery stock
+POC56_WP1_CHECK_PASS FAILED project owns a reserved delivery and an active builder
+POC56_WP1_CHECK_PASS FAILED terminal operation clears the active project
+POC56_WP1_CHECK_PASS FAILED terminal status remains in project history
+POC56_WP1_CHECK_PASS FAILED releases the owned reservation back to available finite stock
+POC56_WP1_CHECK_PASS FAILED cancels its delivery and builder tasks
+POC56_WP1_CHECK_PASS FAILED cleanup preserves economy conservation
+ROOMSCALE_VISUAL_ASSET object=desk source=res://assets/generated/writing_desk.glb normalization={ "source_bounds": [P: (-34.0, 0.0, -17.0), S: (68.0, 30.0, 34.0)], "fitted_dimensions": (68.0, 30.0, 34.0) }
+ROOMSCALE_VISUAL_ASSET object=side_table source=res://assets/generated/writing_desk.glb normalization={ "source_bounds": [P: (-34.0, 0.0, -17.0), S: (68.0, 30.0, 34.0)], "fitted_dimensions": (20.0, 20.0, 17.0) }
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+ROOMSCALE_CITIZEN_SPAWN count=5 separate_nodes=true height=0.5in
+ROOMSCALE_FISHBOWL_READY governor=true population=5 camera=true room=room_poc47 speed=1.0
+ROOMSCALE_CIVILIZATION_READY speed=1.0 governor=true spectator=true
+ROOMSCALE_M2_READY Godot=4.7.2-stable (official) room=room_poc47 size=240x180 in citizens=5
+POC56_WP1_CHECK_PASS SUPERSEDED fixture creates a production project
+POC56_WP1_CHECK_PASS SUPERSEDED fixture receives finite delivery stock
+POC56_WP1_CHECK_PASS SUPERSEDED project owns a reserved delivery and an active builder
+POC56_WP1_CHECK_PASS SUPERSEDED terminal operation clears the active project
+POC56_WP1_CHECK_PASS SUPERSEDED terminal status remains in project history
+POC56_WP1_CHECK_PASS SUPERSEDED releases the owned reservation back to available finite stock
+POC56_WP1_CHECK_PASS SUPERSEDED cancels its delivery and builder tasks
+POC56_WP1_CHECK_PASS SUPERSEDED cleanup preserves economy conservation
+POC56_WP1_PASS []
+

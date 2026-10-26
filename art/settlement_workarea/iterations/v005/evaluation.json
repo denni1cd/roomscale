@@ -1,0 +1,47 @@
+{
+  "candidate_id": "settlement_workarea-v005",
+  "created_at_utc": "2026-10-25T14:53:33+00:00",
+  "decision": "promote",
+  "defects": [],
+  "hard_fail_reasons": [],
+  "incumbent_candidate_id": "settlement_workarea-v003",
+  "incumbent_comparison": "Compared directly to workarea-v003 using matched run-003/run-001 production cameras. v005 restores the missing v2 equipment details after footprint correction: tools, pegs, organized bins, side storage, and a drive wheel. It keeps the open yard, does not lower any required rubric score, and resolves the specific sparse-yard defect.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [],
+  "next_action_hypothesis": "Promote workarea-v005 as the stable assembly-yard visual while preserving the live activity site and construction stage logic.",
+  "observations": {
+    "art_direction_fit": "The mix of timber equipment, stone pavers, and exposed clockwork matches the miniature steampunk setting and reads as functional yard equipment.",
+    "close_up_quality": "The run-001 asset-detail capture resolves the hanging implements, pegs, gear teeth, lathe spindle, storage bins, and trestle shoes; these give the close view concrete workshop detail.",
+    "gameplay_readability": "The candidate remains open around the activity bench; the mesh is presentation-only and the normal production scene retains construction-stage ownership.",
+    "geometric_detail": "The same run-001 close/three-quarter images show hanging tools, pegs, side shelf, bins, drive wheel, spindle, pavers, and joined trestles as separate details.",
+    "material_realism": "Wood, stone, iron, and brass remain visibly distinct under the production light, with metal fittings catching small highlights rather than appearing uniformly matte.",
+    "proportion": "Godot reports 23 x 9 x 12 inches, matching the brief envelope; the elevated workbench is visually proportionate to the miniature agents.",
+    "scale_fidelity": "The validation report matches the intended 23 x 9 x 12 inch bounds; the scene capture shows the bench above the live half-inch citizen scale.",
+    "semantic_recognizability": "The run-001 settlement and asset views now read as an equipped clockwork assembly yard with a hoist, workbench, gears, lathe spindle, and organized storage.",
+    "silhouette_quality": "The gantry and two trestles establish a readable open-yard silhouette; the new right-side bench/storage does not close the central work area.",
+    "surface_variation": "Alternating paving blocks, varied bin tones, dark iron, and brass gears break up the large bench and yard surfaces in the production close view.",
+    "technical_integration": "Godot 4.7.2 validation passes with 91 meshes and 19,008 triangles; the run-001 receipt names settlement_workarea-v005 and its scene path with production_path=true."
+  },
+  "render_evidence": [
+    "art/settlement_workarea/iterations/v005/render-runs/run-001/room-scale.png",
+    "art/settlement_workarea/iterations/v005/render-runs/run-001/settlement-scale.png",
+    "art/settlement_workarea/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+    "art/settlement_workarea/iterations/v005/render-runs/run-001/asset-opposite-three-quarter.png",
+    "art/settlement_workarea/iterations/v005/render-runs/run-001/asset-profile.png",
+    "art/settlement_workarea/iterations/v005/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 4,
+    "gameplay_readability": 4,
+    "geometric_detail": 4,
+    "material_realism": 4,
+    "proportion": 4,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 4,
+    "surface_variation": 4,
+    "technical_integration": 5
+  }
+}

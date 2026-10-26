@@ -1,0 +1,37 @@
+{
+  "deterministic_seed": 2511,
+  "generator_command": [
+    ".tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generate_settlement_candidate.gd"
+  ],
+  "import_configuration": {
+    "format": "native .tscn PackedScene",
+    "renderer": "gl_compatibility",
+    "scale": "inches"
+  },
+  "instructions": "The first rendered workshop challenger has a strong timber frame, boiler stack, copper seams, and warm openings, but its two broad roof wings cover the boiler and conceal the defining machinery from the production three-quarter view. Preserve the dimensions and details. Pull the two standing-seam wings outward and narrow them to create a clear central opening above the existing boiler and stack; keep copper seams on each wing. Preserve the animated production gear and steam effect. Do not remove roof coverage from the structure's outer bays.",
+  "material_method": "Shared RoomScale PBR material library with deterministic procedural textures",
+  "method": "godot_procedural_clockwork_settlement",
+  "parameters": {
+    "outputs": [
+      "settlement_workshop.tscn"
+    ],
+    "refinement": "footprint_calibration_v3"
+  },
+  "post_processing": [
+    "Pack generated Node3D and owned descendants into a native PackedScene"
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "art/settlement_workshop/brief.json",
+    "scripts/art_factory/generate_settlement_candidate.gd",
+    "scripts/visuals/visual_geometry.gd",
+    "scripts/visuals/material_library.gd"
+  ],
+  "tool": "RoomScale Art Factory deterministic Godot generator",
+  "tool_version": "Godot 4.7.2-stable official"
+}

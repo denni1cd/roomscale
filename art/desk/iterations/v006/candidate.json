@@ -1,0 +1,58 @@
+{
+  "asset_files": [
+    "art/desk/iterations/v006/generated/desk.tscn"
+  ],
+  "asset_id": "desk",
+  "candidate_id": "desk-v006",
+  "created_at_utc": "2026-10-25T13:32:58+00:00",
+  "evaluation_file": "",
+  "generation_result": {
+    "command": [
+      "C:/Users/Zero/python_projects/ai/roomscale/.tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+      "--headless",
+      "--path",
+      "C:\\Users\\Zero\\python_projects\\ai\\roomscale",
+      "--script",
+      "res://scripts/art_factory/generate_desk_candidate.gd"
+    ],
+    "exit_code": 0,
+    "recorded_at_utc": "2026-10-25T13:32:58+00:00",
+    "status": "pass"
+  },
+  "parent_candidate_id": "desk-v005",
+  "recipe_file": "art/desk/iterations/v006/recipe.json",
+  "renders": [],
+  "schema_version": 1,
+  "status": "rejected",
+  "technical_validation": {
+    "asset_path": "res://art/desk/iterations/v006/generated/desk.tscn",
+    "bounds": {
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "engine": "4.7.2-stable (official)",
+    "import_exit_code": 0,
+    "issues": [
+      "candidate needs at least one render mesh and surface",
+      "candidate bounds must be finite and positive on all axes",
+      "source proportions exceed brief tolerance: ratios=(0.0, 0.0, 0.0) tolerance=0.200"
+    ],
+    "log": "art/desk/iterations/v006/technical-validation.log",
+    "mesh_count": 0,
+    "recorded_at_utc": "2026-10-25T13:33:04+00:00",
+    "report": "art/desk/iterations/v006/technical-validation.json",
+    "status": "fail",
+    "surface_count": 0,
+    "triangle_count": 0,
+    "validation_exit_code": 1
+  },
+  "version": 6
+}

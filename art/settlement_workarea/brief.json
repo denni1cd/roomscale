@@ -1,0 +1,48 @@
+{
+  "asset_id": "settlement_workarea",
+  "camera_distances": [
+    2.0,
+    12.0,
+    64.0,
+    330.0
+  ],
+  "category": "settlement_structure",
+  "display_name": "Clockwork Assembly Yard",
+  "gameplay_invariants": {
+    "activity_stations_remain_room_definition_owned": true,
+    "construction_projects_and_stage_gates_remain_system_owned": true,
+    "render_meshes_do_not_create_collision_navigation_or_selection": true,
+    "room_definition_landmark_is_authoritative": true
+  },
+  "intended_dimensions": [
+    23.0,
+    9.0,
+    12.0
+  ],
+  "iteration_budget": 5,
+  "materials": {
+    "bench_and_shelf": "oiled timber with joined trestles",
+    "bins": "stained wood with iron details",
+    "machines_and_tools": "forged iron, brass, and copper",
+    "yard": "worn stone pavers with varied edges"
+  },
+  "prohibited_changes": [
+    "do not change RoomDefinition landmarks or activity stations",
+    "do not change construction stage requirements, project sites, or citizen work assignments",
+    "do not add render meshes to collision, navigation, selection, or construction logic",
+    "do not add canonical-room-specific placement or simulation logic"
+  ],
+  "quality_tier": "B",
+  "reference_images": [],
+  "required_features": [
+    "open yard and elevated assembly bench remain easy to distinguish",
+    "organized tool rack, bins, gear, and lathe read as specific equipment",
+    "stone, wood, iron, and brass remain materially distinct",
+    "readable from settlement distance without obscuring citizens",
+    "fit the existing 23 by 9 by 12 inch local presentation envelope"
+  ],
+  "schema_version": 1,
+  "semantic_type": "clockwork settlement work yard",
+  "source_room_definition": "",
+  "visual_target": "An open miniature clockwork assembly yard, with a worn stone work pad, a substantial timber trestle bench, exposed gears, organized wall tools, small parts bins, a lathe spindle, and iron fittings. It should read as a real working place rather than a colored platform, while staying open and legible to citizens and construction staging."
+}

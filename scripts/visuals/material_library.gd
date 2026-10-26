@@ -31,11 +31,14 @@ static func get_material(category: String, color: Color, roughness: float = 0.8)
 	material.albedo_color = color
 	material.roughness = float(properties.get("roughness", roughness))
 	material.metallic = float(properties.get("metallic", 0.0))
-	if category in ["wood", "floor_wood", "canvas", "fabric", "rope", "leather", "stone"]:
+	if category in ["wood", "floor_wood", "canvas", "fabric", "citizen_fabric", "rope", "leather", "stone"]:
 		material.albedo_texture = _texture(category)
 		material.uv1_triplanar = true
 		material.uv1_world_triplanar = true
 		material.uv1_scale = Vector3(0.06, 0.12, 0.10) if category == "wood" else Vector3.ONE * 0.5
+		if category == "citizen_fabric":
+			material.uv1_scale = Vector3.ONE * 7.0
+			material.roughness = 0.9
 		if category == "floor_wood":
 			material.uv1_scale = Vector3(0.025, 0.08, 0.07)
 			material.roughness = 0.92
@@ -46,9 +49,23 @@ static func get_material(category: String, color: Color, roughness: float = 0.8)
 	_cache[key] = material
 	return material
 
-static func _texture(category: String) -> NoiseTexture2D:
+static func _texture(category: String) -> Texture2D:
 	if _textures.has(category):
 		return _textures[category]
+	if category == "citizen_fabric":
+		var weave := Image.create(128, 128, false, Image.FORMAT_RGB8)
+		for y in range(128):
+			var tile_y := floori(float(y) / 8.0)
+			for x in range(128):
+				var tile_x := floori(float(x) / 8.0)
+				var warp_on_top := (tile_x + tile_y) % 2 == 0
+				var thread_core := (y % 8 < 6) if warp_on_top else (x % 8 < 6)
+				var thread_ridge := (x % 2 == 0) if warp_on_top else (y % 2 == 0)
+				var value := 0.84 if not thread_core else (0.99 if thread_ridge else 0.92)
+				weave.set_pixel(x, y, Color(value, value, value))
+		var woven_texture := ImageTexture.create_from_image(weave)
+		_textures[category] = woven_texture
+		return woven_texture
 	var texture := NoiseTexture2D.new()
 	texture.width = 256
 	texture.height = 256
@@ -59,7 +76,8 @@ static func _texture(category: String) -> NoiseTexture2D:
 	noise.fractal_octaves = 3
 	texture.noise = noise
 	var gradient := Gradient.new()
-	gradient.set_color(0, Color(0.94, 0.94, 0.94) if category == "floor_wood" else Color(0.84, 0.84, 0.84))
+	var shadow_value := Color(0.94, 0.94, 0.94) if category == "floor_wood" else Color(0.84, 0.84, 0.84)
+	gradient.set_color(0, shadow_value)
 	gradient.set_color(1, Color(1.0, 1.0, 1.0))
 	texture.color_ramp = gradient
 	_textures[category] = texture

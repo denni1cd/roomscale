@@ -1,0 +1,47 @@
+{
+  "candidate_id": "settlement_housing-v002",
+  "created_at_utc": "2026-10-25T14:53:33+00:00",
+  "decision": "promote",
+  "defects": [],
+  "hard_fail_reasons": [],
+  "incumbent_candidate_id": "",
+  "incumbent_comparison": "This is the first housing candidate to pass generation/technical validation after the blocked v001 common-parser attempt. Run-003 confirms the two-home silhouette, cladding, hinged doors, divided warm windows, flue, and roof ribs in the production room; no valid accepted incumbent exists for this identity.",
+  "incumbent_comparison_result": "first_pass",
+  "likely_causes": [],
+  "next_action_hypothesis": "Promote housing-v002 as the stable housing visual. Leave the two-house landmark, sleeping/work assignments, and citizen logic under existing RoomDefinition ownership.",
+  "observations": {
+    "art_direction_fit": "Two compact joined cottages with timber, iron, warm glazing, and copper roof detailing fit the miniature steampunk settlement direction.",
+    "close_up_quality": "At close asset distance the doors/windows and their trim remain legible; the room-scale framing is not used as close detail proof.",
+    "gameplay_readability": "The production view shows homes at the established settlement footprint without changing RoomDefinition or citizen activity sites.",
+    "geometric_detail": "The production capture resolves horizontal cladding, roof ribs, door frames/hinges, window mullions, porch posts, and shared flue hardware.",
+    "material_realism": "Painted warm windows, dark roof iron, copper ribs, and timber walls show different light response under production key/fill.",
+    "proportion": "Godot measures 17 x 7.09 x 9.85 inches, close to the 17 x 7 x 9 inch intended presentation envelope.",
+    "scale_fidelity": "The report is within the brief's tolerance and the render places the homes at the 0.6 building scale beside half-inch agents.",
+    "semantic_recognizability": "Run-003 three-quarter and settlement views show two separate homes with doors, lit divided windows, porches, flues, and distinct roofs.",
+    "silhouette_quality": "The twin gabled roofs and separate facades create a readable domestic silhouette instead of one uninterrupted block.",
+    "surface_variation": "The two roof tones and alternating cladding courses create modest surface variation across the pair of structures.",
+    "technical_integration": "Godot 4.7.2 import/bounds checks pass; run-003 receipt confirms the exact housing candidate/path was rendered with production_path=true."
+  },
+  "render_evidence": [
+    "art/settlement_housing/iterations/v002/render-runs/run-003/room-scale.png",
+    "art/settlement_housing/iterations/v002/render-runs/run-003/settlement-scale.png",
+    "art/settlement_housing/iterations/v002/render-runs/run-003/asset-three-quarter.png",
+    "art/settlement_housing/iterations/v002/render-runs/run-003/asset-opposite-three-quarter.png",
+    "art/settlement_housing/iterations/v002/render-runs/run-003/asset-profile.png",
+    "art/settlement_housing/iterations/v002/render-runs/run-003/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 5,
+    "close_up_quality": 4,
+    "gameplay_readability": 4,
+    "geometric_detail": 4,
+    "material_realism": 4,
+    "proportion": 4,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 4,
+    "surface_variation": 4,
+    "technical_integration": 5
+  }
+}

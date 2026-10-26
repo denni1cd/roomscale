@@ -1,0 +1,56 @@
+{
+  "candidate_id": "grapple-v003",
+  "created_at_utc": "2026-10-25T13:55:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "The pressure dials remain too small and unreadable despite the new pointer geometry.",
+    "The launcher rails and pressure vessel still use broad plain primitive surfaces with little manufactured edge or seam detail.",
+    "The spool is identifiable but its wide spoke-ring, stacked rope wraps, and central tower make the lower half visually crowded.",
+    "Metal surfaces lack restrained tonal variation and the rendered close view remains stylized rather than convincingly manufactured."
+  ],
+  "hard_fail_reasons": [
+    "The close render remains visibly simplified programmer art: the pressure gauges are blank dots, major rails and the boiler have plain surfaces, and the broad winch/rim assembly still overwhelms its small hardware cues."
+  ],
+  "incumbent_candidate_id": "grapple-v002",
+  "incumbent_comparison": "Better than grapple-v002: v003 makes the spool a supported wheel, exposes a second gear and shaft, changes the wraps to rough tan rope, and braces the launcher. The candidate still fails the visual hard-fail gate.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "Gauge faces are too small relative to the roughly twelve-inch asset and the pointer is hidden by the dial's front surface at the standard camera distance.",
+    "The tower rails are square boxes and the pressure vessel has no circumferential seams or fittings.",
+    "The spool winds are modeled as stacked torus loops, which read as ribs instead of a wrapped cable drum at three-quarter distance."
+  ],
+  "next_action_hypothesis": "For grapple-v004, enlarge and contrast the gauge faces, move each pointer forward of the enamel surface, and add visible tick marks. Replace the square tower posts with thin round iron rails while retaining the same centerlines. Add two restrained copper vessel seams and bolt collars. Reduce the spool's visual dominance by using narrow round rope wraps and darker spoke rims. Re-render at identical production angles and re-check bounds and live deployment.",
+  "observations": {
+    "art_direction_fit": "The supported winch wheel, exposed linkage, rope, metalwork, copper vessel, and ladder brace now fit the steampunk target; the large smooth surfaces still feel like simplified game geometry.",
+    "close_up_quality": "The detail image reads more mechanically than v002, with a driven upper gear and spoke wheel, although the gauges still look like small blank buttons rather than instruments.",
+    "gameplay_readability": "The real construction run completes all stages, deploys the live cable, activates the Floor-to-DESK_TOP connection, and records a traversal task in progress.",
+    "geometric_detail": "Spool spokes and hubs, a second exposed gear, copper plumbing, drum wraps, round sheave, tower collars, and diagonal braces are visible in the production close-up.",
+    "material_realism": "The engine render separates tan rope, dark iron, bright brass, copper, and oiled timber, but several large parts still appear as smooth shapes without small-scale finish.",
+    "proportion": "Godot reports 9.000 x 11.580 x 7.500 inches, and the render sits on the same project base and site as both earlier candidates.",
+    "scale_fidelity": "The measured native scene remains within the existing 10-inch construction base and does not alter collision or navigation bounds.",
+    "semantic_recognizability": "The three-quarter and profile views clearly show a rope winch, supported spool wheel, linked secondary gear, pressure vessel, tower ladder, top sheave, and live cable.",
+    "silhouette_quality": "The installation now has a readable low winch and narrow braced tower silhouette; the broad spool ring still consumes much of the lower outline.",
+    "surface_variation": "Noise-textured rope and timber now create visible contrast; iron, brass, and copper remain mostly uniform clean metal.",
+    "technical_integration": "The production adapter loads grapple-v003 by stable registry override, hides the legacy stage meshes, and keeps the live build/deployment functions. Godot validates 170 meshes and 54,816 triangles."
+  },
+  "render_evidence": [
+    "art/grapple/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+    "art/grapple/iterations/v003/render-runs/run-001/asset-profile.png",
+    "art/grapple/iterations/v003/render-runs/run-001/asset-detail.png",
+    "art/grapple/iterations/v003/render-runs/run-001/grapple-complete.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 3,
+    "gameplay_readability": 5,
+    "geometric_detail": 4,
+    "material_realism": 3,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 4,
+    "surface_variation": 3,
+    "technical_integration": 5
+  }
+}

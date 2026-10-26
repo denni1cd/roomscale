@@ -1,0 +1,49 @@
+{
+  "asset_id": "settlement_workshop",
+  "camera_distances": [
+    2.0,
+    12.0,
+    64.0,
+    330.0
+  ],
+  "category": "settlement_structure",
+  "display_name": "Clockwork Workshop",
+  "gameplay_invariants": {
+    "activity_stations_remain_room_definition_owned": true,
+    "boiler_steam_and_workshop_animation_nodes_remain_production_owned": true,
+    "render_meshes_do_not_create_collision_navigation_or_selection": true,
+    "room_definition_landmark_is_authoritative": true
+  },
+  "intended_dimensions": [
+    26.0,
+    20.0,
+    20.0
+  ],
+  "iteration_budget": 4,
+  "materials": {
+    "boiler": "sooty iron with layered copper hoops",
+    "foundation": "weathered stone and oiled timber",
+    "frame_and_roof": "dark stained wood, forged iron, and oxidized standing-seam metal",
+    "pipework": "aged copper with brass gauge fittings",
+    "windows": "amber glass with dark iron mullions"
+  },
+  "prohibited_changes": [
+    "do not change RoomDefinition landmarks, activity stations, work durations, or citizen assignments",
+    "do not add render meshes to collision, navigation, traversability, selection, or work-site calculations",
+    "do not remove the production steam emitter or animated workshop gear contract",
+    "do not add canonical-room-specific placement or simulation logic"
+  ],
+  "quality_tier": "B",
+  "reference_images": [],
+  "required_features": [
+    "recognizable open-front miniature workshop silhouette",
+    "boiler, stack, copper pipework, gauge, workbench, and exposed gear remain distinct",
+    "visible joins, wall-board variation, roof seams, and fasteners",
+    "material categories remain distinguishable in the production settlement view",
+    "fit the existing 26 by 20 by 20 inch local presentation envelope"
+  ],
+  "schema_version": 1,
+  "semantic_type": "clockwork settlement workshop",
+  "source_room_definition": "",
+  "visual_target": "A hand-built clockwork workshop at miniature scale, with a timber-and-stone base, visible framing, individually joined wall boards, standing-seam roof wings, a riveted dark-iron boiler, copper pressure lines, an exposed flywheel, a usable workbench, and warm glazed openings. Keep the roof open enough to read its machinery from strategy view. Materials should show grain, worn iron, aged copper, and restrained brass under RoomScale lighting."
+}

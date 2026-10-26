@@ -1,0 +1,37 @@
+{
+  "deterministic_seed": 2510,
+  "generator_command": [
+    ".tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generate_settlement_candidate.gd"
+  ],
+  "import_configuration": {
+    "format": "native .tscn PackedScene",
+    "renderer": "gl_compatibility",
+    "scale": "inches"
+  },
+  "instructions": "The improved assembly yard remains technically undersized in height: actual bounds are 23 by 7.28 by 12 inches against the brief's 23 by 9 by 12 inches. Keep the stone pavers, trestle bench, hanging tool rack, bins, and lathe. Add a narrow timber-and-iron overhead hoist gantry at the rear edge, with a small pulley, to reach the stated 9-inch vertical envelope while preserving an open center and existing work stations.",
+  "material_method": "Shared RoomScale PBR material library with deterministic procedural textures",
+  "method": "godot_procedural_clockwork_settlement",
+  "parameters": {
+    "outputs": [
+      "settlement_workarea.tscn"
+    ],
+    "refinement": "footprint_calibration_v3"
+  },
+  "post_processing": [
+    "Pack generated Node3D and owned descendants into a native PackedScene"
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "art/settlement_workarea/brief.json",
+    "scripts/art_factory/generate_settlement_candidate.gd",
+    "scripts/visuals/visual_geometry.gd",
+    "scripts/visuals/material_library.gd"
+  ],
+  "tool": "RoomScale Art Factory deterministic Godot generator",
+  "tool_version": "Godot 4.7.2-stable official"
+}

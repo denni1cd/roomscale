@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "candidate_id": "desk-v002",
+  "scores": {
+    "semantic_recognizability": 5,
+    "silhouette_quality": 4,
+    "proportion": 5,
+    "geometric_detail": 4,
+    "material_realism": 3,
+    "surface_variation": 4,
+    "close_up_quality": 4,
+    "gameplay_readability": 5,
+    "scale_fidelity": 5,
+    "art_direction_fit": 4,
+    "technical_integration": 5,
+    "source_resemblance": 3
+  },
+  "observations": {
+    "semantic_recognizability": "All three-quarter, profile, and detail production renders read as an open-frame computer desk; separate monitors remain on the top.",
+    "silhouette_quality": "The thin top and exposed support frame correct the heavy box shape, but four independent posts still differ from the reference's two standing-desk end frames.",
+    "proportion": "Godot measured 66 x 30 x 30 inches; the top reads thin relative to the full width and height.",
+    "geometric_detail": "The close render shows a beveled top, narrow legs, collars, rubber feet, cross supports, and cable tray. The base lacks depth-spanning T feet.",
+    "material_realism": "The tabletop has one visible specular point but reads mostly as flat dark material rather than reflective smoked glass.",
+    "surface_variation": "The glass, dark frame, and steel collars separate at close range, though the desktop remains nearly uniform.",
+    "close_up_quality": "The profile and detail views expose the thin edge and support rails; nearby monitor and chair props remain present in the real room.",
+    "gameplay_readability": "The table surface and independent monitor silhouettes remain readable in the production room.",
+    "scale_fidelity": "The technical report confirms exact 66 x 30 x 30-inch mesh bounds and floor contact.",
+    "art_direction_fit": "The cleaner frame is compatible with the room's stylized look and matches the modern workstation better than v1.",
+    "technical_integration": "Godot imported 23 meshes and 23 surfaces; the stable desk resolver selected desk-v002 with no fallback and technical validation passed.",
+    "source_resemblance": "Sample (2) has two rectangular standing-desk columns and broad T-shaped feet; v2 has four narrow cylindrical posts and no full-width feet."
+  },
+  "hard_fail_reasons": [],
+  "defects": [
+    "The four-post silhouette does not match the two end-frame standing-desk supports visible in Sample (2).",
+    "The dark tabletop gets only a small localized highlight and still reads more like painted metal than smoked glass.",
+    "The feet do not create the characteristic depth-spanning T base shown in the reference."
+  ],
+  "likely_causes": [
+    "The v2 recipe describes four narrow tubular legs and levelers instead of two structural end frames with transverse feet.",
+    "The uniformly dark opaque top has limited broad reflection cues in the current room lighting."
+  ],
+  "next_action_hypothesis": "Change the construction to a standing-desk-specific double T-frame: two rectangular graphite lift columns, one broad floor-level foot per end spanning nearly the full desk depth, and a rear crossbar under the smoked-glass top. Increase the glass's controlled specular and clearcoat response while keeping its dark tint. Keep bounds and all RoomDefinition geometry unchanged.",
+  "incumbent_comparison": "Better than desk-v001 on silhouette, proportion, surface variation, close-up quality, art-direction fit, and source resemblance; current best-so-far candidate, still below the source-resemblance and material gates.",
+  "decision": "continue",
+  "render_evidence": [
+    "art/desk/iterations/v002/render-runs/run-001/asset-three-quarter.png",
+    "art/desk/iterations/v002/render-runs/run-001/asset-profile.png",
+    "art/desk/iterations/v002/render-runs/run-001/asset-detail.png"
+  ],
+  "created_at_utc": "2026-10-25T13:30:00+00:00"
+}

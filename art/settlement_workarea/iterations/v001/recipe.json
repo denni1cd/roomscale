@@ -1,0 +1,37 @@
+{
+  "deterministic_seed": 2504,
+  "generator_command": [
+    ".tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generate_settlement_candidate.gd"
+  ],
+  "import_configuration": {
+    "format": "native .tscn PackedScene",
+    "renderer": "gl_compatibility",
+    "scale": "inches"
+  },
+  "instructions": "Create an open clockwork assembly yard with a stone pad, trestle bench, gear, simple parts tin, rail, and storage rack. This first pass establishes scale and composition with broad shapes while preserving the room-definition work stations and construction logic.",
+  "material_method": "Shared RoomScale PBR material library with deterministic procedural textures",
+  "method": "godot_procedural_clockwork_settlement",
+  "parameters": {
+    "outputs": [
+      "settlement_workarea.tscn"
+    ],
+    "refinement": "blockout_v1"
+  },
+  "post_processing": [
+    "Pack generated Node3D and owned descendants into a native PackedScene"
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "art/settlement_workarea/brief.json",
+    "scripts/art_factory/generate_settlement_candidate.gd",
+    "scripts/visuals/visual_geometry.gd",
+    "scripts/visuals/material_library.gd"
+  ],
+  "tool": "RoomScale Art Factory deterministic Godot generator",
+  "tool_version": "Godot 4.7.2-stable official"
+}

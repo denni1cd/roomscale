@@ -1,0 +1,48 @@
+{
+  "candidate_id": "display_cabinet-v001",
+  "created_at_utc": "2026-10-25T15:26:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "The broad single glass panel reads as a solid blue insert rather than two transparent framed doors.",
+    "The handles, hinges, door rails, and shelf divisions are not visible in the captured candidate."
+  ],
+  "hard_fail_reasons": [],
+  "incumbent_candidate_id": "",
+  "incumbent_comparison": "The first production capture shows a plausible wood cabinet silhouette, but the plain full-width door and absent door hardware obscure the intended framed double-door design.",
+  "incumbent_comparison_result": "first_pass",
+  "likely_causes": [
+    "The blockout recipe creates one opaque full-height panel with no frame or hardware detail."
+  ],
+  "next_action_hypothesis": "Replace the single panel with two lightly transparent framed doors, add brass handles and hinge details, and keep the internal shelves and existing separate collectibles intact.",
+  "observations": {
+    "art_direction_fit": "The warm wood color fits the room's furniture palette, but the plain door falls short of the intended display-case style.",
+    "close_up_quality": "The camera fits the cabinet, but the capture exposes a single uninterrupted panel and sparse detail.",
+    "gameplay_readability": "The cabinet is easy to locate, and the separate room collectibles remain present in the production scene.",
+    "geometric_detail": "The first recipe includes a plinth, side panels, back, top, and internal shelves, but no door framing or hardware.",
+    "material_realism": "The warm wood reads clearly; the undetailed blue-gray panel reads more like an opaque insert than glass.",
+    "proportion": "The cabinet is tall and narrow in a plausible display-case proportion.",
+    "scale_fidelity": "Godot technical validation passed within the 33 x 76 x 18-inch brief envelope.",
+    "semantic_recognizability": "The close capture clearly reads as a tall wood cabinet, though the plain panel does not yet read as a display cabinet.",
+    "silhouette_quality": "The tall rectangular case, plinth, and broad crown create a stable cabinet outline.",
+    "surface_variation": "The large door surface has little variation and there are no visible handles or trim details.",
+    "technical_integration": "The native scene passes technical validation and the production resolver loaded display_cabinet-v001 for six real RoomScale captures."
+  },
+  "render_evidence": [
+    "art/display_cabinet/iterations/v001/render-runs/run-001/asset-three-quarter.png",
+    "art/display_cabinet/iterations/v001/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 3,
+    "gameplay_readability": 4,
+    "geometric_detail": 2,
+    "material_realism": 3,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 4,
+    "surface_variation": 2,
+    "technical_integration": 5
+  }
+}

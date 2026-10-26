@@ -1,0 +1,54 @@
+{
+  "asset_id": "citizen",
+  "camera_distances": [
+    1.65,
+    3.0,
+    12.0,
+    330.0
+  ],
+  "category": "animated_civilization_character",
+  "display_name": "Clockwork Miniature Citizen",
+  "gameplay_invariants": {
+    "accepted_asset_failure_does_not_fall_back_to_legacy_procedural_figure": true,
+    "art_geometry_does_not_enter_collision_navigation_selection_or_gameplay_bounds": true,
+    "body_arm_and_leg_animation_pivots_are_preserved": true,
+    "citizen_task_state_navigation_and_movement_are_unchanged": true,
+    "fifty_citizens_remain_active": true,
+    "role_tool_backpack_badge_cargo_and_traversal_equipment_remain_production_owned": true
+  },
+  "intended_dimensions": [
+    0.26,
+    0.5,
+    0.21
+  ],
+  "iteration_budget": 8,
+  "materials": {
+    "coat": "warm varied woven fabric",
+    "face": "warm natural miniature skin",
+    "hardware": "aged iron, polished brass, and restrained copper",
+    "lenses": "dark teal glass with small highlights",
+    "sleeves_and_boots": "dark fitted leather"
+  },
+  "prohibited_changes": [
+    "do not change citizen movement, tasks, animation timing, navigation, combat, role assignment, or identity",
+    "do not change the production half-inch citizen scale or animated pivot contract",
+    "do not replace independently controlled role equipment with art geometry",
+    "do not alter collision, selection, room surface data, or floor navigation",
+    "do not fall back to an unregistered legacy citizen when the accepted asset cannot load"
+  ],
+  "quality_tier": "B",
+  "reference_images": [],
+  "required_features": [
+    "five named animated mesh pivots Body, LeftArm, RightArm, LeftLeg, and RightLeg at the established miniature scale",
+    "recognizable human head, torso, separate arms and legs, fitted boots, and distinct head silhouette",
+    "clockwork cap and two brass-framed lenses with readable glass contrast",
+    "layered tailored fabric and leather with deliberate seams, lapels, fasteners, and role badge space",
+    "textured fabric and leather with visually separate brass, iron, skin, and glass materials",
+    "role tool, backpack, cargo, chest badge, and traversal clip remain independently attached by the production citizen rig",
+    "visible at the actual close, room, builder, cargo, and climbing views with 50 active citizens"
+  ],
+  "schema_version": 1,
+  "semantic_type": "clockwork worker citizen",
+  "source_room_definition": "",
+  "visual_target": "A polished half-inch RoomScale clockwork worker with a readable human silhouette, tailored textured coat, warm face, brass-framed twin goggles, a distinctive clockwork cap, fitted gloves and boots, and restrained mechanical detailing. It must remain legible in a 50-citizen room at ordinary camera distance and reward close inspection without losing its rig pivots."
+}

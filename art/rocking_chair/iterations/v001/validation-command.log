@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\Zero\python_projects\ai\roomscale\scripts\art_factory\__main__.py", line 3, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "C:\Users\Zero\python_projects\ai\roomscale\scripts\art_factory\cli.py", line 87, in main
+    result = GodotArtBridge(factory, args.godot).validate_candidate(args.candidate_id)
+  File "C:\Users\Zero\python_projects\ai\roomscale\scripts\art_factory\godot_bridge.py", line 82, in validate_candidate
+    raise RuntimeError(f"Godot candidate validation failed: {candidate_id}: {result}")
+RuntimeError: Godot candidate validation failed: rocking_chair-v001: {'asset_path': 'res://art/rocking_chair/iterations/v001/generated/rocking_chair.tscn', 'bounds': {'position': [-10.25, 1.03140020370483, -12.3671407699585], 'size': [20.5, 36.2686004638672, 22.8271408081055]}, 'engine': '4.7.2-stable (official)', 'issues': ['source proportions exceed brief tolerance: ratios=(0.854167, 0.954437, 0.736359) tolerance=0.200'], 'mesh_count': 36, 'status': 'fail', 'surface_count': 36, 'triangle_count': 9408, 'import_exit_code': 0, 'validation_exit_code': 1, 'log': 'art/rocking_chair/iterations/v001/technical-validation.log', 'report': 'art/rocking_chair/iterations/v001/technical-validation.json'}

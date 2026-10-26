@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "method": "godot_procedural_miniature_grapple",
+  "instructions": "Create a deterministic baseline from RoomScale's current grapple detail method. Keep the existing three hidden/revealed stage groups and authored world coordinates. Preserve the gameplay-owned site, builder work, rope deployment, anchor, and navigation. This first candidate establishes a production-render baseline; do not change the task or construction system.",
+  "parameters": {
+    "outputs": ["grapple.tscn"],
+    "refinement": "baseline_v1"
+  },
+  "source_inputs": [
+    "scripts/visuals/grapple_details.gd",
+    "scripts/construction_system.gd",
+    "scripts/surface_navigation.gd"
+  ],
+  "tool": "Godot Engine",
+  "tool_version": "4.7.2.stable.official.ed1daf0bf",
+  "post_processing": [
+    "pack to native Godot PackedScene",
+    "assign all generated descendants to the candidate root",
+    "Godot editor import before technical validation"
+  ],
+  "material_method": "Existing miniature steel, brass, copper, wood, rope, and lamp material library",
+  "import_configuration": {
+    "format": "Godot PackedScene",
+    "up_axis": "Y",
+    "candidate_root": "Node3D",
+    "embedded_materials": true
+  },
+  "deterministic_seed": 25,
+  "generator_command": [
+    "C:/Users/Zero/python_projects/ai/roomscale/.tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generate_grapple_candidate.gd"
+  ]
+}

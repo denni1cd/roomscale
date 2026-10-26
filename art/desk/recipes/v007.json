@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "method": "native_scene_standing_desk_t_frame_glass",
+  "instructions": "Retry the v6 native Godot scene material-preservation method after its packed scene omitted unowned generated children. Assign every generated descendant to the DeskAsset root before packing. Preserve v5's T-frame geometry, 0.58 alpha smoked glass, clearcoat/rim material, exact bounds, and all RoomDefinition data. The output must contain the full mesh/material hierarchy and pass technical bounds validation before it is rendered.",
+  "parameters": {
+    "outputs": ["desk.tscn"],
+    "glass_color": "303a3d",
+    "glass_alpha": 0.58,
+    "glass_rim": 0.38,
+    "frame_color": "242a2c",
+    "metal_color": "929da2",
+    "rubber_color": "111416",
+    "top_thickness": 0.72
+  },
+  "source_inputs": [
+    "photo_holder/Sample (2).jpg",
+    "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json",
+    "art/desk/iterations/v005/evaluation.json",
+    "art/desk/iterations/v006/technical-validation.json"
+  ],
+  "tool": "Godot Engine",
+  "tool_version": "4.7.2.stable.official.ed1daf0bf",
+  "post_processing": [
+    "Assign ownership of generated descendants and pack as a Godot PackedScene",
+    "Godot editor scan before technical validation"
+  ],
+  "material_method": "Native StandardMaterial3D smoked glass with alpha, clearcoat, and rim; separate graphite T-frame",
+  "import_configuration": {
+    "format": "Godot PackedScene",
+    "up_axis": "Y",
+    "candidate_root": "Node3D",
+    "native_materials": true
+  },
+  "deterministic_seed": 25,
+  "generator_command": [
+    "C:/Users/Zero/python_projects/ai/roomscale/.tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generate_desk_candidate.gd"
+  ]
+}

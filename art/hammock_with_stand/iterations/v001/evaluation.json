@@ -1,0 +1,48 @@
+{
+  "candidate_id": "hammock_with_stand-v001",
+  "created_at_utc": "2026-10-25T15:26:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "The production captures show the metal stand with no fabric hammock between the supports.",
+    "Without the sling, the asset does not read as a complete hammock."
+  ],
+  "hard_fail_reasons": [],
+  "incumbent_candidate_id": "",
+  "incumbent_comparison": "First production candidate. The metal stand is visible, but the required sling does not appear in any captured view.",
+  "incumbent_comparison_result": "first_pass",
+  "likely_causes": [
+    "Godot rejected the generator's untyped color array at the Array[Color] function boundary; the wrapper returned exit code zero even though the sling builder stopped before adding canvas meshes."
+  ],
+  "next_action_hypothesis": "Pass a typed Array[Color] into the sling builder, require the expected number of generated canvas meshes, and rerender the production scene to verify the textile is visible.",
+  "observations": {
+    "art_direction_fit": "The dark stand and neutral palette fit the room, but the missing main fabric surface leaves the visual target unmet.",
+    "close_up_quality": "The detailed capture looks at the room wall and stand edge rather than a fabric surface, so the required textile is not shown.",
+    "gameplay_readability": "The stand is visible in the room, but the absent hammock fabric makes the intended object incomplete.",
+    "geometric_detail": "The stand has paired angled legs and end braces; the expected suspension canvas and visible end details are not present in the images.",
+    "material_realism": "The dark metal frame reads as metal, while the fabric material cannot be evaluated because the sling is invisible.",
+    "proportion": "The support span and stand height appear consistent with a long room-scale hammock.",
+    "scale_fidelity": "Godot technical validation passed for the 118 x 40 x 34-inch target envelope.",
+    "semantic_recognizability": "The close view shows a long dark frame, but the missing sling prevents a clear hammock reading.",
+    "silhouette_quality": "The end supports and tension rails make a long freestanding frame silhouette; the sling shape is absent.",
+    "surface_variation": "The frame has little visible surface variation and none from the missing striped sling.",
+    "technical_integration": "The native scene passes technical validation and the production resolver loaded hammock_with_stand-v001 for six real RoomScale captures."
+  },
+  "render_evidence": [
+    "art/hammock_with_stand/iterations/v001/render-runs/run-001/asset-three-quarter.png",
+    "art/hammock_with_stand/iterations/v001/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 2,
+    "gameplay_readability": 2,
+    "geometric_detail": 3,
+    "material_realism": 2,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 2,
+    "silhouette_quality": 3,
+    "surface_variation": 1,
+    "technical_integration": 5
+  }
+}

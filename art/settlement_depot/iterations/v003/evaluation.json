@@ -1,0 +1,47 @@
+{
+  "candidate_id": "settlement_depot-v003",
+  "created_at_utc": "2026-10-25T14:53:33+00:00",
+  "decision": "promote",
+  "defects": [],
+  "hard_fail_reasons": [],
+  "incumbent_candidate_id": "",
+  "incumbent_comparison": "The preceding v002 attempt is retained but fails the measured dimensional tolerance (Godot reports 24 x 10.37 x 20.15 inches against the brief 24 x 13 x 20 inches), so there is no valid rendered incumbent to compare. v003 responds with a roof vent/cap to correct the height and records the first technically passing production render; it reads as a loading shed with hoist and strapped supplies.",
+  "incumbent_comparison_result": "first_pass",
+  "likely_causes": [],
+  "next_action_hypothesis": "Promote depot-v003 as the stable supply-depot visual; preserve RoomDefinition-owned storage, construction state, and landmark placement.",
+  "observations": {
+    "art_direction_fit": "A timber-and-copper supply shed with a rail hoist belongs in the detailed miniature clockwork settlement and is more specific than the prior box-like placeholder.",
+    "close_up_quality": "The close capture exposes the crates and barrel construction plus the loading pulley; the three-quarter view still reads the canopy as one continuous covering plane.",
+    "gameplay_readability": "The production path attaches the asset to the existing RoomDefinition depot landmark; no generated mesh is used as storage/construction gameplay state.",
+    "geometric_detail": "Run-003 detail and opposite views show crate straps/rivets, plank courses, awning seams, corner braces, hoist chain/pulley, vent, counter frame, and barrel hoops.",
+    "material_realism": "Warm timber, dark iron, copper awning, stone plinth, and amber counter glass respond differently to the current key/fill lighting in run-003.",
+    "proportion": "The technical report measures 24 x 13.08 x 20.15 inches against the 24 x 13 x 20 inch target, within the factory's dimensional tolerance.",
+    "scale_fidelity": "The measured bounds match the brief, and the settlement-scale capture shows the 0.6-scaled building alongside active citizens.",
+    "semantic_recognizability": "Run-003 asset and settlement captures identify an open-front storehouse with a raised base, timber rear wall, metal canopy, counter opening, rail, pulley, crates, and barrel.",
+    "silhouette_quality": "The canopy and two front posts form a legible depot silhouette; the open front preserves visibility into the loading area.",
+    "surface_variation": "Wood courses and crate bands vary in color and roughness; repeated crates remain intentionally family-consistent instead of identical flat cubes.",
+    "technical_integration": "Godot 4.7.2 technical validation passes and run-003 receipt identifies the exact depot candidate and scene path with production_path=true."
+  },
+  "render_evidence": [
+    "art/settlement_depot/iterations/v003/render-runs/run-003/room-scale.png",
+    "art/settlement_depot/iterations/v003/render-runs/run-003/settlement-scale.png",
+    "art/settlement_depot/iterations/v003/render-runs/run-003/asset-three-quarter.png",
+    "art/settlement_depot/iterations/v003/render-runs/run-003/asset-opposite-three-quarter.png",
+    "art/settlement_depot/iterations/v003/render-runs/run-003/asset-profile.png",
+    "art/settlement_depot/iterations/v003/render-runs/run-003/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 4,
+    "gameplay_readability": 4,
+    "geometric_detail": 4,
+    "material_realism": 4,
+    "proportion": 4,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 4,
+    "surface_variation": 4,
+    "technical_integration": 5
+  }
+}

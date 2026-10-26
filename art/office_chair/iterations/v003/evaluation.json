@@ -1,0 +1,44 @@
+{
+  "candidate_id": "office_chair-v003",
+  "created_at_utc": "2026-10-25T15:31:00+00:00",
+  "decision": "promote",
+  "defects": [],
+  "hard_fail_reasons": [],
+  "incumbent_candidate_id": "office_chair-v002",
+  "incumbent_comparison": "Better than office_chair-v002: the padded back is now divided into visible slate-blue panels, edge piping resolves in the production three-quarter and detail captures, and the full five-wheel base remains clear.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [],
+  "next_action_hypothesis": "",
+  "observations": {
+    "art_direction_fit": "The dark slate and blue fabric treatment fits the restrained low-poly furniture palette and preserves the room's original chair colors.",
+    "close_up_quality": "The production detail capture resolves the chair upholstery sections and keeps the whole chair inside frame.",
+    "gameplay_readability": "The chair remains visible beside the desk; its RoomDefinition obstacle and dimensions remain independent from the render mesh.",
+    "geometric_detail": "The captured back shows three distinct fabric panels, piping, a cross seam, and side rails; the profile shows the five spokes, caster wheels, and lift hardware.",
+    "material_realism": "The slate-blue textured panels separate clearly from the graphite shell and darker frame in the actual RoomScale lighting.",
+    "proportion": "The padded seat and back feel balanced against the base; the frame remains compact beside the desk.",
+    "scale_fidelity": "Godot measured 20.2 x 41.15 x 16.90 inches; the resolver fits the native candidate to the existing 23 x 44 x 18-inch RoomDefinition envelope.",
+    "semantic_recognizability": "The real room and close production views show a complete wheeled office chair with a tall back, padded seat, paired arms, central lift, and five casters.",
+    "silhouette_quality": "The back, seat, arms, lift, and five-star base remain easy to distinguish, with a stronger padded outline than v002.",
+    "surface_variation": "The seat panels, three back sections, accent piping, metal lift, rubber casters, and shell provide visible material changes.",
+    "technical_integration": "Godot validation passes with 47 meshes, and the production resolver loads office_chair-v003 as a native local scene across six captures with no fallback."
+  },
+  "render_evidence": [
+    "art/office_chair/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+    "art/office_chair/iterations/v003/render-runs/run-001/asset-profile.png",
+    "art/office_chair/iterations/v003/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 4,
+    "gameplay_readability": 4,
+    "geometric_detail": 4,
+    "material_realism": 4,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 4,
+    "surface_variation": 4,
+    "technical_integration": 5
+  }
+}

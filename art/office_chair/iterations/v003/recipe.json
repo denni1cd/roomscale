@@ -1,0 +1,37 @@
+{
+  "deterministic_seed": 2517,
+  "generator_command": [
+    ".tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generate_furniture_candidate.gd"
+  ],
+  "import_configuration": {
+    "format": "native .tscn PackedScene",
+    "renderer": "gl_compatibility",
+    "scale": "inches"
+  },
+  "instructions": "The best-so-far candidate has a readable silhouette, but its near-black upholstery panels merge in the production room capture. Raise fabric and frame contrast, segment the padded back and seat, and preserve all RoomDefinition dimensions and gameplay state.",
+  "material_method": "Shared lit RoomScale materials with visible slate-blue padded panels and restrained piping",
+  "method": "godot_procedural_room_furniture",
+  "parameters": {
+    "outputs": [
+      "office_chair.tscn"
+    ],
+    "refinement": "visibility_and_material_v3"
+  },
+  "post_processing": [
+    "Pack generated Node3D and owned descendants into a native PackedScene"
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "art/office_chair/brief.json",
+    "scripts/art_factory/generate_furniture_candidate.gd",
+    "scripts/visuals/visual_geometry.gd",
+    "scripts/visuals/material_library.gd"
+  ],
+  "tool": "RoomScale Art Factory deterministic Godot generator",
+  "tool_version": "Godot 4.7.2-stable official"
+}

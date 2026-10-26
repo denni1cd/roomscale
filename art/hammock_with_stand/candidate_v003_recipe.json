@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "method": "godot_procedural_room_furniture",
+  "instructions": "The two previous generation attempts reported exit code zero but omitted the hammock canvas after a typed-array error. Pass the generator's expected woven colors as Array[Color], require the canvas meshes before packing the scene, and preserve the sagging striped sling and full brief envelope.",
+  "parameters": {
+    "refinement": "joinery_and_fabric_v2",
+    "outputs": [
+      "hammock_with_stand.tscn"
+    ]
+  },
+  "source_inputs": [
+    "art/hammock_with_stand/brief.json",
+    "scripts/art_factory/generate_furniture_candidate.gd",
+    "scripts/visuals/visual_geometry.gd",
+    "scripts/visuals/material_library.gd"
+  ],
+  "tool": "RoomScale Art Factory deterministic Godot generator",
+  "tool_version": "Godot 4.7.2-stable official",
+  "post_processing": [
+    "Pack generated Node3D and owned descendants into a native PackedScene"
+  ],
+  "material_method": "Shared lit woven fabric in seven neutral stripes with dark powder-coated metal and visible suspension hardware",
+  "import_configuration": {
+    "format": "native .tscn PackedScene",
+    "renderer": "gl_compatibility",
+    "scale": "inches"
+  },
+  "deterministic_seed": 2517,
+  "generator_command": [
+    ".tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generate_furniture_candidate.gd"
+  ]
+}

@@ -72,6 +72,8 @@ static func build(settlement: Node3D, definition: Dictionary) -> void:
 	# Paint and copper roofing separate miniature structures from room furniture.
 	for name in ["Depot", "Housing"]:
 		var building := settlement.get_node(name)
+		if bool(building.get_meta("accepted_art_visible", false)):
+			continue
 		for mesh in building.get_children():
 			if mesh is MeshInstance3D and (String(mesh.name).begins_with("RoofWing") or String(mesh.name).begins_with("CanvasRoof")):
 				mesh.material_override = preload("res://scripts/visuals/material_library.gd").get_material("copper" if name == "Depot" else "canvas", Color("6d7f7c") if name == "Depot" else Color("9c8761"))
@@ -85,6 +87,8 @@ static func _cart(parent: Node3D, at: Vector3) -> void:
 
 static func _facades(settlement: Node3D) -> void:
 	var housing := settlement.get_node("Housing") as Node3D
+	if bool(housing.get_meta("accepted_art_visible", false)):
+		return
 	for x in [-4.2, 4.2]:
 		G.box(housing, "FrontTimber", Vector3(7, 3.1, 0.25), Vector3(x, 2.2, 3.05), "wood", Color("71513a"), 0.08)
 		G.box(housing, "Door", Vector3(1.5, 2.6, 0.15), Vector3(x, 1.7, 3.3), "wood", Color("35494c"), 0.05)

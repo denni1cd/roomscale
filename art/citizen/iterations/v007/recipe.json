@@ -1,0 +1,70 @@
+{
+  "deterministic_seed": 317,
+  "generator_command": [
+    "C:/Users/Zero/python_projects/ai/roomscale/.tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generate_citizen_candidate.gd"
+  ],
+  "import_configuration": {
+    "candidate_root": "Node3D",
+    "embedded_materials": true,
+    "format": "Godot PackedScene",
+    "up_axis": "Y"
+  },
+  "instructions": "Use citizen-v006 as the design source but retain citizen-v005 as the current best-so-far comparison. In v6, the main Body mesh remained on the shared fabric material, so the intended citizen-specific texture was limited to smaller panels and the cap. The bright rear horizontal/vertical seams also made a cross resembling extra equipment. Apply a deterministic tileable warp-and-weft weave directly to the main Body mesh at a scale visible in the unchanged close render. Remove the rear shoulder cross, use a low-contrast center seam and two short side darts, and darken/thin the cap-top seam so it reads as cloth stitching. Keep the v5/v6 silhouette, raised brim, goggles, domed shoulders, dimensions, animation pivots, live role equipment, and RoomScale gameplay unchanged.",
+  "material_method": "Dedicated deterministic woven fabric texture; distinct leather, iron, brass, copper, skin, and glass materials",
+  "method": "tailored_clockwork_worker_v7",
+  "parameters": {
+    "outputs": [
+      "citizen.tscn"
+    ],
+    "pose_rig": [
+      "Body",
+      "LeftArm",
+      "RightArm",
+      "LeftLeg",
+      "RightLeg"
+    ],
+    "style": "tailored_clockwork_worker_v7",
+    "targeted_changes": {
+      "camera_conditions": "unchanged standardized RoomScale production capture",
+      "cap_top_seam": "thin and muted to match the cap fabric",
+      "fabric_texture": "deterministic tileable warp-and-weft ImageTexture; local to citizen fabric",
+      "fabric_thread_tone_range": [
+        0.84,
+        1.0
+      ],
+      "fabric_uv_scale": 7.0,
+      "rear_finish": [
+        "low-contrast center seam",
+        "two low-contrast side darts",
+        "short hem finish"
+      ],
+      "rear_shoulder_cross": "removed"
+    }
+  },
+  "post_processing": [
+    "pack generated geometry into a native Godot PackedScene with embedded materials",
+    "preserve all candidate descendants under the scene root",
+    "import and verify dimensions before standardized production rendering"
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "art/citizen/brief.json",
+    "art/citizen/iterations/v006/recipe.json",
+    "art/citizen/iterations/v006/evaluation.json",
+    "art/citizen/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+    "art/citizen/iterations/v006/render-runs/run-001/asset-opposite-three-quarter.png",
+    "art/citizen/iterations/v006/render-runs/run-001/asset-profile.png",
+    "art/citizen/iterations/v006/render-runs/run-001/asset-detail.png",
+    "scripts/art_factory/generate_citizen_candidate.gd",
+    "scripts/visuals/material_library.gd",
+    "scripts/visuals/citizen_art_adapter.gd",
+    "scripts/citizen_agent.gd"
+  ],
+  "tool": "Godot Engine",
+  "tool_version": "4.7.2.stable.official.ed1daf0bf"
+}

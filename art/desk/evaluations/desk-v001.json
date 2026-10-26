@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "candidate_id": "desk-v001",
+  "scores": {
+    "semantic_recognizability": 5,
+    "silhouette_quality": 3,
+    "proportion": 4,
+    "geometric_detail": 2,
+    "material_realism": 2,
+    "surface_variation": 2,
+    "close_up_quality": 2,
+    "gameplay_readability": 5,
+    "scale_fidelity": 5,
+    "art_direction_fit": 3,
+    "technical_integration": 5,
+    "source_resemblance": 1
+  },
+  "observations": {
+    "semantic_recognizability": "The 3/4 and profile production renders clearly read as a desk supporting the independently resolved monitors.",
+    "silhouette_quality": "The top and four legs are recognizable, but the apron and drawers form a heavy box silhouette unlike the reference's open support frame.",
+    "proportion": "The tabletop is wide and low; the dark apron visually makes the body thicker than the reference.",
+    "geometric_detail": "The close view shows repeated rounded boxes and drawer fronts; it lacks thin edges, tubular supports, brackets, and glass mounts.",
+    "material_realism": "The tabletop renders as matte black wood-like material with no glass edge highlight or reflection.",
+    "surface_variation": "The tabletop and supports are nearly uniform black; material separation is weak.",
+    "close_up_quality": "At close range the black slab and chunky square supports dominate; the asset loses its modern standing-desk construction.",
+    "gameplay_readability": "The desk remains legible beside the separate monitors and does not obscure their semantic identity.",
+    "scale_fidelity": "Godot measured the candidate bounds at exactly 66 x 30 x 30 inches, matching the RoomDefinition dimensions.",
+    "art_direction_fit": "The low-poly shading fits the room's broad style, but the old-fashioned drawer-heavy form does not fit the modern computer setup.",
+    "technical_integration": "Godot imported 21 meshes and 21 surfaces; the production resolver loaded desk-v001 without fallback and the render run measured 47 FPS in its final close view.",
+    "source_resemblance": "Sample (2) shows a thin black glass desktop on visible metal legs; v1 has a thick opaque top, panelled apron, drawers, and square legs."
+  },
+  "hard_fail_reasons": [
+    "The candidate reads as chunky primitive furniture rather than the photographed thin glass desk with an exposed metal frame."
+  ],
+  "defects": [
+    "The tabletop appears opaque and thick rather than thin smoked glass.",
+    "The drawer front and broad apron add a furniture style absent from the reference.",
+    "Four square supports and uniform near-black materials suppress the modern open-frame silhouette."
+  ],
+  "likely_causes": [
+    "The basic_rectangular_desk method delegates to the generic wood-furniture recipe, which adds drawers and a deep apron based on desk proportions.",
+    "The recipe assigns one dark color and rough material response to the entire asset, with no glass, graphite steel, or rubber separation."
+  ],
+  "next_action_hypothesis": "Change the generation method to a dedicated low-profile computer-desk recipe: use a 0.7-inch smoked-glass slab with a readable beveled edge, four narrow graphite tubular legs, separate support rails and small satin mounting collars, rubber levelers, and no drawers or wood-like apron. Keep the exact 66 x 30 x 30-inch bounds and leave all RoomDefinition geometry untouched.",
+  "incumbent_comparison": "First Art Factory candidate; compared with the existing legacy desk render. Not accepted.",
+  "decision": "continue",
+  "render_evidence": [
+    "art/desk/iterations/v001/render-runs/run-004/asset-three-quarter.png",
+    "art/desk/iterations/v001/render-runs/run-004/asset-profile.png",
+    "art/desk/iterations/v001/render-runs/run-004/asset-detail.png"
+  ],
+  "created_at_utc": "2026-10-25T13:30:00+00:00"
+}

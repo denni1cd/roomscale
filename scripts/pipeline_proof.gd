@@ -136,7 +136,7 @@ func _build_settlement() -> void:
 	if "depot" in initial: _build_depot(settlement)
 	if "housing" in initial: _build_housing(settlement)
 	if "work_area" in initial: _build_work_area(settlement)
-	if initial.size() == 4: SettlementDetails.decorate(settlement, _room_definition)
+	if initial.size() == 4: SettlementDetails.decorate(settlement, _room_definition, _visual_resolver)
 
 
 func _build_workshop(parent: Node3D) -> void:

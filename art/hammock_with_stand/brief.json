@@ -1,0 +1,47 @@
+{
+  "asset_id": "hammock_with_stand",
+  "camera_distances": [
+    2.0,
+    12.0,
+    64.0,
+    330.0
+  ],
+  "category": "room_furniture",
+  "display_name": "Striped Hammock on Metal Stand",
+  "gameplay_invariants": {
+    "blocks_navigation": true,
+    "dimensions_inches": [
+      118.0,
+      40.0,
+      34.0
+    ],
+    "render_meshes_do_not_replace_roomdefinition_collision": true
+  },
+  "intended_dimensions": [
+    118.0,
+    40.0,
+    34.0
+  ],
+  "iteration_budget": 5,
+  "materials": {
+    "frame": "dark grey powder-coated steel",
+    "hardware": "aged steel rings and rope",
+    "sling": "woven off-white, sage-grey, and charcoal fabric stripes"
+  },
+  "prohibited_changes": [
+    "do not change RoomDefinition positions, dimensions, rotation, navigation metadata, or obstacle state",
+    "do not derive collision, navigation, selection, or gameplay bounds from generated render meshes",
+    "do not add canonical-room-specific gameplay logic"
+  ],
+  "quality_tier": "B",
+  "reference_images": [],
+  "required_features": [
+    "fabric visibly sags between the two end supports",
+    "striped neutral woven sling",
+    "dark freestanding frame with tension rails and suspension hardware"
+  ],
+  "schema_version": 1,
+  "semantic_type": "striped fabric hammock with freestanding metal frame",
+  "source_room_definition": "",
+  "visual_target": "A long freestanding hammock with a visibly sagging striped woven sling and a stable dark steel stand. Preserve the canonical neutral grey/white stripe direction and the 118 by 40 by 34 inch envelope. The fabric should read as a suspended textile, not a flat board."
+}

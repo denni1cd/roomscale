@@ -1,0 +1,58 @@
+{
+  "candidate_id": "citizen-v005",
+  "created_at_utc": "2026-10-25T14:23:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "The outfit surfaces look smooth and uniform in close production views.",
+    "The back of the coat is nearly blank, making the opposite view less finished than the front.",
+    "The head and body remain assembled from large, simple geometric forms, so the citizen still reads as a toy at close scale.",
+    "Facial expression is almost absent beneath the goggles."
+  ],
+  "hard_fail_reasons": [],
+  "incumbent_candidate_id": "citizen-v002",
+  "incumbent_comparison": "Compared with citizen-v002 under equivalent production cameras, v5 is better: the raised compact brim reveals the goggles, the domed shoulder plates soften the silhouette, and the duplicate harness remains absent. v5 passes technical validation but remains below the close-detail and material quality bar, so it stays best-so-far while the finish is refined.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "The shared fabric noise has low frequency and subtle contrast at half-inch citizen scale.",
+    "The generated back surface has no tailored seam, panel, or finish detail.",
+    "The generator spends its geometry budget on a few large pieces and front-only fittings.",
+    "The eye region is covered by dark goggles and the face currently has only a small nose and mouth line."
+  ],
+  "next_action_hypothesis": "Create citizen-v006 using a citizen-only higher-frequency woven material so fabric detail remains local to the Art Factory pilot; add fine tailoring seams along the coat back and cap finish, and subtle face details that remain visible below the raised brim. Preserve the v5 silhouette, dimensions, camera conditions, 50-agent integration, animator pivots, and live role attachments. Compare the full opposite and three-quarter views directly to v5 before promotion.",
+  "observations": {
+    "art_direction_fit": "The cap, twin goggles, brass winding, tailored tunic, and miniature scale suit the clockwork civilization. Uniform surfaces and toy-like body geometry still fall short of the brief's credible close-up finish.",
+    "close_up_quality": "The raised brim improves face visibility in the run-001 detail capture, but the blank face, smooth coat surface, and simple large shapes remain obvious at close range.",
+    "gameplay_readability": "In the matched 12-inch production follow capture, the citizen remains a distinct small humanoid through its coat and boot colors; fine clothing details correctly resolve only in close views. The harness confirms all 50 citizens load the same candidate path.",
+    "geometric_detail": "The close capture shows the cap winding, goggles, lapels, buttons, cuffs, seams, and boot soles. The back view is a plain coat panel and much of the outfit still resolves as a few large simple forms.",
+    "material_realism": "The production close render differentiates woven coat, dark leather, metal, and glass by color and roughness, but fabric and leather still look smooth and clean with little close-scale texture.",
+    "proportion": "The run-001 close views show the face and goggles separated from the brim and the shoulders reduced to fit the torso. The figure remains compact with visually readable arms and legs.",
+    "scale_fidelity": "Godot bounds are 0.264 x 0.5016 x 0.1791 inches. The figure stays half-inch tall and its measured axis ratios pass the ArtBrief's configured 20 percent proportion tolerance.",
+    "semantic_recognizability": "In the v005 production three-quarter and profile renders, the figure reads as a goggled clockwork worker with a tailored coat, gloves, and boots. The blank face and simple body forms keep it from reading as a finished character.",
+    "silhouette_quality": "Compared with citizen-v002, the run-001 three-quarter view shows a higher, thinner cap brim, closer crown, and domed shoulder plates. The hat still provides an exaggerated toy-like silhouette but no longer hides the goggles.",
+    "surface_variation": "Run-001 detail and profile renders show minimal visible wear or weave on the torso and cap; the surfaces remain mostly uniform at the standard close camera.",
+    "technical_integration": "Godot technical validation passes with 74 meshes, 20,352 triangles, and no reported issues. The production receipt shows citizen-v005 loaded for all 50 agents through the RoomScale resolver; no fallback was used."
+  },
+  "render_evidence": [
+    "art/citizen/iterations/v005/render-runs/run-002/room-scale.png",
+    "art/citizen/iterations/v005/render-runs/run-002/settlement-scale.png",
+    "art/citizen/iterations/v005/render-runs/run-002/asset-gameplay-distance.png",
+    "art/citizen/iterations/v005/render-runs/run-002/asset-three-quarter.png",
+    "art/citizen/iterations/v005/render-runs/run-002/asset-opposite-three-quarter.png",
+    "art/citizen/iterations/v005/render-runs/run-002/asset-profile.png",
+    "art/citizen/iterations/v005/render-runs/run-002/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 3,
+    "gameplay_readability": 4,
+    "geometric_detail": 3,
+    "material_realism": 3,
+    "proportion": 4,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 4,
+    "surface_variation": 3,
+    "technical_integration": 5
+  }
+}

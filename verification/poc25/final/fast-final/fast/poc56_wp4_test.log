@@ -1,0 +1,86 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ROOMSCALE_CIVILIZATION_PROFILE id=clockwork name=Clockwork citizen_style=clockwork settlement_style=clockwork traversal_style=grapple_cable
+ROOMSCALE_VISUAL_ASSET object=desk source=res://assets/generated/writing_desk.glb normalization={ "source_bounds": [P: (-34.0, 0.0, -17.0), S: (68.0, 30.0, 34.0)], "fitted_dimensions": (68.0, 30.0, 34.0) }
+ROOMSCALE_VISUAL_ASSET object=side_table source=res://assets/generated/writing_desk.glb normalization={ "source_bounds": [P: (-34.0, 0.0, -17.0), S: (68.0, 30.0, 34.0)], "fitted_dimensions": (20.0, 20.0, 17.0) }
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+ROOMSCALE_CITIZEN_SPAWN count=5 separate_nodes=true height=0.5in
+ROOMSCALE_FISHBOWL_READY governor=true population=5 camera=true room=room_poc47 speed=1.0
+ROOMSCALE_CIVILIZATION_READY speed=1.0 governor=true spectator=true
+ROOMSCALE_M2_READY Godot=4.7.2-stable (official) room=room_poc47 size=240x180 in citizens=5
+ROOMSCALE_CIVILIZATION_PRESENTATION_READY id=clockwork citizens=5
+POC56_WP4_CHECK_PASS citizen descriptor uses the live agent identity and task
+POC56_WP4_CHECK_PASS furniture descriptor uses semantic name and finite salvage state
+POC56_WP4_CHECK_PASS resource descriptor exposes finite remaining stock
+POC56_WP4_CHECK_PASS surface descriptor explains its current connection
+POC56_WP4_CHECK_PASS production project fixture creates a real active build project
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+POC56_WP4_CHECK_PASS project descriptor reports authoritative progress and blocker
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+POC56_WP4_CHECK_PASS viewport click selects an active project
+POC56_WP4_CHECK_PASS selected project reaches both normal inspector surfaces
+POC56_WP4_CHECK_PASS viewport click selects room furniture
+POC56_WP4_CHECK_PASS entity selection highlight coexists with POC 5.5 event highlight
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+POC56_WP4_CHECK_PASS production access checks expose at least two unapproved salvageable furniture objects
+POC56_WP4_CHECK_PASS existing salvage selector is explicitly set to object A
+POC56_WP4_CHECK_PASS both selected test objects begin unauthorized
+POC56_WP4_CHECK_PASS real viewport click selects furniture B after selector A
+POC56_WP4_CHECK_PASS generalized inspector descriptor identifies clicked furniture B
+POC56_WP4_CHECK_PASS existing salvage selector and HUD inspector both synchronize to furniture B
+POC56_WP4_CHECK_PASS Authorize Salvage action is enabled for the selected unapproved furniture
+POC56_WP4_CHECK_PASS viewport furniture selection transfers camera ownership to manual control
+POC56_WP4_CHECK_PASS furniture selection preserves the POC 5.5 event highlight
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+POC56_WP4_CHECK_PASS normal Authorize Salvage button authorizes clicked furniture B
+POC56_WP4_CHECK_PASS previously selected object A is not authorized by furniture B click
+POC56_WP4_CHECK_PASS world selection descriptor refreshes to authorized state after the action
+POC56_WP4_CHECK_PASS HUD inspector shows authoritative authorization state and action result
+POC56_WP4_CHECK_PASS spectator inspector and action availability refresh after authorization
+POC56_WP4_CHECK_PASS non-salvageable furniture remains selectable for inspection
+POC56_WP4_CHECK_PASS non-salvageable inspection clears stale salvage choice and disables its action
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+POC56_WP4_CHECK_PASS production authorization accepts furniture A for depletion regression
+POC4_SALVAGE_STAGE object=chair state=STRIPPED work=8.0 yields={ "metal": 2.0 }
+POC56_WP4_CHECK_PASS real production salvage completes furniture A stage 1
+POC4_SALVAGE_STAGE object=chair state=PARTIAL work=20.0 yields={ "wood": 5.0, "metal": 2.0 }
+POC56_WP4_CHECK_PASS real production salvage completes furniture A stage 2
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=9
+POC4_SALVAGE_STAGE object=chair state=FRAME work=32.0 yields={ "wood": 3.0 }
+POC56_WP4_CHECK_PASS real production salvage completes furniture A stage 3
+ROOMSCALE_FLOOR_NAV_READY room=room_poc47 grid=60x45 cell=4in obstacles=8
+POC4_SALVAGE_STAGE object=chair state=DEPLETED work=42.0 yields={ "wood": 5.0 }
+POC56_WP4_CHECK_PASS real production salvage completes furniture A stage 4
+POC56_WP4_CHECK_PASS furniture A is physically removed only after production salvage depletion
+POC56_WP4_CHECK_PASS depleted furniture A cannot be selected through the generalized picker
+POC56_WP4_CHECK_PASS viewport click selects a citizen
+POC56_WP4_CHECK_PASS viewport click selects a finite resource
+POC56_WP4_CHECK_PASS viewport click selects an inspectable surface
+POC56_WP4_CHECK_PASS goal-surface click preserves the Reach/Explore action
+ROOMSCALE_VISUAL_ASSET object=desk source=res://assets/generated/writing_desk.glb normalization={ "source_bounds": [P: (-34.0, 0.0, -17.0), S: (68.0, 30.0, 34.0)], "fitted_dimensions": (68.0, 30.0, 34.0) }
+ROOMSCALE_VISUAL_ASSET object=side_table source=res://assets/generated/writing_desk.glb normalization={ "source_bounds": [P: (-34.0, 0.0, -17.0), S: (68.0, 30.0, 34.0)], "fitted_dimensions": (20.0, 20.0, 17.0) }
+ROOMSCALE_FLOOR_NAV_READY room=room_conflict grid=60x45 cell=4in obstacles=9
+ROOMSCALE_CITIZEN_SPAWN count=12 separate_nodes=true height=0.5in
+ROOMSCALE_FISHBOWL_READY governor=true population=12 camera=true room=room_conflict speed=1.0
+ROOMSCALE_M2_READY Godot=4.7.2-stable (official) room=room_conflict size=240x180 in citizens=24
+POC56_WP4_CHECK_PASS shared-world production fixture exposes stable strategic sites
+POC56_WP4_CHECK_PASS viewport click selects strategic site
+POC56_WP4_PASS []
+

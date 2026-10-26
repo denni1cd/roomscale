@@ -1,0 +1,50 @@
+{
+  "candidate_id": "grapple-v005",
+  "created_at_utc": "2026-10-25T14:00:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "The gauge indices and hand are occluded by the enamel cylinder even though they were moved into the correct X/Z face plane."
+  ],
+  "hard_fail_reasons": [
+    "The two pressure-gauge faces remain blank in the actual production render, so the instrument-readability hard gate is still closed."
+  ],
+  "incumbent_candidate_id": "grapple-v004",
+  "incumbent_comparison": "No visible gauge improvement over grapple-v004: the same blank faces persist, while silhouette, materials, and live gameplay remain effectively unchanged.",
+  "incumbent_comparison_result": "same",
+  "likely_causes": [
+    "The enamel cylinder is centered at local Y=0.105 with height 0.18, so its front surface is at Y=0.195; v5 placed the overlay centers at Y=0.139 to 0.151 inside the cylinder."
+  ],
+  "next_action_hypothesis": "For grapple-v006, keep the dial face at local Y=0.105 and lift high-contrast ticks, hand, and hub beyond its front surface at Y>=0.22 while retaining their radial X/Z positions. Re-render and inspect the matched production close-up.",
+  "observations": {
+    "art_direction_fit": "The timber, iron, brass, copper, rope, supported winch, and ladder tower remain on brief in the production three-quarter render.",
+    "close_up_quality": "The boiler instruments still render as two unmarked pale discs in asset-detail.png; the new face overlays are not visible.",
+    "gameplay_readability": "The actual project reaches complete, deploys the cable, activates FLOOR-to-DESK_TOP, and records TRAVERSE_IN_PROGRESS.",
+    "geometric_detail": "The matched capture retains the exposed gear train, nine rope wraps, round tower rails, collars, vessel seams, and ladder details.",
+    "material_realism": "Wood and rope show texture, while iron, brass, and copper remain visibly distinct but broadly uniform.",
+    "proportion": "The installation keeps the intended 9.0 by 11.58 by 7.5 inch production bounds.",
+    "scale_fidelity": "The candidate passes the 10-inch construction base check without changing construction or traversal geometry.",
+    "semantic_recognizability": "Both standard three-quarter and profile production views identify a rope winch with a braced launch tower and pressure vessel.",
+    "silhouette_quality": "The thin tower above the broad winch base remains distinct at standard close and room-scale cameras.",
+    "surface_variation": "Only timber and rope show visible texture; the larger metal surfaces remain uniform.",
+    "technical_integration": "Godot packs and imports the candidate at 236 mesh parts and 74,016 triangles, with no bounds issues and a live production override."
+  },
+  "render_evidence": [
+    "art/grapple/iterations/v005/render-runs/run-001/asset-detail.png",
+    "art/grapple/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+    "art/grapple/iterations/v005/render-runs/run-001/grapple-complete.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 2,
+    "gameplay_readability": 5,
+    "geometric_detail": 4,
+    "material_realism": 3,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 4,
+    "surface_variation": 3,
+    "technical_integration": 5
+  }
+}

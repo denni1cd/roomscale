@@ -1,0 +1,39 @@
+{
+  "deterministic_seed": 35,
+  "generator_command": [
+    "C:/Users/Zero/python_projects/ai/roomscale/.tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generate_citizen_candidate.gd"
+  ],
+  "import_configuration": {
+    "candidate_root": "Node3D",
+    "embedded_materials": true,
+    "format": "Godot PackedScene",
+    "up_axis": "Y"
+  },
+  "instructions": "Build a production-size, tailored clockwork worker scene with the five exact animator mesh pivots Body, LeftArm, RightArm, LeftLeg, and RightLeg. Give the body a woven coat, layered vest and lapels, readable face, clockwork cap, twin brass-frame glass goggles, fitted cuffs, gloves, boots, and compact mechanical seams and fasteners. Keep the total height at one-half inch and geometry presentation-only. The Art Factory adapter will attach live tools, cargo, role badge, backpack, and traversal clip; do not bake these independent role props into the candidate.",
+  "material_method": "Godot packed miniature with triplanar woven fabric and leather, lit iron and brass, warm skin, and dark reflective glass",
+  "method": "tailored_clockwork_worker_v1",
+  "parameters": {
+    "outputs": ["citizen.tscn"],
+    "pose_rig": ["Body", "LeftArm", "RightArm", "LeftLeg", "RightLeg"],
+    "style": "tailored_clockwork_worker_v1"
+  },
+  "post_processing": [
+    "pack to native Godot PackedScene with embedded materials",
+    "assign every generated node to the candidate root",
+    "Godot import and bounds validation before production render"
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "scripts/citizen_agent.gd",
+    "scripts/visuals/citizen_art_adapter.gd",
+    "scripts/visuals/presentation_test.gd",
+    "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json"
+  ],
+  "tool": "Godot Engine",
+  "tool_version": "4.7.2.stable.official.ed1daf0bf"
+}

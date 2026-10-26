@@ -1,0 +1,2123 @@
+{
+  "camera": {
+    "fill_position": [
+      5,
+      68,
+      24
+    ],
+    "focus": [
+      0,
+      0,
+      0
+    ],
+    "lantern_position": [
+      -25,
+      10,
+      60
+    ]
+  },
+  "civilization": {
+    "cohort_size": 1,
+    "economy_construction": true,
+    "initial_speed": 1,
+    "rest_capacity": 0,
+    "shelter_capacity": 0,
+    "stock": {
+      "food": 20,
+      "metal": 0,
+      "water": 30,
+      "wood": 0
+    }
+  },
+  "dimensions": [
+    240,
+    180
+  ],
+  "display_name": "Five Founders / Organic Civilization",
+  "floor": {
+    "center": [
+      0,
+      0,
+      0
+    ],
+    "dimensions": [
+      240,
+      180
+    ],
+    "height": 0
+  },
+  "floor_color": "795b43",
+  "id": "PLACE-031",
+  "objects": [
+    {
+      "blocks_navigation": true,
+      "color": "81593e",
+      "dimensions": [
+        68,
+        30,
+        34
+      ],
+      "id": "desk",
+      "kind": "table",
+      "name": "Desk",
+      "navigation_padding": [
+        8,
+        0,
+        7
+      ],
+      "position": [
+        -58,
+        0,
+        -52
+      ],
+      "surface": {
+        "anchor": [
+          -58,
+          30,
+          -52
+        ],
+        "height": 30,
+        "region_id": "STUDY_SURFACE"
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "color": "546d68",
+      "dimensions": [
+        25,
+        19,
+        23
+      ],
+      "id": "chair",
+      "kind": "chair",
+      "name": "Chair",
+      "navigation_padding": [
+        3,
+        0,
+        3
+      ],
+      "position": [
+        -58,
+        0,
+        -20
+      ]
+    },
+    {
+      "blocks_navigation": true,
+      "color": "74503a",
+      "dimensions": [
+        32,
+        63,
+        17
+      ],
+      "id": "bookcase",
+      "kind": "bookcase",
+      "name": "Bookcase",
+      "navigation_padding": [
+        3,
+        0,
+        2
+      ],
+      "position": [
+        91,
+        0,
+        -63
+      ]
+    },
+    {
+      "blocks_navigation": false,
+      "color": "a66e4e",
+      "dimensions": [
+        92,
+        0.12,
+        68
+      ],
+      "id": "rug",
+      "kind": "rug",
+      "name": "Rug",
+      "position": [
+        50,
+        0,
+        -22
+      ]
+    },
+    {
+      "blocks_navigation": true,
+      "color": "80583d",
+      "dimensions": [
+        20,
+        20,
+        17
+      ],
+      "id": "side_table",
+      "kind": "table",
+      "name": "Side Table",
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "position": [
+        44,
+        0,
+        -15
+      ]
+    },
+    {
+      "blocks_navigation": true,
+      "color": "a98254",
+      "dimensions": [
+        17,
+        15,
+        14
+      ],
+      "id": "storage_box",
+      "kind": "box",
+      "name": "Storage Box",
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "position": [
+        75,
+        0,
+        43
+      ]
+    },
+    {
+      "blocks_navigation": true,
+      "color": "637674",
+      "dimensions": [
+        16,
+        14,
+        16
+      ],
+      "id": "waste_bin",
+      "kind": "cylinder",
+      "name": "Waste Bin",
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "position": [
+        -99,
+        0,
+        12
+      ]
+    },
+    {
+      "blocks_navigation": true,
+      "color": "789166",
+      "dimensions": [
+        13,
+        42,
+        12
+      ],
+      "id": "plant",
+      "kind": "plant",
+      "name": "Room Plant",
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "position": [
+        -91,
+        0,
+        -46
+      ]
+    },
+    {
+      "blocks_navigation": false,
+      "color": "6ea6b8",
+      "dimensions": [
+        3,
+        5,
+        3
+      ],
+      "id": "water_cup",
+      "kind": "water_container",
+      "name": "Water Container",
+      "position": [
+        -58,
+        30,
+        -50
+      ],
+      "resource_profile": {
+        "contents": {
+          "water": 60000
+        },
+        "region_id": "STUDY_SURFACE",
+        "work_seconds": 2
+      }
+    },
+    {
+      "blocks_navigation": false,
+      "color": "d0a864",
+      "dimensions": [
+        2,
+        1,
+        2
+      ],
+      "id": "food_cache",
+      "kind": "food_cache",
+      "name": "Food Cache",
+      "position": [
+        -44,
+        0,
+        20
+      ],
+      "resource_profile": {
+        "contents": {
+          "food": 40000
+        },
+        "work_seconds": 2
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "color": "92754e",
+      "dimensions": [
+        20,
+        20,
+        20
+      ],
+      "id": "packing_crate",
+      "kind": "box",
+      "name": "Packing Crate",
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "position": [
+        101,
+        0,
+        9
+      ]
+    },
+    {
+      "blocks_navigation": true,
+      "color": "88704f",
+      "dimensions": [
+        20,
+        20,
+        20
+      ],
+      "id": "spare_crate",
+      "kind": "box",
+      "name": "Spare Crate",
+      "navigation_padding": [
+        2,
+        0,
+        2
+      ],
+      "position": [
+        103,
+        0,
+        62
+      ]
+    },
+    {
+      "blocks_navigation": false,
+      "color": "6ea6b8",
+      "dimensions": [
+        3,
+        0.15,
+        3
+      ],
+      "id": "spilled_water",
+      "kind": "water_container",
+      "name": "Spilled Water",
+      "position": [
+        -24,
+        0,
+        20
+      ],
+      "resource_profile": {
+        "contents": {
+          "water": 60
+        },
+        "work_seconds": 2
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-108_-68_0",
+      "kind": "box",
+      "name": "pocket_tile_-108_-68_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -108.0,
+        0,
+        -68.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-108_-44_0",
+      "kind": "box",
+      "name": "pocket_tile_-108_-44_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -108.0,
+        0,
+        -44.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-108_-20_0",
+      "kind": "box",
+      "name": "pocket_tile_-108_-20_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -108.0,
+        0,
+        -20.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-108_4_0",
+      "kind": "box",
+      "name": "pocket_tile_-108_4_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -108.0,
+        0,
+        4.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-108_28_0",
+      "kind": "box",
+      "name": "pocket_tile_-108_28_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -108.0,
+        0,
+        28.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-108_52_0",
+      "kind": "box",
+      "name": "pocket_tile_-108_52_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -108.0,
+        0,
+        52.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-108_76_0",
+      "kind": "box",
+      "name": "pocket_tile_-108_76_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -108.0,
+        0,
+        76.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-84_-68_0",
+      "kind": "box",
+      "name": "pocket_tile_-84_-68_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -84.0,
+        0,
+        -68.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-84_-44_0",
+      "kind": "box",
+      "name": "pocket_tile_-84_-44_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -84.0,
+        0,
+        -44.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-84_-20_0",
+      "kind": "box",
+      "name": "pocket_tile_-84_-20_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -84.0,
+        0,
+        -20.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-84_4_0",
+      "kind": "box",
+      "name": "pocket_tile_-84_4_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -84.0,
+        0,
+        4.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-84_28_0",
+      "kind": "box",
+      "name": "pocket_tile_-84_28_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -84.0,
+        0,
+        28.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-84_52_0",
+      "kind": "box",
+      "name": "pocket_tile_-84_52_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -84.0,
+        0,
+        52.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-84_76_0",
+      "kind": "box",
+      "name": "pocket_tile_-84_76_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -84.0,
+        0,
+        76.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-60_-68_0",
+      "kind": "box",
+      "name": "pocket_tile_-60_-68_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -60.0,
+        0,
+        -68.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-60_-44_0",
+      "kind": "box",
+      "name": "pocket_tile_-60_-44_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -60.0,
+        0,
+        -44.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-60_-20_0",
+      "kind": "box",
+      "name": "pocket_tile_-60_-20_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -60.0,
+        0,
+        -20.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-60_4_0",
+      "kind": "box",
+      "name": "pocket_tile_-60_4_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -60.0,
+        0,
+        4.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-60_28_0",
+      "kind": "box",
+      "name": "pocket_tile_-60_28_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -60.0,
+        0,
+        28.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-60_52_0",
+      "kind": "box",
+      "name": "pocket_tile_-60_52_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -60.0,
+        0,
+        52.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-60_76_0",
+      "kind": "box",
+      "name": "pocket_tile_-60_76_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -60.0,
+        0,
+        76.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-36_-68_0",
+      "kind": "box",
+      "name": "pocket_tile_-36_-68_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -36.0,
+        0,
+        -68.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-36_-44_0",
+      "kind": "box",
+      "name": "pocket_tile_-36_-44_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -36.0,
+        0,
+        -44.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-36_-20_0",
+      "kind": "box",
+      "name": "pocket_tile_-36_-20_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -36.0,
+        0,
+        -20.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-36_4_0",
+      "kind": "box",
+      "name": "pocket_tile_-36_4_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -36.0,
+        0,
+        4.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-36_28_0",
+      "kind": "box",
+      "name": "pocket_tile_-36_28_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -36.0,
+        0,
+        28.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-36_52_0",
+      "kind": "box",
+      "name": "pocket_tile_-36_52_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -36.0,
+        0,
+        52.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-36_76_0",
+      "kind": "box",
+      "name": "pocket_tile_-36_76_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -36.0,
+        0,
+        76.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-12_-68_0",
+      "kind": "box",
+      "name": "pocket_tile_-12_-68_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -12.0,
+        0,
+        -68.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-12_-44_0",
+      "kind": "box",
+      "name": "pocket_tile_-12_-44_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -12.0,
+        0,
+        -44.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-12_-20_0",
+      "kind": "box",
+      "name": "pocket_tile_-12_-20_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -12.0,
+        0,
+        -20.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-12_4_0",
+      "kind": "box",
+      "name": "pocket_tile_-12_4_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -12.0,
+        0,
+        4.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        10
+      ],
+      "id": "pocket_tile_-12_28_2",
+      "kind": "box",
+      "name": "pocket_tile_-12_28_2",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -12.0,
+        0,
+        27.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_-12_76_0",
+      "kind": "box",
+      "name": "pocket_tile_-12_76_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -12.0,
+        0,
+        76.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_12_-68_0",
+      "kind": "box",
+      "name": "pocket_tile_12_-68_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        12.0,
+        0,
+        -68.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_12_-44_0",
+      "kind": "box",
+      "name": "pocket_tile_12_-44_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        12.0,
+        0,
+        -44.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_12_-20_0",
+      "kind": "box",
+      "name": "pocket_tile_12_-20_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        12.0,
+        0,
+        -20.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_12_4_0",
+      "kind": "box",
+      "name": "pocket_tile_12_4_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        12.0,
+        0,
+        4.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        10
+      ],
+      "id": "pocket_tile_12_28_2",
+      "kind": "box",
+      "name": "pocket_tile_12_28_2",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        12.0,
+        0,
+        27.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_12_76_0",
+      "kind": "box",
+      "name": "pocket_tile_12_76_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        12.0,
+        0,
+        76.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_36_-68_0",
+      "kind": "box",
+      "name": "pocket_tile_36_-68_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        36.0,
+        0,
+        -68.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_36_-44_0",
+      "kind": "box",
+      "name": "pocket_tile_36_-44_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        36.0,
+        0,
+        -44.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_36_-20_0",
+      "kind": "box",
+      "name": "pocket_tile_36_-20_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        36.0,
+        0,
+        -20.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_36_4_0",
+      "kind": "box",
+      "name": "pocket_tile_36_4_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        36.0,
+        0,
+        4.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_36_28_0",
+      "kind": "box",
+      "name": "pocket_tile_36_28_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        36.0,
+        0,
+        28.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_36_52_0",
+      "kind": "box",
+      "name": "pocket_tile_36_52_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        36.0,
+        0,
+        52.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_36_76_0",
+      "kind": "box",
+      "name": "pocket_tile_36_76_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        36.0,
+        0,
+        76.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_60_-68_0",
+      "kind": "box",
+      "name": "pocket_tile_60_-68_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        60.0,
+        0,
+        -68.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_60_-44_0",
+      "kind": "box",
+      "name": "pocket_tile_60_-44_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        60.0,
+        0,
+        -44.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_60_-20_0",
+      "kind": "box",
+      "name": "pocket_tile_60_-20_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        60.0,
+        0,
+        -20.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_60_4_0",
+      "kind": "box",
+      "name": "pocket_tile_60_4_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        60.0,
+        0,
+        4.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_60_28_0",
+      "kind": "box",
+      "name": "pocket_tile_60_28_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        60.0,
+        0,
+        28.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_60_52_0",
+      "kind": "box",
+      "name": "pocket_tile_60_52_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        60.0,
+        0,
+        52.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_60_76_0",
+      "kind": "box",
+      "name": "pocket_tile_60_76_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        60.0,
+        0,
+        76.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_84_-68_0",
+      "kind": "box",
+      "name": "pocket_tile_84_-68_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        84.0,
+        0,
+        -68.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_84_-44_0",
+      "kind": "box",
+      "name": "pocket_tile_84_-44_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        84.0,
+        0,
+        -44.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_84_-20_0",
+      "kind": "box",
+      "name": "pocket_tile_84_-20_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        84.0,
+        0,
+        -20.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_84_4_0",
+      "kind": "box",
+      "name": "pocket_tile_84_4_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        84.0,
+        0,
+        4.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_84_28_0",
+      "kind": "box",
+      "name": "pocket_tile_84_28_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        84.0,
+        0,
+        28.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_84_52_0",
+      "kind": "box",
+      "name": "pocket_tile_84_52_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        84.0,
+        0,
+        52.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_84_76_0",
+      "kind": "box",
+      "name": "pocket_tile_84_76_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        84.0,
+        0,
+        76.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_108_-68_0",
+      "kind": "box",
+      "name": "pocket_tile_108_-68_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        108.0,
+        0,
+        -68.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_108_-44_0",
+      "kind": "box",
+      "name": "pocket_tile_108_-44_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        108.0,
+        0,
+        -44.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_108_-20_0",
+      "kind": "box",
+      "name": "pocket_tile_108_-20_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        108.0,
+        0,
+        -20.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_108_4_0",
+      "kind": "box",
+      "name": "pocket_tile_108_4_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        108.0,
+        0,
+        4.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_108_28_0",
+      "kind": "box",
+      "name": "pocket_tile_108_28_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        108.0,
+        0,
+        28.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_108_52_0",
+      "kind": "box",
+      "name": "pocket_tile_108_52_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        108.0,
+        0,
+        52.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        12,
+        6,
+        12
+      ],
+      "id": "pocket_tile_108_76_0",
+      "kind": "box",
+      "name": "pocket_tile_108_76_0",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        108.0,
+        0,
+        76.0
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        4,
+        6,
+        38
+      ],
+      "id": "pocket_west",
+      "kind": "box",
+      "name": "pocket_west",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -25,
+        0,
+        51
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        4,
+        6,
+        38
+      ],
+      "id": "pocket_east",
+      "kind": "box",
+      "name": "pocket_east",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        25,
+        0,
+        51
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        46,
+        6,
+        4
+      ],
+      "id": "pocket_north",
+      "kind": "box",
+      "name": "pocket_north",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        0,
+        0,
+        72
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        19,
+        6,
+        4
+      ],
+      "id": "pocket_door_left",
+      "kind": "box",
+      "name": "pocket_door_left",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        -13.5,
+        0,
+        30
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    },
+    {
+      "blocks_navigation": true,
+      "dimensions": [
+        19,
+        6,
+        4
+      ],
+      "id": "pocket_door_right",
+      "kind": "box",
+      "name": "pocket_door_right",
+      "navigation_padding": [
+        0,
+        0,
+        0
+      ],
+      "position": [
+        13.5,
+        0,
+        30
+      ],
+      "resource_profile": {
+        "protected": true
+      }
+    }
+  ],
+  "schema_version": 1,
+  "spawn": {
+    "center": [
+      0,
+      0,
+      8
+    ],
+    "dimensions": [
+      8,
+      0,
+      8
+    ]
+  },
+  "start": {
+    "infrastructure": [],
+    "origin": [
+      0,
+      0,
+      8
+    ],
+    "population": 5
+  },
+  "target_surface_id": "STUDY_SURFACE",
+  "wall_height": 72
+}

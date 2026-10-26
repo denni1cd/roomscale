@@ -1,0 +1,19 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 610.88 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5090
+
+ROOMSCALE_CIVILIZATION_PROFILE id=clockwork name=Clockwork citizen_style=clockwork settlement_style=clockwork traversal_style=grapple_cable
+ROOMSCALE_VISUAL_ASSET object=computer-desk source=res://art/desk/iterations/v007/generated/desk.tscn normalization={ "source_bounds": [P: (-33.0, 0.03, -15.0), S: (66.0, 29.97, 30.0)], "fitted_dimensions": (66.0, 30.0, 30.0) }
+ROOMSCALE_VISUAL_ASSET object=office-chair source=res://art/office_chair/iterations/v002/generated/office_chair.tscn normalization={ "source_bounds": [P: (-10.1, 0.12, -8.232364), S: (20.2, 41.14622, 16.83237)], "fitted_dimensions": (23.0, 44.0, 18.0) }
+ROOMSCALE_VISUAL_ASSET object=ArtPresentation source=res://art/settlement_workshop/iterations/v004/generated/settlement_workshop.tscn normalization={ "source_bounds": [P: (-13.0, 0.0, -10.0), S: (26.0, 19.94, 20.0)], "fitted_dimensions": (26.0, 20.0, 20.0) }
+ROOMSCALE_VISUAL_ASSET object=ArtPresentation source=res://art/settlement_depot/iterations/v003/generated/settlement_depot.tscn normalization={ "source_bounds": [P: (-12.0, 0.0, -10.15), S: (24.0, 13.08, 20.15)], "fitted_dimensions": (24.0, 13.0, 20.0) }
+ROOMSCALE_VISUAL_ASSET object=ArtPresentation source=res://art/settlement_housing/iterations/v002/generated/settlement_housing.tscn normalization={ "source_bounds": [P: (-8.5, 0.0, -4.5), S: (17.0, 7.09, 9.85)], "fitted_dimensions": (17.0, 7.0, 9.0) }
+ROOMSCALE_VISUAL_ASSET object=ArtPresentation source=res://art/settlement_workarea/iterations/v005/generated/settlement_workarea.tscn normalization={ "source_bounds": [P: (-11.5, 0.0, -6.0), S: (23.0, 9.0, 12.0)], "fitted_dimensions": (23.0, 9.0, 12.0) }
+ROOMSCALE_FLOOR_NAV_READY room=room_photo_luna grid=39x36 cell=4in obstacles=11
+ROOMSCALE_CITIZEN_SPAWN count=50 separate_nodes=true height=0.5in
+ROOMSCALE_M2_READY Godot=4.7.2-stable (official) room=room_photo_luna size=156x144 in citizens=50
+ROOMSCALE_CIVILIZATION_PRESENTATION_READY id=clockwork citizens=50
+ERROR: ROOMSCALE_ART_FACTORY_RENDER_FAIL: render asset-detail appears occluded or nearly blank: 39 sampled colors
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _fail (res://scripts/art_factory/render_harness.gd:301)
+       [1] _capture (res://scripts/art_factory/render_harness.gd:266)

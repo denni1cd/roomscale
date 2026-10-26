@@ -1,0 +1,37 @@
+{
+  "deterministic_seed": 30,
+  "generator_command": [
+    "C:/Users/Zero/python_projects/ai/roomscale/.tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generate_grapple_candidate.gd"
+  ],
+  "import_configuration": {
+    "candidate_root": "Node3D",
+    "embedded_materials": true,
+    "format": "Godot PackedScene",
+    "up_axis": "Y"
+  },
+  "instructions": "Correct grapple-v005 after inspecting its actual production render. Although the gauge overlays were moved into the correct X/Z face plane, they remain occluded because their local-Y centers are still inside the enamel cylinder, which extends to Y=0.195 after scaling. Keep the enamel disc at local Y=0.105 and place raised high-contrast indices at local Y=0.22, the hand at Y=0.225, and the brass hub beyond Y=0.24. Maintain raised clearance above the face and radial positions in X/Z. Preserve the v004 silhouette/material refinements and all production stage, scale, cable, and navigation invariants; render at the matched production cameras and inspect dial readability.",
+  "material_method": "Raised high-contrast iron dial indices, copper readout hand, brass hub, enamel face, and the existing timber, iron, brass, copper, and rope surfaces",
+  "method": "godot_procedural_miniature_grapple",
+  "parameters": {
+    "outputs": ["grapple.tscn"],
+    "refinement": "mechanical_readability_v6"
+  },
+  "post_processing": [
+    "pack to native Godot PackedScene",
+    "assign all generated descendants to the candidate root",
+    "Godot editor import before technical validation"
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "scripts/visuals/grapple_details.gd",
+    "art/grapple/iterations/v005/render-runs/run-001/asset-detail.png",
+    "art/grapple/iterations/v005/evaluation.json"
+  ],
+  "tool": "Godot Engine",
+  "tool_version": "4.7.2.stable.official.ed1daf0bf"
+}

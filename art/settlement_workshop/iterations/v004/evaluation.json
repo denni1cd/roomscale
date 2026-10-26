@@ -1,0 +1,47 @@
+{
+  "candidate_id": "settlement_workshop-v004",
+  "created_at_utc": "2026-10-25T14:53:33+00:00",
+  "decision": "promote",
+  "defects": [],
+  "hard_fail_reasons": [],
+  "incumbent_candidate_id": "settlement_workshop-v002",
+  "incumbent_comparison": "Compared directly with workshop-v002 using matched run-004/run-001 production three-quarter and detail cameras. v004 moves the roof wings outboard and narrows them, so the boiler and stack are visible while the covered side bays, timber courses, and machinery remain. It scores no lower on any required rubric dimension and resolves the diagnosed occlusion.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [],
+  "next_action_hypothesis": "Promote workshop-v004 as the stable settlement workshop visual. Keep the RoomDefinition landmark, work stations, steam, and animated production gears authoritative.",
+  "observations": {
+    "art_direction_fit": "The handmade timber/iron/copper construction and restrained amber openings fit the detailed miniature steampunk direction without reading as a generic box shell.",
+    "close_up_quality": "Run-001 detail shows readable boiler fittings, gauge, flywheel teeth, door hardware, and bench tools; the opening removes the prior occlusion rather than relying on a lighting effect.",
+    "gameplay_readability": "Production room and settlement captures show the visual asset attached to the established building site; no candidate mesh becomes a collision or navigation input in the adapter path.",
+    "geometric_detail": "The close and three-quarter captures show board courses, collars, roof seams, door straps/rivets, pressure lines, gauge, boiler hoops, bench, tools, and flywheel in distinct assemblies.",
+    "material_realism": "In the same production lighting, dark iron stays matte, copper hoops and seams catch warm highlights, and timber/glazing remain distinct; materials respond credibly at miniature scale.",
+    "proportion": "The production technical report measures 26 x 19.94 x 20 inches, within the intended envelope; the room-scale and settlement-scale shots retain the existing 0.6 visual scale.",
+    "scale_fidelity": "The candidate validation reports 26 x 19.94 x 20 inches and the settlement-scale capture shows it beside the live half-inch citizens at the established building scale.",
+    "semantic_recognizability": "Run-001 shows the stack, boiler, copper hoops, exposed gear, workbench, timber frame, and glazed opening together; it unmistakably reads as a working clockwork workshop.",
+    "silhouette_quality": "The open central roof slot and separated roof wings make the boiler/stack assembly part of the silhouette while retaining covered outer bays (run-001/asset-three-quarter.png).",
+    "surface_variation": "Alternating cladding boards, copper accents, iron collars, and the open roof break up the broad surfaces visible in run-001/asset-detail.png.",
+    "technical_integration": "Godot 4.7.2 validation passes with 86 meshes and 18,816 triangles; the run-001 receipt names settlement_workshop-v004 and its exact scene path with production_path=true."
+  },
+  "render_evidence": [
+    "art/settlement_workshop/iterations/v004/render-runs/run-001/room-scale.png",
+    "art/settlement_workshop/iterations/v004/render-runs/run-001/settlement-scale.png",
+    "art/settlement_workshop/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+    "art/settlement_workshop/iterations/v004/render-runs/run-001/asset-opposite-three-quarter.png",
+    "art/settlement_workshop/iterations/v004/render-runs/run-001/asset-profile.png",
+    "art/settlement_workshop/iterations/v004/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 5,
+    "close_up_quality": 4,
+    "gameplay_readability": 4,
+    "geometric_detail": 4,
+    "material_realism": 4,
+    "proportion": 4,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 4,
+    "surface_variation": 4,
+    "technical_integration": 5
+  }
+}

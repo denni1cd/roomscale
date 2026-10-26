@@ -1,0 +1,40 @@
+{
+  "deterministic_seed": 26,
+  "generator_command": [
+    "C:/Users/Zero/python_projects/ai/roomscale/.tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generate_grapple_candidate.gd"
+  ],
+  "import_configuration": {
+    "candidate_root": "Node3D",
+    "embedded_materials": true,
+    "format": "Godot PackedScene",
+    "up_axis": "Y"
+  },
+  "instructions": "Respond to grapple-v001's production close view by separating the timber sole, forged foot shoes, iron collars, brass fasteners, and controls instead of using one color/material per large mechanism. Add a visible shaft bearing and gearbox, a smaller governor gear, two enamel pressure gauges with pointer needles and copper feed pipes, and evenly spaced drum fasteners. Keep all new details inside the established site footprint. Retain the three named construction groups and do not touch the deployment cable, scene state, or gameplay geometry.",
+  "material_method": "Independent oiled timber, forged iron, brass, copper, enamel, and wound-rope materials",
+  "method": "godot_procedural_miniature_grapple",
+  "parameters": {
+    "outputs": [
+      "grapple.tscn"
+    ],
+    "refinement": "mechanical_readability_v2"
+  },
+  "post_processing": [
+    "pack to native Godot PackedScene",
+    "assign all generated descendants to the candidate root",
+    "Godot editor import before technical validation"
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "scripts/visuals/grapple_details.gd",
+    "scripts/construction_system.gd",
+    "art/grapple/iterations/v001/render-runs/run-003/asset-detail.png",
+    "art/grapple/iterations/v001/evaluation.json"
+  ],
+  "tool": "Godot Engine",
+  "tool_version": "4.7.2.stable.official.ed1daf0bf"
+}

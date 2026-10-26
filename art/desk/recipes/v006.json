@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "method": "native_scene_standing_desk_t_frame_glass",
+  "instructions": "Keep the best-so-far v5 double T-frame and smoked glass geometry. Change only the deliverable format to a Godot PackedScene so the production project retains the native StandardMaterial3D clearcoat and Fresnel rim parameters that GLB export discarded. Preserve alpha transparency, dark tint, separated graphite/steel/rubber materials, exact bounds, and all RoomDefinition data. Do not use a preview-only shader or modify the gameplay scene.",
+  "parameters": {
+    "outputs": ["desk.tscn"],
+    "glass_color": "303a3d",
+    "glass_alpha": 0.58,
+    "glass_rim": 0.38,
+    "frame_color": "242a2c",
+    "metal_color": "929da2",
+    "rubber_color": "111416",
+    "top_thickness": 0.72
+  },
+  "source_inputs": [
+    "photo_holder/Sample (2).jpg",
+    "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json",
+    "art/desk/iterations/v005/evaluation.json"
+  ],
+  "tool": "Godot Engine",
+  "tool_version": "4.7.2.stable.official.ed1daf0bf",
+  "post_processing": [
+    "Pack the generated mesh/material hierarchy into a native Godot PackedScene",
+    "Godot editor scan before technical validation"
+  ],
+  "material_method": "Native StandardMaterial3D smoked glass with alpha, clearcoat, and rim; separate graphite T-frame",
+  "import_configuration": {
+    "format": "Godot PackedScene",
+    "up_axis": "Y",
+    "candidate_root": "Node3D",
+    "native_materials": true
+  },
+  "deterministic_seed": 25,
+  "generator_command": [
+    "C:/Users/Zero/python_projects/ai/roomscale/.tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generate_desk_candidate.gd"
+  ]
+}

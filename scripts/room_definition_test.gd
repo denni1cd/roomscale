@@ -610,55 +610,31 @@ func _verify_v2_geometry_and_renderer(fixture: Dictionary) -> bool:
 	if generic_box == null or object_parent.get_node_or_null("storage_box/ObjectLid") != null:
 		_fail("generic unknown semantic kind did not use its documented simple archetype")
 		return false
-	var hammock_fixture := {"id":"visual_hammock_test", "kind":"hammock", "position":[0, 0, 0], "dimensions":[48, 30, 24], "appearance":{"archetype":"hammock", "base_color":"a9a59a", "accent_color":"343739", "material":"fabric"}}
+	var hammock_fixture := {"id":"visual_hammock_test", "kind":"hammock_with_stand", "position":[0, 0, 0], "dimensions":[48, 30, 24], "appearance":{"archetype":"hammock", "base_color":"a9a59a", "accent_color":"343739", "material":"fabric"}}
 	object_renderer.call("_build_room_object", object_parent, hammock_fixture)
 	var hammock_visual := object_parent.get_node_or_null("visual_hammock_test")
-	var hammock_frame_found := false
-	if hammock_visual != null:
-		for visual_variant in hammock_visual.get_children():
-			if String(visual_variant.name).begins_with("HammockAFrame_"):
-				hammock_frame_found = true
-	if hammock_visual == null or hammock_visual.get_node_or_null("HammockFabricStripe_0") == null or not hammock_frame_found:
-		_fail("hammock renderer omitted striped suspended fabric or its freestanding frame")
+	var hammock_asset := hammock_visual.get_node_or_null("ResolvedAsset") as Node3D if hammock_visual != null else null
+	if hammock_asset == null or String(hammock_visual.get_meta("visual_asset_id", "")) != "hammock_with_stand" or String(hammock_visual.get_meta("visual_asset_candidate_id", "")) != "hammock_with_stand-v005" or hammock_asset.find_children("WovenHammockStripe_*", "MeshInstance3D", true, false).size() != 7 or hammock_asset.find_children("AFrameLeg_*", "MeshInstance3D", true, false).size() != 4:
+		_fail("hammock production resolver omitted its accepted seven-stripe sling or freestanding frame")
 		return false
 	var rocker_fixture := {"id":"visual_rocker_test", "kind":"rocking_chair", "position":[0, 0, 0], "dimensions":[26, 38, 32], "appearance":{"archetype":"rocking_chair", "base_color":"754629", "accent_color":"493023", "material":"wood"}}
 	object_renderer.call("_build_room_object", object_parent, rocker_fixture)
 	var rocker_visual := object_parent.get_node_or_null("visual_rocker_test")
-	var rocker_runner_found := false
-	if rocker_visual != null:
-		for visual_variant in rocker_visual.get_children():
-			if String(visual_variant.name).begins_with("Rocker_"):
-				rocker_runner_found = true
-	if rocker_visual == null or not rocker_runner_found or rocker_visual.get_node_or_null("BackSlat_1") == null:
-		_fail("rocking chair renderer omitted curved runners or back slats")
+	var rocker_asset := rocker_visual.get_node_or_null("ResolvedAsset") as Node3D if rocker_visual != null else null
+	if rocker_asset == null or String(rocker_visual.get_meta("visual_asset_candidate_id", "")) != "rocking_chair-v003" or rocker_asset.find_children("CurvedRocker_*", "MeshInstance3D", true, false).size() != 48 or rocker_asset.find_children("BackSlat_*", "MeshInstance3D", true, false).size() != 7:
+		_fail("rocking chair production resolver omitted the accepted curved runners or back slats")
 		return false
 	var cabinet_fixture := {"id":"visual_display_test", "kind":"display_cabinet", "position":[0, 0, 0], "dimensions":[34, 76, 20], "appearance":{"archetype":"display_cabinet", "base_color":"ad733c", "accent_color":"4b5045", "material":"wood", "transparency":0.66}}
 	object_renderer.call("_build_room_object", object_parent, cabinet_fixture)
 	var display_visual := object_parent.get_node_or_null("visual_display_test")
-	var glass_pane_found := false
-	if display_visual != null:
-		for visual_variant in display_visual.get_children():
-			if String(visual_variant.name).begins_with("DisplayGlass_"):
-				glass_pane_found = true
-	if display_visual == null or not glass_pane_found or display_visual.get_node_or_null("DisplayShelf_2") == null:
-		_fail("display cabinet renderer omitted glass frontage or interior shelves")
+	var cabinet_asset := display_visual.get_node_or_null("ResolvedAsset") as Node3D if display_visual != null else null
+	if cabinet_asset == null or String(display_visual.get_meta("visual_asset_candidate_id", "")) != "display_cabinet-v002" or cabinet_asset.find_children("GlassDoor_*", "MeshInstance3D", true, false).size() != 2 or cabinet_asset.find_children("DisplayShelf_*", "MeshInstance3D", true, false).size() != 3:
+		_fail("display cabinet production resolver omitted the accepted glass doors or interior shelves")
 		return false
-	for cabinet_part in display_visual.get_children():
-		if String(cabinet_part.name).begins_with("CabinetCollectible_"):
-			_fail("display cabinet renderer added undeclared items above the cabinet")
-			return false
-	var cabinet_frame_material: StandardMaterial3D
-	for cabinet_part in display_visual.get_children():
-		if String(cabinet_part.name).begins_with("CabinetSide_"):
-			var cabinet_mesh := cabinet_part as MeshInstance3D
-			cabinet_frame_material = cabinet_mesh.material_override as StandardMaterial3D if cabinet_mesh != null else null
-			break
-	var cabinet_glass_material: StandardMaterial3D
-	for cabinet_part in display_visual.get_children():
-		if String(cabinet_part.name).begins_with("DisplayGlass_"):
-			var cabinet_mesh := cabinet_part as MeshInstance3D
-			cabinet_glass_material = cabinet_mesh.material_override as StandardMaterial3D if cabinet_mesh != null else null
-			break
+	var cabinet_frame_mesh := cabinet_asset.find_child("SidePanel_1", true, false) as MeshInstance3D
+	var cabinet_frame_material := cabinet_frame_mesh.material_override as StandardMaterial3D if cabinet_frame_mesh != null else null
+	var cabinet_glass_mesh := cabinet_asset.find_child("GlassDoor_1", true, false) as MeshInstance3D
+	var cabinet_glass_material := cabinet_glass_mesh.material_override as StandardMaterial3D if cabinet_glass_mesh != null else null
 	if cabinet_frame_material == null or cabinet_frame_material.albedo_color.a < 0.99 or cabinet_glass_material == null or cabinet_glass_material.albedo_color.a >= 0.99:
 		_fail("display cabinet should keep its wood frame opaque while its glass remains translucent")
 		return false

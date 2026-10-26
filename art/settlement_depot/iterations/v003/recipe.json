@@ -1,0 +1,37 @@
+{
+  "deterministic_seed": 2509,
+  "generator_command": [
+    ".tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generate_settlement_candidate.gd"
+  ],
+  "import_configuration": {
+    "format": "native .tscn PackedScene",
+    "renderer": "gl_compatibility",
+    "scale": "inches"
+  },
+  "instructions": "The refined depot reads correctly, but the technical envelope is taller than the generated geometry: actual bounds are 24 by 10.37 by 20.15 inches against the brief's 24 by 13 by 20 inches. Keep the canopy, crate, pulley, and material refinements. Add a restrained copper roof vent with a weather cap that brings the vertical bounds close to the stated 13-inch height without expanding the footprint. This is a measured proportion correction, not a change to the acceptance bar.",
+  "material_method": "Shared RoomScale PBR material library with deterministic procedural textures",
+  "method": "godot_procedural_clockwork_settlement",
+  "parameters": {
+    "outputs": [
+      "settlement_depot.tscn"
+    ],
+    "refinement": "footprint_calibration_v3"
+  },
+  "post_processing": [
+    "Pack generated Node3D and owned descendants into a native PackedScene"
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "art/settlement_depot/brief.json",
+    "scripts/art_factory/generate_settlement_candidate.gd",
+    "scripts/visuals/visual_geometry.gd",
+    "scripts/visuals/material_library.gd"
+  ],
+  "tool": "RoomScale Art Factory deterministic Godot generator",
+  "tool_version": "Godot 4.7.2-stable official"
+}

@@ -1,0 +1,48 @@
+{
+  "asset_id": "display_cabinet",
+  "camera_distances": [
+    2.0,
+    12.0,
+    64.0,
+    330.0
+  ],
+  "category": "room_furniture",
+  "display_name": "Wood and Glass Display Cabinet",
+  "gameplay_invariants": {
+    "blocks_navigation": true,
+    "dimensions_inches": [
+      33.0,
+      76.0,
+      18.0
+    ],
+    "render_meshes_do_not_replace_roomdefinition_collision": true,
+    "roomdefinition_collectibles_remain_separate": true
+  },
+  "intended_dimensions": [
+    33.0,
+    76.0,
+    18.0
+  ],
+  "iteration_budget": 3,
+  "materials": {
+    "case": "warm stained wood with subtle grain",
+    "doors": "clear lightly tinted glass",
+    "hardware": "aged brass and dark iron"
+  },
+  "prohibited_changes": [
+    "do not change RoomDefinition positions, dimensions, rotation, navigation metadata, or obstacle state",
+    "do not derive collision, navigation, selection, or gameplay bounds from generated render meshes",
+    "do not add canonical-room-specific gameplay logic"
+  ],
+  "quality_tier": "B",
+  "reference_images": [],
+  "required_features": [
+    "tall framed cabinet with crown and base moldings",
+    "two transparent glass doors with visible hinges and handles",
+    "internal shelves remain open for separate RoomDefinition collectibles"
+  ],
+  "schema_version": 1,
+  "semantic_type": "tall wooden glass-front display cabinet",
+  "source_room_definition": "",
+  "visual_target": "A tall warm-toned display cabinet with a framed glass double-door front, three open internal shelves, understated brass handles, hinge hardware, and finished crown/base moldings. Keep the shelves empty because collectibles remain separate RoomDefinition objects."
+}

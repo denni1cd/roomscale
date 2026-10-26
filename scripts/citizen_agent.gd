@@ -6,6 +6,7 @@ const WALK_SPEED := 6.5
 const CitizenMeshScale := 1.0
 const G := preload("res://scripts/visuals/visual_geometry.gd")
 const Materials := preload("res://scripts/visuals/material_library.gd")
+const CitizenArtAdapter := preload("res://scripts/visuals/citizen_art_adapter.gd")
 const CombatPresentation := preload("res://scripts/combat_presentation.gd")
 static var _shared_meshes: Dictionary = {}
 
@@ -172,6 +173,8 @@ var _role_pack: Node3D
 var _role_badge: MeshInstance3D
 var _traversal_clip: Node3D
 var _fine_details: Array[Node3D] = []
+var _asset_detail_core_nodes: Array[Node3D] = []
+var _asset_detail_close_nodes: Array[Node3D] = []
 var _detail_visible := true
 var _lod_timer := 0.0
 var _presentation_previous_position := Vector3.ZERO
@@ -292,8 +295,12 @@ func advance_simulation(delta: float) -> void:
 func refresh_visual_lod() -> void:
 	# Camera-dependent rendering can refresh while simulation is paused.
 	var camera := get_viewport().get_camera_3d()
-	_detail_visible = camera == null or camera.global_position.distance_squared_to(global_position) < 144.0
+	var camera_distance_squared := 0.0 if camera == null else camera.global_position.distance_squared_to(global_position)
+	_detail_visible = camera == null or camera_distance_squared < 144.0
+	var asset_close_detail_visible := camera == null or camera_distance_squared < 36.0
 	for detail in _fine_details: detail.visible = _detail_visible
+	for detail in _asset_detail_core_nodes: detail.visible = _detail_visible
+	for detail in _asset_detail_close_nodes: detail.visible = asset_close_detail_visible
 	_role_tool.visible = _detail_visible and task_type in ["CONSTRUCTION_BUILD", "SALVAGE"]
 	_role_pack.visible = _detail_visible and task_type in ["SURFACE_INVESTIGATION", "SURFACE_TRAVERSAL", "SURFACE_EXPLORATION"]
 	_traversal_clip.visible = _detail_visible and task_type in ["SURFACE_TRAVERSAL", "RESOURCE_COLLECT"] and _path_cursor < _path.size() and absf(_path[_path_cursor].y - global_position.y) > 0.01
@@ -579,6 +586,30 @@ func _build_figure() -> void:
 	for child in model.get_children():
 		if String(child.name).begins_with("Goggle") or String(child.name).begins_with("Lens") or String(child.name).begins_with("ShoulderPlate") or String(child.name).begins_with("Boot") or child.name == "Buckle":
 			_fine_details.append(child)
+	var art_result: Dictionary = CitizenArtAdapter.apply(model, PackedStringArray(["RoleChest", "ExplorerPack", "BuilderHammer", "Parcel", "CableSafetyClip"]))
+	if bool(art_result.get("registered", false)):
+		_fine_details.clear()
+		if not bool(art_result.get("loaded", false)):
+			return
+		var rig: Dictionary = art_result.rig
+		_body = rig["Body"] as MeshInstance3D
+		_left_arm = rig["LeftArm"] as MeshInstance3D
+		_right_arm = rig["RightArm"] as MeshInstance3D
+		_left_leg = rig["LeftLeg"] as MeshInstance3D
+		_right_leg = rig["RightLeg"] as MeshInstance3D
+		var coat_instance := _body.material_override as StandardMaterial3D
+		if coat_instance != null:
+			coat_instance = coat_instance.duplicate() as StandardMaterial3D
+			coat_instance.albedo_color = coat_colors[citizen_id % coat_colors.size()]
+			_body.material_override = coat_instance
+		var asset_instance := art_result.instance as Node3D
+		for detail_variant in asset_instance.find_children("*", "MeshInstance3D", true, false):
+			var detail := detail_variant as MeshInstance3D
+			if detail.name not in ["Body", "Head", "LeftArm", "RightArm", "LeftLeg", "RightLeg"]:
+				if detail.name in ["CapBrim", "ClockworkCap", "CapBand", "GoggleBridge", "GoggleStrap"] or String(detail.name).begins_with("GoggleFrame") or String(detail.name).begins_with("GoggleLens") or String(detail.name).begins_with("ShoulderPlate") or String(detail.name).begins_with("Boot"):
+					_asset_detail_core_nodes.append(detail)
+				else:
+					_asset_detail_close_nodes.append(detail)
 
 
 func _update_animation() -> void:

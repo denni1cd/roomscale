@@ -1,0 +1,390 @@
+{
+  "asset_id": "grapple",
+  "autonomous_reach_state": {
+    "accepted": true,
+    "arrived_citizens": [
+      47,
+      48
+    ],
+    "arrived_explorers": 2,
+    "barrier": {
+      "approach_position": "(68.0, 0.0, 46.97497)",
+      "from": "FLOOR",
+      "investigated_by": [
+        47,
+        48
+      ],
+      "reason": "no active navigation route between FLOOR and DESK_TOP",
+      "recognized_after_approach": true,
+      "to": "DESK_TOP"
+    },
+    "expected_explorers": 2,
+    "label": "Dark computer desk",
+    "message": "Barrier recognized: floor explorers reached Dark computer desk, but no navigation link reaches its elevated surface.",
+    "plan": {
+      "project_count": 0,
+      "projects": [],
+      "reachable_regions": [
+        "DESK_TOP",
+        "FLOOR"
+      ],
+      "reason": "target is reachable through active infrastructure",
+      "reused_edges": [
+        "floor_desk_top_0"
+      ],
+      "route": [
+        {
+          "active": true,
+          "capability": "grapple",
+          "capability_score": 13.4,
+          "from": "FLOOR",
+          "id": "floor_desk_top_0",
+          "path": [
+            "(-20.0, 0.0, 46.0)",
+            "(-20.0, 0.6, 44.4)",
+            "(-20.0, 3.2, 44.4)",
+            "(-20.0, 5.8, 44.4)",
+            "(-20.0, 8.4, 44.4)",
+            "(-20.0, 11.0, 44.4)",
+            "(-17.69444, 11.35677, 44.47222)",
+            "(-15.38889, 11.71354, 44.54445)",
+            "(-13.08333, 12.0703, 44.61667)",
+            "(-10.77778, 12.42707, 44.68889)",
+            "(-8.472222, 12.80446, 44.76111)",
+            "(-6.166667, 13.18186, 44.83334)",
+            "(-3.861111, 13.55925, 44.90556)",
+            "(-1.555555, 13.93665, 44.97778)",
+            "(0.75, 14.35281, 45.05)",
+            "(3.055556, 14.76896, 45.12222)",
+            "(5.361112, 15.18512, 45.19444)",
+            "(7.666668, 15.60128, 45.26667)",
+            "(9.972223, 16.06967, 45.33889)",
+            "(12.27778, 16.53806, 45.41111)",
+            "(14.58333, 17.00644, 45.48333)",
+            "(16.88889, 17.47483, 45.55556)",
+            "(19.19445, 18.00261, 45.62778)",
+            "(21.5, 18.53038, 45.7)",
+            "(23.80556, 19.05816, 45.77222)",
+            "(26.11111, 19.58594, 45.84444)",
+            "(28.41667, 20.17311, 45.91667)",
+            "(30.72223, 20.76028, 45.98889)",
+            "(33.02778, 21.34745, 46.06111)",
+            "(35.33334, 21.93462, 46.13334)",
+            "(37.63889, 22.57401, 46.20556)",
+            "(39.94445, 23.21341, 46.27778)",
+            "(42.25, 23.85281, 46.35)",
+            "(44.55556, 24.4922, 46.42222)",
+            "(46.86111, 25.17036, 46.49445)",
+            "(49.16667, 25.84853, 46.56667)",
+            "(51.47222, 26.52669, 46.63889)",
+            "(53.77778, 27.20485, 46.71111)",
+            "(56.08334, 27.90364, 46.78333)",
+            "(58.38889, 28.60242, 46.85556)",
+            "(60.69444, 29.30121, 46.92778)",
+            "(63.0, 30.0, 47.0)"
+          ],
+          "project": false,
+          "project_cost": 28.04,
+          "project_id": "floor_desk_top_0",
+          "state": "ACTIVE",
+          "to": "DESK_TOP",
+          "type": "grapple"
+        }
+      ],
+      "start": "FLOOR",
+      "state": "REACHABLE",
+      "target": "DESK_TOP",
+      "total_cost": 0.0
+    },
+    "route_request": {
+      "path": [],
+      "reachable": false,
+      "reason": "no active navigation route between FLOOR and DESK_TOP"
+    },
+    "state": "TRAVERSAL_DISPATCHED",
+    "surface": "DESK_TOP",
+    "traveler_id": 36,
+    "traversal_task_id": 287
+  },
+  "candidate_id": "grapple-v001",
+  "captures": [
+    {
+      "camera": {
+        "distance_inches": 76.0,
+        "focus": "(-20.0, 7.5, 46.0)",
+        "fov_degrees": 55.0,
+        "tilt_degrees": 68.0,
+        "yaw_radians": 0.6
+      },
+      "draw_calls": 1879.0,
+      "fps": 60.0,
+      "path": "C:\\Users\\Zero\\python_projects\\ai\\roomscale\\art\\grapple\\iterations\\v001\\render-runs\\run-003/construction.png",
+      "phase": "construction",
+      "primitives": 753932.0,
+      "production_path": true
+    },
+    {
+      "camera": {
+        "distance_inches": 175.0,
+        "focus": "(2.0, 15.0, 42.0)",
+        "fov_degrees": 55.0,
+        "tilt_degrees": 50.0,
+        "yaw_radians": 0.55
+      },
+      "draw_calls": 1383.0,
+      "fps": 60.0,
+      "path": "C:\\Users\\Zero\\python_projects\\ai\\roomscale\\art\\grapple\\iterations\\v001\\render-runs\\run-003/grapple-deployment.png",
+      "phase": "grapple-deployment",
+      "primitives": 499018.0,
+      "production_path": true
+    },
+    {
+      "camera": {
+        "distance_inches": 32.0,
+        "focus": "(-20.0, 5.0, 46.0)",
+        "fov_degrees": 55.0,
+        "tilt_degrees": 34.0,
+        "yaw_radians": 0.6
+      },
+      "draw_calls": 1829.0,
+      "fps": 60.0,
+      "path": "C:\\Users\\Zero\\python_projects\\ai\\roomscale\\art\\grapple\\iterations\\v001\\render-runs\\run-003/grapple-complete.png",
+      "phase": "grapple-complete",
+      "primitives": 788880.0,
+      "production_path": true
+    },
+    {
+      "camera": {
+        "distance_inches": 285.0,
+        "focus": "(0.0, 10.0, 0.0)",
+        "fov_degrees": 55.0,
+        "tilt_degrees": 50.0,
+        "yaw_radians": 0.45
+      },
+      "draw_calls": 1396.0,
+      "fps": 58.0,
+      "path": "C:\\Users\\Zero\\python_projects\\ai\\roomscale\\art\\grapple\\iterations\\v001\\render-runs\\run-003/room-scale.png",
+      "phase": "room-scale",
+      "primitives": 526865.0,
+      "production_path": true
+    },
+    {
+      "camera": {
+        "distance_inches": 22.0,
+        "focus": "(-20.0, 5.6, 46.0)",
+        "fov_degrees": 55.0,
+        "tilt_degrees": 38.0,
+        "yaw_radians": 0.62
+      },
+      "draw_calls": 1658.0,
+      "fps": 58.0,
+      "path": "C:\\Users\\Zero\\python_projects\\ai\\roomscale\\art\\grapple\\iterations\\v001\\render-runs\\run-003/asset-three-quarter.png",
+      "phase": "asset-three-quarter",
+      "primitives": 675772.0,
+      "production_path": true
+    },
+    {
+      "camera": {
+        "distance_inches": 22.0,
+        "focus": "(-20.0, 5.6, 46.0)",
+        "fov_degrees": 55.0,
+        "tilt_degrees": 38.0,
+        "yaw_radians": 3.76159265358979
+      },
+      "draw_calls": 272.0,
+      "fps": 58.0,
+      "path": "C:\\Users\\Zero\\python_projects\\ai\\roomscale\\art\\grapple\\iterations\\v001\\render-runs\\run-003/asset-opposite-three-quarter.png",
+      "phase": "asset-opposite-three-quarter",
+      "primitives": 195756.0,
+      "production_path": true
+    },
+    {
+      "camera": {
+        "distance_inches": 19.0,
+        "focus": "(-20.0, 5.6, 46.0)",
+        "fov_degrees": 55.0,
+        "tilt_degrees": 38.0,
+        "yaw_radians": 2.1907963267949
+      },
+      "draw_calls": 304.0,
+      "fps": 48.0,
+      "path": "C:\\Users\\Zero\\python_projects\\ai\\roomscale\\art\\grapple\\iterations\\v001\\render-runs\\run-003/asset-profile.png",
+      "phase": "asset-profile",
+      "primitives": 199836.0,
+      "production_path": true
+    },
+    {
+      "camera": {
+        "distance_inches": 16.0,
+        "focus": "(-19.2, 6.0, 46.7)",
+        "fov_degrees": 55.0,
+        "tilt_degrees": 25.0,
+        "yaw_radians": 0.25
+      },
+      "draw_calls": 2351.0,
+      "fps": 48.0,
+      "path": "C:\\Users\\Zero\\python_projects\\ai\\roomscale\\art\\grapple\\iterations\\v001\\render-runs\\run-003/asset-detail.png",
+      "phase": "asset-detail",
+      "primitives": 1049704.0,
+      "production_path": true
+    }
+  ],
+  "construction_state": {
+    "active_stage": "complete",
+    "cable_deployed": true,
+    "completed_stages": 3,
+    "created": true,
+    "delivered": {
+      "mechanical_parts": 3,
+      "metal": 4,
+      "wood": 4
+    },
+    "floor_target_connected": true,
+    "from_region": "FLOOR",
+    "picked_up": {
+      "mechanical_parts": 3,
+      "metal": 4,
+      "wood": 4
+    },
+    "progress_percent": 100.0,
+    "project_history": [
+      {
+        "project": {
+          "capability": "grapple",
+          "capability_score": 13.4,
+          "cost": 28.04,
+          "destination_position": "(63.0, 30.0, 47.0)",
+          "edge_id": "floor_desk_top_0",
+          "from": "FLOOR",
+          "resources": {
+            "mechanical_parts": 3,
+            "metal": 4,
+            "wood": 4
+          },
+          "source_position": "(68.0, 0.0, 47.0)",
+          "to": "DESK_TOP"
+        },
+        "result": {
+          "active_stage": "complete",
+          "cable_deployed": true,
+          "completed_stages": 3,
+          "created": true,
+          "delivered": {
+            "mechanical_parts": 3,
+            "metal": 4,
+            "wood": 4
+          },
+          "floor_target_connected": true,
+          "from_region": "FLOOR",
+          "picked_up": {
+            "mechanical_parts": 3,
+            "metal": 4,
+            "wood": 4
+          },
+          "progress_percent": 100.0,
+          "project_id": "floor_desk_top_0",
+          "required": {
+            "mechanical_parts": 3,
+            "metal": 4,
+            "wood": 4
+          },
+          "site": "(-20.0, 0.0, 46.0)",
+          "stage_count": 3,
+          "stage_gates": [
+            {
+              "mechanical_parts": 0,
+              "metal": 1,
+              "wood": 2
+            },
+            {
+              "mechanical_parts": 3,
+              "metal": 4,
+              "wood": 4
+            },
+            {
+              "mechanical_parts": 3,
+              "metal": 4,
+              "wood": 4
+            }
+          ],
+          "stage_progress": 0.0,
+          "state": "TRAVERSAL_ACTIVATED",
+          "stockpile": {
+            "mechanical_parts": 0,
+            "metal": 0,
+            "wood": 0
+          },
+          "target_region": "DESK_TOP",
+          "traversal": {},
+          "traversal_deployed": true,
+          "traversal_type": "grapple"
+        }
+      }
+    ],
+    "project_id": "floor_desk_top_0",
+    "required": {
+      "mechanical_parts": 3,
+      "metal": 4,
+      "wood": 4
+    },
+    "site": "(-20.0, 0.0, 46.0)",
+    "stage_count": 3,
+    "stage_gates": [
+      {
+        "mechanical_parts": 0,
+        "metal": 1,
+        "wood": 2
+      },
+      {
+        "mechanical_parts": 3,
+        "metal": 4,
+        "wood": 4
+      },
+      {
+        "mechanical_parts": 3,
+        "metal": 4,
+        "wood": 4
+      }
+    ],
+    "stage_progress": 0.0,
+    "state": "TRAVERSAL_ACTIVATED",
+    "stockpile": {
+      "mechanical_parts": 0,
+      "metal": 0,
+      "wood": 0
+    },
+    "target_region": "DESK_TOP",
+    "traversal": {
+      "citizen_id": 36,
+      "connection_ids": [
+        "floor_desk_top_0"
+      ],
+      "connection_types": [
+        "grapple"
+      ],
+      "expected_route_length": 150.862589120865,
+      "state": "TRAVERSE_IN_PROGRESS",
+      "target_region": "DESK_TOP",
+      "task_id": 287
+    },
+    "traversal_deployed": true,
+    "traversal_type": "grapple"
+  },
+  "engine": "4.7.2-stable (official)",
+  "loaded_asset_path": "res://art/grapple/iterations/v001/generated/grapple.tscn",
+  "loaded_candidate_id": "grapple-v001",
+  "performance": {
+    "draw_calls": 2351.0,
+    "fps": 48.0,
+    "objects": 2351.0,
+    "primitives": 1049704.0
+  },
+  "production_path": true,
+  "renderer": "gl_compatibility",
+  "room_id": "room_photo_luna",
+  "schema_version": 1,
+  "viewport": [
+    1280,
+    720
+  ]
+}

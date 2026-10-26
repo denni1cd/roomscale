@@ -1,0 +1,67 @@
+{
+  "deterministic_seed": 35,
+  "generator_command": [
+    "C:/Users/Zero/python_projects/ai/roomscale/.tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generate_citizen_candidate.gd"
+  ],
+  "import_configuration": {
+    "candidate_root": "Node3D",
+    "embedded_materials": true,
+    "format": "Godot PackedScene",
+    "up_axis": "Y"
+  },
+  "instructions": "Refine citizen-v001 in response to its production run-009 close views. Narrow the flat cap brim so it frames rather than hides the face and twin goggles; reduce the cap crown width; shrink both square shoulder pads to compact fitted plates; omit all candidate-owned harness/yoke/straps because the production rig owns the live role pack; add a restrained side-winding detail and a finish ridge so the cap remains clockwork-readable from the side. Retain the tailored coat, face, paired brass goggles, cuffs, gloves, boots, established materials, exact five animator pivots, half-inch gameplay scale, and production-owned role attachments. Do not change citizen behavior, camera conditions, or gameplay geometry.",
+  "material_method": "Godot procedural miniature materials: woven fabric, leather, iron, brass, copper, warm skin, and dark teal glass",
+  "method": "tailored_clockwork_worker_v2",
+  "parameters": {
+    "outputs": [
+      "citizen.tscn"
+    ],
+    "pose_rig": [
+      "Body",
+      "LeftArm",
+      "RightArm",
+      "LeftLeg",
+      "RightLeg"
+    ],
+    "style": "tailored_clockwork_worker_v2",
+    "targeted_changes": {
+      "candidate_harness": "omitted; production role rig owns pack and harness",
+      "cap_brim_scale_xz": 0.84,
+      "cap_crown_scale_xz": 0.88,
+      "cap_details": [
+        "side winding",
+        "brass hub",
+        "finish ridge"
+      ],
+      "shoulder_plate_inches": [
+        0.043,
+        0.03,
+        0.052
+      ]
+    }
+  },
+  "post_processing": [
+    "pack generated geometry into a native Godot PackedScene with embedded materials",
+    "preserve all candidate descendants under the scene root",
+    "import and verify dimensions before standardized production rendering"
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "art/citizen/brief.json",
+    "art/citizen/iterations/v001/recipe.json",
+    "art/citizen/iterations/v001/evaluation.json",
+    "art/citizen/iterations/v001/render-runs/run-009/asset-three-quarter.png",
+    "art/citizen/iterations/v001/render-runs/run-009/asset-profile.png",
+    "art/citizen/iterations/v001/render-runs/run-009/asset-detail.png",
+    "scripts/art_factory/generate_citizen_candidate.gd",
+    "scripts/visuals/citizen_art_adapter.gd",
+    "scripts/citizen_agent.gd"
+  ],
+  "tool": "Godot Engine",
+  "tool_version": "4.7.2.stable.official.ed1daf0bf"
+}

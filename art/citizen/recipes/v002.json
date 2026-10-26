@@ -1,0 +1,51 @@
+{
+  "method": "tailored_clockwork_worker_v2",
+  "instructions": "Refine citizen-v001 in response to its production run-009 close views. Narrow the flat cap brim so it frames rather than hides the face and twin goggles; reduce the cap crown width; shrink both square shoulder pads to compact fitted plates; omit all candidate-owned harness/yoke/straps because the production rig owns the live role pack; add a restrained side-winding detail and a finish ridge so the cap remains clockwork-readable from the side. Retain the tailored coat, face, paired brass goggles, cuffs, gloves, boots, established materials, exact five animator pivots, half-inch gameplay scale, and production-owned role attachments. Do not change citizen behavior, camera conditions, or gameplay geometry.",
+  "parameters": {
+    "style": "tailored_clockwork_worker_v2",
+    "pose_rig": ["Body", "LeftArm", "RightArm", "LeftLeg", "RightLeg"],
+    "outputs": ["citizen.tscn"],
+    "targeted_changes": {
+      "cap_brim_scale_xz": 0.84,
+      "cap_crown_scale_xz": 0.88,
+      "shoulder_plate_inches": [0.043, 0.03, 0.052],
+      "candidate_harness": "omitted; production role rig owns pack and harness",
+      "cap_details": ["side winding", "brass hub", "finish ridge"]
+    }
+  },
+  "source_inputs": [
+    "art/citizen/brief.json",
+    "art/citizen/iterations/v001/recipe.json",
+    "art/citizen/iterations/v001/evaluation.json",
+    "art/citizen/iterations/v001/render-runs/run-009/asset-three-quarter.png",
+    "art/citizen/iterations/v001/render-runs/run-009/asset-profile.png",
+    "art/citizen/iterations/v001/render-runs/run-009/asset-detail.png",
+    "scripts/art_factory/generate_citizen_candidate.gd",
+    "scripts/visuals/citizen_art_adapter.gd",
+    "scripts/citizen_agent.gd"
+  ],
+  "tool": "Godot Engine",
+  "tool_version": "4.7.2.stable.official.ed1daf0bf",
+  "post_processing": [
+    "pack generated geometry into a native Godot PackedScene with embedded materials",
+    "preserve all candidate descendants under the scene root",
+    "import and verify dimensions before standardized production rendering"
+  ],
+  "material_method": "Godot procedural miniature materials: woven fabric, leather, iron, brass, copper, warm skin, and dark teal glass",
+  "import_configuration": {
+    "format": "Godot PackedScene",
+    "candidate_root": "Node3D",
+    "up_axis": "Y",
+    "embedded_materials": true
+  },
+  "deterministic_seed": 35,
+  "generator_command": [
+    "C:/Users/Zero/python_projects/ai/roomscale/.tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generate_citizen_candidate.gd"
+  ],
+  "schema_version": 1
+}

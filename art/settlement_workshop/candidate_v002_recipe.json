@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "method": "godot_procedural_clockwork_settlement",
+  "instructions": "Refine the blocked first attempt after fixing the shared generator parse error, and improve the workshop rather than merely repeating the blockout. Replace broad uniform wall and roof slabs with separated wall-board courses, exposed framing, seven copper roof seams per wing, a riveted boiler with distinct hoops, copper pressure lines and gauge, door straps, divided warm glazing, a joined workbench, tools, and an exposed flywheel. Keep the open-front inspection silhouette and presentation-only gameplay boundary.",
+  "parameters": {
+    "refinement": "joinery_and_materials_v2",
+    "outputs": ["settlement_workshop.tscn"]
+  },
+  "source_inputs": ["art/settlement_workshop/brief.json", "scripts/art_factory/generate_settlement_candidate.gd", "scripts/visuals/visual_geometry.gd", "scripts/visuals/material_library.gd"],
+  "tool": "RoomScale Art Factory deterministic Godot generator",
+  "tool_version": "Godot 4.7.2-stable official",
+  "post_processing": ["Pack generated Node3D and owned descendants into a native PackedScene"],
+  "material_method": "Shared RoomScale PBR material library with deterministic procedural textures",
+  "import_configuration": {"format": "native .tscn PackedScene", "renderer": "gl_compatibility", "scale": "inches"},
+  "deterministic_seed": 2505,
+  "generator_command": [".tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe", "--headless", "--path", "{project_root}", "--script", "res://scripts/art_factory/generate_settlement_candidate.gd"]
+}

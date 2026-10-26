@@ -1,0 +1,55 @@
+{
+  "method": "tailored_clockwork_worker_v4",
+  "instructions": "Create a new challenger from the citizen-v003 recipe while addressing its recorded technical-validation failure. v3's compact cap, raised brim, and domed shoulders are the chosen visual repair, but its total depth measured 0.1665 inches and narrowly exceeded the ArtBrief's 20 percent dimension tolerance. Increase only the brim's horizontal scale from 0.70 to 0.72 (radius 0.0756 inches) to restore dimension compliance while keeping the brim close to the head; retain its raised center and 0.012-inch thickness. Preserve all other v3 geometry, materials, five exact animator pivots, normal production role attachments, and unchanged rendering cameras. Do not scale the full citizen or modify gameplay dimensions.",
+  "parameters": {
+    "style": "tailored_clockwork_worker_v4",
+    "pose_rig": ["Body", "LeftArm", "RightArm", "LeftLeg", "RightLeg"],
+    "outputs": ["citizen.tscn"],
+    "targeted_changes": {
+      "cap_brim_scale_xz": 0.72,
+      "cap_brim_radius_inches": 0.0756,
+      "cap_brim_center_y_inches": 0.461,
+      "cap_brim_thickness_inches": 0.012,
+      "preserved_v3_changes": ["raised compact cap", "small front gear", "side winding", "domed shoulder plates"],
+      "dimension_tolerance_repair": "adjust cap brim only; do not scale the full asset",
+      "camera_conditions": "unchanged standardized RoomScale production capture"
+    }
+  },
+  "source_inputs": [
+    "art/citizen/brief.json",
+    "art/citizen/iterations/v003/recipe.json",
+    "art/citizen/iterations/v003/technical-validation.json",
+    "art/citizen/iterations/v003/technical-validation.log",
+    "art/citizen/iterations/v002/evaluation.json",
+    "art/citizen/iterations/v002/render-runs/run-001/asset-three-quarter.png",
+    "art/citizen/iterations/v002/render-runs/run-001/asset-profile.png",
+    "art/citizen/iterations/v002/render-runs/run-001/asset-detail.png",
+    "scripts/art_factory/generate_citizen_candidate.gd",
+    "scripts/visuals/citizen_art_adapter.gd",
+    "scripts/citizen_agent.gd"
+  ],
+  "tool": "Godot Engine",
+  "tool_version": "4.7.2.stable.official.ed1daf0bf",
+  "post_processing": [
+    "pack generated geometry into a native Godot PackedScene with embedded materials",
+    "preserve all candidate descendants under the scene root",
+    "import and verify dimensions before standardized production rendering"
+  ],
+  "material_method": "Godot procedural miniature materials: woven fabric, leather, iron, brass, copper, warm skin, and dark teal glass",
+  "import_configuration": {
+    "format": "Godot PackedScene",
+    "candidate_root": "Node3D",
+    "up_axis": "Y",
+    "embedded_materials": true
+  },
+  "deterministic_seed": 35,
+  "generator_command": [
+    "C:/Users/Zero/python_projects/ai/roomscale/.tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generate_citizen_candidate.gd"
+  ],
+  "schema_version": 1
+}

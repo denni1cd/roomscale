@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "method": "godot_procedural_room_furniture",
+  "instructions": "Build the first importable object from the brief envelope and core recognizable parts; keep render geometry presentation-only.",
+  "parameters": {
+    "refinement": "blockout_v1",
+    "outputs": [
+      "hammock_with_stand.tscn"
+    ]
+  },
+  "source_inputs": [
+    "art/hammock_with_stand/brief.json",
+    "scripts/art_factory/generate_furniture_candidate.gd",
+    "scripts/visuals/visual_geometry.gd",
+    "scripts/visuals/material_library.gd"
+  ],
+  "tool": "RoomScale Art Factory deterministic Godot generator",
+  "tool_version": "Godot 4.7.2-stable official",
+  "post_processing": [
+    "Pack generated Node3D and owned descendants into a native PackedScene"
+  ],
+  "material_method": "Shared lit RoomScale material library with deterministic wood, fabric, iron, rubber, and brass materials",
+  "import_configuration": {
+    "format": "native .tscn PackedScene",
+    "renderer": "gl_compatibility",
+    "scale": "inches"
+  },
+  "deterministic_seed": 2515,
+  "generator_command": [
+    ".tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generate_furniture_candidate.gd"
+  ]
+}
