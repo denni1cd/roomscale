@@ -322,14 +322,23 @@ class ArtEvaluation:
                     f"visual_gate.{name} must include an explicit answer, pass, and evidence"
                 )
                 return
-            if not str(answer.get("answer", "")).strip():
+            answer_text = str(answer.get("answer", "")).strip()
+            answer_disposition = _yes_no_disposition(answer_text)
+            if not answer_text:
                 errors.append(
                     f"visual_gate.{name}.answer must explicitly answer the review question"
                 )
+            elif answer_disposition is None:
+                errors.append(
+                    f"visual_gate.{name}.answer must be exactly Yes or No; explain in evidence"
+                )
             if not isinstance(answer.get("pass"), bool):
                 errors.append(f"visual_gate.{name}.pass must be a boolean")
-            elif not answer["pass"]:
-                failures.append(f"visual gate failed: {description}")
+            else:
+                if answer_disposition is not None and answer_disposition != answer["pass"]:
+                    errors.append(f"visual_gate.{name}.answer contradicts its pass boolean")
+                if not answer["pass"]:
+                    failures.append(f"visual gate failed: {description}")
             if not str(answer.get("evidence", "")).strip():
                 errors.append(f"visual_gate.{name}.evidence is required")
 
@@ -345,10 +354,17 @@ class ArtEvaluation:
         if not isinstance(craft, dict):
             errors.append("visual_gate.craftsmanship must answer all seven manufacturing checks")
         else:
-            if not str(craft.get("answer", "")).strip():
+            craft_answer = str(craft.get("answer", "")).strip()
+            craft_disposition = _yes_no_disposition(craft_answer)
+            if not craft_answer:
                 errors.append(
                     "visual_gate.craftsmanship.answer must explicitly answer whether all manufacturing details are believable"
                 )
+            elif craft_disposition is None:
+                errors.append(
+                    "visual_gate.craftsmanship.answer must be exactly Yes or No; explain in evidence"
+                )
+            craft_checks: list[bool] = []
             for check in VISUAL_CRAFT_CHECKS:
                 value = craft.get(check)
                 if not isinstance(value, dict):
@@ -358,12 +374,20 @@ class ArtEvaluation:
                     continue
                 if not isinstance(value.get("pass"), bool):
                     errors.append(f"visual_gate.craftsmanship.{check}.pass must be a boolean")
-                elif not value["pass"]:
-                    failures.append(
-                        f"visual gate failed: craftsmanship {check.replace('_', ' ')} is not believable"
-                    )
+                else:
+                    craft_checks.append(value["pass"])
+                    if not value["pass"]:
+                        failures.append(
+                            f"visual gate failed: craftsmanship {check.replace('_', ' ')} is not believable"
+                        )
                 if not str(value.get("evidence", "")).strip():
                     errors.append(f"visual_gate.craftsmanship.{check}.evidence is required")
+            if len(craft_checks) == len(VISUAL_CRAFT_CHECKS):
+                craft_passed = all(craft_checks)
+                if craft_disposition is not None and craft_disposition != craft_passed:
+                    errors.append(
+                        "visual_gate.craftsmanship.answer contradicts its seven pass checks"
+                    )
 
         photo = gate.get("photo_character")
         if not isinstance(photo, dict) or not isinstance(photo.get("applicable"), bool):
@@ -375,23 +399,36 @@ class ArtEvaluation:
                 "visual_gate.photo_character applicability must match whether the ArtBrief has source imagery"
             )
         elif photo["applicable"]:
-            if not str(photo.get("answer", "")).strip():
+            photo_answer = str(photo.get("answer", "")).strip()
+            photo_disposition = _yes_no_disposition(photo_answer)
+            if not photo_answer:
                 errors.append(
                     "visual_gate.photo_character.answer must explicitly answer the source-character question"
+                )
+            elif photo_disposition is None:
+                errors.append(
+                    "visual_gate.photo_character.answer must be exactly Yes or No; explain in evidence"
                 )
             if not isinstance(photo.get("pass"), bool):
                 errors.append(
                     "visual_gate.photo_character.pass must be a boolean when a photograph exists"
                 )
-            elif not photo["pass"]:
-                failures.append(
-                    "visual gate failed: render does not materially approach the photographed object's visual character"
-                )
+            else:
+                if photo_disposition is not None and photo_disposition != photo["pass"]:
+                    errors.append("visual_gate.photo_character.answer contradicts its pass boolean")
+                if not photo["pass"]:
+                    failures.append(
+                        "visual gate failed: render does not materially approach the photographed object's visual character"
+                    )
             if not str(photo.get("evidence", "")).strip():
                 errors.append("visual_gate.photo_character.evidence is required when applicable")
         elif not str(photo.get("answer", "")).strip():
             errors.append(
                 "visual_gate.photo_character.answer must explain why this question is not applicable"
+            )
+        elif str(photo.get("answer", "")).strip().lower() not in {"not applicable", "n/a"}:
+            errors.append(
+                "visual_gate.photo_character.answer must be exactly Not applicable or N/A"
             )
         elif photo.get("pass") is not None:
             errors.append("visual_gate.photo_character.pass must be null when not applicable")
@@ -413,7 +450,17 @@ class ArtEvaluation:
 
         if not allow_stylization:
             evidence_text = " ".join(
-                [str(value) for value in self.observations.values()] + _collect_strings(gate)
+                [
+                    str(value)
+                    for value in (
+                        list(self.observations.values())
+                        + self.hard_fail_reasons
+                        + self.defects
+                        + self.likely_causes
+                        + [self.next_action_hypothesis, self.incumbent_comparison]
+                    )
+                ]
+                + _collect_strings(gate)
             )
             if _has_unacceptable_style_language(evidence_text):
                 failures.append(
@@ -435,3 +482,12 @@ def _collect_strings(value: Any) -> list[str]:
     if isinstance(value, (list, tuple)):
         return [part for nested in value for part in _collect_strings(nested)]
     return []
+
+
+def _yes_no_disposition(answer: str) -> bool | None:
+    normalized = answer.strip().lower()
+    if normalized == "yes":
+        return True
+    if normalized == "no":
+        return False
+    return None

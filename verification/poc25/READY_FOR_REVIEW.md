@@ -27,7 +27,7 @@ The GitHub run `40256472981` for `04e75d2842346ff7262ca9268c37cdb2c4d75807` is c
 | AC-01 Approved Execution Contract | Satisfied by prior workflow | User authorized implementation with “Okay go for it” after the prior contract-review step. Contract workflow was not recreated here. |
 | AC-02 Baseline Preserved | PASS | `baseline/RoomScale_POC_2.5_Baseline.md`; baseline commit, fast suite, Room A/B, canonical room, screenshots, and the known pre-existing graphical-launch redirect failure are recorded. |
 | AC-03 No Manual Art Requirement | PASS | Candidates are produced by recorded local Godot recipes and scripts; see candidate `recipe.json` and `generation.log` files under `art/`. No user modeling, texturing, rigging, or cleanup is required. |
-| AC-04 Art Factory Exists | PASS | `scripts/art_factory/` and `scripts/test_art_factory.py`; 18 unit tests pass after the visual-gate repair, including low-poly, blocky, and placeholder description/flag regressions. |
+| AC-04 Art Factory Exists | PASS | `scripts/art_factory/` and `scripts/test_art_factory.py`; 19 unit tests pass after the visual-gate repair, including low-poly, blocky, placeholder, description-field, and answer-consistency regressions. |
 | AC-05 Durable Art Brief | PASS | Briefs are preserved under `art/` for the desk, grapple, citizen, four settlement structures, office chair, rocking chair, `hammock_with_stand`, and display cabinet. The hammock ID matches its stable RoomDefinition semantic identity. |
 | AC-06 Recipe Preservation | PASS | Candidate-local `recipe.json` files preserve method, instructions, tool/version, parameters, inputs, and import settings. Failed and blocked attempts remain in iteration folders. |
 | AC-07 Production Integration | PASS | `scripts/art_factory/render_harness.gd` resolves candidates through the production scene and records the exact path/candidate in receipts. |
@@ -38,7 +38,7 @@ The GitHub run `40256472981` for `04e75d2842346ff7262ca9268c37cdb2c4d75807` is c
 | AC-12 Challenger vs Incumbent | PASS | Pilot evaluations identify best-so-far candidates; workshop v004 is compared with v002 and workarea v005 with v003 under equivalent current renderer/camera settings. Technically failed/blocked candidates are not mislabeled as visual incumbents. |
 | AC-13 Best-So-Far Preservation | PASS | `scripts/art_factory/factory.py` gates promotion against the registry incumbent, comparison result, and score regressions; rejected/blocked candidate folders remain. |
 | AC-14 Evidence-Based Scoring | PASS | Accepted and continued `evaluation.json` records provide an observation for each applicable rubric score and link registered production renders. |
-| AC-15 Hard Anti-Blockiness Gate | REPAIRED; pilot gate unresolved | Evaluator now requires explicit neutral-read, close-inspection, craftsmanship, and photo-character answers and blocks unapproved style flags or affirmative style descriptions. Reassessment: grapple passes; desk and citizen fail. |
+| AC-15 Hard Anti-Blockiness Gate | REPAIRED; pilot gate unresolved | Evaluator now requires exact Yes/No gate answers reconciled with their pass booleans, all seven craftsmanship checks reconciled with the craftsmanship answer, and N/A when no source photo exists. It scans every evaluation description/evidence field and blocks unapproved style flags or affirmative style descriptions. Reassessment: grapple passes; desk and citizen fail. |
 | AC-16 Desk Pilot Pass | FAIL — repair required | Preserve `desk-v007` as best-so-far. `desk-v009` is the distinct CAD/PBR challenger; its matched production renders and evaluation show no visual pass and score source resemblance 2/5. Eight challenger attempts are exhausted. Gameplay geometry remains RoomDefinition-owned. |
 | AC-17 Grapple Pilot Pass | PASS — visual gate reassessed | `art/grapple/iterations/v006/visual-gate-reassessment.json` records affirmative answers across the visual gate with matched close/deployment evidence. Production traversal is exercised by the recorded smoke evidence and current Room A/Room B reruns. |
 | AC-18 Citizen Pilot Pass | FAIL — repair required | `art/citizen/iterations/v007/visual-gate-reassessment.json` rejects the unapproved stylized/block-form read. Preserve the current registry entry and history; the pilot does not pass visual acceptance. |
@@ -67,7 +67,7 @@ The GitHub run `40256472981` for `04e75d2842346ff7262ca9268c37cdb2c4d75807` is c
 
 ## Final Verification Results
 
-- Art Factory unit tests: **18 passed** after the repair (`final/repair-rerun/` test invocation; prior 14-test baseline log retained).
+- Art Factory unit tests: **19 passed** after the latest evaluator repair; Ruff lint and format checks pass locally.
 - Repository fast deterministic suite: **PASS** (`final/fast-rerun/` and `final/fast-suite-rerun.log`). It was rerun after the Art Factory runtime-error guard was added, using the existing `.venv` Python because the shell's default Python does not have Ruff installed.
 - Visual resolver including Windows CRLF canonical hashing: **PASS** (`final/repair-rerun/visual-resolver.log`).
 - Room A, Room B, canonical reconstructed room: **PASS** (`final/room-a-smoke.log`, `final/room-b-smoke.log`, `final/canonical-room-smoke.log`).
@@ -85,10 +85,10 @@ The GitHub run `40256472981` for `04e75d2842346ff7262ca9268c37cdb2c4d75807` is c
 
 ### Repair rerun results
 
-- Art Factory unit suite: **18 passed**; Ruff checks pass after the explicit-answer and style-language gate changes.
+- Art Factory unit suite: **19 passed**; Ruff lint and format checks pass after the description-scan and answer-consistency repairs.
 - Fast deterministic Godot suite: **PASS** (`final/repair-rerun/fast.log`).
 - Civilization definitions and Verdant presentation contract: **PASS** (`final/repair-rerun/civilizations/`).
 - Clockwork Room A smoke: **PASS**, 50 citizens, navigation, deliveries, construction, grapple traversal, and M6 exploration (`final/repair-rerun/smoke-room_a-clockwork.log`).
 - Verdant Room A smoke: **FAIL — prerequisite/out-of-scope dirty POC 3/5 worktree issue**, not a POC 2.5 regression. The modified construction code deploys to `current_project.destination_position` while the Verdant visual anchor follows `target_anchor`; CI run 40256472981 was on committed `04e75d2`, whose construction system does not contain that divergence. See `final/ci-04e75d2-classification.md`. The unrelated edits remain untouched.
-- Clockwork Room B smoke: rerun underway at report preparation; result will be recorded after completion.
-- GitHub remote rerun on the repair commit: required after push; not yet observed.
+- Clockwork Room B smoke: **PASS**, 50 citizens, navigation, deliveries, construction, grapple traversal, and M6 exploration (`final/repair-rerun/smoke-room_b-clockwork.log`).
+- GitHub run `40347158916` on `23a3d70`: **all six jobs passed** (Python quality, Clockwork and Verdant Room A/Room B smoke, and conflict). The final evaluator description-scan and answer-consistency repair is newer and will require its own full run.

@@ -74,17 +74,17 @@ def make_scores(raised: str = "semantic_recognizability") -> dict[str, int]:
 def make_visual_gate(photo_applicable: bool = False) -> dict[str, object]:
     return {
         "neutral_viewer_realism": {
-            "answer": "Yes, the asset reads as realistic furniture.",
+            "answer": "Yes",
             "pass": True,
             "evidence": "The production render reads as a convincingly constructed physical asset.",
         },
         "close_inspection": {
-            "answer": "Yes, the close render holds up without primitive construction.",
+            "answer": "Yes",
             "pass": True,
             "evidence": "The close production render holds together without obvious primitive construction.",
         },
         "craftsmanship": {
-            "answer": "Yes, all seven listed manufacturing details look believable.",
+            "answer": "Yes",
             **{
                 check: {
                     "pass": True,
@@ -95,9 +95,7 @@ def make_visual_gate(photo_applicable: bool = False) -> dict[str, object]:
         },
         "photo_character": {
             "applicable": photo_applicable,
-            "answer": "Yes, the render approaches the source object's visual character."
-            if photo_applicable
-            else "Not applicable; the brief has no source photograph.",
+            "answer": "Yes" if photo_applicable else "N/A",
             "pass": True if photo_applicable else None,
             "evidence": "The production render materially approaches the photographed object."
             if photo_applicable
@@ -378,14 +376,52 @@ class ArtFactoryTest(unittest.TestCase):
         evaluation.observations["geometric_detail"] = "The model still looks like a placeholder."
         self.assertTrue(any("unapproved low-poly" in error for error in evaluation.validate()))
 
+        for field_name in ("defects", "likely_causes"):
+            evaluation = make_evaluation("test-desk-v001")
+            getattr(evaluation, field_name).append("The render still reads as primitive geometry.")
+            self.assertTrue(any("unapproved low-poly" in error for error in evaluation.validate()))
+
+        evaluation = make_evaluation("test-desk-v001")
+        evaluation.next_action_hypothesis = "The current result remains simplified programmer art."
+        self.assertTrue(any("unapproved low-poly" in error for error in evaluation.validate()))
+
         evaluation = make_evaluation("test-desk-v001")
         evaluation.visual_gate["close_inspection"]["answer"] = (
             "No, it still reads as low-poly construction."
         )
         self.assertTrue(any("unapproved low-poly" in error for error in evaluation.validate()))
 
+    def test_visual_gate_answers_must_match_their_pass_evidence(self) -> None:
+        evaluation = make_evaluation("test-desk-v001")
+        evaluation.visual_gate["neutral_viewer_realism"]["answer"] = "Yes, but still stylized."
+        self.assertTrue(
+            any("must be exactly Yes or No" in error for error in evaluation.validate())
+        )
+
+        evaluation = make_evaluation("test-desk-v001")
+        evaluation.visual_gate["neutral_viewer_realism"]["answer"] = "No"
+        self.assertTrue(
+            any("answer contradicts its pass boolean" in error for error in evaluation.validate())
+        )
+
+        evaluation = make_evaluation("test-desk-v001")
+        evaluation.visual_gate["craftsmanship"]["answer"] = "No"
+        self.assertTrue(
+            any("craftsmanship.answer contradicts" in error for error in evaluation.validate())
+        )
+
+        evaluation = make_evaluation("test-desk-v001", source_resemblance=True)
+        evaluation.visual_gate["photo_character"]["answer"] = "No"
+        self.assertTrue(
+            any(
+                "photo_character.answer contradicts" in error
+                for error in evaluation.validate(source_resemblance_required=True)
+            )
+        )
+
         repair = make_evaluation("test-desk-v001", decision="continue")
         repair.visual_gate["neutral_viewer_realism"]["pass"] = False
+        repair.visual_gate["neutral_viewer_realism"]["answer"] = "No"
         repair.hard_fail_reasons = ["does not read as realistic furniture"]
         self.assertEqual(repair.validate(), [])
 
