@@ -386,6 +386,10 @@ class ArtFactoryTest(unittest.TestCase):
         self.assertTrue(any("unapproved low-poly" in error for error in evaluation.validate()))
 
         evaluation = make_evaluation("test-desk-v001")
+        evaluation.incumbent_comparison = "The challenger remains primitive geometry."
+        self.assertTrue(any("unapproved low-poly" in error for error in evaluation.validate()))
+
+        evaluation = make_evaluation("test-desk-v001")
         evaluation.visual_gate["close_inspection"]["answer"] = (
             "No, it still reads as low-poly construction."
         )
