@@ -41,7 +41,9 @@ def make_brief(
         iteration_budget=8,
         source_room_definition=source_room_definition,
         allow_stylization=allow_stylization,
-        stylization_rationale="The requested target is intentionally stylized." if allow_stylization else "",
+        stylization_rationale="The requested target is intentionally stylized."
+        if allow_stylization
+        else "",
     )
 
 
@@ -362,18 +364,24 @@ class ArtFactoryTest(unittest.TestCase):
 
         evaluation = make_evaluation("test-desk-v001")
         evaluation.visual_gate["style_flags"]["primitive_geometry"] = True
-        self.assertTrue(any("unapproved stylization hard fail" in error for error in evaluation.validate()))
+        self.assertTrue(
+            any("unapproved stylization hard fail" in error for error in evaluation.validate())
+        )
 
         evaluation = make_evaluation("test-desk-v001")
         evaluation.visual_gate["style_flags"]["blocky_geometry"] = True
-        self.assertTrue(any("unapproved stylization hard fail" in error for error in evaluation.validate()))
+        self.assertTrue(
+            any("unapproved stylization hard fail" in error for error in evaluation.validate())
+        )
 
         evaluation = make_evaluation("test-desk-v001")
         evaluation.observations["geometric_detail"] = "The model still looks like a placeholder."
         self.assertTrue(any("unapproved low-poly" in error for error in evaluation.validate()))
 
         evaluation = make_evaluation("test-desk-v001")
-        evaluation.visual_gate["close_inspection"]["answer"] = "No, it still reads as low-poly construction."
+        evaluation.visual_gate["close_inspection"]["answer"] = (
+            "No, it still reads as low-poly construction."
+        )
         self.assertTrue(any("unapproved low-poly" in error for error in evaluation.validate()))
 
         repair = make_evaluation("test-desk-v001", decision="continue")
@@ -389,7 +397,9 @@ class ArtFactoryTest(unittest.TestCase):
         self.assertEqual(evaluation.validate(allow_stylization=True), [])
         self.assertIn(
             "allow_stylization requires an explicit stylization_rationale",
-            make_brief().__class__(**{**make_brief().__dict__, "allow_stylization": True}).validate(),
+            make_brief()
+            .__class__(**{**make_brief().__dict__, "allow_stylization": True})
+            .validate(),
         )
 
     def test_comparison_result_is_validated(self) -> None:
@@ -404,7 +414,7 @@ class ArtFactoryTest(unittest.TestCase):
     def test_text_asset_hash_ignores_windows_checkout_line_endings(self) -> None:
         lf_file = self.root / "asset.tscn"
         crlf_file = self.root / "asset-copy.tscn"
-        lf_file.write_bytes(b"[gd_scene format=4]\n[node name=\"Root\"]\n")
+        lf_file.write_bytes(b'[gd_scene format=4]\n[node name="Root"]\n')
         crlf_file.write_bytes(lf_file.read_bytes().replace(b"\n", b"\r\n"))
         self.assertEqual(sha256_file(lf_file), sha256_file(crlf_file))
         crlf_file.write_bytes(crlf_file.read_bytes().replace(b"Root", b"Other"))

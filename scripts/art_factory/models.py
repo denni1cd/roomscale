@@ -45,13 +45,25 @@ VISUAL_STYLE_FLAGS = (
 _UNACCEPTABLE_STYLE_PATTERNS = (
     re.compile(r"\blow[ -]poly\b", re.IGNORECASE),
     re.compile(r"\bblocky\b", re.IGNORECASE),
-    re.compile(r"\bplaceholder(?:[ -](?:art|geometry|asset|model|mesh|form|object))?\b", re.IGNORECASE),
+    re.compile(
+        r"\bplaceholder(?:[ -](?:art|geometry|asset|model|mesh|form|object))?\b", re.IGNORECASE
+    ),
     re.compile(r"\b(?:obvious )?programmer[ -]art\b", re.IGNORECASE),
-    re.compile(r"\b(?:blocky|primitive) (?:geometry|geometr(?:y|ies)|forms?|construction)\b", re.IGNORECASE),
-    re.compile(r"\b(?:reads?|looks?|feels?) (?:as |like )?(?:a )?(?:primitive|blocky)\b", re.IGNORECASE),
-    re.compile(r"\bsimplified (?:programmer[ -]art )?(?:geometry|mesh|forms?|construction)\b", re.IGNORECASE),
+    re.compile(
+        r"\b(?:blocky|primitive) (?:geometry|geometr(?:y|ies)|forms?|construction)\b", re.IGNORECASE
+    ),
+    re.compile(
+        r"\b(?:reads?|looks?|feels?) (?:as |like )?(?:a )?(?:primitive|blocky)\b", re.IGNORECASE
+    ),
+    re.compile(
+        r"\bsimplified (?:programmer[ -]art )?(?:geometry|mesh|forms?|construction)\b",
+        re.IGNORECASE,
+    ),
     re.compile(r"\bmaterially flat\b|\bflat (?:material|surface|appearance)\b", re.IGNORECASE),
-    re.compile(r"\b(?:substantially|intentionally|obviously|heavily) styl(?:i|y)z(?:ed|ed)\b", re.IGNORECASE),
+    re.compile(
+        r"\b(?:substantially|intentionally|obviously|heavily) styl(?:i|y)z(?:ed|ed)\b",
+        re.IGNORECASE,
+    ),
     re.compile(r"\bmore styl(?:i|y)z(?:ed|ed) than\b", re.IGNORECASE),
     re.compile(r"\bsimple but deliberate\b", re.IGNORECASE),
 )
@@ -306,10 +318,14 @@ class ArtEvaluation:
         def require_answer(name: str, description: str) -> None:
             answer = gate.get(name)
             if not isinstance(answer, dict):
-                errors.append(f"visual_gate.{name} must include an explicit answer, pass, and evidence")
+                errors.append(
+                    f"visual_gate.{name} must include an explicit answer, pass, and evidence"
+                )
                 return
             if not str(answer.get("answer", "")).strip():
-                errors.append(f"visual_gate.{name}.answer must explicitly answer the review question")
+                errors.append(
+                    f"visual_gate.{name}.answer must explicitly answer the review question"
+                )
             if not isinstance(answer.get("pass"), bool):
                 errors.append(f"visual_gate.{name}.pass must be a boolean")
             elif not answer["pass"]:
@@ -330,41 +346,59 @@ class ArtEvaluation:
             errors.append("visual_gate.craftsmanship must answer all seven manufacturing checks")
         else:
             if not str(craft.get("answer", "")).strip():
-                errors.append("visual_gate.craftsmanship.answer must explicitly answer whether all manufacturing details are believable")
+                errors.append(
+                    "visual_gate.craftsmanship.answer must explicitly answer whether all manufacturing details are believable"
+                )
             for check in VISUAL_CRAFT_CHECKS:
                 value = craft.get(check)
                 if not isinstance(value, dict):
-                    errors.append(f"visual_gate.craftsmanship.{check} must include pass and evidence")
+                    errors.append(
+                        f"visual_gate.craftsmanship.{check} must include pass and evidence"
+                    )
                     continue
                 if not isinstance(value.get("pass"), bool):
                     errors.append(f"visual_gate.craftsmanship.{check}.pass must be a boolean")
                 elif not value["pass"]:
-                    failures.append(f"visual gate failed: craftsmanship {check.replace('_', ' ')} is not believable")
+                    failures.append(
+                        f"visual gate failed: craftsmanship {check.replace('_', ' ')} is not believable"
+                    )
                 if not str(value.get("evidence", "")).strip():
                     errors.append(f"visual_gate.craftsmanship.{check}.evidence is required")
 
         photo = gate.get("photo_character")
         if not isinstance(photo, dict) or not isinstance(photo.get("applicable"), bool):
-            errors.append("visual_gate.photo_character must state applicability, pass, and evidence")
+            errors.append(
+                "visual_gate.photo_character must state applicability, pass, and evidence"
+            )
         elif photo["applicable"] != photo_character_required:
             errors.append(
                 "visual_gate.photo_character applicability must match whether the ArtBrief has source imagery"
             )
         elif photo["applicable"]:
             if not str(photo.get("answer", "")).strip():
-                errors.append("visual_gate.photo_character.answer must explicitly answer the source-character question")
+                errors.append(
+                    "visual_gate.photo_character.answer must explicitly answer the source-character question"
+                )
             if not isinstance(photo.get("pass"), bool):
-                errors.append("visual_gate.photo_character.pass must be a boolean when a photograph exists")
+                errors.append(
+                    "visual_gate.photo_character.pass must be a boolean when a photograph exists"
+                )
             elif not photo["pass"]:
-                failures.append("visual gate failed: render does not materially approach the photographed object's visual character")
+                failures.append(
+                    "visual gate failed: render does not materially approach the photographed object's visual character"
+                )
             if not str(photo.get("evidence", "")).strip():
                 errors.append("visual_gate.photo_character.evidence is required when applicable")
         elif not str(photo.get("answer", "")).strip():
-            errors.append("visual_gate.photo_character.answer must explain why this question is not applicable")
+            errors.append(
+                "visual_gate.photo_character.answer must explain why this question is not applicable"
+            )
         elif photo.get("pass") is not None:
             errors.append("visual_gate.photo_character.pass must be null when not applicable")
         elif not str(photo.get("evidence", "")).strip():
-            errors.append("visual_gate.photo_character.evidence must explain why it is not applicable")
+            errors.append(
+                "visual_gate.photo_character.evidence must explain why it is not applicable"
+            )
 
         flags = gate.get("style_flags")
         if not isinstance(flags, dict):
@@ -379,11 +413,12 @@ class ArtEvaluation:
 
         if not allow_stylization:
             evidence_text = " ".join(
-                [str(value) for value in self.observations.values()]
-                + _collect_strings(gate)
+                [str(value) for value in self.observations.values()] + _collect_strings(gate)
             )
             if _has_unacceptable_style_language(evidence_text):
-                failures.append("unapproved low-poly, primitive, simplified, flat, or substantially stylized appearance described in visual evidence")
+                failures.append(
+                    "unapproved low-poly, primitive, simplified, flat, or substantially stylized appearance described in visual evidence"
+                )
         if failures:
             if self.decision == "promote":
                 errors.extend(failures)
