@@ -1,0 +1,120 @@
+{
+  "candidate_id": "desk-v024",
+  "created_at_utc": "2026-10-26T22:58:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "The horizontal desk form is restored, but the close capture still reads as a dark flat slab supported by generic box columns and rectangular feet.",
+    "Broad window and room reflections are largely absent from the smoked glass surface; the top is materially flat in the production lighting.",
+    "The two support joints, tabletop fittings, feet, and underside hardware lack the visible manufacturing construction of the photographed desk.",
+    "Godot measures the lower bound at Y=0.395 inches, leaving a small gap above the RoomScale floor datum."
+  ],
+  "hard_fail_reasons": [
+    "A neutral viewer describes the candidate as simplified/blocky game or CAD geometry rather than realistic furniture.",
+    "The candidate fails close inspection because the tabletop, columns, feet, and hardware resolve as simple primitives with weak material/surface response.",
+    "The real source photograph's glass-and-metal character, broad reflections, dual-column connections, and detailed foot construction are not materially approached."
+  ],
+  "incumbent_candidate_id": "desk-v007",
+  "incumbent_comparison": "V024 corrects the orientation failure in v023 and presents a recognizable standing desk with UV-mapped PBR slots, paired telescoping columns, and T-feet. Compared with desk-v007, it still reads as more generic block geometry, with substantially weaker glass reflections and less convincing joins, feet, and hardware. Preserve desk-v007 as current best-so-far; v024 is not promoted.",
+  "incumbent_comparison_result": "worse",
+  "likely_causes": [
+    "The bevelled-box reconstruction uses large primitive components and simplified rectangular supports instead of the photographed desk's nuanced radii, connection plates, cable path, and visible fasteners.",
+    "The glass shader and restrained noise maps do not reproduce broad reflected window/room structure under the existing compatibility renderer.",
+    "Cylinder components were authored on the default Blender local-Z axis while the assembly components use a Y-up convention, so levelers and fasteners are misaligned with intended horizontal surfaces; the leveler placement also misses the floor datum."
+  ],
+  "next_action_hypothesis": "Refine the component-authored strategy using correctly oriented horizontal fasteners/levelers, a true zero-height floor contact, smaller glass-edge chamfers, physically clearer glass reflection/transmission, and material-specific roughness/normal detail. Add more faithful formed feet, mounting plates, telescoping transitions, and visible under-top support/cable hardware. Re-evaluate the same RoomScale views against the photograph and incumbent; reject if the result still reads as primitive geometry or lacks credible surface and manufacturing detail.",
+  "observations": {
+    "art_direction_fit": "The dark finish fits the workstation palette, but the generic blocks and low-reflection top look like simplified CAD/game geometry.",
+    "close_up_quality": "asset-detail.png exposes plain dark surfaces, boxed columns, broad rectangular feet, limited hardware, and weak top-to-frame connection evidence.",
+    "gameplay_readability": "The desk is recognizable under the two monitors and remains at its normal computer-desk position; gameplay data are not changed by this visual candidate.",
+    "geometric_detail": "The model contains 38 authored parts and 17,368 triangles, but most visible structures remain bevelled boxes and straight slabs. Geometry count does not make the forms realistic.",
+    "material_realism": "The frame has restrained specular response, while the large smoked-glass panel remains nearly uniform dark with no broad reflected window character like the source photograph.",
+    "proportion": "The desk reads as a 66-inch by 30-inch standing workstation. Its actual lower bound is 0.395 inches above the intended floor datum and must be corrected.",
+    "scale_fidelity": "Godot reports 66 x 29.605 x 30 inches with no technical import issues; vertical placement is offset by 0.395 inches and should be fixed before a final candidate.",
+    "semantic_recognizability": "The three-quarter and room views clearly identify a desk, but its visual character is noticeably simplified compared with realistic manufactured furniture.",
+    "silhouette_quality": "The thin broad top, two columns, and T-feet form a recognizable desk silhouette; the rectangular legs/feet lack the nuanced edge profiles of the reference.",
+    "source_resemblance": "The source photograph shows smoked glass with broad window reflections, detailed black steel supports, collars, feet, visible connections, and a cluttered hardware/cable layer. The render mainly matches the broad silhouette and dark palette.",
+    "surface_variation": "The top and frame maps have subtle noise, but close inspection shows little perceivable physically coherent grain, variation, or broad glass reflection.",
+    "technical_integration": "Godot 4.7.2 loaded desk-v024 through the Art Factory production path and captured all six standardized views with production_path=true. Technical validation reports one mesh, five material surfaces, and 17,368 triangles. Harness captures report 32 FPS; this is not a warmed representative performance benchmark."
+  },
+  "render_evidence": [
+    "art/desk/iterations/v024/render-runs/run-001/room-scale.png",
+    "art/desk/iterations/v024/render-runs/run-001/settlement-scale.png",
+    "art/desk/iterations/v024/render-runs/run-001/asset-three-quarter.png",
+    "art/desk/iterations/v024/render-runs/run-001/asset-opposite-three-quarter.png",
+    "art/desk/iterations/v024/render-runs/run-001/asset-profile.png",
+    "art/desk/iterations/v024/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 2,
+    "close_up_quality": 2,
+    "gameplay_readability": 5,
+    "geometric_detail": 2,
+    "material_realism": 2,
+    "proportion": 4,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "source_resemblance": 2,
+    "surface_variation": 1,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "asset-detail.png shows a smooth dark panel, broad rectangular rails, box-shaped telescoping columns, and few legible fasteners or plate joints; obvious primitive construction remains.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "The panel has a visible edge band and narrow highlight, but its broad plain perimeter and insufficiently refined glass edge treatment do not match polished furniture glass.",
+        "pass": false
+      },
+      "hardware": {
+        "evidence": "No convincingly seated fasteners, adjustment feet, cable fittings, or surface controls are legible in the close capture; the cylinder-axis issue also misaligns intended hardware.",
+        "pass": false
+      },
+      "joins": {
+        "evidence": "The desk top sits over two columns, but mounting plates and transitions are not clearly legible as credible manufactured joints.",
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "The 38-part authoring list resolves visually into a few generic slab/box forms without sufficient real-world fitting, collar, and underside detail.",
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "The frame has some highlights, but the glass panel remains almost uniformly dark and does not reflect broad windows/room shapes visible in the source photograph.",
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "The UV maps do not show coherent, noticeable variation at the production close distance; the top appears materially flat.",
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "The thin panel edge is visible and proportionally plausible, although the underside edge band is broad and the top's chamfer is not convincingly refined.",
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The captures identify a desk, but the dark slab, broad rectangular feet, and boxed column supports read as simplified/blocky game geometry rather than realistic manufactured furniture.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "No",
+      "applicable": true,
+      "evidence": "The photograph has broad window reflections on smoked glass, recognizable metal joins and feet, and visible hardware/cable detail. The render chiefly reproduces the desk's bounding-box silhouette and dark color, without approaching those visual characteristics.",
+      "pass": false
+    },
+    "style_flags": {
+      "blocky_geometry": true,
+      "low_poly": false,
+      "materially_flat": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "substantially_stylized": true
+    }
+  }
+}

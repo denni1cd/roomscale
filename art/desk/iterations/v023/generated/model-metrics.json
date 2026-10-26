@@ -1,0 +1,86 @@
+{
+  "method": "source-measured component-authored Blender PBR assembly",
+  "axis_convention": "X=desk width, Y=height, Z=depth; floor datum Y=0",
+  "target_bounds_inches": {
+    "min": [
+      -33.0,
+      0.0,
+      -15.0
+    ],
+    "max": [
+      33.0,
+      30.0,
+      15.0
+    ],
+    "dimensions": [
+      66.0,
+      30.0,
+      30.0
+    ]
+  },
+  "component_names": [
+    "GlassTop",
+    "GlassEdgeBand",
+    "LiftColumnOuter_1",
+    "LiftColumnInner_1",
+    "ColumnSleeve_1",
+    "TFootRail_1",
+    "FootEndCap_1_1",
+    "FootEndCap_1_2",
+    "TopFlange_1",
+    "MountPlate_1",
+    "TopSpacer_1",
+    "GlassIsolationPad_1",
+    "LiftColumnOuter_2",
+    "LiftColumnInner_2",
+    "ColumnSleeve_2",
+    "TFootRail_2",
+    "FootEndCap_2_1",
+    "FootEndCap_2_2",
+    "TopFlange_2",
+    "MountPlate_2",
+    "TopSpacer_2",
+    "GlassIsolationPad_2",
+    "RearCrossRail",
+    "FrontCrossRail",
+    "CableTraySideRailLeft",
+    "CableTraySideRailRight",
+    "CableTrayCrossSlat_1",
+    "CableTrayCrossSlat_2",
+    "CableTrayCrossSlat_3",
+    "CableTrayCrossSlat_4",
+    "CableTrayCrossSlat_5",
+    "CableTrayCrossSlat_6",
+    "CableTrayCrossSlat_7",
+    "CableTrayCrossSlat_8",
+    "CableTrayCrossSlat_9",
+    "LiftControllerHousing",
+    "ControllerBezel",
+    "CableStrainRelief"
+  ],
+  "component_count_before_join": 38,
+  "joined_mesh_count": 1,
+  "triangle_count": 17368,
+  "uv_mapped": true,
+  "materials": {
+    "glass": "smoked glass with exported albedo and roughness textures; dielectric clearcoat",
+    "frame": "graphite powder-coated steel with exported albedo and roughness textures",
+    "hardware": "satin steel metallic-roughness PBR",
+    "feet": "high-roughness molded rubber PBR"
+  },
+  "material_maps": {
+    "smoked-glass": {
+      "albedo": "smoked-glass-albedo.png",
+      "albedo_sha256": "740176e7a45cee6f640ad479cafa40ad86745a681ffa8bd1361128ab219776be",
+      "roughness": "smoked-glass-roughness.png",
+      "roughness_sha256": "32f0e4ab6b77ee4f094a15b7fdb1c9eb1b479783fba25b0829b41be3921f4ed5"
+    },
+    "graphite-metal": {
+      "albedo": "graphite-metal-albedo.png",
+      "albedo_sha256": "83f9b8e47ba1e87494eae2e8591f0d779690c54fa27bb53c8264445d9ac8e523",
+      "roughness": "graphite-metal-roughness.png",
+      "roughness_sha256": "40e453e13802864049111963eb47c00f33da47d52d3c84ee9268f05f85f13fb6"
+    }
+  },
+  "glb_sha256": "04cb7a2778231cbbdeb0ec887363690f02070e179f0f1fdbbbd9ed7eead2ea40"
+}

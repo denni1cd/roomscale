@@ -23,6 +23,7 @@ from art_factory.registry import sha256_file
 def make_brief(
     source_room_definition: str = "",
     allow_stylization: bool = False,
+    iteration_budget: int | None = 8,
 ) -> ArtBrief:
     return ArtBrief(
         asset_id="test-desk",
@@ -38,7 +39,7 @@ def make_brief(
         prohibited_changes=["gameplay bounds", "navigation identity"],
         camera_distances=[2.0, 20.0, 300.0],
         quality_tier="B",
-        iteration_budget=8,
+        iteration_budget=iteration_budget,
         source_room_definition=source_room_definition,
         allow_stylization=allow_stylization,
         stylization_rationale="The requested target is intentionally stylized."
@@ -182,6 +183,20 @@ class ArtFactoryTest(unittest.TestCase):
         self.assertIn("procedural mesh", make_recipe().to_dict()["method"])
         self.assertEqual(make_brief().validate(), [])
         self.assertEqual(make_recipe().validate(), [])
+
+    def test_unbounded_pilot_brief_can_create_more_than_eight_challengers(self) -> None:
+        brief_path = self.factory.save_brief(make_brief(iteration_budget=None))
+        recorded = ArtBrief.from_dict(json.loads(brief_path.read_text(encoding="utf-8")))
+        self.assertIsNone(recorded.iteration_budget)
+        self.assertEqual(recorded.validate(), [])
+
+        candidates = [
+            self.factory.create_candidate(
+                "test-desk", make_recipe(), {"mesh/test.glb": self.source}
+            )
+            for _ in range(10)
+        ]
+        self.assertEqual(candidates[-1].candidate_id, "test-desk-v010")
 
     def test_candidate_files_and_recipe_are_preserved(self) -> None:
         candidate_id = self.create_candidate()

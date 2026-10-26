@@ -410,7 +410,9 @@ class ArtFactory:
             raise ValueError("invalid ArtCandidate: " + "; ".join(errors))
         atomic_write_json(self._candidate_root(candidate) / "candidate.json", candidate.to_dict())
 
-    def _reserve_candidate(self, asset_id: str, iteration_budget: int) -> tuple[int, str, Path]:
+    def _reserve_candidate(
+        self, asset_id: str, iteration_budget: int | None
+    ) -> tuple[int, str, Path]:
         iteration_root = self.art_root / asset_id / "iterations"
         versions = [
             int(path.name[1:])
@@ -418,7 +420,7 @@ class ArtFactory:
             if path.name[1:].isdigit()
         ]
         version = max(versions, default=0) + 1
-        if version > iteration_budget + 1:
+        if iteration_budget is not None and version > iteration_budget + 1:
             raise ValueError(f"iteration budget exhausted for {asset_id}: {iteration_budget}")
         candidate_id = f"{asset_id}-v{version:03d}"
         return version, candidate_id, iteration_root / f"v{version:03d}"

@@ -1,0 +1,121 @@
+{
+  "candidate_id": "desk-v025",
+  "created_at_utc": "2026-10-26T23:01:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "The top and supports still read as simplified primitive geometry rather than realistic manufactured furniture.",
+    "The smoked-glass top has no broad window/room reflection; the compatibility-rendered surface remains nearly uniform dark.",
+    "The graphite columns and feet show mottled, noisy highlights from the normal-map workflow instead of coherent powder-coated metal.",
+    "Godot continues to report a 0.395-inch gap above the floor datum, so the leveler geometry/orientation change did not correct the measured foot contact."
+  ],
+  "hard_fail_reasons": [
+    "A neutral viewer still reads the model as blocky/stylized game geometry rather than realistic human-room furniture.",
+    "The close capture lacks credible visible fasteners, leg joints, feet, coherent materials, and manufacturing detail.",
+    "The production render does not materially approach the photograph’s broad glass reflections or detailed support/foot construction."
+  ],
+  "incumbent_candidate_id": "desk-v007",
+  "incumbent_comparison": "V025 refines v024 with a tighter tabletop chamfer and extra material-specific normal maps, but its close capture remains primitive and the added surface response appears mottled rather than physically coherent. desk-v007 remains the current best-so-far even though it does not pass the repaired absolute visual gate.",
+  "incumbent_comparison_result": "worse",
+  "likely_causes": [
+    "The scripted model still uses broad bevelled boxes for the primary furniture forms; part count and texture maps do not supply detailed manufactured geometry.",
+    "The candidate-local reflection probe and PBR clearcoat are present and the Compatibility renderer supports reflection probes; the actual capture shows only weak, poorly defined broad reflections under the existing room environment.",
+    "The new tangent-space normal map produces patchy highlights on metal rather than the restrained fine grain of powder-coated steel.",
+    "Godot still measures the lower bound at Y=0.395, indicating the authored levelers do not reach the floor in the imported mesh."
+  ],
+  "next_action_hypothesis": "Do not promote. Inspect the candidate reflection capture and material parameters in the unchanged Compatibility production path; do not assume that switching renderers fixes the visual failure. The next geometry challenger should replace the simple boxed forms with materially higher-fidelity manufactured profiles, make the reflection probe respond coherently to the room window, and verify in Godot that foot contact is Y=0 before visual inspection.",
+  "observations": {
+    "art_direction_fit": "The dark silhouette fits the workstation palette, but the desk still looks like simplified CAD/game geometry and the surface finish is not photo-real.",
+    "close_up_quality": "asset-detail.png shows a plain, dark top, block-shaped support columns and limited legible hardware; metal mottling adds visual noise rather than crafted finish.",
+    "gameplay_readability": "The desk is recognizable under the two monitors and remains at its normal computer-desk position; gameplay data are not changed by this visual candidate.",
+    "geometric_detail": "The candidate contains 15,800 triangles, one imported mesh, five material surfaces and named assembly parts, but the visible support and foot shapes remain broad rectangular primitives.",
+    "material_realism": "The top remains nearly black with no broad room/window reflections. The powder-coated frame has a mottled normal response that does not resemble the smooth fine grain of coated steel.",
+    "proportion": "The horizontal top, paired supports and T-feet form a recognizable standing desk. Measured lower bound remains Y=0.395 rather than the zero floor datum.",
+    "scale_fidelity": "Godot reports 66 x 29.605 x 30 inches and no import issues, but the floor gap is measurable and requires correction.",
+    "semantic_recognizability": "The three-quarter and room views clearly identify a desk, but its visual character is noticeably simplified compared with realistic manufactured furniture.",
+    "silhouette_quality": "The thin broad top, two columns, and T-feet form a recognizable desk silhouette; the rectangular legs/feet lack the nuanced edge profiles of the reference.",
+    "source_resemblance": "The render matches the broad top/leg silhouette and dark color. It misses the photograph’s broad glass reflections, richer metal joins, detailed feet and hardware/cable character.",
+    "surface_variation": "The additional tangent-space normals create patchy mottling on the metal and do not add coherent, material-specific variation to the glass or frame.",
+    "technical_integration": "Godot 4.7.2 loaded the asset through the RoomScale production path and captured all six standard views with production_path=true. The capture reports gl_compatibility, 235 close-view draw calls, 107,574 primitives, and 30 FPS; this is a harness capture and not a warmed performance benchmark."
+  },
+  "render_evidence": [
+    "art/desk/iterations/v025/render-runs/run-001/room-scale.png",
+    "art/desk/iterations/v025/render-runs/run-001/settlement-scale.png",
+    "art/desk/iterations/v025/render-runs/run-001/asset-three-quarter.png",
+    "art/desk/iterations/v025/render-runs/run-001/asset-opposite-three-quarter.png",
+    "art/desk/iterations/v025/render-runs/run-001/asset-profile.png",
+    "art/desk/iterations/v025/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 2,
+    "close_up_quality": 2,
+    "gameplay_readability": 5,
+    "geometric_detail": 2,
+    "material_realism": 2,
+    "proportion": 3,
+    "scale_fidelity": 3,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "source_resemblance": 2,
+    "surface_variation": 1,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "asset-detail.png exposes primitive rectangular supports, weak visible hardware and joins, a largely dark featureless top, and mottled metal normals.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "The tightened chamfer and narrow edge highlight in asset-profile.png read as a thin finished top edge, although glass material response still fails.",
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "No cleanly seated bolts or adjustment-leveler detail is legible; foot contact is also 0.395 inches above the floor datum in the validated bounds.",
+        "pass": false
+      },
+      "joins": {
+        "evidence": "The telescoping transitions are simple boxed bands and the top mounting plates/fasteners do not resolve convincingly in asset-detail.png.",
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "The visible feet, columns, joints and underside hardware remain simplified rectangular forms.",
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "The compatibility-rendered glass has no broad environment reflection, and coated metal appears mottled in asset-detail.png.",
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "The generated normal-map highlights form patchy noise rather than fine, coherent glass and powder-coat response.",
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "The horizontal top presents as a thin slab in asset-profile.png, with a distinct edge band.",
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "asset-three-quarter.png and asset-detail.png identify a desk but show a boxy slab-and-column reconstruction with patchy surface response; it reads as simplified/stylized game geometry, not realistic furniture.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "No",
+      "applicable": true,
+      "evidence": "Against photo_holder/Sample (2).jpg, the render preserves the desk envelope and dark color but lacks broad glass/window reflections, detailed feet, and the source’s support/hardware character.",
+      "pass": false
+    },
+    "style_flags": {
+      "blocky_geometry": true,
+      "low_poly": false,
+      "materially_flat": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "substantially_stylized": true
+    }
+  }
+}

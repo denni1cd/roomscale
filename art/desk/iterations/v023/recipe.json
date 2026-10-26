@@ -1,0 +1,66 @@
+{
+  "deterministic_seed": null,
+  "generator_command": [
+    "C:/Users/Zero/miniforge3/python.exe",
+    "scripts/art_factory/generators/build_source_measured_desk_v023.py",
+    "--output",
+    "{output_dir}",
+    "--seed",
+    "231019"
+  ],
+  "import_configuration": {
+    "candidate_root": "Node3D",
+    "format": "Godot PackedScene wrapper with Blender-exported GLB child",
+    "probe": "UPDATE_ONCE candidate-local ReflectionProbe, candidate excluded from capture",
+    "renderer": "existing Compatibility renderer"
+  },
+  "instructions": "Reconstruct the standing desk from the original Sample (2) room photograph and its measured 66 x 30 x 30 inch envelope. Author independent manufactured components in Blender: a thin radiused smoked-glass panel and edge, two nested lift columns, broad T-feet with levelers, mounting flanges, satin fasteners, cross-support rails, an open cable pan, and a lift controller. Apply small true bevels, UV coordinates, subtle exported albedo/roughness textures, separate PBR material slots, and a candidate-local reflection probe. Preserve the RoomDefinition-owned placement, footprint, DESK_TOP anchor, and separate monitors/equipment. Inspect actual RoomScale captures and fail on any unclear joins, hardware, surface defects, insufficient photo-character, or gameplay/performance regression.",
+  "material_method": "Principled metallic-roughness PBR with packed smoked-glass and graphite albedo/roughness images, satin steel hardware, dielectric rubber, and a candidate-local Godot reflection probe",
+  "method": "source_measured_component_authored_blender_pbr_v1",
+  "parameters": {
+    "glass_albedo_roughness": "1024x1024; dark neutral albedo; roughness 0.11 with very subtle variation",
+    "graphite_albedo_roughness": "1024x1024; restrained graphite with low-contrast directional finish; roughness 0.29",
+    "leg_center_x_inches": [
+      -22.5,
+      22.5
+    ],
+    "outputs": [
+      "desk.tscn",
+      "desk.glb",
+      "desk_reflection_wrapper.gd",
+      "model-metrics.json",
+      "pbr-material-manifest.json",
+      "generation-record.json",
+      "smoked-glass-albedo.png",
+      "smoked-glass-roughness.png",
+      "graphite-metal-albedo.png",
+      "graphite-metal-roughness.png"
+    ],
+    "seed": 231019,
+    "source_photo": "photo_holder/Sample (2).jpg",
+    "target_bounds_inches_xyz": [
+      66,
+      30,
+      30
+    ],
+    "top_thickness_inches": 0.44
+  },
+  "post_processing": [
+    "Deterministic source-measured component geometry with independent radiused parts and manufacturing seams",
+    "UV smart projection with baked subtle albedo and roughness maps",
+    "GLB export with packed materials, plus Godot PackedScene wrapper and candidate-local reflection probe",
+    "Godot technical bounds validation and canonical RoomScale production renders",
+    "Visual inspection against the original photograph and current desk-v007 incumbent"
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "photo_holder/Sample (2).jpg",
+    "art/desk/brief.json",
+    "art/desk/iterations/v007/evaluation.json",
+    "art/desk/iterations/v022/evaluation.json",
+    "art/desk/iterations/v022/generated/model-metrics.json",
+    "verification/poc25/final/desk-v022-review.md"
+  ],
+  "tool": "Blender Python/bpy source-measured assembly generator and RoomScale Godot Art Factory",
+  "tool_version": "Blender 5.2.3; bpy; Pillow; NumPy; Godot 4.7.2 official"
+}

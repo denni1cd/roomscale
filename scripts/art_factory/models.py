@@ -101,7 +101,7 @@ class ArtBrief:
     prohibited_changes: list[str]
     camera_distances: list[float]
     quality_tier: str
-    iteration_budget: int
+    iteration_budget: int | None
     source_room_definition: str = ""
     schema_version: int = SCHEMA_VERSION
     allow_stylization: bool = False
@@ -137,7 +137,7 @@ class ArtBrief:
             errors.append("intended_dimensions must contain three positive values in inches")
         if self.quality_tier not in QUALITY_TIERS:
             errors.append(f"quality_tier must be one of {sorted(QUALITY_TIERS)}")
-        if self.iteration_budget < 0:
+        if self.iteration_budget is not None and self.iteration_budget < 0:
             errors.append("iteration_budget must be zero or greater")
         if self.allow_stylization and not self.stylization_rationale.strip():
             errors.append("allow_stylization requires an explicit stylization_rationale")

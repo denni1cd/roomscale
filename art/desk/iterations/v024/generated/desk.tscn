@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://art/desk/iterations/v024/generated/desk.glb" id="1_glb"]
+[ext_resource type="Script" path="res://art/desk/iterations/v024/generated/desk_reflection_wrapper.gd" id="2_script"]
+
+[node name="DeskAsset" instance=ExtResource("1_glb")]
+script = ExtResource("2_script")
+
+[node name="RoomReflectionProbe" type="ReflectionProbe" parent="."]
+position = Vector3(0, 15, 0)
+size = Vector3(90, 70, 90)
+intensity = 1.5
+box_projection = true
+cull_mask = 1
+update_mode = 0

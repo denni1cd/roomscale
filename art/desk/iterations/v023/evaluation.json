@@ -1,0 +1,117 @@
+{
+  "candidate_id": "desk-v023",
+  "created_at_utc": "2026-10-26T22:55:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "The exported tabletop is vertical in the RoomScale render rather than horizontal, so the candidate reads as a divider or wall panel rather than a desk.",
+    "Desk components are consequently oriented against the production room and do not form a usable desk assembly.",
+    "The source photograph's horizontal glass top, lift-column arrangement, and T-foot construction are not reproduced in the production render."
+  ],
+  "hard_fail_reasons": [
+    "Neutral viewers do not read the rendered object as realistic furniture or a desk.",
+    "The candidate fails close inspection and all required craftsmanship checks because the GLB axis conversion makes its components visibly misoriented.",
+    "The production render does not approach the photographed object's visual character; the tabletop stands upright instead of spanning the supports."
+  ],
+  "incumbent_candidate_id": "desk-v007",
+  "incumbent_comparison": "Compared with desk-v007, v023 has more authored component geometry and PBR material slots, but its vertical tabletop export is a major functional and visual regression. Preserve desk-v007 as the current best-so-far incumbent. V023 is rejected as a visual candidate while its source-measured assembly strategy remains eligible for a corrected refinement.",
+  "incumbent_comparison_result": "worse",
+  "likely_causes": [
+    "The component generator authored its geometry in a Y-up coordinate convention, while Blender uses Z-up and the glTF exporter converts from Blender's basis. The missing basis transform rotates the horizontal tabletop into a vertical plane in Godot."
+  ],
+  "next_action_hypothesis": "Apply an explicit 90-degree X-axis transform to the Y-up assembly before GLB export so that RoomScale's Y-up dimensions map correctly through Blender's Z-up authoring basis. Regenerate as a distinct challenger, validate the floor datum and bounds in Godot, then inspect all six equivalent production captures. Do not pass or promote unless the realistic furniture, close inspection, all seven craftsmanship, and source-photo character gates pass.",
+  "observations": {
+    "art_direction_fit": "The dark workstation materials fit the room palette, but the vertical tabletop contradicts the intended desk design.",
+    "close_up_quality": "The detail capture shows an upright panel and incorrectly oriented support members; this is not a credible desk at close inspection.",
+    "gameplay_readability": "The candidate is loaded at the expected desk location, but the vertical panel does not preserve the visual form of the computer desk.",
+    "geometric_detail": "The Blender authoring data contains 38 named components before joining, but additional component count cannot compensate for the visibly incorrect exported orientation.",
+    "material_realism": "The render includes distinct dark glass-like and graphite material response, but material quality cannot compensate for a misoriented object.",
+    "proportion": "Godot reports a 66 x 30 x 29.605-inch bound, but the tabletop is vertical and the floor datum is displaced to Y=-15; the intended desk proportions are not realized in the scene.",
+    "scale_fidelity": "Technical validation reports a 66 x 30 x 29.605-inch envelope with no import errors, but the measured origin/bounds reveal a floor-datum mismatch and visual orientation failure.",
+    "semantic_recognizability": "The room and three-quarter captures read as a large upright divider with projecting rails, not as a standing desk.",
+    "silhouette_quality": "The vertical panel dominates the silhouette; the top, two lifting columns, and full-depth T-feet do not read as an assembled desk.",
+    "source_resemblance": "Against photo_holder/Sample (2).jpg, the horizontal tabletop and its supports are not preserved; the rendered panel stands upright.",
+    "surface_variation": "Subtle albedo and roughness maps exist, but the RoomScale views do not establish believable desk-surface character because the tabletop is misoriented.",
+    "technical_integration": "Godot 4.7.2 loaded desk-v023 through the normal production path and captured all six standard views with production_path=true. The geometry orientation is visually incorrect despite a successful import."
+  },
+  "render_evidence": [
+    "art/desk/iterations/v023/render-runs/run-001/room-scale.png",
+    "art/desk/iterations/v023/render-runs/run-001/settlement-scale.png",
+    "art/desk/iterations/v023/render-runs/run-001/asset-three-quarter.png",
+    "art/desk/iterations/v023/render-runs/run-001/asset-opposite-three-quarter.png",
+    "art/desk/iterations/v023/render-runs/run-001/asset-profile.png",
+    "art/desk/iterations/v023/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 1,
+    "close_up_quality": 1,
+    "gameplay_readability": 2,
+    "geometric_detail": 2,
+    "material_realism": 2,
+    "proportion": 1,
+    "scale_fidelity": 1,
+    "semantic_recognizability": 1,
+    "silhouette_quality": 1,
+    "source_resemblance": 1,
+    "surface_variation": 2,
+    "technical_integration": 3
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "asset-detail.png shows the tabletop as a near-vertical panel with rails and supports projecting from the wrong plane; the desk is not a credible manufactured object at close view.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "The rendered perimeter is the edge of a vertical panel rather than a believable radiused horizontal desk top.",
+        "pass": false
+      },
+      "hardware": {
+        "evidence": "Mounting hardware is not legible as correctly seated hardware because the desk assembly is exported in the wrong orientation.",
+        "pass": false
+      },
+      "joins": {
+        "evidence": "Support members and rails meet the tabletop plane incorrectly; believable tabletop-to-frame joins are absent.",
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "The render does not form a believable standing-desk assembly; component labels and underlying mesh count are not visual evidence of manufacturing quality.",
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "Dark reflective highlights are present on the panel, but this does not establish credible glass/metal response for the intended horizontal desk surfaces.",
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "The actual desk top is not oriented as a top surface, so the capture does not demonstrate believable surface variation on the intended furniture form.",
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "The panel's edge is visible, but the tabletop does not sit horizontally at the expected height; desk-top thickness cannot pass while the part is vertically oriented.",
+        "pass": false
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The asset-three-quarter, asset-profile, and room-scale captures show a large upright divider with projecting rails rather than realistic standing-desk furniture.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "No",
+      "applicable": true,
+      "evidence": "Compared with photo_holder/Sample (2).jpg, the production render lacks the photograph's horizontal glass top, paired lift columns, and T-feet arrangement because the top is vertical.",
+      "pass": false
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  }
+}
