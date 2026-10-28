@@ -1,0 +1,116 @@
+{
+  "candidate_id": "citizen-v073",
+  "created_at_utc": "2026-10-28T19:24:45+00:00",
+  "decision": "continue",
+  "defects": [
+    "Crowd-scale identity still relies on the broad color arrangement; the twin optical lenses and manufactured headgear are too small to dominate at the 12-inch camera distance.",
+    "The production renderer receipt mixes this candidate with the moving scene and produces variable whole-scene workload metrics; it does not isolate the candidate or prove its per-citizen frame cost."
+  ],
+  "hard_fail_reasons": [
+    "The current production capture measures the whole animated scene, and repeated v072/v073 detail results are mixed (15→20 FPS in run-001; 18→17 in run-002). The 29.3% asset triangle reduction is real, but runtime recovery is not established against v007.",
+    "At the 12-inch gameplay distance the Clockwork cues improve over v007 but remain too small for the highest role-recognition threshold in a 50-citizen scene."
+  ],
+  "incumbent_candidate_id": "citizen-v007",
+  "incumbent_comparison": "v073 preserves v072’s anatomy, Clockwork helmet, paired goggles, fitted workwear, and rear pressure pack while reducing the generated asset from 90,418 to 63,914 triangles (29.3%). The latest production images show no obvious faceting or loss of the paired optics, garment layers, or rear equipment. It remains a challenger: the 12-inch citizen is still small in the 50-citizen scene, and repeated whole-scene detail captures do not establish a reliable runtime improvement over v072 or v007. Keep v007 as the incumbent.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "The camera places a half-inch figure among 50 active citizens, making the head-mounted optical detail occupy only a small number of pixels.",
+    "Only one selected candidate replaces the regular crowd asset in the whole-scene capture, and the scene state changes between runs; aggregate draw calls/primitives/FPS therefore obscure per-asset cost."
+  ],
+  "next_action_hypothesis": "Keep v007 as incumbent and v073 as challenger. First add a controlled Art Factory performance comparison that renders the same candidate as the same 50-citizen workload from a fixed camera after warm-up, reporting repeated frame-time percentiles and candidate triangle/material counts; do not infer performance from the changing whole-scene receipt. Then, if the budget still requires it, test a distance-aware lower-detail citizen representation while preserving the detailed close asset, rig, five pivots, package bounds, gameplay equipment, and collision/navigation/selection contracts. Separately improve 12-inch Clockwork role recognition through broad, physically plausible silhouette/material cues, not scattered tiny hardware.",
+  "observations": {
+    "art_direction_fit": "The render now reads as a believable miniature pressure-equipped Clockwork worker from the front and back, rather than a generic green human.",
+    "close_up_quality": "The latest matched two-inch render preserves distinct brass-rimmed teal lenses, the formed helmet shell, layered workwear, and twin rear reservoirs. The lower triangle count causes no obvious faceting in the production capture; the production-owned tool still obscures part of the lower front.",
+    "gameplay_readability": "The 12-inch image retains a recognizable helmet, bright goggles, warm chest yoke, blue-green workcoat, and rear pressure kit. At crowd scale, the character remains small and the paired optics cannot carry role identity by themselves.",
+    "geometric_detail": "The fitted MPFB anatomy and 53-bone rig remain unchanged. Authored helmet hardware, bands, tubes, tanks, boots, and curves use fewer segments; validation records 63,914 triangles versus 90,418 in v072, with exact bounds and the same eight meshes/18 surfaces.",
+    "material_realism": "Teal-blue cloth, warm canvas, dark leather, brass, dark steel, glass, and skin remain differentiated under production lighting.",
+    "proportion": "The reservoirs and optics are larger, but remain within exact package bounds and are proportionate to miniature pressure-worker equipment.",
+    "scale_fidelity": "Godot validates exact 0.26 x 0.50 x 0.21 inch bounds and all five required pivots.",
+    "semantic_recognizability": "The front 3/4 reads as a Clockwork worker with twin glass optics, metal helmet, warm canvas workwear, and a tool harness. The back 3/4 shows a fitted shoulder yoke and twin pressure reservoirs, so role identity no longer depends solely on the face.",
+    "silhouette_quality": "The broad shoulder yoke and paired rear tanks add a useful role silhouette from the back; the front is defined by the enlarged paired optics and helmet brow.",
+    "surface_variation": "The broad canvas areas separate clearly from the deep coat and metal/glass equipment in the front and back views.",
+    "technical_integration": "Godot validation passes with exact 0.26 × 0.50 × 0.21 inch bounds, eight meshes, 18 surfaces, and the preserved 53-bone rig/five pivots. Generated triangles fell 29.3% from v072 (90,418 to 63,914). Whole-scene detail receipts are not stable enough to show a runtime recovery: run-001 is v072 15 FPS/v073 20 FPS, while run-002 is v072 18/v073 17; v007 also varied from 45 FPS in run-005 to 25 in run-006. Whole-scene primitive counts vary independently of the candidate’s triangle reduction, so this is not a controlled per-citizen performance measurement."
+  },
+  "render_evidence": [
+    "art/citizen/iterations/v073/render-runs/run-002/room-scale.png",
+    "art/citizen/iterations/v073/render-runs/run-002/settlement-scale.png",
+    "art/citizen/iterations/v073/render-runs/run-002/asset-gameplay-distance.png",
+    "art/citizen/iterations/v073/render-runs/run-002/asset-three-quarter.png",
+    "art/citizen/iterations/v073/render-runs/run-002/asset-opposite-three-quarter.png",
+    "art/citizen/iterations/v073/render-runs/run-002/asset-profile.png",
+    "art/citizen/iterations/v073/render-runs/run-002/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 4,
+    "gameplay_readability": 4,
+    "geometric_detail": 4,
+    "material_realism": 4,
+    "proportion": 3,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 4,
+    "surface_variation": 4,
+    "technical_integration": 3
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "Yes",
+      "evidence": "The paired lenses, bridge, brow, temple hardware, seams, canvas yoke, and pressure vessels read clearly in the matched three-quarter, profile, and detail renders.",
+      "pass": true
+    },
+    "craftsmanship": {
+      "answer": "Yes",
+      "edge_treatment": {
+        "evidence": "Helmet brow, lens rings, apron/yoke hems, cuffs, and pack crossbars have modeled finished edges.",
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "Twin rims, central hinge, buckles, gauge, retaining bands, ferrules, and twin reservoirs are visible at close range.",
+        "pass": true
+      },
+      "joins": {
+        "evidence": "The optics attach through a structural bridge/brow, the rear yoke follows the body, and straps join it to the pressure frame.",
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "The face cage, helmet supports, fitted rear yoke, reservoir straps, gauge, and pack rails form functional assemblies.",
+        "pass": true
+      },
+      "material_response": {
+        "evidence": "Cloth, canvas, leather, brass, steel, glass, and skin respond differently to production lighting.",
+        "pass": true
+      },
+      "pass": true,
+      "surface_variation": {
+        "evidence": "Warm canvas, deep blue-green cloth, dark leather, metal, and teal glass stay visually separated.",
+        "pass": true
+      },
+      "thickness": {
+        "evidence": "Helmet, optical barrels, canvas panels, harness, pressure tanks, and boots have actual thickness.",
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "evidence": "Anatomical proportions, fitted cloth and canvas, leather harness, paired optical glass, machined helmet hardware, and a connected pressure pack form a believable miniature industrial worker.",
+      "pass": true
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "The Citizen ArtBrief has no photographic reference.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  }
+}

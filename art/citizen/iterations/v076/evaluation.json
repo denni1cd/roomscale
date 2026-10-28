@@ -1,0 +1,116 @@
+{
+  "candidate_id": "citizen-v076",
+  "created_at_utc": "2026-10-28T19:32:49+00:00",
+  "decision": "continue",
+  "defects": [
+    "At the 12-inch camera distance, optics and manufactured head details are too small to dominate the crowd view.",
+    "The whole-scene render receipt varies with moving citizen placement and does not isolate per-citizen performance."
+  ],
+  "hard_fail_reasons": [
+    "Semantic recognizability and gameplay readability remain at 4 rather than the required 5: the Clockwork role does not dominate every citizen at the 12-inch crowd view.",
+    "Runtime frame-time improvement is not yet proven by a controlled repeated test that isolates one candidate across the same 50-citizen camera and scene state."
+  ],
+  "incumbent_candidate_id": "citizen-v007",
+  "incumbent_comparison": "v076 keeps v073’s detailed Clockwork form for close views and adds a runtime 5-inch visibility switch between two mesh levels on the same 53-bone skeleton. Godot logs confirm eight high-detail and eight distance meshes; exact fit and all seven captures pass. The 12-inch capture remains visually recognizable by the helmet, bright lenses, warm yoke, blue-green workwear, and rear pack, but the citizen is still too small for top-tier role readability. Scene-wide performance receipts improve against the dual-render v075 attempt, but the captures also include changing world activity, so per-citizen runtime cost remains unproven. Keep v007 as incumbent.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "The brief fixes the figure at half-inch scale while the production camera views it from 12 inches, leaving fine head details at very small pixel sizes.",
+    "Aggregate draw calls and primitives include the active world and vary with scene state between captures."
+  ],
+  "next_action_hypothesis": "Keep v007 incumbent and v076 challenger. Retain the 5-inch shared-skeleton LOD; it preserves the close authored asset and gives a far mesh near the incumbent’s generated topology budget. Improve broad Clockwork silhouette/readability at 12 inches with a distinct head and shoulder shape that survives LOD reduction, then use repeated identical 50-citizen captures to validate performance. Do not change RoomDefinition, gameplay geometry, pivots, collision, navigation, or selection.",
+  "observations": {
+    "art_direction_fit": "The render now reads as a believable miniature pressure-equipped Clockwork worker from the front and back, rather than a generic green human.",
+    "close_up_quality": "The 2-inch production capture uses the detailed level and retains smooth paired goggle rings, finished helmet edges, fitted layered cloth, and the twin reservoir equipment. The body and its facial morphs remain in the high-detail level; only the far LOD omits tiny facial morph keys while retaining the 53-bone weighted rig.",
+    "gameplay_readability": "In the 12-inch image, the warm shoulder yoke and chest kit, dark teal workcoat, helmet, and luminous paired optics distinguish the worker from a generic suit. The face-level cue remains too small to be unmistakable across the full 50-citizen view.",
+    "geometric_detail": "The fitted MPFB anatomy and 53-bone rig remain unchanged. Authored helmet hardware, bands, tubes, tanks, boots, and curves use fewer segments; validation records 63,914 triangles versus 90,418 in v072, with exact bounds and the same eight meshes/18 surfaces.",
+    "material_realism": "Teal-blue cloth, warm canvas, dark leather, brass, dark steel, glass, and skin remain differentiated under production lighting.",
+    "proportion": "The reservoirs and optics are larger, but remain within exact package bounds and are proportionate to miniature pressure-worker equipment.",
+    "scale_fidelity": "Godot validates exact 0.26 x 0.50 x 0.21 inch bounds and all five required pivots.",
+    "semantic_recognizability": "The front 3/4 reads as a Clockwork worker with twin glass optics, metal helmet, warm canvas workwear, and a tool harness. The back 3/4 shows a fitted shoulder yoke and twin pressure reservoirs, so role identity no longer depends solely on the face.",
+    "silhouette_quality": "The broad shoulder yoke and paired rear tanks add a useful role silhouette from the back; the front is defined by the enlarged paired optics and helmet brow.",
+    "surface_variation": "The broad canvas areas separate clearly from the deep coat and metal/glass equipment in the front and back views.",
+    "technical_integration": "Godot validation passes with exact 0.26 × 0.50 × 0.21 inch bounds, 53 bones, five pivots, 16 mesh instances, and no issues. The runtime bridge logs eight high-detail and eight distance LOD meshes with a 5-inch switch. Blender reports 91,070 triangles in the detailed export source and 21,974 in LOD1 before import; Godot’s combined imported validation count is 79,610. The 12-inch scene receipt is 964 draw calls/373,622 primitives versus v075’s 1,990/720,917 when both levels rendered, but whole-scene counters fluctuate and do not prove a controlled per-citizen frame-time gain."
+  },
+  "render_evidence": [
+    "art/citizen/iterations/v076/render-runs/run-001/room-scale.png",
+    "art/citizen/iterations/v076/render-runs/run-001/settlement-scale.png",
+    "art/citizen/iterations/v076/render-runs/run-001/asset-gameplay-distance.png",
+    "art/citizen/iterations/v076/render-runs/run-001/asset-three-quarter.png",
+    "art/citizen/iterations/v076/render-runs/run-001/asset-opposite-three-quarter.png",
+    "art/citizen/iterations/v076/render-runs/run-001/asset-profile.png",
+    "art/citizen/iterations/v076/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 4,
+    "gameplay_readability": 4,
+    "geometric_detail": 4,
+    "material_realism": 4,
+    "proportion": 3,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 4,
+    "surface_variation": 4,
+    "technical_integration": 4
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "Yes",
+      "evidence": "The paired lenses, bridge, brow, temple hardware, seams, canvas yoke, and pressure vessels read clearly in the matched three-quarter, profile, and detail renders.",
+      "pass": true
+    },
+    "craftsmanship": {
+      "answer": "Yes",
+      "edge_treatment": {
+        "evidence": "Helmet brow, lens rings, apron/yoke hems, cuffs, and pack crossbars have modeled finished edges.",
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "Twin rims, central hinge, buckles, gauge, retaining bands, ferrules, and twin reservoirs are visible at close range.",
+        "pass": true
+      },
+      "joins": {
+        "evidence": "The optics attach through a structural bridge/brow, the rear yoke follows the body, and straps join it to the pressure frame.",
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "The face cage, helmet supports, fitted rear yoke, reservoir straps, gauge, and pack rails form functional assemblies.",
+        "pass": true
+      },
+      "material_response": {
+        "evidence": "Cloth, canvas, leather, brass, steel, glass, and skin respond differently to production lighting.",
+        "pass": true
+      },
+      "pass": true,
+      "surface_variation": {
+        "evidence": "Warm canvas, deep blue-green cloth, dark leather, metal, and teal glass stay visually separated.",
+        "pass": true
+      },
+      "thickness": {
+        "evidence": "Helmet, optical barrels, canvas panels, harness, pressure tanks, and boots have actual thickness.",
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "evidence": "Anatomical proportions, fitted cloth and canvas, leather harness, paired optical glass, machined helmet hardware, and a connected pressure pack form a believable miniature industrial worker.",
+      "pass": true
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "The Citizen ArtBrief has no photographic reference.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  }
+}

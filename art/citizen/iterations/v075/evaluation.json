@@ -1,0 +1,116 @@
+{
+  "candidate_id": "citizen-v075",
+  "created_at_utc": "2026-10-28T19:32:49+00:00",
+  "decision": "continue",
+  "defects": [
+    "The two skinned geometry sets overlap instead of switching at the intended 5-inch distance.",
+    "The gameplay-distance role cue remains too small to dominate the crowd view."
+  ],
+  "hard_fail_reasons": [
+    "Both geometry LODs render simultaneously because the child visibility-range overrides were applied to an external scene instance and were not saved in citizen.tscn. This duplicates the geometry and invalidates the intended runtime LOD/performance test.",
+    "At the 12-inch distance, Clockwork role identity is still small in the 50-citizen gameplay scene."
+  ],
+  "incumbent_candidate_id": "citizen-v007",
+  "incumbent_comparison": "v075 retains the improved Clockwork worker appearance and exact fit from v073, but the attempted LOD visibility overrides were not serialized into the PackedScene. Both high-detail and distance meshes render together, so the capture is not a valid performance improvement and uses roughly double the intended geometry. The next candidate moves visibility setup into the existing rig bridge at runtime. Keep v007 as incumbent.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "Godot packed the GLB as an external scene instance, so setting child properties in the SceneTree packer did not serialize those overrides.",
+    "At a half-inch figure scale and 12-inch camera distance, fine goggles and hardware occupy few pixels."
+  ],
+  "next_action_hypothesis": "Keep this failed LOD attempt in history. Configure visibility ranges in the existing runtime rig bridge, assert that eight meshes belong to each LOD, and re-render close and gameplay views to confirm one level is active at a time. Keep the incumbent unchanged.",
+  "observations": {
+    "art_direction_fit": "The render now reads as a believable miniature pressure-equipped Clockwork worker from the front and back, rather than a generic green human.",
+    "close_up_quality": "The latest matched two-inch render preserves distinct brass-rimmed teal lenses, the formed helmet shell, layered workwear, and twin rear reservoirs. The lower triangle count causes no obvious faceting in the production capture; the production-owned tool still obscures part of the lower front.",
+    "gameplay_readability": "The 12-inch image retains a recognizable helmet, bright goggles, warm chest yoke, blue-green workcoat, and rear pressure kit. At crowd scale, the character remains small and the paired optics cannot carry role identity by themselves.",
+    "geometric_detail": "The fitted MPFB anatomy and 53-bone rig remain unchanged. Authored helmet hardware, bands, tubes, tanks, boots, and curves use fewer segments; validation records 63,914 triangles versus 90,418 in v072, with exact bounds and the same eight meshes/18 surfaces.",
+    "material_realism": "Teal-blue cloth, warm canvas, dark leather, brass, dark steel, glass, and skin remain differentiated under production lighting.",
+    "proportion": "The reservoirs and optics are larger, but remain within exact package bounds and are proportionate to miniature pressure-worker equipment.",
+    "scale_fidelity": "Godot validates exact 0.26 x 0.50 x 0.21 inch bounds and all five required pivots.",
+    "semantic_recognizability": "The front 3/4 reads as a Clockwork worker with twin glass optics, metal helmet, warm canvas workwear, and a tool harness. The back 3/4 shows a fitted shoulder yoke and twin pressure reservoirs, so role identity no longer depends solely on the face.",
+    "silhouette_quality": "The broad shoulder yoke and paired rear tanks add a useful role silhouette from the back; the front is defined by the enlarged paired optics and helmet brow.",
+    "surface_variation": "The broad canvas areas separate clearly from the deep coat and metal/glass equipment in the front and back views.",
+    "technical_integration": "Godot confirms 53 bones, 16 mesh instances, exact 0.26 × 0.50 × 0.21 inch bounds, and no validation errors. However, the packaged scene omitted the intended child visibility overrides: its rig bridge does not configure ranges, so the 8 detailed and 8 LOD1 meshes overlap and render at once. The measured receipt is therefore invalid for LOD performance acceptance."
+  },
+  "render_evidence": [
+    "art/citizen/iterations/v075/render-runs/run-001/room-scale.png",
+    "art/citizen/iterations/v075/render-runs/run-001/settlement-scale.png",
+    "art/citizen/iterations/v075/render-runs/run-001/asset-gameplay-distance.png",
+    "art/citizen/iterations/v075/render-runs/run-001/asset-three-quarter.png",
+    "art/citizen/iterations/v075/render-runs/run-001/asset-opposite-three-quarter.png",
+    "art/citizen/iterations/v075/render-runs/run-001/asset-profile.png",
+    "art/citizen/iterations/v075/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 4,
+    "gameplay_readability": 4,
+    "geometric_detail": 4,
+    "material_realism": 4,
+    "proportion": 3,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 4,
+    "surface_variation": 4,
+    "technical_integration": 2
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "Yes",
+      "evidence": "The paired lenses, bridge, brow, temple hardware, seams, canvas yoke, and pressure vessels read clearly in the matched three-quarter, profile, and detail renders.",
+      "pass": true
+    },
+    "craftsmanship": {
+      "answer": "Yes",
+      "edge_treatment": {
+        "evidence": "Helmet brow, lens rings, apron/yoke hems, cuffs, and pack crossbars have modeled finished edges.",
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "Twin rims, central hinge, buckles, gauge, retaining bands, ferrules, and twin reservoirs are visible at close range.",
+        "pass": true
+      },
+      "joins": {
+        "evidence": "The optics attach through a structural bridge/brow, the rear yoke follows the body, and straps join it to the pressure frame.",
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "The face cage, helmet supports, fitted rear yoke, reservoir straps, gauge, and pack rails form functional assemblies.",
+        "pass": true
+      },
+      "material_response": {
+        "evidence": "Cloth, canvas, leather, brass, steel, glass, and skin respond differently to production lighting.",
+        "pass": true
+      },
+      "pass": true,
+      "surface_variation": {
+        "evidence": "Warm canvas, deep blue-green cloth, dark leather, metal, and teal glass stay visually separated.",
+        "pass": true
+      },
+      "thickness": {
+        "evidence": "Helmet, optical barrels, canvas panels, harness, pressure tanks, and boots have actual thickness.",
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "evidence": "Anatomical proportions, fitted cloth and canvas, leather harness, paired optical glass, machined helmet hardware, and a connected pressure pack form a believable miniature industrial worker.",
+      "pass": true
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "The Citizen ArtBrief has no photographic reference.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  }
+}

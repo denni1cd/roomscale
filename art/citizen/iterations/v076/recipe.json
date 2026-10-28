@@ -1,0 +1,111 @@
+{
+  "deterministic_seed": 76031,
+  "generator_command": [
+    "{project_root}/.venv/Scripts/python.exe",
+    "{project_root}/scripts/art_factory/generators/mpfb_citizen_v076_pipeline.py",
+    "{project_root}",
+    "{output_dir}"
+  ],
+  "import_configuration": {
+    "candidate_root": "CitizenArtAsset",
+    "format": "Godot PackedScene containing the fitted 53-bone character, batched head/workwear/boot accessory meshes, and five RoomScale pivots",
+    "independent_detail_nodes": [],
+    "keep_gameplay_collision_navigation_selection_and_floor_geometry_unchanged": true,
+    "pivot_nodes": [
+      "Body",
+      "LeftArm",
+      "RightArm",
+      "LeftLeg",
+      "RightLeg"
+    ],
+    "primary_asset": "citizen.tscn",
+    "visual_only": true
+  },
+  "instructions": "Respond to citizen-v075: preserve its refined 53-bone human/rig, twin-goggle machinist helmet, fitted workwear, rear pressure pack, PBR materials, and exact RoomScale bounds. The close detail view remains valuable, while 12-inch scenes contain 50 active citizens and the per-asset triangle count remains above the accepted incumbent. Generate a second skin-weighted mesh LOD from the same authored geometry with a controlled Decimate reduction; package both LODs under the same Skeleton3D. In Godot, show the detailed LOD within 5 inches and the lighter LOD beyond 5 inches, so the actual two-inch captures retain craftsmanship while gameplay-distance captures use lower geometry. Keep the visible large Clockwork shapes, material assignments, five pivots, gameplay equipment, collision, navigation, and selection unchanged. Verify actual Godot captures at 2 and 12 inches, exact bounds, animated rig, LOD transition, and active triangle budget; keep v007 incumbent until gameplay identity and technical integration meet the promotion gate.",
+  "material_method": "Keep v071 blue-green coat, warm canvas front yoke/apron, and PBR leather/metal/glass/skin. Use the same canvas surface on a fitted rear yoke joined to physically functional brass pressure vessels and frame.",
+  "method": "mpfb_rig_clockwork_citizen_with_distance_aware_geometry_lod",
+  "parameters": {
+    "best_so_far_incumbent": "citizen-v007",
+    "five_root_pivots": [
+      "Body",
+      "LeftArm",
+      "RightArm",
+      "LeftLeg",
+      "RightLeg"
+    ],
+    "gameplay_geometry_changed": false,
+    "new_skinned_accessory_meshes_per_citizen": 3,
+    "outputs": [
+      "citizen.tscn",
+      "citizen.glb",
+      "generation-record.json",
+      "materials/workcoat_albedo.png",
+      "materials/workwear_apron_albedo.png",
+      "materials/workwear_apron_normal.png",
+      "materials/workwear_apron_roughness.png",
+      "materials/workwear_leather_albedo.png",
+      "materials/workwear_leather_normal.png",
+      "materials/workwear_leather_roughness.png",
+      "materials/workwear_helmet_albedo.png",
+      "materials/workwear_helmet_normal.png",
+      "materials/workwear_helmet_roughness.png",
+      "tooling/mpfb_citizen_v076_blender.py",
+      "tooling/mpfb_citizen_v076_pipeline.py",
+      "tooling/mpfb_citizen_pivots_v076.gd",
+      "tooling/write_mpfb_citizen_scene_v076.gd",
+      "licenses/MPFB2-LICENSE",
+      "licenses/MakeHuman-CC0-assets-license.md",
+      "materials/workcoat_normal.png",
+      "materials/workcoat_roughness.png",
+      "materials/workwear_coverall_albedo.png",
+      "materials/workwear_coverall_normal.png",
+      "materials/workwear_coverall_roughness.png"
+    ],
+    "parent_candidate_id": "citizen-v075",
+    "preserve_53_bone_game_engine_rig": true,
+    "preserve_v055_visual_pivot_gains": {
+      "LeftArm": 1.0,
+      "LeftLeg": 0.35,
+      "RightArm": 1.0,
+      "RightLeg": 0.35
+    },
+    "production_owned_equipment_changed": false,
+    "room_definition_changed": false,
+    "strategy_identity": "MPFB Clockwork citizen with validated shared-skeleton distance-aware LOD visibility",
+    "target_bounds_inches_roomscale_xyz": [
+      0.26,
+      0.5,
+      0.21
+    ]
+  },
+  "post_processing": [
+    "Create one skin-weighted duplicate of each main mesh and apply a deterministic Decimate modifier before its armature in the modifier stack; target a total distance LOD near the incumbent triangle budget while preserving the helmet shell, twin lens circles, broad yoke/apron, silhouette, and pressure pack. Keep all PBR material slots and the existing detailed LOD untouched.",
+    "Package both levels in the same GLB and shared skeleton. Set high-detail MeshInstances visible up to 5 inches and LOD1 MeshInstances visible from 5 inches. Confirm the close capture uses the detailed meshes and the 12-inch/50-citizen production capture uses LOD1 with no doubled geometry or disappearing visibility gap.",
+    "Validate exact target bounds, 53 bones, five pivots, no geometry leakage into collision/navigation/selection, and rendered topology quality. Render the full seven matched views; do not promote if the far LOD loses the distinct twin-optic/Clockwork-worker identity."
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "art/citizen/brief.json",
+    "art/citizen/iterations/v057/evaluation.json",
+    "art/citizen/iterations/v055/evaluation.json",
+    ".tools/makehuman_system_assets-data/skins/young_caucasian_male/young_caucasian_male.mhmat",
+    ".tools/makehuman_system_assets-data/clothes/toigo_gloves_medium/toigo_gloves_medium.mhclo",
+    ".tools/makehuman_system_assets-data/clothes/shoes03/shoes03.mhclo",
+    ".tools/MPFB2/LICENSE.CODE.md",
+    ".tools/MPFB2/LICENSE.ASSETS.md",
+    "scripts/art_factory/generators/mpfb_citizen_v076_blender.py",
+    ".tools/makehuman_system_assets-data/clothes/male_worksuit01/male_worksuit01.mhclo",
+    ".tools/makehuman_system_assets-data/clothes/male_worksuit01/male_worksuit01_diffuse.png",
+    ".tools/makehuman_system_assets-data/clothes/male_worksuit01/male_worksuit01_normal.png",
+    "art/citizen/iterations/v062/evaluation.json",
+    "art/citizen/iterations/v063/evaluation.json",
+    "art/citizen/iterations/v064/evaluation.json",
+    "art/citizen/iterations/v066/references/clockwork-helmet-concept.png",
+    "art/citizen/iterations/v068/evaluation.json",
+    "art/citizen/iterations/v069/evaluation.json",
+    "art/citizen/iterations/v070/evaluation.json",
+    "art/citizen/iterations/v071/evaluation.json"
+  ],
+  "tool": "MPFB2 Blender extension, Blender bespoke accessory/workwear geometry, Godot Art Factory GLB packaging path",
+  "tool_version": "MPFB2 2.0.18; Blender 5.2.3; Godot 4.7.2"
+}
