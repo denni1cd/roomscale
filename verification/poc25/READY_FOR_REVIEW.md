@@ -19,7 +19,7 @@
 | Performance evidence and limits | [RTX 5090 / Godot 4.7.2 Compatibility run](final/best-current-performance-run-001.json), VSync disabled, 50 citizens: room 32.98 FPS, settlement 88.55 FPS, citizen 206.20 FPS. The room view is below 60 FPS; the run was not isolated from other GPU processes, so target performance remains an explicit follow-up. |
 | Durable production-art backlog | [PRODUCTION_ART_BACKLOG.md](PRODUCTION_ART_BACKLOG.md), including citizen role readability/animation/cost, desk fidelity, grapple workmanship, architecture finish, lighting, remaining props, and licensing. |
 | No failed candidate represented as production PASS | Review-only registry statuses, candidate evaluations, receipts, and unchanged `art/registry.json` preserve that boundary. |
-| CI classification | The original `04e75d2` integration regressions are repaired. Later runs `40738817339` and `40756019436` exposed POC 2.5 Python quality failures; their civilization smoke jobs passed (one earlier matrix job was cancelled). The lint and format findings are repaired locally, with a fresh pushed Actions run still required before calling remote CI current. See [dated CI classification](final/ci-quality-classification-2026-10-28.md). |
+| CI classification | The original `04e75d2` integration regressions and the later candidate-worker formatting/lint failures are repaired. Current review-package commit `73e5e1b` passed all six jobs in [Actions run 40776228395](https://github.com/denni1cd/roomscale/actions/runs/40776228395), including Python quality, focused/startup and conflict regressions, and all four civilization smoke combinations. See [dated CI classification](final/ci-quality-classification-2026-10-28.md). |
 
 ## Visual disposition requested
 

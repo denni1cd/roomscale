@@ -32,7 +32,7 @@ The VSync-disabled benchmark in [best-current-performance-run-001.json](final/be
 
 ## CI classification
 
-The original failures from Actions run `40256472981` on `04e75d2` were POC 2.5 regressions: citizen presentation leaked Clockwork art into Verdant, and Windows CRLF conversion broke text-scene registry hashes. Both were repaired. The newer quality runs `40738817339` and `40756019436` then found formatting and lint issues in candidate-specific citizen generation scripts; the civilization smoke jobs passed. Those issues have local repairs, but remote CI still needs a fresh run after the review package is pushed. The run-by-run evidence is in [dated CI classification](final/ci-quality-classification-2026-10-28.md) and [the original regression classification](final/ci-04e75d2-classification.md).
+The original failures from Actions run `40256472981` on `04e75d2` were POC 2.5 regressions: citizen presentation leaked Clockwork art into Verdant, and Windows CRLF conversion broke text-scene registry hashes. Both were repaired. Runs `40738817339` and `40756019436` found formatting and lint issues in candidate-specific citizen generation scripts; those are also repaired. The pushed review package passed all six jobs in [Actions run 40776228395](https://github.com/denni1cd/roomscale/actions/runs/40776228395). The run-by-run evidence is in [dated CI classification](final/ci-quality-classification-2026-10-28.md) and [the original regression classification](final/ci-04e75d2-classification.md).
 
 ## Review boundary
 

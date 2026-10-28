@@ -19,4 +19,4 @@ Neither run produced evidence of a gameplay, renderer, registry, or citizen-runt
 
 ## Current-run status
 
-At the time this record was prepared, these repairs had not yet been pushed through a new GitHub Actions run. The earlier green run `40417656855` predates them and is not evidence that the current commit is green. Update this section with the new run result after pushing; do not claim current remote CI is green until it completes.
+GitHub Actions run [40776228395](https://github.com/denni1cd/roomscale/actions/runs/40776228395) completed successfully on review-package commit `73e5e1b1be56c6a2d683f82d9f4c4c48cf79c738`. All six jobs passed: Python quality and focused/startup regressions, conflict checks including the second room, and Clockwork/Verdant civilization smoke in Room A and Room B. This verifies the formatting/lint repairs and the committed review package. GitHub emitted a non-blocking Node.js 20 deprecation annotation for checkout/cache actions; it did not fail any job.
