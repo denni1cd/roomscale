@@ -1,0 +1,117 @@
+{
+  "method": "blender_component_level_hard_surface_miniature_grapple",
+  "candidate_id": "grapple-v009",
+  "created_at_utc": "2026-10-28T15:32:06+00:00",
+  "geometry_source": "modeled from the RoomScale grapple brief and strict v006 render diagnosis; no primitive scene fallback",
+  "reference_candidate": "grapple-v006",
+  "bounds_target_inches": [
+    8.7,
+    11.67,
+    7.5
+  ],
+  "components": [
+    "FoundationDetails",
+    "MachineryDetails",
+    "LauncherDetails"
+  ],
+  "features": [
+    "radiused timber skids and steel shoes",
+    "turned winch drum with three-strand helical hemp winding",
+    "bevelled twenty-tooth drive gear",
+    "pillow blocks and fasteners",
+    "seamed copper pressure vessel",
+    "two enamel gauges with raised indices and needles",
+    "formed pipework and compression unions",
+    "round tube mast with collars and braces",
+    "round ladder rungs",
+    "grooved sheave and axle locknuts",
+    "candidate-local baked base-color and roughness microtexture",
+    "stage meshes batched by PBR material"
+  ],
+  "material_variation": "512px packed candidate-local sRGB albedo and non-color roughness textures with subtle tileable procedural variation",
+  "mesh_batching": "one exported mesh per unique PBR material within each construction-stage group",
+  "gameplay_geometry_changed": false,
+  "dynamic_cable_embedded": false,
+  "materials": {
+    "wood": {
+      "base_color_rgba": [
+        0.11999999731779099,
+        0.05000000074505806,
+        0.019999999552965164,
+        1.0
+      ],
+      "metallic": 0.05000000074505806,
+      "roughness": 0.5799999833106995
+    },
+    "iron": {
+      "base_color_rgba": [
+        0.04500000178813934,
+        0.061000000685453415,
+        0.06800000369548798,
+        1.0
+      ],
+      "metallic": 0.8199999928474426,
+      "roughness": 0.28999999165534973
+    },
+    "steel": {
+      "base_color_rgba": [
+        0.3100000023841858,
+        0.36000001430511475,
+        0.3799999952316284,
+        1.0
+      ],
+      "metallic": 0.8999999761581421,
+      "roughness": 0.2199999988079071
+    },
+    "brass": {
+      "base_color_rgba": [
+        0.5799999833106995,
+        0.36000001430511475,
+        0.11999999731779099,
+        1.0
+      ],
+      "metallic": 0.8199999928474426,
+      "roughness": 0.25
+    },
+    "copper": {
+      "base_color_rgba": [
+        0.4300000071525574,
+        0.1599999964237213,
+        0.08500000089406967,
+        1.0
+      ],
+      "metallic": 0.7400000095367432,
+      "roughness": 0.30000001192092896
+    },
+    "rope": {
+      "base_color_rgba": [
+        0.1599999964237213,
+        0.07500000298023224,
+        0.02800000086426735,
+        1.0
+      ],
+      "metallic": 0.0,
+      "roughness": 0.9399999976158142
+    },
+    "enamel": {
+      "base_color_rgba": [
+        0.8299999833106995,
+        0.7699999809265137,
+        0.6100000143051147,
+        1.0
+      ],
+      "metallic": 0.07999999821186066,
+      "roughness": 0.2800000011920929
+    },
+    "black": {
+      "base_color_rgba": [
+        0.017999999225139618,
+        0.024000000208616257,
+        0.02800000086426735,
+        1.0
+      ],
+      "metallic": 0.7799999713897705,
+      "roughness": 0.23999999463558197
+    }
+  }
+}

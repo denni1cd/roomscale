@@ -1,0 +1,269 @@
+{
+  "deterministic_seed": 87031,
+  "generator_command": [
+    "{project_root}/.venv/Scripts/python.exe",
+    "{project_root}/scripts/art_factory/generators/mpfb_citizen_v087_pipeline.py",
+    "{project_root}",
+    "{output_dir}"
+  ],
+  "import_configuration": {
+    "candidate_root": "CitizenArtAsset",
+    "format": "Godot PackedScene with unchanged MPFB anatomical Clockwork worker and 53-bone rig, 9+9 shared-skeleton meshes, a separated and flared split canvas apron plus matching skinned rear workcoat tails, concept-matched helmet, twin pressure pack, five pivots, and exact half-inch envelope",
+    "independent_detail_nodes": [],
+    "keep_gameplay_collision_navigation_selection_and_floor_geometry_unchanged": true,
+    "pivot_nodes": [
+      "Body",
+      "LeftArm",
+      "RightArm",
+      "LeftLeg",
+      "RightLeg"
+    ],
+    "primary_asset": "citizen.tscn",
+    "visual_only": true
+  },
+  "instructions": "Respond to the v086 production renders: the helmet and paired goggles read at close range, but the 12-inch crowd still reduces the role to a tiny teal-and-brass figure; the apron panels are obscured in the front by production-owned role equipment and the skirt shape does not survive profile/rear views. Keep the MPFB anatomy, exact half-inch envelope, fitted machinist helmet and paired goggles, 53-bone rig, five pivots, independently attached role equipment, 50 active citizens, RoomDefinition, gameplay and camera unchanged. Build two clearly separated, flared canvas apron panels over the upper thighs with a visible central gait opening, matching shaped coat tails on the rear, and substantial bound hems. Skin each panel to its corresponding existing leg reference weights so the garment articulates. Do not add decorative gear scatter, hide production-owned tools, or change the camera. Validate exact bounds and rig; render seven standard live production views plus idle close and four controlled-facing stills; inspect actual captures and retain citizen-v007 unless every strict gate passes.",
+  "material_method": "Retain the existing textured deep-teal coverall cloth, warm oiled canvas apron, leather binding, aged brass, iron, and glass PBR response; add only fitted front apron panels, matching rear coat tails, and broad hem binding geometry",
+  "method": "mpfb_rigged_clockwork_worker_with_split_fitted_apron_and_rear_coat_tails",
+  "parameters": {
+    "best_so_far_incumbent": "citizen-v007",
+    "concept_reference": "art/citizen/iterations/v066/references/clockwork-helmet-concept.png",
+    "five_root_pivots": [
+      "Body",
+      "LeftArm",
+      "RightArm",
+      "LeftLeg",
+      "RightLeg"
+    ],
+    "gameplay_geometry_changed": false,
+    "helmet_lod_ratio": 1.0,
+    "materials_changed": false,
+    "new_skinned_accessory_meshes_per_citizen": 4,
+    "outputs": [
+      "citizen.tscn",
+      "citizen.glb",
+      "generation-record.json",
+      "materials/workcoat_albedo.png",
+      "materials/workwear_apron_albedo.png",
+      "materials/workwear_apron_normal.png",
+      "materials/workwear_apron_roughness.png",
+      "materials/workwear_leather_albedo.png",
+      "materials/workwear_leather_normal.png",
+      "materials/workwear_leather_roughness.png",
+      "materials/workwear_helmet_albedo.png",
+      "materials/workwear_helmet_normal.png",
+      "materials/workwear_helmet_roughness.png",
+      "tooling/mpfb_citizen_v087_blender.py",
+      "tooling/mpfb_citizen_v087_pipeline.py",
+      "tooling/mpfb_citizen_pivots_v087.gd",
+      "tooling/write_mpfb_citizen_scene_v087.gd",
+      "licenses/MPFB2-LICENSE",
+      "licenses/MakeHuman-CC0-assets-license.md",
+      "materials/workcoat_normal.png",
+      "materials/workcoat_roughness.png",
+      "materials/workwear_coverall_albedo.png",
+      "materials/workwear_coverall_normal.png",
+      "materials/workwear_coverall_roughness.png"
+    ],
+    "parent_candidate_id": "citizen-v086",
+    "preserve_53_bone_game_engine_rig": true,
+    "preserve_v055_visual_pivot_gains": {
+      "LeftArm": 1.0,
+      "LeftLeg": 0.35,
+      "RightArm": 1.0,
+      "RightLeg": 0.35
+    },
+    "previous_helmet_lod_ratio": 0.65,
+    "production_owned_equipment_changed": false,
+    "raised_pressure_pack": {
+      "purpose": "functional silhouette equipment visible from rear and elevated gameplay views",
+      "tank_centers_source_units": [
+        -0.074,
+        0.074
+      ],
+      "tank_z_range_source_units": [
+        0.985,
+        1.345
+      ],
+      "within_existing_brief_envelope": true
+    },
+    "rear_coat_tails": {
+      "height_source_units": [
+        0.585,
+        0.91
+      ],
+      "material": "deep-teal textured coverall cloth",
+      "skinned_to_corresponding_human_leg": true,
+      "within_existing_brief_envelope": true
+    },
+    "room_definition_changed": false,
+    "source_candidate_visual_failure": "v086 close views show coherent Clockwork equipment, but front apron shapes are partly obscured by production-owned role equipment and the skirt silhouette does not survive rear/profile/gameplay views",
+    "split_apron_panels": {
+      "center_path_source_units": [
+        [
+          -0.06,
+          -0.064,
+          -0.068,
+          -0.071,
+          -0.072
+        ],
+        [
+          0.06,
+          0.064,
+          0.068,
+          0.071,
+          0.072
+        ]
+      ],
+      "central_gait_gap_preserved": true,
+      "half_width_source_units": [
+        0.026,
+        0.034,
+        0.041,
+        0.044
+      ],
+      "height_source_units": [
+        0.585,
+        0.91
+      ],
+      "skinned_to_corresponding_human_leg": true,
+      "visual_only": true
+    },
+    "strategy_identity": "Fitted Clockwork workwear with articulated split apron panels and matching rear coat tails whose gap and hem remain visible from multiple facings",
+    "target_bounds_inches_roomscale_xyz": [
+      0.26,
+      0.5,
+      0.21
+    ],
+    "target_helmet_lod_ratio": 1.0,
+    "top_facing_pressure_dial": {
+      "distance_lod_preserved_without_decimation": true,
+      "gameplay_geometry_changed": false,
+      "independent_skinned_mesh": true,
+      "mount_z_range_source_units": [
+        1.405,
+        1.463
+      ],
+      "purpose": "functional pack pressure readout visible in elevated 12-inch gameplay views",
+      "target_bounds_inches_roomscale_xyz": [
+        0.26,
+        0.5,
+        0.21
+      ]
+    },
+    "workwear_palette": {
+      "coverall_albedo_source_linear": [
+        0.045,
+        0.165,
+        0.175
+      ],
+      "palette_name": "muted deep teal with warm canvas apron and aged brass",
+      "shirt_albedo_source_linear": [
+        0.06,
+        0.195,
+        0.19
+      ]
+    }
+  },
+  "post_processing": [
+    "Preserve MPFB human anatomy, exact target envelope, 53-bone game rig, five pivots, all equipment, and gameplay-owned movement/tool/pack/cargo/traversal attachments.",
+    "Fit and skin separated split canvas apron panels to their corresponding upper-leg bones, with outward-shifted centers toward the hem and a central gait opening.",
+    "Add matching deep-teal coat tails to the rear surface, skinned to the same leg references; retain the existing front/back equipment and its visibility.",
+    "Use broad leather hem binding to expose garment construction in the two-inch view without adding scattered ornament.",
+    "Keep nine high-detail plus nine shared-skeleton distance meshes and the 5-inch LOD switch.",
+    "Render and inspect seven live RoomScale views, idle close detail, and four supplemental controlled facings. Do not claim candidate-specific performance from shared-GPU captures."
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "art/citizen/brief.json",
+    "art/citizen/iterations/v057/evaluation.json",
+    "art/citizen/iterations/v055/evaluation.json",
+    ".tools/makehuman_system_assets-data/skins/young_caucasian_male/young_caucasian_male.mhmat",
+    ".tools/makehuman_system_assets-data/clothes/toigo_gloves_medium/toigo_gloves_medium.mhclo",
+    ".tools/makehuman_system_assets-data/clothes/shoes03/shoes03.mhclo",
+    ".tools/MPFB2/LICENSE.CODE.md",
+    ".tools/MPFB2/LICENSE.ASSETS.md",
+    "scripts/art_factory/generators/mpfb_citizen_v076_blender.py",
+    ".tools/makehuman_system_assets-data/clothes/male_worksuit01/male_worksuit01.mhclo",
+    ".tools/makehuman_system_assets-data/clothes/male_worksuit01/male_worksuit01_diffuse.png",
+    ".tools/makehuman_system_assets-data/clothes/male_worksuit01/male_worksuit01_normal.png",
+    "art/citizen/iterations/v062/evaluation.json",
+    "art/citizen/iterations/v063/evaluation.json",
+    "art/citizen/iterations/v064/evaluation.json",
+    "art/citizen/iterations/v066/references/clockwork-helmet-concept.png",
+    "art/citizen/iterations/v068/evaluation.json",
+    "art/citizen/iterations/v069/evaluation.json",
+    "art/citizen/iterations/v070/evaluation.json",
+    "art/citizen/iterations/v071/evaluation.json",
+    "art/citizen/iterations/v076/evaluation.json",
+    "scripts/art_factory/generators/mpfb_citizen_v077_blender.py",
+    "scripts/art_factory/generators/mpfb_citizen_pivots_v077.gd",
+    "scripts/art_factory/generators/write_mpfb_citizen_scene_v077.gd",
+    "scripts/art_factory/generators/mpfb_citizen_v077_pipeline.py",
+    "art/citizen/iterations/v077/candidate.json",
+    "art/citizen/iterations/v077/generation.log",
+    "art/citizen/iterations/v077/generated/citizen.glb",
+    "scripts/art_factory/generators/mpfb_citizen_v078_blender.py",
+    "scripts/art_factory/generators/mpfb_citizen_pivots_v078.gd",
+    "scripts/art_factory/generators/write_mpfb_citizen_scene_v078.gd",
+    "scripts/art_factory/generators/mpfb_citizen_v078_pipeline.py",
+    "art/citizen/iterations/v078/evaluation.json",
+    "art/citizen/iterations/v078/render-runs/run-001/asset-gameplay-distance.png",
+    "art/citizen/iterations/v078/render-runs/run-001/asset-opposite-three-quarter.png",
+    "scripts/art_factory/generators/mpfb_citizen_v079_blender.py",
+    "scripts/art_factory/generators/mpfb_citizen_pivots_v079.gd",
+    "scripts/art_factory/generators/write_mpfb_citizen_scene_v079.gd",
+    "scripts/art_factory/generators/mpfb_citizen_v079_pipeline.py",
+    "art/citizen/iterations/v079/evaluation.json",
+    "art/citizen/iterations/v079/render-runs/run-001/asset-gameplay-distance.png",
+    "art/citizen/iterations/v079/render-runs/run-001/asset-three-quarter.png",
+    "art/citizen/iterations/v080/candidate.json",
+    "art/citizen/iterations/v080/generation.log",
+    "scripts/art_factory/generators/mpfb_citizen_v080_blender.py",
+    "art/citizen/iterations/v081/candidate.json",
+    "art/citizen/iterations/v081/generation.log",
+    "scripts/art_factory/generators/mpfb_citizen_v081_blender.py",
+    "art/citizen/iterations/v082/evaluation.json",
+    "art/citizen/iterations/v082/render-runs/run-001/asset-gameplay-distance.png",
+    "art/citizen/iterations/v082/render-runs/run-001/asset-three-quarter.png",
+    "scripts/art_factory/generators/mpfb_citizen_v082_blender.py",
+    "art/citizen/iterations/v083/evaluation.json",
+    "art/citizen/iterations/v083/render-runs/run-001/asset-gameplay-distance.png",
+    "scripts/art_factory/generators/mpfb_citizen_v083_blender.py",
+    "art/citizen/iterations/v084/evaluation.json",
+    "art/citizen/iterations/v084/render-runs/run-002/receipt.json",
+    "art/citizen/iterations/v084/render-runs/run-002/asset-gameplay-yaw-000.png",
+    "art/citizen/iterations/v084/render-runs/run-002/asset-gameplay-yaw-090.png",
+    "art/citizen/iterations/v084/render-runs/run-002/asset-gameplay-yaw-180.png",
+    "art/citizen/iterations/v084/render-runs/run-002/asset-gameplay-yaw-270.png",
+    "verification/poc25/citizen-v084-controlled-yaw-review-2026-10-28.md",
+    "scripts/art_factory/render_harness.gd",
+    "scripts/art_factory/generators/mpfb_citizen_v085_blender.py",
+    "scripts/art_factory/generators/mpfb_citizen_v085_pipeline.py",
+    "scripts/art_factory/generators/mpfb_citizen_pivots_v085.gd",
+    "scripts/art_factory/generators/write_mpfb_citizen_scene_v085.gd",
+    "art/citizen/iterations/v085/evaluation.json",
+    "art/citizen/iterations/v085/render-runs/run-002/receipt.json",
+    "art/citizen/iterations/v085/render-runs/run-003/receipt.json",
+    "art/citizen/iterations/v085/render-runs/run-003/asset-idle-detail.png",
+    "art/citizen/iterations/v085/render-runs/run-003/asset-gameplay-yaw-000.png",
+    "art/citizen/iterations/v085/render-runs/run-003/asset-gameplay-yaw-090.png",
+    "art/citizen/iterations/v085/render-runs/run-003/asset-gameplay-yaw-180.png",
+    "art/citizen/iterations/v085/render-runs/run-003/asset-gameplay-yaw-270.png",
+    "scripts/art_factory/generators/mpfb_citizen_v086_blender.py",
+    "scripts/art_factory/generators/mpfb_citizen_v086_pipeline.py",
+    "scripts/art_factory/generators/mpfb_citizen_pivots_v086.gd",
+    "scripts/art_factory/generators/write_mpfb_citizen_scene_v086.gd",
+    "art/citizen/iterations/v086/recipe.json",
+    "art/citizen/iterations/v086/candidate.json",
+    "art/citizen/iterations/v086/technical-validation.json",
+    "art/citizen/iterations/v086/render-runs/run-001/receipt.json",
+    "art/citizen/iterations/v086/render-runs/run-001/asset-gameplay-distance.png",
+    "art/citizen/iterations/v086/render-runs/run-001/asset-three-quarter.png",
+    "art/citizen/iterations/v086/render-runs/run-001/asset-opposite-three-quarter.png",
+    "art/citizen/iterations/v086/render-runs/run-001/asset-profile.png",
+    "art/citizen/iterations/v086/render-runs/run-001/asset-idle-detail.png",
+    "art/citizen/iterations/v086/render-runs/run-001/asset-gameplay-yaw-180.png"
+  ],
+  "tool": "MPFB2 fitted-human rig + Blender skinned workwear geometry + Godot Art Factory GLB packaging",
+  "tool_version": "MPFB2 2.0.18; Blender 5.2.3; Godot 4.7.2"
+}

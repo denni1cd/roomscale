@@ -10,10 +10,11 @@ static func apply(model: Node3D, preserve_names: PackedStringArray) -> Dictionar
 	# The accepted ArtBrief describes the clockwork worker. Keep civic-specific
 	# Verdant and future presentation rigs on their own visual path.
 	var citizen := model.get_parent()
-	# This registered asset is the Clockwork Art Factory pilot. Other civilizations
-	# own their own visual transformation and must keep the legacy pose rig intact.
-	var civilization_id := String(citizen.get("civilization_id")) if citizen != null else ""
-	if civilization_id != "clockwork":
+	# A configured simulation owns the authoritative civilization identity. The
+	# canonical POC room can also run the selected presentation profile without a
+	# CivilizationSimulation, in which case its legacy population follows the
+	# globally selected profile (Clockwork by default).
+	if not _uses_clockwork_presentation(citizen):
 		return {"registered": false, "skipped_for_civilization": true}
 	var registry := AssetRegistry.new()
 	if not registry.valid:
@@ -24,6 +25,8 @@ static func apply(model: Node3D, preserve_names: PackedStringArray) -> Dictionar
 	var entry := registry.lookup("citizen")
 	var source := String(entry.get("resolved_path", ""))
 	var candidate_id := String(entry.get("candidate_id", ""))
+	var review_only := bool(entry.get("registry_review_only", false))
+	var registry_status := String(entry.get("status", ""))
 	if not String(entry.get("resolution_error", "")).is_empty():
 		return _fail_closed(model, preserve_names, String(entry.resolution_error), source, candidate_id)
 	var packed := load(source) as PackedScene
@@ -33,14 +36,18 @@ static func apply(model: Node3D, preserve_names: PackedStringArray) -> Dictionar
 	if instance == null:
 		return _fail_closed(model, preserve_names, "accepted citizen asset root must be Node3D", source, candidate_id)
 	for part_name in RIG_PARTS:
-		var part := instance.get_node_or_null(NodePath(part_name)) as MeshInstance3D
+		# The five animation controls are Node3D pivots. Some generated assets put
+		# their skinned surface under Body instead of making each pivot a mesh.
+		var part := instance.get_node_or_null(NodePath(part_name)) as Node3D
 		if part == null:
 			instance.free()
-			return _fail_closed(model, preserve_names, "accepted citizen asset is missing rig mesh %s" % part_name, source, candidate_id)
+			return _fail_closed(model, preserve_names, "accepted citizen asset is missing rig pivot %s" % part_name, source, candidate_id)
 
 	instance.name = "CitizenArtAsset"
 	instance.set_meta("visual_asset_id", "citizen")
 	instance.set_meta("visual_asset_candidate_id", candidate_id)
+	instance.set_meta("visual_asset_review_only", review_only)
+	instance.set_meta("visual_asset_registry_status", registry_status)
 	instance.set_meta("visual_source", source)
 	model.add_child(instance)
 	for child in model.get_children():
@@ -50,11 +57,30 @@ static func apply(model: Node3D, preserve_names: PackedStringArray) -> Dictionar
 
 	model.set_meta("visual_asset_id", "citizen")
 	model.set_meta("visual_asset_candidate_id", candidate_id)
+	model.set_meta("visual_asset_review_only", review_only)
+	model.set_meta("visual_asset_registry_status", registry_status)
 	model.set_meta("visual_source", source)
 	var rig := {}
 	for part_name in RIG_PARTS:
 		rig[part_name] = instance.get_node(part_name)
 	return {"registered": true, "loaded": true, "instance": instance, "rig": rig}
+
+
+static func _uses_clockwork_presentation(citizen: Node) -> bool:
+	if citizen == null:
+		return false
+	var civilization_id := String(citizen.get("civilization_id"))
+	if civilization_id == "clockwork" or civilization_id.begins_with("clockwork_"):
+		return true
+	var coordinator := citizen.get("coordinator") as Node
+	if coordinator != null:
+		var civilization := coordinator.get("civilization") as Node
+		if civilization != null:
+			var definition_id := String(civilization.get("definition_id"))
+			if not definition_id.is_empty():
+				return definition_id == "clockwork"
+	var requested := OS.get_environment("ROOMSCALE_CIVILIZATION").strip_edges().to_lower()
+	return requested.is_empty() or requested == "clockwork"
 
 
 static func _fail_closed(

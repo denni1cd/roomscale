@@ -99,13 +99,28 @@ class GodotArtBridge:
         if not asset_file.is_file():
             raise FileNotFoundError(f"candidate asset is missing: {asset_file}")
         candidate_root = self.factory._candidate_root(candidate)
-        registry_relative = candidate_root / "candidate-registry.json"
-        registry_relative.parent.mkdir(parents=True, exist_ok=True)
+        run_root = self._next_render_run(candidate_root)
+        run_root.mkdir(parents=True, exist_ok=False)
+        registry_relative = run_root / "candidate-registry.json"
         relative_asset = asset_file.relative_to(self.project_root).as_posix()
         brief = self.factory.load_brief(candidate.asset_id)
         override = self.factory.registry.read()
+        override["registry_type"] = "poc25_best_current_showcase"
+        override["purpose"] = (
+            "Temporary Art Factory candidate-review registry. It is never the production-accepted registry."
+        )
+        # These canonical pilots were re-evaluated under the repaired strict
+        # gate and remain visually deficient. Keep their paths available to
+        # the complete production scene without presenting old promotions as
+        # current strict-gate passes.
+        for incumbent_id in ("desk", "citizen"):
+            incumbent_entry = override.setdefault("entries", {}).get(incumbent_id)
+            if incumbent_entry is not None:
+                incumbent_entry["status"] = "best_current_review"
+                incumbent_entry["review_label"] = "BEST CURRENT / PRODUCTION ART FOLLOW-UP REQUIRED"
         override.setdefault("entries", {})[candidate.asset_id] = {
-            "status": "accepted",
+            "status": "best_current_review",
+            "review_label": "BEST CURRENT / PRODUCTION ART FOLLOW-UP REQUIRED",
             "semantic_type": brief.semantic_type,
             "path": relative_asset,
             "candidate_id": candidate_id,
@@ -114,14 +129,13 @@ class GodotArtBridge:
             "dimensions_inches": list(brief.intended_dimensions),
         }
         atomic_write_json(registry_relative, override)
-        run_root = self._next_render_run(candidate_root)
-        run_root.mkdir(parents=True, exist_ok=False)
         environment = os.environ.copy()
         environment.update(
             {
                 "ROOMSCALE_ART_REGISTRY": self._resource_path(
                     registry_relative.relative_to(self.project_root)
                 ),
+                "ROOMSCALE_ART_REGISTRY_MODE": "review_showcase",
                 "ROOMSCALE_ART_FACTORY_ASSET_ID": candidate.asset_id,
                 "ROOMSCALE_ART_FACTORY_CANDIDATE": candidate_id,
                 "ROOMSCALE_ART_FACTORY_ROOM_FILE": room_file,

@@ -68,8 +68,16 @@ def main() -> None:
     env = os.environ.copy()
     env["ROOMSCALE_MPFB_CITIZEN_GLB_PATH"] = "res://" + glb_relative
     env["ROOMSCALE_MPFB_CITIZEN_TSCN_PATH"] = "res://" + tscn_relative
-    run([str(godot), "--headless", "--editor", "--path", str(project_root), "--import"], cwd=project_root, env=env)
-    run([str(godot), "--headless", "--path", str(project_root), "--script", pack_script], cwd=project_root, env=env)
+    run(
+        [str(godot), "--headless", "--editor", "--path", str(project_root), "--import"],
+        cwd=project_root,
+        env=env,
+    )
+    run(
+        [str(godot), "--headless", "--path", str(project_root), "--script", pack_script],
+        cwd=project_root,
+        env=env,
+    )
 
 
 if __name__ == "__main__":

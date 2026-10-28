@@ -1,0 +1,196 @@
+{
+  "schema_version": 1,
+  "review_id": "poc25-strict-incumbent-visual-gate-reaudit-2026-10-27",
+  "created_at_utc": "2026-10-27T18:08:00Z",
+  "purpose": "Append-only re-audit of the three preserved best-so-far pilot incumbents against the repaired absolute visual gate. The earlier evaluation JSON files remain unchanged; registry candidate IDs and gameplay assets remain unchanged.",
+  "gate_contract": {
+    "stylization_allowed_by_any_pilot_brief": false,
+    "questions": [
+      "Would a neutral viewer describe this as realistic furniture/asset rather than low-poly or stylized game geometry?",
+      "Does the actual production output hold up at close inspection without obvious primitive construction?",
+      "Are edge treatment, joins, thickness, hardware, material response, surface variation, and manufacturing detail believable?",
+      "When a source photograph exists, does the production render materially approach the photographed object's visual character?"
+    ],
+    "evidence_method": "Direct inspection of the retained RoomScale production captures; previous written evaluations are treated as historical context, not substitutes for the current gate."
+  },
+  "pilots": {
+    "desk": {
+      "candidate_id": "desk-v007",
+      "incumbent_preserved": true,
+      "registry_changed": false,
+      "legacy_evaluation": {
+        "path": "art/desk/iterations/v007/evaluation.json",
+        "decision": "promote",
+        "visual_gate_present": false,
+        "conflicting_language": "The legacy evaluation explicitly describes the geometry as restrained low-poly and the result as more stylized than the source photograph."
+      },
+      "brief_allows_stylization": false,
+      "production_evidence": [
+        "art/desk/iterations/v007/render-runs/run-002/asset-detail.png",
+        "art/desk/iterations/v007/render-runs/run-002/asset-three-quarter.png",
+        "photo_holder/Sample (2).jpg"
+      ],
+      "neutral_viewer_realism": {
+        "answer": "No",
+        "pass": false,
+        "evidence": "The production captures show a broad, nearly uniform dark slab over two straight support columns and simple T-feet. The photographed desk has a more refined manufactured profile and broad reflected room/window character; the rendered asset reads as simplified game geometry."
+      },
+      "close_inspection": {
+        "answer": "No",
+        "pass": false,
+        "evidence": "The detail image resolves the desk as a large flat dark surface with simple rectangular monitor stands and basic supports; edge transitions, telescoping stages, mounts, cable management and joinery do not reward close inspection."
+      },
+      "craftsmanship": {
+        "answer": "No",
+        "pass": false,
+        "checks": {
+          "edge_treatment": {"pass": false, "evidence": "The tabletop reads as a simple uniform slab with a hard, regular perimeter and little visible finished edge character."},
+          "joins": {"pass": false, "evidence": "The top-to-column and column-to-foot joins read as simple direct intersections without sufficiently resolved plates or telescoping assembly."},
+          "thickness": {"pass": false, "evidence": "The close view does not establish convincing glass thickness or layered edge construction."},
+          "hardware": {"pass": false, "evidence": "Mounts, controls and fasteners are absent or too simple to read as believable product hardware in the retained detail view."},
+          "material_response": {"pass": false, "evidence": "The top is materially near-flat and dark; broad environmental reflection from the source photograph is not reproduced."},
+          "surface_variation": {"pass": false, "evidence": "The tabletop and frame show little local surface variation in the actual render."},
+          "manufacturing_detail": {"pass": false, "evidence": "The close image does not show convincing mounts, stage transitions, fasteners, edge treatment or finished assembly details."}
+        }
+      },
+      "photo_character": {
+        "applicable": true,
+        "answer": "No",
+        "pass": false,
+        "evidence": "Comparing the retained production render with Sample (2).jpg, the game asset matches the broad bounding silhouette but lacks the photographed object's broad window/room reflections, finer top edge, and manufactured frame character."
+      },
+      "style_flags": {
+        "low_poly": true,
+        "blocky_geometry": true,
+        "placeholder_geometry": false,
+        "primitive_geometry": true,
+        "simplified_programmer_art": true,
+        "materially_flat": true,
+        "substantially_stylized": true
+      },
+      "strict_gate_result": "fail",
+      "disposition": "Keep desk-v007 as best-so-far incumbent and preserve all challenger history; it does not satisfy the repaired POC 2.5 visual gate."
+    },
+    "grapple": {
+      "candidate_id": "grapple-v006",
+      "incumbent_preserved": true,
+      "registry_changed": false,
+      "legacy_evaluation": {
+        "path": "art/grapple/iterations/v006/evaluation.json",
+        "decision": "promote",
+        "visual_gate_present": false
+      },
+      "brief_allows_stylization": false,
+      "production_evidence": [
+        "art/grapple/iterations/v006/render-runs/run-001/asset-detail.png",
+        "art/grapple/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+        "art/grapple/iterations/v006/render-runs/run-001/grapple-complete.png"
+      ],
+      "neutral_viewer_realism": {
+        "answer": "No",
+        "pass": false,
+        "evidence": "The actual production captures identify the steampunk grapple, but its square-toothed gears, straight rods, simple plate joins, and broad flat color regions read as stylized game construction rather than a realistic manufactured miniature."
+      },
+      "close_inspection": {
+        "answer": "No",
+        "pass": false,
+        "evidence": "The close view shows many distinct parts, but teeth, rails, braces, and intersections use simplified geometric forms and do not hold up as finished mechanical workmanship."
+      },
+      "craftsmanship": {
+        "answer": "No",
+        "pass": false,
+        "checks": {
+          "edge_treatment": {"pass": false, "evidence": "Gear teeth, plates and rails have visibly angular, simplified edges in the close render."},
+          "joins": {"pass": false, "evidence": "Several rods and plates meet as direct intersections without convincing fitted collars or manufactured joins."},
+          "thickness": {"pass": false, "evidence": "The build has some plate depth, but braces, dial faces and structural joints do not consistently establish realistic thickness."},
+          "hardware": {"pass": true, "evidence": "The two enamel dials, raised indices, brass hubs, spool supports and collars are visibly present and functionally legible."},
+          "material_response": {"pass": true, "evidence": "The render distinguishes rope, timber, copper, brass and dark iron through separate color and lighting responses."},
+          "surface_variation": {"pass": true, "evidence": "Rope windings, timber texture, dial faces and metal groups create visible variation across the installation."},
+          "manufacturing_detail": {"pass": false, "evidence": "The visible parts are numerous but their connections and machined forms remain too simplified to read as believable manufactured detail."}
+        }
+      },
+      "photo_character": {
+        "applicable": false,
+        "answer": "Not applicable",
+        "pass": null,
+        "evidence": "The grapple ArtBrief has no source photograph or registered reference image."
+      },
+      "style_flags": {
+        "low_poly": true,
+        "blocky_geometry": true,
+        "placeholder_geometry": false,
+        "primitive_geometry": true,
+        "simplified_programmer_art": true,
+        "materially_flat": true,
+        "substantially_stylized": true
+      },
+      "strict_gate_result": "fail",
+      "disposition": "Keep grapple-v006 as the preserved best-so-far gameplay incumbent, but do not count its legacy promotion as a strict visual-gate pass."
+    },
+    "citizen": {
+      "candidate_id": "citizen-v007",
+      "incumbent_preserved": true,
+      "registry_changed": false,
+      "legacy_evaluation": {
+        "path": "art/citizen/iterations/v007/evaluation.json",
+        "decision": "promote",
+        "visual_gate_present": false,
+        "conflicting_language": "The legacy evaluation says the face is intentionally stylized at miniature scale."
+      },
+      "brief_allows_stylization": false,
+      "production_evidence": [
+        "art/citizen/iterations/v007/render-runs/run-002/asset-detail.png",
+        "art/citizen/iterations/v007/render-runs/run-002/asset-three-quarter.png",
+        "art/citizen/iterations/v007/render-runs/run-002/asset-gameplay-distance.png",
+        "art/citizen/iterations/v007/render-runs/run-002/room-scale.png"
+      ],
+      "neutral_viewer_realism": {
+        "answer": "No",
+        "pass": false,
+        "evidence": "The close production views show a toy-like figure with a blank simplified face, disk-like cap, cylindrical arms and block-shaped feet. Its woven texture and small metal parts do not change the overall stylized game-geometry read."
+      },
+      "close_inspection": {
+        "answer": "No",
+        "pass": false,
+        "evidence": "At the intended close camera the head and facial anatomy remain simplified; coat layers, cuffs, gloves and boots are built from basic forms without realistic tailored joins or convincing micro-workmanship."
+      },
+      "craftsmanship": {
+        "answer": "No",
+        "pass": false,
+        "checks": {
+          "edge_treatment": {"pass": false, "evidence": "Cap, coat and boot boundaries are regular hard-edged forms rather than finely finished garment edges."},
+          "joins": {"pass": false, "evidence": "Shoulders, sleeves, torso and legs meet as simple assembled forms; garment transitions do not read as tailored construction."},
+          "thickness": {"pass": false, "evidence": "The render does not show convincing layered thickness at lapels, cuffs, hems or boot construction."},
+          "hardware": {"pass": false, "evidence": "Twin goggles and small fittings are recognizable but use simple round/cylindrical forms and do not read as finely manufactured clockwork hardware."},
+          "material_response": {"pass": false, "evidence": "The actual render retains broad flat color regions and a toy-like response across skin, cloth, leather and metal."},
+          "surface_variation": {"pass": true, "evidence": "A subtle weave is visible on the coat and cap at close range, and the metal and leather colors remain distinct."},
+          "manufacturing_detail": {"pass": false, "evidence": "The cap winding, seams, badge, cuffs and footwear are present but remain too simple to establish convincing miniature tailoring and hardware manufacture."}
+        }
+      },
+      "photo_character": {
+        "applicable": false,
+        "answer": "Not applicable",
+        "pass": null,
+        "evidence": "The citizen ArtBrief has no source photograph or registered reference image; its turnaround is a concept reference."
+      },
+      "style_flags": {
+        "low_poly": true,
+        "blocky_geometry": true,
+        "placeholder_geometry": false,
+        "primitive_geometry": true,
+        "simplified_programmer_art": true,
+        "materially_flat": true,
+        "substantially_stylized": true
+      },
+      "strict_gate_result": "fail",
+      "disposition": "Preserve citizen-v007 as the stable gameplay incumbent, but do not count its legacy promotion as a strict visual-gate pass."
+    }
+  },
+  "three_pilot_gate": {
+    "status": "not_satisfied",
+    "passing_pilots": [],
+    "failing_pilots": ["desk-v007", "grapple-v006", "citizen-v007"],
+    "promotion_or_registry_changes": false,
+    "reason": "The retained incumbent evaluations predate explicit strict-gate fields, and direct review of their actual production captures finds hard failures. Existing incumbents remain untouched, but none of the three pilot gates can be counted as PASS until a new challenger passes or the applicable approved plateau is established."
+  }
+}

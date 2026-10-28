@@ -1,5 +1,7 @@
 # RoomScale POC 2.5 — Narrow Iteration-Budget Amendment v1.0
 
+**Later supersession notice (2026-10-28):** POC25-AM-2026-10-28-01 supersedes this document's final statement that all pilot visual gates must pass before POC completion. The Desk/Citizen uncapped attempt-budget change recorded here remains in force; the strict asset gate remains unchanged. See [the user-authorized acceptance amendment](POC25_ACCEPTANCE_AMENDMENT_2026-10-28.md).
+
 **Parent:** the already-approved RoomScale POC 2.5 Execution Contract and its existing acceptance criteria.
 **Status:** explicitly authorized by the user; recorded for the minimum independent amendment review requested.
 **Authority:** the user's continuation request in `Pasted text.txt` explicitly authorizes changing only the numeric iteration-budget restriction for the unresolved Desk and Citizen pilots.

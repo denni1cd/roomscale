@@ -11,8 +11,8 @@ import sys
 from datetime import UTC, datetime
 from pathlib import Path
 
-import bpy
 import bmesh
+import bpy
 import numpy as np
 from mathutils import Vector
 from mathutils.bvhtree import BVHTree
@@ -61,7 +61,9 @@ def _install_mpfb(project_root: Path):
 
     package.get_preference = preference
     package.register()
-    return package, importlib.import_module(f"bl_ext.{repo.module}.mpfb.services.humanservice").HumanService
+    return package, importlib.import_module(
+        f"bl_ext.{repo.module}.mpfb.services.humanservice"
+    ).HumanService
 
 
 def _image(path: Path, *, non_color: bool = False):
@@ -73,7 +75,9 @@ def _image(path: Path, *, non_color: bool = False):
 
 def _save_map(path: Path, pixels: np.ndarray) -> Path:
     height, width, channels = pixels.shape
-    image = bpy.data.images.new(path.stem, width=width, height=height, alpha=channels == 4, float_buffer=False)
+    image = bpy.data.images.new(
+        path.stem, width=width, height=height, alpha=channels == 4, float_buffer=False
+    )
     image.pixels.foreach_set(np.asarray(pixels, dtype=np.float32).ravel())
     image.filepath_raw = str(path)
     image.file_format = "PNG"
@@ -94,7 +98,9 @@ def _derive_worksuit_pbr_maps(project_root: Path, output_dir: Path) -> tuple[Pat
     luma = rgb[..., 0] * 0.25 + rgb[..., 1] * 0.60 + rgb[..., 2] * 0.15
     rough_value = np.clip(0.82 - (luma - 0.35) * 0.10, 0.72, 0.91)
     roughness = np.repeat(rough_value[..., None], 3, axis=2)
-    roughness = np.concatenate((roughness, np.ones((*roughness.shape[:2], 1), dtype=np.float32)), axis=-1)
+    roughness = np.concatenate(
+        (roughness, np.ones((*roughness.shape[:2], 1), dtype=np.float32)), axis=-1
+    )
     roughness_path = output_dir / "materials/workcoat_roughness.png"
     _save_map(roughness_path, roughness)
     diffuse.pack()
@@ -109,10 +115,15 @@ def _make_workwear_maps(output_dir: Path) -> dict[str, Path]:
     rng = np.random.default_rng(58031)
     coarse = np.repeat(np.repeat(rng.normal(0.0, 0.035, (32, 32)), 16, axis=0), 16, axis=1)
     fine = rng.normal(0.0, 0.012, (height, width))
-    fiber = (np.sin(np.arange(height, dtype=np.float32)[:, None] * 0.47) * 0.004)
+    fiber = np.sin(np.arange(height, dtype=np.float32)[:, None] * 0.47) * 0.004
     grain = coarse + fine + fiber
     paths: dict[str, Path] = {}
-    for name, base in (("apron", (0.52, 0.34, 0.145)), ("leather", (0.105, 0.052, 0.026)), ("helmet", (0.25, 0.105, 0.036)), ("coverall", (0.024, 0.105, 0.135))):
+    for name, base in (
+        ("apron", (0.52, 0.34, 0.145)),
+        ("leather", (0.105, 0.052, 0.026)),
+        ("helmet", (0.25, 0.105, 0.036)),
+        ("coverall", (0.024, 0.105, 0.135)),
+    ):
         color = np.empty((height, width, 4), dtype=np.float32)
         for channel, component in enumerate(base):
             color[..., channel] = np.clip(component + grain * (0.7 + component), 0.0, 1.0)
@@ -122,7 +133,9 @@ def _make_workwear_maps(output_dir: Path) -> dict[str, Path]:
         paths[f"{name}_albedo"] = albedo_path
 
         roughness = np.empty((height, width, 4), dtype=np.float32)
-        rough_value = np.clip((0.76 if name != "helmet" else 0.68) + coarse * 0.5 + fine * 0.2, 0.42, 0.96)
+        rough_value = np.clip(
+            (0.76 if name != "helmet" else 0.68) + coarse * 0.5 + fine * 0.2, 0.42, 0.96
+        )
         roughness[..., :3] = rough_value[..., None]
         roughness[..., 3] = 1.0
         roughness_path = output / f"workwear_{name}_roughness.png"
@@ -143,7 +156,10 @@ def _make_workwear_maps(output_dir: Path) -> dict[str, Path]:
 
 def _derive_clockwork_workcoat(project_root: Path, output_dir: Path) -> Path:
     """Recolor the fitted CC0 denim coveralls to durable Clockwork teal."""
-    source_path = project_root / ".tools/makehuman_system_assets-data/clothes/male_worksuit01/male_worksuit01_diffuse.png"
+    source_path = (
+        project_root
+        / ".tools/makehuman_system_assets-data/clothes/male_worksuit01/male_worksuit01_diffuse.png"
+    )
     source = _image(source_path)
     width, height = (int(value) for value in source.size)
     pixels = np.asarray(source.pixels[:], dtype=np.float32).reshape(height, width, 4).copy()
@@ -152,10 +168,28 @@ def _derive_clockwork_workcoat(project_root: Path, output_dir: Path) -> Path:
     target = rgb.copy()
     denim_mask = (blue > red * 1.16) & (blue > green * 1.08) & (blue > 0.12)
     denim_luma = np.clip((red * 0.25 + green * 0.60 + blue * 0.15) / 0.27, 0.46, 1.24)
-    target[denim_mask] = np.stack((0.024 * denim_luma[denim_mask], 0.105 * denim_luma[denim_mask], 0.135 * denim_luma[denim_mask]), axis=-1)
-    shirt_mask = (np.min(rgb, axis=-1) > 0.48) & ((np.max(rgb, axis=-1) - np.min(rgb, axis=-1)) < 0.16)
-    shirt_value = np.clip((rgb[..., 0] * 0.25 + rgb[..., 1] * 0.60 + rgb[..., 2] * 0.15) / 0.80, 0.72, 1.12)
-    target[shirt_mask] = np.stack((0.035 * shirt_value[shirt_mask], 0.145 * shirt_value[shirt_mask], 0.165 * shirt_value[shirt_mask]), axis=-1)
+    target[denim_mask] = np.stack(
+        (
+            0.024 * denim_luma[denim_mask],
+            0.105 * denim_luma[denim_mask],
+            0.135 * denim_luma[denim_mask],
+        ),
+        axis=-1,
+    )
+    shirt_mask = (np.min(rgb, axis=-1) > 0.48) & (
+        (np.max(rgb, axis=-1) - np.min(rgb, axis=-1)) < 0.16
+    )
+    shirt_value = np.clip(
+        (rgb[..., 0] * 0.25 + rgb[..., 1] * 0.60 + rgb[..., 2] * 0.15) / 0.80, 0.72, 1.12
+    )
+    target[shirt_mask] = np.stack(
+        (
+            0.035 * shirt_value[shirt_mask],
+            0.145 * shirt_value[shirt_mask],
+            0.165 * shirt_value[shirt_mask],
+        ),
+        axis=-1,
+    )
     pixels[..., :3] = target
     pixels[..., 3] = 1.0
     output = output_dir / "materials/workcoat_albedo.png"
@@ -165,8 +199,14 @@ def _derive_clockwork_workcoat(project_root: Path, output_dir: Path) -> Path:
     return output
 
 
-def _pbr_material(name: str, albedo: Path, roughness: float, metallic: float = 0.0,
-                   normal: Path | None = None, roughness_map: Path | None = None):
+def _pbr_material(
+    name: str,
+    albedo: Path,
+    roughness: float,
+    metallic: float = 0.0,
+    normal: Path | None = None,
+    roughness_map: Path | None = None,
+):
     material = bpy.data.materials.new(name)
     material.diffuse_color = (0.25, 0.22, 0.18, 1.0)
     material.use_nodes = True
@@ -238,10 +278,9 @@ def _attach_to_reference_skin(obj, rig, reference, fallback: str = "spine_03") -
     tree.balance()
     source_weights = []
     for vertex in reference.data.vertices:
-        source_weights.append([
-            (reference.vertex_groups[group.group].name, group.weight)
-            for group in vertex.groups
-        ])
+        source_weights.append(
+            [(reference.vertex_groups[group.group].name, group.weight) for group in vertex.groups]
+        )
     groups = {}
     for vertex in obj.data.vertices:
         point = obj.matrix_world @ vertex.co
@@ -271,7 +310,9 @@ def _join_reference_skinned(objects, rig, reference, name: str, fallback: str = 
                 obj.select_set(True)
                 bpy.ops.object.modifier_apply(modifier=modifier.name)
                 obj.select_set(False)
-        if not any(modifier.type == "ARMATURE" and modifier.object == rig for modifier in obj.modifiers):
+        if not any(
+            modifier.type == "ARMATURE" and modifier.object == rig for modifier in obj.modifiers
+        ):
             _attach_to_reference_skin(obj, rig, reference, fallback)
     bpy.ops.object.select_all(action="DESELECT")
     for obj in objects:
@@ -313,7 +354,9 @@ def _tube_surface(name, centers, radii, material, segments=24):
     centers = [Vector(center) for center in centers]
     vertices = []
     for ring_index, center in enumerate(centers):
-        tangent = (centers[min(ring_index + 1, len(centers) - 1)] - centers[max(ring_index - 1, 0)]).normalized()
+        tangent = (
+            centers[min(ring_index + 1, len(centers) - 1)] - centers[max(ring_index - 1, 0)]
+        ).normalized()
         reference = Vector((0.0, 0.0, 1.0))
         if abs(tangent.dot(reference)) > 0.92:
             reference = Vector((0.0, 1.0, 0.0))
@@ -336,7 +379,9 @@ def _tube_surface(name, centers, radii, material, segments=24):
     return _mesh_object(name, vertices, faces, material, smooth=True)
 
 
-def _weighted_bone_radius(mesh, rig, bone_name: str, start: Vector, end: Vector, fallback: float) -> float:
+def _weighted_bone_radius(
+    mesh, rig, bone_name: str, start: Vector, end: Vector, fallback: float
+) -> float:
     group = next((group for group in mesh.vertex_groups if group.name == bone_name), None)
     if group is None:
         return fallback
@@ -346,7 +391,10 @@ def _weighted_bone_radius(mesh, rig, bone_name: str, start: Vector, end: Vector,
     direction = segment.normalized()
     distances = []
     for vertex in mesh.data.vertices:
-        if not any(influence.group == group.index and influence.weight >= 0.15 for influence in vertex.groups):
+        if not any(
+            influence.group == group.index and influence.weight >= 0.15
+            for influence in vertex.groups
+        ):
             continue
         point = mesh.matrix_world @ vertex.co
         along = (point - start).dot(direction) / segment.length
@@ -378,19 +426,35 @@ def _add_fitted_work_sleeves(rig, human, coverall_material, leather_material):
             elbow.lerp(wrist, 0.46),
             elbow.lerp(wrist, 0.88),
         ]
-        radii = [upper_radius * 1.12, upper_radius * 1.10, max(upper_radius, lower_radius) * 1.10, lower_radius * 1.12, lower_radius * 1.06]
-        sleeve = _tube_surface(f"RoomScale.ClockworkWorkSleeve_{side}", centers, radii, coverall_material, 24)
+        radii = [
+            upper_radius * 1.12,
+            upper_radius * 1.10,
+            max(upper_radius, lower_radius) * 1.10,
+            lower_radius * 1.12,
+            lower_radius * 1.06,
+        ]
+        sleeve = _tube_surface(
+            f"RoomScale.ClockworkWorkSleeve_{side}", centers, radii, coverall_material, 24
+        )
         _attach_to_reference_skin(sleeve, rig, human, upper.name)
         objects.append(sleeve)
         cuff_centers = [elbow.lerp(wrist, 0.78), elbow.lerp(wrist, 0.91)]
         cuff_radius = lower_radius * 1.16
-        cuff = _tube_surface(f"RoomScale.ReinforcedWorkCuff_{side}", cuff_centers, [cuff_radius, cuff_radius], leather_material, 24)
+        cuff = _tube_surface(
+            f"RoomScale.ReinforcedWorkCuff_{side}",
+            cuff_centers,
+            [cuff_radius, cuff_radius],
+            leather_material,
+            24,
+        )
         _attach_to_reference_skin(cuff, rig, human, lower.name)
         objects.append(cuff)
     return objects
 
 
-def _elliptical_band(name, center, outer_rx, outer_ry, inner_rx, inner_ry, z_height, material, segments=32):
+def _elliptical_band(
+    name, center, outer_rx, outer_ry, inner_rx, inner_ry, z_height, material, segments=32
+):
     cx, cy, cz = center
     vertices = []
     for z in (cz - z_height * 0.5, cz + z_height * 0.5):
@@ -399,7 +463,6 @@ def _elliptical_band(name, center, outer_rx, outer_ry, inner_rx, inner_ry, z_hei
                 angle = (2.0 * math.pi * i) / segments
                 vertices.append((cx + math.cos(angle) * rx, cy + math.sin(angle) * ry, z))
     faces = []
-    base = segments * 4
     for i in range(segments):
         j = (i + 1) % segments
         # Top, bottom, outer wall, inner wall.
@@ -429,7 +492,9 @@ def _rounded_box(name, location, dimensions, material, bevel):
 def _cylinder_between(name, start, end, radius, material, vertices=32, bevel=0.0):
     start, end = Vector(start), Vector(end)
     delta = end - start
-    bpy.ops.mesh.primitive_cylinder_add(vertices=vertices, radius=radius, depth=delta.length, location=(start + end) * 0.5)
+    bpy.ops.mesh.primitive_cylinder_add(
+        vertices=vertices, radius=radius, depth=delta.length, location=(start + end) * 0.5
+    )
     obj = bpy.context.object
     obj.name = name
     obj.rotation_mode = "QUATERNION"
@@ -509,17 +574,27 @@ def _formed_helmet_shell(center_y, top_z, material):
     # at half-inch scale. The crown rises above the MPFB scalp and carries the
     # visor/optics as face protection rather than cap decoration.
     profile = [
-        (-0.073, 0.078, 0.088), (-0.052, 0.101, 0.108),
-        (-0.021, 0.116, 0.121), (0.016, 0.120, 0.120),
-        (0.056, 0.109, 0.107), (0.093, 0.087, 0.083),
-        (0.124, 0.057, 0.056), (0.142, 0.025, 0.027),
+        (-0.073, 0.078, 0.088),
+        (-0.052, 0.101, 0.108),
+        (-0.021, 0.116, 0.121),
+        (0.016, 0.120, 0.120),
+        (0.056, 0.109, 0.107),
+        (0.093, 0.087, 0.083),
+        (0.124, 0.057, 0.056),
+        (0.142, 0.025, 0.027),
         (0.146, 0.006, 0.008),
     ]
     vertices = []
     for z_offset, radius_x, radius_y in profile:
         for segment in range(segments):
             angle = segment * 2.0 * math.pi / segments
-            vertices.append((math.cos(angle) * radius_x, center_y + math.sin(angle) * radius_y, top_z + z_offset))
+            vertices.append(
+                (
+                    math.cos(angle) * radius_x,
+                    center_y + math.sin(angle) * radius_y,
+                    top_z + z_offset,
+                )
+            )
     faces = []
     for ring in range(len(profile) - 1):
         for segment in range(segments):
@@ -536,7 +611,10 @@ def _formed_helmet_shell(center_y, top_z, material):
 
 def _add_clockwork_helmet_and_goggles(rig, fedora, glasses, leather, brass, gunmetal, glass):
     """Replace generic fedora/glasses with a fitted machinist helmet and sealed twin lenses."""
-    head = next((obj for obj in bpy.context.scene.objects if obj.type == "MESH" and obj.name == "Human"), None)
+    head = next(
+        (obj for obj in bpy.context.scene.objects if obj.type == "MESH" and obj.name == "Human"),
+        None,
+    )
     if head is None:
         raise RuntimeError("MPFB head mesh is missing")
     head_world = [head.matrix_world @ vertex.co for vertex in head.data.vertices]
@@ -549,47 +627,103 @@ def _add_clockwork_helmet_and_goggles(rig, fedora, glasses, leather, brass, gunm
     # A dark formed metal shell separates the manufactured helmet from hair,
     # leather straps, and the brown canvas apron at every capture distance.
     helmet_objects.append(_formed_helmet_shell(center_y, top_z, gunmetal))
-    helmet_objects.append(_elliptical_band(
-        "RoomScale.HelmetCrownBinding", (0.0, center_y + 0.005, top_z - 0.050),
-        0.128, 0.130, 0.119, 0.121, 0.016, brass,
-    ))
-    helmet_objects.append(_rounded_box(
-        "RoomScale.HelmetTopRidge", (0.0, center_y + 0.004, top_z + 0.121),
-        (0.046, 0.218, 0.030), brass, 0.010,
-    ))
+    helmet_objects.append(
+        _elliptical_band(
+            "RoomScale.HelmetCrownBinding",
+            (0.0, center_y + 0.005, top_z - 0.050),
+            0.128,
+            0.130,
+            0.119,
+            0.121,
+            0.016,
+            brass,
+        )
+    )
+    helmet_objects.append(
+        _rounded_box(
+            "RoomScale.HelmetTopRidge",
+            (0.0, center_y + 0.004, top_z + 0.121),
+            (0.046, 0.218, 0.030),
+            brass,
+            0.010,
+        )
+    )
     for side in (-1, 1):
-        helmet_objects.append(_rounded_box(
-            f"RoomScale.HelmetTemplePlate_{side}",
-            (side * 0.086, center_y + 0.006, top_z - 0.048),
-            (0.052, 0.150, 0.130), gunmetal, 0.016,
-        ))
-        helmet_objects.append(_ellipsoid(
-            f"RoomScale.HelmetTempleRivet_{side}",
-            (side * 0.092, center_y - 0.010, top_z - 0.044),
-            (0.009, 0.005, 0.009), brass,
-        ))
-    helmet_objects.append(_rounded_box(
-        "RoomScale.HelmetOccipitalGuard",
-        (0.0, center_y + 0.078, top_z - 0.055),
-        (0.135, 0.036, 0.090), gunmetal, 0.014,
-    ))
+        helmet_objects.append(
+            _rounded_box(
+                f"RoomScale.HelmetTemplePlate_{side}",
+                (side * 0.086, center_y + 0.006, top_z - 0.048),
+                (0.052, 0.150, 0.130),
+                gunmetal,
+                0.016,
+            )
+        )
+        helmet_objects.append(
+            _ellipsoid(
+                f"RoomScale.HelmetTempleRivet_{side}",
+                (side * 0.092, center_y - 0.010, top_z - 0.044),
+                (0.009, 0.005, 0.009),
+                brass,
+            )
+        )
+    helmet_objects.append(
+        _rounded_box(
+            "RoomScale.HelmetOccipitalGuard",
+            (0.0, center_y + 0.078, top_z - 0.055),
+            (0.135, 0.036, 0.090),
+            gunmetal,
+            0.014,
+        )
+    )
     brow_z = top_z - 0.052
-    helmet_objects.append(_rounded_box("RoomScale.HelmetWorkVisor", (0.0, -0.147, brow_z), (0.235, 0.072, 0.027), gunmetal, 0.009))
-    helmet_objects.append(_rounded_box("RoomScale.HelmetBrowInlay", (0.0, -0.187, brow_z), (0.230, 0.016, 0.014), brass, 0.004))
+    helmet_objects.append(
+        _rounded_box(
+            "RoomScale.HelmetWorkVisor",
+            (0.0, -0.147, brow_z),
+            (0.235, 0.072, 0.027),
+            gunmetal,
+            0.009,
+        )
+    )
+    helmet_objects.append(
+        _rounded_box(
+            "RoomScale.HelmetBrowInlay", (0.0, -0.187, brow_z), (0.230, 0.016, 0.014), brass, 0.004
+        )
+    )
     # Matched crown rails run from the visor to the rear binding as structural
     # ribs; their paired silhouette survives farther away than decorative screws.
     for x in (-0.050, 0.050):
-        helmet_objects.append(_polyline_tube(
-            f"RoomScale.HelmetCrownSeam_{x:+.3f}",
-            [(x, -0.132, top_z - 0.025), (x * 0.88, -0.091, top_z + 0.052), (x * 0.66, -0.032, top_z + 0.112), (x * 0.38, 0.034, top_z + 0.112)],
-            0.0100, brass,
-        ))
+        helmet_objects.append(
+            _polyline_tube(
+                f"RoomScale.HelmetCrownSeam_{x:+.3f}",
+                [
+                    (x, -0.132, top_z - 0.025),
+                    (x * 0.88, -0.091, top_z + 0.052),
+                    (x * 0.66, -0.032, top_z + 0.112),
+                    (x * 0.38, 0.034, top_z + 0.112),
+                ],
+                0.0100,
+                brass,
+            )
+        )
 
     # A mechanically credible goggle strap wraps the skull behind deep, layered
     # housings. The paired optical barrels are intentionally large at game scale.
     glasses_world = [glasses.matrix_world @ Vector(corner) for corner in glasses.bound_box]
-    glasses_min = Vector((min(p.x for p in glasses_world), min(p.y for p in glasses_world), min(p.z for p in glasses_world)))
-    glasses_max = Vector((max(p.x for p in glasses_world), max(p.y for p in glasses_world), max(p.z for p in glasses_world)))
+    glasses_min = Vector(
+        (
+            min(p.x for p in glasses_world),
+            min(p.y for p in glasses_world),
+            min(p.z for p in glasses_world),
+        )
+    )
+    glasses_max = Vector(
+        (
+            max(p.x for p in glasses_world),
+            max(p.y for p in glasses_world),
+            max(p.z for p in glasses_world),
+        )
+    )
     lens_z = (glasses_min.z + glasses_max.z) * 0.5
     # The previous baseline put the far barrel beyond the face projection.
     # Keep both optical centers over the eye line so they survive 3/4 renders.
@@ -602,54 +736,92 @@ def _add_clockwork_helmet_and_goggles(rig, fedora, glasses, leather, brass, gunm
     # a controlled lens diameter leave a visible projected gap in 3/4 views.
     shared_front_y = min(face_sample(center_x, lens_z) for center_x in centers) - 0.075
     strap_points = [
-        (-0.095, -0.145, lens_z), (-0.118, -0.112, lens_z - 0.002),
-        (-0.132, -0.064, lens_z - 0.004), (-0.130, -0.010, lens_z - 0.004),
-        (-0.120, 0.025, lens_z - 0.003), (-0.090, 0.043, lens_z - 0.002),
-        (0.0, 0.049, lens_z - 0.002), (0.090, 0.043, lens_z - 0.002),
-        (0.120, 0.025, lens_z - 0.003), (0.130, -0.010, lens_z - 0.004),
-        (0.132, -0.064, lens_z - 0.004), (0.118, -0.112, lens_z - 0.002),
+        (-0.095, -0.145, lens_z),
+        (-0.118, -0.112, lens_z - 0.002),
+        (-0.132, -0.064, lens_z - 0.004),
+        (-0.130, -0.010, lens_z - 0.004),
+        (-0.120, 0.025, lens_z - 0.003),
+        (-0.090, 0.043, lens_z - 0.002),
+        (0.0, 0.049, lens_z - 0.002),
+        (0.090, 0.043, lens_z - 0.002),
+        (0.120, 0.025, lens_z - 0.003),
+        (0.130, -0.010, lens_z - 0.004),
+        (0.132, -0.064, lens_z - 0.004),
+        (0.118, -0.112, lens_z - 0.002),
         (0.095, -0.145, lens_z),
     ]
-    helmet_objects.append(_polyline_tube("RoomScale.GoggleLeatherStrap", strap_points, 0.006, leather))
-    helmet_objects.append(_ellipsoid(
-        "RoomScale.HelmetRearStrapPad",
-        (0.0, center_y + 0.095, lens_z + 0.022),
-        (0.055, 0.016, 0.048), leather,
-    ))
+    helmet_objects.append(
+        _polyline_tube("RoomScale.GoggleLeatherStrap", strap_points, 0.006, leather)
+    )
+    helmet_objects.append(
+        _ellipsoid(
+            "RoomScale.HelmetRearStrapPad",
+            (0.0, center_y + 0.095, lens_z + 0.022),
+            (0.055, 0.016, 0.048),
+            leather,
+        )
+    )
     # Structural upper support is sized to the paired assembly so the goggles
     # attach to the shell as functional equipment instead of floating jewelry.
-    helmet_objects.append(_rounded_box(
-        "RoomScale.GoggleStructuralBrow",
-        (0.0, shared_front_y + 0.020, lens_z + lens_radius * 1.34),
-        (lens_spacing * 2.0 + lens_radius * 1.72, 0.030, 0.021), brass, 0.007,
-    ))
+    helmet_objects.append(
+        _rounded_box(
+            "RoomScale.GoggleStructuralBrow",
+            (0.0, shared_front_y + 0.020, lens_z + lens_radius * 1.34),
+            (lens_spacing * 2.0 + lens_radius * 1.72, 0.030, 0.021),
+            brass,
+            0.007,
+        )
+    )
     # A real central hinge separates two adjacent optical cells and connects
     # the face cage mechanically; it is broad enough to read at miniature scale.
-    helmet_objects.append(_rounded_box(
-        "RoomScale.GoggleCentralHinge",
-        (0.0, shared_front_y - 0.006, lens_z),
-        (0.026, 0.034, 0.038), brass, 0.006,
-    ))
+    helmet_objects.append(
+        _rounded_box(
+            "RoomScale.GoggleCentralHinge",
+            (0.0, shared_front_y - 0.006, lens_z),
+            (0.026, 0.034, 0.038),
+            brass,
+            0.006,
+        )
+    )
     for side in (-1, 1):
-        helmet_objects.append(_polyline_tube(
-            f"RoomScale.GoggleLoadStrut_{side}",
-            [
-                (side * (lens_spacing + lens_radius * 0.72), shared_front_y + 0.020, lens_z + lens_radius * 1.26),
-                (side * 0.112, center_y - 0.111, lens_z + 0.044),
-                (side * 0.084, center_y - 0.102, top_z - 0.065),
-            ],
-            0.0090, brass,
-        ))
+        helmet_objects.append(
+            _polyline_tube(
+                f"RoomScale.GoggleLoadStrut_{side}",
+                [
+                    (
+                        side * (lens_spacing + lens_radius * 0.72),
+                        shared_front_y + 0.020,
+                        lens_z + lens_radius * 1.26,
+                    ),
+                    (side * 0.112, center_y - 0.111, lens_z + 0.044),
+                    (side * 0.084, center_y - 0.102, top_z - 0.065),
+                ],
+                0.0090,
+                brass,
+            )
+        )
     for side, center_x in enumerate(centers):
         goggle_front_y = shared_front_y
         # Keep each machined barrel perpendicular to the same optical plane;
         # a common orientation prevents lens depth staggering in perspective.
         cup_back = (center_x, goggle_front_y + 0.050, lens_z)
         cup_front = (center_x, goggle_front_y - 0.018, lens_z)
-        helmet_objects.append(_cylinder_between(f"RoomScale.GoggleIronBarrel{side + 1}", cup_back, cup_front, lens_radius * 1.10, gunmetal, 32, lens_radius * 0.14))
+        helmet_objects.append(
+            _cylinder_between(
+                f"RoomScale.GoggleIronBarrel{side + 1}",
+                cup_back,
+                cup_front,
+                lens_radius * 1.10,
+                gunmetal,
+                32,
+                lens_radius * 0.14,
+            )
+        )
         bpy.ops.mesh.primitive_torus_add(
-            major_segments=32, minor_segments=8,
-            major_radius=lens_radius * 1.04, minor_radius=lens_radius * 0.32,
+            major_segments=32,
+            minor_segments=8,
+            major_radius=lens_radius * 1.04,
+            minor_radius=lens_radius * 0.32,
             location=(center_x, goggle_front_y - 0.013, lens_z),
             rotation=(math.pi * 0.5, 0.0, 0.0),
         )
@@ -659,50 +831,109 @@ def _add_clockwork_helmet_and_goggles(rig, fedora, glasses, leather, brass, gunm
         for polygon in rim.data.polygons:
             polygon.use_smooth = True
         helmet_objects.append(rim)
-        helmet_objects.append(_cylinder_between(
-            f"RoomScale.TealOpticalLens{side + 1}",
-            (center_x, goggle_front_y - 0.020, lens_z),
-            (center_x, goggle_front_y - 0.030, lens_z),
-            lens_radius * 0.83, glass, 32, 0.001,
-        ))
+        helmet_objects.append(
+            _cylinder_between(
+                f"RoomScale.TealOpticalLens{side + 1}",
+                (center_x, goggle_front_y - 0.020, lens_z),
+                (center_x, goggle_front_y - 0.030, lens_z),
+                lens_radius * 0.83,
+                glass,
+                32,
+                0.001,
+            )
+        )
         # Four retaining screws per barrel make the housing read as manufactured.
-        for screw_index, (dx, dz) in enumerate(((0, lens_radius * 0.94), (0, -lens_radius * 0.94), (lens_radius * 0.94, 0), (-lens_radius * 0.94, 0))):
-            helmet_objects.append(_ellipsoid(
-                f"RoomScale.GoggleRetainer{side + 1}_{screw_index + 1}",
-                (center_x + dx, goggle_front_y - 0.033, lens_z + dz),
-                (0.0038, 0.0028, 0.0038), brass,
-            ))
+        for screw_index, (dx, dz) in enumerate(
+            (
+                (0, lens_radius * 0.94),
+                (0, -lens_radius * 0.94),
+                (lens_radius * 0.94, 0),
+                (-lens_radius * 0.94, 0),
+            )
+        ):
+            helmet_objects.append(
+                _ellipsoid(
+                    f"RoomScale.GoggleRetainer{side + 1}_{screw_index + 1}",
+                    (center_x + dx, goggle_front_y - 0.033, lens_z + dz),
+                    (0.0038, 0.0028, 0.0038),
+                    brass,
+                )
+            )
 
     bridge_y = shared_front_y - 0.029
-    helmet_objects.append(_cylinder_between("RoomScale.GoggleBridge", (-lens_spacing, bridge_y, lens_z), (lens_spacing, bridge_y, lens_z), 0.009, brass, 24, 0.002))
+    helmet_objects.append(
+        _cylinder_between(
+            "RoomScale.GoggleBridge",
+            (-lens_spacing, bridge_y, lens_z),
+            (lens_spacing, bridge_y, lens_z),
+            0.009,
+            brass,
+            24,
+            0.002,
+        )
+    )
     for side in (-1, 1):
         # Side cups hold the band adjusters. The right-side ratchet is the single
         # visible clockwork mechanism and also tensions the goggle strap.
         # Broad leather temple guard under the metal ear cup, sized to read as
         # helmet protection rather than a decorative dot.
-        helmet_objects.append(_ellipsoid(
-            f"RoomScale.MachinistTempleGuard_{side}",
-            (side * 0.074, center_y + 0.012, lens_z + 0.008),
-            (0.024, 0.051, 0.055), leather,
-        ))
+        helmet_objects.append(
+            _ellipsoid(
+                f"RoomScale.MachinistTempleGuard_{side}",
+                (side * 0.074, center_y + 0.012, lens_z + 0.008),
+                (0.024, 0.051, 0.055),
+                leather,
+            )
+        )
         x = side * 0.156
-        helmet_objects.append(_cylinder_between(
-            f"RoomScale.EarCupHousing_{side}",
-            (x - side * 0.007, -0.035, lens_z + 0.015),
-            (x + side * 0.007, -0.035, lens_z + 0.015),
-            0.036, gunmetal, 40, 0.0025,
-        ))
+        helmet_objects.append(
+            _cylinder_between(
+                f"RoomScale.EarCupHousing_{side}",
+                (x - side * 0.007, -0.035, lens_z + 0.015),
+                (x + side * 0.007, -0.035, lens_z + 0.015),
+                0.036,
+                gunmetal,
+                40,
+                0.0025,
+            )
+        )
     gear_center = (0.185, -0.030, lens_z + 0.016)
-    helmet_objects.append(_add_gear_on_x("RoomScale.GoggleStrapRatchet", gear_center, 0.032, 0.009, brass, teeth=16))
-    helmet_objects.append(_cylinder_between(
-        "RoomScale.RatchetHub", (0.1895, gear_center[1], gear_center[2]), (0.197, gear_center[1], gear_center[2]), 0.010, gunmetal, 32, 0.0015,
-    ))
-    helmet_objects.append(_cylinder_between(
-        "RoomScale.RatchetAxle", (0.197, gear_center[1], gear_center[2]), (0.202, gear_center[1], gear_center[2]), 0.0045, brass, 24, 0.001,
-    ))
-    helmet_objects.append(_cylinder_between(
-        "RoomScale.GoggleStrapTensioner", (0.185, -0.030, lens_z + 0.016), (0.145, -0.070, lens_z), 0.0042, brass, 20, 0.0008,
-    ))
+    helmet_objects.append(
+        _add_gear_on_x("RoomScale.GoggleStrapRatchet", gear_center, 0.032, 0.009, brass, teeth=16)
+    )
+    helmet_objects.append(
+        _cylinder_between(
+            "RoomScale.RatchetHub",
+            (0.1895, gear_center[1], gear_center[2]),
+            (0.197, gear_center[1], gear_center[2]),
+            0.010,
+            gunmetal,
+            32,
+            0.0015,
+        )
+    )
+    helmet_objects.append(
+        _cylinder_between(
+            "RoomScale.RatchetAxle",
+            (0.197, gear_center[1], gear_center[2]),
+            (0.202, gear_center[1], gear_center[2]),
+            0.0045,
+            brass,
+            24,
+            0.001,
+        )
+    )
+    helmet_objects.append(
+        _cylinder_between(
+            "RoomScale.GoggleStrapTensioner",
+            (0.185, -0.030, lens_z + 0.016),
+            (0.145, -0.070, lens_z),
+            0.0042,
+            brass,
+            20,
+            0.0008,
+        )
+    )
     bpy.data.objects.remove(fedora, do_unlink=True)
     bpy.data.objects.remove(glasses, do_unlink=True)
     return helmet_objects
@@ -712,12 +943,16 @@ def _front_surface_sampler(suit):
     vertices = [suit.matrix_world @ vertex.co for vertex in suit.data.vertices]
     polygons = [tuple(polygon.vertices) for polygon in suit.data.polygons]
     tree = BVHTree.FromPolygons(vertices, polygons)
+
     def sample(x, z):
-        hit, _normal, _face, _distance = tree.ray_cast(Vector((x, -1.0, z)), Vector((0.0, 1.0, 0.0)), 3.0)
+        hit, _normal, _face, _distance = tree.ray_cast(
+            Vector((x, -1.0, z)), Vector((0.0, 1.0, 0.0)), 3.0
+        )
         if hit is not None:
             return hit.y
         closest = min(vertices, key=lambda p: abs(p.x - x) + abs(p.z - z) * 0.7)
         return closest.y
+
     return sample
 
 
@@ -725,16 +960,22 @@ def _back_surface_sampler(suit):
     vertices = [suit.matrix_world @ vertex.co for vertex in suit.data.vertices]
     polygons = [tuple(polygon.vertices) for polygon in suit.data.polygons]
     tree = BVHTree.FromPolygons(vertices, polygons)
+
     def sample(x, z):
-        hit, _normal, _face, _distance = tree.ray_cast(Vector((x, 1.0, z)), Vector((0.0, -1.0, 0.0)), 3.0)
+        hit, _normal, _face, _distance = tree.ray_cast(
+            Vector((x, 1.0, z)), Vector((0.0, -1.0, 0.0)), 3.0
+        )
         if hit is not None:
             return hit.y
         closest = min(vertices, key=lambda p: abs(p.x - x) + abs(p.z - z) * 0.7)
         return closest.y
+
     return sample
 
 
-def _double_sided_panel(name, sampler, rows, material, offset=0.012, thickness=0.006, columns=12, center_x=0.0):
+def _double_sided_panel(
+    name, sampler, rows, material, offset=0.012, thickness=0.006, columns=12, center_x=0.0
+):
     vertices = []
     for z, half_width in rows:
         for column in range(columns + 1):
@@ -793,92 +1034,326 @@ def _ribbon(name, sampler, points_xz, width, material, offset=0.018, thickness=0
         faces.append((a, b, c, d))
         faces.append((count + d, count + c, count + b, count + a))
         faces.extend(((a, d, count + d, count + a), (b, count + b, count + c, c)))
-    faces.extend(((0, count, count + 1, 1), (len(front) - 2, len(front) - 1, count + len(front) - 1, count + len(front) - 2)))
+    faces.extend(
+        (
+            (0, count, count + 1, 1),
+            (len(front) - 2, len(front) - 1, count + len(front) - 1, count + len(front) - 2),
+        )
+    )
     return _mesh_object(name, vertices, faces, material, smooth=True)
 
 
 def _add_buckle(name, center, width, height, material, dark_material):
     x, y, z = center
-    outer = _rounded_box(name + "Frame", (x, y, z), (width, 0.007, height), material, min(width, height) * 0.12)
-    inset = _rounded_box(name + "Inset", (x, y + 0.0042, z), (width * 0.58, 0.003, height * 0.48), dark_material, min(width, height) * 0.08)
-    pin = _cylinder_between(name + "Pin", (x - width * 0.32, y - 0.004, z), (x + width * 0.32, y - 0.004, z), height * 0.06, material, 16)
+    outer = _rounded_box(
+        name + "Frame", (x, y, z), (width, 0.007, height), material, min(width, height) * 0.12
+    )
+    inset = _rounded_box(
+        name + "Inset",
+        (x, y + 0.0042, z),
+        (width * 0.58, 0.003, height * 0.48),
+        dark_material,
+        min(width, height) * 0.08,
+    )
+    pin = _cylinder_between(
+        name + "Pin",
+        (x - width * 0.32, y - 0.004, z),
+        (x + width * 0.32, y - 0.004, z),
+        height * 0.06,
+        material,
+        16,
+    )
     return [outer, inset, pin]
 
 
-def _add_clockwork_workwear(suit, rig, shoe_mesh, human, coverall_material, apron_material, leather_material, thread_material, brass_material, iron_material, rubber_material):
+def _add_clockwork_workwear(
+    suit,
+    rig,
+    shoe_mesh,
+    human,
+    coverall_material,
+    apron_material,
+    leather_material,
+    thread_material,
+    brass_material,
+    iron_material,
+    rubber_material,
+):
     sample = _front_surface_sampler(suit)
     back_sample = _back_surface_sampler(suit)
+
     def waist_profile(z):
         points = [suit.matrix_world @ vertex.co for vertex in suit.data.vertices]
         band = [point for point in points if abs(point.z - z) <= 0.035 and abs(point.x) <= 0.20]
         if not band:
             raise RuntimeError(f"Could not measure fitted suit waist at z={z}")
         return (
-            min(point.x for point in band), max(point.x for point in band),
-            min(point.y for point in band), max(point.y for point in band),
+            min(point.x for point in band),
+            max(point.x for point in band),
+            min(point.y for point in band),
+            max(point.y for point in band),
         )
+
     torso = []
     # The fitted overalls leave both upper arms exposed. Add true sleeves and
     # leather cuffs to the arm bones using local body skin weights.
     torso.extend(_add_fitted_work_sleeves(rig, human, coverall_material, leather_material))
     # A shaped, thick apron bib/skirt covers the necktie and establishes the
     # workshop-worker torso silhouette while following the fitted body surface.
-    apron_rows = [(0.765, 0.108), (0.785, 0.126), (0.91, 0.132), (1.055, 0.137), (1.20, 0.141), (1.325, 0.132), (1.372, 0.104), (1.392, 0.065)]
-    apron = _double_sided_panel("RoomScale.FittedMachinistApron", sample, apron_rows, apron_material, offset=0.014, thickness=0.010, columns=20)
+    apron_rows = [
+        (0.765, 0.108),
+        (0.785, 0.126),
+        (0.91, 0.132),
+        (1.055, 0.137),
+        (1.20, 0.141),
+        (1.325, 0.132),
+        (1.372, 0.104),
+        (1.392, 0.065),
+    ]
+    apron = _double_sided_panel(
+        "RoomScale.FittedMachinistApron",
+        sample,
+        apron_rows,
+        apron_material,
+        offset=0.014,
+        thickness=0.010,
+        columns=20,
+    )
     torso.append(apron)
     # A fitted stand collar and shoulder yoke make the base read as a work
     # garment assembled around the torso instead of uninterrupted coveralls.
-    torso.append(_ribbon(
-        "RoomScale.MachinistWorkcoatCollar", sample,
-        [(-0.118, 1.386), (-0.108, 1.414), (-0.072, 1.438), (0.0, 1.448), (0.072, 1.438), (0.108, 1.414), (0.118, 1.386)],
-        0.045, leather_material, offset=0.029, thickness=0.009,
-    ))
-    torso.append(_ribbon(
-        "RoomScale.MachinistCoatShoulderYoke", sample,
-        [(-0.150, 1.367), (-0.126, 1.398), (-0.075, 1.418), (0.0, 1.424), (0.075, 1.418), (0.126, 1.398), (0.150, 1.367)],
-        0.062, apron_material, offset=0.031, thickness=0.012,
-    ))
-    torso.append(_ribbon(
-        "RoomScale.RearMachinistShoulderYoke", back_sample,
-        [(-0.150, 1.367), (-0.126, 1.398), (-0.075, 1.418), (0.0, 1.424), (0.075, 1.418), (0.126, 1.398), (0.150, 1.367)],
-        0.062, apron_material, offset=-0.026, thickness=0.012,
-    ))
+    torso.append(
+        _ribbon(
+            "RoomScale.MachinistWorkcoatCollar",
+            sample,
+            [
+                (-0.118, 1.386),
+                (-0.108, 1.414),
+                (-0.072, 1.438),
+                (0.0, 1.448),
+                (0.072, 1.438),
+                (0.108, 1.414),
+                (0.118, 1.386),
+            ],
+            0.045,
+            leather_material,
+            offset=0.029,
+            thickness=0.009,
+        )
+    )
+    torso.append(
+        _ribbon(
+            "RoomScale.MachinistCoatShoulderYoke",
+            sample,
+            [
+                (-0.150, 1.367),
+                (-0.126, 1.398),
+                (-0.075, 1.418),
+                (0.0, 1.424),
+                (0.075, 1.418),
+                (0.126, 1.398),
+                (0.150, 1.367),
+            ],
+            0.062,
+            apron_material,
+            offset=0.031,
+            thickness=0.012,
+        )
+    )
+    torso.append(
+        _ribbon(
+            "RoomScale.RearMachinistShoulderYoke",
+            back_sample,
+            [
+                (-0.150, 1.367),
+                (-0.126, 1.398),
+                (-0.075, 1.418),
+                (0.0, 1.424),
+                (0.075, 1.418),
+                (0.126, 1.398),
+                (0.150, 1.367),
+            ],
+            0.062,
+            apron_material,
+            offset=-0.026,
+            thickness=0.012,
+        )
+    )
     for side in (-1, 1):
-        torso.append(_ribbon(
-            f"RoomScale.RearPackShoulderStrap_{side}", back_sample,
-            [(side * 0.105, 1.408), (side * 0.083, 1.350), (side * 0.066, 1.260), (side * 0.052, 1.175)],
-            0.024, leather_material, offset=-0.030, thickness=0.008,
-        ))
+        torso.append(
+            _ribbon(
+                f"RoomScale.RearPackShoulderStrap_{side}",
+                back_sample,
+                [
+                    (side * 0.105, 1.408),
+                    (side * 0.083, 1.350),
+                    (side * 0.066, 1.260),
+                    (side * 0.052, 1.175),
+                ],
+                0.024,
+                leather_material,
+                offset=-0.030,
+                thickness=0.008,
+            )
+        )
     # Broad X harness straps and deliberate top and side seams are readable
     # construction, not small decorative gear scatter.
-    torso.append(_ribbon("RoomScale.LeftCrossHarness", sample, [(-0.092, 1.37), (-0.056, 1.29), (-0.010, 1.17), (0.050, 1.045), (0.085, 0.965)], 0.040, leather_material, offset=0.022))
-    torso.append(_ribbon("RoomScale.RightCrossHarness", sample, [(0.092, 1.37), (0.056, 1.29), (0.010, 1.17), (-0.050, 1.045), (-0.085, 0.965)], 0.040, leather_material, offset=0.026))
+    torso.append(
+        _ribbon(
+            "RoomScale.LeftCrossHarness",
+            sample,
+            [(-0.092, 1.37), (-0.056, 1.29), (-0.010, 1.17), (0.050, 1.045), (0.085, 0.965)],
+            0.040,
+            leather_material,
+            offset=0.022,
+        )
+    )
+    torso.append(
+        _ribbon(
+            "RoomScale.RightCrossHarness",
+            sample,
+            [(0.092, 1.37), (0.056, 1.29), (0.010, 1.17), (-0.050, 1.045), (-0.085, 0.965)],
+            0.040,
+            leather_material,
+            offset=0.026,
+        )
+    )
     for side in (-1, 1):
         # Reinforced apron edge stitching follows the actual fitted surface.
-        torso.append(_ribbon(f"RoomScale.ApronSeam_{side}", sample, [(side * 0.105, 0.79), (side * 0.124, 0.91), (side * 0.118, 1.08), (side * 0.119, 1.24), (side * 0.105, 1.34)], 0.0022, thread_material, offset=0.023, thickness=0.0012))
+        torso.append(
+            _ribbon(
+                f"RoomScale.ApronSeam_{side}",
+                sample,
+                [
+                    (side * 0.105, 0.79),
+                    (side * 0.124, 0.91),
+                    (side * 0.118, 1.08),
+                    (side * 0.119, 1.24),
+                    (side * 0.105, 1.34),
+                ],
+                0.0022,
+                thread_material,
+                offset=0.023,
+                thickness=0.0012,
+            )
+        )
         # Folded pocket and cover flap; these are sized as working garment parts.
         px, pz = side * 0.077, 0.86
-        torso.append(_double_sided_panel(
-            f"RoomScale.ToolPouch_{side}", sample,
-            [(pz - 0.045, 0.031), (pz - 0.036, 0.038), (pz + 0.027, 0.038), (pz + 0.037, 0.031)],
-            leather_material, offset=0.031, thickness=0.010, columns=6, center_x=px,
-        ))
-        torso.append(_rounded_box(f"RoomScale.PouchFlap_{side}", (px, sample(px, pz + 0.029) - 0.039, pz + 0.029), (0.074, 0.012, 0.024), apron_material, 0.004))
-        torso.append(_ellipsoid(f"RoomScale.PouchSnap_{side}", (px, sample(px, pz + 0.029) - 0.047, pz + 0.029), (0.004, 0.002, 0.004), brass_material))
+        torso.append(
+            _double_sided_panel(
+                f"RoomScale.ToolPouch_{side}",
+                sample,
+                [
+                    (pz - 0.045, 0.031),
+                    (pz - 0.036, 0.038),
+                    (pz + 0.027, 0.038),
+                    (pz + 0.037, 0.031),
+                ],
+                leather_material,
+                offset=0.031,
+                thickness=0.010,
+                columns=6,
+                center_x=px,
+            )
+        )
+        torso.append(
+            _rounded_box(
+                f"RoomScale.PouchFlap_{side}",
+                (px, sample(px, pz + 0.029) - 0.039, pz + 0.029),
+                (0.074, 0.012, 0.024),
+                apron_material,
+                0.004,
+            )
+        )
+        torso.append(
+            _ellipsoid(
+                f"RoomScale.PouchSnap_{side}",
+                (px, sample(px, pz + 0.029) - 0.047, pz + 0.029),
+                (0.004, 0.002, 0.004),
+                brass_material,
+            )
+        )
     # Functional strap adjusters, placed high enough to remain apart from the
     # independently attached role badge and carried tools.
-    torso.extend(_add_buckle("RoomScale.HarnessBuckleLeft", (-0.046, sample(-0.046, 1.19) - 0.028, 1.19), 0.036, 0.029, brass_material, iron_material))
-    torso.extend(_add_buckle("RoomScale.HarnessBuckleRight", (0.046, sample(0.046, 1.19) - 0.031, 1.19), 0.036, 0.029, brass_material, iron_material))
+    torso.extend(
+        _add_buckle(
+            "RoomScale.HarnessBuckleLeft",
+            (-0.046, sample(-0.046, 1.19) - 0.028, 1.19),
+            0.036,
+            0.029,
+            brass_material,
+            iron_material,
+        )
+    )
+    torso.extend(
+        _add_buckle(
+            "RoomScale.HarnessBuckleRight",
+            (0.046, sample(0.046, 1.19) - 0.031, 1.19),
+            0.036,
+            0.029,
+            brass_material,
+            iron_material,
+        )
+    )
     # A wide waist belt, keeper loop, and side-mounted tool socket read as kit.
     min_x, max_x, min_y, max_y = waist_profile(0.982)
     belt_rx = max(abs(min_x), abs(max_x)) + 0.006
     belt_center_y = (min_y + max_y) * 0.5
     belt_ry = (max_y - min_y) * 0.5 + 0.005
-    torso.append(_elliptical_band("RoomScale.WorkBelt", (0.0, belt_center_y, 0.982), belt_rx, belt_ry, belt_rx - 0.008, belt_ry - 0.008, 0.025, leather_material, 32))
-    torso.extend(_add_buckle("RoomScale.WorkBeltBuckle", (0.0, min_y - 0.010, 0.982), 0.044, 0.035, brass_material, iron_material))
-    torso.append(_cylinder_between("RoomScale.TapeMeasureCase", (belt_rx * 0.82, belt_center_y - 0.012, 0.97), (belt_rx * 0.92, belt_center_y - 0.012, 0.97), 0.019, brass_material, 36, 0.002))
-    torso.append(_cylinder_between("RoomScale.TapeMeasureFace", (belt_rx * 0.93, belt_center_y - 0.012, 0.97), (belt_rx * 0.96, belt_center_y - 0.012, 0.97), 0.012, iron_material, 32, 0.001))
-    torso.append(_rounded_box("RoomScale.ToolLoop", (-belt_rx * 0.9, belt_center_y - 0.012, 0.968), (0.020, 0.016, 0.064), brass_material, 0.004))
+    torso.append(
+        _elliptical_band(
+            "RoomScale.WorkBelt",
+            (0.0, belt_center_y, 0.982),
+            belt_rx,
+            belt_ry,
+            belt_rx - 0.008,
+            belt_ry - 0.008,
+            0.025,
+            leather_material,
+            32,
+        )
+    )
+    torso.extend(
+        _add_buckle(
+            "RoomScale.WorkBeltBuckle",
+            (0.0, min_y - 0.010, 0.982),
+            0.044,
+            0.035,
+            brass_material,
+            iron_material,
+        )
+    )
+    torso.append(
+        _cylinder_between(
+            "RoomScale.TapeMeasureCase",
+            (belt_rx * 0.82, belt_center_y - 0.012, 0.97),
+            (belt_rx * 0.92, belt_center_y - 0.012, 0.97),
+            0.019,
+            brass_material,
+            36,
+            0.002,
+        )
+    )
+    torso.append(
+        _cylinder_between(
+            "RoomScale.TapeMeasureFace",
+            (belt_rx * 0.93, belt_center_y - 0.012, 0.97),
+            (belt_rx * 0.96, belt_center_y - 0.012, 0.97),
+            0.012,
+            iron_material,
+            32,
+            0.001,
+        )
+    )
+    torso.append(
+        _rounded_box(
+            "RoomScale.ToolLoop",
+            (-belt_rx * 0.9, belt_center_y - 0.012, 0.968),
+            (0.020, 0.016, 0.064),
+            brass_material,
+            0.004,
+        )
+    )
     # A compact twin-reservoir pressure/tool pack gives the worker a readable
     # profession-specific rear profile. The paired vessels, manifold, gauge,
     # and hose are functional equipment shapes, not scattered gear decoration.
@@ -886,47 +1361,123 @@ def _add_clockwork_workwear(suit, rig, shoe_mesh, human, coverall_material, apro
     pack_y = back_sample(0.0, 1.055) + 0.040
     for side, x in enumerate(tank_centers):
         tank_y = back_sample(x, 1.055) + 0.039
-        torso.append(_cylinder_between(
-            f"RoomScale.PressureReservoir_{side + 1}",
-            (x, tank_y, 0.875), (x, tank_y, 1.230), 0.038, brass_material, 24, 0.005,
-        ))
+        torso.append(
+            _cylinder_between(
+                f"RoomScale.PressureReservoir_{side + 1}",
+                (x, tank_y, 0.875),
+                (x, tank_y, 1.230),
+                0.038,
+                brass_material,
+                24,
+                0.005,
+            )
+        )
         for ring_index, z in enumerate((0.900, 1.205)):
-            torso.append(_elliptical_band(
-                f"RoomScale.ReservoirFerrule_{side + 1}_{ring_index + 1}",
-                (x, tank_y, z), 0.041, 0.041, 0.035, 0.035, 0.014, brass_material, 24,
-            ))
+            torso.append(
+                _elliptical_band(
+                    f"RoomScale.ReservoirFerrule_{side + 1}_{ring_index + 1}",
+                    (x, tank_y, z),
+                    0.041,
+                    0.041,
+                    0.035,
+                    0.035,
+                    0.014,
+                    brass_material,
+                    24,
+                )
+            )
         for strap_index, z in enumerate((1.000, 1.105)):
-            torso.append(_elliptical_band(
-                f"RoomScale.ReservoirRetainingStrap_{side + 1}_{strap_index + 1}",
-                (x, tank_y, z), 0.043, 0.043, 0.037, 0.037, 0.015, leather_material, 24,
-            ))
-        torso.append(_rounded_box(
-            f"RoomScale.PackFrameRail_{side + 1}",
-            (x * 1.80, pack_y + 0.012, 1.050), (0.016, 0.022, 0.362), leather_material, 0.005,
-        ))
+            torso.append(
+                _elliptical_band(
+                    f"RoomScale.ReservoirRetainingStrap_{side + 1}_{strap_index + 1}",
+                    (x, tank_y, z),
+                    0.043,
+                    0.043,
+                    0.037,
+                    0.037,
+                    0.015,
+                    leather_material,
+                    24,
+                )
+            )
+        torso.append(
+            _rounded_box(
+                f"RoomScale.PackFrameRail_{side + 1}",
+                (x * 1.80, pack_y + 0.012, 1.050),
+                (0.016, 0.022, 0.362),
+                leather_material,
+                0.005,
+            )
+        )
     for z in (0.890, 1.220):
-        torso.append(_rounded_box(
-            f"RoomScale.PackFrameCrossbar_{z:.3f}",
-            (0.0, pack_y + 0.012, z), (0.181, 0.022, 0.018), brass_material, 0.005,
-        ))
+        torso.append(
+            _rounded_box(
+                f"RoomScale.PackFrameCrossbar_{z:.3f}",
+                (0.0, pack_y + 0.012, z),
+                (0.181, 0.022, 0.018),
+                brass_material,
+                0.005,
+            )
+        )
     gauge_y = back_sample(0.0, 1.235) + 0.080
-    torso.append(_cylinder_between("RoomScale.PressureGaugeHousing", (0.0, gauge_y - 0.014, 1.235), (0.0, gauge_y + 0.014, 1.235), 0.032, brass_material, 24, 0.0025))
-    torso.append(_cylinder_between("RoomScale.PressureGaugeFace", (0.0, gauge_y + 0.014, 1.235), (0.0, gauge_y + 0.016, 1.235), 0.024, iron_material, 24, 0.0015))
-    torso.append(_polyline_tube(
-        "RoomScale.PressureGaugeNeedle",
-        [(0.0, gauge_y + 0.018, 1.235), (0.014, gauge_y + 0.018, 1.245)], 0.0021, brass_material,
-    ))
+    torso.append(
+        _cylinder_between(
+            "RoomScale.PressureGaugeHousing",
+            (0.0, gauge_y - 0.014, 1.235),
+            (0.0, gauge_y + 0.014, 1.235),
+            0.032,
+            brass_material,
+            24,
+            0.0025,
+        )
+    )
+    torso.append(
+        _cylinder_between(
+            "RoomScale.PressureGaugeFace",
+            (0.0, gauge_y + 0.014, 1.235),
+            (0.0, gauge_y + 0.016, 1.235),
+            0.024,
+            iron_material,
+            24,
+            0.0015,
+        )
+    )
+    torso.append(
+        _polyline_tube(
+            "RoomScale.PressureGaugeNeedle",
+            [(0.0, gauge_y + 0.018, 1.235), (0.014, gauge_y + 0.018, 1.245)],
+            0.0021,
+            brass_material,
+        )
+    )
     manifold_y = pack_y + 0.043
-    torso.append(_polyline_tube(
-        "RoomScale.PressurePackManifold",
-        [(-0.050, manifold_y, 1.225), (-0.050, manifold_y, 1.260), (0.0, manifold_y, 1.260), (0.050, manifold_y, 1.260), (0.050, manifold_y, 1.225)],
-        0.0050, brass_material,
-    ))
-    torso.append(_polyline_tube(
-        "RoomScale.PressureToolHose",
-        [(0.075, pack_y + 0.025, 1.18), (0.091, pack_y + 0.038, 1.115), (0.098, pack_y + 0.052, 1.015), (0.080, belt_center_y + 0.020, 0.972)],
-        0.0045, leather_material,
-    ))
+    torso.append(
+        _polyline_tube(
+            "RoomScale.PressurePackManifold",
+            [
+                (-0.050, manifold_y, 1.225),
+                (-0.050, manifold_y, 1.260),
+                (0.0, manifold_y, 1.260),
+                (0.050, manifold_y, 1.260),
+                (0.050, manifold_y, 1.225),
+            ],
+            0.0050,
+            brass_material,
+        )
+    )
+    torso.append(
+        _polyline_tube(
+            "RoomScale.PressureToolHose",
+            [
+                (0.075, pack_y + 0.025, 1.18),
+                (0.091, pack_y + 0.038, 1.115),
+                (0.098, pack_y + 0.052, 1.015),
+                (0.080, belt_center_y + 0.020, 0.972),
+            ],
+            0.0045,
+            leather_material,
+        )
+    )
     for obj in torso:
         for index, material in enumerate(obj.data.materials):
             if material == thread_material:
@@ -938,15 +1489,64 @@ def _add_clockwork_workwear(suit, rig, shoe_mesh, human, coverall_material, apro
     lower_body = []
     for side in (-1, 1):
         x = side * 0.188
-        lower_body.append(_elliptical_band(f"RoomScale.BootGaiter_{side}", (x, -0.015, 0.155), 0.048, 0.056, 0.040, 0.047, 0.025, leather_material, 24))
-        lower_body.append(_elliptical_band(f"RoomScale.BootCuffRim_{side}", (x, -0.015, 0.17), 0.049, 0.057, 0.046, 0.053, 0.005, brass_material, 24))
+        lower_body.append(
+            _elliptical_band(
+                f"RoomScale.BootGaiter_{side}",
+                (x, -0.015, 0.155),
+                0.048,
+                0.056,
+                0.040,
+                0.047,
+                0.025,
+                leather_material,
+                24,
+            )
+        )
+        lower_body.append(
+            _elliptical_band(
+                f"RoomScale.BootCuffRim_{side}",
+                (x, -0.015, 0.17),
+                0.049,
+                0.057,
+                0.046,
+                0.053,
+                0.005,
+                brass_material,
+                24,
+            )
+        )
         # Two riveted toe/instep straps clarify the boot assembly at close range.
-        lower_body.append(_rounded_box(f"RoomScale.BootInstepStrap_{side}", (x, -0.088, 0.041), (0.097, 0.020, 0.015), leather_material, 0.004))
-        lower_body.append(_rounded_box(f"RoomScale.BootToeGuard_{side}", (x, -0.177, 0.043), (0.082, 0.011, 0.024), iron_material, 0.009))
+        lower_body.append(
+            _rounded_box(
+                f"RoomScale.BootInstepStrap_{side}",
+                (x, -0.088, 0.041),
+                (0.097, 0.020, 0.015),
+                leather_material,
+                0.004,
+            )
+        )
+        lower_body.append(
+            _rounded_box(
+                f"RoomScale.BootToeGuard_{side}",
+                (x, -0.177, 0.043),
+                (0.082, 0.011, 0.024),
+                iron_material,
+                0.009,
+            )
+        )
         # Full padded outsoles close against the existing footwear instead of
         # the open ellipse outlines that floated under the first challenger.
-        lower_body.append(_ellipsoid(f"RoomScale.BootOutsole_{side}", (x, -0.078, -0.028), (0.055, 0.125, 0.012), rubber_material))
-    _join_reference_skinned(lower_body, rig, shoe_mesh, "RoomScale.ClockworkBootConstruction", fallback="foot")
+        lower_body.append(
+            _ellipsoid(
+                f"RoomScale.BootOutsole_{side}",
+                (x, -0.078, -0.028),
+                (0.055, 0.125, 0.012),
+                rubber_material,
+            )
+        )
+    _join_reference_skinned(
+        lower_body, rig, shoe_mesh, "RoomScale.ClockworkBootConstruction", fallback="foot"
+    )
     return body_mesh
 
 
@@ -994,7 +1594,9 @@ def main() -> None:
     _package, HumanService = _install_mpfb(project_root)
 
     asset_root = project_root / ".tools/makehuman_system_assets-data"
-    human = HumanService.create_human(mask_helpers=True, detailed_helpers=True, extra_vertex_groups=True)
+    human = HumanService.create_human(
+        mask_helpers=True, detailed_helpers=True, extra_vertex_groups=True
+    )
     skin = asset_root / "skins/young_caucasian_male/young_caucasian_male.mhmat"
     HumanService.set_character_skin(str(skin), human, skin_type="GAMEENGINE")
     rig = HumanService.add_builtin_rig(human, "game_engine", import_weights=True)
@@ -1014,21 +1616,53 @@ def main() -> None:
         file = asset_root / relative
         if not file.is_file():
             raise FileNotFoundError(file)
-        imported.append(HumanService.add_mhclo_asset(
-            str(file), human, asset_type=asset_type, subdiv_levels=0,
-            material_type="GAMEENGINE", set_up_rigging=True, interpolate_weights=True,
-            import_subrig=True, import_weights=True,
-        ))
+        imported.append(
+            HumanService.add_mhclo_asset(
+                str(file),
+                human,
+                asset_type=asset_type,
+                subdiv_levels=0,
+                material_type="GAMEENGINE",
+                set_up_rigging=True,
+                interpolate_weights=True,
+                import_subrig=True,
+                import_weights=True,
+            )
+        )
 
     workcoat_normal, workcoat_roughness = _derive_worksuit_pbr_maps(project_root, output_dir)
     workcoat_albedo = _derive_clockwork_workcoat(project_root, output_dir)
     textures = {
-        "human": (asset_root / "skins/young_caucasian_male/young_lightskinned_male_diffuse.png", 0.62, 0.0, None, None),
+        "human": (
+            asset_root / "skins/young_caucasian_male/young_lightskinned_male_diffuse.png",
+            0.62,
+            0.0,
+            None,
+            None,
+        ),
         "male_worksuit01": (workcoat_albedo, 0.82, 0.0, workcoat_normal, workcoat_roughness),
-        "toigo_gloves_medium": (asset_root / "clothes/toigo_gloves_medium/Gloves02UV.png", 0.57, 0.0, None, None),
+        "toigo_gloves_medium": (
+            asset_root / "clothes/toigo_gloves_medium/Gloves02UV.png",
+            0.57,
+            0.0,
+            None,
+            None,
+        ),
         "shoes03": (asset_root / "clothes/shoes03/shoes03_diffuse.png", 0.43, 0.0, None, None),
-        "toigo_round_glasses_leopard": (asset_root / "clothes/toigo_round_glasses_leopard/Glasses-leopard.png", 0.23, 0.68, None, None),
-        "fedora": (asset_root / "clothes/fedora01/fedora_diffuse.png", 0.72, 0.0, asset_root / "clothes/fedora01/fedora_normal.png", None),
+        "toigo_round_glasses_leopard": (
+            asset_root / "clothes/toigo_round_glasses_leopard/Glasses-leopard.png",
+            0.23,
+            0.68,
+            None,
+            None,
+        ),
+        "fedora": (
+            asset_root / "clothes/fedora01/fedora_diffuse.png",
+            0.72,
+            0.0,
+            asset_root / "clothes/fedora01/fedora_normal.png",
+            None,
+        ),
         "high-poly": (asset_root / "eyes/materials/blue_eye.png", 0.28, 0.0, None, None),
     }
     pbr_materials = {}
@@ -1077,20 +1711,36 @@ def main() -> None:
 
     workwear_maps = _make_workwear_maps(output_dir)
     apron_material = _pbr_material(
-        "RoomScale_Oiled_Canvas_WorkApron", workwear_maps["apron_albedo"], 0.76, 0.0,
-        workwear_maps["apron_normal"], workwear_maps["apron_roughness"],
+        "RoomScale_Oiled_Canvas_WorkApron",
+        workwear_maps["apron_albedo"],
+        0.76,
+        0.0,
+        workwear_maps["apron_normal"],
+        workwear_maps["apron_roughness"],
     )
     leather_material = _pbr_material(
-        "RoomScale_Burnished_WorkLeather", workwear_maps["leather_albedo"], 0.72, 0.0,
-        workwear_maps["leather_normal"], workwear_maps["leather_roughness"],
+        "RoomScale_Burnished_WorkLeather",
+        workwear_maps["leather_albedo"],
+        0.72,
+        0.0,
+        workwear_maps["leather_normal"],
+        workwear_maps["leather_roughness"],
     )
     helmet_material = _pbr_material(
-        "RoomScale_Oilcloth_Machinist_Helmet", workwear_maps["helmet_albedo"], 0.68, 0.0,
-        workwear_maps["helmet_normal"], workwear_maps["helmet_roughness"],
+        "RoomScale_Oilcloth_Machinist_Helmet",
+        workwear_maps["helmet_albedo"],
+        0.68,
+        0.0,
+        workwear_maps["helmet_normal"],
+        workwear_maps["helmet_roughness"],
     )
     coverall_material = _pbr_material(
-        "RoomScale_Teal_Work_Coverall_Cloth", workwear_maps["coverall_albedo"], 0.80, 0.0,
-        workwear_maps["coverall_normal"], workwear_maps["coverall_roughness"],
+        "RoomScale_Teal_Work_Coverall_Cloth",
+        workwear_maps["coverall_albedo"],
+        0.80,
+        0.0,
+        workwear_maps["coverall_normal"],
+        workwear_maps["coverall_roughness"],
     )
     fedora = next((obj for obj in imported if "fedora" in obj.name.lower()), None)
     if fedora is None:
@@ -1103,22 +1753,53 @@ def main() -> None:
         raise RuntimeError("MPFB2 did not return the fitted work-coverall base mesh")
     shoe_mesh = next((obj for obj in imported if "shoes03" in obj.name.lower()), None)
     if shoe_mesh is None:
-        raise RuntimeError("MPFB2 did not return the fitted shoe mesh needed to skin the work boots")
-    head_details = _add_clockwork_helmet_and_goggles(rig, fedora, glasses, helmet_material, brass, gunmetal, glass)
+        raise RuntimeError(
+            "MPFB2 did not return the fitted shoe mesh needed to skin the work boots"
+        )
+    head_details = _add_clockwork_helmet_and_goggles(
+        rig, fedora, glasses, helmet_material, brass, gunmetal, glass
+    )
     head_detail_names = [obj.name for obj in head_details]
-    head_hardware = _join_attached(head_details, rig, "RoomScale.ClockworkMachinistHelmet", {"head": 1.0})
-    workwear_mesh = _add_clockwork_workwear(suit, rig, shoe_mesh, human, coverall_material, apron_material, leather_material, apron_material, brass, gunmetal, rubber)
+    head_hardware = _join_attached(
+        head_details, rig, "RoomScale.ClockworkMachinistHelmet", {"head": 1.0}
+    )
+    workwear_mesh = _add_clockwork_workwear(
+        suit,
+        rig,
+        shoe_mesh,
+        human,
+        coverall_material,
+        apron_material,
+        leather_material,
+        apron_material,
+        brass,
+        gunmetal,
+        rubber,
+    )
 
     mesh_stats = []
     for obj in list(bpy.context.scene.objects):
         if obj.type != "MESH":
             continue
-        match = next((token for token in pbr_materials if token != "human" and token.lower() in obj.name.lower()), None)
+        match = next(
+            (
+                token
+                for token in pbr_materials
+                if token != "human" and token.lower() in obj.name.lower()
+            ),
+            None,
+        )
         if obj == human:
             match = "human"
         if match:
             _assign_material(obj, pbr_materials[match])
-        mesh_stats.append({"name": obj.name, "vertices": len(obj.data.vertices), "triangles": sum(len(face.vertices) - 2 for face in obj.data.polygons)})
+        mesh_stats.append(
+            {
+                "name": obj.name,
+                "vertices": len(obj.data.vertices),
+                "triangles": sum(len(face.vertices) - 2 for face in obj.data.polygons),
+            }
+        )
 
     # Build a second skin-weighted level from the same source meshes. The detailed
     # geometry remains untouched for close inspection; Godot swaps to LOD1 past 5 in.
@@ -1133,9 +1814,15 @@ def main() -> None:
         "RoomScale.ClockworkBootConstruction": 0.30,
     }
     lod_stats = []
-    source_meshes = {obj.name: obj for obj in bpy.context.scene.objects if obj.type == "MESH" and obj.name in lod_ratios}
+    source_meshes = {
+        obj.name: obj
+        for obj in bpy.context.scene.objects
+        if obj.type == "MESH" and obj.name in lod_ratios
+    }
     if set(source_meshes) != set(lod_ratios):
-        raise RuntimeError(f"LOD source mesh set mismatch: expected {sorted(lod_ratios)}, found {sorted(source_meshes)}")
+        raise RuntimeError(
+            f"LOD source mesh set mismatch: expected {sorted(lod_ratios)}, found {sorted(source_meshes)}"
+        )
     for source_name, ratio in lod_ratios.items():
         source_obj = source_meshes[source_name]
         lod_obj = source_obj.copy()
@@ -1153,7 +1840,14 @@ def main() -> None:
             lod_obj.select_set(False)
         decimate = lod_obj.modifiers.new("RoomScale distance LOD1 budget", "DECIMATE")
         decimate.ratio = ratio
-        armature_index = next((index for index, modifier in enumerate(lod_obj.modifiers) if modifier.type == "ARMATURE"), None)
+        armature_index = next(
+            (
+                index
+                for index, modifier in enumerate(lod_obj.modifiers)
+                if modifier.type == "ARMATURE"
+            ),
+            None,
+        )
         if armature_index is not None:
             lod_obj.modifiers.move(len(lod_obj.modifiers) - 1, armature_index)
         bpy.ops.object.select_all(action="DESELECT")
@@ -1162,7 +1856,15 @@ def main() -> None:
         bpy.ops.object.modifier_apply(modifier=decimate.name)
         lod_obj.select_set(False)
         lod_triangles = sum(len(face.vertices) - 2 for face in lod_obj.data.polygons)
-        lod_stats.append({"name": lod_obj.name, "source_mesh": source_name, "ratio": ratio, "vertices": len(lod_obj.data.vertices), "triangles": lod_triangles})
+        lod_stats.append(
+            {
+                "name": lod_obj.name,
+                "source_mesh": source_name,
+                "ratio": ratio,
+                "vertices": len(lod_obj.data.vertices),
+                "triangles": lod_triangles,
+            }
+        )
 
     for image in bpy.data.images:
         if image.source == "FILE":
@@ -1176,13 +1878,19 @@ def main() -> None:
     rig.select_set(True)
     bpy.context.view_layer.objects.active = rig
     for obj in bpy.context.scene.objects:
-        if obj.type == "MESH" and (obj == human or obj.parent == rig or obj.parent == human or obj in imported):
+        if obj.type == "MESH" and (
+            obj == human or obj.parent == rig or obj.parent == human or obj in imported
+        ):
             obj.select_set(True)
     bpy.context.view_layer.update()
     output = output_dir / "citizen.glb"
     result = bpy.ops.export_scene.gltf(
-        filepath=str(output), export_format="GLB", use_selection=True,
-        export_apply=True, export_materials="EXPORT", export_skins=True,
+        filepath=str(output),
+        export_format="GLB",
+        use_selection=True,
+        export_apply=True,
+        export_materials="EXPORT",
+        export_skins=True,
         export_animations=False,
     )
     if "FINISHED" not in result or not output.is_file():
@@ -1207,21 +1915,54 @@ def main() -> None:
             "shared_skeleton": True,
         },
         "pbr_maps": [
-            "materials/workcoat_normal.png", "materials/workcoat_roughness.png", "materials/workcoat_albedo.png",
-            "materials/workwear_apron_albedo.png", "materials/workwear_apron_normal.png", "materials/workwear_apron_roughness.png",
-            "materials/workwear_leather_albedo.png", "materials/workwear_leather_normal.png", "materials/workwear_leather_roughness.png",
-            "materials/workwear_helmet_albedo.png", "materials/workwear_helmet_normal.png", "materials/workwear_helmet_roughness.png",
-            "materials/workwear_coverall_albedo.png", "materials/workwear_coverall_normal.png", "materials/workwear_coverall_roughness.png",
+            "materials/workcoat_normal.png",
+            "materials/workcoat_roughness.png",
+            "materials/workcoat_albedo.png",
+            "materials/workwear_apron_albedo.png",
+            "materials/workwear_apron_normal.png",
+            "materials/workwear_apron_roughness.png",
+            "materials/workwear_leather_albedo.png",
+            "materials/workwear_leather_normal.png",
+            "materials/workwear_leather_roughness.png",
+            "materials/workwear_helmet_albedo.png",
+            "materials/workwear_helmet_normal.png",
+            "materials/workwear_helmet_roughness.png",
+            "materials/workwear_coverall_albedo.png",
+            "materials/workwear_coverall_normal.png",
+            "materials/workwear_coverall_roughness.png",
         ],
-        "clockwork_cap_details": [name for name in head_detail_names if "Helmet" in name or "Ratchet" in name],
-        "clockwork_goggle_details": [name for name in head_detail_names if "Goggle" in name or "Optical" in name or "EarCup" in name],
+        "clockwork_cap_details": [
+            name for name in head_detail_names if "Helmet" in name or "Ratchet" in name
+        ],
+        "clockwork_goggle_details": [
+            name
+            for name in head_detail_names
+            if "Goggle" in name or "Optical" in name or "EarCup" in name
+        ],
         "batched_head_hardware_mesh": head_hardware.name,
         "batched_workwear_mesh": workwear_mesh.name,
         "batched_boot_mesh": "RoomScale.ClockworkBootConstruction",
-        "output": {"path": "citizen.glb", "bytes": output.stat().st_size, "sha256": _sha256(output)},
+        "output": {
+            "path": "citizen.glb",
+            "bytes": output.stat().st_size,
+            "sha256": _sha256(output),
+        },
     }
-    (output_dir / "generation-record.json").write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
-    print("ROOMSCALE_MPFB_CITIZEN_V075_GENERATION_PASS", json.dumps({"mesh_count": len(mesh_stats), "high_detail_triangles": sum(m["triangles"] for m in mesh_stats), "lod1_triangles": sum(m["triangles"] for m in lod_stats), "glb_bytes": output.stat().st_size, "batched_head_hardware": head_hardware.name}))
+    (output_dir / "generation-record.json").write_text(
+        json.dumps(record, indent=2) + "\n", encoding="utf-8"
+    )
+    print(
+        "ROOMSCALE_MPFB_CITIZEN_V075_GENERATION_PASS",
+        json.dumps(
+            {
+                "mesh_count": len(mesh_stats),
+                "high_detail_triangles": sum(m["triangles"] for m in mesh_stats),
+                "lod1_triangles": sum(m["triangles"] for m in lod_stats),
+                "glb_bytes": output.stat().st_size,
+                "batched_head_hardware": head_hardware.name,
+            }
+        ),
+    )
 
 
 if __name__ == "__main__":

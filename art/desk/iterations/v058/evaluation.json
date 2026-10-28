@@ -1,0 +1,125 @@
+{
+  "candidate_id": "desk-v058",
+  "created_at_utc": "2026-10-28T17:30:00+00:00",
+  "decision": "reject",
+  "defects": [
+    "The production mesh is a perforated cluster of dark, disconnected sheets and shards instead of a continuous glass desktop and assembled support frame.",
+    "Large gaps and jagged fragments are obvious across three-quarter, profile, and detail views.",
+    "No credible desk edge, support joins, lift columns, cross-frame, T-feet, hardware, or controls are visible.",
+    "The embedded material renders nearly black and does not present coherent glass reflections or differentiated materials.",
+    "The model's normalized outer bounds conceal severe internal shape and proportion failure."
+  ],
+  "hard_fail_reasons": [
+    "No: a neutral viewer would not describe the rendered candidate as realistic furniture; all close views show a fragmented abstract mesh rather than a desk.",
+    "No: the candidate fails close inspection with torn-looking boundaries, large holes, and detached sheet fragments.",
+    "No: edge treatment, joins, thickness, hardware, material response, surface variation, and manufacturing detail are not believable.",
+    "No: relative to Sample (2), the candidate has no readable tabletop or standing frame and does not materially approach the photograph's object character.",
+    "The candidate's exact outer bounds are achieved through strongly unequal axis scaling, while its internal mesh remains fragmented and desk proportions are not legible."
+  ],
+  "incumbent_candidate_id": "desk-v007",
+  "incumbent_comparison": "desk-v058 is materially worse than desk-v007. The six registered RoomScale production views show a dark fragmented shard/sheet mass, not a coherent desk. desk-v007 remains visibly stylized and fails the repaired realism gate, but it has a recognizable broad top and support silhouette. Preserve v007; do not promote v058.",
+  "incumbent_comparison_result": "worse",
+  "likely_causes": [
+    "The hosted single-image reconstruction generated disconnected surface fragments rather than a watertight desk assembly.",
+    "The masked source crop preserves original desk pixels but the desk occupies a limited, partially occluded view; the geometry output does not infer the missing frame and supports reliably.",
+    "The GLB has one fused mesh and one material, leaving no semantic separation for tabletop, coated frame, feet, and hardware.",
+    "Axis-aligned envelope fitting sets the required RoomScale dimensions but cannot repair the generated mesh's missing topology or visual proportions."
+  ],
+  "next_action_hypothesis": "Do not spend another iteration on SUPRA-Tex crop, seed, clearcoat, or shader tuning for this desk: v058 is a strong geometry failure. Keep desk-v007 and its history intact. Redirect the next work to measurable scene-wide graphic-quality gains under AC-28—composition, lighting/shadow readability, material response, and the oversized live construction marker—while continuing the grapple and citizen strict-gate pilots. If the desk returns to active work later, use a materially different multipart high-detail production method rather than another single-image fused mesh.",
+  "observations": {
+    "art_direction_fit": "The brief calls for realistic human-room furniture. The candidate reads as a dark abstract fractured mesh, far from that target.",
+    "close_up_quality": "The registered close detail view exposes large open gaps, sharp torn-looking sheet boundaries, detached fragments, and no credible assembly.",
+    "gameplay_readability": "The candidate loads at the correct production desk anchor, but its visible shape is not readable as a desk; gameplay geometry itself remains RoomDefinition-owned and unchanged.",
+    "geometric_detail": "Although the GLB contains 350,149 vertices and 488,739 triangles, the captured surfaces are fragmented and do not resolve into a manufactured tabletop, support frame, legs, or feet.",
+    "material_realism": "The one embedded material renders as nearly black broken facets, with no coherent smoked-glass top or differentiated graphite frame.",
+    "proportion": "The wrapper produces the required outer 66 x 30 x 30 inch box, but the generated interior geometry does not form desk-like proportions. The required axis fit uses markedly different per-axis scale factors.",
+    "scale_fidelity": "Godot 4.7.2 validates the candidate at 66 x 30 x 30 inches with a floor-aligned bounding box; this validates only the outer envelope, not the generated object's internal proportions.",
+    "semantic_recognizability": "The three-quarter, opposite, profile, and detail captures show disconnected black fragments and irregular sheets; a neutral viewer would not identify them as a standing desk.",
+    "silhouette_quality": "At close and room scales the silhouette is a jagged, perforated mass with detached spikes; no continuous top-and-support outline is readable.",
+    "source_resemblance": "Sample (2) shows a continuous dark glass computer desk with a visible standing frame. v058 has no recognizable top, frame, or feet and does not approach the photographed desk's visual character.",
+    "surface_variation": "The candidate shows irregular black and pale gaps across disconnected faces rather than continuous, controlled glass reflections or restrained metal variation.",
+    "technical_integration": "Godot 4.7.2 imported the SUPRA-Tex GLB, validated one mesh and one surface at 488,739 triangles, and completed all six registered production captures through the normal resolver. The mesh is technically loadable but visually unusable."
+  },
+  "render_evidence": [
+    "art/desk/iterations/v058/render-runs/run-001/room-scale.png",
+    "art/desk/iterations/v058/render-runs/run-001/settlement-scale.png",
+    "art/desk/iterations/v058/render-runs/run-001/asset-three-quarter.png",
+    "art/desk/iterations/v058/render-runs/run-001/asset-opposite-three-quarter.png",
+    "art/desk/iterations/v058/render-runs/run-001/asset-profile.png",
+    "art/desk/iterations/v058/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 1,
+    "close_up_quality": 1,
+    "gameplay_readability": 1,
+    "geometric_detail": 1,
+    "material_realism": 1,
+    "proportion": 1,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 1,
+    "silhouette_quality": 1,
+    "source_resemblance": 1,
+    "surface_variation": 1,
+    "technical_integration": 3
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The detail and profile captures reveal disconnected fragments, sharp torn-looking edges, holes, and no assembled support structure.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "Visible boundaries are jagged, perforated, and fragmented; there is no consistent finished glass edge or bevel.",
+        "pass": false
+      },
+      "hardware": {
+        "evidence": "There are no readable mounting plates, lift controls, fasteners, end caps, or adjustable feet.",
+        "pass": false
+      },
+      "joins": {
+        "evidence": "No coherent top-to-frame, column-to-crossbar, or column-to-foot join is visible in the production views.",
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "The candidate does not show a manufactured desk assembly, finished edge, stable base, or believable connection details.",
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "The single material appears nearly black and broken into angular facets; it does not read as smoked glass or coated graphite steel.",
+        "pass": false
+      },
+      "pass": false,
+      "surface_variation": {
+        "evidence": "The visible discontinuities are missing geometry and sharp dark/pale gaps, not continuous reflection or restrained material variation.",
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "The surface reads as disconnected thin sheets with holes rather than a continuous panel of believable thickness.",
+        "pass": false
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "Across all close production views the model is an irregular black shard and sheet cluster with large openings, not realistic manufactured furniture.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "No",
+      "applicable": true,
+      "evidence": "The Sample (2) photograph shows a continuous dark top and standing support. The production render has neither a readable tabletop nor frame and does not materially approach that visual character.",
+      "pass": false
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": true
+    }
+  }
+}

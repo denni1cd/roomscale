@@ -2,11 +2,14 @@ extends RefCounted
 ## Runtime read-only view of the offline Art Factory's accepted asset registry.
 
 const DEFAULT_REGISTRY_PATH := "res://art/registry.json"
+const REVIEW_SHOWCASE_TYPE := "poc25_best_current_showcase"
+const REVIEW_SHOWCASE_MODE := "review_showcase"
 
 var registry_path := DEFAULT_REGISTRY_PATH
 var entries: Dictionary = {}
 var diagnostics: Array[String] = []
 var valid := true
+var review_showcase := false
 
 
 func _init(path_override: String = "") -> void:
@@ -24,14 +27,33 @@ func _load() -> void:
 	if not parsed is Dictionary or int(parsed.get("schema_version", 0)) != 1 or not parsed.get("entries") is Dictionary:
 		_fail("registry must be schema_version 1 with an entries dictionary")
 		return
+	var registry_type := String(parsed.get("registry_type", "production"))
+	var requested_mode := OS.get_environment("ROOMSCALE_ART_REGISTRY_MODE")
+	if registry_type == REVIEW_SHOWCASE_TYPE:
+		if requested_mode != REVIEW_SHOWCASE_MODE:
+			_fail("best-current showcase registry requires explicit review_showcase mode")
+			return
+		review_showcase = true
+	elif requested_mode == REVIEW_SHOWCASE_MODE:
+		_fail("review_showcase mode requires a best-current showcase registry")
+		return
+	elif registry_type != "production":
+		_fail("unknown registry_type: %s" % registry_type)
+		return
 	entries = parsed.entries
 	for asset_id in entries:
 		var entry: Variant = entries[asset_id]
-		if not entry is Dictionary or String(entry.get("status", "")) != "accepted":
-			_fail("registry entry %s is not explicitly accepted" % String(asset_id))
+		if not entry is Dictionary:
+			_fail("registry entry %s must be an object" % String(asset_id))
+			return
+		var status := String(entry.get("status", ""))
+		var accepted_status := status == "accepted"
+		var review_status := review_showcase and status == "best_current_review"
+		if not accepted_status and not review_status:
+			_fail("registry entry %s has an invalid status for this registry mode: %s" % [String(asset_id), status])
 			return
 		if String(entry.get("path", "")).is_empty() or String(entry.get("sha256", "")).is_empty():
-			_fail("accepted registry entry %s is missing its path or SHA-256" % String(asset_id))
+			_fail("registered asset %s is missing its path or SHA-256" % String(asset_id))
 			return
 
 
@@ -43,13 +65,14 @@ func lookup(asset_id: String) -> Dictionary:
 	var project_path := source_path if source_path.begins_with("res://") else "res://" + source_path.trim_prefix("/")
 	entry["resolved_path"] = project_path
 	entry["required"] = true
+	entry["registry_review_only"] = review_showcase
 	if not FileAccess.file_exists(project_path):
-		entry["resolution_error"] = "accepted asset file does not exist: %s" % project_path
+		entry["resolution_error"] = "registered asset file does not exist: %s" % project_path
 		_diagnose(asset_id, entry.resolution_error)
 		return entry
 	var file := FileAccess.open(project_path, FileAccess.READ)
 	if file == null:
-		entry["resolution_error"] = "accepted asset cannot be read: %s" % project_path
+		entry["resolution_error"] = "registered asset cannot be read: %s" % project_path
 		_diagnose(asset_id, entry.resolution_error)
 		return entry
 	var actual_hash := ""
@@ -68,7 +91,7 @@ func lookup(asset_id: String) -> Dictionary:
 		hashing.update(file.get_buffer(file.get_length()))
 		actual_hash = hashing.finish().hex_encode()
 	if actual_hash != String(entry.sha256):
-		entry["resolution_error"] = "accepted asset SHA-256 mismatch for %s" % project_path
+		entry["resolution_error"] = "registered asset SHA-256 mismatch for %s" % project_path
 		_diagnose(asset_id, entry.resolution_error)
 	return entry
 

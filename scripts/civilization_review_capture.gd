@@ -5,6 +5,7 @@ extends SceneTree
 ## the fishbowl's ordinary 10x control, and fits presentation cameras.
 
 const Evidence := preload("res://scripts/verification/evidence_io.gd")
+const RoomDefinitionLoader := preload("res://scripts/room_definition.gd")
 
 var scene: Node3D
 var sim: Node
@@ -69,6 +70,12 @@ func run() -> void:
 	var camera_rig := scene.get_node("CameraRig")
 	if not await capture("room-scale", camera_rig.get("_room_focus") + Vector3.UP * 12, 330.0, 52.0, 0.0, null, true):
 		return
+	# Art Factory final-review captures are explicitly review-only when the
+	# alternate showcase registry is selected. The normal production registry
+	# remains the default when this environment variable is absent.
+	if OS.get_environment("ROOMSCALE_ART_REGISTRY_MODE") == "review_showcase":
+		if not await capture("room-scale-opposite-angle", camera_rig.get("_room_focus") + Vector3.UP * 12, 330.0, 52.0, PI * 0.5, null, true):
+			return
 	var center := settlement_center()
 	if not await capture("settlement-scale", center + Vector3.UP * 3, 62.0 if sim == null else 30.0, 40.0):
 		return
@@ -80,6 +87,31 @@ func run() -> void:
 	if citizens.is_empty():
 		finish(false, "Production population is empty")
 		return
+	if OS.get_environment("ROOMSCALE_ART_REGISTRY_MODE") == "review_showcase":
+		var furniture := find_major_furniture()
+		if furniture.is_empty():
+			finish(false, "Review showcase room has no representative major furniture object")
+			return
+		var furniture_root := scene.get_room_object(String(furniture.id)) as Node3D
+		if furniture_root == null:
+			finish(false, "Representative furniture did not resolve through the RoomDefinition")
+			return
+		var furniture_size: Array = furniture.dimensions
+		var furniture_dimensions := Vector3(float(furniture_size[0]), float(furniture_size[1]), float(furniture_size[2]))
+		var furniture_target := furniture_root.global_position + Vector3.UP * furniture_dimensions.y * 0.5
+		var floor_center := RoomDefinitionLoader.vector3_from(scene.get("_room_definition").floor.center)
+		var inward := floor_center - furniture_root.global_position
+		var furniture_yaw := atan2(inward.x, inward.z)
+		if not await capture("major-furniture", furniture_target, maxf(72.0, furniture_dimensions.length() * 1.1), 48.0, furniture_yaw, null, true):
+			return
+		var gameplay_citizen := select_clear_gameplay_citizen(citizens, scene.get("_room_definition"))
+		if gameplay_citizen == null:
+			finish(false, "Review showcase could not select a clear production citizen")
+			return
+		var citizen_inward := floor_center - gameplay_citizen.global_position
+		var citizen_camera_yaw := atan2(citizen_inward.x, citizen_inward.z) - gameplay_citizen.global_rotation.y
+		if not await capture("citizens-gameplay-distance", gameplay_citizen.global_position + Vector3.UP * 0.25, 12.0, 26.0, citizen_camera_yaw, gameplay_citizen):
+			return
 	if not await capture("citizen-close", citizens[0].global_position + Vector3.UP * 0.25, 1.8, 18.0, 0.3, citizens[0]):
 		return
 	if sim == null:
@@ -293,6 +325,55 @@ func settlement_center() -> Vector3:
 	return total / maxf(1, count)
 
 
+func find_major_furniture() -> Dictionary:
+	var objects: Array = scene.get("_room_definition").get("objects", [])
+	var candidates: Array[Dictionary] = []
+	for object_variant in objects:
+		var object: Dictionary = object_variant
+		var kind := String(object.get("kind", "")).to_lower()
+		var dimensions: Array = object.get("dimensions", [0.0, 0.0, 0.0])
+		if kind in ["desk", "workbench"]:
+			return object
+		if kind == "table" and dimensions.size() >= 3 and float(dimensions[0]) >= 45.0 and float(dimensions[2]) >= 24.0:
+			candidates.append(object)
+	if not candidates.is_empty():
+		return candidates[0]
+	return {}
+
+
+func select_clear_gameplay_citizen(population: Array, definition: Dictionary) -> Node3D:
+	var best: Node3D
+	var best_score := -INF
+	for citizen_variant in population:
+		var citizen := citizen_variant as Node3D
+		var point := Vector2(citizen.global_position.x, citizen.global_position.z)
+		var clearance := INF
+		for object_variant in definition.get("objects", []):
+			if not object_variant is Dictionary:
+				continue
+			var object: Dictionary = object_variant
+			if not bool(object.get("blocks_navigation", false)):
+				continue
+			var position: Array = object.get("position", [])
+			var dimensions: Array = object.get("dimensions", [])
+			if position.size() != 3 or dimensions.size() != 3:
+				continue
+			var dx := maxf(absf(point.x - float(position[0])) - float(dimensions[0]) * 0.5 - 2.0, 0.0)
+			var dz := maxf(absf(point.y - float(position[2])) - float(dimensions[2]) * 0.5 - 2.0, 0.0)
+			clearance = minf(clearance, Vector2(dx, dz).length())
+		for other_variant in population:
+			var other := other_variant as Node3D
+			if other != citizen:
+				clearance = minf(clearance, point.distance_to(Vector2(other.global_position.x, other.global_position.z)) - 1.5)
+		var score := clearance
+		if String(citizen.get("state")) in ["TRAVEL", "WORK", "CARRY", "SURFACE_TRAVERSAL"]:
+			score += 2.0
+		if best == null or score > best_score:
+			best = citizen
+			best_score = score
+	return best
+
+
 func snapshot() -> Dictionary:
 	var state := {"wall_seconds": elapsed()}
 	if not is_instance_valid(scene):
@@ -301,6 +382,22 @@ func snapshot() -> Dictionary:
 	state["civilization"] = String(scene.get_meta("civilization_definition", {}).get("id", ""))
 	state["population"] = scene.get("_citizens").size()
 	state["task_summary"] = scene.get_node("TaskCoordinator").summary()
+	state["art_registry_path"] = OS.get_environment("ROOMSCALE_ART_REGISTRY")
+	state["art_registry_mode"] = OS.get_environment("ROOMSCALE_ART_REGISTRY_MODE")
+	var resolver: Variant = scene.get("_visual_resolver")
+	if resolver != null and resolver.registry != null:
+		var review_assets: Array[Dictionary] = []
+		for asset_id in resolver.registry.entries:
+			var entry: Dictionary = resolver.registry.entries[asset_id]
+			if String(entry.get("status", "")) == "best_current_review":
+				review_assets.append({
+					"asset_id": String(asset_id),
+					"candidate_id": String(entry.get("candidate_id", "")),
+					"status": String(entry.get("status", "")),
+					"review_label": String(entry.get("review_label", "")),
+					"strict_pilot_gate_status": String(entry.get("strict_pilot_gate_status", "")),
+				})
+		state["best_current_review_assets"] = review_assets
 	if is_instance_valid(construction):
 		state["construction"] = construction.status()
 		state["deployment_cursor"] = construction.get("_deployment_cursor")
@@ -318,6 +415,8 @@ func snapshot() -> Dictionary:
 
 func missing_phases() -> Array[String]:
 	var required: Array[String] = ["room-scale", "settlement-scale", "citizen-close", "active-construction", "traversal-whole-route", "citizen-climbing"]
+	if OS.get_environment("ROOMSCALE_ART_REGISTRY_MODE") == "review_showcase":
+		required.append_array(["room-scale-opposite-angle", "major-furniture", "citizens-gameplay-distance"])
 	required.append("upper-reclamation" if requested_civilization == "verdant" else "upper-anchor")
 	if sim != null:
 		required.append_array(["founder-module-foundation", "founder-module-frame", "founder-module-shell", "founder-module-complete", "earned-settlement"])
@@ -335,7 +434,7 @@ func elapsed() -> float:
 
 
 func finish(passed: bool, reason: String = "") -> void:
-	var receipt := {"result": "PASS" if passed else "FAIL", "reason": reason, "source_sha": OS.get_environment("GITHUB_SHA"), "engine": Engine.get_version_info().string, "display": DisplayServer.get_name(), "renderer": RenderingServer.get_current_rendering_method(), "wall_timeout_seconds": timeout_seconds, "missing_phases": missing_phases(), "final": snapshot(), "captures": captures}
+	var receipt := {"result": "PASS" if passed else "FAIL", "reason": reason, "source_sha": OS.get_environment("GITHUB_SHA"), "engine": Engine.get_version_info().string, "display": DisplayServer.get_name(), "renderer": RenderingServer.get_current_rendering_method(), "art_registry_mode": OS.get_environment("ROOMSCALE_ART_REGISTRY_MODE"), "review_label": "BEST CURRENT / PRODUCTION ART FOLLOW-UP REQUIRED" if OS.get_environment("ROOMSCALE_ART_REGISTRY_MODE") == "review_showcase" else "", "wall_timeout_seconds": timeout_seconds, "missing_phases": missing_phases(), "final": snapshot(), "captures": captures}
 	var error := Evidence.save_json(receipt, directory.path_join("receipt.json"))
 	if error != OK:
 		passed = false

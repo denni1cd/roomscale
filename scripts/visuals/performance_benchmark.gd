@@ -52,6 +52,15 @@ func _run() -> void:
 		push_error("Performance output could not be written: " + output)
 		quit(1)
 		return
-	file.store_string(JSON.stringify({"engine": Engine.get_version_info().string, "renderer": RenderingServer.get_current_rendering_method(), "vsync": "disabled", "results": results}, "  "))
+	var report := {
+		"engine": Engine.get_version_info().string,
+		"renderer": RenderingServer.get_current_rendering_method(),
+		"vsync": "disabled",
+		"art_registry_path": OS.get_environment("ROOMSCALE_ART_REGISTRY"),
+		"art_registry_mode": OS.get_environment("ROOMSCALE_ART_REGISTRY_MODE"),
+		"review_label": "BEST CURRENT / PRODUCTION ART FOLLOW-UP REQUIRED" if OS.get_environment("ROOMSCALE_ART_REGISTRY_MODE") == "review_showcase" else "",
+		"results": results,
+	}
+	file.store_string(JSON.stringify(report, "  "))
 	print("ROOMSCALE_PERFORMANCE_PASS %s" % [results])
 	quit()

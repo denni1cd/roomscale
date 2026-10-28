@@ -1,0 +1,123 @@
+{
+  "candidate_id": "grapple-v009",
+  "created_at_utc": "2026-10-28T15:34:30+00:00",
+  "decision": "blocked",
+  "defects": [
+    "The model remains visibly stylized and does not pass the realistic-miniature neutral-viewer test.",
+    "The close capture still shows regular coil-like hemp, uniform surfaces, and simplified structural joints.",
+    "Material response, surface variation, joints, and manufacturing detail fail despite added geometry and baked PBR maps.",
+    "Batching improved the asset from 355 to 17 mesh objects and reduced the detail capture report from 6,997 to 5,682 draw calls (v008 to v009), but the result remains above v006 draw calls and primitives; FPS samples are not warmed benchmarks."
+  ],
+  "hard_fail_reasons": [
+    "No: a neutral viewer would still describe the render as low-poly/stylized game geometry rather than realistic manufactured miniature machinery.",
+    "No: close inspection reveals simplified gear/mast joins and coil-like winding without recognizable rope fibers.",
+    "No: edge treatment, joins, thickness, hardware, material response, surface variation, and manufacturing detail are not collectively believable.",
+    "Unapproved low-poly, blocky, primitive and simplified-programmer-art appearance remains visible; the Grapple brief does not allow stylization.",
+    "The textured surfaces remain materially too uniform and do not read as convincingly finished wood, iron, brass, copper, or rope."
+  ],
+  "incumbent_candidate_id": "grapple-v006",
+  "incumbent_comparison": "v009 improves stage-group batching and exact envelope, with 17 meshes instead of 355 in v008 and reduced draw-call samples. It has more geometry and detail than grapple-v006, but its production views still fail neutral realism, close workmanship and material gates, and capture performance does not establish a warmed improvement over v006. Keep v006 as the best-so-far gameplay incumbent.",
+  "incumbent_comparison_result": "same",
+  "likely_causes": [
+    "The component-level model still relies on repeated primitive-derived parts and broad color regions; subtle baked microtexture does not overcome the stylized silhouette and simplistic assembly transitions.",
+    "The three-strand winding reads as repeated metallic-looking coils at RoomScale close distance, not textured hemp rope.",
+    "The lighting and production-room material response do not expose enough roughness or surface character to distinguish the PBR finishes convincingly."
+  ],
+  "next_action_hypothesis": "The Grapple brief permits candidate versions only through v009 under its current iteration_budget. Do not treat this attempt-limit stop as a technical plateau or POC acceptance. A further candidate requires a contract-authorized attempt-budget change; if authorized, use a materially different reference-driven miniature fabrication method and a warmed performance capture. Preserve v006 and all v007-v009 histories.",
+  "observations": {
+    "art_direction_fit": "The asset is recognizable as a fictional steampunk grapple, but the brief requires a believable manufactured miniature and does not allow stylistic simplification.",
+    "close_up_quality": "The detail render exposes the small components and bevels but still reads as a stylized mechanical game model, with coil-like winding and simple joints.",
+    "gameplay_readability": "The gameplay harness completes all three construction stages, deploys the gameplay-owned cable, activates the FLOOR-to-DESK_TOP connection, and records a citizen traversal in progress.",
+    "geometric_detail": "v009 adds bevelled gear profiles, round mast/rungs, collars, case fasteners, turned spool parts, pipe unions and three helical rope strands. Close renders still show simplified part intersections and a toy-like scale impression.",
+    "material_realism": "The candidate now includes packed PBR albedo and roughness textures, but the winding still reads as copper-colored regular coils rather than hemp and the wood/metal surfaces remain too clean and uniform.",
+    "proportion": "Godot validates the exact 8.7 x 11.67 x 7.5 inch envelope. The main winding remains oversized relative to its supports and appears as broad uniform coils.",
+    "scale_fidelity": "Godot 4.7.2 validates 8.7 x 11.67 x 7.5 inch bounds, three required stage groups and no import issues.",
+    "semantic_recognizability": "The three-quarter and detail views identify the windlass, pressure vessel, gauges, exposed gear and braced launcher mast.",
+    "silhouette_quality": "The compact timber skid, central winch, tall runged mast and top sheave make a coherent grapple-installation silhouette.",
+    "surface_variation": "Baked maps introduce subtle value and roughness changes, but the actual production views do not show convincing wood grain, forged finish, rope fibers or varied metal wear.",
+    "technical_integration": "Three stage-specific GLBs load through FoundationDetails, MachineryDetails and LauncherDetails. Godot reports 17 meshes, 17 surfaces, 312,760 triangles and exact bounds; the production harness verifies construction and cable traversal. Detail capture reports 5,682 draw calls, 2,311,952 primitives and 45 FPS; it is not a warmed benchmark."
+  },
+  "render_evidence": [
+    "art/grapple/iterations/v009/render-runs/run-001/construction.png",
+    "art/grapple/iterations/v009/render-runs/run-001/grapple-deployment.png",
+    "art/grapple/iterations/v009/render-runs/run-001/grapple-complete.png",
+    "art/grapple/iterations/v009/render-runs/run-001/room-scale.png",
+    "art/grapple/iterations/v009/render-runs/run-001/asset-three-quarter.png",
+    "art/grapple/iterations/v009/render-runs/run-001/asset-opposite-three-quarter.png",
+    "art/grapple/iterations/v009/render-runs/run-001/asset-profile.png",
+    "art/grapple/iterations/v009/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 2,
+    "close_up_quality": 2,
+    "gameplay_readability": 5,
+    "geometric_detail": 4,
+    "material_realism": 2,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 4,
+    "surface_variation": 2,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The close view shows extra bevels and hardware but still exposes simple mast/base and bearing joins, regular smooth rope coils, and insufficient surface finish.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "The skids, gear teeth, flanges, pipe unions and mast parts have visible bevels or rounded profiles.",
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "Fasteners, gauge indices, hubs, unions, mast collars, rung ferrules, pulley axle and locknuts are present and legible.",
+        "pass": true
+      },
+      "joins": {
+        "evidence": "The mast foot, bearing housings, pipe fittings and guard plates still read as simple intersections rather than consistently fitted assemblies.",
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "The many parts are not yet joined and finished like a real manufactured miniature; rope fibers, gear mesh, bearing fits and plate transitions remain weak.",
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "The candidate now includes packed PBR albedo and roughness textures, but the winding still reads as copper-colored regular coils rather than hemp and the wood/metal surfaces remain too clean and uniform.",
+        "pass": false
+      },
+      "pass": false,
+      "surface_variation": {
+        "evidence": "Baked maps introduce subtle value and roughness changes, but the actual production views do not show convincing wood grain, forged finish, rope fibers or varied metal wear.",
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "The skid, winch plate, gear, flanges and mast components show coherent physical thickness in the profile and detail views.",
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The rendered installation is recognizable and more detailed than v006, but the coil-like rope, uniform surfaces and simplified part transitions still read as stylized game geometry rather than a realistic manufactured miniature.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "The Grapple brief has no source photograph or registered reference image.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": true,
+      "low_poly": true,
+      "materially_flat": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "substantially_stylized": true
+    }
+  }
+}

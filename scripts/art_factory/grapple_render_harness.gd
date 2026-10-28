@@ -66,6 +66,9 @@ func run() -> void:
 	if String(asset_root.get_meta("visual_source", "")) != expected_asset_path or String(asset_root.get_meta("visual_asset_candidate_id", "")) != candidate_id:
 		_fail("production construction did not load the requested candidate: path=%s id=%s" % [asset_root.get_meta("visual_source", ""), asset_root.get_meta("visual_asset_candidate_id", "")])
 		return
+	if not bool(asset_root.get_meta("visual_asset_review_only", false)):
+		_fail("candidate render must use an explicit review-only showcase registry")
+		return
 	elapsed = 0.0
 	while not (String(construction.status().active_stage) == "winch" and float(construction.status().stage_progress) >= 0.25) and elapsed < 150.0:
 		await create_timer(0.25).timeout
@@ -122,6 +125,10 @@ func run() -> void:
 		"room_id": String(room.get("id", "")),
 		"asset_id": "grapple",
 		"candidate_id": candidate_id,
+		"registry_mode": OS.get_environment("ROOMSCALE_ART_REGISTRY_MODE"),
+		"candidate_status": String(asset_root.get_meta("visual_asset_registry_status", "")),
+		"review_label": "BEST CURRENT / PRODUCTION ART FOLLOW-UP REQUIRED",
+		"registry_path": OS.get_environment("ROOMSCALE_ART_REGISTRY"),
 		"loaded_asset_path": String(asset_root.get_meta("visual_source", "")),
 		"loaded_candidate_id": String(asset_root.get_meta("visual_asset_candidate_id", "")),
 		"construction_state": status,

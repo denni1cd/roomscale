@@ -1,0 +1,238 @@
+{
+  "asset_files": [
+    "art/grapple/iterations/v009/generated/grapple.tscn",
+    "art/grapple/iterations/v009/generated/FoundationDetails.glb",
+    "art/grapple/iterations/v009/generated/MachineryDetails.glb",
+    "art/grapple/iterations/v009/generated/LauncherDetails.glb",
+    "art/grapple/iterations/v009/generated/modeling-record.json"
+  ],
+  "asset_id": "grapple",
+  "candidate_id": "grapple-v009",
+  "created_at_utc": "2026-10-28T15:31:59+00:00",
+  "evaluation_file": "art/grapple/iterations/v009/evaluation.json",
+  "generation_result": {
+    "command": [
+      "C:\\Users\\Zero\\python_projects\\ai\\roomscale/.tools/blender-5.2.3/blender-5.2.3-windows-x64/blender.exe",
+      "--background",
+      "--factory-startup",
+      "--python-exit-code",
+      "1",
+      "--python",
+      "C:\\Users\\Zero\\python_projects\\ai\\roomscale/scripts/art_factory/generators/grapple_v009_blender.py",
+      "--",
+      "C:\\Users\\Zero\\python_projects\\ai\\roomscale\\art\\grapple\\iterations\\v009\\generated"
+    ],
+    "exit_code": 0,
+    "recorded_at_utc": "2026-10-28T15:32:06+00:00",
+    "status": "pass"
+  },
+  "parent_candidate_id": "grapple-v008",
+  "recipe_file": "art/grapple/iterations/v009/recipe.json",
+  "renders": [
+    {
+      "asset_id": "grapple",
+      "camera": {
+        "distance_inches": 34.0,
+        "focus": "(-20.0, 6.0, 46.0)",
+        "fov_degrees": 55.0,
+        "tilt_degrees": 45.0,
+        "yaw_radians": 2.6
+      },
+      "candidate_id": "grapple-v009",
+      "captured_at_utc": "2026-10-28T15:33:20+00:00",
+      "draw_calls": 288.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 60.0,
+      "path": "art/grapple/iterations/v009/render-runs/run-001/construction.png",
+      "phase": "construction",
+      "primitives": 236730.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_photo_luna",
+      "sha256": "87f1e0078abb20c2f9b4b5dfff964c2b9a0d8b3bca3e7fa8f4a12f3d76efc92d"
+    },
+    {
+      "asset_id": "grapple",
+      "camera": {
+        "distance_inches": 160.0,
+        "focus": "(2.0, 15.0, 42.0)",
+        "fov_degrees": 55.0,
+        "tilt_degrees": 65.0,
+        "yaw_radians": 3.14159265358979
+      },
+      "candidate_id": "grapple-v009",
+      "captured_at_utc": "2026-10-28T15:33:20+00:00",
+      "draw_calls": 3182.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 60.0,
+      "path": "art/grapple/iterations/v009/render-runs/run-001/grapple-deployment.png",
+      "phase": "grapple-deployment",
+      "primitives": 975061.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_photo_luna",
+      "sha256": "57784b56c3721fce0b625a96fb758ed5aaf62657d845d767e17dfb8996bcd7a9"
+    },
+    {
+      "asset_id": "grapple",
+      "camera": {
+        "distance_inches": 32.0,
+        "focus": "(-20.0, 5.0, 46.0)",
+        "fov_degrees": 55.0,
+        "tilt_degrees": 34.0,
+        "yaw_radians": 0.6
+      },
+      "candidate_id": "grapple-v009",
+      "captured_at_utc": "2026-10-28T15:33:20+00:00",
+      "draw_calls": 4212.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 60.0,
+      "path": "art/grapple/iterations/v009/render-runs/run-001/grapple-complete.png",
+      "phase": "grapple-complete",
+      "primitives": 1640440.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_photo_luna",
+      "sha256": "96c440a1ca129e40d87469fe7589feb33d06aea5ea690e63e6c056eeee0565d0"
+    },
+    {
+      "asset_id": "grapple",
+      "camera": {
+        "distance_inches": 285.0,
+        "focus": "(0.0, 10.0, 0.0)",
+        "fov_degrees": 55.0,
+        "tilt_degrees": 78.0,
+        "yaw_radians": 0.0
+      },
+      "candidate_id": "grapple-v009",
+      "captured_at_utc": "2026-10-28T15:33:20+00:00",
+      "draw_calls": 3201.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 60.0,
+      "path": "art/grapple/iterations/v009/render-runs/run-001/room-scale.png",
+      "phase": "room-scale",
+      "primitives": 1039449.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_photo_luna",
+      "sha256": "bfda74b68104a6a1850a9b29c765d8c1658937096820190a1e0cf64a4d071ea8"
+    },
+    {
+      "asset_id": "grapple",
+      "camera": {
+        "distance_inches": 22.0,
+        "focus": "(-20.0, 5.6, 46.0)",
+        "fov_degrees": 55.0,
+        "tilt_degrees": 38.0,
+        "yaw_radians": 0.62
+      },
+      "candidate_id": "grapple-v009",
+      "captured_at_utc": "2026-10-28T15:33:20+00:00",
+      "draw_calls": 4089.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 60.0,
+      "path": "art/grapple/iterations/v009/render-runs/run-001/asset-three-quarter.png",
+      "phase": "asset-three-quarter",
+      "primitives": 1617562.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_photo_luna",
+      "sha256": "6de352497d9a380fd5d36c42d1f0b0b05ac7be00c1d403b34baf81bc4e2fb6df"
+    },
+    {
+      "asset_id": "grapple",
+      "camera": {
+        "distance_inches": 22.0,
+        "focus": "(-20.0, 5.6, 46.0)",
+        "fov_degrees": 55.0,
+        "tilt_degrees": 38.0,
+        "yaw_radians": 3.76159265358979
+      },
+      "candidate_id": "grapple-v009",
+      "captured_at_utc": "2026-10-28T15:33:20+00:00",
+      "draw_calls": 176.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 45.0,
+      "path": "art/grapple/iterations/v009/render-runs/run-001/asset-opposite-three-quarter.png",
+      "phase": "asset-opposite-three-quarter",
+      "primitives": 321902.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_photo_luna",
+      "sha256": "b30dc401144c87d31df5076a2ed19ded4fde5a26670b2de81399b4c628920f31"
+    },
+    {
+      "asset_id": "grapple",
+      "camera": {
+        "distance_inches": 19.0,
+        "focus": "(-20.0, 5.6, 46.0)",
+        "fov_degrees": 55.0,
+        "tilt_degrees": 38.0,
+        "yaw_radians": 2.1907963267949
+      },
+      "candidate_id": "grapple-v009",
+      "captured_at_utc": "2026-10-28T15:33:20+00:00",
+      "draw_calls": 283.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 45.0,
+      "path": "art/grapple/iterations/v009/render-runs/run-001/asset-profile.png",
+      "phase": "asset-profile",
+      "primitives": 415268.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_photo_luna",
+      "sha256": "42919fc3ee3352e9d1d95270c6ee52c7916b43752e5a30924f2e1d2a9b7a01f5"
+    },
+    {
+      "asset_id": "grapple",
+      "camera": {
+        "distance_inches": 16.0,
+        "focus": "(-19.2, 6.0, 46.7)",
+        "fov_degrees": 55.0,
+        "tilt_degrees": 25.0,
+        "yaw_radians": 0.25
+      },
+      "candidate_id": "grapple-v009",
+      "captured_at_utc": "2026-10-28T15:33:20+00:00",
+      "draw_calls": 5682.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 45.0,
+      "path": "art/grapple/iterations/v009/render-runs/run-001/asset-detail.png",
+      "phase": "asset-detail",
+      "primitives": 2311952.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_photo_luna",
+      "sha256": "f697a16f3d0e2b13ec2d9d36ece0e3c56df07d07baaab13b7b0f54bc12008c9a"
+    }
+  ],
+  "schema_version": 1,
+  "status": "blocked",
+  "technical_validation": {
+    "asset_path": "res://art/grapple/iterations/v009/generated/grapple.tscn",
+    "bounds": {
+      "position": [
+        -4.34999990463257,
+        0.0,
+        -3.75
+      ],
+      "size": [
+        8.70000076293945,
+        11.6700000762939,
+        7.5
+      ]
+    },
+    "engine": "4.7.2-stable (official)",
+    "import_exit_code": 0,
+    "issues": [],
+    "log": "art/grapple/iterations/v009/technical-validation.log",
+    "mesh_count": 17,
+    "recorded_at_utc": "2026-10-28T15:32:16+00:00",
+    "report": "art/grapple/iterations/v009/technical-validation.json",
+    "status": "pass",
+    "surface_count": 17,
+    "triangle_count": 312760,
+    "validation_exit_code": 0
+  },
+  "version": 9
+}

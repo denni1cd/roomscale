@@ -58,24 +58,32 @@ func run() -> void:
 	if String(asset_node.get_meta("visual_asset_candidate_id", "")) != candidate_id:
 		_fail("production resolver did not report candidate id %s" % candidate_id)
 		return
+	if not bool(asset_node.get_meta("visual_asset_review_only", false)):
+		_fail("candidate render must use an explicit review-only showcase registry")
+		return
 	var selected_citizen_id := -1
+	var selected_citizen_carrying := false
+	var citizen_population: Array = []
 	if asset_id == "citizen":
-		var population: Array = scene.get("_citizens")
-		if population.size() != 50:
-			_fail("citizen candidate requires all 50 production citizens; found %d" % population.size())
+		citizen_population = scene.get("_citizens")
+		if citizen_population.size() != 50:
+			_fail("citizen candidate requires all 50 production citizens; found %d" % citizen_population.size())
 			return
-		for citizen_variant in population:
+		for citizen_variant in citizen_population:
 			var citizen := citizen_variant as Node3D
 			var figure := citizen.get_node_or_null("Figure") as Node3D
-			if figure == null or String(figure.get_meta("visual_source", "")) != expected_asset_path or String(figure.get_meta("visual_asset_candidate_id", "")) != candidate_id:
+			if figure == null or String(figure.get_meta("visual_source", "")) != expected_asset_path or String(figure.get_meta("visual_asset_candidate_id", "")) != candidate_id or not bool(figure.get_meta("visual_asset_review_only", false)):
 				_fail("not every production citizen is using the candidate override: %s" % citizen.name)
 				return
-		var selected_figure := _select_clear_citizen(population, definition)
+		var selected_figure := _select_clear_citizen(citizen_population, definition, true)
+		if selected_figure == null:
+			selected_figure = _select_clear_citizen(citizen_population, definition)
 		if selected_figure == null:
 			_fail("no accepted production citizen could be selected for the close render")
 			return
 		asset_node = selected_figure
 		selected_citizen_id = int(selected_figure.get_parent().get("citizen_id"))
+		selected_citizen_carrying = bool(selected_figure.get_parent().get("carrying"))
 	var camera_rig := scene.get_node("CameraRig")
 	# This harness chooses explicit evidence viewpoints. Disable interactive camera
 	# smoothing so the requested close fit is the camera that reaches the renderer.
@@ -90,6 +98,8 @@ func run() -> void:
 	var room_camera: Dictionary = definition.get("camera", {})
 	var room_yaw := deg_to_rad(float(room_camera.get("yaw_degrees", 0.0)))
 	if not await _capture(scene, "room-scale", floor_center + Vector3.UP * 12.0, 330.0, 52.0, room_yaw):
+		return
+	if not await _capture(scene, "room-scale-opposite-angle", floor_center + Vector3.UP * 12.0, 330.0, 52.0, room_yaw + PI * 0.5):
 		return
 	var workshop := scene.get_node_or_null("Settlement/Workshop") as Node3D
 	var work_area := scene.get_node_or_null("Settlement/WorkArea") as Node3D
@@ -196,6 +206,22 @@ func run() -> void:
 		detail_distance *= 0.6
 	if not await _capture(scene, "asset-detail", target, detail_distance, detail_tilt, detail_yaw, follow_citizen):
 		return
+	var controlled_citizen_yaws := OS.get_environment("ROOMSCALE_ART_FACTORY_CITIZEN_YAW_SWEEP_DEGREES")
+	var controlled_citizen_receipt: Dictionary = {}
+	if asset_id == "citizen" and not controlled_citizen_yaws.is_empty():
+		var sweep_figure := _select_clear_citizen(citizen_population, definition, true)
+		if sweep_figure == null:
+			sweep_figure = follow_citizen
+		controlled_citizen_receipt = await _capture_citizen_yaw_sweep(
+			scene,
+			sweep_figure,
+			controlled_citizen_yaws,
+			12.0,
+			26.0,
+			0.62
+		)
+		if controlled_citizen_receipt.is_empty():
+			return
 	var receipt := {
 		"schema_version": 1,
 		"production_path": true,
@@ -204,7 +230,13 @@ func run() -> void:
 		"room_id": room_id,
 		"asset_id": asset_id,
 		"candidate_id": candidate_id,
+		"registry_mode": OS.get_environment("ROOMSCALE_ART_REGISTRY_MODE"),
+		"candidate_status": String(asset_node.get_meta("visual_asset_registry_status", "")),
+		"review_label": "BEST CURRENT / PRODUCTION ART FOLLOW-UP REQUIRED",
+		"registry_path": OS.get_environment("ROOMSCALE_ART_REGISTRY"),
 		"selected_citizen_id": selected_citizen_id,
+		"selected_citizen_carrying": selected_citizen_carrying,
+		"controlled_citizen_yaw_sweep": controlled_citizen_receipt,
 		"loaded_asset_path": String(asset_node.get_meta("visual_source", "")),
 		"loaded_candidate_id": String(asset_node.get_meta("visual_asset_candidate_id", "")),
 		"viewport": [root.size.x, root.size.y],
@@ -226,6 +258,97 @@ func run() -> void:
 	quit(0)
 
 
+func _capture_citizen_yaw_sweep(
+	scene: Node3D,
+	figure: Node3D,
+	yaw_degrees_csv: String,
+	distance: float,
+	tilt: float,
+	camera_world_yaw: float
+) -> Dictionary:
+	if not is_instance_valid(figure) or figure.get_parent() == null:
+		_fail("controlled citizen yaw sweep has no valid production citizen")
+		return {}
+	var citizen := figure.get_parent() as Node3D
+	var angles: Array[float] = []
+	for token in yaw_degrees_csv.split(",", false):
+		var parsed := token.strip_edges().to_float()
+		if not is_finite(parsed):
+			_fail("controlled citizen yaw sweep contains a non-finite angle")
+			return {}
+		angles.append(parsed)
+	if angles.is_empty():
+		_fail("controlled citizen yaw sweep needs at least one angle")
+		return {}
+
+	# Supplemental stills only: retain the running production capture above, then
+	# freeze the already-instantiated RoomScale scene while changing just the
+	# selected citizen's facing. All 50 production citizens remain in the scene.
+	var tree := scene.get_tree()
+	tree.paused = true
+	var capture_position := citizen.global_position
+	var citizen_id := int(citizen.get("citizen_id"))
+	citizen.rotation.y = camera_world_yaw - 0.62
+	figure.rotation.y = 0.0
+	var detail_camera_yaw := camera_world_yaw - figure.global_rotation.y
+	if not await _capture(
+		scene,
+		"asset-idle-detail",
+		figure.global_position + Vector3.UP * 0.25,
+		2.0,
+		38.0,
+		detail_camera_yaw,
+		figure,
+		{
+			"controlled_still": true,
+			"idle_citizen_close_inspection": true,
+			"selected_citizen_id": citizen_id,
+			"selected_citizen_carrying": bool(citizen.get("carrying")),
+			"subject_world_yaw_radians": figure.global_rotation.y,
+		}
+	):
+		tree.paused = false
+		return {}
+	for relative_facing_degrees in angles:
+		var relative_facing := deg_to_rad(relative_facing_degrees)
+		# Match the standard three-quarter relation at 0 degrees. Camera world yaw
+		# stays fixed, so the images isolate front/profile/back role cues.
+		citizen.rotation.y = camera_world_yaw - 0.62 - relative_facing
+		figure.rotation.y = 0.0
+		var relative_camera_yaw := camera_world_yaw - figure.global_rotation.y
+		var phase := "asset-gameplay-yaw-%03d" % posmod(roundi(relative_facing_degrees), 360)
+		if not await _capture(
+			scene,
+			phase,
+			figure.global_position + Vector3.UP * 0.25,
+			distance,
+			tilt,
+			relative_camera_yaw,
+			figure,
+			{
+				"controlled_still": true,
+				"selected_citizen_id": citizen_id,
+				"subject_facing_degrees_relative_to_standard": relative_facing_degrees,
+				"subject_world_yaw_radians": figure.global_rotation.y,
+			}
+		):
+			tree.paused = false
+			return {}
+	tree.paused = false
+	return {
+		"supplemental_stills_only": true,
+		"scene_paused_during_stills": true,
+		"production_citizen_count": 50,
+		"selected_citizen_id": citizen_id,
+		"selected_citizen_carrying": bool(citizen.get("carrying")),
+		"selected_citizen_world_position": capture_position,
+		"distance_inches": distance,
+		"close_inspection_phase": "asset-idle-detail",
+		"camera_world_yaw_radians": camera_world_yaw,
+		"subject_facing_degrees_relative_to_standard": angles,
+	}
+
+
 func _find_asset_node(scene: Node3D) -> Node3D:
 	var possible := scene.find_children("*", "Node3D", true, false)
 	for node in possible:
@@ -238,11 +361,13 @@ func _find_asset_node(scene: Node3D) -> Node3D:
 	return null
 
 
-func _select_clear_citizen(population: Array, definition: Dictionary) -> Node3D:
+func _select_clear_citizen(population: Array, definition: Dictionary, require_idle: bool = false) -> Node3D:
 	var best: Node3D
 	var best_clearance := -INF
 	for citizen_variant in population:
 		var citizen := citizen_variant as Node3D
+		if require_idle and bool(citizen.get("carrying")):
+			continue
 		var figure := citizen.get_node_or_null("Figure") as Node3D
 		if figure == null:
 			continue
@@ -277,7 +402,7 @@ func _select_clear_citizen(population: Array, definition: Dictionary) -> Node3D:
 	return best
 
 
-func _capture(scene: Node3D, phase: String, focus: Vector3, distance: float, tilt: float, yaw: float, follow: Node3D = null) -> bool:
+func _capture(scene: Node3D, phase: String, focus: Vector3, distance: float, tilt: float, yaw: float, follow: Node3D = null, extra_evidence: Dictionary = {}) -> bool:
 	var rig := scene.get_node("CameraRig")
 	var camera := scene.get_node("CameraRig/Camera") as Camera3D
 	if is_instance_valid(follow):
@@ -315,7 +440,7 @@ func _capture(scene: Node3D, phase: String, focus: Vector3, distance: float, til
 	if image.save_png(image_path) != OK:
 		_fail("render %s could not save %s" % [phase, image_path])
 		return false
-	captures.append({
+	var capture_record := {
 		"phase": phase,
 		"path": image_path,
 		"production_path": true,
@@ -323,7 +448,9 @@ func _capture(scene: Node3D, phase: String, focus: Vector3, distance: float, til
 		"fps": Performance.get_monitor(Performance.TIME_FPS),
 		"draw_calls": Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME),
 		"primitives": Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME),
-	})
+	}
+	capture_record.merge(extra_evidence, true)
+	captures.append(capture_record)
 	return true
 
 

@@ -34,7 +34,9 @@ func run() -> void:
 		if root == null:
 			issues.append("candidate scene root must be Node3D")
 		else:
-			bounds = Resolver.mesh_bounds(root)
+			# Include the PackedScene root so candidate-local axis/scale transforms
+			# are measured in the same frame in which RoomScale renders the asset.
+			bounds = Resolver.mesh_bounds(root, root.transform)
 			for mesh_variant in root.find_children("*", "MeshInstance3D", true, false):
 				var mesh_instance := mesh_variant as MeshInstance3D
 				if mesh_instance.mesh == null:

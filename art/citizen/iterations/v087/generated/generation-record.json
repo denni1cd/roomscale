@@ -1,0 +1,277 @@
+{
+  "candidate_id": "citizen-v087",
+  "strategy_identity": "Fitted long split workshop-apron panels with thigh skinning on the preserved MPFB Clockwork worker",
+  "method": "MPFB2 anatomical basemesh and 53-bone rig + longer, wider split workshop-apron panels skinned over both thighs + fitted machinist clothing/equipment + deep-teal PBR textile response",
+  "gameplay_camera_diagnosis": "The v085 production captures show the short split panels do not establish a distinct lower work-apron silhouette; the 12-inch views remain hard to identify. Extend the fitted split apron to mid-thigh with a clear central gait gap and outward flare, retaining thigh skinning, the improved cloth palette, the concept-matched helmet, anatomy, exact envelope, and live production behavior. Do not add random gears or change the camera.",
+  "tool_versions": {
+    "blender": "5.2.3 LTS",
+    "mpfb2": "(2, 0, 18)"
+  },
+  "created_at_utc": "2026-10-28T20:53:04+00:00",
+  "assets": [
+    "clothes/male_worksuit01/male_worksuit01.mhclo",
+    "clothes/toigo_gloves_medium/toigo_gloves_medium.mhclo",
+    "clothes/shoes03/shoes03.mhclo",
+    "clothes/toigo_round_glasses_leopard/toigo_round_glasses_leopard.mhclo",
+    "clothes/fedora01/fedora01.mhclo",
+    "eyes/high-poly/high-poly.mhclo"
+  ],
+  "skin_asset": "skins/young_caucasian_male/young_caucasian_male.mhmat",
+  "license": "MPFB2 GPL-3.0 generator; all selected MakeHuman system, coveralls, glasses, gloves, shoes, and eyes assets are marked CC0 by their asset pack terms.",
+  "rig": {
+    "name": "game_engine",
+    "bones": [
+      "Root",
+      "pelvis",
+      "spine_01",
+      "spine_02",
+      "spine_03",
+      "clavicle_l",
+      "upperarm_l",
+      "lowerarm_l",
+      "hand_l",
+      "index_01_l",
+      "index_02_l",
+      "index_03_l",
+      "middle_01_l",
+      "middle_02_l",
+      "middle_03_l",
+      "pinky_01_l",
+      "pinky_02_l",
+      "pinky_03_l",
+      "ring_01_l",
+      "ring_02_l",
+      "ring_03_l",
+      "thumb_01_l",
+      "thumb_02_l",
+      "thumb_03_l",
+      "clavicle_r",
+      "upperarm_r",
+      "lowerarm_r",
+      "hand_r",
+      "index_01_r",
+      "index_02_r",
+      "index_03_r",
+      "middle_01_r",
+      "middle_02_r",
+      "middle_03_r",
+      "pinky_01_r",
+      "pinky_02_r",
+      "pinky_03_r",
+      "ring_01_r",
+      "ring_02_r",
+      "ring_03_r",
+      "thumb_01_r",
+      "thumb_02_r",
+      "thumb_03_r",
+      "neck_01",
+      "head",
+      "thigh_l",
+      "calf_l",
+      "foot_l",
+      "ball_l",
+      "thigh_r",
+      "calf_r",
+      "foot_r",
+      "ball_r"
+    ]
+  },
+  "meshes": [
+    {
+      "name": "Human",
+      "vertices": 19158,
+      "triangles": 36972
+    },
+    {
+      "name": "Human.male_worksuit01",
+      "vertices": 3763,
+      "triangles": 6986
+    },
+    {
+      "name": "Human.toigo_gloves_medium",
+      "vertices": 2894,
+      "triangles": 5744
+    },
+    {
+      "name": "Human.shoes03",
+      "vertices": 2222,
+      "triangles": 4128
+    },
+    {
+      "name": "Human.high-poly",
+      "vertices": 1064,
+      "triangles": 2040
+    },
+    {
+      "name": "RoomScale.ClockworkMachinistHelmet",
+      "vertices": 11882,
+      "triangles": 23512
+    },
+    {
+      "name": "RoomScale.ClockworkWorkshopClothing",
+      "vertices": 5880,
+      "triangles": 11352
+    },
+    {
+      "name": "RoomScale.ClockworkBootConstruction",
+      "vertices": 1732,
+      "triangles": 3440
+    },
+    {
+      "name": "RoomScale.ClockworkPackTopPressureGauge",
+      "vertices": 660,
+      "triangles": 1276
+    }
+  ],
+  "distance_lod": {
+    "switch_distance_inches": 5.0,
+    "high_detail_triangles": 95450,
+    "lod1_triangles": 41660,
+    "lod1_meshes": [
+      {
+        "name": "Human_LOD1",
+        "source_mesh": "Human",
+        "ratio": 0.2,
+        "vertices": 4250,
+        "triangles": 7337
+      },
+      {
+        "name": "Human.male_worksuit01_LOD1",
+        "source_mesh": "Human.male_worksuit01",
+        "ratio": 0.3,
+        "vertices": 1215,
+        "triangles": 2094
+      },
+      {
+        "name": "Human.toigo_gloves_medium_LOD1",
+        "source_mesh": "Human.toigo_gloves_medium",
+        "ratio": 0.3,
+        "vertices": 883,
+        "triangles": 1722
+      },
+      {
+        "name": "Human.shoes03_LOD1",
+        "source_mesh": "Human.shoes03",
+        "ratio": 0.3,
+        "vertices": 743,
+        "triangles": 1238
+      },
+      {
+        "name": "Human.high-poly_LOD1",
+        "source_mesh": "Human.high-poly",
+        "ratio": 0.3,
+        "vertices": 350,
+        "triangles": 612
+      },
+      {
+        "name": "RoomScale.ClockworkMachinistHelmet_LOD1",
+        "source_mesh": "RoomScale.ClockworkMachinistHelmet",
+        "ratio": 1.0,
+        "vertices": 11882,
+        "triangles": 23512
+      },
+      {
+        "name": "RoomScale.ClockworkWorkshopClothing_LOD1",
+        "source_mesh": "RoomScale.ClockworkWorkshopClothing",
+        "ratio": 0.25,
+        "vertices": 1555,
+        "triangles": 2837
+      },
+      {
+        "name": "RoomScale.ClockworkBootConstruction_LOD1",
+        "source_mesh": "RoomScale.ClockworkBootConstruction",
+        "ratio": 0.3,
+        "vertices": 528,
+        "triangles": 1032
+      },
+      {
+        "name": "RoomScale.ClockworkPackTopPressureGauge_LOD1",
+        "source_mesh": "RoomScale.ClockworkPackTopPressureGauge",
+        "ratio": 1.0,
+        "vertices": 660,
+        "triangles": 1276
+      }
+    ],
+    "shared_skeleton": true
+  },
+  "pbr_maps": [
+    "materials/workcoat_normal.png",
+    "materials/workcoat_roughness.png",
+    "materials/workcoat_albedo.png",
+    "materials/workwear_apron_albedo.png",
+    "materials/workwear_apron_normal.png",
+    "materials/workwear_apron_roughness.png",
+    "materials/workwear_leather_albedo.png",
+    "materials/workwear_leather_normal.png",
+    "materials/workwear_leather_roughness.png",
+    "materials/workwear_helmet_albedo.png",
+    "materials/workwear_helmet_normal.png",
+    "materials/workwear_helmet_roughness.png",
+    "materials/workwear_coverall_albedo.png",
+    "materials/workwear_coverall_normal.png",
+    "materials/workwear_coverall_roughness.png"
+  ],
+  "clockwork_cap_details": [
+    "RoomScale.MachinistHelmetShell",
+    "RoomScale.HelmetCrownBinding",
+    "RoomScale.HelmetTopRidge",
+    "RoomScale.HelmetTemplePlate_-1",
+    "RoomScale.HelmetTempleRivet_-1",
+    "RoomScale.HelmetTemplePlate_1",
+    "RoomScale.HelmetTempleRivet_1",
+    "RoomScale.HelmetOccipitalGuard",
+    "RoomScale.HelmetWorkVisor",
+    "RoomScale.HelmetBrowInlay",
+    "RoomScale.HelmetCrownSeam_-0.050",
+    "RoomScale.HelmetCrownSeam_+0.050",
+    "RoomScale.HelmetSweptOpticalBrim",
+    "RoomScale.HelmetBrimReinforcedEdge",
+    "RoomScale.HelmetRearStrapPad",
+    "RoomScale.HelmetVentilatedEarGuard_-1",
+    "RoomScale.HelmetEarVent_-1_1",
+    "RoomScale.HelmetEarVent_-1_2",
+    "RoomScale.HelmetEarVent_-1_3",
+    "RoomScale.HelmetVentilatedEarGuard_1",
+    "RoomScale.HelmetEarVent_1_1",
+    "RoomScale.HelmetEarVent_1_2",
+    "RoomScale.HelmetEarVent_1_3",
+    "RoomScale.GoggleStrapRatchet",
+    "RoomScale.RatchetHub",
+    "RoomScale.RatchetAxle"
+  ],
+  "clockwork_goggle_details": [
+    "RoomScale.HelmetSweptOpticalBrim",
+    "RoomScale.GoggleLeatherStrap",
+    "RoomScale.GoggleStructuralBrow",
+    "RoomScale.GoggleCentralHinge",
+    "RoomScale.GoggleLoadStrut_-1",
+    "RoomScale.GoggleLoadStrut_1",
+    "RoomScale.GoggleIronBarrel1",
+    "RoomScale.BrassGoggleBezel1",
+    "RoomScale.TealOpticalLens1",
+    "RoomScale.GoggleRetainer1_1",
+    "RoomScale.GoggleRetainer1_2",
+    "RoomScale.GoggleRetainer1_3",
+    "RoomScale.GoggleRetainer1_4",
+    "RoomScale.GoggleIronBarrel2",
+    "RoomScale.BrassGoggleBezel2",
+    "RoomScale.TealOpticalLens2",
+    "RoomScale.GoggleRetainer2_1",
+    "RoomScale.GoggleRetainer2_2",
+    "RoomScale.GoggleRetainer2_3",
+    "RoomScale.GoggleRetainer2_4",
+    "RoomScale.GoggleBridge",
+    "RoomScale.EarCupHousing_-1",
+    "RoomScale.EarCupHousing_1",
+    "RoomScale.GoggleStrapRatchet",
+    "RoomScale.GoggleStrapTensioner"
+  ],
+  "batched_head_hardware_mesh": "RoomScale.ClockworkMachinistHelmet",
+  "batched_workwear_mesh": "RoomScale.ClockworkWorkshopClothing",
+  "batched_boot_mesh": "RoomScale.ClockworkBootConstruction",
+  "output": {
+    "path": "citizen.glb",
+    "bytes": 22263244,
+    "sha256": "62b102e64fdbd2cc305fc243f1da6014ebbd9eff1952ed5ba24d9e2d447fec44"
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "candidate_id": "citizen-v087",
+  "created_at_utc": "2026-10-28T20:55:27Z",
+  "decision": "continue",
+  "defects": [
+    "The shaped split front panels and matching rear coat tails are more distinct in close views, but do not materially improve the 12-inch Clockwork role read.",
+    "The front production-owned tool still occludes the lower apron; flared tails are subtle at gameplay scale and the 12-inch facing sweep remains insufficient for a strict pass.",
+    "Controlled stills are diagnostic only; they do not establish live gameplay or performance."
+  ],
+  "hard_fail_reasons": [
+    "Clockwork role readability does not reach the required 5/5 in actual 12-inch 50-citizen production and controlled-facing captures.",
+    "Candidate-specific repeated performance is not isolated; FPS telemetry from the shared user GPU/model workload is unsuitable for acceptance."
+  ],
+  "incumbent_candidate_id": "citizen-v007",
+  "incumbent_comparison": "The MPFB challenger is a substantial anatomical and material improvement over primitive citizen-v007 and integrates the full human rig and Clockwork equipment. The shaped split front panels and matching rear coat tails are more distinct in close views, but do not materially improve the 12-inch Clockwork role read. It remains a challenger; preserve citizen-v007 as the stable gameplay incumbent and label the MPFB candidate BEST CURRENT / PRODUCTION ART FOLLOW-UP REQUIRED in any separate showcase.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "A 0.5-inch citizen occupies only about 40 pixels in the 12-inch production view, so helmet optics, workwear, and equipment occupy few pixels.",
+    "The front role tool is production-owned and must remain visible; it masks part of the apron in the front close capture.",
+    "Repeated isolated 50-citizen performance has not been measured on a quiet controlled GPU workload."
+  ],
+  "next_action_hypothesis": "This was the bounded follow-up to v086. Do not continue with another seam, hem, or small silhouette iteration for POC 2.5. Use the best current MPFB human in a separate showcase registry, keep citizen-v007 as the accepted production incumbent, and record character identity, animation, and mass-use cost as production-art follow-up.",
+  "observations": {
+    "art_direction_fit": "Helmet, twin goggles, pressure pack, canvas workwear, teal coat, leather, and brass fit the Clockwork workshop-worker target, but identity remains weak at crowd scale.",
+    "close_up_quality": "Approximately two-inch detail/profile/three-quarter views show attached equipment, fitted clothing, anatomy, and boots coherently; smaller tailoring and pose issues remain.",
+    "gameplay_readability": "The front production-owned tool still occludes the lower apron; flared tails are subtle at gameplay scale and the 12-inch facing sweep remains insufficient for a strict pass.",
+    "geometric_detail": "The complete fitted body, helmet optics, pack, boots, and workwear are geometric; Godot reports 103676 triangles.",
+    "material_realism": "Textured teal work cloth, warm canvas, leather, brass, iron, glass, and skin have differentiated PBR response.",
+    "proportion": "The human remains fitted to the established half-inch envelope; some torso/equipment bulk remains a production-art refinement.",
+    "scale_fidelity": "Godot imports the candidate at exactly 0.26 x 0.50 x 0.21 inches with the established 53-bone rig, five pivots, and 9+9 LOD meshes.",
+    "semantic_recognizability": "The Clockwork worker identity is apparent in close equipment views but is not immediately unmistakable across the 12-inch 50-citizen facings.",
+    "silhouette_quality": "Human proportions are coherent. Helmet, pressure pack, work coat, and apron/tails add a professional silhouette, but do not dominate the gameplay-distance image.",
+    "surface_variation": "Separate inherited maps provide fabric, leather, metal, helmet, and lens variation; the asset is not materially flat.",
+    "technical_integration": "Godot 4.7.2 validation passes with exact bounds, 18 meshes, 42 surfaces, 103676 triangles, 53 bones, five pivots, and seven live RoomScale captures plus supplemental stills."
+  },
+  "render_evidence": [
+    "art/citizen/iterations/v087/render-runs/run-001/room-scale.png",
+    "art/citizen/iterations/v087/render-runs/run-001/settlement-scale.png",
+    "art/citizen/iterations/v087/render-runs/run-001/asset-gameplay-distance.png",
+    "art/citizen/iterations/v087/render-runs/run-001/asset-three-quarter.png",
+    "art/citizen/iterations/v087/render-runs/run-001/asset-opposite-three-quarter.png",
+    "art/citizen/iterations/v087/render-runs/run-001/asset-profile.png",
+    "art/citizen/iterations/v087/render-runs/run-001/asset-idle-detail.png",
+    "art/citizen/iterations/v087/render-runs/run-001/asset-gameplay-yaw-000.png",
+    "art/citizen/iterations/v087/render-runs/run-001/asset-gameplay-yaw-090.png",
+    "art/citizen/iterations/v087/render-runs/run-001/asset-gameplay-yaw-180.png",
+    "art/citizen/iterations/v087/render-runs/run-001/asset-gameplay-yaw-270.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 4,
+    "gameplay_readability": 3,
+    "geometric_detail": 4,
+    "material_realism": 4,
+    "proportion": 3,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 3,
+    "silhouette_quality": 3,
+    "surface_variation": 4,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "Yes",
+      "evidence": "At the approximately two-inch inspection view, anatomy, helmet, paired lenses, fitted workwear, pressure pack, boots, and material boundaries remain coherent; ordinary production-art refinement needs remain.",
+      "pass": true
+    },
+    "craftsmanship": {
+      "answer": "Yes",
+      "edge_treatment": {
+        "evidence": "Helmet guard, optical housings, workwear panels, and boot pieces have formed edges and visible thickness in close/profile captures.",
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "Paired brass-rimmed lenses, strap fittings, pack ferrules, gauge, hose, and garment buckles are present and attached.",
+        "pass": true
+      },
+      "joins": {
+        "evidence": "Optics connect to the helmet cage, pressure equipment connects through its frame and straps, and garment pieces are skinned into the existing human rig.",
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "Tailored workwear, mechanical helmet, twin pressure pack, layered boots, and fasteners read as manufactured pieces at close inspection.",
+        "pass": true
+      },
+      "material_response": {
+        "evidence": "Textured cloth, warm canvas, leather, brass, iron, teal glass, and skin remain visually distinct in production views.",
+        "pass": true
+      },
+      "surface_variation": {
+        "evidence": "Inherited textile, leather, helmet, metal, and glass maps preserve distinct surface and roughness response.",
+        "pass": true
+      },
+      "thickness": {
+        "evidence": "Helmet shell, goggle barrels, apron/tails, harness, reservoirs, and boot construction retain thickness in profile/detail.",
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "evidence": "Godot close, profile, and three-quarter renders show coherent human anatomy, fitted textile clothing, a layered mechanical helmet and paired optics, connected pressure equipment, and manufactured footwear. The candidate is not low-poly, primitive, placeholder, or materially flat.",
+      "pass": true
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "The Citizen ArtBrief has no photographic reference.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  }
+}

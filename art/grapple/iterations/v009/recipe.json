@@ -1,0 +1,92 @@
+{
+  "deterministic_seed": 27009,
+  "generator_command": [
+    "{project_root}/.tools/blender-5.2.3/blender-5.2.3-windows-x64/blender.exe",
+    "--background",
+    "--factory-startup",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "{project_root}/scripts/art_factory/generators/grapple_v009_blender.py",
+    "--",
+    "{output_dir}"
+  ],
+  "import_configuration": {
+    "bounds_inches": [
+      8.7,
+      11.67,
+      7.5
+    ],
+    "dynamic_cable_is_gameplay_owned": true,
+    "format": "Node3D PackedScene wrapping three stage-specific GLB groups",
+    "keep_gameplay_geometry_unchanged": true,
+    "primary_asset": "grapple.tscn",
+    "stage_groups_required": [
+      "FoundationDetails",
+      "MachineryDetails",
+      "LauncherDetails"
+    ],
+    "up_axis": "Godot Y up via glTF export"
+  },
+  "instructions": "Refine the v008 high-detail component-level hard-surface Blender model in response to its strict review. Keep the three construction-stage groups and exact gameplay footprint. Batch all parts within each stage by PBR material, unwrap each batch, and bake subtle candidate-local base-color and roughness variation. Replace the smooth pale drum winding with three braided hemp strands and a darker, rougher rope finish; retain the bevelled gear, fitted bearing details, formed copper plumbing, gauges, and rounded mast/rungs. Preserve the gameplay-owned deployment cable, stage gates, anchors, navigation, collision, selection, construction, and traversal. Render the actual RoomScale construction, complete, deployment, room, three-quarter, opposite, profile, and detail views. Compare strict realism, craftsmanship, surface response, hardware, production draw calls and warmed performance against grapple-v006; do not promote unless every strict gate passes and the challenger clearly beats the incumbent.",
+  "material_method": "Distinct Principled PBR wood, forged iron, satin steel, brass, copper, rope, enamel, and blackened-steel materials on bevelled component-level geometry",
+  "method": "blender_component_level_hard_surface_miniature_grapple",
+  "parameters": {
+    "changes_from_v008": [
+      "stage meshes batch by material",
+      "baked subtle PBR albedo and roughness maps",
+      "three-strand darker rough hemp winding"
+    ],
+    "dynamic_cable_embedded": false,
+    "gameplay_geometry_changed": false,
+    "material_variation": "512px packed candidate-local sRGB albedo and non-color roughness textures with subtle tileable procedural variation",
+    "mesh_batching": "one exported mesh per unique PBR material within each construction-stage group",
+    "outputs": [
+      "grapple.tscn",
+      "FoundationDetails.glb",
+      "MachineryDetails.glb",
+      "LauncherDetails.glb",
+      "modeling-record.json"
+    ],
+    "pbr_materials": [
+      "oiled walnut hardwood",
+      "forged charcoal iron",
+      "machined satin steel",
+      "aged machined brass",
+      "aged copper pipework",
+      "twisted hemp rope",
+      "warm ivory gauge enamel",
+      "blackened steel"
+    ],
+    "source_candidate": "grapple-v008",
+    "stage_groups": [
+      "FoundationDetails",
+      "MachineryDetails",
+      "LauncherDetails"
+    ],
+    "target_bounds_inches": [
+      8.7,
+      11.67,
+      7.5
+    ]
+  },
+  "post_processing": [
+    "Export three candidate-local GLB stage groups and a Node3D PackedScene wrapper",
+    "Godot-import and validate bounds and all stage-group nodes",
+    "Capture construction, grapple-complete, grapple-deployment, room, three-quarter, opposite-three-quarter, profile, and detail production views",
+    "Record strict visual-gate answers, defects, and best-so-far comparison"
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "art/grapple/brief.json",
+    "art/grapple/iterations/v006/evaluation.json",
+    "art/grapple/iterations/v006/render-runs/run-003/asset-detail.png",
+    "verification/poc25/final/strict-incumbent-visual-gate-reaudit.json",
+    "art/grapple/iterations/v007/generation.log",
+    "art/grapple/iterations/v008/evaluation.json",
+    "art/grapple/iterations/v008/generated/modeling-record.json",
+    "scripts/art_factory/generators/grapple_v009_blender.py"
+  ],
+  "tool": "Blender hard-surface model generator through the RoomScale Art Factory",
+  "tool_version": "Blender 5.2.3 LTS; Godot 4.7.2-stable Compatibility production renderer"
+}

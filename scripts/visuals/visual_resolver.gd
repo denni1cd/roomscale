@@ -39,6 +39,8 @@ func resolve(object: Dictionary) -> Dictionary:
 		recipe["asset_registry_required"] = true
 		recipe["asset_registry_error"] = String(registered.get("resolution_error", ""))
 		recipe["asset_registry_candidate_id"] = String(registered.get("candidate_id", ""))
+		recipe["asset_registry_status"] = String(registered.get("status", ""))
+		recipe["asset_registry_review_only"] = bool(registered.get("registry_review_only", false))
 	return recipe
 
 
@@ -51,6 +53,8 @@ func render(parent: Node3D, object: Dictionary, fallback: Callable) -> void:
 	var path := String(recipe.get("asset", ""))
 	var required := bool(recipe.get("asset_registry_required", false))
 	parent.set_meta("visual_asset_id", String(recipe.get("asset_registry_id", recipe.get("semantic", ""))))
+	parent.set_meta("visual_asset_review_only", bool(recipe.get("asset_registry_review_only", false)))
+	parent.set_meta("visual_asset_registry_status", String(recipe.get("asset_registry_status", "")))
 	if required and not String(recipe.get("asset_registry_error", "")).is_empty():
 		_required_asset_failure(parent, String(recipe.asset_registry_id), String(recipe.asset_registry_error))
 		return
@@ -58,7 +62,15 @@ func render(parent: Node3D, object: Dictionary, fallback: Callable) -> void:
 		parent.set_meta("visual_source", path)
 		if required:
 			parent.set_meta("visual_asset_candidate_id", String(recipe.get("asset_registry_candidate_id", "")))
-		print("ROOMSCALE_VISUAL_ASSET object=%s source=%s normalization=%s" % [parent.name, path, parent.get_meta("visual_normalization")])
+		var review_label := " BEST CURRENT / PRODUCTION ART FOLLOW-UP REQUIRED" if String(recipe.get("asset_registry_status", "")) == "best_current_review" else ""
+		print("ROOMSCALE_VISUAL_ASSET object=%s source=%s registry_status=%s review_only=%s%s normalization=%s" % [
+			parent.name,
+			path,
+			String(recipe.get("asset_registry_status", "")),
+			bool(recipe.get("asset_registry_review_only", false)),
+			review_label,
+			parent.get_meta("visual_normalization"),
+		])
 		return
 	if required:
 		_required_asset_failure(parent, String(recipe.asset_registry_id), "accepted asset could not be imported")

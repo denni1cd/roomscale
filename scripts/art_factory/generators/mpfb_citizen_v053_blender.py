@@ -58,7 +58,9 @@ def _install_mpfb(project_root: Path):
 
     package.get_preference = preference
     package.register()
-    return package, importlib.import_module(f"bl_ext.{repo.module}.mpfb.services.humanservice").HumanService
+    return package, importlib.import_module(
+        f"bl_ext.{repo.module}.mpfb.services.humanservice"
+    ).HumanService
 
 
 def _image(path: Path, *, non_color: bool = False):
@@ -70,7 +72,9 @@ def _image(path: Path, *, non_color: bool = False):
 
 def _save_map(path: Path, pixels: np.ndarray) -> Path:
     height, width, channels = pixels.shape
-    image = bpy.data.images.new(path.stem, width=width, height=height, alpha=channels == 4, float_buffer=False)
+    image = bpy.data.images.new(
+        path.stem, width=width, height=height, alpha=channels == 4, float_buffer=False
+    )
     image.pixels.foreach_set(np.asarray(pixels, dtype=np.float32).ravel())
     image.filepath_raw = str(path)
     image.file_format = "PNG"
@@ -86,18 +90,30 @@ def _derive_pbr_maps(project_root: Path, output_dir: Path) -> tuple[Path, Path]:
     shutil.copy2(suit_dir / "NewSuit3-norm.png", normal_path)
 
     spec_width, spec_height = (int(v) for v in specular_source.size)
-    spec = np.asarray(specular_source.pixels[:], dtype=np.float32).reshape(spec_height, spec_width, 4)[..., :3].mean(axis=2)
+    spec = (
+        np.asarray(specular_source.pixels[:], dtype=np.float32)
+        .reshape(spec_height, spec_width, 4)[..., :3]
+        .mean(axis=2)
+    )
     roughness = np.clip(1.0 - np.sqrt(np.maximum(spec, 0.0)), 0.25, 0.95)
     roughness = np.repeat(roughness[..., None], 3, axis=2)
-    roughness = np.concatenate((roughness, np.ones((*roughness.shape[:2], 1), dtype=np.float32)), axis=-1)
+    roughness = np.concatenate(
+        (roughness, np.ones((*roughness.shape[:2], 1), dtype=np.float32)), axis=-1
+    )
     roughness_path = output_dir / "materials/suit_roughness.png"
     _save_map(roughness_path, roughness)
     specular_source.pack()
     return normal_path, roughness_path
 
 
-def _pbr_material(name: str, albedo: Path, roughness: float, metallic: float = 0.0,
-                   normal: Path | None = None, roughness_map: Path | None = None):
+def _pbr_material(
+    name: str,
+    albedo: Path,
+    roughness: float,
+    metallic: float = 0.0,
+    normal: Path | None = None,
+    roughness_map: Path | None = None,
+):
     material = bpy.data.materials.new(name)
     material.diffuse_color = (0.25, 0.22, 0.18, 1.0)
     material.use_nodes = True
@@ -175,7 +191,9 @@ def _add_clockwork_cap_details(rig, fedora, brass_material) -> list[object]:
     for tooth in range(teeth):
         for step, radial in enumerate((0.82, 0.82, 1.0, 1.0)):
             angle = (tooth + step / 4.0) * (2.0 * math.pi / teeth)
-            outline.append((math.sin(angle) * gear_radius * radial, math.cos(angle) * gear_radius * radial))
+            outline.append(
+                (math.sin(angle) * gear_radius * radial, math.cos(angle) * gear_radius * radial)
+            )
     count = len(outline)
     vertices: list[tuple[float, float, float]] = []
     for x in (gear_center.x - thickness * 0.5, gear_center.x + thickness * 0.5):
@@ -213,7 +231,9 @@ def main() -> None:
     _package, HumanService = _install_mpfb(project_root)
 
     asset_root = project_root / ".tools/makehuman_system_assets-data"
-    human = HumanService.create_human(mask_helpers=True, detailed_helpers=True, extra_vertex_groups=True)
+    human = HumanService.create_human(
+        mask_helpers=True, detailed_helpers=True, extra_vertex_groups=True
+    )
     skin = asset_root / "skins/young_caucasian_male/young_caucasian_male.mhmat"
     HumanService.set_character_skin(str(skin), human, skin_type="GAMEENGINE")
     rig = HumanService.add_builtin_rig(human, "game_engine", import_weights=True)
@@ -233,20 +253,58 @@ def main() -> None:
         file = asset_root / relative
         if not file.is_file():
             raise FileNotFoundError(file)
-        imported.append(HumanService.add_mhclo_asset(
-            str(file), human, asset_type=asset_type, subdiv_levels=0,
-            material_type="GAMEENGINE", set_up_rigging=True, interpolate_weights=True,
-            import_subrig=True, import_weights=True,
-        ))
+        imported.append(
+            HumanService.add_mhclo_asset(
+                str(file),
+                human,
+                asset_type=asset_type,
+                subdiv_levels=0,
+                material_type="GAMEENGINE",
+                set_up_rigging=True,
+                interpolate_weights=True,
+                import_subrig=True,
+                import_weights=True,
+            )
+        )
 
     suit_normal, suit_roughness = _derive_pbr_maps(project_root, output_dir)
     textures = {
-        "human": (asset_root / "skins/young_caucasian_male/young_lightskinned_male_diffuse.png", 0.62, 0.0, None, None),
-        "toigo_male_suit_3": (asset_root / "clothes/toigo_male_suit_3/NewSuit3.png", 0.72, 0.0, suit_normal, suit_roughness),
-        "toigo_gloves_medium": (asset_root / "clothes/toigo_gloves_medium/Gloves02UV.png", 0.57, 0.0, None, None),
+        "human": (
+            asset_root / "skins/young_caucasian_male/young_lightskinned_male_diffuse.png",
+            0.62,
+            0.0,
+            None,
+            None,
+        ),
+        "toigo_male_suit_3": (
+            asset_root / "clothes/toigo_male_suit_3/NewSuit3.png",
+            0.72,
+            0.0,
+            suit_normal,
+            suit_roughness,
+        ),
+        "toigo_gloves_medium": (
+            asset_root / "clothes/toigo_gloves_medium/Gloves02UV.png",
+            0.57,
+            0.0,
+            None,
+            None,
+        ),
         "shoes03": (asset_root / "clothes/shoes03/shoes03_diffuse.png", 0.43, 0.0, None, None),
-        "toigo_round_glasses_leopard": (asset_root / "clothes/toigo_round_glasses_leopard/Glasses-leopard.png", 0.23, 0.68, None, None),
-        "fedora": (asset_root / "clothes/fedora01/fedora_diffuse.png", 0.72, 0.0, asset_root / "clothes/fedora01/fedora_normal.png", None),
+        "toigo_round_glasses_leopard": (
+            asset_root / "clothes/toigo_round_glasses_leopard/Glasses-leopard.png",
+            0.23,
+            0.68,
+            None,
+            None,
+        ),
+        "fedora": (
+            asset_root / "clothes/fedora01/fedora_diffuse.png",
+            0.72,
+            0.0,
+            asset_root / "clothes/fedora01/fedora_normal.png",
+            None,
+        ),
         "high-poly": (asset_root / "eyes/materials/blue_eye.png", 0.28, 0.0, None, None),
     }
     pbr_materials = {}
@@ -271,12 +329,25 @@ def main() -> None:
     for obj in list(bpy.context.scene.objects):
         if obj.type != "MESH":
             continue
-        match = next((token for token in pbr_materials if token != "human" and token.lower() in obj.name.lower()), None)
+        match = next(
+            (
+                token
+                for token in pbr_materials
+                if token != "human" and token.lower() in obj.name.lower()
+            ),
+            None,
+        )
         if obj == human:
             match = "human"
         if match:
             _assign_material(obj, pbr_materials[match])
-        mesh_stats.append({"name": obj.name, "vertices": len(obj.data.vertices), "triangles": sum(len(face.vertices) - 2 for face in obj.data.polygons)})
+        mesh_stats.append(
+            {
+                "name": obj.name,
+                "vertices": len(obj.data.vertices),
+                "triangles": sum(len(face.vertices) - 2 for face in obj.data.polygons),
+            }
+        )
 
     for image in bpy.data.images:
         if image.source == "FILE":
@@ -290,13 +361,19 @@ def main() -> None:
     rig.select_set(True)
     bpy.context.view_layer.objects.active = rig
     for obj in bpy.context.scene.objects:
-        if obj.type == "MESH" and (obj == human or obj.parent == rig or obj.parent == human or obj in imported):
+        if obj.type == "MESH" and (
+            obj == human or obj.parent == rig or obj.parent == human or obj in imported
+        ):
             obj.select_set(True)
     bpy.context.view_layer.update()
     output = output_dir / "citizen.glb"
     result = bpy.ops.export_scene.gltf(
-        filepath=str(output), export_format="GLB", use_selection=True,
-        export_apply=True, export_materials="EXPORT", export_skins=True,
+        filepath=str(output),
+        export_format="GLB",
+        use_selection=True,
+        export_apply=True,
+        export_materials="EXPORT",
+        export_skins=True,
         export_animations=False,
     )
     if "FINISHED" not in result or not output.is_file():
@@ -315,10 +392,25 @@ def main() -> None:
         "meshes": mesh_stats,
         "pbr_maps": ["materials/suit_normal.png", "materials/suit_roughness.png"],
         "clockwork_cap_details": [obj.name for obj in cap_details],
-        "output": {"path": "citizen.glb", "bytes": output.stat().st_size, "sha256": _sha256(output)},
+        "output": {
+            "path": "citizen.glb",
+            "bytes": output.stat().st_size,
+            "sha256": _sha256(output),
+        },
     }
-    (output_dir / "generation-record.json").write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
-    print("ROOMSCALE_MPFB_CITIZEN_V053_GENERATION_PASS", json.dumps({"mesh_count": len(mesh_stats), "total_triangles": sum(m["triangles"] for m in mesh_stats), "glb_bytes": output.stat().st_size}))
+    (output_dir / "generation-record.json").write_text(
+        json.dumps(record, indent=2) + "\n", encoding="utf-8"
+    )
+    print(
+        "ROOMSCALE_MPFB_CITIZEN_V053_GENERATION_PASS",
+        json.dumps(
+            {
+                "mesh_count": len(mesh_stats),
+                "total_triangles": sum(m["triangles"] for m in mesh_stats),
+                "glb_bytes": output.stat().st_size,
+            }
+        ),
+    )
 
 
 if __name__ == "__main__":

@@ -1,0 +1,87 @@
+{
+  "deterministic_seed": 26058,
+  "generator_command": [
+    "{project_root}/.venv/Scripts/python.exe",
+    "{project_root}/scripts/art_factory/generators/package_supra_tex_desk_v058.py"
+  ],
+  "import_configuration": {
+    "candidate_root": "DeskAsset",
+    "format": "Godot PackedScene wrapper instancing the unchanged SUPRA-Tex GLB",
+    "gameplay_geometry_changed": false,
+    "orientation": "preserve model axes and fit X/Y/Z bounds to 66 x 30 x 30 inches",
+    "renderer": "existing Compatibility renderer",
+    "visual_only": true
+  },
+  "instructions": "Record one authorized hosted SUPRA-Tex desk run with the tighter alpha-masked Sample (3) crop and seed 26058. Preserve the returned geometry, topology, UVs, and PBR textures; do not retopologize or replace the mesh with primitives. Package the unchanged generated GLB under RoomScale's target 66 x 30 x 30 inch envelope and preserve the per-axis normalization in the receipt. Render through the normal RoomScale production scene, apply the repaired non-stylized realism and source-character gate, compare to desk-v007 and Sample (2), and keep desk-v007 as incumbent unless every gate passes. This is a bounded single-method result; it does not authorize further desk-only shader iteration or broad asset migration.",
+  "material_method": "SUPRA-Tex image-conditioned PBR material prediction and completion, retained in its downloaded GLB",
+  "method": "supra_tex_hosted_pixel_aligned_geometry_and_pbr_desk_challenger",
+  "parameters": {
+    "best_so_far_incumbent": "desk-v007",
+    "conditioning_image": "art/desk/source_views/desk-photo-tight-v058.png",
+    "conditioning_image_provenance": "art/desk/source_views/desk-photo-tight-v058.provenance.json",
+    "conditioning_image_sha256": "e553d7ae6f40be40d0da2f910da27b2904a14bbd76e192837d46344a753fba07",
+    "conditioning_mask_coverage_percent": 14.7154,
+    "conditioning_source_photo": "photo_holder/Sample (3).jpg",
+    "downloaded_glb": "C:/Users/Zero/Downloads/supra-tex.glb",
+    "downloaded_glb_sha256": "91ae187fda308c84e5e3e5f1407cae8a41cbc68a53c08b50b400f142e75156b0",
+    "geometry_policy": "preserve the downloaded GLB mesh, topology, UVs, and embedded materials; normalize only to the stable desk envelope using the same axis-aligned bounds fit used by the production resolver",
+    "gpu": "NVIDIA L4",
+    "model_bounds_units_xyz": {
+      "maximum": [
+        0.5005158186,
+        0.139487952,
+        0.4043968916
+      ],
+      "minimum": [
+        -0.3963521123,
+        -0.1246993765,
+        -0.2449273765
+      ],
+      "size": [
+        0.8968679309,
+        0.2641873285,
+        0.6493242681
+      ]
+    },
+    "outputs": [
+      "desk.tscn",
+      "supra-tex.glb",
+      "generation-record.json"
+    ],
+    "parent_candidate_id": "desk-v057",
+    "remote_job_id": "not surfaced by demo UI",
+    "remote_run_timestamp_local": "2026-10-28 13:08 America/New_York",
+    "remote_space": "UniLat3D/Supra-Tex",
+    "remote_status": "complete; GLB downloaded",
+    "remote_upload_id": "not surfaced by demo UI",
+    "seed": 26058,
+    "source_photo": "photo_holder/Sample (2).jpg",
+    "space_revision": "0105a52",
+    "target_dimensions_inches_xyz": [
+      66,
+      30,
+      30
+    ]
+  },
+  "post_processing": [
+    "Use a tighter crop of the approved original-pixel alpha mask; do not inpaint or alter retained desk RGB pixels",
+    "Download the hosted GLB and verify its SHA-256 before packaging",
+    "Preserve the generated mesh, UVs, and embedded PBR texture maps",
+    "Fit the generated asset to the existing RoomDefinition-owned 66 x 30 x 30 inch visual envelope and record each axis scale",
+    "Godot import and technical validation, then standardized production renders and strict visual evaluation"
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "photo_holder/Sample (2).jpg",
+    "photo_holder/Sample (3).jpg",
+    "art/desk/source_views/desk-photo-tight-v058.png",
+    "art/desk/source_views/desk-photo-tight-v058.provenance.json",
+    "C:/Users/Zero/Downloads/supra-tex.glb",
+    "art/desk/brief.json",
+    "art/desk/iterations/v007/evaluation.json",
+    "art/desk/iterations/v057/evaluation.json",
+    "scripts/art_factory/generators/package_supra_tex_desk_v058.py"
+  ],
+  "tool": "Official UniLat3D SUPRA-Tex Hugging Face Space, image-to-3D path",
+  "tool_version": "Hugging Face Space commit 0105a52; hosted NVIDIA L4; seed 26058"
+}
