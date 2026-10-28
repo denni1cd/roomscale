@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/art_factory/generators/mpfb_citizen_pivots_v055.gd" id="1_p0oaa"]
+[ext_resource type="PackedScene" path="res://art/citizen/iterations/v055/generated/citizen.glb" id="2_askkk"]
+
+[node name="CitizenArtAsset" type="Node3D" unique_id=1920709245]
+script = ExtResource("1_p0oaa")
+
+[node name="Body" type="Node3D" parent="." unique_id=1566109335]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23, 0)
+metadata/preserve_generated_vertex_color = true
+
+[node name="MPFBGeneratedRig" type="Node3D" parent="Body" unique_id=1754155274 instance=ExtResource("2_askkk")]
+transform = Transform3D(0.24682201, 0, 0, 0, 0.2927591, 0, 0, 0, 0.4563551, 0, -0.22346191, -0.048023358)
+
+[node name="LeftArm" type="Node3D" parent="." unique_id=1378090668]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.105, 0.235, 0)
+
+[node name="RightArm" type="Node3D" parent="." unique_id=768662602]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.105, 0.235, 0)
+
+[node name="LeftLeg" type="Node3D" parent="." unique_id=1551160503]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.045, 0.095, 0)
+
+[node name="RightLeg" type="Node3D" parent="." unique_id=2074053]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.045, 0.095, 0)

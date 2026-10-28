@@ -1,0 +1,182 @@
+{
+  "candidate_id": "citizen-v054",
+  "strategy_identity": "MPFB2_fitted_human_with_readable_clockwork_goggle_and_cap_geometry_and_compact_visual_pivot_mapping",
+  "method": "MPFB2 human basemesh + fitted CC0 garments + verified suit PBR + larger head-weighted machined brass gear + fitted twin brass goggle rims, teal lenses and temples + compact visual-only limb pivot gains",
+  "tool_versions": {
+    "blender": "5.2.3 LTS",
+    "mpfb2": "(2, 0, 18)"
+  },
+  "created_at_utc": "2026-10-28T17:37:12+00:00",
+  "assets": [
+    "clothes/toigo_male_suit_3/toigo_male_suit_3.mhclo",
+    "clothes/toigo_gloves_medium/toigo_gloves_medium.mhclo",
+    "clothes/shoes03/shoes03.mhclo",
+    "clothes/toigo_round_glasses_leopard/toigo_round_glasses_leopard.mhclo",
+    "clothes/fedora01/fedora01.mhclo",
+    "eyes/high-poly/high-poly.mhclo"
+  ],
+  "skin_asset": "skins/young_caucasian_male/young_caucasian_male.mhmat",
+  "license": "MPFB2 GPL-3.0 generator; all selected MakeHuman system, suits, glasses, gloves, shoes, and eyes assets are marked CC0 by their asset pack terms.",
+  "rig": {
+    "name": "game_engine",
+    "bones": [
+      "Root",
+      "pelvis",
+      "spine_01",
+      "spine_02",
+      "spine_03",
+      "clavicle_l",
+      "upperarm_l",
+      "lowerarm_l",
+      "hand_l",
+      "index_01_l",
+      "index_02_l",
+      "index_03_l",
+      "middle_01_l",
+      "middle_02_l",
+      "middle_03_l",
+      "pinky_01_l",
+      "pinky_02_l",
+      "pinky_03_l",
+      "ring_01_l",
+      "ring_02_l",
+      "ring_03_l",
+      "thumb_01_l",
+      "thumb_02_l",
+      "thumb_03_l",
+      "clavicle_r",
+      "upperarm_r",
+      "lowerarm_r",
+      "hand_r",
+      "index_01_r",
+      "index_02_r",
+      "index_03_r",
+      "middle_01_r",
+      "middle_02_r",
+      "middle_03_r",
+      "pinky_01_r",
+      "pinky_02_r",
+      "pinky_03_r",
+      "ring_01_r",
+      "ring_02_r",
+      "ring_03_r",
+      "thumb_01_r",
+      "thumb_02_r",
+      "thumb_03_r",
+      "neck_01",
+      "head",
+      "thigh_l",
+      "calf_l",
+      "foot_l",
+      "ball_l",
+      "thigh_r",
+      "calf_r",
+      "foot_r",
+      "ball_r"
+    ]
+  },
+  "meshes": [
+    {
+      "name": "Human",
+      "vertices": 19158,
+      "triangles": 36972
+    },
+    {
+      "name": "Human.toigo_male_suit_3",
+      "vertices": 8527,
+      "triangles": 16250
+    },
+    {
+      "name": "Human.toigo_gloves_medium",
+      "vertices": 2894,
+      "triangles": 5744
+    },
+    {
+      "name": "Human.shoes03",
+      "vertices": 2222,
+      "triangles": 4128
+    },
+    {
+      "name": "Human.toigo_round_glasses_leopard",
+      "vertices": 4008,
+      "triangles": 4396
+    },
+    {
+      "name": "Human.fedora01",
+      "vertices": 634,
+      "triangles": 1244
+    },
+    {
+      "name": "Human.high-poly",
+      "vertices": 1064,
+      "triangles": 2040
+    },
+    {
+      "name": "RoomScale.ClockworkCapBand",
+      "vertices": 384,
+      "triangles": 768
+    },
+    {
+      "name": "RoomScale.ClockworkCapGear",
+      "vertices": 96,
+      "triangles": 188
+    },
+    {
+      "name": "RoomScale.ClockworkCapGearHub",
+      "vertices": 266,
+      "triangles": 528
+    },
+    {
+      "name": "RoomScale.BrassGoggleRim1",
+      "vertices": 576,
+      "triangles": 1152
+    },
+    {
+      "name": "RoomScale.TealGoggleLens1",
+      "vertices": 96,
+      "triangles": 188
+    },
+    {
+      "name": "RoomScale.BrassGoggleRim2",
+      "vertices": 576,
+      "triangles": 1152
+    },
+    {
+      "name": "RoomScale.TealGoggleLens2",
+      "vertices": 96,
+      "triangles": 188
+    },
+    {
+      "name": "RoomScale.LeftGoggleTemple",
+      "vertices": 32,
+      "triangles": 60
+    },
+    {
+      "name": "RoomScale.RightGoggleTemple",
+      "vertices": 32,
+      "triangles": 60
+    }
+  ],
+  "pbr_maps": [
+    "materials/suit_normal.png",
+    "materials/suit_roughness.png"
+  ],
+  "clockwork_cap_details": [
+    "RoomScale.ClockworkCapBand",
+    "RoomScale.ClockworkCapGear",
+    "RoomScale.ClockworkCapGearHub"
+  ],
+  "clockwork_goggle_details": [
+    "RoomScale.BrassGoggleRim1",
+    "RoomScale.TealGoggleLens1",
+    "RoomScale.BrassGoggleRim2",
+    "RoomScale.TealGoggleLens2",
+    "RoomScale.LeftGoggleTemple",
+    "RoomScale.RightGoggleTemple"
+  ],
+  "output": {
+    "path": "citizen.glb",
+    "bytes": 24616100,
+    "sha256": "688d2302208b5b85d29f179e10e24f21fbfc0562b3bbfc1c33ecc99f372d181c"
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "candidate_id": "citizen-v055",
+  "created_at_utc": "2026-10-28T17:41:36Z",
+  "decision": "continue",
+  "defects": [
+    "The fitted human has more natural anatomy and a narrower stride than v053/v054, but the production profile still shows a wide walking separation at half-inch scale.",
+    "The face, suit, fedora, tie, gloves, and glasses read clearly, yet the rendered outfit does not establish enough Clockwork worker identity beyond the dark teal lenses and small brass head hardware.",
+    "Tailored seams, coat fasteners, layered cuffs, and manufactured boot construction remain under-resolved in the standardized two-inch detail view.",
+    "The draw count recovers to 446 for the detail capture versus 457 in v053 and 713 in v054; FPS remains an unmatched cold capture and cannot support a performance conclusion."
+  ],
+  "hard_fail_reasons": [
+    "The visual gate does not establish the ArtBrief's finished Clockwork-worker craftsmanship: seams, joins, thickness, assembled hardware, and manufacturing detail do not all pass.",
+    "The profile still reads as an extended walk cycle rather than a compact worker pose, although its projected foot separation is narrower than v053/v054.",
+    "The asset reads as a realistic suited human, but not yet as a distinctive clockwork citizen with legible fitted cap equipment, tailored workwear, and layered boots."
+  ],
+  "incumbent_candidate_id": "citizen-v007",
+  "incumbent_comparison": "v055 replaces the box-built v007 body with a coherent fitted human, suit PBR maps, a 53-bone rig, and a single batched head-hardware mesh while keeping exact half-inch bounds and all 50-citizen production captures. The new candidate is more anatomically natural, but it loses v007's more distinctive clockwork-worker identity, tailored silhouette, and clearly layered close details. It also remains short of the repaired close craftsmanship and pose gates. Preserve citizen-v007 as the best-so-far gameplay incumbent; do not change the registry.",
+  "incumbent_comparison_result": "worse",
+  "likely_causes": [
+    "The current MPFB clothing set is generic formal wear; it does not produce the tailored industrial seams, cuff construction, layered boots, and compact cap profile of the incumbent.",
+    "The glasses and cog are geometrically separate and correctly fitted, but they remain small within the standardized camera and blend into the dark fedora/face palette.",
+    "A single thigh bone still produces a long leg lever even after the 0.35 visual gain; a more articulated knee/ankle mapping or different rig-compatible pose treatment is needed.",
+    "The independent role-equipment contract limits attaching or reshaping cargo as an art workaround, so the character's hand pose must fit the existing production-owned equipment transforms."
+  ],
+  "next_action_hypothesis": "Do not spend another iteration on shader-only changes. Test a materially different character-production capability or a tailored fitted-garment/rig solution that can preserve the natural body while restoring the incumbent's recognizable Clockwork silhouette, adding close-readable seams/boots/hardware, and articulating the leg pose. Keep the five RoomScale pivots, exact bounds, and independent equipment contract unchanged; compare all seven production views and the full 50-citizen render before acceptance.",
+  "observations": {
+    "art_direction_fit": "Natural face, tailored navy suit, red tie, fedora, brass rings, and teal lenses improve material and human presence, but do not yet match the incumbent's distinct Clockwork cap, industrial tailoring, and layered worker details.",
+    "close_up_quality": "The standardized detail capture rewards inspection with a coherent face and fitted clothes, but it does not show enough tailored seams, fasteners, layered boots, or clearly assembled Clockwork equipment to pass the close-detail bar.",
+    "gameplay_readability": "The human form remains clear in the room and settlement captures, but the citizen reads primarily as a suited person at gameplay distance and head equipment stays subtle among the population.",
+    "geometric_detail": "Godot imports eight mesh nodes, nine surfaces, and 46,544 triangles. Brass rims, teal lenses, temples, cap band, cog, and hub are batched into one head-weighted mesh; the actual close image still lacks readable coat fasteners and boot layers.",
+    "material_realism": "The suit base-color, normal, and roughness maps remain connected; skin, fabric, leather, brass, and teal glass have distinguishable response in the production detail render.",
+    "proportion": "Godot reports the exact 0.26 x 0.50 x 0.21 inch envelope. The anatomical body is convincing, while the dynamic stride still stretches the small figure visually.",
+    "scale_fidelity": "Godot 4.7.2 validates exact 0.26 x 0.50 x 0.21 inch bounds with all five required root pivots.",
+    "semantic_recognizability": "All production views show a clearly human worker with a face, fedora, glasses, navy clothing, gloves, and boots, but the Clockwork-specific identity is weaker than the incumbent's.",
+    "silhouette_quality": "The human body stays coherent and the leg span is narrower than v053/v054 in the matched profile view, but the active gait still has conspicuous fore/aft foot separation and the hat-side gear is not a strong silhouette cue.",
+    "surface_variation": "The render distinguishes warm skin, navy fabric, red tie, dark glove/leather, brass fittings, teal lenses, and the carried parcel.",
+    "technical_integration": "Godot 4.7.2 validation passes and all seven actual RoomScale production views render the requested candidate; the 53-bone rig and five pivots remain intact. Detail-view draws are 446 versus 457 in v053 and 713 in v054. The 20 FPS reading is not a matched warmed result and is not used as a performance claim."
+  },
+  "render_evidence": [
+    "art/citizen/iterations/v055/render-runs/run-001/room-scale.png",
+    "art/citizen/iterations/v055/render-runs/run-001/settlement-scale.png",
+    "art/citizen/iterations/v055/render-runs/run-001/asset-gameplay-distance.png",
+    "art/citizen/iterations/v055/render-runs/run-001/asset-three-quarter.png",
+    "art/citizen/iterations/v055/render-runs/run-001/asset-opposite-three-quarter.png",
+    "art/citizen/iterations/v055/render-runs/run-001/asset-profile.png",
+    "art/citizen/iterations/v055/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 3,
+    "gameplay_readability": 3,
+    "geometric_detail": 4,
+    "material_realism": 4,
+    "proportion": 3,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "surface_variation": 4,
+    "technical_integration": 4
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The two-inch production detail image still does not resolve tailored seams, coat fasteners, finished cuffs/boots, or a strong assembled Clockwork head mechanism.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "The fitted clothing and shoe silhouettes have volume, but the close capture does not establish deliberate hem, cuff, lapel, or sole-edge finishing.",
+        "pass": false
+      },
+      "hardware": {
+        "evidence": "The batched mesh contains brass rims, teal lenses, temples, a cap band, a cog, and a hub, but the lenses/cog remain small and the straps, adjusters, and lens housings are not clearly legible.",
+        "pass": false
+      },
+      "joins": {
+        "evidence": "The mesh remains a coherent human, but the production profile still shows an extended walking stride rather than compact articulated steps.",
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "The production detail view does not show the brief's tailored seams, coat fasteners, layered boot construction, or clearly manufactured Clockwork headgear.",
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "The suit textures are connected and the render distinguishes fabric, skin, leather, brass, and teal glass under the current production lighting.",
+        "pass": true
+      },
+      "pass": false,
+      "surface_variation": {
+        "evidence": "The close render retains distinct navy, red, warm skin, dark leather, brass, teal lens, and parcel surfaces.",
+        "pass": true
+      },
+      "thickness": {
+        "evidence": "The goggles and cap gear have physical thickness, but the suit cuffs, lapels, and boot layers do not read as intentionally assembled components.",
+        "pass": false
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "evidence": "The actual three-quarter and profile captures show a natural human face, fitted suit, and coherent anatomical body; it reads as a realistic human miniature rather than a nonhuman figure.",
+      "pass": true
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "The Citizen ArtBrief supplies no photographic reference.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  }
+}

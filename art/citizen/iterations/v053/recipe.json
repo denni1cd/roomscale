@@ -1,0 +1,87 @@
+{
+  "deterministic_seed": 53025,
+  "generator_command": [
+    "{project_root}/.venv/Scripts/python.exe",
+    "{project_root}/scripts/art_factory/generators/mpfb_citizen_v053_pipeline.py",
+    "{project_root}",
+    "{output_dir}"
+  ],
+  "import_configuration": {
+    "candidate_root": "CitizenArtAsset",
+    "format": "Godot PackedScene with seven-plus MPFB skinned meshes, a 53-bone Skeleton3D, verified PBR, clockwork fedora hardware, and five RoomScale pivot nodes",
+    "independent_detail_nodes": [],
+    "keep_gameplay_collision_navigation_selection_and_floor_geometry_unchanged": true,
+    "pivot_nodes": [
+      "Body",
+      "LeftArm",
+      "RightArm",
+      "LeftLeg",
+      "RightLeg"
+    ],
+    "primary_asset": "citizen.tscn",
+    "visual_only": true
+  },
+  "instructions": "Refine the MPFB2 Citizen method in response to v052's concrete evidence. Use a different fitted navy suit asset with its supplied normal/spec maps; bind the suit and glasses through the exact MPFB imported object names and confirm the exported GLB has the intended PBR maps. Add a head-weighted machined brass cap band and side gear so the fedora has a clear Clockwork cue. Compare bone-local pivot rotation with v052's world-axis conversion while preserving all RoomScale animation timing and gameplay behavior. Keep the parametric human, fitted garments, role equipment separation, five root pivots, gameplay geometry, and incumbent registry unchanged. Generate, technically validate, capture and inspect all seven production views, compare with citizen-v007 and v052, and record a strict evaluation. Keep model output local.",
+  "material_method": "CC0 suit and accessory albedo/normal/spec textures converted to glTF Principled PBR with derived roughness; realistic fabric, metal, skin, and leather roughness values",
+  "method": "mpfb2_parametric_human_with_fitted_cc0_clothing_clockwork_cap_details_and_bone_local_pivot_mapping",
+  "parameters": {
+    "best_so_far_incumbent": "citizen-v007",
+    "gameplay_geometry_changed": false,
+    "mpfb2_commit": "6ff1eb358f6c1959ced77e79e6dd2406d9a71f49",
+    "outputs": [
+      "citizen.tscn",
+      "citizen.glb",
+      "generation-record.json",
+      "materials/suit_normal.png",
+      "materials/suit_roughness.png",
+      "tooling/mpfb_citizen_v053_blender.py",
+      "tooling/mpfb_citizen_v053_pipeline.py",
+      "tooling/mpfb_citizen_pivots_v053.gd",
+      "tooling/write_mpfb_citizen_scene_v053.gd",
+      "licenses/MPFB2-LICENSE",
+      "licenses/MakeHuman-CC0-assets-license.md"
+    ],
+    "parent_candidate_id": "citizen-v052",
+    "pbr_bindings": {
+      "glasses_object_token": "toigo_round_glasses_leopard",
+      "suit_maps": [
+        "NewSuit3.png",
+        "NewSuit3-norm.png",
+        "generated roughness from NewSuit3-spec.png"
+      ],
+      "suit_object_token": "toigo_male_suit_3"
+    },
+    "pivot_method_change": "Apply each RoomScale pivot X angle as a delta in the mapped MPFB bone's local rest frame; preserve all citizen animation source curves and timing.",
+    "production_owned_equipment_changed": false,
+    "room_definition_changed": false,
+    "strategy_identity": "MPFB2 parametric human + fitted CC0 garments + standard game_engine rig + verified Principled PBR maps + head-weighted brass Clockwork cap details",
+    "target_bounds_inches_roomscale_xyz": [
+      0.26,
+      0.5,
+      0.21
+    ]
+  },
+  "post_processing": [
+    "Use the MPFB2 parametric basemesh and standard game_engine rig; fit the named CC0 suit, gloves, boots, glasses, fedora, and eyes.",
+    "Bind PBR materials by the actual MPFB object names and inspect glTF JSON to verify suit normal and roughness texture bindings.",
+    "Add a brass band and small machined cog to the fedora, fully weighted to the existing head bone.",
+    "Map the same four RoomScale pivot rotations into each target bone's local rest basis without changing citizen animation timing.",
+    "Godot validate; capture and inspect all seven standardized production views; compare live pose and performance to v007 and v052.",
+    "Do not alter citizen tasks, movement, independent role equipment, collision, navigation, RoomDefinition, or best-so-far incumbent."
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "art/citizen/brief.json",
+    "art/citizen/iterations/v052/evaluation.json",
+    ".tools/MPFB2/src/mpfb/services/humanservice.py",
+    ".tools/makehuman_system_assets-data/skins/young_caucasian_male/young_caucasian_male.mhmat",
+    ".tools/makehuman_system_assets-data/clothes/toigo_male_suit_3/toigo_male_suit_3.mhclo",
+    ".tools/makehuman_system_assets-data/clothes/toigo_gloves_medium/toigo_gloves_medium.mhclo",
+    ".tools/makehuman_system_assets-data/clothes/shoes03/shoes03.mhclo",
+    ".tools/makehuman_system_assets-data/clothes/toigo_round_glasses_leopard/toigo_round_glasses_leopard.mhclo",
+    ".tools/makehuman_system_assets-data/clothes/fedora01/fedora01.mhclo",
+    ".tools/makehuman_system_assets-data/eyes/high-poly/high-poly.mhclo"
+  ],
+  "tool": "MPFB2 Blender extension, Blender, Godot Art Factory GLB packaging path",
+  "tool_version": "MPFB2 2.0.18 (6ff1eb358f6c1959ced77e79e6dd2406d9a71f49); Blender 5.2.3; Godot 4.7.2"
+}

@@ -1,0 +1,77 @@
+{
+  "deterministic_seed": 55031,
+  "generator_command": [
+    "{project_root}/.venv/Scripts/python.exe",
+    "{project_root}/scripts/art_factory/generators/mpfb_citizen_v055_pipeline.py",
+    "{project_root}",
+    "{output_dir}"
+  ],
+  "import_configuration": {
+    "candidate_root": "CitizenArtAsset",
+    "format": "Godot PackedScene containing a fitted 53-bone character, one head-hardware mesh with two material surfaces, and five RoomScale pivots",
+    "independent_detail_nodes": [],
+    "keep_gameplay_collision_navigation_selection_and_floor_geometry_unchanged": true,
+    "pivot_nodes": [
+      "Body",
+      "LeftArm",
+      "RightArm",
+      "LeftLeg",
+      "RightLeg"
+    ],
+    "primary_asset": "citizen.tscn",
+    "visual_only": true
+  },
+  "instructions": "Refine citizen-v054 after the actual RoomScale captures show that its added head pieces do not yet read clearly and its nine independent head-detail meshes add excessive draw calls across the production citizen population. Keep the fitted human, suit PBR, generated brass goggle rims/teal lenses/temples and clockwork cog, but join those details into one head-weighted mesh with brass and glass material surfaces. Preserve the exact five-pivot and 53-bone contracts. Keep both arm pivot gains at 1.0 so hands continue to match independently attached tools and cargo; reduce only the leg visual gain to 0.35 to address the measured long stride without changing animation phase/timing, movement, or tasks. Do not change RoomDefinition, gameplay geometry, collision, role equipment, or the best-so-far registry. Generate, technically validate, inspect all seven actual RoomScale production views and 50-citizen runtime evidence, then record a strict comparison with citizen-v007 and citizen-v054. Reject if hardware still fails close inspection, pose remains awkward, or added geometry damages performance/readability.",
+  "material_method": "Retain suit base-color, normal, and roughness maps; batch brass and teal lens PBR surfaces into one head-weighted mesh.",
+  "method": "mpfb2_fitted_character_with_batched_clockwork_head_hardware_and_compact_leg_animation_mapping",
+  "parameters": {
+    "best_so_far_incumbent": "citizen-v007",
+    "gameplay_geometry_changed": false,
+    "new_per_citizen_head_meshes": 1,
+    "outputs": [
+      "citizen.tscn",
+      "citizen.glb",
+      "generation-record.json",
+      "materials/suit_normal.png",
+      "materials/suit_roughness.png",
+      "tooling/mpfb_citizen_v055_blender.py",
+      "tooling/mpfb_citizen_v055_pipeline.py",
+      "tooling/mpfb_citizen_pivots_v055.gd",
+      "tooling/write_mpfb_citizen_scene_v055.gd",
+      "licenses/MPFB2-LICENSE",
+      "licenses/MakeHuman-CC0-assets-license.md"
+    ],
+    "parent_candidate_id": "citizen-v054",
+    "production_owned_equipment_changed": false,
+    "room_definition_changed": false,
+    "strategy_identity": "MPFB2 fitted human + single batched Clockwork hardware mesh + compact lower-body presentation mapping",
+    "target_bounds_inches_roomscale_xyz": [
+      0.26,
+      0.5,
+      0.21
+    ],
+    "visual_pivot_gains": {
+      "LeftArm": 1.0,
+      "LeftLeg": 0.35,
+      "RightArm": 1.0,
+      "RightLeg": 0.35
+    }
+  },
+  "post_processing": [
+    "Join the brass cap/goggle geometry and teal lenses while preserving two distinct material surfaces and head skin weights.",
+    "Apply 1.0 arm gains and 0.35 leg gains to the existing live pivots; keep timing and all external equipment transforms unchanged.",
+    "Verify exact brief bounds, all named pivots, the game_engine skeleton, materials, and the 50-citizen production presentation.",
+    "Compare close/profile/three-quarter/room/settlement captures with v007, v053, and v054 before recording the visual decision."
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "art/citizen/brief.json",
+    "art/citizen/iterations/v054/evaluation.json",
+    "scripts/art_factory/generators/mpfb_citizen_v054_blender.py",
+    ".tools/makehuman_system_assets-data/clothes/toigo_male_suit_3/toigo_male_suit_3.mhclo",
+    ".tools/makehuman_system_assets-data/clothes/toigo_round_glasses_leopard/toigo_round_glasses_leopard.mhclo",
+    ".tools/makehuman_system_assets-data/clothes/fedora01/fedora01.mhclo"
+  ],
+  "tool": "MPFB2 Blender extension, Blender, Godot Art Factory GLB packaging path",
+  "tool_version": "MPFB2 2.0.18; Blender 5.2.3; Godot 4.7.2"
+}
