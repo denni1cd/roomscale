@@ -1,0 +1,52 @@
+{
+  "result": "PASS",
+  "source_commit_base": "333cee7e44e43662c8a095843b1a1a2e78d1b835",
+  "tested_runtime_source": "scripts/citizen_agent.gd",
+  "tested_runtime_source_sha256": "7a7f47d50cdcfab0db7edb739c8304d60313795c4a089768c80a2534b62d2a82",
+  "runtime_source_matches_review_tree": true,
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "civilization": "clockwork",
+  "room_definition_sha256": "4e96a537f8415f2e987d27740de59f97c8cb349473a5c41636664a3b477b4d3b",
+  "art_registry": "res://verification/poc25/final/best-current-art-showcase-registry-v089.json",
+  "art_registry_sha256": "3f70eb60dc394759c7533fe996e7c0d08049b3ef1c5b27d5ac2f1c6f06f2241c",
+  "art_registry_mode": "review_showcase",
+  "registry_contract": "PASS",
+  "production_registry_sha256_before": "1d3eb72f0cea9e826e36f80741a4442e9ccd9f5943c69731f2897d4a9605aed9",
+  "production_registry_sha256_after": "1d3eb72f0cea9e826e36f80741a4442e9ccd9f5943c69731f2897d4a9605aed9",
+  "production_registry_unchanged": true,
+  "required_assertions": [
+    "50 active citizens",
+    "navigation",
+    "11 deliveries",
+    "construction",
+    "grapple deployment",
+    "actual traversal/climbing",
+    "continued exploration",
+    "no missing visual asset",
+    "no silent fallback",
+    "no script errors"
+  ],
+  "cases": [
+    {
+      "case": "room-a",
+      "room": "room_a",
+      "room_definition_file": "Room A production RoomDefinition",
+      "result": "PASS",
+      "log": "room-a-v089-review-showcase.log"
+    },
+    {
+      "case": "room-b",
+      "room": "room_b",
+      "room_definition_file": "Room B production RoomDefinition",
+      "result": "PASS",
+      "log": "room-b-v089-review-showcase.log"
+    },
+    {
+      "case": "reconstructed-room",
+      "room": "room_photo_luna",
+      "room_definition_file": "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json",
+      "result": "PASS",
+      "log": "reconstructed-room-v089-review-showcase.log"
+    }
+  ]
+}

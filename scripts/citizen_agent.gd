@@ -162,11 +162,11 @@ var _path_cursor := 0
 var _work_timer := 0.0
 var production_work_active := false
 var _animation_time := 0.0
-var _body: MeshInstance3D
-var _left_arm: MeshInstance3D
-var _right_arm: MeshInstance3D
-var _left_leg: MeshInstance3D
-var _right_leg: MeshInstance3D
+var _body: Node3D
+var _left_arm: Node3D
+var _right_arm: Node3D
+var _left_leg: Node3D
+var _right_leg: Node3D
 var _cargo: MeshInstance3D
 var _role_tool: Node3D
 var _role_pack: Node3D
@@ -592,16 +592,21 @@ func _build_figure() -> void:
 		if not bool(art_result.get("loaded", false)):
 			return
 		var rig: Dictionary = art_result.rig
-		_body = rig["Body"] as MeshInstance3D
-		_left_arm = rig["LeftArm"] as MeshInstance3D
-		_right_arm = rig["RightArm"] as MeshInstance3D
-		_left_leg = rig["LeftLeg"] as MeshInstance3D
-		_right_leg = rig["RightLeg"] as MeshInstance3D
-		var coat_instance := _body.material_override as StandardMaterial3D
-		if coat_instance != null:
-			coat_instance = coat_instance.duplicate() as StandardMaterial3D
-			coat_instance.albedo_color = coat_colors[citizen_id % coat_colors.size()]
-			_body.material_override = coat_instance
+		_body = rig["Body"] as Node3D
+		_left_arm = rig["LeftArm"] as Node3D
+		_right_arm = rig["RightArm"] as Node3D
+		_left_leg = rig["LeftLeg"] as Node3D
+		_right_leg = rig["RightLeg"] as Node3D
+		# Art Factory rigs expose animation pivots as Node3D containers. Retain
+		# the legacy per-citizen tint only when Body itself is a mesh; for skinned
+		# Body containers, leave the authored PBR materials untouched.
+		var body_mesh := _body as MeshInstance3D
+		if body_mesh != null:
+			var coat_instance := body_mesh.material_override as StandardMaterial3D
+			if coat_instance != null:
+				coat_instance = coat_instance.duplicate() as StandardMaterial3D
+				coat_instance.albedo_color = coat_colors[citizen_id % coat_colors.size()]
+				body_mesh.material_override = coat_instance
 		var asset_instance := art_result.instance as Node3D
 		for detail_variant in asset_instance.find_children("*", "MeshInstance3D", true, false):
 			var detail := detail_variant as MeshInstance3D

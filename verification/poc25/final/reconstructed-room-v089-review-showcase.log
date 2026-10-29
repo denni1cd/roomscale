@@ -1,0 +1,94 @@
+POC25_V089_SHOWCASE_SMOKE case=reconstructed-room result=PASS
+source_commit=333cee7e44e43662c8a095843b1a1a2e78d1b835
+tested_citizen_agent_sha256=7a7f47d50cdcfab0db7edb739c8304d60313795c4a089768c80a2534b62d2a82
+room=room_photo_luna
+room_definition_file=C:\Users\Zero\.codex\worktrees\poc25-final-verification\roomscale\verification\poc2\candidates\primary\attempt-7\room_photo_luna.json
+civilization=clockwork
+art_registry=res://verification/poc25/final/best-current-art-showcase-registry-v089.json
+art_registry_sha256=3f70eb60dc394759c7533fe996e7c0d08049b3ef1c5b27d5ac2f1c6f06f2241c
+art_registry_mode=review_showcase
+production_registry_sha256_before=1d3eb72f0cea9e826e36f80741a4442e9ccd9f5943c69731f2897d4a9605aed9
+godot=4.7.2.stable.official.ed1daf0bf
+v089_bridge_instances=50
+assertions=50_citizens,navigation,11_deliveries,construction,grapple_deployment,physical_climb,continued_exploration,review_only_registry,no_required_asset_failures,no_script_errors
+
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ROOMSCALE_CIVILIZATION_PROFILE id=clockwork name=Clockwork citizen_style=clockwork settlement_style=clockwork traversal_style=grapple_cable
+ROOMSCALE_VISUAL_ASSET object=computer-desk source=res://art/desk/iterations/v007/generated/desk.tscn registry_status=best_current_review review_only=true BEST CURRENT / PRODUCTION ART FOLLOW-UP REQUIRED normalization={ "source_bounds": [P: (-33.0, 0.03, -15.0), S: (66.0, 29.97, 30.0)], "fitted_dimensions": (66.0, 30.0, 30.0) }
+ROOMSCALE_VISUAL_ASSET object=office-chair source=res://art/office_chair/iterations/v003/generated/office_chair.tscn registry_status=accepted review_only=true normalization={ "source_bounds": [P: (-10.1, 0.12, -8.299854), S: (20.2, 41.14622, 16.89986)], "fitted_dimensions": (23.0, 44.0, 18.0) }
+ROOMSCALE_VISUAL_ASSET object=rocking-chair source=res://art/rocking_chair/iterations/v003/generated/rocking_chair.tscn registry_status=accepted review_only=true normalization={ "source_bounds": [P: (-10.25, 0.031921, -13.98618), S: (20.5, 37.26808, 27.97236)], "fitted_dimensions": (24.0, 38.0, 31.0) }
+ROOMSCALE_VISUAL_ASSET object=hammock-and-frame source=res://art/hammock_with_stand/iterations/v005/generated/hammock_with_stand.tscn registry_status=accepted review_only=true normalization={ "source_bounds": [P: (-57.82106, 0.479902, -14.31886), S: (115.6421, 36.3402, 28.63773)], "fitted_dimensions": (118.0, 40.0, 34.0) }
+ROOMSCALE_VISUAL_ASSET object=display-cabinet source=res://art/display_cabinet/iterations/v002/generated/display_cabinet.tscn registry_status=accepted review_only=true normalization={ "source_bounds": [P: (-17.0, 0.0, -9.5), S: (34.0, 75.95, 19.95)], "fitted_dimensions": (33.0, 76.0, 18.0) }
+ROOMSCALE_VISUAL_ASSET object=ArtPresentation source=res://art/settlement_workshop/iterations/v004/generated/settlement_workshop.tscn registry_status=accepted review_only=true normalization={ "source_bounds": [P: (-13.0, 0.0, -10.0), S: (26.0, 19.94, 20.0)], "fitted_dimensions": (26.0, 20.0, 20.0) }
+ROOMSCALE_VISUAL_ASSET object=ArtPresentation source=res://art/settlement_depot/iterations/v003/generated/settlement_depot.tscn registry_status=accepted review_only=true normalization={ "source_bounds": [P: (-12.0, 0.0, -10.15), S: (24.0, 13.08, 20.15)], "fitted_dimensions": (24.0, 13.0, 20.0) }
+ROOMSCALE_VISUAL_ASSET object=ArtPresentation source=res://art/settlement_housing/iterations/v002/generated/settlement_housing.tscn registry_status=accepted review_only=true normalization={ "source_bounds": [P: (-8.5, 0.0, -4.5), S: (17.0, 7.09, 9.85)], "fitted_dimensions": (17.0, 7.0, 9.0) }
+ROOMSCALE_VISUAL_ASSET object=ArtPresentation source=res://art/settlement_workarea/iterations/v005/generated/settlement_workarea.tscn registry_status=accepted review_only=true normalization={ "source_bounds": [P: (-11.5, 0.0, -6.0), S: (23.0, 9.0, 12.0)], "fitted_dimensions": (23.0, 9.0, 12.0) }
+ROOMSCALE_FLOOR_NAV_READY room=room_photo_luna grid=39x36 cell=4in obstacles=11
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_MPFB_CITIZEN_V089_BRIDGE_PASS bones=53 pivots=5 high_detail_meshes=9 distance_lod_meshes=9 switch_inches=5 rig=game_engine axis=bone_local visual_gains={ "LeftArm": 1.0, "RightArm": 1.0, "LeftLeg": 0.35, "RightLeg": 0.35 }
+ROOMSCALE_CITIZEN_SPAWN count=50 separate_nodes=true height=0.5in
+ROOMSCALE_M2_READY Godot=4.7.2-stable (official) room=room_photo_luna size=156x144 in citizens=50
+ROOMSCALE_CIVILIZATION_PRESENTATION_READY id=clockwork citizens=50
+ROOMSCALE_TRAVERSAL_START route=71.8in timeout=31.1s start=(-11.32681, 0.0, 37.32679) target=(24.0, 30.0, 38.0)
+ROOMSCALE_M6_BUDGET task=347 type=SURFACE_EXPLORATION route=160.6in added=57.2s cumulative=77.2s
+ROOMSCALE_M6_BUDGET task=471 type=SURFACE_TRAVERSAL route=93.5in added=35.2s cumulative=112.4s
+ROOMSCALE_M6_BUDGET task=538 type=SURFACE_EXPLORATION route=160.6in added=57.2s cumulative=169.6s
+ROOMSCALE_M6_BUDGET task=663 type=SURFACE_TRAVERSAL route=86.2in added=33.2s cumulative=202.8s
+ROOMSCALE_M6_BUDGET task=711 type=SURFACE_EXPLORATION route=160.6in added=57.2s cumulative=260.1s
+ROOMSCALE_ROOM=room_photo_luna TARGET=Dark computer desk REGION=DESK_TOP FLOOR=156x144 SITE=(-20.0, 0.0, 46.0)
+ROOMSCALE_M2_SMOKE_PASS room=room_photo_luna citizens=50 active=47 available=2 moving=43 obstacles=11 detour=117.0in
+ROOMSCALE_M3_SMOKE_PASS room=room_photo_luna selected=Dark computer desk investigators=2 arrived=2 barrier=no navigation connection between FLOOR and DESK_TOP elapsed=20.25s
+ROOMSCALE_M4_SMOKE_PASS room=room_photo_luna deliveries=11 delivered={ "wood": 4, "metal": 4, "mechanical_parts": 3 } builders_returned=true gates=3 components=3 site=(-20.0, 0.0, 46.0) elapsed=31.75s
+ROOMSCALE_M5_SMOKE_PASS room=room_photo_luna cable_segments=8 radius=0.04in partial_deploy=true traverser=Citizen37 height=30.0in walked=72.9in route=71.8in max_step=1.34in max_step_interval=0.207s max_sample_speed=6.50in/s speed_sample_interval=0.207s speed_cap=6.5in/s step_tolerance=0.25in elapsed=11.20s
+ROOMSCALE_M6_SMOKE_PASS room=room_photo_luna arrivals=3 explorations=3 reused=2 distinct_travelers=3 work=12.0s persistent_link=true combined_max_step=1.36in max_step_interval=0.210s max_sample_speed=6.50in/s speed_sample_interval=0.201s speed_cap=6.5in/s step_tolerance=0.25in elapsed=111.60s budget=260.08s
+ROOMSCALE_M8_SMOKE_PASS room=room_photo_luna steam=true cog_teeth=8 citizen_inspection=true camera_easing=verified
+ROOMSCALE_CIVILIZATION_SMOKE_PASS civilization=clockwork production_scene=true identity=true traversal_geometry=true deployment_cursor=true presentation_read_only=true
