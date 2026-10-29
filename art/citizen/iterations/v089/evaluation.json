@@ -1,0 +1,125 @@
+{
+  "candidate_id": "citizen-v089",
+  "created_at_utc": "2026-10-29T00:04:54+00:00",
+  "decision": "continue",
+  "defects": [
+    "The broader overcoat silhouette is visible in close, profile, and fixed 12-inch views, but the small helmet/goggle assembly and teal-and-canvas worker silhouette still do not make the Clockwork faction unmistakable from every gameplay facing.",
+    "The production-owned carried tool remains prominent over the center-front garment. The new skirt is more visible around it, but the tool still masks the central apron and part of the workwear construction.",
+    "The wide lower garment looks coherent at close range, but only the front/rear and oblique views establish its new flare; the profile still reads mostly as a narrow human wearing a pack.",
+    "Candidate performance is not established by this shared-workload render run."
+  ],
+  "hard_fail_reasons": [
+    "Clockwork role readability remains 4/5 in the fixed 12-inch four-facing production stills; the role does not yet meet the user's requirement that the worker identity be visually dominant at gameplay distance.",
+    "No candidate-specific isolated 50-citizen performance result exists. The render receipts vary from 2 to 40 FPS across views and are not suitable for an acceptance claim."
+  ],
+  "incumbent_candidate_id": "citizen-v007",
+  "incumbent_comparison": "v089 preserves the MPFB anatomical body and rig and improves the broad workwear silhouette over v087 through a flared, two-panel machinist overcoat and shoulder yoke. It is a substantial improvement over the block-built citizen-v007, but the Clockwork role is not yet visually dominant at the fixed gameplay view and the twin optics do not resolve consistently at 12 inches. Keep citizen-v007 as the production incumbent; v089 remains a best-current review challenger.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "A half-inch citizen occupies roughly 40 pixels at the 12-inch capture distance, leaving few pixels for helmet optics and role-specific garment structure.",
+    "The broad skirt improves the lower outline, but the strongest distinctive Clockwork cues remain concentrated at the head and back rather than forming a dominant full-body silhouette.",
+    "The independently attached production tool must stay visible and overlaps the central torso; surrounding clothing must carry the role read around that fixed occlusion.",
+    "No controlled candidate-specific performance session was captured."
+  ],
+  "next_action_hypothesis": "Do not iterate the skirt width, hem binding, or helmet LOD again. First assess a materially different upper-body role-identity method: a mechanically constructed worker cap with unmistakable paired optics and a full industrial coat/harness geometry designed around the existing production tool attachment. Keep the MPFB body/rig if it remains the best anatomical foundation; check a character-appropriate generation path only if it can be rigged to the preserved skeleton. Re-evaluate actual 12-inch production facings before any further candidate is treated as progress.",
+  "observations": {
+    "art_direction_fit": "The broadened split machinist overcoat, strengthened shoulder yoke, mechanically constructed helmet, paired goggles, and pressure equipment better express a Clockwork worker than v087. The faction read is still not dominant at gameplay distance.",
+    "close_up_quality": "The 1.8–2.0 inch three-quarter, profile, and idle captures show coherent anatomy, textured cloth, canvas, leather, helmet hardware, pack, and boots. The production-owned tool still covers the center-front garment.",
+    "gameplay_readability": "The fixed 12-inch controlled four-facing views show a broader warm-canvas lower outline, but helmet optics and industrial role cues remain small. Rate 4/5; the user's 5/5 dominant-identity bar is not met.",
+    "geometric_detail": "Godot imports 103,767 triangles with fitted anatomical meshes, thick front/rear overcoat panels, leather-bound edges, mechanical helmet, pressure pack, and footwear.",
+    "material_realism": "The inherited textile, canvas, leather, brass, iron, skin, and glass materials remain differentiated under the RoomScale production lighting.",
+    "proportion": "The figure stays inside the exact half-inch envelope and the broader coat remains plausible as workwear, though its skirt is intentionally generous relative to the torso.",
+    "scale_fidelity": "Godot validates exact 0.26 x 0.50 x 0.21 inch bounds, 18 imported meshes, 42 surfaces, 53 rig bones, five pivots, and 9+9 shared-skeleton LOD meshes.",
+    "semantic_recognizability": "The close views unmistakably show a Clockwork worker; at the 12-inch capture the broad coat and equipment improve the read, but the role is not unmistakable from every facing.",
+    "silhouette_quality": "The wide split overcoat and shoulder yoke are a measurable silhouette change from v087. The narrow head/body scale and fixed gameplay camera still limit faction recognition.",
+    "surface_variation": "Textured cloth, warm canvas, leather, metal, teal glass, and skin retain distinct color and roughness response.",
+    "technical_integration": "Art Factory generation, Godot 4.7.2 validation, and production rendering pass. Exact bounds are retained with 18 meshes, 42 surfaces, 103,767 triangles, 53 bones, five pivots, and 12 registered production-path captures including four controlled facings."
+  },
+  "render_evidence": [
+    "art/citizen/iterations/v089/render-runs/run-001/room-scale.png",
+    "art/citizen/iterations/v089/render-runs/run-001/room-scale-opposite-angle.png",
+    "art/citizen/iterations/v089/render-runs/run-001/settlement-scale.png",
+    "art/citizen/iterations/v089/render-runs/run-001/asset-gameplay-distance.png",
+    "art/citizen/iterations/v089/render-runs/run-001/asset-three-quarter.png",
+    "art/citizen/iterations/v089/render-runs/run-001/asset-opposite-three-quarter.png",
+    "art/citizen/iterations/v089/render-runs/run-001/asset-profile.png",
+    "art/citizen/iterations/v089/render-runs/run-001/asset-detail.png",
+    "art/citizen/iterations/v089/render-runs/run-001/asset-idle-detail.png",
+    "art/citizen/iterations/v089/render-runs/run-001/asset-gameplay-yaw-000.png",
+    "art/citizen/iterations/v089/render-runs/run-001/asset-gameplay-yaw-090.png",
+    "art/citizen/iterations/v089/render-runs/run-001/asset-gameplay-yaw-180.png",
+    "art/citizen/iterations/v089/render-runs/run-001/asset-gameplay-yaw-270.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 4,
+    "gameplay_readability": 4,
+    "geometric_detail": 4,
+    "material_realism": 4,
+    "proportion": 3,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 4,
+    "surface_variation": 4,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "Yes",
+      "evidence": "The 1.8–2.0 inch close, profile, and three-quarter production captures show the new flared coat panels, thick leather-bound edges, shoulder yoke, fitted clothing, helmet, lenses, harness, pack, and boots. The production-owned tool continues to obscure part of the central front garment.",
+      "pass": true
+    },
+    "craftsmanship": {
+      "answer": "Yes",
+      "edge_treatment": {
+        "evidence": "The enlarged front/rear coat panels have formed hems and leather-bound side edges; helmet guards and boot pieces retain shaped edges.",
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "Paired brass-rimmed lenses, strap fittings, pack ferrules, gauge, hose, and garment buckles are present and attached.",
+        "pass": true
+      },
+      "joins": {
+        "evidence": "Overcoat panels are weighted to the corresponding leg references; the shoulder yoke, helmet optics, harness, and pressure pack connect to their intended structures.",
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "The candidate shows a tailored, split machinist overcoat with a functional gait gap, bound edges, pockets, harness, twin pressure reservoirs, helmet, goggles, and layered boots.",
+        "pass": true
+      },
+      "material_response": {
+        "evidence": "Textured cloth, warm canvas, leather, brass, iron, teal glass, and skin remain visually distinct in production views.",
+        "pass": true
+      },
+      "surface_variation": {
+        "evidence": "Inherited textile, leather, helmet, metal, and glass maps preserve distinct surface and roughness response.",
+        "pass": true
+      },
+      "thickness": {
+        "evidence": "The wide split panels, hem bindings, helmet shell, optical barrels, reservoir frame, and boot soles retain physical thickness in profile and close views.",
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "evidence": "The production renders show believable human anatomy, fitted industrial workwear, thick cloth panels, manufactured helmet optics, and connected pressure equipment. The candidate does not read as primitive or materially flat.",
+      "pass": true
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "The Citizen ArtBrief has no photographic reference.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  }
+}

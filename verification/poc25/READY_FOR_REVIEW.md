@@ -1,29 +1,29 @@
-# RoomScale POC 2.5 — READY FOR INDEPENDENT REVIEW (2026-10-28)
+# RoomScale POC 2.5 — READY FOR INDEPENDENT REVIEW (2026-10-29)
 
 **Current state:** `READY FOR REVIEW`. This is a request for independent Rules Lawyer disposition, not a self-issued `COMPLETE`.
 **Controlling acceptance direction:** [POC25-AM-2026-10-28-01](POC25_ACCEPTANCE_AMENDMENT_2026-10-28.md). The strict asset-level visual gate is unchanged, but the earlier requirement that every pilot pass before POC review is superseded.
-**Production boundary:** `art/registry.json` remains unchanged. The final integration uses the separate, explicitly selected review-only registry and labels desk-v007, grapple-v006, and citizen-v087 `BEST CURRENT / PRODUCTION ART FOLLOW-UP REQUIRED`.
+**Production boundary:** `art/registry.json` remains unchanged. The latest integration uses the separate, explicitly selected review-only registry and labels desk-v007, grapple-v006, and citizen-v089 `BEST CURRENT / PRODUCTION ART FOLLOW-UP REQUIRED`; citizen-v007 remains the production incumbent.
 
 ## Amended acceptance evidence
 
 | Amended criterion | Evidence and disposition |
 |---|---|
 | Reusable factory and replaceable backends | [ART_FACTORY_ARCHITECTURE.md](ART_FACTORY_ARCHITECTURE.md); shared contracts and versioned workers cover procedural/Godot, Blender, TRELLIS.2 with intended DINOv3, Pixal3D, Hunyuan3D 2.1, RecGen3D, SUPRA-Tex, and MPFB2. |
-| Full autonomous iteration loop and honest rejection | Preserved candidate recipes, technical reports, actual RoomScale renders, evaluations, comparisons, and failed/continued candidate histories under `art/`; strict re-audit and `citizen-v087` remain failures/continuations rather than PASS. |
+| Full autonomous iteration loop and honest rejection | Preserved candidate recipes, technical reports, actual RoomScale renders, evaluations, comparisons, and failed/continued candidate histories under `art/`; strict re-audit and `citizen-v089` remain failures/continuations rather than PASS. |
 | Three meaningfully different asset classes | Desk, grapple, and citizen have separate briefs, workflows, technical checks, render harnesses, and evaluation records. Pilot failures remain visible and are production-art follow-up. |
-| Best-current integration without production promotion | `final/best-current-art-showcase-registry.json`; [integration receipt](final/best-current-integration-run-005/receipt.json), 14 production captures, all 50 citizens, zero missing phases. The canonical registry was not replaced. |
+| Best-current integration without production promotion | `final/best-current-art-showcase-registry-v089.json`; [latest integration receipt](final/best-current-integration-run-009/receipt.json), 14 production captures, all 50 citizens, zero missing phases. The earlier v087 run 005 remains preserved; the canonical registry was not replaced. |
 | Scene-wide graphic improvement evidence | [Best-current visual review](BEST_CURRENT_INTEGRATION_REVIEW.md) compares the POC baseline with the final captures and discusses room presentation, settlement architecture, furniture, and citizens. The independent reviewer is asked to judge whether the integrated improvement meets the amended bar. |
 | Room A regression | [Room A log](final/final-integration-smoke/room-a-showcase.log): PASS; 50 active citizens, navigation, 11 deliveries, construction, cable deployment/traversal, and continued exploration. |
 | Room B regression | [Room B log](final/final-integration-smoke/room-b-showcase.log): PASS; 50 active citizens, navigation, 11 deliveries, construction, cable deployment/traversal, and continued exploration. |
 | Reconstructed RoomDefinition regression | [Canonical-room log](final/final-integration-smoke/reconstructed-room-showcase.log): PASS for `room_photo_luna`, including the desk target, navigation, delivery, construction, traversal, and citizen exploration. |
-| Performance evidence and limits | [RTX 5090 / Godot 4.7.2 Compatibility run](final/best-current-performance-run-001.json), VSync disabled, 50 citizens: room 32.98 FPS, settlement 88.55 FPS, citizen 206.20 FPS. The room view is below 60 FPS; the run was not isolated from other GPU processes, so target performance remains an explicit follow-up. |
+| Performance evidence and limits | [RTX 5090 / Godot 4.7.2 Compatibility run](final/best-current-performance-run-002.json), VSync disabled, 50 v089 citizens: room 58.89 FPS / 18.83 ms p95, settlement 156.48 / 7.70 ms, citizen 241.94 / 6.00 ms. Room view remains below 60 FPS; the shared desktop run is not an isolated target-hardware verdict. |
 | Durable production-art backlog | [PRODUCTION_ART_BACKLOG.md](PRODUCTION_ART_BACKLOG.md), including citizen role readability/animation/cost, desk fidelity, grapple workmanship, architecture finish, lighting, remaining props, and licensing. |
 | No failed candidate represented as production PASS | Review-only registry statuses, candidate evaluations, receipts, and unchanged `art/registry.json` preserve that boundary. |
 | CI classification | The original `04e75d2` integration regressions and the later candidate-worker formatting/lint failures are repaired. Current review-package commit `73e5e1b` passed all six jobs in [Actions run 40776228395](https://github.com/denni1cd/roomscale/actions/runs/40776228395), including Python quality, focused/startup and conflict regressions, and all four civilization smoke combinations. See [dated CI classification](final/ci-quality-classification-2026-10-28.md). |
 
 ## Visual disposition requested
 
-All three strict pilot incumbents still fail their unchanged asset gate. Citizen v087 is a meaningful anatomical and material improvement over the block-built citizen-v007, but its Clockwork role is not unmistakable at every gameplay facing. Desk-v007 remains visibly flat and misses the source-photo reflection character. Grapple-v006 remains simplified at close inspection. The review registry makes these limitations explicit; see [the integrated visual assessment](BEST_CURRENT_INTEGRATION_REVIEW.md) and [the durable backlog](PRODUCTION_ART_BACKLOG.md).
+All three strict pilot incumbents still fail their unchanged asset gate. Citizen v089 improves the workwear silhouette and retains MPFB anatomy/rig, but Clockwork readability remains 4/5 at fixed 12-inch facings, below the 5/5 bar; its decision is `continue`, not PASS. Desk-v007 remains visibly flat and misses the source-photo reflection character. Grapple-v006 remains simplified at close inspection. The review registry makes these limitations explicit; see [the integrated visual assessment](BEST_CURRENT_INTEGRATION_REVIEW.md) and [the durable backlog](PRODUCTION_ART_BACKLOG.md).
 
 The final capture demonstrates the complete current scene and production behavior. The room shell and broad environment remain rough, and performance is not yet isolated. These are review findings, not reasons to relabel an asset-level failure as a visual PASS.
 

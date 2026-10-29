@@ -55,3 +55,13 @@ READY FOR REVIEW means this evidence package is ready for independent Rules Lawy
 ## Registry semantics
 
 art/registry.json remains the production-accepted registry. The separate poc25_best_current_showcase registry uses best_current_review for the three pilots that fail the current strict re-audit. Loading those entries requires explicit ROOMSCALE_ART_REGISTRY_MODE=review_showcase; otherwise the runtime resolver rejects the registry. Captures and receipts carry the label BEST CURRENT / PRODUCTION ART FOLLOW-UP REQUIRED. This mode is a review/showcase boundary, not promotion or acceptance.
+
+## Consolidation update — 2026-10-29
+
+The bounded citizen experiment ended with `citizen-v089`: it improves the fitted workcoat silhouette over v087 while retaining the MPFB2 anatomy, 53-bone rig, five RoomScale pivots, and gameplay attachment contract. Its strict result remains `continue` at 4/5 Clockwork readability; it is not a visual PASS or production promotion. `citizen-v007` remains the production incumbent. No additional citizen refinement was started after this bounded experiment, consistent with the amended POC direction to consolidate rather than continue local art polishing.
+
+The best-current showcase is captured with v089 in `final/best-current-integration-run-009/` and selected only by `final/best-current-art-showcase-registry-v089.json`. The receipt passes all 14 required production captures with 50 citizens, including furniture, settlement, active construction, deployed traversal, and citizen climbing. Earlier v087 integration evidence remains in run 005. The canonical production registry is unchanged.
+
+The v089 50-citizen Compatibility-renderer performance record is `final/best-current-performance-run-002.json`: 58.89 FPS / 18.83 ms p95 in the room view, 156.48 / 7.70 ms at settlement distance, and 241.94 / 6.00 ms in the citizen view, VSync disabled. The room view is below 60 FPS; GPU clients were present and not all could be identified, so this remains a shared-desktop measurement rather than a controlled target-hardware verdict.
+
+This dated update supplements the original acceptance amendment without rewriting its historical evidence or weakening the asset visual gate. The current evidence map is in `READY_FOR_REVIEW.md` and `BEST_CURRENT_INTEGRATION_REVIEW.md`; disposition remains `READY FOR REVIEW` pending independent review.
