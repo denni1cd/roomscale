@@ -60,21 +60,37 @@ func _build_verdant_overlay(building: Node3D, role: String) -> void:
 	building.add_child(overlay)
 	match role:
 		"workshop":
-			_box(overlay, "RootPlatform", Vector3(15, 0.5, 11), Vector3(0, 0.25, 0), Color("6b5235"), 0.96)
+			var root_deck := _cylinder(overlay, "RootPlatform", 7.0, 0.48, Vector3(0, 0.24, 0), Color("6b5235"))
+			root_deck.scale.z = 0.76
+			for slat_index in range(8):
+				var slat_angle := TAU * float(slat_index) / 8.0
+				var slat := _box(overlay, "RootDeckBarkSlat%d" % slat_index, Vector3(0.20, 0.10, 8.2), Vector3.ZERO, Color("795b3c") if slat_index % 2 == 0 else Color("634a33"), 0.95)
+				slat.position = Vector3(cos(slat_angle) * 0.35, 0.44, sin(slat_angle) * 0.35)
+				slat.rotation.y = slat_angle
 			# A cultivated tree is the nursery itself. The open front work yard stays
 			# visible beneath a branching crown, rather than a green industrial roof.
 			_segment(overlay, "NurseryTrunkLower", Vector3(0, 0.5, -2.0), Vector3(-0.55, 3.4, -2.1), 0.72, Color("745337"))
 			_segment(overlay, "NurseryTrunkUpper", Vector3(-0.55, 3.4, -2.1), Vector3(0.15, 6.5, -1.4), 0.48, Color("745337"))
 			_sphere(overlay, "TrunkKnot", Vector3(-0.55, 3.4, -2.1), Vector3(1.5, 1.35, 1.4), Color("745337"))
-			var crown_points := [Vector3(-3.6, 7.2, -2.1), Vector3(3.4, 7.7, -1.9), Vector3(0.2, 8.0, 1.0)]
-			for index in range(crown_points.size()):
-				var tip: Vector3 = crown_points[index]
-				_segment(overlay, "NurseryBranch%d" % index, Vector3(-0.3, 4.5, -1.8), tip, 0.3, Color("78593c"))
-				_sphere(overlay, "TreeCrown%d" % index, tip + Vector3.UP * 0.45, Vector3(5.4, 2.3, 4.3), Color("4f783d") if index % 2 == 0 else Color("77934d"))
-				_leaf(overlay, "CrownLeaf%d" % index, tip + Vector3(0.6, 1.55, 0.3), Vector3(3.3, 0.3, 1.7), Color("86a956"), index * 0.7)
-				_segment(overlay, "HangingSeedStem%d" % index, tip, tip + Vector3(0.4, -1.7, 0.4), 0.075, Color("647848"))
-				_sphere(overlay, "SeedPod%d" % index, tip + Vector3(0.4, -1.7, 0.4), Vector3(0.8, 1.2, 0.8), Color("bd9b53"))
-				_magic_flower(overlay, "NurseryBloom%d" % index, tip + Vector3(0.2, 0.95, 1.45), 0.42)
+			for index in range(6):
+				var angle := TAU * float(index) / 6.0
+				var direction := Vector3(cos(angle), 0.0, sin(angle))
+				var tip := Vector3(direction.x * 3.7, 7.35 + float(index % 2) * 0.35, -1.4 + direction.z * 2.7)
+				_segment(overlay, "NurseryBranch%d" % index, Vector3(-0.1, 5.0, -1.8), tip, 0.22, Color("78593c"))
+				var leaf_center := tip + direction * 0.75 + Vector3(0.0, 0.3, 0.0)
+				var canopy_leaf := _leaf(overlay, "CrownLeaf%d" % index, leaf_center, Vector3(3.8, 0.15, 0.58), Color("4f783d") if index % 2 == 0 else Color("77934d"), -angle)
+				canopy_leaf.rotation.z = 0.04 + float(index % 2) * 0.04
+				var lateral := Vector3(-direction.z, 0.0, direction.x)
+				for pair_index in range(2):
+					var branch_distance := 1.35 + float(pair_index) * 0.9
+					for side in [-1.0, 1.0]:
+						var leaflet_at := Vector3(direction.x * branch_distance, leaf_center.y - 0.05, -1.4 + direction.z * branch_distance) + lateral * float(side) * 0.34
+						var leaflet := _leaf(overlay, "CrownSideLeaf%d_%d_%s" % [index, pair_index, side], leaflet_at, Vector3(0.92, 0.11, 0.3), Color("608546") if (index + pair_index) % 2 == 0 else Color("86a956"), -angle + PI * 0.5)
+						leaflet.rotation.z = float(side) * 0.08
+				if index % 2 == 0:
+					_segment(overlay, "HangingSeedStem%d" % index, tip, tip + Vector3(0.3, -1.35, 0.3), 0.06, Color("647848"))
+					_sphere(overlay, "SeedPod%d" % index, tip + Vector3(0.3, -1.35, 0.3), Vector3(0.5, 0.86, 0.5), Color("bd9b53"))
+					_magic_flower(overlay, "NurseryBloom%d" % index, tip + Vector3(0.2, 0.7, 0.9), 0.24)
 			for index in range(5):
 				var angle := TAU * float(index) / 5.0
 				_segment(overlay, "NurseryRoot%d" % index, Vector3(0, 0.6, -2), Vector3(cos(angle) * 5.7, 0.55, -1 + sin(angle) * 3.4), 0.25, Color("705034"))

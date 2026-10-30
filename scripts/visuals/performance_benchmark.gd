@@ -10,15 +10,40 @@ func _run() -> void:
 		push_error("Performance benchmark requires the real renderer")
 		quit(1)
 		return
+	OS.set_environment("ROOMSCALE_ROOM", "room_a")
+	OS.set_environment("ROOMSCALE_ROOM_FILE", "")
+	OS.set_environment("ROOMSCALE_CIVILIZATION", "clockwork")
+	OS.set_environment("ROOMSCALE_NO_MENU", "1")
+	OS.set_environment("ROOMSCALE_DISABLE_STARTUP_CAPTURE", "1")
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 	Engine.max_fps = 0
 	var scene := (load("res://scenes/pipeline_proof.tscn") as PackedScene).instantiate() as Node3D
 	root.add_child(scene)
-	await process_frame
-	var camera := scene.get_node("CameraRig")
-	var subject := scene.get_node("Citizen01") as Node3D
-	var definition: Dictionary = scene.get("_room_definition")
-	var landmark: Array = definition.landmarks.workshop
+	var camera: Node
+	var citizens: Array = []
+	var definition: Dictionary = {}
+	for frame in range(120):
+		await process_frame
+		camera = scene.get_node_or_null("CameraRig")
+		var citizens_variant: Variant = scene.get("_citizens")
+		if citizens_variant is Array:
+			citizens = citizens_variant
+		var definition_variant: Variant = scene.get("_room_definition")
+		if definition_variant is Dictionary:
+			definition = definition_variant
+		if camera != null and citizens.size() == 50 and definition.has("landmarks"):
+			break
+	if camera == null or citizens.size() != 50 or not definition.has("landmarks"):
+		push_error("Performance benchmark could not find the initialized camera, 50 citizens, and RoomDefinition")
+		quit(1)
+		return
+	var subject := citizens[0] as Node3D
+	var landmarks: Dictionary = definition.get("landmarks", {})
+	var landmark: Array = landmarks.get("workshop", [])
+	if subject == null or landmark.size() != 3:
+		push_error("Performance benchmark could not resolve the citizen subject or workshop landmark")
+		quit(1)
+		return
 	for view in ["room", "settlement", "citizen"]:
 		if view == "room":
 			camera.focus_at(Vector3.ZERO, 330.0)
@@ -46,7 +71,10 @@ func _run() -> void:
 	var output := OS.get_environment("ROOMSCALE_PERFORMANCE_PATH")
 	if output.is_empty():
 		output = "res://verification/poc3/performance.json"
-	DirAccess.make_dir_recursive_absolute(output.get_base_dir())
+	var output_directory := output.get_base_dir()
+	if output_directory.begins_with("res://"):
+		output_directory = ProjectSettings.globalize_path(output_directory)
+	DirAccess.make_dir_recursive_absolute(output_directory)
 	var file := FileAccess.open(output, FileAccess.WRITE)
 	if file == null:
 		push_error("Performance output could not be written: " + output)

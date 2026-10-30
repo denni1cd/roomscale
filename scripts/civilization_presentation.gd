@@ -6,6 +6,9 @@ extends Node
 ## into a civilization-specific visual language so pacing stays identical.
 
 const CivilizationDefinition := preload("res://scripts/civilization_definition.gd")
+const MaterialLibrary := preload("res://scripts/visuals/material_library.gd")
+const Geometry := preload("res://scripts/visuals/visual_geometry.gd")
+static var _leaf_mesh: ArrayMesh
 
 
 static func uses_organic_combat(civilization: Dictionary) -> bool:
@@ -20,14 +23,16 @@ static func society_summary(runtimes: Array) -> String:
 
 
 func refresh_runtime(runtime: Node) -> void:
-	if runtime.definition.citizen_style != "verdant_folk":
-		return
-	for citizen in runtime.citizens:
-		_style_verdant_citizen(citizen)
-		_refresh_verdant_cargo(citizen)
-	var growth_presenter: Node = get_tree().root.get_node("VerdantDevelopmentPresentation")
-	for module in runtime.development.visuals.values():
-		growth_presenter._style_module(module)
+	if runtime.definition.citizen_style == "verdant_folk":
+		for citizen in runtime.citizens:
+			_style_verdant_citizen(citizen)
+			_refresh_verdant_cargo(citizen)
+		var growth_presenter: Node = get_tree().root.get_node("VerdantDevelopmentPresentation")
+		for module in runtime.development.visuals.values():
+			growth_presenter._style_module(module)
+	elif runtime.definition.citizen_style == "scavenger_salvage":
+		for citizen in runtime.citizens:
+			_style_scavenger_citizen(citizen)
 
 var definition: Dictionary = {}
 var _scene_instance_id := 0
@@ -75,9 +80,12 @@ func _process(delta: float) -> void:
 		return
 	_refresh_timer = 0.0
 	_refresh_banner(scene)
-	if String(definition.id) == "verdant":
-		_refresh_verdant_citizens(scene)
-		_refresh_verdant_project(scene)
+	match String(definition.id):
+		"verdant":
+			_refresh_verdant_citizens(scene)
+			_refresh_verdant_project(scene)
+		"scavenger":
+			_refresh_scavenger_citizens(scene)
 
 
 func _reset_for_scene(scene: Node3D) -> void:
@@ -105,10 +113,14 @@ func _try_apply_scene(scene: Node3D) -> void:
 	if not _ensure_banner(scene):
 		return
 	scene.set_meta("civilization_definition", definition.duplicate(true))
-	if String(definition.id) == "verdant":
-		_apply_verdant_settlement(scene)
-		_refresh_verdant_citizens(scene)
-		_create_initial_influence(scene)
+	match String(definition.id):
+		"verdant":
+			_apply_verdant_settlement(scene)
+			_refresh_verdant_citizens(scene)
+			_create_initial_influence(scene)
+		"scavenger":
+			_apply_scavenger_settlement(scene)
+			_refresh_scavenger_citizens(scene)
 	_scene_applied = true
 	print("ROOMSCALE_CIVILIZATION_PRESENTATION_READY id=%s citizens=%d" % [definition.id, citizens_variant.size()])
 
@@ -178,6 +190,58 @@ func _apply_verdant_settlement(scene: Node3D) -> void:
 		_build_cultivation_circle(settlement, _vec3(landmarks.work_area))
 
 
+func _apply_scavenger_settlement(scene: Node3D) -> void:
+	var settlement := scene.get_node("Settlement") as Node3D
+	if settlement.has_node("ScavengerVisualPass"):
+		return
+	var details := Node3D.new()
+	details.name = "ScavengerVisualPass"
+	details.set_meta("presentation_only", true)
+	settlement.add_child(details)
+	var dimensions := {
+		"Workshop": Vector3(26.0, 20.0, 20.0),
+		"Depot": Vector3(24.0, 13.0, 20.0),
+		"Housing": Vector3(17.0, 7.0, 9.0),
+		"WorkArea": Vector3(23.0, 9.0, 12.0),
+	}
+	var sheet_colors := [Color("536c7a"), Color("8d5841"), Color("b0804f"), Color("46575c")]
+	for building_index in range(dimensions.size()):
+		var building_name: String = ["Workshop", "Depot", "Housing", "WorkArea"][building_index]
+		var building := settlement.get_node_or_null(building_name) as Node3D
+		if building == null:
+			continue
+		var overlay := Node3D.new()
+		overlay.name = "ScrapCladding"
+		overlay.set_meta("presentation_only", true)
+		building.add_child(overlay)
+		var size: Vector3 = dimensions[building_name]
+		var sheet_color: Color = sheet_colors[building_index % sheet_colors.size()]
+		var roof_width := size.x * 0.30
+		var roof_depth := size.z * 0.78
+		for side in [-1.0, 1.0]:
+			var side_sign := float(side)
+			var x := side_sign * size.x * 0.22
+			var sheet := Node3D.new()
+			sheet.name = "ScrapRoofSection%d%s" % [building_index, side]
+			sheet.position = Vector3(x, size.y * 0.92, 0)
+			sheet.rotation.z = -side_sign * 0.16
+			overlay.add_child(sheet)
+			var roof_panel := Geometry.box(sheet, "ScrapRoofPanel", Vector3(roof_width, 0.18, roof_depth), Vector3.ZERO, "iron", sheet_color, 0.045)
+			roof_panel.set_meta("presentation_only", true)
+			for seam in [-1.0, 1.0]:
+				Geometry.box(sheet, "RoofFold%s" % seam, Vector3(roof_width * 0.88, 0.055, 0.11), Vector3(0, 0.115, seam * roof_depth * 0.28), "iron", sheet_colors[(building_index + 1) % sheet_colors.size()], 0.018)
+			for fastener in [-1.0, 1.0]:
+				Geometry.box(sheet, "RoofFastener%s" % fastener, Vector3(0.15, 0.06, 0.15), Vector3(fastener * roof_width * 0.40, 0.125, -roof_depth * 0.38), "brass", Color("c39150"), 0.03)
+		var side_panel_size := Vector3(0.16, maxf(1.5, size.y * 0.25), size.z * 0.30)
+		for side in [-1.0, 1.0]:
+			var side_sign := float(side)
+			var panel_center := Vector3(side_sign * (size.x * 0.5 + 0.07), size.y * 0.56, 0)
+			var side_panel := Geometry.box(overlay, "ScrapSidePanel%d%s" % [building_index, side], side_panel_size, panel_center, "iron", sheet_colors[(building_index + 2) % sheet_colors.size()], 0.04)
+			side_panel.set_meta("presentation_only", true)
+			for fastener in [-1.0, 1.0]:
+				Geometry.box(overlay, "SideFastener%d%s%s" % [building_index, side, fastener], Vector3(0.08, 0.17, 0.17), Vector3(panel_center.x + side_sign * 0.09, panel_center.y, float(fastener) * side_panel_size.z * 0.36), "brass", Color("c39150"), 0.04)
+
+
 func _style_founder_supplies(settlement: Node3D) -> void:
 	var supplies := settlement.get_node_or_null("PortableSupplies") as Node3D
 	if supplies == null:
@@ -199,12 +263,30 @@ func _build_growth_nursery(parent: Node3D, at: Vector3) -> void:
 	root.name = "Workshop"
 	root.position = at
 	parent.add_child(root)
-	_box(root, "RootPlatform", Vector3(15, 0.5, 11), Vector3(0, 0.25, 0), Color("6b5235"), 0.96)
+	var root_deck := Geometry.cylinder(root, "RootDeck", 6.4, 0.42, Vector3(0, 0.21, 0), "wood", Color("6b5235"))
+	root_deck.scale.z = 0.78
+	for index in range(6):
+		var angle := TAU * float(index) / 6.0
+		var slat := Geometry.box(root, "BarkDeckSlat%d" % index, Vector3(0.18, 0.045, 8.4), Vector3.ZERO, "wood", Color("795b3c") if index % 2 == 0 else Color("634a33"), 0.03)
+		slat.rotation.y = angle
+		slat.position = Vector3(cos(angle) * 0.55, 0.435, sin(angle) * 0.55)
 	for side in [-1.0, 1.0]:
 		_segment(root, "TrunkPost%s" % side, Vector3(side * 5.8, 0.5, -3.6), Vector3(side * 5.2, 7.8, -3.2), 0.42, Color("67503a"))
 		_segment(root, "FrontRoot%s" % side, Vector3(side * 5.6, 0.35, 4.0), Vector3(side * 3.2, 0.65, 0), 0.28, Color("59462f"))
-	var canopy := _sphere(root, "LeafCanopy", Vector3(0, 8.2, -1.0), Vector3(13, 1.2, 9), Color("4f783d"))
-	canopy.rotation.z = 0.04
+	for index in range(6):
+		var angle := TAU * float(index) / 6.0
+		var direction := Vector3(cos(angle), 0.0, sin(angle))
+		var leaf_center := direction * 2.55 + Vector3(0.0, 8.05 + float(index % 2) * 0.28, -1.0)
+		_segment(root, "CanopyBranch%d" % index, Vector3(0.0, 7.5, -1.0), leaf_center, 0.14, Color("68513a"))
+		var canopy_leaf := _leaf(root, "CanopyLeaf%d" % index, leaf_center, Vector3(4.1, 0.14, 0.62), Color("4f783d") if index % 2 == 0 else Color("668b48"), -angle)
+		canopy_leaf.rotation.z = 0.035 + float(index % 2) * 0.035
+		var lateral := Vector3(-direction.z, 0.0, direction.x)
+		for pair_index in range(2):
+			var branch_distance := 1.2 + float(pair_index) * 1.2
+			for side in [-1.0, 1.0]:
+				var leaflet_at := direction * branch_distance + lateral * float(side) * 0.36 + Vector3(0.0, 8.0 + float(pair_index % 2) * 0.12, -1.0)
+				var leaflet := _leaf(root, "CanopySideLeaf%d_%d_%s" % [index, pair_index, side], leaflet_at, Vector3(0.98, 0.10, 0.32), Color("5a8541") if (index + pair_index) % 2 == 0 else Color("73944d"), -angle + PI * 0.5)
+				leaflet.rotation.z = float(side) * 0.08
 	for index in range(5):
 		var x := -4.0 + index * 2.0
 		_sphere(root, "SeedPod%d" % index, Vector3(x, 5.8 + float(index % 2) * 0.6, -1.0), Vector3(0.8, 1.4, 0.8), Color("b49147"))
@@ -238,7 +320,13 @@ func _build_pod_homes(parent: Node3D, at: Vector3) -> void:
 		var x := -5.0 + index * 5.0
 		_sphere(root, "HomePod%d" % index, Vector3(x, 2.3, 0), Vector3(3.6, 4.8, 3.5), Color("6f7c43") if index % 2 == 0 else Color("806644"))
 		_box(root, "Door%d" % index, Vector3(1.1, 1.8, 0.28), Vector3(x, 1.25, 1.72), Color("3d4d2e"), 0.9)
-		_leaf(root, "RoofLeaf%d" % index, Vector3(x, 4.7, 0), Vector3(3.8, 0.25, 2.0), Color("527b3c"), -0.25 + index * 0.22)
+		for side in [-1.0, 1.0]:
+			_segment(root, "DoorJamb%d_%s" % [index, side], Vector3(x + side * 0.72, 0.4, 1.72), Vector3(x + side * 0.66, 2.3, 1.65), 0.11, Color("59462f"))
+		_segment(root, "DoorArch%d" % index, Vector3(x - 0.66, 2.3, 1.65), Vector3(x + 0.66, 2.3, 1.65), 0.11, Color("59462f"))
+		_sphere(root, "WarmWindow%d" % index, Vector3(x, 3.0, 1.48), Vector3(0.72, 0.78, 0.16), Color("d6b66d"))
+		for leaf_index in range(3):
+			var roof_leaf := _leaf(root, "RoofLeaf%d_%d" % [index, leaf_index], Vector3(x - 0.9 + leaf_index * 0.9, 4.72 + float(leaf_index % 2) * 0.08, -0.05), Vector3(2.1, 0.16, 0.86), Color("527b3c") if leaf_index % 2 == 0 else Color("638947"), -0.25 + index * 0.22 + float(leaf_index - 1) * 0.16)
+			roof_leaf.rotation.z = -0.06 + float(leaf_index % 2) * 0.12
 		_sphere(root, "GlowCap%d" % index, Vector3(x + 1.3, 1.4, 2.0), Vector3(0.35, 0.45, 0.35), Color("d7cf73"))
 	_world_label(root, "HousingLabel", "POD HOMES", Vector3(0, 7.2, 0), Color("d9cf72"))
 
@@ -270,6 +358,146 @@ func _refresh_verdant_citizens(scene: Node3D) -> void:
 		_refresh_verdant_cargo(citizen)
 
 
+func _refresh_scavenger_citizens(scene: Node3D) -> void:
+	var citizens_variant: Variant = scene.get("_citizens")
+	if not (citizens_variant is Array):
+		return
+	for citizen_variant in citizens_variant:
+		var citizen := citizen_variant as Node3D
+		if citizen == null:
+			continue
+		_style_scavenger_citizen(citizen)
+
+
+func _style_scavenger_citizen(citizen: Node3D) -> void:
+	var figure := citizen.get_node_or_null("Figure") as Node3D
+	if figure == null or figure.has_meta("scavenger_styled"):
+		return
+	var citizen_index := int(citizen.get("citizen_id"))
+	var coat_colors := [Color("536c8b"), Color("695647"), Color("596b70"), Color("72584a"), Color("68744f")]
+	var coat := MaterialLibrary.get_material("citizen_fabric", coat_colors[citizen_index % coat_colors.size()], 0.94).duplicate() as StandardMaterial3D
+	var leather := MaterialLibrary.get_material("leather", Color("493d35"), 0.86)
+	var iron := MaterialLibrary.get_material("iron", Color("59646a"), 0.72)
+	var brass := MaterialLibrary.get_material("brass", Color("b0804f"), 0.52)
+	var glass := MaterialLibrary.get_material("glass", Color("8db8bc"), 0.22)
+	for child in figure.get_children():
+		if not child is MeshInstance3D:
+			continue
+		var mesh := child as MeshInstance3D
+		var node_name := String(mesh.name)
+		if node_name in ["Body", "ClockworkCap"]:
+			mesh.material_override = coat.duplicate() as StandardMaterial3D
+		elif node_name in ["LeftArm", "RightArm", "LeftLeg", "RightLeg", "CapBrim", "Belt", "ExplorerPack"] or node_name.begins_with("Boot"):
+			mesh.material_override = leather
+		elif node_name.begins_with("Goggle") or node_name.begins_with("ShoulderPlate"):
+			mesh.material_override = iron
+		elif node_name.begins_with("Lens"):
+			mesh.material_override = glass
+		elif node_name == "Buckle":
+			mesh.material_override = brass
+		elif node_name == "RoleChest":
+			mesh.material_override = MaterialLibrary.get_material("paint", Color("b0804f"), 0.82)
+	var head := figure.get_node_or_null("Head") as MeshInstance3D
+	if head != null:
+		head.material_override = MaterialLibrary.get_material("skin", Color("ddb98d"), 0.9)
+	var body := figure.get_node_or_null("Body") as MeshInstance3D
+	if body != null:
+		var coat_color: Color = coat_colors[citizen_index % coat_colors.size()]
+		body.material_override = MaterialLibrary.get_material("citizen_fabric", coat_color, 0.94)
+		for garment_part in body.get_children():
+			if garment_part is MeshInstance3D:
+				var part_name := String(garment_part.name)
+				if part_name == "TunicHem":
+					(garment_part as MeshInstance3D).material_override = leather
+				else:
+					var trim_color := coat_color.darkened(0.14) if part_name == "TunicYoke" else coat_color.lightened(0.08)
+					(garment_part as MeshInstance3D).material_override = MaterialLibrary.get_material("citizen_fabric", trim_color, 0.94)
+	_style_mpfb_faction_body(citizen, figure, coat_colors[citizen_index % coat_colors.size()], "scavenger")
+	if figure.has_node("CitizenArtAsset"):
+		_build_mpfb_scavenger_details(figure)
+	else:
+		var patch_colors := [Color("a57c54"), Color("647b85"), Color("8d5841"), Color("8e805d")]
+		var strap := Geometry.box(figure, "SalvageBackStrap", Vector3(0.034, 0.19, 0.02), Vector3(-0.045, 0.25, -0.09), "leather", Color("493d35"), 0.009)
+		strap.rotation.z = 0.24
+		Geometry.box(figure, "SalvageShoulderPatch", Vector3(0.064, 0.044, 0.072), Vector3(-0.098, 0.306, -0.01), "canvas", patch_colors[(citizen_index + 1) % patch_colors.size()], 0.012)
+		Geometry.box(figure, "SalvageToolLoop", Vector3(0.075, 0.028, 0.03), Vector3(0.076, 0.146, -0.09), "iron", Color("56636a"), 0.008)
+		for index in range(2):
+			Geometry.box(figure, "FieldNotePatch%d" % index, Vector3(0.036, 0.044, 0.014), Vector3(-0.052 + index * 0.075, 0.211, 0.063), "canvas", patch_colors[(citizen_index + index) % patch_colors.size()], 0.007)
+		Geometry.box(figure, "SalvageCapFlap", Vector3(0.12, 0.018, 0.035), Vector3(0, 0.445, -0.065), "leather", Color("493d35"), 0.008)
+	figure.set_meta("scavenger_styled", true)
+
+
+func _build_mpfb_scavenger_details(figure: Node3D) -> void:
+	var cap := MeshInstance3D.new()
+	cap.name = "SalvageWorkerCap"
+	var cap_mesh := SphereMesh.new()
+	cap_mesh.radius = 0.5
+	cap_mesh.height = 1.0
+	cap_mesh.radial_segments = 16
+	cap_mesh.rings = 8
+	cap.mesh = cap_mesh
+	cap.scale = Vector3(0.112, 0.043, 0.108)
+	cap.position = Vector3(0.0, 0.469, 0.0)
+	cap.material_override = MaterialLibrary.get_material("citizen_fabric", Color("48555b"), 0.92)
+	figure.add_child(cap)
+	Geometry.box(figure, "SalvageCapBrim", Vector3(0.12, 0.012, 0.073), Vector3(0.0, 0.451, 0.028), "leather", Color("493d35"), 0.006)
+
+
+func _style_mpfb_faction_body(citizen: Node3D, figure: Node3D, coat_color: Color, style: String) -> void:
+	if figure.has_meta("mpfb_faction_styled"):
+		return
+	var asset := figure.get_node_or_null("CitizenArtAsset") as Node3D
+	if asset == null:
+		return
+	var leather_color := Color("765438") if style == "verdant" else Color("493d35")
+	var role_badge := figure.get_node_or_null("RoleChest") as MeshInstance3D
+	if role_badge != null:
+		role_badge.scale = Vector3(0.58, 0.68, 0.75)
+		if style == "scavenger":
+			role_badge.visible = false
+	var role_pack := citizen.get("_role_pack") as Node3D
+	if role_pack != null:
+		role_pack.scale = Vector3(0.76, 0.82, 0.76)
+	var cargo := citizen.get("_cargo") as MeshInstance3D
+	if cargo != null:
+		cargo.scale = Vector3(0.78, 0.82, 0.78)
+	var traversal_clip := citizen.get("_traversal_clip") as Node3D
+	if traversal_clip != null:
+		traversal_clip.scale = Vector3(0.8, 0.85, 0.8)
+	var core_details: Array = citizen.get("_asset_detail_core_nodes")
+	var close_details: Array = citizen.get("_asset_detail_close_nodes")
+	for mesh_variant in asset.find_children("*", "MeshInstance3D", true, false):
+		var mesh := mesh_variant as MeshInstance3D
+		var node_name := String(mesh.name).to_lower()
+		if "clockworkmachinisthelmet" in node_name or "clockworkbootconstruction" in node_name or "clockworkpacktoppressuregauge" in node_name or "clockworkworkshopclothing" in node_name:
+			mesh.visible = false
+			core_details.erase(mesh)
+			close_details.erase(mesh)
+		elif "male_worksuit01" in node_name:
+			_tint_existing_mesh_materials(mesh, coat_color.lightened(0.72))
+		elif "shoes03" in node_name or "gloves_medium" in node_name:
+			_tint_existing_mesh_materials(mesh, leather_color.lightened(0.55))
+	figure.set_meta("mpfb_faction_styled", true)
+
+
+func _tint_existing_mesh_materials(mesh: MeshInstance3D, tint: Color) -> void:
+	if mesh.mesh == null:
+		return
+	var source_materials: Array[Material] = []
+	for surface_index in range(mesh.mesh.get_surface_count()):
+		source_materials.append(mesh.get_active_material(surface_index))
+	mesh.material_override = null
+	for surface_index in range(source_materials.size()):
+		var source := source_materials[surface_index] as StandardMaterial3D
+		if source == null:
+			continue
+		var tinted := source.duplicate() as StandardMaterial3D
+		if tinted == null:
+			continue
+		tinted.albedo_color = source.albedo_color * tint
+		mesh.set_surface_override_material(surface_index, tinted)
+
+
 func _style_verdant_citizen(citizen: Node3D) -> void:
 	var figure := citizen.get_node_or_null("Figure") as Node3D
 	if figure == null:
@@ -283,6 +511,9 @@ func _style_verdant_citizen(citizen: Node3D) -> void:
 		if child_name in ["ClockworkCap", "CapBrim", "Buckle"] or child_name.begins_with("Goggle") or child_name.begins_with("Lens") or child_name.begins_with("ShoulderPlate"):
 			child.visible = false
 			fine_details.erase(child)
+	if not figure.has_meta("verdant_styled"):
+		var verdant_coats := [Color("68834b"), Color("a2784d"), Color("83618b"), Color("628b89"), Color("b58b4e")]
+		_style_mpfb_faction_body(citizen, figure, verdant_coats[int(citizen.get("citizen_id")) % verdant_coats.size()], "verdant")
 	if figure.has_meta("verdant_styled"):
 		return
 	figure.set_meta("verdant_styled", true)
@@ -290,7 +521,13 @@ func _style_verdant_citizen(citizen: Node3D) -> void:
 	var head := figure.get_node_or_null("Head") as MeshInstance3D
 	if body != null:
 		var coats := [Color("68834b"), Color("a2784d"), Color("83618b"), Color("628b89"), Color("b58b4e")]
-		body.material_override = _material(coats[int(citizen.get("citizen_id")) % coats.size()], 0.94)
+		var coat_color: Color = coats[int(citizen.get("citizen_id")) % coats.size()]
+		body.material_override = MaterialLibrary.get_material("citizen_fabric", coat_color, 0.94)
+		for garment_part in body.get_children():
+			if garment_part is MeshInstance3D:
+				var part_name := String(garment_part.name)
+				var trim_color := Color("765438") if part_name == "TunicHem" else (coat_color.darkened(0.12) if part_name == "TunicYoke" else coat_color.lightened(0.08))
+				(garment_part as MeshInstance3D).material_override = _material(trim_color, 0.96)
 	if head != null:
 		head.material_override = _material(Color("ddb98d"), 0.96)
 	for limb_name in ["LeftArm", "RightArm", "LeftLeg", "RightLeg"]:
@@ -316,21 +553,21 @@ func _style_verdant_citizen(citizen: Node3D) -> void:
 	cap_mesh.rings = 6
 	cap.mesh = cap_mesh
 	cap.position = Vector3(0, 0.475, 0)
-	cap.scale = Vector3(0.18, 0.075, 0.17)
+	var mpfb_derived := figure.has_node("CitizenArtAsset")
+	cap.scale = Vector3(0.10, 0.043, 0.10) if mpfb_derived else Vector3(0.18, 0.075, 0.17)
 	cap.material_override = _material(Color("8a633b"), 0.95)
 	figure.add_child(cap)
-	_cylinder(figure, "AcornRim", 0.088, 0.012, Vector3(0, 0.451, 0), Color("65472f"))
-	var cap_leaf := _leaf(figure, "CapLeaf", Vector3(0.075, 0.505, 0), Vector3(0.12, 0.025, 0.055), Color("5b873f"), 0.45)
+	_cylinder(figure, "AcornRim", 0.048 if mpfb_derived else 0.088, 0.008 if mpfb_derived else 0.012, Vector3(0, 0.451, 0), Color("65472f"))
+	var cap_leaf := _leaf(figure, "CapLeaf", Vector3(0.045 if mpfb_derived else 0.075, 0.505, 0), Vector3(0.07, 0.016, 0.032) if mpfb_derived else Vector3(0.12, 0.025, 0.055), Color("5b873f"), 0.45)
 	cap_leaf.rotation.z = 0.2
+	if not mpfb_derived:
+		for side in [-1.0, 1.0]:
+			_sphere(figure, "Eye%s" % side, Vector3(side * 0.027, 0.409, 0.064), Vector3(0.015, 0.017, 0.011), Color("30291f"))
+			_sphere(figure, "Ear%s" % side, Vector3(side * 0.068, 0.4, 0), Vector3(0.035, 0.026, 0.022), Color("ddb98d"))
+		_sphere(figure, "Nose", Vector3(0, 0.389, 0.067), Vector3(0.023, 0.025, 0.028), Color("c89c74"))
 	for side in [-1.0, 1.0]:
-		_sphere(figure, "Eye%s" % side, Vector3(side * 0.027, 0.409, 0.064), Vector3(0.015, 0.017, 0.011), Color("30291f"))
-		_sphere(figure, "Ear%s" % side, Vector3(side * 0.068, 0.4, 0), Vector3(0.035, 0.026, 0.022), Color("ddb98d"))
-	_sphere(figure, "Nose", Vector3(0, 0.389, 0.067), Vector3(0.023, 0.025, 0.028), Color("c89c74"))
-	_leaf(figure, "LeafCloakLeft", Vector3(-0.06, 0.265, -0.07), Vector3(0.15, 0.025, 0.12), Color("4f773b"), -0.55)
-	_leaf(figure, "LeafCloakRight", Vector3(0.06, 0.265, -0.07), Vector3(0.15, 0.025, 0.12), Color("628b45"), 0.55)
-	if int(citizen.get("citizen_id")) % 4 == 0:
-		_leaf(figure, "FaerieWingLeft", Vector3(-0.11, 0.31, -0.08), Vector3(0.16, 0.018, 0.08), Color("8cab68", 0.78), -0.75)
-		_leaf(figure, "FaerieWingRight", Vector3(0.11, 0.31, -0.08), Vector3(0.16, 0.018, 0.08), Color("9db97a", 0.78), 0.75)
+		var mantle := _leaf(figure, "LeafMantle%s" % side, Vector3(float(side) * 0.05, 0.245, -0.07), Vector3(0.17, 0.022, 0.072), Color("4f773b") if side < 0.0 else Color("628b45"), 0.0)
+		mantle.quaternion = Quaternion(Vector3.UP, float(side) * 0.12) * Quaternion(Vector3(1.0, 1.0, 1.0).normalized(), TAU / 3.0)
 	var tool := figure.get_node_or_null("BuilderHammer") as Node3D
 	if tool != null:
 		for child in tool.get_children():
@@ -739,11 +976,15 @@ func _vec3(value: Variant) -> Vector3:
 
 
 func _material(color: Color, roughness: float = 0.9) -> StandardMaterial3D:
-	var material := StandardMaterial3D.new()
-	material.albedo_color = color
-	material.roughness = roughness
+	var category := "wood" if color.r > color.b * 1.15 and roughness > 0.55 else "paint"
+	if color.g > color.r * 1.08 and color.g > color.b * 1.05:
+		category = "living_organic"
+	var material := MaterialLibrary.get_material(category, color, roughness).duplicate() as StandardMaterial3D
+	if category == "living_organic":
+		material.cull_mode = BaseMaterial3D.CULL_DISABLED
 	if color.a < 0.999:
 		material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		material.albedo_color.a = color.a
 	return material
 
 
@@ -800,9 +1041,62 @@ func _segment(parent: Node3D, node_name: String, start: Vector3, finish: Vector3
 
 func _leaf(parent: Node3D, node_name: String, at: Vector3, size: Vector3, color: Color, yaw: float) -> MeshInstance3D:
 	var leaf := _sphere(parent, node_name, at, size, color)
+	leaf.mesh = _shared_leaf_mesh()
 	leaf.rotation.y = yaw
 	leaf.rotation.z = 0.12
+	var material := leaf.material_override as StandardMaterial3D
+	material.cull_mode = BaseMaterial3D.CULL_DISABLED
 	return leaf
+
+
+static func _shared_leaf_mesh() -> ArrayMesh:
+	if _leaf_mesh != null:
+		return _leaf_mesh
+	var surface := SurfaceTool.new()
+	surface.begin(Mesh.PRIMITIVE_TRIANGLES)
+	const LONGITUDINAL_SEGMENTS := 12
+	for segment in range(LONGITUDINAL_SEGMENTS):
+		var t0 := float(segment) / LONGITUDINAL_SEGMENTS
+		var t1 := float(segment + 1) / LONGITUDINAL_SEGMENTS
+		for lane in range(2):
+			var u0 := -1.0 + float(lane)
+			var u1 := u0 + 1.0
+			var top00 := _leaf_point(t0, u0, true)
+			var top10 := _leaf_point(t1, u0, true)
+			var top11 := _leaf_point(t1, u1, true)
+			var top01 := _leaf_point(t0, u1, true)
+			_leaf_triangle(surface, top00, top10, top11)
+			_leaf_triangle(surface, top00, top11, top01)
+			var bottom00 := _leaf_point(t0, u0, false)
+			var bottom10 := _leaf_point(t1, u0, false)
+			var bottom11 := _leaf_point(t1, u1, false)
+			var bottom01 := _leaf_point(t0, u1, false)
+			_leaf_triangle(surface, bottom00, bottom11, bottom10)
+			_leaf_triangle(surface, bottom00, bottom01, bottom11)
+		# Raised central rib catches light and makes the plant forms read as leaves.
+		var rib0_left := _leaf_point(t0, -0.04, true)
+		var rib0_right := _leaf_point(t0, 0.04, true)
+		var rib1_left := _leaf_point(t1, -0.04, true)
+		var rib1_right := _leaf_point(t1, 0.04, true)
+		_leaf_triangle(surface, rib0_left, rib1_left, rib1_right)
+		_leaf_triangle(surface, rib0_left, rib1_right, rib0_right)
+	surface.generate_normals()
+	_leaf_mesh = surface.commit()
+	return _leaf_mesh
+
+
+static func _leaf_point(t: float, across: float, upper: bool) -> Vector3:
+	var width := sin(t * PI) * 0.47
+	var ridge := (1.0 - absf(across)) * 0.035
+	var curve := sin(t * PI) * 0.035
+	var skin := 0.008 if upper else -0.008
+	return Vector3(t - 0.5, curve + ridge + skin, across * width)
+
+
+static func _leaf_triangle(surface: SurfaceTool, a: Vector3, b: Vector3, c: Vector3) -> void:
+	surface.add_vertex(a)
+	surface.add_vertex(b)
+	surface.add_vertex(c)
 
 
 func _world_label(parent: Node3D, node_name: String, value: String, at: Vector3, color: Color) -> Label3D:

@@ -1,0 +1,27 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ROOMSCALE_CIVILIZATION_PROFILE id=clockwork name=Clockwork citizen_style=clockwork settlement_style=clockwork traversal_style=grapple_cable
+ROOMSCALE_VISUAL_ASSET object=desk source=res://assets/generated/writing_desk.glb registry_status= review_only=false normalization={ "source_bounds": [P: (-34.0, 0.0, -17.0), S: (68.0, 30.0, 34.0)], "fitted_dimensions": (68.0, 30.0, 34.0) }
+ROOMSCALE_VISUAL_ASSET object=side_table source=res://assets/generated/writing_desk.glb registry_status= review_only=false normalization={ "source_bounds": [P: (-34.0, 0.0, -17.0), S: (68.0, 30.0, 34.0)], "fitted_dimensions": (20.0, 20.0, 17.0) }
+ROOMSCALE_VISUAL_ASSET object=ArtPresentation source=res://art/settlement_workshop/iterations/v004/generated/settlement_workshop.tscn registry_status=accepted review_only=false normalization={ "source_bounds": [P: (-13.0, 0.0, -10.0), S: (26.0, 19.94, 20.0)], "fitted_dimensions": (26.0, 20.0, 20.0) }
+ROOMSCALE_VISUAL_ASSET object=ArtPresentation source=res://art/settlement_depot/iterations/v003/generated/settlement_depot.tscn registry_status=accepted review_only=false normalization={ "source_bounds": [P: (-12.0, 0.0, -10.15), S: (24.0, 13.08, 20.15)], "fitted_dimensions": (24.0, 13.0, 20.0) }
+ROOMSCALE_VISUAL_ASSET object=ArtPresentation source=res://art/settlement_housing/iterations/v002/generated/settlement_housing.tscn registry_status=accepted review_only=false normalization={ "source_bounds": [P: (-8.5, 0.0, -4.5), S: (17.0, 7.09, 9.85)], "fitted_dimensions": (17.0, 7.0, 9.0) }
+ROOMSCALE_VISUAL_ASSET object=ArtPresentation source=res://art/settlement_workarea/iterations/v005/generated/settlement_workarea.tscn registry_status=accepted review_only=false normalization={ "source_bounds": [P: (-11.5, 0.0, -6.0), S: (23.0, 9.0, 12.0)], "fitted_dimensions": (23.0, 9.0, 12.0) }
+ROOMSCALE_FLOOR_NAV_READY room=room_a grid=60x45 cell=4in obstacles=11
+ROOMSCALE_CITIZEN_SPAWN count=50 separate_nodes=true height=0.5in
+ROOMSCALE_M2_READY Godot=4.7.2-stable (official) room=room_a size=240x180 in citizens=50
+ROOMSCALE_CIVILIZATION_PRESENTATION_READY id=clockwork citizens=50
+ROOMSCALE_TRAVERSAL_START route=86.5in timeout=33.3s start=(-6.818899, 0.0, -43.18108) target=(-58.0, 30.0, -52.0)
+ROOMSCALE_M6_BUDGET task=278 type=SURFACE_EXPLORATION route=177.1in added=61.7s cumulative=81.7s
+ROOMSCALE_M6_BUDGET task=358 type=SURFACE_TRAVERSAL route=156.8in added=52.2s cumulative=133.9s
+ROOMSCALE_M6_BUDGET task=413 type=SURFACE_EXPLORATION route=177.2in added=61.7s cumulative=195.6s
+ROOMSCALE_M6_BUDGET task=495 type=SURFACE_TRAVERSAL route=159.4in added=52.9s cumulative=248.5s
+ROOMSCALE_M6_BUDGET task=557 type=SURFACE_EXPLORATION route=177.1in added=61.7s cumulative=310.2s
+ROOMSCALE_ROOM=room_a TARGET=Desk REGION=STUDY_SURFACE FLOOR=240x180 SITE=(2.0, 0.0, -52.0)
+ROOMSCALE_M2_SMOKE_PASS room=room_a citizens=50 active=47 available=2 moving=46 obstacles=11 detour=150.0in
+ROOMSCALE_M3_SMOKE_PASS room=room_a selected=Desk investigators=2 arrived=2 barrier=no navigation connection between FLOOR and STUDY_SURFACE elapsed=18.25s
+ROOMSCALE_M4_SMOKE_PASS room=room_a deliveries=11 delivered={ "wood": 4, "metal": 4, "mechanical_parts": 3 } builders_returned=true gates=3 components=3 site=(2.0, 0.0, -52.0) elapsed=54.00s
+ROOMSCALE_M5_SMOKE_PASS room=room_a cable_segments=8 radius=0.04in partial_deploy=true traverser=Citizen47 height=30.0in walked=87.6in route=86.5in max_step=1.35in max_step_interval=0.207s max_sample_speed=6.50in/s speed_sample_interval=0.207s speed_cap=6.5in/s step_tolerance=0.25in elapsed=13.40s
+ROOMSCALE_M6_SMOKE_PASS room=room_a arrivals=3 explorations=3 reused=2 distinct_travelers=3 work=12.0s persistent_link=true combined_max_step=1.35in max_step_interval=0.208s max_sample_speed=6.50in/s speed_sample_interval=0.206s speed_cap=6.5in/s step_tolerance=0.25in elapsed=139.80s budget=310.23s
+ROOMSCALE_M8_SMOKE_PASS room=room_a steam=true cog_teeth=8 citizen_inspection=true camera_easing=verified
+ROOMSCALE_CIVILIZATION_SMOKE_PASS civilization=clockwork production_scene=true identity=true traversal_geometry=true deployment_cursor=true presentation_read_only=true

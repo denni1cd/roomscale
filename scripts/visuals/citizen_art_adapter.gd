@@ -7,14 +7,12 @@ const RIG_PARTS := ["Body", "LeftArm", "RightArm", "LeftLeg", "RightLeg"]
 
 
 static func apply(model: Node3D, preserve_names: PackedStringArray) -> Dictionary:
-	# The accepted ArtBrief describes the clockwork worker. Keep civic-specific
-	# Verdant and future presentation rigs on their own visual path.
 	var citizen := model.get_parent()
-	# A configured simulation owns the authoritative civilization identity. The
-	# canonical POC room can also run the selected presentation profile without a
-	# CivilizationSimulation, in which case its legacy population follows the
-	# globally selected profile (Clockwork by default).
-	if not _uses_clockwork_presentation(citizen):
+	var faction_adaptation := not _uses_clockwork_presentation(citizen)
+	# Non-Clockwork factions can borrow the review-only MPFB anatomy and rig while
+	# their own presentation hides Clockwork fittings and supplies faction styling.
+	# Canonical registries never route this candidate to those factions.
+	if faction_adaptation and OS.get_environment("ROOMSCALE_ART_REGISTRY_MODE") != "review_showcase":
 		return {"registered": false, "skipped_for_civilization": true}
 	var registry := AssetRegistry.new()
 	if not registry.valid:
@@ -27,6 +25,8 @@ static func apply(model: Node3D, preserve_names: PackedStringArray) -> Dictionar
 	var candidate_id := String(entry.get("candidate_id", ""))
 	var review_only := bool(entry.get("registry_review_only", false))
 	var registry_status := String(entry.get("status", ""))
+	if faction_adaptation and not review_only:
+		return {"registered": false, "skipped_for_civilization": true}
 	if not String(entry.get("resolution_error", "")).is_empty():
 		return _fail_closed(model, preserve_names, String(entry.resolution_error), source, candidate_id)
 	var packed := load(source) as PackedScene

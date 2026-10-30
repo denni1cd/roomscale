@@ -279,9 +279,12 @@ func _build_room() -> void:
 
 
 func _build_legacy_room_shell(room: Node3D, floor_center: Vector3, floor_height: float) -> void:
-	_add_box(room, "WallBack", Vector3(ROOM_WIDTH, WALL_HEIGHT, 2.0), Vector3(floor_center.x, floor_height + WALL_HEIGHT * 0.5, floor_center.z - ROOM_DEPTH * 0.5), Color("d9c9aa"), 0.94)
-	_add_box(room, "WallLeft", Vector3(2.0, WALL_HEIGHT, ROOM_DEPTH), Vector3(floor_center.x - ROOM_WIDTH * 0.5, floor_height + WALL_HEIGHT * 0.5, floor_center.z), Color("c6b99f"), 0.95)
-	_add_box(room, "WallRight", Vector3(2.0, WALL_HEIGHT, ROOM_DEPTH), Vector3(floor_center.x + ROOM_WIDTH * 0.5, floor_height + WALL_HEIGHT * 0.5, floor_center.z), Color("c6b99f"), 0.95)
+	var back := _add_box(room, "WallBack", Vector3(ROOM_WIDTH, WALL_HEIGHT, 2.0), Vector3(floor_center.x, floor_height + WALL_HEIGHT * 0.5, floor_center.z - ROOM_DEPTH * 0.5), Color("d9c9aa"), 0.94)
+	back.material_override = MaterialLibrary.get_material("paint", Color("d9c9aa"), 0.94)
+	var left := _add_box(room, "WallLeft", Vector3(2.0, WALL_HEIGHT, ROOM_DEPTH), Vector3(floor_center.x - ROOM_WIDTH * 0.5, floor_height + WALL_HEIGHT * 0.5, floor_center.z), Color("c6b99f"), 0.95)
+	left.material_override = MaterialLibrary.get_material("paint", Color("c6b99f"), 0.95)
+	var right := _add_box(room, "WallRight", Vector3(2.0, WALL_HEIGHT, ROOM_DEPTH), Vector3(floor_center.x + ROOM_WIDTH * 0.5, floor_height + WALL_HEIGHT * 0.5, floor_center.z), Color("c6b99f"), 0.95)
+	right.material_override = MaterialLibrary.get_material("paint", Color("c6b99f"), 0.95)
 	_add_box(room, "BaseboardBack", Vector3(ROOM_WIDTH, 3.0, 1.0), Vector3(floor_center.x, floor_height + 1.5, floor_center.z - ROOM_DEPTH * 0.5 + 1.0), Color("76583f"), 0.78)
 	_add_box(room, "BaseboardLeft", Vector3(1.0, 3.0, ROOM_DEPTH), Vector3(floor_center.x - ROOM_WIDTH * 0.5 + 1.0, floor_height + 1.5, floor_center.z), Color("76583f"), 0.78)
 	_add_box(room, "BaseboardRight", Vector3(1.0, 3.0, ROOM_DEPTH), Vector3(floor_center.x + ROOM_WIDTH * 0.5 - 1.0, floor_height + 1.5, floor_center.z), Color("76583f"), 0.78)
@@ -314,7 +317,9 @@ func _build_data_room_shell(room: Node3D, shell: Dictionary) -> void:
 			_cutaway_wall_side = side
 		var side_length := float(room_dimensions[0]) if side in ["north", "south"] else float(room_dimensions[1])
 		var appearance_value: Variant = wall.get("appearance", {})
-		var appearance: Dictionary = appearance_value if appearance_value is Dictionary else {}
+		var appearance: Dictionary = appearance_value.duplicate(true) if appearance_value is Dictionary else {}
+		if not appearance.has("material") or String(appearance.get("material", "")).is_empty():
+			appearance["material"] = "paint"
 		var wall_color := _appearance_color(appearance, "base_color", Color("d9c9aa"))
 		var openings_value: Variant = wall.get("openings", [])
 		var openings: Array = openings_value if openings_value is Array else []

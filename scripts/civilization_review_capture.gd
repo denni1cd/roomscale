@@ -112,7 +112,11 @@ func run() -> void:
 		var citizen_camera_yaw := atan2(citizen_inward.x, citizen_inward.z) - gameplay_citizen.global_rotation.y
 		if not await capture("citizens-gameplay-distance", gameplay_citizen.global_position + Vector3.UP * 0.25, 12.0, 26.0, citizen_camera_yaw, gameplay_citizen):
 			return
-	if not await capture("citizen-close", citizens[0].global_position + Vector3.UP * 0.25, 1.8, 18.0, 0.3, citizens[0]):
+	var close_citizen := select_clear_gameplay_citizen(citizens, scene.get("_room_definition")) if OS.get_environment("ROOMSCALE_ART_REGISTRY_MODE") == "review_showcase" else citizens[0] as Node3D
+	if close_citizen == null:
+		finish(false, "Review showcase could not select a clear citizen close-up subject")
+		return
+	if not await capture("citizen-close", close_citizen.global_position + Vector3.UP * 0.25, 1.8, 18.0, 0.3, close_citizen):
 		return
 	if sim == null:
 		var navigation := scene.get_node("SurfaceNavigation")

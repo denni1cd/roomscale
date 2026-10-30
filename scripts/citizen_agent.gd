@@ -9,6 +9,7 @@ const Materials := preload("res://scripts/visuals/material_library.gd")
 const CitizenArtAdapter := preload("res://scripts/visuals/citizen_art_adapter.gd")
 const CombatPresentation := preload("res://scripts/combat_presentation.gd")
 static var _shared_meshes: Dictionary = {}
+static var _shared_tunic_mesh: ArrayMesh
 
 var citizen_id := -1
 var civilization_id := "legacy"
@@ -541,14 +542,29 @@ func _build_figure() -> void:
 	var model := Node3D.new()
 	model.name = "Figure"
 	add_child(model)
+	var scavenger := civilization_id == "scavenger" or civilization_id.begins_with("scavenger_")
 	var coat_colors := [Color("a87950"), Color("638891"), Color("a96250"), Color("778d53"), Color("b29b5d")]
-	var coat := _material(coat_colors[citizen_id % coat_colors.size()], 0.82)
-	var brass := _material(Color("f2c65e"), 0.42)
-	var leather := _material(Color("574537"), 0.8)
-	var face := _material(Color("edcba2"), 0.9)
-	_body = _box(model, "Body", Vector3(0.15, 0.21, 0.11), Vector3(0.0, 0.23, 0.0), coat)
+	if scavenger:
+		coat_colors = [Color("536c8b"), Color("695647"), Color("596b70"), Color("72584a"), Color("68744f")]
+	var coat_color: Color = coat_colors[citizen_id % coat_colors.size()]
+	var coat := Materials.get_material("citizen_fabric", coat_color, 0.9)
+	var brass := Materials.get_material("brass", Color("c39150") if scavenger else Color("f2c65e"), 0.42)
+	var leather := Materials.get_material("leather", Color("493d35") if scavenger else Color("574537"), 0.84)
+	var face := Materials.get_material("skin", Color("edcba2"), 0.9)
+	_body = MeshInstance3D.new()
+	_body.name = "Body"
+	_body.mesh = _tailored_tunic_mesh()
+	_body.position = Vector3(0.0, 0.23, 0.0)
+	_body.material_override = coat
+	model.add_child(_body)
+	# The fallback citizen wears a fitted, layered work tunic. These broad seams
+	# survive gameplay distance and remain subordinate to faction-specific assets.
+	G.box(_body, "TunicYoke", Vector3(0.142, 0.026, 0.101), Vector3(0.0, 0.067, 0.0), "citizen_fabric", coat_color.darkened(0.12), 0.009)
+	G.box(_body, "TunicPlacket", Vector3(0.012, 0.082, 0.014), Vector3(0.0, -0.002, 0.054), "canvas", coat_color.lightened(0.08), 0.004)
+	G.box(_body, "TunicHem", Vector3(0.146, 0.018, 0.104), Vector3(0.0, -0.087, 0.0), "leather", leather_color_for_citizen(scavenger), 0.006)
 	var head := _sphere(model, "Head", 0.068, Vector3(0.0, 0.395, 0.0), face)
-	var hat := _cylinder(model, "ClockworkCap", 0.09, 0.05, Vector3(0.0, 0.475, 0.0), brass)
+	var hat_material := Materials.get_material("citizen_fabric", Color("536c8b"), 0.9) if scavenger else brass
+	var hat := _cylinder(model, "ScavengerCap" if scavenger else "ClockworkCap", 0.09, 0.05, Vector3(0.0, 0.475, 0.0), hat_material)
 	var cap_brim := _cylinder(model, "CapBrim", 0.105, 0.018, Vector3(0.0, 0.448, 0.0), leather)
 	_left_arm = _capsule(model, "LeftArm", 0.023, 0.17, Vector3(-0.105, 0.235, 0.0), leather)
 	_right_arm = _capsule(model, "RightArm", 0.023, 0.17, Vector3(0.105, 0.235, 0.0), leather)
@@ -556,21 +572,32 @@ func _build_figure() -> void:
 	_right_leg = _capsule(model, "RightLeg", 0.025, 0.19, Vector3(0.045, 0.095, 0.0), leather)
 	_add_box(model, "Belt", Vector3(0.16, 0.035, 0.12), Vector3(0.0, 0.16, 0.0), brass)
 	for side in [-1.0, 1.0]:
-		var goggle := _cylinder(model, "Goggle%s" % side, 0.025, 0.018, Vector3(side * 0.031, 0.409, 0.059), brass)
+		var goggle_radius := 0.022 if scavenger else 0.025
+		var goggle := _cylinder(model, "Goggle%s" % side, goggle_radius, 0.018, Vector3(side * 0.031, 0.409, 0.059), brass)
 		goggle.rotation.x = PI * 0.5
-		var lens := _cylinder(model, "Lens%s" % side, 0.017, 0.02, Vector3(side * 0.031, 0.409, 0.07), Materials.get_material("glass", Color("204a53")))
+		var lens := _cylinder(model, "Lens%s" % side, 0.015 if scavenger else 0.017, 0.02, Vector3(side * 0.031, 0.409, 0.07), Materials.get_material("glass", Color("83a4a6") if scavenger else Color("204a53")))
 		lens.rotation.x = PI * 0.5
 		_box(model, "Boot%s" % side, Vector3(0.064, 0.045, 0.09), Vector3(side * 0.045, 0.025, 0.019), leather)
-		_box(model, "ShoulderPlate%s" % side, Vector3(0.056, 0.04, 0.066), Vector3(side * 0.099, 0.307, 0.0), brass)
+		_box(model, "ShoulderPlate%s" % side, Vector3(0.056, 0.04, 0.066), Vector3(side * 0.099, 0.307, 0.0), Materials.get_material("iron", Color("59646a")) if scavenger else brass)
 	_box(model, "Buckle", Vector3(0.037, 0.025, 0.016), Vector3(0, 0.173, 0.071), brass)
-	_role_badge = _box(model, "RoleChest", Vector3(0.085, 0.045, 0.02), Vector3(0, 0.28, 0.065), brass)
+	_role_badge = _box(model, "RoleChest", Vector3(0.062, 0.034, 0.016), Vector3(0.047, 0.285, 0.059), brass)
+	if scavenger:
+		var patch_colors := [Color("9c7650"), Color("b18a5b"), Color("566b77"), Color("7c654c")]
+		var patch := Materials.get_material("canvas", patch_colors[citizen_id % patch_colors.size()], 0.94)
+		var front_patch := _box(model, "ScavengerRepairPatch", Vector3(0.055, 0.07, 0.014), Vector3(-0.04, 0.235, 0.062), patch)
+		front_patch.rotation.z = -0.08
+		_box(model, "SalvageStrap", Vector3(0.025, 0.19, 0.014), Vector3(0.045, 0.24, 0.064), leather).rotation.z = -0.28
+		_box(model, "ToolPouch", Vector3(0.047, 0.052, 0.035), Vector3(0.085, 0.17, -0.09), leather)
+		_box(model, "CapPatch", Vector3(0.05, 0.023, 0.012), Vector3(0, 0.476, 0.083), patch)
+		for side in [-1.0, 1.0]:
+			_cylinder(model, "RepairRivet%s" % side, 0.007, 0.01, Vector3(-0.055 + (side + 1.0) * 0.025, 0.252, 0.071), brass)
 	_traversal_clip = Node3D.new()
 	_traversal_clip.name = "CableSafetyClip"
 	model.add_child(_traversal_clip)
 	_box(_traversal_clip, "SafetyLanyard", Vector3(0.015, 0.18, 0.015), Vector3(0.075, 0.11, 0), leather)
 	var clip := _cylinder(_traversal_clip, "CableClamp", 0.018, 0.045, Vector3(0.055, 0.021, 0), Materials.get_material("iron", Color("728990")))
 	clip.rotation.x = PI * 0.5
-	_role_pack = _box(model, "ExplorerPack", Vector3(0.115, 0.13, 0.065), Vector3(0, 0.255, -0.089), leather)
+	_role_pack = _box(model, "ExplorerPack", Vector3(0.125, 0.14, 0.075) if scavenger else Vector3(0.115, 0.13, 0.065), Vector3(0, 0.255, -0.089), leather)
 	_role_tool = Node3D.new()
 	_role_tool.name = "BuilderHammer"
 	_role_tool.position = Vector3(0.12, 0.22, 0.035)
@@ -795,6 +822,64 @@ func _sphere(parent: Node3D, node_name: String, radius: float, at: Vector3, mate
 	item.material_override = material
 	parent.add_child(item)
 	return item
+
+
+func _tailored_tunic_mesh() -> ArrayMesh:
+	if _shared_tunic_mesh != null:
+		return _shared_tunic_mesh
+	var surface := SurfaceTool.new()
+	surface.begin(Mesh.PRIMITIVE_TRIANGLES)
+	const SEGMENTS := 16
+	var profile := [
+		Vector3(-0.105, 0.070, 0.050),
+		Vector3(-0.082, 0.078, 0.056),
+		Vector3(-0.044, 0.067, 0.049),
+		Vector3(0.022, 0.074, 0.051),
+		Vector3(0.070, 0.088, 0.056),
+		Vector3(0.104, 0.040, 0.034),
+	]
+	for ring in range(profile.size() - 1):
+		var lower: Vector3 = profile[ring]
+		var upper: Vector3 = profile[ring + 1]
+		for segment in range(SEGMENTS):
+			var u0 := float(segment) / SEGMENTS
+			var u1 := float(segment + 1) / SEGMENTS
+			var a0 := TAU * u0
+			var a1 := TAU * u1
+			var lower_a := Vector3(cos(a0) * lower.y, lower.x, sin(a0) * lower.z)
+			var lower_b := Vector3(cos(a1) * lower.y, lower.x, sin(a1) * lower.z)
+			var upper_a := Vector3(cos(a0) * upper.y, upper.x, sin(a0) * upper.z)
+			var upper_b := Vector3(cos(a1) * upper.y, upper.x, sin(a1) * upper.z)
+			_append_tunic_triangle(surface, lower_a, upper_b, lower_b, Vector2(u0, float(ring) / profile.size()), Vector2(u1, float(ring + 1) / profile.size()), Vector2(u1, float(ring) / profile.size()))
+			_append_tunic_triangle(surface, lower_a, upper_a, upper_b, Vector2(u0, float(ring) / profile.size()), Vector2(u0, float(ring + 1) / profile.size()), Vector2(u1, float(ring + 1) / profile.size()))
+	var bottom_center := Vector3(0.0, profile[0].x, 0.0)
+	var top_center := Vector3(0.0, profile[-1].x, 0.0)
+	for segment in range(SEGMENTS):
+		var a0 := TAU * float(segment) / SEGMENTS
+		var a1 := TAU * float(segment + 1) / SEGMENTS
+		var bottom_a := Vector3(cos(a0) * profile[0].y, profile[0].x, sin(a0) * profile[0].z)
+		var bottom_b := Vector3(cos(a1) * profile[0].y, profile[0].x, sin(a1) * profile[0].z)
+		var top_a := Vector3(cos(a0) * profile[-1].y, profile[-1].x, sin(a0) * profile[-1].z)
+		var top_b := Vector3(cos(a1) * profile[-1].y, profile[-1].x, sin(a1) * profile[-1].z)
+		_append_tunic_triangle(surface, bottom_center, bottom_b, bottom_a, Vector2.ZERO, Vector2.ZERO, Vector2.ZERO)
+		_append_tunic_triangle(surface, top_center, top_a, top_b, Vector2.ZERO, Vector2.ZERO, Vector2.ZERO)
+	surface.index()
+	surface.generate_normals()
+	_shared_tunic_mesh = surface.commit()
+	return _shared_tunic_mesh
+
+
+static func _append_tunic_triangle(surface: SurfaceTool, a: Vector3, b: Vector3, c: Vector3, uv_a: Vector2, uv_b: Vector2, uv_c: Vector2) -> void:
+	surface.set_uv(uv_a)
+	surface.add_vertex(a)
+	surface.set_uv(uv_b)
+	surface.add_vertex(b)
+	surface.set_uv(uv_c)
+	surface.add_vertex(c)
+
+
+static func leather_color_for_citizen(scavenger: bool) -> Color:
+	return Color("493d35") if scavenger else Color("574537")
 
 
 func _cylinder(parent: Node3D, node_name: String, radius: float, height: float, at: Vector3, material: Material) -> MeshInstance3D:

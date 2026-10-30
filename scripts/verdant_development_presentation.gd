@@ -8,6 +8,8 @@ extends Node
 
 var _refresh_timer := 0.0
 var _active := false
+const MaterialLibrary := preload("res://scripts/visuals/material_library.gd")
+const BasePresentation := preload("res://scripts/civilization_presentation.gd")
 
 
 func _ready() -> void:
@@ -174,12 +176,20 @@ func _build_nursery_tree(root: Node3D, stage: String) -> void:
 		var tip := Vector3(side * 2.25 * growth, 1.4 * growth, -1.25)
 		_segment(root, "NurseryFork%s" % side, fork, tip, 0.075, Color("81603e"))
 		if stage != "FRAME":
-			_sphere(root, "NurseryCrown%s" % side, tip + Vector3.UP * 0.18, Vector3(2.8, 0.8, 2.25) * growth, Color("567d40") if side < 0 else Color("7a984e"))
-			_leaf(root, "NurseryShoot%s" % side, tip + Vector3(0, 0.57, 0.1), Vector3(1.3, 0.12, 0.65) * growth, Color("8fae60"), side * 0.7)
+			var leaf_center := tip + Vector3(0.0, 0.28, 0.05)
+			var main_leaf := _leaf(root, "NurseryShoot%s" % side, leaf_center, Vector3(2.7, 0.14, 0.52) * growth, Color("567d40") if side < 0 else Color("7a984e"), -side * 0.18)
+			main_leaf.rotation.z = side * 0.06
+			for leaflet_index in range(2):
+				var distance := 0.48 + float(leaflet_index) * 0.72
+				for leaflet_side in [-1.0, 1.0]:
+					var leaflet_at := Vector3(side * distance, 1.18 * growth, -1.5 + leaflet_side * 0.3)
+					var leaflet := _leaf(root, "NurseryLeaflet%s_%d_%s" % [side, leaflet_index, leaflet_side], leaflet_at, Vector3(0.9, 0.10, 0.30) * growth, Color("638947") if leaflet_side < 0 else Color("85a857"), side * 0.25 + PI * 0.5)
+					leaflet.rotation.z = leaflet_side * 0.08
 		if stage == "COMPLETE":
 			_magic_bloom(root, "NurseryMagic%s" % side, tip + Vector3(0, 0.55, 0.8), 0.19)
 	if stage == "COMPLETE":
-		_sphere(root, "NurseryHighCrown", top + Vector3.UP * 0.12, Vector3(2.7, 0.75, 2.1), Color("5e8845"))
+		var top_leaf := _leaf(root, "NurseryHighCrown", top + Vector3.UP * 0.25, Vector3(2.35, 0.13, 0.52), Color("5e8845"), 0.1)
+		top_leaf.rotation.z = 0.035
 		_magic_bloom(root, "NurseryTopBloom", top + Vector3.UP * 0.52, 0.22)
 
 
@@ -199,9 +209,14 @@ func _magic_bloom(parent: Node3D, node_name: String, at: Vector3, radius: float)
 
 
 func _material(color: Color, roughness: float) -> StandardMaterial3D:
-	var material := StandardMaterial3D.new()
-	material.albedo_color = color
-	material.roughness = roughness
+	var category := "paint"
+	if color.g > color.r * 1.08 and color.g > color.b * 1.05:
+		category = "living_organic"
+	elif color.r > color.b * 1.15 and roughness > 0.55:
+		category = "wood"
+	var material := MaterialLibrary.get_material(category, color, roughness).duplicate() as StandardMaterial3D
+	if category == "living_organic":
+		material.cull_mode = BaseMaterial3D.CULL_DISABLED
 	return material
 
 
@@ -246,8 +261,11 @@ func _segment(parent: Node3D, node_name: String, start: Vector3, finish: Vector3
 
 func _leaf(parent: Node3D, node_name: String, at: Vector3, size: Vector3, color: Color, yaw: float) -> MeshInstance3D:
 	var leaf := _sphere(parent, node_name, at, size, color)
+	leaf.mesh = BasePresentation._shared_leaf_mesh()
 	leaf.rotation.y = yaw
 	leaf.rotation.z = 0.12
+	var material := leaf.material_override as StandardMaterial3D
+	material.cull_mode = BaseMaterial3D.CULL_DISABLED
 	return leaf
 
 
