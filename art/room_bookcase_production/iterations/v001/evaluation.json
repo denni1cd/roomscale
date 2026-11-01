@@ -1,0 +1,102 @@
+{
+  "candidate_id": "room_bookcase_production-v001",
+  "created_at_utc": "2026-11-01T00:00:00+00:00",
+  "decision": "promote",
+  "defects": [],
+  "hard_fail_reasons": [],
+  "incumbent_candidate_id": "",
+  "incumbent_comparison": "First candidate for this semantic identity. Matched Batch 0 room views show a generic bookcase with uniformly colored book forms; v001 replaces it with a fitted workshop parts rack featuring a face frame, four shelf levels, nine fitted trays/drawers, brass labels and organized mechanical stock. This is a material construction and role-identity improvement, not recoloring.",
+  "incumbent_comparison_result": "first_pass",
+  "likely_causes": [],
+  "next_action_hypothesis": "Promote v001 under its new semantic ID; keep the RoomDefinition object, opening and collision untouched.",
+  "observations": {
+    "art_direction_fit": "The equipment cabinet supports the clockwork workshop and room context.",
+    "close_up_quality": "Close views resolve tray fronts, labels, hinges, hardware and organized mechanical stock.",
+    "gameplay_readability": "Rack identity remains clear at Room B camera without changing navigation or simulation geometry.",
+    "geometric_detail": "The close render shows four shelf levels, three organized bays, fitted trays, lower doors and a substantial frame.",
+    "material_realism": "Oak grain and metal hardware show separate material response.",
+    "proportion": "Godot bounds fit the specified 40 x 52 x 20 inch rack envelope.",
+    "scale_fidelity": "The measured envelope matches the RoomDefinition presentation dimensions.",
+    "semantic_recognizability": "The matched Room B view reads as workshop storage for parts rather than a household library.",
+    "silhouette_quality": "A tall face frame, crown and base create a clear cabinet silhouette at room scale.",
+    "surface_variation": "Wood grain, dark recesses, brass labels and stored parts give visible variation.",
+    "technical_integration": "Godot validates and loads the exact v001 GLB through the production visual resolver."
+  },
+  "render_evidence": [
+    "art/room_bookcase_production/iterations/v001/render-runs/run-001/asset-three-quarter.png",
+    "art/room_bookcase_production/iterations/v001/render-runs/run-001/asset-detail.png",
+    "art/room_bookcase_production/iterations/v001/render-runs/run-001/room-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 5,
+    "close_up_quality": 4,
+    "gameplay_readability": 5,
+    "geometric_detail": 5,
+    "material_realism": 4,
+    "proportion": 5,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 4,
+    "surface_variation": 4,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "Yes",
+      "evidence": "At close distance, rails, trays, labels, doors and stored parts remain coherent without assembly defects.",
+      "pass": true
+    },
+    "craftsmanship": {
+      "answer": "Yes",
+      "edge_treatment": {
+        "evidence": "The frame, shelf nosings and tray fronts have finished edges.",
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "Brass label plates, handles and fasteners give the storage readable hardware.",
+        "pass": true
+      },
+      "joins": {
+        "evidence": "Face-frame rails, stiles, shelves and doors align as cabinet joinery.",
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "Fitted storage, labels, front frame, hardware and organized parts read as finished cabinetry.",
+        "pass": true
+      },
+      "material_response": {
+        "evidence": "Oak grain, dark recesses and metal fittings have distinct roughness and highlights.",
+        "pass": true
+      },
+      "surface_variation": {
+        "evidence": "Wood grain, stock and recesses vary across the surface.",
+        "pass": true
+      },
+      "thickness": {
+        "evidence": "Cabinet sides, shelves, doors and tray fronts have convincing thickness.",
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "evidence": "A viewer reads the grain-finished face-frame cabinet as a believable workshop parts rack.",
+      "pass": true
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "No photograph is attached to this ArtBrief; review is based on the construction brief and production render.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  }
+}

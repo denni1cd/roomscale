@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "method": "blender_authored_modular_production_asset_with_embedded_pbr",
+  "instructions": "A believable, fitted workshop storage cabinet sized to the Room B parts-rack footprint. Show a substantial face frame, moulded crown, plinth, four shelves, three bays of removable parts trays, organized replacement gears and hardware, and a lower pair of paneled doors. Do not dress it as a library bookcase.",
+  "parameters": {
+    "outputs": [
+      "asset.glb",
+      "generation-record.json"
+    ],
+    "asset_type": "bookcase",
+    "geometry_units": "inches"
+  },
+  "source_inputs": [
+    "scripts/art_factory/generators/production_batch01_blender.py",
+    "rooms/room_b.json"
+  ],
+  "tool": "Blender background authoring through the RoomScale Art Factory generator",
+  "tool_version": "Blender 5.2.3",
+  "post_processing": [
+    "apply manufactured edge bevel and weighted normals",
+    "unwrap authored components with scale-aware UVs",
+    "batch meshes by shared material",
+    "export GLB with embedded base-colour, roughness, and tangent-normal textures"
+  ],
+  "material_method": "Embedded, per-material PBR base-colour, roughness, and tangent-normal maps, with separate glazing and metal responses.",
+  "import_configuration": {
+    "format": "GLB PackedScene with embedded PBR textures",
+    "units": "inches",
+    "axes": "Blender X width / Y depth / Z up exported to Godot X width / Y up / Z depth",
+    "renderer": "gl_compatibility",
+    "normalization": "fit source geometry to ArtBrief dimensions without altering RoomDefinition"
+  },
+  "deterministic_seed": 2513,
+  "generator_command": [
+    "python",
+    "{project_root}/scripts/art_factory/generators/production_batch01_blender.py"
+  ]
+}

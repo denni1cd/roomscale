@@ -1,0 +1,22 @@
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)
+
+Blender quit
+C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale\scripts\art_factory\generators\production_batch01_blender.py:314: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  material.use_nodes = True
+Traceback (most recent call last):
+  File "C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale\scripts\art_factory\generators\production_batch01_blender.py", line 890, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale\scripts\art_factory\generators\production_batch01_blender.py", line 884, in main
+    run_blender_generation(arguments[0], Path(arguments[1]))
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale\scripts\art_factory\generators\production_batch01_blender.py", line 858, in run_blender_generation
+    builder(mats)
+    ~~~~~~~^^^^^^
+  File "C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale\scripts\art_factory\generators\production_batch01_blender.py", line 210, in build_housing
+    framed_opening(*door, 1.2, mats, "Housing entry", True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale\scripts\art_factory\generators\production_batch01_blender.py", line 698, in framed_opening
+    trim = mats["oak"]
+           ~~~~^^^^^^^
+TypeError: string indices must be integers, not 'str'

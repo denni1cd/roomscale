@@ -8,9 +8,11 @@ static func decorate(settlement: Node3D, definition: Dictionary, resolver: Varia
 		var dimensions := _asset_dimensions(name)
 		var descriptor := {"kind": asset_id, "appearance": {"asset_id": asset_id}, "dimensions": dimensions}
 		var uses_registered_art := false
+		var uses_self_contained_model := false
 		if resolver != null:
 			var recipe: Dictionary = resolver.resolve(descriptor)
 			uses_registered_art = bool(recipe.get("asset_registry_required", false))
+			uses_self_contained_model = uses_registered_art and String(recipe.get("asset", "")).get_extension().to_lower() == "glb"
 		if uses_registered_art:
 			_hide_legacy_meshes(building)
 			building.set_meta("accepted_art_visible", true)
@@ -19,6 +21,8 @@ static func decorate(settlement: Node3D, definition: Dictionary, resolver: Varia
 			asset_root.set_meta("presentation_only", true)
 			building.add_child(asset_root)
 			resolver.render(asset_root, descriptor, func(_parent: Node3D, _object: Dictionary) -> void: pass)
+		if uses_self_contained_model:
+			continue
 		var visual := Node3D.new()
 		visual.name = "ClockworkDetails"
 		building.add_child(visual)

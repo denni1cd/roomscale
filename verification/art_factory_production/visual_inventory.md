@@ -1,15 +1,15 @@
 # RoomScale Full Visible-Art Inventory
 
-Generated: `2026-10-30T20:53:10+00:00`
+Generated: `2026-11-01T02:37:18+00:00`
 
 Starting state: POC 2.5 closure `1e111d37325e7ad00030266efec201796b7fc07d`
 Purpose: production prioritization only; no POC 2.5 reopening.
 
 ## Automated coverage
 
-- RoomDefinition files: 20 (2 playable Room A/B; 18 candidate/scenario variants).
-- Room object records / unique object classes: 294 / 79.
-- Canonical Art Factory registry entries: 11; visual catalog entries: 10; material categories: 17.
+- RoomDefinition files: 21 (2 playable Room A/B; 19 candidate/scenario variants).
+- Room object records / unique object classes: 318 / 79.
+- Canonical Art Factory registry entries: 12; visual catalog entries: 10; material categories: 17.
 - Runtime GDScript files with procedural/dynamic geometry: 12; geometry builder sites: 79.
 - Active scenes with visible art nodes or a runtime presentation controller: 1.
 - Catalogued asset classes and presentation systems: 95.
@@ -97,7 +97,7 @@ The inventory joins source-defined room content with the canonical/review asset 
 | Tier 3 | `room_low_bright_green_stool` — Low bright-green stool | 0 | planned `room_low_bright_green_stool`; stool → procedural fallback | Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below. | reuse shared quality furniture where it fits; use source-conditioned Art Factory production for distinctive photographed objects |
 | Tier 3 | `room_map_wall_art` — map-wall-art | 0 | planned `room_map_wall_art`; framed_map → procedural fallback | Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below. | reuse shared quality furniture where it fits; use source-conditioned Art Factory production for distinctive photographed objects |
 | Tier 3 | `room_packing_crate` — Packing Crate | 0 | planned `room_packing_crate`; box → procedural fallback | Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below. | reuse shared quality furniture where it fits; use source-conditioned Art Factory production for distinctive photographed objects |
-| Tier 3 | `room_parts_rack` — Parts Rack | 1 | planned `room_parts_rack`; bookcase → catalog detailed_furniture fallback | Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below. | reuse shared quality furniture where it fits; use source-conditioned Art Factory production for distinctive photographed objects |
+| Tier 3 | `room_parts_rack` — Parts Rack | 1 | planned `room_parts_rack`; bookcase → catalog detailed_furniture fallback; room_bookcase_production → Art Factory registry asset | Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below. | reuse shared quality furniture where it fits; use source-conditioned Art Factory production for distinctive photographed objects |
 | Tier 3 | `room_raised_stone_hearth` — Raised stone hearth | 0 | planned `room_raised_stone_hearth`; fireplace hearth → procedural fallback | Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below. | reuse shared quality furniture where it fits; use source-conditioned Art Factory production for distinctive photographed objects |
 | Tier 3 | `room_room_plant` — Room Plant | 1 | planned `room_room_plant`; plant → procedural fallback | Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below. | reuse shared quality furniture where it fits; use source-conditioned Art Factory production for distinctive photographed objects |
 | Tier 3 | `rug` — Rug | 1 | planned `rug`; rug → procedural fallback | Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below. | reuse shared quality furniture where it fits; use source-conditioned Art Factory production for distinctive photographed objects |

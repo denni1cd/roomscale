@@ -2,18 +2,18 @@
   "schema_version": 1,
   "title": "RoomScale Art Factory Production Deployment — Full Visible-Art Inventory",
   "source_commit": "1e111d37325e7ad00030266efec201796b7fc07d",
-  "generated_at_utc": "2026-10-30T20:53:10+00:00",
+  "generated_at_utc": "2026-11-01T02:37:18+00:00",
   "inventory_scope": "Playable room definitions, reconstructed/candidate RoomDefinitions, canonical and review registries, visual/material catalogs, static scenes, and runtime code that creates visible geometry/material/light/presentation nodes.",
   "coverage": {
-    "room_definition_files_scanned": 20,
+    "room_definition_files_scanned": 21,
     "playable_room_definition_files": [
       "rooms/room_a.json",
       "rooms/room_b.json"
     ],
-    "candidate_and_scenario_room_definition_files": 18,
-    "room_object_records_scanned": 294,
+    "candidate_and_scenario_room_definition_files": 19,
+    "room_object_records_scanned": 318,
     "unique_room_object_classes": 79,
-    "art_factory_production_registry_entries": 11,
+    "art_factory_production_registry_entries": 12,
     "art_factory_production_registry_ids": [
       "citizen",
       "desk",
@@ -22,6 +22,7 @@
       "hammock_with_stand",
       "office_chair",
       "rocking_chair",
+      "room_bookcase_production",
       "settlement_depot",
       "settlement_housing",
       "settlement_workarea",
@@ -271,6 +272,13 @@
       "scope": "RoomDefinition candidate or scenario",
       "object_count": 12,
       "shell_wall_count": 0
+    },
+    {
+      "path": "rooms/room_photo_luna.json",
+      "id": "room_photo_luna",
+      "scope": "RoomDefinition candidate or scenario",
+      "object_count": 24,
+      "shell_wall_count": 4
     },
     {
       "path": "rooms/room_poc4.json",
@@ -720,175 +728,175 @@
         },
         {
           "function": "_build_octagonal_glass_table",
-          "line": 832,
+          "line": 862,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_build_octagonal_glass_table",
-          "line": 834,
+          "line": 864,
           "constructors": [
             "CylinderMesh.new()"
           ]
         },
         {
           "function": "_build_stone_fireplace",
-          "line": 874,
+          "line": 904,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_build_stone_fireplace",
-          "line": 876,
+          "line": 906,
           "constructors": [
             "CylinderMesh.new()"
           ]
         },
         {
           "function": "_build_floor_lamp",
-          "line": 964,
+          "line": 994,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_build_floor_lamp",
-          "line": 966,
+          "line": 996,
           "constructors": [
             "CylinderMesh.new()"
           ]
         },
         {
           "function": "_build_floor_seat",
-          "line": 985,
+          "line": 1015,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_build_floor_seat",
-          "line": 997,
+          "line": 1027,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_build_floor_seat",
-          "line": 1003,
+          "line": 1033,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_build_floor_seat",
-          "line": 1005,
+          "line": 1035,
           "constructors": [
             "CylinderMesh.new()"
           ]
         },
         {
           "function": "_add_hammock_fabric_stripe",
-          "line": 1088,
+          "line": 1118,
           "constructors": [
             "SurfaceTool.new()"
           ]
         },
         {
           "function": "_add_hammock_fabric_stripe",
-          "line": 1116,
+          "line": 1146,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_build_blanket_pile",
-          "line": 1207,
+          "line": 1237,
           "constructors": [
             "SurfaceTool.new()"
           ]
         },
         {
           "function": "_build_blanket_pile",
-          "line": 1236,
+          "line": 1266,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_add_art_triangle",
-          "line": 1275,
+          "line": 1305,
           "constructors": [
             "SurfaceTool.new()"
           ]
         },
         {
           "function": "_add_art_triangle",
-          "line": 1281,
+          "line": 1311,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_add_rod_between",
-          "line": 1295,
+          "line": 1325,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_add_rod_between",
-          "line": 1297,
+          "line": 1327,
           "constructors": [
             "BoxMesh.new()"
           ]
         },
         {
           "function": "_add_steam_emitter",
-          "line": 1915,
+          "line": 1945,
           "constructors": [
             "SphereMesh.new()"
           ]
         },
         {
           "function": "_add_box",
-          "line": 1928,
+          "line": 1958,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_add_box",
-          "line": 1930,
+          "line": 1960,
           "constructors": [
             "BoxMesh.new()"
           ]
         },
         {
           "function": "_add_cylinder",
-          "line": 1940,
+          "line": 1970,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_add_cylinder",
-          "line": 1942,
+          "line": 1972,
           "constructors": [
             "CylinderMesh.new()"
           ]
         },
         {
           "function": "_add_sphere",
-          "line": 1954,
+          "line": 1984,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_add_sphere",
-          "line": 1956,
+          "line": 1986,
           "constructors": [
             "SphereMesh.new()"
           ]
@@ -2146,6 +2154,7 @@
       "display_name": "Bright green blanket beneath hammock",
       "room_definition_kind": "blanket",
       "source_paths": [
+        "rooms/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-4/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-5/room_photo_luna.json",
@@ -2153,6 +2162,30 @@
         "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json"
       ],
       "room_instances": [
+        {
+          "room_id": "room_photo_luna",
+          "room_definition": "rooms/room_photo_luna.json",
+          "object_id": "bright-blanket-pile",
+          "kind": "blanket",
+          "dimensions": [
+            34,
+            5,
+            18
+          ],
+          "blocks_navigation": false,
+          "has_surface": false,
+          "runtime_visual_resolution": {
+            "runtime_semantic_id": "blanket",
+            "runtime_catalog_id": "blanket_pile",
+            "runtime_art_factory_asset_id": "blanket",
+            "runtime_art_factory_registry_active": false,
+            "runtime_source": "existing_procedural",
+            "runtime_source_type": "procedural fallback",
+            "catalog_asset": null,
+            "catalog_fallback": "existing_procedural",
+            "strict_gate_result": null
+          }
+        },
         {
           "room_id": "room_photo_luna",
           "room_definition": "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
@@ -2287,7 +2320,7 @@
       "runtime_visual_resolutions": [
         {
           "runtime_semantic_id": "blanket",
-          "runtime_catalog_id": "fabric_pile",
+          "runtime_catalog_id": "blanket_pile",
           "runtime_art_factory_asset_id": "blanket",
           "runtime_art_factory_registry_active": false,
           "runtime_source": "existing_procedural",
@@ -2298,7 +2331,7 @@
         },
         {
           "runtime_semantic_id": "blanket",
-          "runtime_catalog_id": "blanket_pile",
+          "runtime_catalog_id": "fabric_pile",
           "runtime_art_factory_asset_id": "blanket",
           "runtime_art_factory_registry_active": false,
           "runtime_source": "existing_procedural",
@@ -2309,7 +2342,7 @@
         }
       ],
       "active_room_definition_instances": 0,
-      "definition_occurrences_across_playable_and_candidate_rooms": 5,
+      "definition_occurrences_across_playable_and_candidate_rooms": 6,
       "max_dimensions_inches_xyz": [
         34.0,
         5.0,
@@ -2320,7 +2353,7 @@
       "approx_screen_space_importance": "high for large furniture; dimensions and runtime source are listed",
       "repetition_frequency": {
         "playable_room_instances": 0,
-        "room_definition_examples": 5
+        "room_definition_examples": 6
       },
       "current_visual_quality": "Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below.",
       "programmer_art_or_primitive": true,
@@ -2455,6 +2488,7 @@
       "display_name": "cabinet-collectibles-lower",
       "room_definition_kind": "boxed_collectibles",
       "source_paths": [
+        "rooms/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-4/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-5/room_photo_luna.json",
@@ -2462,6 +2496,30 @@
         "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json"
       ],
       "room_instances": [
+        {
+          "room_id": "room_photo_luna",
+          "room_definition": "rooms/room_photo_luna.json",
+          "object_id": "cabinet-collectibles-lower",
+          "kind": "boxed_collectibles",
+          "dimensions": [
+            16,
+            8,
+            29
+          ],
+          "blocks_navigation": false,
+          "has_surface": false,
+          "runtime_visual_resolution": {
+            "runtime_semantic_id": "boxed_collectibles",
+            "runtime_catalog_id": "boxed_collectibles",
+            "runtime_art_factory_asset_id": "boxed_collectibles",
+            "runtime_art_factory_registry_active": false,
+            "runtime_source": "existing_procedural",
+            "runtime_source_type": "procedural fallback",
+            "catalog_asset": null,
+            "catalog_fallback": "existing_procedural",
+            "strict_gate_result": null
+          }
+        },
         {
           "room_id": "room_photo_luna",
           "room_definition": "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
@@ -2596,7 +2654,7 @@
       "runtime_visual_resolutions": [
         {
           "runtime_semantic_id": "boxed_collectibles",
-          "runtime_catalog_id": "box",
+          "runtime_catalog_id": "boxed_collectibles",
           "runtime_art_factory_asset_id": "boxed_collectibles",
           "runtime_art_factory_registry_active": false,
           "runtime_source": "existing_procedural",
@@ -2607,7 +2665,7 @@
         },
         {
           "runtime_semantic_id": "boxed_collectibles",
-          "runtime_catalog_id": "boxed_collectibles",
+          "runtime_catalog_id": "box",
           "runtime_art_factory_asset_id": "boxed_collectibles",
           "runtime_art_factory_registry_active": false,
           "runtime_source": "existing_procedural",
@@ -2618,7 +2676,7 @@
         }
       ],
       "active_room_definition_instances": 0,
-      "definition_occurrences_across_playable_and_candidate_rooms": 5,
+      "definition_occurrences_across_playable_and_candidate_rooms": 6,
       "max_dimensions_inches_xyz": [
         17.0,
         8.0,
@@ -2629,7 +2687,7 @@
       "approx_screen_space_importance": "high for large furniture; dimensions and runtime source are listed",
       "repetition_frequency": {
         "playable_room_instances": 0,
-        "room_definition_examples": 5
+        "room_definition_examples": 6
       },
       "current_visual_quality": "Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below.",
       "programmer_art_or_primitive": true,
@@ -2666,6 +2724,7 @@
       "display_name": "cabinet-collectibles-upper",
       "room_definition_kind": "boxed_collectibles",
       "source_paths": [
+        "rooms/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-4/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-5/room_photo_luna.json",
@@ -2673,6 +2732,30 @@
         "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json"
       ],
       "room_instances": [
+        {
+          "room_id": "room_photo_luna",
+          "room_definition": "rooms/room_photo_luna.json",
+          "object_id": "cabinet-collectibles-upper",
+          "kind": "boxed_collectibles",
+          "dimensions": [
+            14,
+            8,
+            24
+          ],
+          "blocks_navigation": false,
+          "has_surface": false,
+          "runtime_visual_resolution": {
+            "runtime_semantic_id": "boxed_collectibles",
+            "runtime_catalog_id": "boxed_collectibles",
+            "runtime_art_factory_asset_id": "boxed_collectibles",
+            "runtime_art_factory_registry_active": false,
+            "runtime_source": "existing_procedural",
+            "runtime_source_type": "procedural fallback",
+            "catalog_asset": null,
+            "catalog_fallback": "existing_procedural",
+            "strict_gate_result": null
+          }
+        },
         {
           "room_id": "room_photo_luna",
           "room_definition": "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
@@ -2807,7 +2890,7 @@
       "runtime_visual_resolutions": [
         {
           "runtime_semantic_id": "boxed_collectibles",
-          "runtime_catalog_id": "box",
+          "runtime_catalog_id": "boxed_collectibles",
           "runtime_art_factory_asset_id": "boxed_collectibles",
           "runtime_art_factory_registry_active": false,
           "runtime_source": "existing_procedural",
@@ -2818,7 +2901,7 @@
         },
         {
           "runtime_semantic_id": "boxed_collectibles",
-          "runtime_catalog_id": "boxed_collectibles",
+          "runtime_catalog_id": "box",
           "runtime_art_factory_asset_id": "boxed_collectibles",
           "runtime_art_factory_registry_active": false,
           "runtime_source": "existing_procedural",
@@ -2829,7 +2912,7 @@
         }
       ],
       "active_room_definition_instances": 0,
-      "definition_occurrences_across_playable_and_candidate_rooms": 5,
+      "definition_occurrences_across_playable_and_candidate_rooms": 6,
       "max_dimensions_inches_xyz": [
         15.0,
         8.0,
@@ -2840,7 +2923,7 @@
       "approx_screen_space_importance": "high for large furniture; dimensions and runtime source are listed",
       "repetition_frequency": {
         "playable_room_instances": 0,
-        "room_definition_examples": 5
+        "room_definition_examples": 6
       },
       "current_visual_quality": "Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below.",
       "programmer_art_or_primitive": true,
@@ -3220,6 +3303,7 @@
       "display_name": "computer-on-chair",
       "room_definition_kind": "computer_tower",
       "source_paths": [
+        "rooms/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-4/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-5/room_photo_luna.json",
@@ -3227,6 +3311,30 @@
         "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json"
       ],
       "room_instances": [
+        {
+          "room_id": "room_photo_luna",
+          "room_definition": "rooms/room_photo_luna.json",
+          "object_id": "computer-on-chair",
+          "kind": "computer_tower",
+          "dimensions": [
+            10,
+            17,
+            17
+          ],
+          "blocks_navigation": false,
+          "has_surface": false,
+          "runtime_visual_resolution": {
+            "runtime_semantic_id": "computer_tower",
+            "runtime_catalog_id": "box",
+            "runtime_art_factory_asset_id": "computer_tower",
+            "runtime_art_factory_registry_active": false,
+            "runtime_source": "existing_procedural",
+            "runtime_source_type": "procedural fallback",
+            "catalog_asset": null,
+            "catalog_fallback": "existing_procedural",
+            "strict_gate_result": null
+          }
+        },
         {
           "room_id": "room_photo_luna",
           "room_definition": "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
@@ -3371,7 +3479,7 @@
         }
       ],
       "active_room_definition_instances": 0,
-      "definition_occurrences_across_playable_and_candidate_rooms": 5,
+      "definition_occurrences_across_playable_and_candidate_rooms": 6,
       "max_dimensions_inches_xyz": [
         10.0,
         17.0,
@@ -3382,7 +3490,7 @@
       "approx_screen_space_importance": "high for large furniture; dimensions and runtime source are listed",
       "repetition_frequency": {
         "playable_room_instances": 0,
-        "room_definition_examples": 5
+        "room_definition_examples": 6
       },
       "current_visual_quality": "Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below.",
       "programmer_art_or_primitive": true,
@@ -3418,6 +3526,7 @@
       "display_name": "Dark computer desk",
       "room_definition_kind": "desk",
       "source_paths": [
+        "rooms/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-4/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-5/room_photo_luna.json",
@@ -3425,6 +3534,30 @@
         "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json"
       ],
       "room_instances": [
+        {
+          "room_id": "room_photo_luna",
+          "room_definition": "rooms/room_photo_luna.json",
+          "object_id": "computer-desk",
+          "kind": "desk",
+          "dimensions": [
+            66,
+            30,
+            30
+          ],
+          "blocks_navigation": true,
+          "has_surface": true,
+          "runtime_visual_resolution": {
+            "runtime_semantic_id": "desk",
+            "runtime_catalog_id": "table",
+            "runtime_art_factory_asset_id": "desk",
+            "runtime_art_factory_registry_active": true,
+            "runtime_source": "art/desk/iterations/v007/generated/desk.tscn",
+            "runtime_source_type": "Art Factory registry asset",
+            "catalog_asset": "res://assets/generated/writing_desk.glb",
+            "catalog_fallback": "detailed_furniture",
+            "strict_gate_result": "fail"
+          }
+        },
         {
           "room_id": "room_photo_luna",
           "room_definition": "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
@@ -3569,7 +3702,7 @@
         }
       ],
       "active_room_definition_instances": 0,
-      "definition_occurrences_across_playable_and_candidate_rooms": 5,
+      "definition_occurrences_across_playable_and_candidate_rooms": 6,
       "max_dimensions_inches_xyz": [
         66.0,
         30.0,
@@ -3580,7 +3713,7 @@
       "approx_screen_space_importance": "high for large furniture; dimensions and runtime source are listed",
       "repetition_frequency": {
         "playable_room_instances": 0,
-        "room_definition_examples": 5
+        "room_definition_examples": 6
       },
       "current_visual_quality": "Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below.",
       "programmer_art_or_primitive": true,
@@ -3737,6 +3870,7 @@
       "display_name": "Dark office chair behind desk",
       "room_definition_kind": "office_chair",
       "source_paths": [
+        "rooms/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-4/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-5/room_photo_luna.json",
@@ -3744,6 +3878,30 @@
         "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json"
       ],
       "room_instances": [
+        {
+          "room_id": "room_photo_luna",
+          "room_definition": "rooms/room_photo_luna.json",
+          "object_id": "office-chair",
+          "kind": "office_chair",
+          "dimensions": [
+            23,
+            44,
+            18
+          ],
+          "blocks_navigation": true,
+          "has_surface": false,
+          "runtime_visual_resolution": {
+            "runtime_semantic_id": "office_chair",
+            "runtime_catalog_id": "office_chair",
+            "runtime_art_factory_asset_id": "office_chair",
+            "runtime_art_factory_registry_active": true,
+            "runtime_source": "art/office_chair/iterations/v003/generated/office_chair.tscn",
+            "runtime_source_type": "Art Factory registry asset",
+            "catalog_asset": null,
+            "catalog_fallback": "existing_procedural",
+            "strict_gate_result": null
+          }
+        },
         {
           "room_id": "room_photo_luna",
           "room_definition": "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
@@ -3888,7 +4046,7 @@
         }
       ],
       "active_room_definition_instances": 0,
-      "definition_occurrences_across_playable_and_candidate_rooms": 5,
+      "definition_occurrences_across_playable_and_candidate_rooms": 6,
       "max_dimensions_inches_xyz": [
         23.0,
         44.0,
@@ -3899,7 +4057,7 @@
       "approx_screen_space_importance": "high for large furniture; dimensions and runtime source are listed",
       "repetition_frequency": {
         "playable_room_instances": 0,
-        "room_definition_examples": 5
+        "room_definition_examples": 6
       },
       "current_visual_quality": "Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below.",
       "programmer_art_or_primitive": null,
@@ -4842,6 +5000,7 @@
       "display_name": "hammock-floor-mat",
       "room_definition_kind": "mat",
       "source_paths": [
+        "rooms/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-4/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-5/room_photo_luna.json",
@@ -4849,6 +5008,30 @@
         "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json"
       ],
       "room_instances": [
+        {
+          "room_id": "room_photo_luna",
+          "room_definition": "rooms/room_photo_luna.json",
+          "object_id": "hammock-floor-mat",
+          "kind": "mat",
+          "dimensions": [
+            101,
+            0.15,
+            38
+          ],
+          "blocks_navigation": false,
+          "has_surface": false,
+          "runtime_visual_resolution": {
+            "runtime_semantic_id": "mat",
+            "runtime_catalog_id": "rug",
+            "runtime_art_factory_asset_id": "mat",
+            "runtime_art_factory_registry_active": false,
+            "runtime_source": "existing_procedural",
+            "runtime_source_type": "procedural fallback",
+            "catalog_asset": null,
+            "catalog_fallback": "existing_procedural",
+            "strict_gate_result": null
+          }
+        },
         {
           "room_id": "room_photo_luna",
           "room_definition": "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
@@ -4993,7 +5176,7 @@
         }
       ],
       "active_room_definition_instances": 0,
-      "definition_occurrences_across_playable_and_candidate_rooms": 5,
+      "definition_occurrences_across_playable_and_candidate_rooms": 6,
       "max_dimensions_inches_xyz": [
         101.0,
         0.15,
@@ -5004,7 +5187,7 @@
       "approx_screen_space_importance": "high for large furniture; dimensions and runtime source are listed",
       "repetition_frequency": {
         "playable_room_instances": 0,
-        "room_definition_examples": 5
+        "room_definition_examples": 6
       },
       "current_visual_quality": "Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below.",
       "programmer_art_or_primitive": true,
@@ -6307,6 +6490,7 @@
       "display_name": "Striped hammock on dark stand",
       "room_definition_kind": "hammock_with_stand",
       "source_paths": [
+        "rooms/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-4/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-5/room_photo_luna.json",
@@ -6314,6 +6498,30 @@
         "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json"
       ],
       "room_instances": [
+        {
+          "room_id": "room_photo_luna",
+          "room_definition": "rooms/room_photo_luna.json",
+          "object_id": "hammock-and-frame",
+          "kind": "hammock_with_stand",
+          "dimensions": [
+            118,
+            40,
+            34
+          ],
+          "blocks_navigation": true,
+          "has_surface": false,
+          "runtime_visual_resolution": {
+            "runtime_semantic_id": "hammock_with_stand",
+            "runtime_catalog_id": "hammock",
+            "runtime_art_factory_asset_id": "hammock_with_stand",
+            "runtime_art_factory_registry_active": true,
+            "runtime_source": "art/hammock_with_stand/iterations/v005/generated/hammock_with_stand.tscn",
+            "runtime_source_type": "Art Factory registry asset",
+            "catalog_asset": null,
+            "catalog_fallback": "existing_procedural",
+            "strict_gate_result": null
+          }
+        },
         {
           "room_id": "room_photo_luna",
           "room_definition": "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
@@ -6458,7 +6666,7 @@
         }
       ],
       "active_room_definition_instances": 0,
-      "definition_occurrences_across_playable_and_candidate_rooms": 5,
+      "definition_occurrences_across_playable_and_candidate_rooms": 6,
       "max_dimensions_inches_xyz": [
         118.0,
         40.0,
@@ -6469,7 +6677,7 @@
       "approx_screen_space_importance": "high for large furniture; dimensions and runtime source are listed",
       "repetition_frequency": {
         "playable_room_instances": 0,
-        "room_definition_examples": 5
+        "room_definition_examples": 6
       },
       "current_visual_quality": "Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below.",
       "programmer_art_or_primitive": null,
@@ -6505,6 +6713,7 @@
       "display_name": "Tall wood and glass display cabinet",
       "room_definition_kind": "display_cabinet",
       "source_paths": [
+        "rooms/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-4/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-5/room_photo_luna.json",
@@ -6512,6 +6721,30 @@
         "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json"
       ],
       "room_instances": [
+        {
+          "room_id": "room_photo_luna",
+          "room_definition": "rooms/room_photo_luna.json",
+          "object_id": "display-cabinet",
+          "kind": "display_cabinet",
+          "dimensions": [
+            33,
+            76,
+            18
+          ],
+          "blocks_navigation": true,
+          "has_surface": false,
+          "runtime_visual_resolution": {
+            "runtime_semantic_id": "display_cabinet",
+            "runtime_catalog_id": "display_cabinet",
+            "runtime_art_factory_asset_id": "display_cabinet",
+            "runtime_art_factory_registry_active": true,
+            "runtime_source": "art/display_cabinet/iterations/v002/generated/display_cabinet.tscn",
+            "runtime_source_type": "Art Factory registry asset",
+            "catalog_asset": null,
+            "catalog_fallback": "existing_procedural",
+            "strict_gate_result": null
+          }
+        },
         {
           "room_id": "room_photo_luna",
           "room_definition": "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
@@ -6656,7 +6889,7 @@
         }
       ],
       "active_room_definition_instances": 0,
-      "definition_occurrences_across_playable_and_candidate_rooms": 5,
+      "definition_occurrences_across_playable_and_candidate_rooms": 6,
       "max_dimensions_inches_xyz": [
         33.0,
         76.0,
@@ -6667,7 +6900,7 @@
       "approx_screen_space_importance": "high for large furniture; dimensions and runtime source are listed",
       "repetition_frequency": {
         "playable_room_instances": 0,
-        "room_definition_examples": 5
+        "room_definition_examples": 6
       },
       "current_visual_quality": "Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below.",
       "programmer_art_or_primitive": null,
@@ -6995,6 +7228,7 @@
       "display_name": "Wood rocking chair",
       "room_definition_kind": "rocking_chair",
       "source_paths": [
+        "rooms/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-4/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-5/room_photo_luna.json",
@@ -7002,6 +7236,30 @@
         "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json"
       ],
       "room_instances": [
+        {
+          "room_id": "room_photo_luna",
+          "room_definition": "rooms/room_photo_luna.json",
+          "object_id": "rocking-chair",
+          "kind": "rocking_chair",
+          "dimensions": [
+            24,
+            38,
+            31
+          ],
+          "blocks_navigation": true,
+          "has_surface": false,
+          "runtime_visual_resolution": {
+            "runtime_semantic_id": "rocking_chair",
+            "runtime_catalog_id": "rocking_chair",
+            "runtime_art_factory_asset_id": "rocking_chair",
+            "runtime_art_factory_registry_active": true,
+            "runtime_source": "art/rocking_chair/iterations/v003/generated/rocking_chair.tscn",
+            "runtime_source_type": "Art Factory registry asset",
+            "catalog_asset": null,
+            "catalog_fallback": "existing_procedural",
+            "strict_gate_result": null
+          }
+        },
         {
           "room_id": "room_photo_luna",
           "room_definition": "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
@@ -7146,7 +7404,7 @@
         }
       ],
       "active_room_definition_instances": 0,
-      "definition_occurrences_across_playable_and_candidate_rooms": 5,
+      "definition_occurrences_across_playable_and_candidate_rooms": 6,
       "max_dimensions_inches_xyz": [
         24.0,
         38.0,
@@ -7157,7 +7415,7 @@
       "approx_screen_space_importance": "high for large furniture; dimensions and runtime source are listed",
       "repetition_frequency": {
         "playable_room_instances": 0,
-        "room_definition_examples": 5
+        "room_definition_examples": 6
       },
       "current_visual_quality": "Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below.",
       "programmer_art_or_primitive": null,
@@ -7328,15 +7586,15 @@
       "room_instances": [
         {
           "scope": "RoomDefinition room shell",
-          "room_count": 20
+          "room_count": 21
         }
       ],
       "active_room_definition_instances": 2,
-      "definition_occurrences_across_playable_and_candidate_rooms": 20,
+      "definition_occurrences_across_playable_and_candidate_rooms": 21,
       "max_dimensions_inches_xyz": null,
       "repetition_frequency": {
         "playable_rooms": 2,
-        "room_definition_examples": 20
+        "room_definition_examples": 21
       },
       "photo_room_examples": [
         "room_photo_luna"
@@ -7377,15 +7635,15 @@
       "room_instances": [
         {
           "scope": "RoomDefinition room shell",
-          "room_count": 20
+          "room_count": 21
         }
       ],
       "active_room_definition_instances": 2,
-      "definition_occurrences_across_playable_and_candidate_rooms": 20,
+      "definition_occurrences_across_playable_and_candidate_rooms": 21,
       "max_dimensions_inches_xyz": null,
       "repetition_frequency": {
         "playable_rooms": 2,
-        "room_definition_examples": 20
+        "room_definition_examples": 21
       },
       "photo_room_examples": [
         "room_photo_luna"
@@ -7426,15 +7684,15 @@
       "room_instances": [
         {
           "scope": "RoomDefinition room shell",
-          "room_count": 20
+          "room_count": 21
         }
       ],
       "active_room_definition_instances": 2,
-      "definition_occurrences_across_playable_and_candidate_rooms": 20,
+      "definition_occurrences_across_playable_and_candidate_rooms": 21,
       "max_dimensions_inches_xyz": null,
       "repetition_frequency": {
         "playable_rooms": 2,
-        "room_definition_examples": 20
+        "room_definition_examples": 21
       },
       "photo_room_examples": [
         "room_photo_luna"
@@ -7474,11 +7732,11 @@
       "room_instances": [
         {
           "scope": "runtime-generated; see procedural source index",
-          "room_count": 20
+          "room_count": 21
         }
       ],
       "active_room_definition_instances": null,
-      "definition_occurrences_across_playable_and_candidate_rooms": 20,
+      "definition_occurrences_across_playable_and_candidate_rooms": 21,
       "max_dimensions_inches_xyz": null,
       "repetition_frequency": {
         "runtime": "population and activity dependent"
@@ -7544,11 +7802,11 @@
       "room_instances": [
         {
           "scope": "runtime-generated; see procedural source index",
-          "room_count": 20
+          "room_count": 21
         }
       ],
       "active_room_definition_instances": null,
-      "definition_occurrences_across_playable_and_candidate_rooms": 20,
+      "definition_occurrences_across_playable_and_candidate_rooms": 21,
       "max_dimensions_inches_xyz": null,
       "repetition_frequency": {
         "runtime": "population and activity dependent"
@@ -7650,11 +7908,11 @@
       "room_instances": [
         {
           "scope": "runtime-generated; see procedural source index",
-          "room_count": 20
+          "room_count": 21
         }
       ],
       "active_room_definition_instances": null,
-      "definition_occurrences_across_playable_and_candidate_rooms": 20,
+      "definition_occurrences_across_playable_and_candidate_rooms": 21,
       "max_dimensions_inches_xyz": null,
       "repetition_frequency": {
         "runtime": "population and activity dependent"
@@ -7698,11 +7956,11 @@
       "room_instances": [
         {
           "scope": "runtime-generated; see procedural source index",
-          "room_count": 20
+          "room_count": 21
         }
       ],
       "active_room_definition_instances": null,
-      "definition_occurrences_across_playable_and_candidate_rooms": 20,
+      "definition_occurrences_across_playable_and_candidate_rooms": 21,
       "max_dimensions_inches_xyz": null,
       "repetition_frequency": {
         "runtime": "population and activity dependent"
@@ -7745,11 +8003,11 @@
       "room_instances": [
         {
           "scope": "runtime-generated; see procedural source index",
-          "room_count": 20
+          "room_count": 21
         }
       ],
       "active_room_definition_instances": null,
-      "definition_occurrences_across_playable_and_candidate_rooms": 20,
+      "definition_occurrences_across_playable_and_candidate_rooms": 21,
       "max_dimensions_inches_xyz": null,
       "repetition_frequency": {
         "runtime": "population and activity dependent"
@@ -7792,11 +8050,11 @@
       "room_instances": [
         {
           "scope": "runtime-generated; see procedural source index",
-          "room_count": 20
+          "room_count": 21
         }
       ],
       "active_room_definition_instances": null,
-      "definition_occurrences_across_playable_and_candidate_rooms": 20,
+      "definition_occurrences_across_playable_and_candidate_rooms": 21,
       "max_dimensions_inches_xyz": null,
       "repetition_frequency": {
         "runtime": "population and activity dependent"
@@ -8672,15 +8930,15 @@
       "room_instances": [
         {
           "scope": "RoomDefinition room shell",
-          "room_count": 20
+          "room_count": 21
         }
       ],
       "active_room_definition_instances": 2,
-      "definition_occurrences_across_playable_and_candidate_rooms": 20,
+      "definition_occurrences_across_playable_and_candidate_rooms": 21,
       "max_dimensions_inches_xyz": null,
       "repetition_frequency": {
         "playable_rooms": 2,
-        "room_definition_examples": 20
+        "room_definition_examples": 21
       },
       "photo_room_examples": [
         "room_photo_luna"
@@ -8721,15 +8979,15 @@
       "room_instances": [
         {
           "scope": "RoomDefinition room shell",
-          "room_count": 20
+          "room_count": 21
         }
       ],
       "active_room_definition_instances": 2,
-      "definition_occurrences_across_playable_and_candidate_rooms": 20,
+      "definition_occurrences_across_playable_and_candidate_rooms": 21,
       "max_dimensions_inches_xyz": null,
       "repetition_frequency": {
         "playable_rooms": 2,
-        "room_definition_examples": 20
+        "room_definition_examples": 21
       },
       "photo_room_examples": [
         "room_photo_luna"
@@ -8768,11 +9026,11 @@
       "room_instances": [
         {
           "scope": "runtime-generated; see procedural source index",
-          "room_count": 20
+          "room_count": 21
         }
       ],
       "active_room_definition_instances": null,
-      "definition_occurrences_across_playable_and_candidate_rooms": 20,
+      "definition_occurrences_across_playable_and_candidate_rooms": 21,
       "max_dimensions_inches_xyz": null,
       "repetition_frequency": {
         "runtime": "population and activity dependent"
@@ -8816,11 +9074,11 @@
       "room_instances": [
         {
           "scope": "runtime-generated; see procedural source index",
-          "room_count": 20
+          "room_count": 21
         }
       ],
       "active_room_definition_instances": null,
-      "definition_occurrences_across_playable_and_candidate_rooms": 20,
+      "definition_occurrences_across_playable_and_candidate_rooms": 21,
       "max_dimensions_inches_xyz": null,
       "repetition_frequency": {
         "runtime": "population and activity dependent"
@@ -8864,11 +9122,11 @@
       "room_instances": [
         {
           "scope": "runtime-generated; see procedural source index",
-          "room_count": 20
+          "room_count": 21
         }
       ],
       "active_room_definition_instances": null,
-      "definition_occurrences_across_playable_and_candidate_rooms": 20,
+      "definition_occurrences_across_playable_and_candidate_rooms": 21,
       "max_dimensions_inches_xyz": null,
       "repetition_frequency": {
         "runtime": "population and activity dependent"
@@ -8929,11 +9187,11 @@
       "room_instances": [
         {
           "scope": "runtime-generated; see procedural source index",
-          "room_count": 20
+          "room_count": 21
         }
       ],
       "active_room_definition_instances": null,
-      "definition_occurrences_across_playable_and_candidate_rooms": 20,
+      "definition_occurrences_across_playable_and_candidate_rooms": 21,
       "max_dimensions_inches_xyz": null,
       "repetition_frequency": {
         "runtime": "population and activity dependent"
@@ -9087,6 +9345,7 @@
       "display_name": "corner-dragon-decoration",
       "room_definition_kind": "dragon_decoration",
       "source_paths": [
+        "rooms/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-4/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-5/room_photo_luna.json",
@@ -9094,6 +9353,30 @@
         "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json"
       ],
       "room_instances": [
+        {
+          "room_id": "room_photo_luna",
+          "room_definition": "rooms/room_photo_luna.json",
+          "object_id": "corner-dragon-decoration",
+          "kind": "dragon_decoration",
+          "dimensions": [
+            17,
+            31,
+            17
+          ],
+          "blocks_navigation": true,
+          "has_surface": false,
+          "runtime_visual_resolution": {
+            "runtime_semantic_id": "dragon_decoration",
+            "runtime_catalog_id": "simple",
+            "runtime_art_factory_asset_id": "dragon_decoration",
+            "runtime_art_factory_registry_active": false,
+            "runtime_source": "existing_procedural",
+            "runtime_source_type": "procedural fallback",
+            "catalog_asset": null,
+            "catalog_fallback": "existing_procedural",
+            "strict_gate_result": null
+          }
+        },
         {
           "room_id": "room_photo_luna",
           "room_definition": "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
@@ -9238,7 +9521,7 @@
         }
       ],
       "active_room_definition_instances": 0,
-      "definition_occurrences_across_playable_and_candidate_rooms": 5,
+      "definition_occurrences_across_playable_and_candidate_rooms": 6,
       "max_dimensions_inches_xyz": [
         17.0,
         31.0,
@@ -9249,7 +9532,7 @@
       "approx_screen_space_importance": "small or secondary in room overview; assess at close/context view",
       "repetition_frequency": {
         "playable_room_instances": 0,
-        "room_definition_examples": 5
+        "room_definition_examples": 6
       },
       "current_visual_quality": "Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below.",
       "programmer_art_or_primitive": true,
@@ -9285,6 +9568,7 @@
       "display_name": "desk-laptop",
       "room_definition_kind": "laptop",
       "source_paths": [
+        "rooms/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-4/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-5/room_photo_luna.json",
@@ -9292,6 +9576,30 @@
         "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json"
       ],
       "room_instances": [
+        {
+          "room_id": "room_photo_luna",
+          "room_definition": "rooms/room_photo_luna.json",
+          "object_id": "desk-laptop",
+          "kind": "laptop",
+          "dimensions": [
+            12,
+            9,
+            1
+          ],
+          "blocks_navigation": false,
+          "has_surface": false,
+          "runtime_visual_resolution": {
+            "runtime_semantic_id": "laptop",
+            "runtime_catalog_id": "box",
+            "runtime_art_factory_asset_id": "laptop",
+            "runtime_art_factory_registry_active": false,
+            "runtime_source": "existing_procedural",
+            "runtime_source_type": "procedural fallback",
+            "catalog_asset": null,
+            "catalog_fallback": "existing_procedural",
+            "strict_gate_result": null
+          }
+        },
         {
           "room_id": "room_photo_luna",
           "room_definition": "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
@@ -9436,7 +9744,7 @@
         }
       ],
       "active_room_definition_instances": 0,
-      "definition_occurrences_across_playable_and_candidate_rooms": 5,
+      "definition_occurrences_across_playable_and_candidate_rooms": 6,
       "max_dimensions_inches_xyz": [
         12.0,
         9.0,
@@ -9447,7 +9755,7 @@
       "approx_screen_space_importance": "small or secondary in room overview; assess at close/context view",
       "repetition_frequency": {
         "playable_room_instances": 0,
-        "room_definition_examples": 5
+        "room_definition_examples": 6
       },
       "current_visual_quality": "Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below.",
       "programmer_art_or_primitive": true,
@@ -9483,6 +9791,7 @@
       "display_name": "desk-monitor-left-stand",
       "room_definition_kind": "monitor_stand",
       "source_paths": [
+        "rooms/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-4/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-5/room_photo_luna.json",
@@ -9490,6 +9799,30 @@
         "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json"
       ],
       "room_instances": [
+        {
+          "room_id": "room_photo_luna",
+          "room_definition": "rooms/room_photo_luna.json",
+          "object_id": "desk-monitor-left-stand",
+          "kind": "monitor_stand",
+          "dimensions": [
+            7,
+            3,
+            7
+          ],
+          "blocks_navigation": false,
+          "has_surface": false,
+          "runtime_visual_resolution": {
+            "runtime_semantic_id": "monitor_stand",
+            "runtime_catalog_id": "box",
+            "runtime_art_factory_asset_id": "monitor_stand",
+            "runtime_art_factory_registry_active": false,
+            "runtime_source": "existing_procedural",
+            "runtime_source_type": "procedural fallback",
+            "catalog_asset": null,
+            "catalog_fallback": "existing_procedural",
+            "strict_gate_result": null
+          }
+        },
         {
           "room_id": "room_photo_luna",
           "room_definition": "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
@@ -9634,7 +9967,7 @@
         }
       ],
       "active_room_definition_instances": 0,
-      "definition_occurrences_across_playable_and_candidate_rooms": 5,
+      "definition_occurrences_across_playable_and_candidate_rooms": 6,
       "max_dimensions_inches_xyz": [
         7.0,
         3.0,
@@ -9645,7 +9978,7 @@
       "approx_screen_space_importance": "small or secondary in room overview; assess at close/context view",
       "repetition_frequency": {
         "playable_room_instances": 0,
-        "room_definition_examples": 5
+        "room_definition_examples": 6
       },
       "current_visual_quality": "Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below.",
       "programmer_art_or_primitive": true,
@@ -9681,6 +10014,7 @@
       "display_name": "desk-monitor-right-stand",
       "room_definition_kind": "monitor_stand",
       "source_paths": [
+        "rooms/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-4/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-5/room_photo_luna.json",
@@ -9688,6 +10022,30 @@
         "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json"
       ],
       "room_instances": [
+        {
+          "room_id": "room_photo_luna",
+          "room_definition": "rooms/room_photo_luna.json",
+          "object_id": "desk-monitor-right-stand",
+          "kind": "monitor_stand",
+          "dimensions": [
+            7,
+            3,
+            7
+          ],
+          "blocks_navigation": false,
+          "has_surface": false,
+          "runtime_visual_resolution": {
+            "runtime_semantic_id": "monitor_stand",
+            "runtime_catalog_id": "box",
+            "runtime_art_factory_asset_id": "monitor_stand",
+            "runtime_art_factory_registry_active": false,
+            "runtime_source": "existing_procedural",
+            "runtime_source_type": "procedural fallback",
+            "catalog_asset": null,
+            "catalog_fallback": "existing_procedural",
+            "strict_gate_result": null
+          }
+        },
         {
           "room_id": "room_photo_luna",
           "room_definition": "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
@@ -9832,7 +10190,7 @@
         }
       ],
       "active_room_definition_instances": 0,
-      "definition_occurrences_across_playable_and_candidate_rooms": 5,
+      "definition_occurrences_across_playable_and_candidate_rooms": 6,
       "max_dimensions_inches_xyz": [
         7.0,
         3.0,
@@ -9843,7 +10201,7 @@
       "approx_screen_space_importance": "small or secondary in room overview; assess at close/context view",
       "repetition_frequency": {
         "playable_room_instances": 0,
-        "room_definition_examples": 5
+        "room_definition_examples": 6
       },
       "current_visual_quality": "Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below.",
       "programmer_art_or_primitive": true,
@@ -10051,6 +10409,7 @@
       "display_name": "dragon-wall-emblem",
       "room_definition_kind": "wall_decoration",
       "source_paths": [
+        "rooms/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-4/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-5/room_photo_luna.json",
@@ -10058,6 +10417,30 @@
         "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json"
       ],
       "room_instances": [
+        {
+          "room_id": "room_photo_luna",
+          "room_definition": "rooms/room_photo_luna.json",
+          "object_id": "dragon-wall-emblem",
+          "kind": "wall_decoration",
+          "dimensions": [
+            13,
+            14,
+            0.5
+          ],
+          "blocks_navigation": false,
+          "has_surface": false,
+          "runtime_visual_resolution": {
+            "runtime_semantic_id": "wall_decoration",
+            "runtime_catalog_id": "wall_emblem",
+            "runtime_art_factory_asset_id": "wall_decoration",
+            "runtime_art_factory_registry_active": false,
+            "runtime_source": "existing_procedural",
+            "runtime_source_type": "procedural fallback",
+            "catalog_asset": null,
+            "catalog_fallback": "existing_procedural",
+            "strict_gate_result": null
+          }
+        },
         {
           "room_id": "room_photo_luna",
           "room_definition": "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
@@ -10192,7 +10575,7 @@
       "runtime_visual_resolutions": [
         {
           "runtime_semantic_id": "wall_decoration",
-          "runtime_catalog_id": "dragon_emblem",
+          "runtime_catalog_id": "wall_emblem",
           "runtime_art_factory_asset_id": "wall_decoration",
           "runtime_art_factory_registry_active": false,
           "runtime_source": "existing_procedural",
@@ -10203,7 +10586,7 @@
         },
         {
           "runtime_semantic_id": "wall_decoration",
-          "runtime_catalog_id": "wall_emblem",
+          "runtime_catalog_id": "dragon_emblem",
           "runtime_art_factory_asset_id": "wall_decoration",
           "runtime_art_factory_registry_active": false,
           "runtime_source": "existing_procedural",
@@ -10214,7 +10597,7 @@
         }
       ],
       "active_room_definition_instances": 0,
-      "definition_occurrences_across_playable_and_candidate_rooms": 5,
+      "definition_occurrences_across_playable_and_candidate_rooms": 6,
       "max_dimensions_inches_xyz": [
         13.0,
         14.0,
@@ -10225,7 +10608,7 @@
       "approx_screen_space_importance": "small or secondary in room overview; assess at close/context view",
       "repetition_frequency": {
         "playable_room_instances": 0,
-        "room_definition_examples": 5
+        "room_definition_examples": 6
       },
       "current_visual_quality": "Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below.",
       "programmer_art_or_primitive": true,
@@ -10528,6 +10911,7 @@
       "display_name": "First large monitor",
       "room_definition_kind": "monitor",
       "source_paths": [
+        "rooms/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-4/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-5/room_photo_luna.json",
@@ -10535,6 +10919,30 @@
         "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json"
       ],
       "room_instances": [
+        {
+          "room_id": "room_photo_luna",
+          "room_definition": "rooms/room_photo_luna.json",
+          "object_id": "desk-monitor-left",
+          "kind": "monitor",
+          "dimensions": [
+            25,
+            19,
+            2
+          ],
+          "blocks_navigation": false,
+          "has_surface": false,
+          "runtime_visual_resolution": {
+            "runtime_semantic_id": "monitor",
+            "runtime_catalog_id": "monitor",
+            "runtime_art_factory_asset_id": "monitor",
+            "runtime_art_factory_registry_active": false,
+            "runtime_source": "existing_procedural",
+            "runtime_source_type": "procedural fallback",
+            "catalog_asset": null,
+            "catalog_fallback": "existing_procedural",
+            "strict_gate_result": null
+          }
+        },
         {
           "room_id": "room_photo_luna",
           "room_definition": "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
@@ -10679,7 +11087,7 @@
         }
       ],
       "active_room_definition_instances": 0,
-      "definition_occurrences_across_playable_and_candidate_rooms": 5,
+      "definition_occurrences_across_playable_and_candidate_rooms": 6,
       "max_dimensions_inches_xyz": [
         25.0,
         19.0,
@@ -10690,7 +11098,7 @@
       "approx_screen_space_importance": "small or secondary in room overview; assess at close/context view",
       "repetition_frequency": {
         "playable_room_instances": 0,
-        "room_definition_examples": 5
+        "room_definition_examples": 6
       },
       "current_visual_quality": "Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below.",
       "programmer_art_or_primitive": true,
@@ -10849,6 +11257,7 @@
       "display_name": "floor-lamp-base",
       "room_definition_kind": "floor_lamp",
       "source_paths": [
+        "rooms/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-4/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-5/room_photo_luna.json",
@@ -10856,6 +11265,30 @@
         "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json"
       ],
       "room_instances": [
+        {
+          "room_id": "room_photo_luna",
+          "room_definition": "rooms/room_photo_luna.json",
+          "object_id": "floor-lamp-base",
+          "kind": "floor_lamp",
+          "dimensions": [
+            11,
+            66,
+            11
+          ],
+          "blocks_navigation": true,
+          "has_surface": false,
+          "runtime_visual_resolution": {
+            "runtime_semantic_id": "floor_lamp",
+            "runtime_catalog_id": "floor_lamp",
+            "runtime_art_factory_asset_id": "floor_lamp",
+            "runtime_art_factory_registry_active": false,
+            "runtime_source": "existing_procedural",
+            "runtime_source_type": "procedural fallback",
+            "catalog_asset": null,
+            "catalog_fallback": "existing_procedural",
+            "strict_gate_result": null
+          }
+        },
         {
           "room_id": "room_photo_luna",
           "room_definition": "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
@@ -11000,7 +11433,7 @@
         }
       ],
       "active_room_definition_instances": 0,
-      "definition_occurrences_across_playable_and_candidate_rooms": 5,
+      "definition_occurrences_across_playable_and_candidate_rooms": 6,
       "max_dimensions_inches_xyz": [
         11.0,
         66.0,
@@ -11011,7 +11444,7 @@
       "approx_screen_space_importance": "small or secondary in room overview; assess at close/context view",
       "repetition_frequency": {
         "playable_room_instances": 0,
-        "room_definition_examples": 5
+        "room_definition_examples": 6
       },
       "current_visual_quality": "Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below.",
       "programmer_art_or_primitive": true,
@@ -11047,6 +11480,7 @@
       "display_name": "Gray open storage bin",
       "room_definition_kind": "storage_bin",
       "source_paths": [
+        "rooms/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-4/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-5/room_photo_luna.json",
@@ -11054,6 +11488,30 @@
         "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json"
       ],
       "room_instances": [
+        {
+          "room_id": "room_photo_luna",
+          "room_definition": "rooms/room_photo_luna.json",
+          "object_id": "storage-bin",
+          "kind": "storage_bin",
+          "dimensions": [
+            17,
+            14,
+            15
+          ],
+          "blocks_navigation": true,
+          "has_surface": false,
+          "runtime_visual_resolution": {
+            "runtime_semantic_id": "storage_bin",
+            "runtime_catalog_id": "box",
+            "runtime_art_factory_asset_id": "storage_bin",
+            "runtime_art_factory_registry_active": false,
+            "runtime_source": "existing_procedural",
+            "runtime_source_type": "procedural fallback",
+            "catalog_asset": null,
+            "catalog_fallback": "existing_procedural",
+            "strict_gate_result": null
+          }
+        },
         {
           "room_id": "room_photo_luna",
           "room_definition": "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
@@ -11198,7 +11656,7 @@
         }
       ],
       "active_room_definition_instances": 0,
-      "definition_occurrences_across_playable_and_candidate_rooms": 5,
+      "definition_occurrences_across_playable_and_candidate_rooms": 6,
       "max_dimensions_inches_xyz": [
         17.0,
         14.0,
@@ -11209,7 +11667,7 @@
       "approx_screen_space_importance": "small or secondary in room overview; assess at close/context view",
       "repetition_frequency": {
         "playable_room_instances": 0,
-        "room_definition_examples": 5
+        "room_definition_examples": 6
       },
       "current_visual_quality": "Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below.",
       "programmer_art_or_primitive": true,
@@ -11662,6 +12120,7 @@
       "display_name": "map-wall-art",
       "room_definition_kind": "framed_map",
       "source_paths": [
+        "rooms/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-4/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-5/room_photo_luna.json",
@@ -11669,6 +12128,30 @@
         "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json"
       ],
       "room_instances": [
+        {
+          "room_id": "room_photo_luna",
+          "room_definition": "rooms/room_photo_luna.json",
+          "object_id": "map-wall-art",
+          "kind": "framed_map",
+          "dimensions": [
+            0.5,
+            30,
+            17
+          ],
+          "blocks_navigation": false,
+          "has_surface": false,
+          "runtime_visual_resolution": {
+            "runtime_semantic_id": "framed_map",
+            "runtime_catalog_id": "framed_map",
+            "runtime_art_factory_asset_id": "framed_map",
+            "runtime_art_factory_registry_active": false,
+            "runtime_source": "existing_procedural",
+            "runtime_source_type": "procedural fallback",
+            "catalog_asset": null,
+            "catalog_fallback": "existing_procedural",
+            "strict_gate_result": null
+          }
+        },
         {
           "room_id": "room_photo_luna",
           "room_definition": "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
@@ -11813,7 +12296,7 @@
         }
       ],
       "active_room_definition_instances": 0,
-      "definition_occurrences_across_playable_and_candidate_rooms": 5,
+      "definition_occurrences_across_playable_and_candidate_rooms": 6,
       "max_dimensions_inches_xyz": [
         0.5,
         30.0,
@@ -11824,7 +12307,7 @@
       "approx_screen_space_importance": "small or secondary in room overview; assess at close/context view",
       "repetition_frequency": {
         "playable_room_instances": 0,
-        "room_definition_examples": 5
+        "room_definition_examples": 6
       },
       "current_visual_quality": "Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below.",
       "programmer_art_or_primitive": true,
@@ -12052,10 +12535,10 @@
           "runtime_visual_resolution": {
             "runtime_semantic_id": "bookcase",
             "runtime_catalog_id": "bookcase",
-            "runtime_art_factory_asset_id": "bookcase",
-            "runtime_art_factory_registry_active": false,
-            "runtime_source": "detailed_furniture",
-            "runtime_source_type": "catalog detailed_furniture fallback",
+            "runtime_art_factory_asset_id": "room_bookcase_production",
+            "runtime_art_factory_registry_active": true,
+            "runtime_source": "art/room_bookcase_production/iterations/v001/generated/asset.glb",
+            "runtime_source_type": "Art Factory registry asset",
             "catalog_asset": null,
             "catalog_fallback": "detailed_furniture",
             "strict_gate_result": null
@@ -12141,9 +12624,21 @@
         "bookcase"
       ],
       "runtime_art_factory_ids": [
-        "bookcase"
+        "bookcase",
+        "room_bookcase_production"
       ],
       "runtime_visual_resolutions": [
+        {
+          "runtime_semantic_id": "bookcase",
+          "runtime_catalog_id": "bookcase",
+          "runtime_art_factory_asset_id": "room_bookcase_production",
+          "runtime_art_factory_registry_active": true,
+          "runtime_source": "art/room_bookcase_production/iterations/v001/generated/asset.glb",
+          "runtime_source_type": "Art Factory registry asset",
+          "catalog_asset": null,
+          "catalog_fallback": "detailed_furniture",
+          "strict_gate_result": null
+        },
         {
           "runtime_semantic_id": "bookcase",
           "runtime_catalog_id": "bookcase",
@@ -12765,6 +13260,7 @@
       "display_name": "Second large monitor",
       "room_definition_kind": "monitor",
       "source_paths": [
+        "rooms/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-4/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-5/room_photo_luna.json",
@@ -12772,6 +13268,30 @@
         "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json"
       ],
       "room_instances": [
+        {
+          "room_id": "room_photo_luna",
+          "room_definition": "rooms/room_photo_luna.json",
+          "object_id": "desk-monitor-right",
+          "kind": "monitor",
+          "dimensions": [
+            25,
+            19,
+            2
+          ],
+          "blocks_navigation": false,
+          "has_surface": false,
+          "runtime_visual_resolution": {
+            "runtime_semantic_id": "monitor",
+            "runtime_catalog_id": "monitor",
+            "runtime_art_factory_asset_id": "monitor",
+            "runtime_art_factory_registry_active": false,
+            "runtime_source": "existing_procedural",
+            "runtime_source_type": "procedural fallback",
+            "catalog_asset": null,
+            "catalog_fallback": "existing_procedural",
+            "strict_gate_result": null
+          }
+        },
         {
           "room_id": "room_photo_luna",
           "room_definition": "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
@@ -12916,7 +13436,7 @@
         }
       ],
       "active_room_definition_instances": 0,
-      "definition_occurrences_across_playable_and_candidate_rooms": 5,
+      "definition_occurrences_across_playable_and_candidate_rooms": 6,
       "max_dimensions_inches_xyz": [
         25.0,
         19.0,
@@ -12927,7 +13447,7 @@
       "approx_screen_space_importance": "small or secondary in room overview; assess at close/context view",
       "repetition_frequency": {
         "playable_room_instances": 0,
-        "room_definition_examples": 5
+        "room_definition_examples": 6
       },
       "current_visual_quality": "Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below.",
       "programmer_art_or_primitive": true,
@@ -13134,6 +13654,7 @@
       "display_name": "spare-equipment",
       "room_definition_kind": "stored_computer_equipment",
       "source_paths": [
+        "rooms/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-4/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-5/room_photo_luna.json",
@@ -13141,6 +13662,30 @@
         "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json"
       ],
       "room_instances": [
+        {
+          "room_id": "room_photo_luna",
+          "room_definition": "rooms/room_photo_luna.json",
+          "object_id": "spare-equipment",
+          "kind": "stored_computer_equipment",
+          "dimensions": [
+            20,
+            15,
+            5
+          ],
+          "blocks_navigation": true,
+          "has_surface": false,
+          "runtime_visual_resolution": {
+            "runtime_semantic_id": "stored_computer_equipment",
+            "runtime_catalog_id": "box",
+            "runtime_art_factory_asset_id": "stored_computer_equipment",
+            "runtime_art_factory_registry_active": false,
+            "runtime_source": "existing_procedural",
+            "runtime_source_type": "procedural fallback",
+            "catalog_asset": null,
+            "catalog_fallback": "existing_procedural",
+            "strict_gate_result": null
+          }
+        },
         {
           "room_id": "room_photo_luna",
           "room_definition": "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
@@ -13285,7 +13830,7 @@
         }
       ],
       "active_room_definition_instances": 0,
-      "definition_occurrences_across_playable_and_candidate_rooms": 5,
+      "definition_occurrences_across_playable_and_candidate_rooms": 6,
       "max_dimensions_inches_xyz": [
         20.0,
         15.0,
@@ -13296,7 +13841,7 @@
       "approx_screen_space_importance": "small or secondary in room overview; assess at close/context view",
       "repetition_frequency": {
         "playable_room_instances": 0,
-        "room_definition_examples": 5
+        "room_definition_examples": 6
       },
       "current_visual_quality": "Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below.",
       "programmer_art_or_primitive": true,
@@ -14167,6 +14712,7 @@
       "display_name": "Wide dragon artwork",
       "room_definition_kind": "wall_art",
       "source_paths": [
+        "rooms/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-4/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-5/room_photo_luna.json",
@@ -14174,6 +14720,30 @@
         "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json"
       ],
       "room_instances": [
+        {
+          "room_id": "room_photo_luna",
+          "room_definition": "rooms/room_photo_luna.json",
+          "object_id": "dragon-wall-art",
+          "kind": "wall_art",
+          "dimensions": [
+            65,
+            30,
+            0.5
+          ],
+          "blocks_navigation": false,
+          "has_surface": false,
+          "runtime_visual_resolution": {
+            "runtime_semantic_id": "wall_art",
+            "runtime_catalog_id": "triptych_art",
+            "runtime_art_factory_asset_id": "wall_art",
+            "runtime_art_factory_registry_active": false,
+            "runtime_source": "existing_procedural",
+            "runtime_source_type": "procedural fallback",
+            "catalog_asset": null,
+            "catalog_fallback": "existing_procedural",
+            "strict_gate_result": null
+          }
+        },
         {
           "room_id": "room_photo_luna",
           "room_definition": "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
@@ -14308,7 +14878,7 @@
       "runtime_visual_resolutions": [
         {
           "runtime_semantic_id": "wall_art",
-          "runtime_catalog_id": "dragon_triptych",
+          "runtime_catalog_id": "triptych_art",
           "runtime_art_factory_asset_id": "wall_art",
           "runtime_art_factory_registry_active": false,
           "runtime_source": "existing_procedural",
@@ -14319,7 +14889,7 @@
         },
         {
           "runtime_semantic_id": "wall_art",
-          "runtime_catalog_id": "triptych_art",
+          "runtime_catalog_id": "dragon_triptych",
           "runtime_art_factory_asset_id": "wall_art",
           "runtime_art_factory_registry_active": false,
           "runtime_source": "existing_procedural",
@@ -14330,7 +14900,7 @@
         }
       ],
       "active_room_definition_instances": 0,
-      "definition_occurrences_across_playable_and_candidate_rooms": 5,
+      "definition_occurrences_across_playable_and_candidate_rooms": 6,
       "max_dimensions_inches_xyz": [
         65.0,
         30.0,
@@ -14341,7 +14911,7 @@
       "approx_screen_space_importance": "small or secondary in room overview; assess at close/context view",
       "repetition_frequency": {
         "playable_room_instances": 0,
-        "room_definition_examples": 5
+        "room_definition_examples": 6
       },
       "current_visual_quality": "Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below.",
       "programmer_art_or_primitive": true,
@@ -14596,6 +15166,7 @@
       "display_name": "corner-plush-pile",
       "room_definition_kind": "plush_toys",
       "source_paths": [
+        "rooms/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-4/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-5/room_photo_luna.json",
@@ -14603,6 +15174,30 @@
         "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json"
       ],
       "room_instances": [
+        {
+          "room_id": "room_photo_luna",
+          "room_definition": "rooms/room_photo_luna.json",
+          "object_id": "corner-plush-pile",
+          "kind": "plush_toys",
+          "dimensions": [
+            19,
+            23,
+            23
+          ],
+          "blocks_navigation": true,
+          "has_surface": false,
+          "runtime_visual_resolution": {
+            "runtime_semantic_id": "plush_toys",
+            "runtime_catalog_id": "fabric_pile",
+            "runtime_art_factory_asset_id": "plush_toys",
+            "runtime_art_factory_registry_active": false,
+            "runtime_source": "existing_procedural",
+            "runtime_source_type": "procedural fallback",
+            "catalog_asset": null,
+            "catalog_fallback": "existing_procedural",
+            "strict_gate_result": null
+          }
+        },
         {
           "room_id": "room_photo_luna",
           "room_definition": "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
@@ -14747,7 +15342,7 @@
         }
       ],
       "active_room_definition_instances": 0,
-      "definition_occurrences_across_playable_and_candidate_rooms": 5,
+      "definition_occurrences_across_playable_and_candidate_rooms": 6,
       "max_dimensions_inches_xyz": [
         19.0,
         23.0,
@@ -14758,7 +15353,7 @@
       "approx_screen_space_importance": "medium; multiple authored rooms place this class in normal gameplay views",
       "repetition_frequency": {
         "playable_room_instances": 0,
-        "room_definition_examples": 5
+        "room_definition_examples": 6
       },
       "current_visual_quality": "Runtime source is listed below; no strict asset evaluation is attached to this room-object instance.",
       "programmer_art_or_primitive": true,
@@ -14794,6 +15389,7 @@
       "display_name": "Lime bowl-shaped floor seat",
       "room_definition_kind": "floor_seat",
       "source_paths": [
+        "rooms/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-4/room_photo_luna.json",
         "verification/poc2/candidates/primary/attempt-5/room_photo_luna.json",
@@ -14801,6 +15397,30 @@
         "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json"
       ],
       "room_instances": [
+        {
+          "room_id": "room_photo_luna",
+          "room_definition": "rooms/room_photo_luna.json",
+          "object_id": "green-floor-seat",
+          "kind": "floor_seat",
+          "dimensions": [
+            23,
+            12,
+            21
+          ],
+          "blocks_navigation": true,
+          "has_surface": false,
+          "runtime_visual_resolution": {
+            "runtime_semantic_id": "floor_seat",
+            "runtime_catalog_id": "floor_seat",
+            "runtime_art_factory_asset_id": "floor_seat",
+            "runtime_art_factory_registry_active": false,
+            "runtime_source": "existing_procedural",
+            "runtime_source_type": "procedural fallback",
+            "catalog_asset": null,
+            "catalog_fallback": "existing_procedural",
+            "strict_gate_result": null
+          }
+        },
         {
           "room_id": "room_photo_luna",
           "room_definition": "verification/poc2/candidates/primary/attempt-3/room_photo_luna.json",
@@ -14945,7 +15565,7 @@
         }
       ],
       "active_room_definition_instances": 0,
-      "definition_occurrences_across_playable_and_candidate_rooms": 5,
+      "definition_occurrences_across_playable_and_candidate_rooms": 6,
       "max_dimensions_inches_xyz": [
         23.0,
         12.0,
@@ -14956,7 +15576,7 @@
       "approx_screen_space_importance": "medium; multiple authored rooms place this class in normal gameplay views",
       "repetition_frequency": {
         "playable_room_instances": 0,
-        "room_definition_examples": 5
+        "room_definition_examples": 6
       },
       "current_visual_quality": "Runtime source is listed below; no strict asset evaluation is attached to this room-object instance.",
       "programmer_art_or_primitive": true,
@@ -15002,11 +15622,11 @@
       "room_instances": [
         {
           "scope": "runtime-generated; see procedural source index",
-          "room_count": 20
+          "room_count": 21
         }
       ],
       "active_room_definition_instances": null,
-      "definition_occurrences_across_playable_and_candidate_rooms": 20,
+      "definition_occurrences_across_playable_and_candidate_rooms": 21,
       "max_dimensions_inches_xyz": null,
       "repetition_frequency": {
         "runtime": "population and activity dependent"

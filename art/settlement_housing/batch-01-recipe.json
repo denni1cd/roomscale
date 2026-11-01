@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "method": "blender_authored_modular_production_asset_with_embedded_pbr",
+  "instructions": "Two compact, lived-in miniature worker cottages sharing a raised timber deck. Use visible plank courses, exposed corner posts, a pair of pitched standing-seam roofs, warm divided windows, hinged doors, porch landing, and a capped shared flue. The silhouette should feel domestic and buildable, with distinct stained wood, iron, copper, and amber glass.",
+  "parameters": {
+    "outputs": [
+      "asset.glb",
+      "generation-record.json"
+    ],
+    "asset_type": "housing",
+    "geometry_units": "inches",
+    "keep_roomscale_landmarks_and_scale": true
+  },
+  "source_inputs": [
+    "scripts/art_factory/generators/production_batch01_blender.py",
+    "art/settlement_housing/brief.json",
+    "scripts/visuals/settlement_details.gd",
+    "scripts/visuals/settlement_composition.gd"
+  ],
+  "tool": "Blender background authoring through the RoomScale Art Factory generator",
+  "tool_version": "Blender 5.2.3",
+  "post_processing": [
+    "apply manufactured edge bevel and weighted normals",
+    "unwrap authored components with scale-aware UVs",
+    "batch meshes by shared material",
+    "export GLB with embedded base-colour, roughness, and tangent-normal textures"
+  ],
+  "material_method": "Embedded, per-material PBR base-colour, roughness, and tangent-normal maps, with separate timber, stone, iron, copper, brass, and glazing responses.",
+  "import_configuration": {
+    "format": "GLB PackedScene with embedded PBR textures",
+    "units": "inches",
+    "axes": "Blender X width / Y depth / Z up exported to Godot X width / Y up / Z depth",
+    "renderer": "gl_compatibility",
+    "normalization": "fit source geometry to ArtBrief dimensions without altering RoomDefinition"
+  },
+  "deterministic_seed": 2513,
+  "generator_command": [
+    "python",
+    "{project_root}/scripts/art_factory/generators/production_batch01_blender.py"
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "candidate_id": "settlement_workshop-v006",
+  "created_at_utc": "2026-11-01T00:00:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "Roof wings occlude boiler and stack.",
+    "Workbench and exposed machinery do not hold attention in the close view."
+  ],
+  "hard_fail_reasons": [
+    "Broad roof wings hide the defining boiler and stack in normal production views, regressing machinery readability against accepted v004."
+  ],
+  "incumbent_candidate_id": "settlement_workshop-v004",
+  "incumbent_comparison": "Compared directly with accepted v004 in matched production views. v006 has fuller plank and roof construction, but broad roof wings obscure the boiler and stack that v004 keeps legible. It is not a better replacement.",
+  "incumbent_comparison_result": "worse",
+  "likely_causes": [
+    "Roof footprint and slope occupy too much of the silhouette.",
+    "Interior fittings are sparse compared with the roof mass."
+  ],
+  "next_action_hypothesis": "Keep v004. A later challenger must open the roof and expose boiler, stack, flywheel and bench together before further refinement.",
+  "observations": {
+    "art_direction_fit": "The miniature direction fits, but working machinery should remain visually dominant.",
+    "close_up_quality": "The roof edge occludes the boiler and reduces clarity of the interior at close inspection.",
+    "gameplay_readability": "The asset remains attached to the fixed landmark, but machinery reads less clearly than v004.",
+    "geometric_detail": "The production render shows layered boards, framed bays, roof seams, posts and bench.",
+    "material_realism": "Timber, dark roof metal, stone and copper accents respond differently to production light.",
+    "proportion": "Godot measures the candidate within the 26 x 20 x 20 inch envelope.",
+    "scale_fidelity": "Validated dimensions stay inside the envelope beside miniature citizens.",
+    "semantic_recognizability": "The open timber frame and stack identify a workshop, but the boiler is partly hidden.",
+    "silhouette_quality": "Wide roof wings dominate the building silhouette and conceal machinery.",
+    "surface_variation": "Board courses and roof seams break up broad surfaces, but interior detail is sparse.",
+    "technical_integration": "Godot validation passes and the exact challenger loaded through the review-only production path."
+  },
+  "render_evidence": [
+    "art/settlement_workshop/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+    "art/settlement_workshop/iterations/v006/render-runs/run-001/asset-detail.png",
+    "art/settlement_workshop/iterations/v006/render-runs/run-001/settlement-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 3,
+    "gameplay_readability": 3,
+    "geometric_detail": 4,
+    "material_realism": 4,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "surface_variation": 4,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The roof mass obstructs boiler, stack and bench details in the production close view.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "Roof and beam edges have shaped seams and bevels.",
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "Visible fittings and pipe collars provide some readable hardware.",
+        "pass": true
+      },
+      "joins": {
+        "evidence": "Timber courses and braces meet as separate assemblies.",
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "Boiler, stack and bench are not legible together to demonstrate the intended workshop equipment.",
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "Timber, iron and copper have distinct production-light response.",
+        "pass": true
+      },
+      "surface_variation": {
+        "evidence": "Board courses and roof seams vary across surfaces.",
+        "pass": true
+      },
+      "thickness": {
+        "evidence": "Posts, walls, roof sheets and plinth have plausible thickness.",
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "evidence": "A viewer recognizes a built miniature workshop, though covered machinery weakens its focal read.",
+      "pass": true
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "No photograph is attached to this ArtBrief; review is based on the construction brief and production render.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": true
+    }
+  }
+}

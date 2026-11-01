@@ -51,3 +51,11 @@ Evidence logs: [Room A smoke](room-a-smoke.log), [Room B smoke](room-b-smoke.log
 - Citizen-v089 stays review-only. No art candidate was promoted by this pass.
 - No matched POC-closure/best-current visual comparison was performed here; this evidence does not establish the production phase success criterion of clear scene-wide improvement.
 - Next priority remains scene foundation and major furniture, then the Clockwork settlement core. Citizen faction clothing and Verdant leaf construction remain follow-up items, not reasons to continue citizen iteration ahead of the broader scene.
+
+## Batch 1 replacement work — 2026-10-31
+
+The actual first replacement batch selected seven high-impact targets from the inventory: four Tier 1 Clockwork settlement structures, the large Room B parts rack, the prominent reconstructed-room windows, and the reconstructed-room French door. It produced and rendered all seven Art Factory candidates in Godot and recorded explicit evaluations.
+
+Three candidates passed and were promoted: depot-v005, housing-v004, and room_bookcase_production-v001. Workshop-v006 and workarea-v006 remain challengers because their roof geometry obscures defining machinery. The window and French-door candidates remain review-only because required construction details and source-character checks fail. All incumbents and failed/continued histories remain preserved.
+
+Matched Batch 0/Batch 1 captures, exact review-registry receipts, the Room A end-to-end gameplay smoke, performance comparison, candidate dispositions, and the honest scene-wide visual conclusion are in [Batch 1 visual review](batch-01/visual-review.md). The room shell and large human-room furniture remain prototype-level, so this work does not claim production deployment complete. The new unresolved items are recorded in [production-art-backlog.md](production-art-backlog.md). The full inventory was regenerated after the three promotions and the Room B semantic mapping change.

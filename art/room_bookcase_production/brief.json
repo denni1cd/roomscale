@@ -1,0 +1,46 @@
+{
+  "allow_stylization": false,
+  "asset_id": "room_bookcase_production",
+  "camera_distances": [
+    2.0,
+    12.0,
+    64.0,
+    330.0
+  ],
+  "category": "furniture",
+  "display_name": "Room B Workshop Parts Rack",
+  "gameplay_invariants": {
+    "RoomDefinition_dimensions_and_landmarks_remain_authoritative": true,
+    "landmarks_activity_stations_and_citizen_assignments_are_unchanged": true,
+    "render_meshes_do_not_create_collision_navigation_selection_or_simulation_state": true
+  },
+  "intended_dimensions": [
+    40.0,
+    52.0,
+    20.0
+  ],
+  "iteration_budget": 0,
+  "materials": {
+    "carcass": "grain-textured warm stained oak",
+    "hardware": "aged brass and steel",
+    "shelves": "dark walnut with solid nosings",
+    "stored_parts": "metallic copper, steel and brass with varied roughness"
+  },
+  "prohibited_changes": [
+    "do not change the RoomDefinition opening, object dimensions, position, collision, navigation, or simulation identity",
+    "do not add presentation geometry to collision, navigation, selection, or task logic",
+    "do not substitute shader recoloring for the described constructed asset"
+  ],
+  "quality_tier": "B",
+  "reference_images": [],
+  "required_features": [
+    "full-depth fitted shelving with a face frame, crown, plinth and strong side panels",
+    "four open shelf levels with nine individually fitted removable parts trays",
+    "readable replacement gears, bearing races, shaft collars, labels, hinges and cupboard hardware"
+  ],
+  "schema_version": 1,
+  "semantic_type": "built-in workshop parts rack",
+  "source_room_definition": "rooms/room_b.json",
+  "stylization_rationale": "",
+  "visual_target": "A believable, fitted workshop storage cabinet sized to the Room B parts-rack footprint. Show a substantial face frame, moulded crown, plinth, four shelves, three bays of removable parts trays, organized replacement gears and hardware, and a lower pair of paneled doors. Do not dress it as a library bookcase."
+}

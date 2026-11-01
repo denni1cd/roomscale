@@ -1,0 +1,110 @@
+{
+  "candidate_id": "settlement_workarea-v006",
+  "created_at_utc": "2026-11-01T00:00:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "Canopy visually dominates the working area.",
+    "Drive equipment and bench details are hard to read at gameplay distance."
+  ],
+  "hard_fail_reasons": [
+    "The shelter roof hides too much of the workbench and drive equipment in production views, reducing assembly-yard readability compared with v005."
+  ],
+  "incumbent_candidate_id": "settlement_workarea-v005",
+  "incumbent_comparison": "Compared with accepted v005 using matched cameras. The v006 canopy gives shelter, but hides the drive wheel, gears, tools and bench that made v005 read as an equipped assembly yard. Keep v005 as incumbent.",
+  "incumbent_comparison_result": "worse",
+  "likely_causes": [
+    "The roof footprint is too large for the yard envelope.",
+    "Bench and machinery sit beneath the dominant canopy plane."
+  ],
+  "next_action_hypothesis": "Retain v005. A future challenger must preserve an open equipment silhouette or use a different shelter approach; do not add more roof detail.",
+  "observations": {
+    "art_direction_fit": "A covered work yard fits, but recognizable machinery should lead the asset.",
+    "close_up_quality": "The close images show the canopy obstructing central work equipment.",
+    "gameplay_readability": "The low work surface and drive equipment are less readable at normal distance than v005.",
+    "geometric_detail": "The render shows roof seams, timber supports, a bench and small fittings.",
+    "material_realism": "Wood, iron, brass and roof material respond differently under production light.",
+    "proportion": "The model stays within the 23 x 9 x 12 inch brief envelope.",
+    "scale_fidelity": "Validation and citizen scale remain within the intended presentation envelope.",
+    "semantic_recognizability": "Posts and bench identify a covered work area, but machinery is less clear than the incumbent.",
+    "silhouette_quality": "The broad canopy dominates the open-yard silhouette.",
+    "surface_variation": "Floor boards and roof seams add material breaks, but the bench remains subordinate.",
+    "technical_integration": "Godot validation passes and v006 renders through the review-only production path."
+  },
+  "render_evidence": [
+    "art/settlement_workarea/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+    "art/settlement_workarea/iterations/v006/render-runs/run-001/asset-detail.png",
+    "art/settlement_workarea/iterations/v006/render-runs/run-001/settlement-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 3,
+    "gameplay_readability": 3,
+    "geometric_detail": 4,
+    "material_realism": 4,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 4,
+    "surface_variation": 4,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The roof plane blocks a clear inspection of the bench drive and equipment.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "Roof sheets and plank surfaces have defined edges.",
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "The work equipment does not show enough readable hardware from prescribed angles.",
+        "pass": false
+      },
+      "joins": {
+        "evidence": "Timber posts and cross braces meet as distinct pieces.",
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "The canopy hides the bench and drive details that define the asset.",
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "Wood, dark iron and brass read as separate materials.",
+        "pass": true
+      },
+      "surface_variation": {
+        "evidence": "Boarding and roof seams add some variation.",
+        "pass": true
+      },
+      "thickness": {
+        "evidence": "Roof, beams, bench and base have believable thickness.",
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "evidence": "The canopy and workbench read as a miniature work yard.",
+      "pass": true
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "No photograph is attached to this ArtBrief; review is based on the construction brief and production render.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": true
+    }
+  }
+}

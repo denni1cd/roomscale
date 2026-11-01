@@ -430,6 +430,36 @@ func _build_shell_opening(parent: Node3D, side: String, floor_center: Vector3, r
 	var appearance_value: Variant = opening.get("appearance", {})
 	var appearance: Dictionary = appearance_value if appearance_value is Dictionary else {}
 	var kind := String(opening.kind)
+	var registered_opening_id := String(appearance.get("asset_id", "")).to_lower()
+	if not registered_opening_id.is_empty() and kind in ["window", "door"]:
+		var opening_thickness := maxf(0.35, wall_thickness * 0.25)
+		var descriptor := {
+			"kind": kind,
+			"appearance": appearance,
+			"dimensions": [width, height, opening_thickness],
+		}
+		var registered_recipe: Dictionary = _visual_resolver.resolve(descriptor)
+		if bool(registered_recipe.get("asset_registry_required", false)):
+			_build_opening_exterior_scene(parent, side, floor_center, room_dimensions, offset, width, bottom, height, wall_thickness, opening)
+			var opening_root := Node3D.new()
+			opening_root.name = "RegisteredOpening_%s" % String(opening.get("id", "asset"))
+			opening_root.set_meta("presentation_only", true)
+			parent.add_child(opening_root)
+			var center := Vector3.ZERO
+			if side in ["north", "south"]:
+				var wall_z := floor_center.z - float(room_dimensions[1]) * 0.5 if side == "north" else floor_center.z + float(room_dimensions[1]) * 0.5
+				center = Vector3(floor_center.x - float(room_dimensions[0]) * 0.5 + offset + width * 0.5, float(_room_definition.floor.height) + bottom, wall_z)
+			else:
+				var wall_x := floor_center.x - float(room_dimensions[0]) * 0.5 if side == "west" else floor_center.x + float(room_dimensions[0]) * 0.5
+				center = Vector3(wall_x, float(_room_definition.floor.height) + bottom, floor_center.z - float(room_dimensions[1]) * 0.5 + offset + width * 0.5)
+			opening_root.position = parent.to_local(center)
+			match side:
+				"south": opening_root.rotation.y = PI
+				"east": opening_root.rotation.y = -PI * 0.5
+				"west": opening_root.rotation.y = PI * 0.5
+				_: opening_root.rotation.y = 0.0
+			_visual_resolver.render(opening_root, descriptor, func(_target: Node3D, _object: Dictionary) -> void: pass)
+			return
 	var archetype := String(appearance.get("archetype", "")).to_lower()
 	var frame_color := _appearance_color(appearance, "accent_color", Color("76583f"))
 	var frame_appearance := appearance.duplicate(true)

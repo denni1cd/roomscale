@@ -1,0 +1,53 @@
+{
+  "asset_files": [
+    "art/room_photo_french_door_production/iterations/v001/generated/asset.glb",
+    "art/room_photo_french_door_production/iterations/v001/generated/generation-record.json"
+  ],
+  "asset_id": "room_photo_french_door_production",
+  "candidate_id": "room_photo_french_door_production-v001",
+  "created_at_utc": "2026-11-01T02:17:50+00:00",
+  "evaluation_file": "",
+  "generation_result": {
+    "command": [
+      "python",
+      "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/scripts/art_factory/generators/production_batch01_blender.py"
+    ],
+    "exit_code": 0,
+    "recorded_at_utc": "2026-11-01T02:17:52+00:00",
+    "status": "pass"
+  },
+  "parent_candidate_id": "",
+  "recipe_file": "art/room_photo_french_door_production/iterations/v001/recipe.json",
+  "renders": [],
+  "schema_version": 1,
+  "status": "rejected",
+  "technical_validation": {
+    "asset_path": "res://art/room_photo_french_door_production/iterations/v001/generated/asset.glb",
+    "bounds": {
+      "position": [
+        -35.5200004577637,
+        -40.3647537231445,
+        -2.14000010490417
+      ],
+      "size": [
+        71.0400009155273,
+        124.644752502441,
+        6.26000022888184
+      ]
+    },
+    "engine": "4.7.2-stable (official)",
+    "import_exit_code": 0,
+    "issues": [
+      "source proportions exceed brief tolerance: ratios=(1.076364, 1.520058, 1.565) tolerance=0.200"
+    ],
+    "log": "art/room_photo_french_door_production/iterations/v001/technical-validation.log",
+    "mesh_count": 6,
+    "recorded_at_utc": "2026-11-01T02:19:46+00:00",
+    "report": "art/room_photo_french_door_production/iterations/v001/technical-validation.json",
+    "status": "fail",
+    "surface_count": 6,
+    "triangle_count": 5692,
+    "validation_exit_code": 1
+  },
+  "version": 1
+}

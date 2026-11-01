@@ -1,0 +1,22 @@
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)
+
+Blender quit
+C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale\scripts\art_factory\generators\production_batch01_blender.py:314: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  material.use_nodes = True
+Traceback (most recent call last):
+  File "C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale\scripts\art_factory\generators\production_batch01_blender.py", line 890, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale\scripts\art_factory\generators\production_batch01_blender.py", line 884, in main
+    run_blender_generation(arguments[0], Path(arguments[1]))
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale\scripts\art_factory\generators\production_batch01_blender.py", line 858, in run_blender_generation
+    builder(mats)
+    ~~~~~~~^^^^^^
+  File "C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale\scripts\art_factory\generators\production_batch01_blender.py", line 176, in build_depot
+    hardware_pin("Depot hinge rivet", x, -9.92, z, mats["brass"], 0.085)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale\scripts\art_factory\generators\production_batch01_blender.py", line 713, in hardware_pin
+    cylinder(name, (x, y, z), radius, 0.055, mats["brass"], "Y", 16, 0.012)
+                                             ~~~~^^^^^^^^^
+KeyError: 'bpy_struct[key]: key "brass" not found'

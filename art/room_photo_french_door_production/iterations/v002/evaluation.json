@@ -1,0 +1,116 @@
+{
+  "candidate_id": "room_photo_french_door_production-v002",
+  "created_at_utc": "2026-11-01T00:00:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "No readable hinges, latch escutcheon or lever handle.",
+    "Dark glazing does not read as clear household glass.",
+    "The available photograph does not depict the door."
+  ],
+  "hard_fail_reasons": [
+    "Required hinges and central latch hardware are not legible in the production close view.",
+    "The reference photograph contains no French door, so photo-character acceptance cannot be established.",
+    "Glazing reads as a dark opaque panel rather than residential glass."
+  ],
+  "incumbent_candidate_id": "",
+  "incumbent_comparison": "The first candidate adds paired leaves and divided glazing. The supplied photo does not show this door, so its design is judged against the written brief and production render. The glazing reads dark and opaque, and required hinges, latch escutcheons and handles are not legible.",
+  "incumbent_comparison_result": "first_pass",
+  "likely_causes": [
+    "Geometry prioritizes leaf outline and broad panel grid.",
+    "The glazing material lacks a clear-glass workflow.",
+    "The only photograph shows windows, not this door."
+  ],
+  "next_action_hypothesis": "Keep this challenger review-only. A future bounded attempt needs an actual door reference and distinct high-detail glazing and hardware; otherwise retain the backlog item.",
+  "observations": {
+    "art_direction_fit": "The divided pair fits the written specification but needs credible glass and hardware.",
+    "close_up_quality": "Close inspection confirms missing hardware and nontransparent glass.",
+    "gameplay_readability": "The door loads at the unchanged opening and does not alter simulation.",
+    "geometric_detail": "Panel divisions are present but requested hinges and latch details are not readable.",
+    "material_realism": "Wood tone is warm, but glass looks like a flat dark panel.",
+    "proportion": "The candidate fits the specified opening envelope.",
+    "scale_fidelity": "Rendered bounds fit the opening without RoomDefinition changes.",
+    "semantic_recognizability": "Paired meeting stiles and divided panels identify French doors.",
+    "silhouette_quality": "Two leaves and stepped casing fit the reconstructed opening.",
+    "source_resemblance": "The photograph does not depict a door, so photographic character similarity cannot be demonstrated.",
+    "surface_variation": "Frame grain is modest; glazing and lower panels remain uniform.",
+    "technical_integration": "Godot validation passes and the exact v002 asset is used in the production opening path."
+  },
+  "render_evidence": [
+    "art/room_photo_french_door_production/iterations/v002/render-runs/run-003/asset-three-quarter.png",
+    "art/room_photo_french_door_production/iterations/v002/render-runs/run-003/asset-detail.png",
+    "art/room_photo_french_door_production/iterations/v002/render-runs/run-003/room-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 3,
+    "gameplay_readability": 4,
+    "geometric_detail": 3,
+    "material_realism": 3,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 4,
+    "source_resemblance": 2,
+    "surface_variation": 3,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "Close inspection shows missing hardware and overly uniform glazing.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "Outer frame and rails have defined edges.",
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "Required sash or door hardware is absent or unreadable.",
+        "pass": false
+      },
+      "joins": {
+        "evidence": "Mullions and frame are fitted separate parts.",
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "Operating details and residential joinery are incomplete.",
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "Glass lacks credible clear glazing and restrained reflectance.",
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "Glazing and broad frame areas remain too uniform for the photographic source.",
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "Casing and rails have physical depth.",
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The frame and pane grid are recognizable, but the render does not read as a finished residential opening.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "No",
+      "applicable": true,
+      "evidence": "A room photo exists but does not contain a French door, so it cannot validate the door. The current render also lacks clear glazing and the specified visible hardware.",
+      "pass": false
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  }
+}

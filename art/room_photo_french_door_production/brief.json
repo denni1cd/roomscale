@@ -1,0 +1,47 @@
+{
+  "allow_stylization": false,
+  "asset_id": "room_photo_french_door_production",
+  "camera_distances": [
+    2.0,
+    12.0,
+    64.0,
+    330.0
+  ],
+  "category": "architectural_opening",
+  "display_name": "Reconstructed Room French Door Pair",
+  "gameplay_invariants": {
+    "RoomDefinition_dimensions_and_landmarks_remain_authoritative": true,
+    "landmarks_activity_stations_and_citizen_assignments_are_unchanged": true,
+    "render_meshes_do_not_create_collision_navigation_selection_or_simulation_state": true
+  },
+  "intended_dimensions": [
+    66.0,
+    82.0,
+    4.0
+  ],
+  "iteration_budget": 1,
+  "materials": {
+    "frame": "photographic warm stained oak with fine grain and satin wear",
+    "glass": "clear household glazing with restrained reflectance",
+    "hardware": "aged brass and steel"
+  },
+  "prohibited_changes": [
+    "do not change the RoomDefinition opening, object dimensions, position, collision, navigation, or simulation identity",
+    "do not add presentation geometry to collision, navigation, selection, or task logic",
+    "do not substitute shader recoloring for the described constructed asset"
+  ],
+  "quality_tier": "B",
+  "reference_images": [
+    "photo_holder/Sample (1).jpg"
+  ],
+  "required_features": [
+    "deep stained-oak casing, jambs, threshold and paired door leaves",
+    "divided glass lights with true stiles, rails, centre meeting stile and bottom panels",
+    "credible hinges, latch escutcheons, lever hardware and household glazing"
+  ],
+  "schema_version": 1,
+  "semantic_type": "photographic glazed French double door",
+  "source_room_definition": "rooms/room_photo_luna.json",
+  "stylization_rationale": "",
+  "visual_target": "A source-matched, paired residential French door fitted to the exact 66 by 82 inch reconstructed opening. Give each leaf real stiles, rails and divided glazing; include the central meeting stile, lower wood panels, stepped warm-oak casing, threshold, hinges, and latch hardware. Match the photographed wood and glass character instead of rendering a flat panel and muntin grid."
+}

@@ -1,0 +1,39 @@
+{
+  "deterministic_seed": 2513,
+  "generator_command": [
+    "python",
+    "{project_root}/scripts/art_factory/generators/production_batch01_blender.py"
+  ],
+  "import_configuration": {
+    "axes": "Blender X width / Y depth / Z up exported to Godot X width / Y up / Z depth",
+    "format": "GLB PackedScene with embedded PBR textures",
+    "normalization": "fit source geometry to ArtBrief dimensions without altering RoomDefinition",
+    "renderer": "gl_compatibility",
+    "units": "inches"
+  },
+  "instructions": "A source-matched residential double-hung window assembly, fitted exactly inside a 96 by 68 inch reconstructed opening. The warm stained-oak trim, projecting sill, separate sash rails and stiles, centre mullions, upper transom lights, clear glass and small sash hardware should approach the photographed room rather than use the existing flat glass panel and box frame.",
+  "material_method": "Embedded, per-material PBR base-colour, roughness, and tangent-normal maps, with separate glazing and metal responses.",
+  "method": "blender_authored_modular_production_asset_with_embedded_pbr",
+  "parameters": {
+    "asset_type": "window",
+    "geometry_units": "inches",
+    "outputs": [
+      "asset.glb",
+      "generation-record.json"
+    ]
+  },
+  "post_processing": [
+    "apply manufactured edge bevel and weighted normals",
+    "unwrap authored components with scale-aware UVs",
+    "batch meshes by shared material",
+    "export GLB with embedded base-colour, roughness, and tangent-normal textures"
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "scripts/art_factory/generators/production_batch01_blender.py",
+    "photo_holder/Sample (1).jpg",
+    "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json"
+  ],
+  "tool": "Blender background authoring through the RoomScale Art Factory generator",
+  "tool_version": "Blender 5.2.3"
+}

@@ -299,7 +299,8 @@ class ArtFactory:
     def record_evaluation(self, evaluation: ArtEvaluation) -> Path:
         candidate = self.load_candidate(evaluation.candidate_id)
         brief = self.load_brief(candidate.asset_id)
-        source_imagery_required = bool(brief.source_room_definition or brief.reference_images)
+        # A RoomDefinition supplies fit/gameplay context, not a photograph.
+        source_imagery_required = bool(brief.reference_images)
         errors = evaluation.validate(
             source_resemblance_required=source_imagery_required,
             allow_stylization=brief.allow_stylization,
@@ -336,7 +337,8 @@ class ArtFactory:
             raise ValueError("candidate has no recorded visual evaluation")
         evaluation_path = self.project_root / _safe_relative_path(candidate.evaluation_file)
         evaluation = ArtEvaluation.from_dict(_read_json(evaluation_path))
-        source_imagery_required = bool(brief.source_room_definition or brief.reference_images)
+        # A RoomDefinition supplies fit/gameplay context, not a photograph.
+        source_imagery_required = bool(brief.reference_images)
         errors = evaluation.validate(
             source_resemblance_required=source_imagery_required,
             allow_stylization=brief.allow_stylization,

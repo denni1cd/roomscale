@@ -1,0 +1,20 @@
+{
+  "asset_id": "settlement_depot",
+  "asset_type": "depot",
+  "method": "blender_authored_modular_production_asset_with_embedded_pbr",
+  "tool": "Blender 5.2.3 LTS Python/bpy",
+  "output": "asset.glb",
+  "dimensions_inches": [
+    24.0,
+    13.0,
+    20.0
+  ],
+  "source_inputs": [
+    "scripts/art_factory/generators/production_batch01_blender.py",
+    "art/settlement_depot/brief.json",
+    "scripts/visuals/settlement_details.gd",
+    "scripts/visuals/settlement_composition.gd"
+  ],
+  "geometry": "authored modular mesh assemblies with bevelled edges, framed openings, and fit-for-purpose component detail",
+  "materials": "embedded PBR base-colour, roughness, and tangent-normal textures for wood, stone, iron, copper, and paper as applicable"
+}

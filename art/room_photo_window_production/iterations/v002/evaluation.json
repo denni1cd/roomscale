@@ -1,0 +1,114 @@
+{
+  "candidate_id": "room_photo_window_production-v002",
+  "created_at_utc": "2026-11-01T00:00:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "Sash locks are absent at required detail distance.",
+    "Upper transom lights are not clearly divided.",
+    "Glazing is uniformly cool and opaque-looking."
+  ],
+  "hard_fail_reasons": [
+    "The render does not include required readable sash locks and transom lights.",
+    "Glazing does not materially approach the photographic window character closely enough for acceptance."
+  ],
+  "incumbent_candidate_id": "",
+  "incumbent_comparison": "The first candidate adds timber framing and divided glazing to the Batch 0 windows, but does not complete the brief: close views lack recognizable sash locks and upper transom lights, and glazing reads as a uniform cool panel instead of clear household glass.",
+  "incumbent_comparison_result": "first_pass",
+  "likely_causes": [
+    "Geometry emphasizes the large frame and pane grid rather than operating hardware.",
+    "The glass material lacks clear household transmission and reflectance."
+  ],
+  "next_action_hypothesis": "Keep v002 review-only. A future bounded attempt must add sash hardware and transom divisions and use credible clear-glass response.",
+  "observations": {
+    "art_direction_fit": "Oak framing fits, but incomplete sash construction weakens residential presentation.",
+    "close_up_quality": "Close views expose missing hardware and uniform glazing.",
+    "gameplay_readability": "Both window instances load and align with unchanged openings.",
+    "geometric_detail": "Rails and mullions are present, but required sash locks and transom detailing are missing.",
+    "material_realism": "The frame is warm, but uniform blue glazing does not read as household glass.",
+    "proportion": "The rendered frame fits the existing RoomDefinition opening.",
+    "scale_fidelity": "The candidate normalizes to opening dimensions without changing the RoomDefinition.",
+    "semantic_recognizability": "The oak frame and pane layout identify a divided residential window.",
+    "silhouette_quality": "Casing and center frame fit the opening.",
+    "source_resemblance": "Oak and divided panes echo the photo, but absent transom/sash detail and opaque glass prevent a material match.",
+    "surface_variation": "The wood has grain, while glass and frame lack source-level subtle variation.",
+    "technical_integration": "Godot validates v002 and both production window instances use its exact GLB."
+  },
+  "render_evidence": [
+    "art/room_photo_window_production/iterations/v002/render-runs/run-003/asset-three-quarter.png",
+    "art/room_photo_window_production/iterations/v002/render-runs/run-003/asset-detail.png",
+    "art/room_photo_window_production/iterations/v002/render-runs/run-003/room-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 3,
+    "gameplay_readability": 4,
+    "geometric_detail": 3,
+    "material_realism": 3,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 4,
+    "source_resemblance": 3,
+    "surface_variation": 3,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "Close inspection shows missing hardware and overly uniform glazing.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "Outer frame and rails have defined edges.",
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "Required sash or door hardware is absent or unreadable.",
+        "pass": false
+      },
+      "joins": {
+        "evidence": "Mullions and frame are fitted separate parts.",
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "Operating details and residential joinery are incomplete.",
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "Glass lacks credible clear glazing and restrained reflectance.",
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "Glazing and broad frame areas remain too uniform for the photographic source.",
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "Casing and rails have physical depth.",
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The frame and pane grid are recognizable, but the render does not read as a finished residential opening.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "No",
+      "applicable": true,
+      "evidence": "The source photo shows warm stained-wood double-hung windows; this render captures the frame color and divided opening but lacks transom lights and sash locks, and its glass appears uniformly opaque.",
+      "pass": false
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  }
+}

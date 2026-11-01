@@ -1,0 +1,102 @@
+{
+  "candidate_id": "settlement_depot-v005",
+  "created_at_utc": "2026-11-01T00:00:00+00:00",
+  "decision": "promote",
+  "defects": [],
+  "hard_fail_reasons": [],
+  "incumbent_candidate_id": "settlement_depot-v003",
+  "incumbent_comparison": "Compared with accepted v003 and matched Batch 0/1 production captures. v005 replaces the largely unarticulated roof and wall mass with a framed timber storehouse, paneled loading doors, roof seams, loading equipment and strapped supplies. It is materially more legible and detailed without losing depot identity or footprint.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [],
+  "next_action_hypothesis": "Promote v005; preserve the RoomDefinition depot landmark, resource storage and construction systems.",
+  "observations": {
+    "art_direction_fit": "The constructed timber, iron and copper storehouse fits the approved miniature settlement direction.",
+    "close_up_quality": "Door panels, braces, straps and supply details remain coherent at close distance.",
+    "gameplay_readability": "The depot reads beside live citizens and remains presentation-only at its existing site.",
+    "geometric_detail": "The render shows layered boards, paneled doors, braces, roof seams, crates, barrel hoops and pulley assembly.",
+    "material_realism": "Oiled timber, dark iron, copper and stone respond differently under RoomScale lighting.",
+    "proportion": "Godot reports bounds within the specified depot envelope.",
+    "scale_fidelity": "Validation and settlement capture retain the intended miniature scale.",
+    "semantic_recognizability": "Three-quarter and room-context views read as a miniature clockwork supply depot with loading front and stored goods.",
+    "silhouette_quality": "Pitched metal awning and framed loading front distinguish the depot at settlement scale.",
+    "surface_variation": "Board courses, roof seams, crate bands and metal fittings vary visibly.",
+    "technical_integration": "Godot 4.7.2 validation passes and the exact v005 GLB renders through the review registry."
+  },
+  "render_evidence": [
+    "art/settlement_depot/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+    "art/settlement_depot/iterations/v005/render-runs/run-001/asset-detail.png",
+    "art/settlement_depot/iterations/v005/render-runs/run-001/settlement-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 5,
+    "close_up_quality": 4,
+    "gameplay_readability": 4,
+    "geometric_detail": 5,
+    "material_realism": 4,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 4,
+    "surface_variation": 5,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "Yes",
+      "evidence": "The close render resolves door framing, braces, roof seams, crate straps and supply details without assembly defects.",
+      "pass": true
+    },
+    "craftsmanship": {
+      "answer": "Yes",
+      "edge_treatment": {
+        "evidence": "Door panels, roof seams, crate edges and frame members have controlled edges.",
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "Straps, pulley and door fittings read at close distance.",
+        "pass": true
+      },
+      "joins": {
+        "evidence": "Board courses, braces, posts and framed doors meet in coherent joints.",
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "Loading assembly, door construction, bracing and strapped supplies read as manufactured parts.",
+        "pass": true
+      },
+      "material_response": {
+        "evidence": "Wood, iron, copper and stone respond distinctly under production light.",
+        "pass": true
+      },
+      "surface_variation": {
+        "evidence": "Boards and supply surfaces vary in color and roughness.",
+        "pass": true
+      },
+      "thickness": {
+        "evidence": "Plinth, awning, wall, doors and crates have credible relative thickness.",
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "evidence": "A viewer reads the framed doors, board construction and loading equipment as a believable miniature storehouse.",
+      "pass": true
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "No photograph is attached to this ArtBrief; review is based on the construction brief and production render.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": true
+    }
+  }
+}

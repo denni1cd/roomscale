@@ -164,8 +164,21 @@ func run() -> void:
 	if asset_id == "citizen":
 		close_distance = maxf(1.65, dimensions.length() * 3.0)
 		target = asset_node.global_position + Vector3.UP * dimensions.y * 0.5
+	if asset_id in ["room_photo_window_production", "room_photo_french_door_production"]:
+		# The opening sits on a room boundary. Keep every close comparison camera
+		# on the interior side while varying only the oblique angle slightly.
+		var toward_room := (floor_center - target).normalized()
+		var interior_yaw := atan2(toward_room.x, toward_room.z)
+		close_distance = maxf(70.0, dimensions.length() * 0.78)
+		three_quarter_yaw = interior_yaw - 0.26
+		opposite_yaw = interior_yaw + 0.26
+		profile_yaw = interior_yaw
+		detail_yaw = interior_yaw
 	var asset_tilt := 38.0
 	var detail_tilt := 28.0
+	if asset_id in ["room_photo_window_production", "room_photo_french_door_production"]:
+		asset_tilt = 22.0
+		detail_tilt = 20.0
 	if asset_id.begins_with("settlement_"):
 		# Settlement presentation roots retain the existing 0.6 visual scale.
 		# Focus at the rendered structure center and lower the camera so roofs do
@@ -183,7 +196,7 @@ func run() -> void:
 	if not await _capture(scene, "asset-three-quarter", target, close_distance, asset_tilt, three_quarter_yaw, follow_citizen):
 		return
 	var alternate_phase := "asset-opposite-three-quarter"
-	if asset_id == "hammock_with_stand":
+	if asset_id in ["hammock_with_stand", "room_photo_window_production", "room_photo_french_door_production"]:
 		alternate_phase = "asset-interior-oblique"
 	if not await _capture(scene, alternate_phase, target, close_distance, asset_tilt, opposite_yaw, follow_citizen):
 		return
@@ -202,6 +215,8 @@ func run() -> void:
 		detail_distance = maxf(2.0, dimensions.y * 4.0)
 		detail_yaw = 0.9
 		detail_tilt = 38.0
+	if asset_id in ["room_photo_window_production", "room_photo_french_door_production"]:
+		detail_distance = maxf(44.0, dimensions.y * 0.72)
 	if asset_id.begins_with("settlement_"):
 		detail_distance *= 0.6
 	if not await _capture(scene, "asset-detail", target, detail_distance, detail_tilt, detail_yaw, follow_citizen):

@@ -1,0 +1,102 @@
+{
+  "candidate_id": "settlement_housing-v004",
+  "created_at_utc": "2026-11-01T00:00:00+00:00",
+  "decision": "promote",
+  "defects": [],
+  "hard_fail_reasons": [],
+  "incumbent_candidate_id": "settlement_housing-v002",
+  "incumbent_comparison": "Compared with accepted v002 in matched production three-quarter and settlement views. v004 gives the paired homes separate gables, layered siding, framed doors, divided windows, roof seams and a shared service flue; the prior candidate read as a simpler joined mass. It improves construction detail and domestic silhouette while retaining the exact footprint.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [],
+  "next_action_hypothesis": "Promote v004; keep housing placement, citizen assignments and simulation behavior RoomDefinition-owned.",
+  "observations": {
+    "art_direction_fit": "The paired hand-built homes fit the approved steampunk settlement direction.",
+    "close_up_quality": "Doors, windows, roof joints and posts remain coherent at close distance.",
+    "gameplay_readability": "Homes remain readable at settlement scale without moving activity sites.",
+    "geometric_detail": "The image resolves siding courses, roof seams, porch posts, door frames and window mullions.",
+    "material_realism": "Timber, roof metal, glazing and flue have separate material response under production light.",
+    "proportion": "The candidate stays within the specified paired-home envelope.",
+    "scale_fidelity": "Godot bounds remain in tolerance and retain miniature citizen scale.",
+    "semantic_recognizability": "Matched views show two homes with doors, windows, porches, gables and a shared flue.",
+    "silhouette_quality": "Two separated roof peaks create a domestic silhouette against the prior joined roof mass.",
+    "surface_variation": "Cladding courses and roof pieces vary across both facades.",
+    "technical_integration": "Godot validation passes and the exact v004 GLB loads from the review registry."
+  },
+  "render_evidence": [
+    "art/settlement_housing/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+    "art/settlement_housing/iterations/v004/render-runs/run-001/asset-detail.png",
+    "art/settlement_housing/iterations/v004/render-runs/run-001/settlement-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 5,
+    "close_up_quality": 4,
+    "gameplay_readability": 4,
+    "geometric_detail": 5,
+    "material_realism": 4,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 5,
+    "surface_variation": 4,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "Yes",
+      "evidence": "Close inspection resolves siding, roof construction, window divisions and door fittings without visible intersections.",
+      "pass": true
+    },
+    "craftsmanship": {
+      "answer": "Yes",
+      "edge_treatment": {
+        "evidence": "Roof edges, board ends and facade openings are consistently finished.",
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "Door and window fittings are present at the evaluated distance.",
+        "pass": true
+      },
+      "joins": {
+        "evidence": "Cladding, porch posts, frames and roof members meet as separate components.",
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "Framed openings, porch supports, roof joints and flue details read as constructed components.",
+        "pass": true
+      },
+      "material_response": {
+        "evidence": "Roof metal, timber and glazing respond distinctly to production light.",
+        "pass": true
+      },
+      "surface_variation": {
+        "evidence": "The paired facades use varied cladding and roof detail.",
+        "pass": true
+      },
+      "thickness": {
+        "evidence": "Walls, trim, roofs and posts have credible miniature thickness.",
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "evidence": "A viewer reads two hand-built miniature homes with coherent facades, not an undifferentiated building mass.",
+      "pass": true
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "No photograph is attached to this ArtBrief; review is based on the construction brief and production render.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": true
+    }
+  }
+}
