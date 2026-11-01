@@ -1,0 +1,114 @@
+{
+  "candidate_id": "desk-v060",
+  "created_at_utc": "2026-11-01T12:42:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "The glass edge and broad top reflection remain weak in asset-three-quarter.png.",
+    "Frame, fittings, and rubber still merge at the room/gameplay view.",
+    "The root cause is no longer simply dark GLTF base factors; imported GLTF response still fails to reproduce the native incumbent's rim/clearcoat appearance."
+  ],
+  "hard_fail_reasons": [
+    "The production render still makes the dominant glass top and graphite frame too dark to match the approved target's material hierarchy.",
+    "The material improvement is not yet visibly better than desk-v007 in the matched production view; v007 remains the current incumbent."
+  ],
+  "incumbent_candidate_id": "desk-v007",
+  "incumbent_comparison": "v060 keeps v059's exact geometry and imports at the correct bounds. Reusing v007's higher albedo, lower metal response, roughness, and glass alpha makes the surface somewhat more translucent and exposes the underframe, but the Godot render remains nearly black across the desk. desk-v007 is still more readable and remains incumbent.",
+  "incumbent_comparison_result": "worse",
+  "likely_causes": [
+    "Godot's GLTF conversion does not reproduce the incumbent's native StandardMaterial3D rim response from the exported clearcoat material.",
+    "Compatibility-rendered glass transparency and the available room reflection keep the tabletop darker than the visual target despite matching the v007 factors."
+  ],
+  "next_action_hypothesis": "Change material integration strategy without changing mesh geometry: assign Godot-native StandardMaterial3D overrides in a candidate-local review wrapper, matching v007's explicit alpha, rim, clearcoat, metallic, and roughness values to the corresponding desk parts. Re-render through Godot and keep v007 unless the actual pixels clearly improve.",
+  "observations": {
+    "art_direction_fit": "The restrained dark workstation identity fits Human Room, but the surface response remains too dark for the approved concept.",
+    "close_up_quality": "asset-detail.png reveals the paired supports and rail more readily than v059; dark glass and metal still hide their material edge detail.",
+    "gameplay_readability": "The room view retains the large desk silhouette but does not give it the highlight contrast of incumbent v007.",
+    "geometric_detail": "The paired lift stages, under-glass support, and fasteners are present; v060 leaves all v059 geometry unchanged.",
+    "material_realism": "The desktop is slightly more translucent than v059 and shows an additional broad reflection, but its overall value still collapses to near-black in the compatibility render.",
+    "proportion": "Godot reports the same exact 66 x 30 x 30-inch bounds as the VisualBrief and RoomDefinition.",
+    "scale_fidelity": "Godot validation confirms exact 66 x 30 x 30-inch bounds with no RoomDefinition edits.",
+    "semantic_recognizability": "asset-three-quarter.png still clearly depicts a standing computer desk with a broad top, two columns, and T-feet.",
+    "silhouette_quality": "The wide tabletop and open knee space remain intact, with both support columns and feet visible.",
+    "source_resemblance": "The source silhouette is retained, but the glass still lacks the broad bright reflection and visible edge response of the source/approved concept.",
+    "surface_variation": "The top is more distinct from the underframe than v059, but metal/fittings still merge into a very dark surface.",
+    "technical_integration": "Godot 4.7.2 imports the 22 mesh components without issues and renders the challenger through the normal six-view RoomScale path."
+  },
+  "render_evidence": [
+    "art/desk/iterations/v060/render-runs/run-001/asset-three-quarter.png",
+    "art/desk/iterations/v060/render-runs/run-001/asset-detail.png",
+    "art/desk/iterations/v060/render-runs/run-001/room-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 3,
+    "gameplay_readability": 3,
+    "geometric_detail": 4,
+    "material_realism": 2,
+    "proportion": 5,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 5,
+    "source_resemblance": 2,
+    "surface_variation": 2,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The close view reveals the support geometry better but still hides material edges and fitting hierarchy in darkness.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "The tabletop remains thin with a continuous edge in asset-profile.png.",
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "The fittings exist but their metal response is too dark to read as discrete hardware.",
+        "pass": false
+      },
+      "joins": {
+        "evidence": "The two-stage column joins remain difficult to inspect because their material values merge with the top.",
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "The detail view exposes components but does not show enough material contrast for a polished manufacturing read.",
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "The glass and coated metal remain substantially darker than the approved target and incumbent.",
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "The tabletop, graphite, and fittings still do not separate sufficiently under production lighting.",
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "The side/profile render keeps the glass top as a thin continuous panel.",
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The glass is more translucent than v059, but asset-three-quarter.png and asset-detail.png still render the desk as a largely near-black object with weak surface separation.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "No",
+      "applicable": true,
+      "evidence": "The T-frame and top proportions match, but the compatibility render still lacks the photographed desk's readable broad glass reflection and edge brightness.",
+      "pass": false
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  }
+}

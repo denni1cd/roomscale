@@ -1,0 +1,126 @@
+{
+  "candidate_id": "settlement_workshop-v007",
+  "created_at_utc": "2026-11-01T13:45:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "Canopy is too small and asymmetrical relative to the approved target.",
+    "Roof supports do not connect into a continuous truss assembly."
+  ],
+  "hard_fail_reasons": [
+    "The one-sided canopy does not read as the target's supported raised-ridge workshop roof."
+  ],
+  "incumbent_candidate_id": "settlement_workshop-v004",
+  "incumbent_comparison": "Compared with accepted v004 in matched Godot cameras, v007 removes the obstructive roof mass but replaces it with an undersized one-sided awning. The boiler remains visible, yet the canopy and truss read is weaker than v004's supported open central roof slot. Keep v004 as best 3D and production asset.",
+  "incumbent_comparison_result": "worse",
+  "likely_causes": [
+    "The first transfer strategy removed the full roof before fitting a compact awning over the bench.",
+    "Target canopy width and support connections were lost during geometry translation."
+  ],
+  "next_action_hypothesis": "A future attempt would need a component-authored ridge canopy tied into a continuous support frame while leaving an open machine lane above the boiler; do not change RoomDefinition landmarks or boiler/gameplay positions.",
+  "observations": {
+    "art_direction_fit": "The machinery retains Clockwork identity, but the asymmetric workbench awning reads less like the selected workshop concept than accepted v004's continuous roof with a central machine opening.",
+    "close_up_quality": "The Godot detail view shows the roof supports ending beside the upper wall courses rather than forming the continuous truss-supported target assembly.",
+    "gameplay_readability": "The boiler and flywheel remain readable and the RoomDefinition landmark and citizen scale are unchanged.",
+    "geometric_detail": "Posts, board courses, boiler fittings, pressure line, flywheel, bench, and a raised roof assembly survive the transfer.",
+    "material_realism": "Timber, iron, copper, and stone remain separate under the normal production light.",
+    "proportion": "Godot validates a 25.5 x 20.46 x 19.25-inch envelope; the slight 0.46-inch depth overshoot remains within validator tolerance.",
+    "scale_fidelity": "The model remains near the 26 x 20 x 20-inch brief envelope and does not alter the settlement site.",
+    "semantic_recognizability": "The boiler, flywheel, flue, timber bays, and bench still read as a Clockwork workshop.",
+    "silhouette_quality": "The small one-sided canopy does not transfer the approved full raised-ridge roof silhouette as clearly as intended.",
+    "surface_variation": "Board courses and mixed metal/timber areas break up the structure, though the reduced canopy leaves the top sparse.",
+    "technical_integration": "Godot 4.7.2 Compatibility import and RoomScale production rendering pass with no fallback."
+  },
+  "render_evidence": [
+    "art/settlement_workshop/iterations/v007/render-runs/run-001/asset-three-quarter.png",
+    "art/settlement_workshop/iterations/v007/render-runs/run-001/asset-detail.png",
+    "art/settlement_workshop/iterations/v007/render-runs/run-001/settlement-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 3,
+    "gameplay_readability": 4,
+    "geometric_detail": 4,
+    "material_realism": 4,
+    "proportion": 4,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 3,
+    "surface_variation": 4,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The Godot detail capture shows a disconnected canopy and unresolved support joins.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "The window retains stepped casing, fitted sash rails, and finished sill edges.",
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "The second-pass latch sits on the camera-facing centre stile and appears at the meeting rail.",
+        "pass": true
+      },
+      "joins": {
+        "evidence": "The casing, transom, sash rails, centre stile, and sill remain separate fitted parts.",
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "Upper lights, meeting rail, and the central sash latch read as a constructed double-hung assembly.",
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "Warm timber, visible outdoors through low-alpha glazing, and metal hardware have separate responses in the production scene.",
+        "pass": true
+      },
+      "surface_variation": {
+        "evidence": "The dark stained casing and lighter sash members remain distinguishable.",
+        "pass": true
+      },
+      "thickness": {
+        "evidence": "Casing and projecting sill hold physical depth in the Godot close capture.",
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "evidence": "The production render identifies the intended built asset.",
+      "pass": true
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "No photographed source is attached to this ArtBrief; the approved target is the design reference.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Preserve v004 and backlog this target for a component-authored canopy pass with a continuous load-bearing frame and open machine lane; do not accept the asymmetric v007 roof as a production replacement.",
+    "lost_visual_information": [
+      "The broad, supported raised ridge roof from the approved target became a small one-sided canopy.",
+      "Continuous truss-to-post load paths are not readable in the close render."
+    ],
+    "preserved_components": [
+      "Clockwork boiler, flywheel, gauge, and flue",
+      "workbench and open front",
+      "stone/timber base and RoomDefinition scale"
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "proportion_drift"
+    ]
+  }
+}

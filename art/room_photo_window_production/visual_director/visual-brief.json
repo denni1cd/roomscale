@@ -1,0 +1,81 @@
+{
+  "asset_id": "room_photo_window_production",
+  "semantic_identity": "Source-matched residential double-hung window with upper transom lights",
+  "intended_function": "Replace the existing simple window asset appearance inside the authoritative reconstructed opening.",
+  "dimensions_inches": [
+    96,
+    68,
+    4
+  ],
+  "citizen_scale": {
+    "citizen_height_inches": 0.5,
+    "ratio_or_view": "68-inch window height is 136 half-inch citizen-heights; compare against an exact dimension-derived schematic, not a generated person's apparent size."
+  },
+  "silhouette_requirements": [
+    "Complete wide, shallow window assembly within a 96 x 68 x 4 inch envelope.",
+    "Warm stained-oak casing with a fitted sill and jamb.",
+    "Two broad lower double-hung sash sections with a central vertical stile and meeting rail.",
+    "Narrow upper band divided into four transom lights."
+  ],
+  "construction_materials": [
+    {
+      "part": "casing and sill",
+      "construction": "Fitted straight casing, side jambs and projecting sill; restrained household trim.",
+      "material": "Warm dark stained oak with visible fine grain."
+    },
+    {
+      "part": "lower sash",
+      "construction": "Two aligned lower sash sections with slim center stile and horizontal meeting rail.",
+      "material": "Stained oak and clear household glass."
+    },
+    {
+      "part": "transom",
+      "construction": "Four fixed upper lights with thin muntins and no decorative latch blocks.",
+      "material": "Stained oak and clear household glass."
+    },
+    {
+      "part": "sash hardware",
+      "construction": "One restrained centered latch at the lower meeting rail.",
+      "material": "Aged brass."
+    }
+  ],
+  "art_direction": "Human Room: source-matched residential woodwork, clear glass and restrained reflections.",
+  "faction_identity": null,
+  "gameplay_distance_readability": "The casing, central stile, meeting rail and transom band should read in the 64\u2013330 inch room views.",
+  "source_photo_constraints": "photo_holder/Sample (1).jpg shows dark warm wood casing, a divided upper transom band, two broad lower window sections, a center divider/meeting rail and clear outdoor glazing. Decorative corner blocks, repeated transom latches and the contents of the room are not window evidence.",
+  "visual_references": [
+    {
+      "path": "photo_holder/Sample (1).jpg",
+      "role": "source photo",
+      "provenance": "Room photo; only visible window features listed in source_photo_constraints are treated as evidence."
+    },
+    {
+      "path": "art/room_photo_window_production/iterations/v002/render-runs/run-003/asset-three-quarter.png",
+      "role": "best current production candidate",
+      "provenance": "Actual Godot Compatibility render, review-only v002."
+    },
+    {
+      "path": "art/room_photo_window_production/visual_director/round-01/approved-target-r01.png",
+      "role": "approved visual target",
+      "provenance": "Selected/edited transom concept after pixel inspection."
+    },
+    {
+      "path": "art/room_photo_window_production/visual_director/reference-pack/scale-guide.svg",
+      "role": "dimension-derived scale schematic",
+      "provenance": "Exact ArtBrief dimensions at 12 SVG pixels per inch; 0.5-inch citizen shown as a 6-pixel marker."
+    }
+  ],
+  "prohibited_failure_modes": [
+    "No decorative corner rosettes or oversized stacked crown.",
+    "No repeated latches on fixed transom lights.",
+    "No opaque or strongly mirrored glazing.",
+    "No changes to RoomDefinition opening, dimensions, position, collision or navigation."
+  ],
+  "roomdefinition_authority": "ArtBrief and rooms/room_photo_luna.json own the 96 x 68 x 4 inch opening, position and gameplay semantics. The 3D mesh is presentation only.",
+  "separate_room_assets": [
+    "room wall and opening",
+    "exterior scenery",
+    "curtains/blinds",
+    "room objects visible through the glass"
+  ]
+}

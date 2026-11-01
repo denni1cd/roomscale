@@ -1,0 +1,122 @@
+{
+  "approved_visual_target": {
+    "approval": "pass",
+    "approved_at_utc": "2026-11-01T13:11:55+00:00",
+    "concept_id": "clockwork-workshop-raised-canopy-r01",
+    "path": "art/settlement_workshop/visual_director/round-01/approved-target-r01.png",
+    "review_method": "pixel inspection; review evidence recorded by Luna",
+    "review_path": "art/settlement_workshop/visual_director/round-01/visual-development.md",
+    "sha256": "9313647a47a2c7ea5c71840499e0e8202e8191e02e72435fb58c7238eb7037b5"
+  },
+  "asset_id": "settlement_workshop",
+  "backlog_reason": "v007 replaces the target raised-ridge canopy with an undersized one-sided awning and does not beat accepted v004; keep v004, and resume only with a supported continuous canopy that preserves an open machine lane.",
+  "best_3d_candidate": {
+    "accepted_at_utc": "2026-10-25T14:53:55+00:00",
+    "candidate_id": "settlement_workshop-v004",
+    "path": "art/settlement_workshop/iterations/v004/generated/settlement_workshop.tscn"
+  },
+  "candidate_history": [
+    {
+      "candidate_file": "art/settlement_workshop/iterations/v007/candidate.json",
+      "candidate_id": "settlement_workshop-v007",
+      "created_at_utc": "2026-11-01T13:18:35+00:00",
+      "parent_candidate_id": "",
+      "recipe_file": "art/settlement_workshop/iterations/v007/recipe.json",
+      "visual_director_attempt": 1,
+      "visual_director_provenance": {
+        "approved_visual_target": {
+          "approval": "pass",
+          "approved_at_utc": "2026-11-01T13:11:55+00:00",
+          "concept_id": "clockwork-workshop-raised-canopy-r01",
+          "path": "art/settlement_workshop/visual_director/round-01/approved-target-r01.png",
+          "review_method": "pixel inspection; review evidence recorded by Luna",
+          "review_path": "art/settlement_workshop/visual_director/round-01/visual-development.md",
+          "sha256": "9313647a47a2c7ea5c71840499e0e8202e8191e02e72435fb58c7238eb7037b5"
+        },
+        "case_file": "art/settlement_workshop/visual_director/state.json",
+        "policy": {
+          "inputs": {
+            "category": "settlement_structure",
+            "current_quality": "below_target",
+            "faction_defining": true,
+            "inferred": [],
+            "priority_tier": 1,
+            "screen_space_importance": 4,
+            "source_images_present": false,
+            "source_photo_required": false
+          },
+          "reasons": [
+            "Tier 1 scene-defining asset",
+            "high screen-space importance",
+            "current production quality is below target"
+          ],
+          "required": true
+        },
+        "status": "approved",
+        "strategy": "initial",
+        "target_episode_attempt": 1
+      }
+    }
+  ],
+  "case_file": "art/settlement_workshop/visual_director/state.json",
+  "policy": {
+    "inputs": {
+      "category": "settlement_structure",
+      "current_quality": "below_target",
+      "faction_defining": true,
+      "inferred": [],
+      "priority_tier": 1,
+      "screen_space_importance": 4,
+      "source_images_present": false,
+      "source_photo_required": false
+    },
+    "reasons": [
+      "Tier 1 scene-defining asset",
+      "high screen-space importance",
+      "current production quality is below target"
+    ],
+    "required": true
+  },
+  "production_asset": {
+    "accepted_at_utc": "2026-10-25T14:53:55+00:00",
+    "candidate_id": "settlement_workshop-v004",
+    "path": "art/settlement_workshop/iterations/v004/generated/settlement_workshop.tscn"
+  },
+  "schema_version": 1,
+  "status": "backlog",
+  "target_episode": {
+    "attempts": [
+      {
+        "attempt": 1,
+        "candidate_id": "settlement_workshop-v007",
+        "decision": "continue",
+        "evaluated_at_utc": "2026-11-01T13:20:55+00:00",
+        "evaluation_file": "art/settlement_workshop/iterations/v007/evaluation.json",
+        "incumbent_comparison_result": "worse",
+        "status": "evaluated",
+        "strategy": "initial",
+        "visual_transfer_diagnosis": {
+          "corrective_action": "Preserve v004 and backlog this target for a component-authored canopy pass with a continuous load-bearing frame and open machine lane; do not accept the asymmetric v007 roof as a production replacement.",
+          "lost_visual_information": [
+            "The broad, supported raised ridge roof from the approved target became a small one-sided canopy.",
+            "Continuous truss-to-post load paths are not readable in the close render."
+          ],
+          "preserved_components": [
+            "Clockwork boiler, flywheel, gauge, and flue",
+            "workbench and open front",
+            "stone/timber base and RoomDefinition scale"
+          ],
+          "primary_causes": [
+            "geometry_loss",
+            "proportion_drift"
+          ]
+        }
+      }
+    ],
+    "backlog_reason": "v007 replaces the target raised-ridge canopy with an undersized one-sided awning and does not beat accepted v004; keep v004, and resume only with a supported continuous canopy that preserves an open machine lane.",
+    "status": "backlog",
+    "target_sha256": "9313647a47a2c7ea5c71840499e0e8202e8191e02e72435fb58c7238eb7037b5"
+  },
+  "updated_at_utc": "2026-11-01T13:20:55+00:00",
+  "visual_brief_file": "art/settlement_workshop/visual_director/visual-brief-draft.json"
+}

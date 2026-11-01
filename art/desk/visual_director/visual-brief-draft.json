@@ -1,0 +1,61 @@
+{
+  "art_direction": "RoomScale category: human_furniture. A dark modern computer desk with a broad low rectangular smoked-glass top and a restrained graphite metal frame, faithful to the desk in Sample (2). The tabletop must read as a thin reflective glass plane; the supporting structure must remain visible from room and close cameras. The room's separately defined monitors and equipment remain separate assets.",
+  "asset_id": "desk",
+  "citizen_scale": {
+    "citizen_height_inches": 0.5,
+    "ratio_or_view": "Use the exact 30-inch height against a 0.5-inch citizen; derive a schematic if generated scale is inaccurate."
+  },
+  "construction_materials": [
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "black rubber",
+      "part": "feet"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "matte graphite powder-coated metal",
+      "part": "frame"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "small satin steel fittings",
+      "part": "mounts"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "smoked dark glass, low roughness with readable edge highlights",
+      "part": "top"
+    }
+  ],
+  "dimensions_inches": [
+    66.0,
+    30.0,
+    30.0
+  ],
+  "faction_identity": null,
+  "gameplay_distance_readability": "Keep required features legible at the ArtBrief gameplay camera distances: 2.0, 12.0, 40.0, 300.0 inches.",
+  "intended_function": "A dark modern computer desk with a broad low rectangular smoked-glass top and a restrained graphite metal frame, faithful to the desk in Sample (2). The tabletop must read as a thin reflective glass plane; the supporting structure must remain visible from room and close cameras. The room's separately defined monitors and equipment remain separate assets.",
+  "prohibited_failure_modes": [
+    "do not change the RoomDefinition object id, center, orientation, dimensions, navigation footprint, or surface anchor",
+    "do not embed or move the separately defined monitors, keyboard, or other room props into this asset",
+    "do not replace a failed accepted asset with procedural fallback"
+  ],
+  "roomdefinition_authority": "ArtBrief dimensions are (66.0, 30.0, 30.0); source RoomDefinition: verification/poc2/candidates/primary/attempt-7/room_photo_luna.json. RoomDefinition remains authoritative for placement and gameplay.",
+  "semantic_identity": "desk",
+  "separate_room_assets": [],
+  "silhouette_requirements": [
+    "recognizable wide computer-desk silhouette",
+    "thin dark reflective tabletop",
+    "visible independent leg and support frame",
+    "beveled edge highlights",
+    "clean fit to the RoomDefinition bounds"
+  ],
+  "source_photo_constraints": "Inspect the listed source images and state which visible features are evidenced, which are occluded, and which construction details remain assumptions: photo_holder/Sample (2).jpg",
+  "visual_references": [
+    {
+      "path": "photo_holder/Sample (2).jpg",
+      "provenance": "ArtBrief reference_images",
+      "role": "source image"
+    }
+  ]
+}

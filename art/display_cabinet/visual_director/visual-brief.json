@@ -1,0 +1,78 @@
+{
+  "asset_id": "display_cabinet",
+  "semantic_identity": "Tall warm walnut and clear-glass display cabinet",
+  "intended_function": "Hold three RoomDefinition-owned collectibles on separate interior shelves without incorporating them into the mesh.",
+  "dimensions_inches": [
+    33,
+    76,
+    18
+  ],
+  "citizen_scale": {
+    "citizen_height_inches": 0.5,
+    "ratio_or_view": "76-inch cabinet is 152 half-inch citizen-heights; use a dimension-derived schematic if the generated scale cue is inaccurate."
+  },
+  "silhouette_requirements": [
+    "Narrow tall rectangular case with visible side depth.",
+    "Two front-opening glass doors.",
+    "Three empty shelves.",
+    "Finished restrained crown and solid plinth."
+  ],
+  "construction_materials": [
+    {
+      "part": "case",
+      "construction": "Straight framed case with joined side panels and restrained crown/plinth.",
+      "material": "Warm dark walnut with subtle grain."
+    },
+    {
+      "part": "doors",
+      "construction": "Two framed, hinged clear-glass doors with central meeting stile.",
+      "material": "Clear lightly tinted household glass and walnut."
+    },
+    {
+      "part": "shelves",
+      "construction": "Three fixed, evenly spaced shelves with visible thickness and supported ends.",
+      "material": "Warm walnut."
+    },
+    {
+      "part": "hardware",
+      "construction": "Three hinge positions per door and paired small central knobs.",
+      "material": "Brass."
+    }
+  ],
+  "art_direction": "Human Room: restrained, believable domestic cabinetry with readable natural wood and glass.",
+  "faction_identity": null,
+  "gameplay_distance_readability": "At 64\u2013330 inch views, the narrow tall case and paired glazed doors should remain legible.",
+  "source_photo_constraints": "rooms/room_photo_luna.json instantiates a display cabinet. Sample (2) has only a partial timber object at the far-right edge; it does not prove the full cabinet front, glazing, shelves, or joinery. Treat those as ArtBrief/current-asset evidence, not source-photo evidence.",
+  "visual_references": [
+    {
+      "path": "photo_holder/Sample (2).jpg",
+      "role": "partial room source context",
+      "provenance": "Object at the far-right edge is cropped and ambiguous; use only broad room wood context."
+    },
+    {
+      "path": "art/display_cabinet/iterations/v002/render-runs/run-001/asset-three-quarter.png",
+      "role": "best current production render",
+      "provenance": "Godot Art Factory render of accepted display_cabinet-v002."
+    },
+    {
+      "path": "art/display_cabinet/visual_director/round-01/approved-target-r01.png",
+      "role": "approved visual target",
+      "provenance": "Selected center direction from a three-way image concept sheet; Luna pixel review."
+    },
+    {
+      "path": "art/display_cabinet/visual_director/reference-pack/scale-guide.svg",
+      "role": "dimension-derived scale schematic",
+      "provenance": "Exact ArtBrief dimensions at 12 SVG pixels per inch; 0.5-inch citizen shown as a 6-pixel marker."
+    }
+  ],
+  "prohibited_failure_modes": [
+    "No collectibles, boxes or lights fused into the case.",
+    "No opaque door panels or missing side walls.",
+    "No ornate carving unsupported by the brief.",
+    "No changes to the 33 x 76 x 18 inch envelope or RoomDefinition-owned collectibles."
+  ],
+  "roomdefinition_authority": "ArtBrief dimensions are 33 x 76 x 18 inches. rooms/room_photo_luna.json owns placement, obstacle state, navigation and collectible instances; the mesh only guides appearance.",
+  "separate_room_assets": [
+    "RoomDefinition collectibles and any contents placed on or around the cabinet"
+  ]
+}

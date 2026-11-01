@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "method": "blender_visual_director_target_transfer",
+  "instructions": "Keep the approved window target and all v003 geometry. The v003 Godot detail capture shows the central latch concealed by the meeting stile; move only that latch assembly onto the camera-facing face, then compare the same close and room cameras.",
+  "parameters": {
+    "asset_type": "room_photo_window_production",
+    "geometry_units": "inches",
+    "outputs": [
+      "asset.glb",
+      "generation-record.json"
+    ],
+    "visual_director_strategy": "targeted_correction",
+    "visual_director_target": "art/room_photo_window_production/visual_director/round-01/approved-target-r01.png",
+    "diagnosis_ref": "room_photo_window_production-v003"
+  },
+  "source_inputs": [
+    "art/room_photo_window_production/brief.json",
+    "art/room_photo_window_production/visual_director/round-01/approved-target-r01.png",
+    "scripts/art_factory/generators/visual_director_window_r02_blender.py",
+    "scripts/art_factory/generators/visual_director_batch02_blender.py",
+    "photo_holder/Sample (1).jpg",
+    "rooms/room_photo_luna.json"
+  ],
+  "tool": "RoomScale Visual Director Blender targeted-correction generator",
+  "tool_version": "Blender 5.2.3",
+  "material_method": "Preserve attempt-1 stained-oak and glazing materials; correct the diagnosed camera-facing hardware placement only.",
+  "post_processing": [
+    "apply modeled edge treatment",
+    "unwrap authored components with scale-aware UVs",
+    "batch by material",
+    "export GLB with embedded textures"
+  ],
+  "import_configuration": {
+    "format": "GLB with embedded PBR textures",
+    "renderer": "gl_compatibility",
+    "units": "inches",
+    "axes": "Blender X width / Y depth / Z up exported to Godot X width / Y up / Z depth"
+  },
+  "deterministic_seed": 2517,
+  "generator_command": [
+    ".venv/Scripts/python.exe",
+    "{project_root}/scripts/art_factory/generators/visual_director_window_r02_blender.py"
+  ]
+}

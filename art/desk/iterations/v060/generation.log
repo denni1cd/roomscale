@@ -1,0 +1,69 @@
+INFO Draco is available, use library at C:\Users\Zero\python_projects\ai\roomscale\.tools\blender-5.2.3\blender-5.2.3-windows-x64\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_draco_bridge.dll
+INFO MeshOptimizer is available, use library at C:\Users\Zero\python_projects\ai\roomscale\.tools\blender-5.2.3\blender-5.2.3-windows-x64\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_meshopt_bridge.dll
+07:40:48 | INFO: Starting glTF 2.0 export
+07:40:48 | INFO: Extracting primitive: Cube
+07:40:48 | INFO: Primitives created: 1
+07:40:48 | INFO: Extracting primitive: Cube.006
+07:40:48 | INFO: Primitives created: 1
+07:40:48 | INFO: Extracting primitive: Cube.012
+07:40:48 | INFO: Primitives created: 1
+07:40:48 | INFO: Extracting primitive: Cube.002
+07:40:48 | INFO: Primitives created: 1
+07:40:48 | INFO: Extracting primitive: Cube.008
+07:40:48 | INFO: Primitives created: 1
+07:40:48 | INFO: Extracting primitive: Cube.003
+07:40:48 | INFO: Primitives created: 1
+07:40:48 | INFO: Extracting primitive: Cube.009
+07:40:48 | INFO: Primitives created: 1
+07:40:48 | INFO: Extracting primitive: Cube.007
+07:40:48 | INFO: Primitives created: 1
+07:40:48 | INFO: Extracting primitive: Cube.013
+07:40:48 | INFO: Primitives created: 1
+07:40:48 | INFO: Extracting primitive: Cylinder.002
+07:40:48 | WARNING: Cylinder.002: Could not calculate tangents. Please try to triangulate the mesh first.
+07:40:48 | INFO: Primitives created: 1
+07:40:48 | INFO: Extracting primitive: Cylinder.003
+07:40:48 | WARNING: Cylinder.003: Could not calculate tangents. Please try to triangulate the mesh first.
+07:40:48 | INFO: Primitives created: 1
+07:40:48 | INFO: Extracting primitive: Cylinder.006
+07:40:48 | WARNING: Cylinder.006: Could not calculate tangents. Please try to triangulate the mesh first.
+07:40:48 | INFO: Primitives created: 1
+07:40:48 | INFO: Extracting primitive: Cylinder.007
+07:40:48 | WARNING: Cylinder.007: Could not calculate tangents. Please try to triangulate the mesh first.
+07:40:48 | INFO: Primitives created: 1
+07:40:48 | INFO: Extracting primitive: Cube.001
+07:40:48 | INFO: Primitives created: 1
+07:40:48 | INFO: Extracting primitive: Cube.004
+07:40:48 | INFO: Primitives created: 1
+07:40:48 | INFO: Extracting primitive: Cube.010
+07:40:48 | INFO: Primitives created: 1
+07:40:48 | INFO: Extracting primitive: Cube.005
+07:40:48 | INFO: Primitives created: 1
+07:40:48 | INFO: Extracting primitive: Cube.011
+07:40:48 | INFO: Primitives created: 1
+07:40:48 | INFO: Extracting primitive: Cylinder
+07:40:48 | WARNING: Cylinder: Could not calculate tangents. Please try to triangulate the mesh first.
+07:40:48 | INFO: Primitives created: 1
+07:40:48 | INFO: Extracting primitive: Cylinder.001
+07:40:48 | WARNING: Cylinder.001: Could not calculate tangents. Please try to triangulate the mesh first.
+07:40:48 | INFO: Primitives created: 1
+07:40:48 | INFO: Extracting primitive: Cylinder.004
+07:40:48 | WARNING: Cylinder.004: Could not calculate tangents. Please try to triangulate the mesh first.
+07:40:48 | INFO: Primitives created: 1
+07:40:48 | INFO: Extracting primitive: Cylinder.005
+07:40:48 | WARNING: Cylinder.005: Could not calculate tangents. Please try to triangulate the mesh first.
+07:40:48 | INFO: Primitives created: 1
+07:40:48 | INFO: Finished glTF 2.0 export in 0.033028364181518555 s
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)
+
+Warning: Cylinder.002: Could not calculate tangents. Please try to triangulate the mesh first.
+Warning: Cylinder.003: Could not calculate tangents. Please try to triangulate the mesh first.
+Warning: Cylinder.006: Could not calculate tangents. Please try to triangulate the mesh first.
+Warning: Cylinder.007: Could not calculate tangents. Please try to triangulate the mesh first.
+Warning: Cylinder: Could not calculate tangents. Please try to triangulate the mesh first.
+Warning: Cylinder.001: Could not calculate tangents. Please try to triangulate the mesh first.
+Warning: Cylinder.004: Could not calculate tangents. Please try to triangulate the mesh first.
+Warning: Cylinder.005: Could not calculate tangents. Please try to triangulate the mesh first.
+ROOMSCALE_VISUAL_DIRECTOR_DESK_GENERATION_PASS {"candidate_id": "desk-v060", "method": "visual_director_source_constrained_multipart_blender_model", "tool": "Blender Python/bpy", "tool_version": "5.2.3 LTS", "visual_target": "art/desk/visual_director/round-01/incumbent-edit-r01.png", "source_photo": "photo_holder/Sample (2).jpg", "target_bounds_inches": [66.0, 30.0, 30.0], "component_count": 22, "triangle_count": 8712, "materials": {"top": "smoked dielectric glass with restrained clearcoat", "frame": "graphite metallic-roughness powder-coated steel", "fittings": "satin steel metallic-roughness PBR", "levelers": "high-roughness black rubber"}, "glb_sha256": "10aa61de1fffc931eda31307a986b244d57253bed40f1eb2708907991e374912", "runtime_geometry_authority": "RoomDefinition remains authoritative; asset presentation only"}
+C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale\scripts\art_factory\generators\visual_director_desk_v060_blender.py:39: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True

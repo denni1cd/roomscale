@@ -91,6 +91,8 @@ files do not contain Clockwork- or Verdant-specific traversal coordinates or pre
 See [RoomDefinition contract](docs/RoomDefinition_Contract.md) and
 [reconstruction workflow](skills/roomscale-room-reconstruction/SKILL.md).
 
+For high-impact asset art direction before 3D production, use the [RoomScale Visual Director](skills/roomscale-visual-director/SKILL.md) with the existing [Art Factory workflow](docs/ART_FACTORY_VISUAL_DIRECTOR.md).
+
 Pause/0.5x/1x/4x/10x control time; 1x remains the deterministic regression reference.
 F3/Details opens diagnostics. Click supported world entities to inspect their current
 identity and state. Keys 1/2/3 select room/settlement/citizen views. WASD/arrows pan, right drag

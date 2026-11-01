@@ -12,6 +12,11 @@ from typing import Any
 
 from .models import ArtBrief, ArtCandidate, ArtEvaluation, ArtRecipe
 from .registry import AssetRegistry, atomic_write_json, sha256_file, validate_asset_id
+from .visual_director import (
+    VisualDirectorGateRequired,
+    classify_visual_director_policy,
+    visual_brief_scaffold,
+)
 
 
 def _now_utc() -> str:
@@ -67,6 +72,7 @@ class ArtFactory:
         """Materialize a reproducible attempt from files produced by its recorded recipe."""
         validate_asset_id(asset_id)
         brief = self.load_brief(asset_id)
+        visual_director_provenance = self._require_visual_director_target(brief, recipe)
         errors = recipe.validate()
         if errors:
             raise ValueError("invalid ArtRecipe: " + "; ".join(errors))
@@ -98,8 +104,10 @@ class ArtFactory:
                 recipe_file=recipe_path.relative_to(self.project_root).as_posix(),
                 created_at_utc=_now_utc(),
                 parent_candidate_id=parent_candidate_id,
+                visual_director_provenance=visual_director_provenance,
             )
             self._save_candidate(candidate)
+            self._record_visual_director_candidate(candidate)
         except BaseException:
             shutil.rmtree(candidate_root, ignore_errors=True)
             raise
@@ -115,6 +123,7 @@ class ArtFactory:
         """Run a recorded local generator and preserve outputs or a blocked attempt."""
         validate_asset_id(asset_id)
         brief = self.load_brief(asset_id)
+        visual_director_provenance = self._require_visual_director_target(brief, recipe)
         errors = recipe.validate()
         if errors:
             raise ValueError("invalid ArtRecipe: " + "; ".join(errors))
@@ -143,6 +152,7 @@ class ArtFactory:
             recipe_file=recipe_path.relative_to(self.project_root).as_posix(),
             created_at_utc=_now_utc(),
             parent_candidate_id=parent_candidate_id,
+            visual_director_provenance=visual_director_provenance,
         )
         command = [
             argument.format(
@@ -238,7 +248,144 @@ class ArtFactory:
                 "recorded_at_utc": _now_utc(),
             }
         self._save_candidate(candidate)
+        self._record_visual_director_candidate(candidate)
         return candidate
+
+    def visual_director_status(self, asset_id: str) -> dict[str, Any]:
+        """Return policy and separate visual-target / 3D / production incumbents."""
+        brief = self.load_brief(asset_id)
+        case_path = self._visual_director_case_path(asset_id)
+        policy = classify_visual_director_policy(brief)
+        state = _read_json(case_path) if case_path.is_file() else {}
+        state.update(
+            {
+                "schema_version": 1,
+                "asset_id": asset_id,
+                "policy": policy,
+                "case_file": case_path.relative_to(self.project_root).as_posix(),
+                "visual_brief_file": (
+                    self._visual_director_root(asset_id) / "visual-brief-draft.json"
+                ).relative_to(self.project_root).as_posix(),
+                "production_asset": self._production_asset_record(asset_id),
+            }
+        )
+        if "best_3d_candidate" not in state:
+            production = state["production_asset"]
+            state["best_3d_candidate"] = production
+        if state.get("status") in {"backlog", "production_pass"}:
+            pass
+        elif state.get("approved_visual_target") and not self._approved_target_is_current(
+            state["approved_visual_target"]
+        ):
+            state["status"] = "target_stale"
+        elif state.get("approved_visual_target"):
+            state["status"] = "approved"
+        elif policy["required"]:
+            state["status"] = "target_pending"
+        else:
+            state["status"] = "bypass_allowed"
+        return state
+
+    def prepare_visual_director(self, asset_id: str) -> dict[str, Any]:
+        """Automatically open a visual-development case and scaffold its VisualBrief."""
+        brief = self.load_brief(asset_id)
+        root = self._visual_director_root(asset_id)
+        root.mkdir(parents=True, exist_ok=True)
+        draft_path = root / "visual-brief-draft.json"
+        if not draft_path.exists():
+            atomic_write_json(draft_path, visual_brief_scaffold(brief))
+        case_path = self._visual_director_case_path(asset_id)
+        state = _read_json(case_path) if case_path.is_file() else {}
+        state.setdefault("approved_visual_target", None)
+        state.setdefault("best_3d_candidate", self._production_asset_record(asset_id))
+        state.setdefault("candidate_history", [])
+        approved_target = state.get("approved_visual_target")
+        if state.get("status") in {"backlog", "production_pass"}:
+            state_status = state["status"]
+        elif isinstance(approved_target, dict) and self._approved_target_is_current(approved_target):
+            state_status = "approved"
+        elif classify_visual_director_policy(brief)["required"]:
+            state_status = "target_stale" if approved_target else "target_pending"
+        else:
+            state_status = "bypass_allowed"
+        state.update(
+            {
+                "schema_version": 1,
+                "asset_id": asset_id,
+                "status": state_status,
+                "policy": classify_visual_director_policy(brief),
+                "case_file": case_path.relative_to(self.project_root).as_posix(),
+                "visual_brief_file": draft_path.relative_to(self.project_root).as_posix(),
+                "production_asset": self._production_asset_record(asset_id),
+                "updated_at_utc": _now_utc(),
+            }
+        )
+        atomic_write_json(case_path, state)
+        return state
+
+    def approve_visual_target(
+        self,
+        asset_id: str,
+        target_path: str,
+        review_path: str,
+        concept_id: str = "",
+    ) -> dict[str, Any]:
+        """Record Luna's pixel-reviewed concept as the separate appearance incumbent."""
+        self.prepare_visual_director(asset_id)
+        target_relative = _safe_relative_path(target_path)
+        review_relative = _safe_relative_path(review_path)
+        target_file = self.project_root.joinpath(*target_relative.parts)
+        review_file = self.project_root.joinpath(*review_relative.parts)
+        if not target_file.is_file():
+            raise ValueError(f"approved visual target does not exist: {target_path}")
+        if target_file.suffix.lower() not in {".png", ".jpg", ".jpeg", ".webp", ".svg"}:
+            raise ValueError("approved visual target must be a PNG, JPEG, WebP, or SVG image")
+        if not review_file.is_file():
+            raise ValueError(f"pixel-review evidence does not exist: {review_path}")
+        case_path = self._visual_director_case_path(asset_id)
+        state = _read_json(case_path)
+        target = {
+            "path": target_relative.as_posix(),
+            "sha256": sha256_file(target_file),
+            "review_path": review_relative.as_posix(),
+            "approved_at_utc": _now_utc(),
+            "concept_id": concept_id or target_file.stem,
+            "approval": "pass",
+            "review_method": "pixel inspection; review evidence recorded by Luna",
+        }
+        state["approved_visual_target"] = target
+        state["status"] = "approved"
+        previous_episode = state.get("target_episode", {})
+        if previous_episode.get("target_sha256") != target["sha256"]:
+            state["target_episode"] = {
+                "target_sha256": target["sha256"],
+                "status": "ready_for_3d",
+                "attempts": [],
+            }
+        state["updated_at_utc"] = _now_utc()
+        atomic_write_json(case_path, state)
+        return self.visual_director_status(asset_id)
+
+    def backlog_visual_director_case(self, asset_id: str, reason: str) -> dict[str, Any]:
+        """Stop a target episode while preserving its target, best candidate, and production asset."""
+        if not reason.strip():
+            raise ValueError("backlog requires a concrete visual-transfer reason")
+        state = self.prepare_visual_director(asset_id)
+        if not state.get("approved_visual_target"):
+            raise ValueError("cannot backlog a Visual Director case without an approved target")
+        episode = state.get("target_episode", {})
+        if not episode.get("attempts"):
+            raise ValueError("cannot backlog a Visual Director case before a 3D candidate is reviewed")
+        if state.get("status") == "production_pass":
+            raise ValueError("a production-passed Visual Director case cannot be backlogged")
+        episode["status"] = "backlog"
+        episode["backlog_reason"] = reason.strip()
+        state["target_episode"] = episode
+        state["status"] = "backlog"
+        state["backlog_reason"] = reason.strip()
+        state["updated_at_utc"] = _now_utc()
+        atomic_write_json(self._visual_director_case_path(asset_id), state)
+        return self.visual_director_status(asset_id)
 
     def load_candidate(self, candidate_id: str) -> ArtCandidate:
         asset_id, version = self._split_candidate_id(candidate_id)
@@ -309,6 +456,14 @@ class ArtFactory:
             raise ValueError("invalid ArtEvaluation: " + "; ".join(errors))
         if evaluation.candidate_id != candidate.candidate_id:
             raise ValueError("evaluation candidate ID mismatch")
+        if (
+            candidate.visual_director_provenance.get("approved_visual_target")
+            and not evaluation.visual_transfer_diagnosis
+        ):
+            raise ValueError(
+                "Visual Director candidates require a visual_transfer_diagnosis with causes, "
+                "lost information, preserved components, and corrective action"
+            )
         for evidence_path in evaluation.render_evidence:
             relative = _safe_relative_path(evidence_path)
             if not self.project_root.joinpath(*relative.parts).is_file():
@@ -326,6 +481,11 @@ class ArtFactory:
         elif evaluation.decision == "blocked":
             candidate.status = "blocked"
         self._save_candidate(candidate)
+        self._record_visual_director_evaluation(candidate, evaluation)
+        if evaluation.decision != "reject" and evaluation.incumbent_comparison_result in {
+            "better", "first_pass"
+        }:
+            self._set_best_3d_candidate(candidate)
         return evaluation_path
 
     def promote(self, candidate_id: str) -> dict[str, Any]:
@@ -394,6 +554,7 @@ class ArtFactory:
         self.registry.accept(candidate.asset_id, entry)
         candidate.status = "accepted"
         self._save_candidate(candidate)
+        self._set_best_3d_candidate(candidate, production_asset=entry)
         return entry
 
     def _load_candidate_evaluation(self, candidate_id: str) -> ArtEvaluation:
@@ -405,6 +566,268 @@ class ArtFactory:
 
     def _candidate_root(self, candidate: ArtCandidate) -> Path:
         return self.art_root / candidate.asset_id / "iterations" / f"v{candidate.version:03d}"
+
+    def _visual_director_root(self, asset_id: str) -> Path:
+        return self.art_root / asset_id / "visual_director"
+
+    def _visual_director_case_path(self, asset_id: str) -> Path:
+        return self._visual_director_root(asset_id) / "state.json"
+
+    def _production_asset_record(self, asset_id: str) -> dict[str, Any] | None:
+        entry = self.registry.resolve(asset_id)
+        if not entry:
+            return None
+        return {
+            "candidate_id": entry.get("candidate_id", ""),
+            "path": entry.get("path", ""),
+            "accepted_at_utc": entry.get("accepted_at_utc", ""),
+        }
+
+    def _approved_target_is_current(self, target: dict[str, Any]) -> bool:
+        try:
+            relative = _safe_relative_path(str(target.get("path", "")))
+            path = self.project_root.joinpath(*relative.parts)
+            return path.is_file() and sha256_file(path) == target.get("sha256")
+        except (ValueError, OSError):
+            return False
+
+    def _require_visual_director_target(
+        self, brief: ArtBrief, recipe: ArtRecipe
+    ) -> dict[str, Any]:
+        state = self.prepare_visual_director(brief.asset_id)
+        policy = classify_visual_director_policy(brief)
+        target = state.get("approved_visual_target")
+        if policy["required"] and not (
+            isinstance(target, dict) and self._approved_target_is_current(target)
+        ):
+            status = "target_stale" if isinstance(target, dict) else "target_pending"
+            state["status"] = status
+            state["updated_at_utc"] = _now_utc()
+            atomic_write_json(self._visual_director_case_path(brief.asset_id), state)
+            raise VisualDirectorGateRequired(
+                asset_id=brief.asset_id,
+                case_file=state["case_file"],
+                visual_brief_file=state["visual_brief_file"],
+                reasons=policy["reasons"],
+            )
+        attempt = None
+        strategy = str(recipe.parameters.get("visual_director_strategy", "bypass"))
+        if policy["required"]:
+            target_path = str(target["path"])
+            if target_path not in recipe.source_inputs:
+                raise ValueError(
+                    "3D recipe must list the approved visual target in source_inputs so it "
+                    "drives production"
+                )
+            episode = state.setdefault(
+                "target_episode",
+                {"target_sha256": target["sha256"], "status": "ready_for_3d", "attempts": []},
+            )
+            attempts = episode.setdefault("attempts", [])
+            if len(attempts) >= 3:
+                episode["status"] = "backlog"
+                state["status"] = "backlog"
+                state["updated_at_utc"] = _now_utc()
+                atomic_write_json(self._visual_director_case_path(brief.asset_id), state)
+                raise ValueError(
+                    "Visual Director remediation budget is exhausted for this approved target; "
+                    "preserve best_3d_candidate and backlog the transfer defect"
+                )
+            attempt = len(attempts) + 1
+            expected_strategy = {
+                1: "initial",
+                2: "targeted_correction",
+                3: "alternate_strategy",
+            }[attempt]
+            if strategy != expected_strategy:
+                raise ValueError(
+                    f"Visual Director attempt {attempt} requires "
+                    f"parameters.visual_director_strategy={expected_strategy!r}"
+                )
+            history = state.get("candidate_history", [])
+            if attempt > 1:
+                diagnosis_ref = str(recipe.parameters.get("diagnosis_ref", ""))
+                previous_record = next(
+                    (
+                        item
+                        for item in history
+                        if str(item.get("candidate_id", "")) == diagnosis_ref
+                    ),
+                    None,
+                )
+                if not diagnosis_ref or previous_record is None:
+                    raise ValueError(
+                        "targeted Visual Director remediation requires diagnosis_ref to name a "
+                        "prior candidate"
+                    )
+                previous_candidate = self.load_candidate(diagnosis_ref)
+                if not previous_candidate.evaluation_file:
+                    raise ValueError(
+                        "targeted Visual Director remediation requires a recorded prior evaluation"
+                    )
+                previous_evaluation = self._load_candidate_evaluation(diagnosis_ref)
+                if not previous_evaluation.visual_transfer_diagnosis:
+                    raise ValueError(
+                        "targeted Visual Director remediation requires the prior evaluation to "
+                        "contain a visual_transfer_diagnosis"
+                    )
+            if attempt == 3:
+                if not recipe.parameters.get("materially_different_strategy"):
+                    raise ValueError(
+                        "the third Visual Director attempt must declare "
+                        "materially_different_strategy=true"
+                    )
+                first = next(
+                    (item for item in history if item.get("visual_director_attempt") == 1), None
+                )
+                first_recipe_path = (
+                    self.project_root / _safe_relative_path(first.get("recipe_file", ""))
+                    if first else None
+                )
+                if not first_recipe_path or not first_recipe_path.is_file():
+                    raise ValueError(
+                        "the initial candidate recipe is missing; cannot verify strategy change"
+                    )
+                first_recipe = ArtRecipe.from_dict(_read_json(first_recipe_path))
+                if (
+                    recipe.tool == first_recipe.tool
+                    and recipe.material_method == first_recipe.material_method
+                ):
+                    raise ValueError(
+                        "alternate_strategy must change the tool/backend or material_method from "
+                        "the initial attempt"
+                    )
+        case_relative = self._visual_director_case_path(brief.asset_id).relative_to(
+            self.project_root
+        ).as_posix()
+        return {
+            "policy": policy,
+            "status": "approved" if target else "bypass_allowed",
+            "case_file": case_relative,
+            "approved_visual_target": target,
+            "target_episode_attempt": attempt,
+            "strategy": strategy,
+        }
+
+    def _record_visual_director_candidate(self, candidate: ArtCandidate) -> None:
+        case_path = self._visual_director_case_path(candidate.asset_id)
+        if not case_path.is_file():
+            return
+        state = _read_json(case_path)
+        history = state.setdefault("candidate_history", [])
+        if not any(item.get("candidate_id") == candidate.candidate_id for item in history):
+            history.append(
+                {
+                    "candidate_id": candidate.candidate_id,
+                    "created_at_utc": candidate.created_at_utc,
+                    "parent_candidate_id": candidate.parent_candidate_id,
+                    "candidate_file": (
+                        self._candidate_root(candidate) / "candidate.json"
+                    ).relative_to(self.project_root).as_posix(),
+                    "recipe_file": candidate.recipe_file,
+                    "visual_director_attempt": candidate.visual_director_provenance.get(
+                        "target_episode_attempt"
+                    ),
+                    "visual_director_provenance": candidate.visual_director_provenance,
+                }
+            )
+        if candidate.visual_director_provenance.get("approved_visual_target"):
+            episode = state.setdefault(
+                "target_episode",
+                {
+                    "target_sha256": candidate.visual_director_provenance[
+                        "approved_visual_target"
+                    ]["sha256"],
+                    "status": "in_progress",
+                    "attempts": [],
+                },
+            )
+            attempts = episode.setdefault("attempts", [])
+            if not any(item.get("candidate_id") == candidate.candidate_id for item in attempts):
+                attempts.append(
+                    {
+                        "candidate_id": candidate.candidate_id,
+                        "strategy": candidate.visual_director_provenance.get("strategy"),
+                        "attempt": candidate.visual_director_provenance.get(
+                            "target_episode_attempt"
+                        ),
+                        "status": "awaiting_render_review",
+                    }
+                )
+            episode["status"] = "in_progress"
+            state["target_episode"] = episode
+        state["updated_at_utc"] = _now_utc()
+        state["production_asset"] = self._production_asset_record(candidate.asset_id)
+        atomic_write_json(case_path, state)
+
+    def _record_visual_director_evaluation(
+        self, candidate: ArtCandidate, evaluation: ArtEvaluation
+    ) -> None:
+        if not candidate.visual_director_provenance.get("approved_visual_target"):
+            return
+        case_path = self._visual_director_case_path(candidate.asset_id)
+        if not case_path.is_file():
+            return
+        state = _read_json(case_path)
+        episode = state.get("target_episode", {})
+        attempts = episode.get("attempts", [])
+        record = next(
+            (item for item in attempts if item.get("candidate_id") == candidate.candidate_id),
+            None,
+        )
+        if record is None:
+            return
+        record.update(
+            {
+                "status": "evaluated",
+                "evaluation_file": candidate.evaluation_file,
+                "decision": evaluation.decision,
+                "incumbent_comparison_result": evaluation.incumbent_comparison_result,
+                "visual_transfer_diagnosis": evaluation.visual_transfer_diagnosis,
+                "evaluated_at_utc": _now_utc(),
+            }
+        )
+        episode["attempts"] = attempts
+        if evaluation.decision == "promote":
+            episode["status"] = "ready_for_promotion"
+        elif len(attempts) >= 3:
+            episode["status"] = "backlog"
+            state["status"] = "backlog"
+        else:
+            episode["status"] = "remediation_needed"
+        state["target_episode"] = episode
+        state["updated_at_utc"] = _now_utc()
+        atomic_write_json(case_path, state)
+
+    def _set_best_3d_candidate(
+        self,
+        candidate: ArtCandidate,
+        production_asset: dict[str, Any] | None = None,
+    ) -> None:
+        case_path = self._visual_director_case_path(candidate.asset_id)
+        if not case_path.is_file():
+            return
+        state = _read_json(case_path)
+        evaluation_path = candidate.evaluation_file
+        state["best_3d_candidate"] = {
+            "candidate_id": candidate.candidate_id,
+            "candidate_file": (
+                self._candidate_root(candidate) / "candidate.json"
+            ).relative_to(self.project_root).as_posix(),
+            "evaluation_file": evaluation_path,
+            "updated_at_utc": _now_utc(),
+        }
+        state["production_asset"] = (
+            production_asset or self._production_asset_record(candidate.asset_id)
+        )
+        if production_asset is not None:
+            state["status"] = "production_pass"
+            episode = state.get("target_episode", {})
+            if episode:
+                episode["status"] = "production_pass"
+                state["target_episode"] = episode
+        state["updated_at_utc"] = _now_utc()
+        atomic_write_json(case_path, state)
 
     def _save_candidate(self, candidate: ArtCandidate) -> None:
         errors = candidate.validate()

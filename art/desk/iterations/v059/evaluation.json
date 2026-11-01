@@ -1,0 +1,115 @@
+{
+  "candidate_id": "desk-v059",
+  "created_at_utc": "2026-11-01T12:40:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "The glass has no broad readable room/window reflection and loses its clear edge highlight at the room and detail views.",
+    "The graphite frame, satin fittings, and rubber levelers do not separate clearly at normal RoomScale lighting.",
+    "At room distance, the dark desk competes with the black chair and monitors and loses contrast."
+  ],
+  "hard_fail_reasons": [
+    "The actual RoomScale production renders show the smoked glass and graphite frame as an almost black mass, so the principal material hierarchy and broad reflective top in the approved image target are not present.",
+    "The result is not yet a polished realistic furniture render and remains visibly weaker than desk-v007 in source-character/material response."
+  ],
+  "incumbent_candidate_id": "desk-v007",
+  "incumbent_comparison": "desk-v059 has a stronger component-level support layout than earlier failed fused-mesh work and imports at exact 66 x 30 x 30-inch bounds. However, its actual Godot Compatibility renders make the top and graphite frame nearly black and hide material distinctions. desk-v007 has clearer glass highlights and more readable material response, so it remains the incumbent.",
+  "incumbent_comparison_result": "worse",
+  "likely_causes": [
+    "The GLTF material base colors are materially darker than the established v007 native StandardMaterial3D values.",
+    "The glass alpha and clearcoat factors exported through Blender's GLTF path produce a darker Compatibility-rendered result than the accepted native scene values.",
+    "The room environment provides limited broad reflections, which makes low-albedo metallic and glass surfaces collapse toward black."
+  ],
+  "next_action_hypothesis": "Keep v059 geometry intact and produce a separate v060 challenger using the proven desk-v007 StandardMaterial3D base-color, metallic, roughness, alpha, clearcoat, and rim factors as GLTF PBR values. Do not iterate concept art or change geometry for this material failure. Re-import, inspect the actual Godot close and room views, and retain desk-v007 unless the challenger clearly improves the material read and source character.",
+  "observations": {
+    "art_direction_fit": "The restrained black-and-smoked-glass palette fits the Human Room, but the rendered surfaces are too dark to deliver the approved polished material hierarchy.",
+    "close_up_quality": "The detail view shows the real assembled geometry, but the top and most supports are too dark to inspect their material edges and small fittings comfortably.",
+    "gameplay_readability": "The silhouette remains desk-like, but room-scale.png does not distinguish the surface from the dark chair/monitors as clearly as the incumbent render.",
+    "geometric_detail": "The 22-mesh, 8,712-triangle model exposes the telescoping overlap, under-glass rail, clamp saddles, and levelers as distinct connected components.",
+    "material_realism": "In asset-three-quarter.png and asset-detail.png, smoked glass and graphite steel collapse toward near-black; the broad glass reflection and readable edge response are lost.",
+    "proportion": "Godot measured the exact 66 x 30 x 30-inch envelope; tabletop, columns, and T-feet preserve the approved concept proportions.",
+    "scale_fidelity": "Godot validation reports exact bounds [-33,0,-15] to [33,30,15]; RoomDefinition placement and 0.5-inch citizen scale remain unchanged.",
+    "semantic_recognizability": "asset-three-quarter.png and the room view retain the unmistakable broad desk top, paired lift columns, and two T-feet.",
+    "silhouette_quality": "The thin broad top, two square lift columns, open knee space, and perpendicular low rails read clearly in asset-three-quarter.png.",
+    "source_resemblance": "The dark broad top and T-frame match the photo silhouette, but weak glass highlights and nearly black hardware do not yet approach the visible source character.",
+    "surface_variation": "The highlight variation on the tabletop is faint, and the frame/fittings/levelers do not separate cleanly under the RoomScale Compatibility lighting.",
+    "technical_integration": "Godot 4.7.2 Compatibility imports the wrapper with no issues and renders all six views from the normal review_showcase production path."
+  },
+  "render_evidence": [
+    "art/desk/iterations/v059/render-runs/run-001/asset-three-quarter.png",
+    "art/desk/iterations/v059/render-runs/run-001/asset-detail.png",
+    "art/desk/iterations/v059/render-runs/run-001/room-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 2,
+    "gameplay_readability": 3,
+    "geometric_detail": 4,
+    "material_realism": 2,
+    "proportion": 5,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 5,
+    "source_resemblance": 2,
+    "surface_variation": 2,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "asset-detail.png contains the authored assembly, but dark material response hides the glass edge, fitting separation, and most support detail.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "The close and profile images show a thin, continuous beveled glass edge.",
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "Under-glass fittings and levelers are present in the mesh but do not read cleanly in asset-detail.png.",
+        "pass": false
+      },
+      "joins": {
+        "evidence": "The two-stage columns, saddles, and rail connect in geometry, but near-black materials obscure a convincing assembled read.",
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "The mesh contains distinct manufactured components, but the dark render hides the edge and part separation needed to judge the assembly as polished furniture.",
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "The tabletop lacks a readable broad glass reflection, and graphite steel remains near-black.",
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "Glass, graphite, fittings, and rubber do not separate sufficiently under the production lighting.",
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "asset-profile.png shows the continuous thin tabletop and edge thickness.",
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The large forms are recognizable, but the room and detail renders make the tabletop and graphite frame nearly black; the result does not read as polished realistic glass-and-steel furniture.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "No",
+      "applicable": true,
+      "evidence": "The broad desk/T-foot silhouette resembles Sample (2), but the production render loses the source's dark reflective glass edge and visible distinction between glass and metal.",
+      "pass": false
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  }
+}

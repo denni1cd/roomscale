@@ -1,0 +1,129 @@
+{
+  "candidate_id": "room_photo_window_production-v003",
+  "created_at_utc": "2026-11-01T13:31:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "Central latch is occluded behind the centre stile.",
+    "Glazing still appears cooler than the approved source-matched target."
+  ],
+  "hard_fail_reasons": [
+    "The target's sash latch is not readable in the actual Godot close capture."
+  ],
+  "incumbent_candidate_id": "room_photo_window_production-v002",
+  "incumbent_comparison": "Compared in matched room_photo_luna production cameras, v003 is stronger than v002: it fits the 96-inch opening exactly, adds a visible divided transom and fitted stained casing, and improves sill depth. It does not yet pass the source-photo gate because the latch is hidden and the glass retains a cool cast.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "The latch geometry was placed at the correct rail location but behind the centre stile's front face.",
+    "The empty room-side background contributes a cool tone through the clear glazing."
+  ],
+  "next_action_hypothesis": "Keep v003's fitted casing, explicit transom, and clear glass; move the latch assembly onto the front face of the centre stile, then inspect the same Godot close camera before changing materials.",
+  "observations": {
+    "art_direction_fit": "The richer stained surround follows the approved source-matched target better than the flat blue panel of the incumbent.",
+    "close_up_quality": "The Godot close capture shows the transom and meeting rail, but the intended central latch disappears behind the centre stile.",
+    "gameplay_readability": "The exact production window stays attached to the existing room opening; no RoomDefinition state changed.",
+    "geometric_detail": "Relative to v002, the actual render adds transom lights, a meeting rail, fitted casing, sash rails, and a deeper sill.",
+    "material_realism": "The warm stain and low-alpha glazing are distinct, though the empty outdoor backdrop leaves a cool blue cast through broad panes.",
+    "proportion": "The bounds validate at exactly 96 x 68 inches with a 4.1-inch maximum depth, close to the four-inch brief.",
+    "scale_fidelity": "Godot reports 96 x 68 x 4.1 inches; the source opening and RoomDefinition remain authoritative.",
+    "semantic_recognizability": "The sash pair, stained casing, and transom grid identify a residential divided window.",
+    "silhouette_quality": "The thick outer casing and projecting sill fit the rectangular opening without changing the room silhouette.",
+    "source_resemblance": "Warm casing and the transom divisions now approach the photographed assembly, while the hidden latch and cool glass response remain visible gaps.",
+    "surface_variation": "Stained casing, lighter sash edges, and separate trim create visible layered wood surfaces.",
+    "technical_integration": "Godot 4.7.2 Compatibility import and the production render pass; the registered receipt names v003."
+  },
+  "render_evidence": [
+    "art/room_photo_window_production/iterations/v003/render-runs/run-002/asset-three-quarter.png",
+    "art/room_photo_window_production/iterations/v003/render-runs/run-002/asset-detail.png",
+    "art/room_photo_window_production/iterations/v003/render-runs/run-002/room-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 3,
+    "gameplay_readability": 4,
+    "geometric_detail": 4,
+    "material_realism": 3,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 4,
+    "source_resemblance": 3,
+    "surface_variation": 4,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The registered Godot asset-detail capture shows the sash construction, but the target latch is hidden behind the centre stile.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "Manufactured radii and the frame profile hold in the close render.",
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "The target latch is occluded behind the wide centre stile in the actual Godot close render.",
+        "pass": false
+      },
+      "joins": {
+        "evidence": "The sash, jambs, rails, and trim resolve as separate fitted components.",
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "Transom construction transferred, but the operating sash hardware does not read.",
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "The glazing remains cool and uniform compared with the source window.",
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "Timber grain and layered trim break up the broad frame surfaces.",
+        "pass": true
+      },
+      "thickness": {
+        "evidence": "The casing, sill, and sash members retain visible depth.",
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "evidence": "The render reads as the intended finished furniture or architectural assembly.",
+      "pass": true
+    },
+    "photo_character": {
+      "answer": "No",
+      "applicable": true,
+      "evidence": "The warm divided window character transferred, but the latch is not visible in the Godot close view, so the source-matched functional sash detail remains incomplete.",
+      "pass": false
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "For attempt 2, keep v003's approved-target-driven geometry and move the latch assembly onto the centre stile's camera-facing surface; compare the same Godot close capture before revisiting the glass material.",
+    "lost_visual_information": [
+      "The target's centered sash latch is hidden behind the centre stile in the Godot detail view.",
+      "The target's warm neutral glazing context is replaced by the cool empty outdoor/room backdrop."
+    ],
+    "preserved_components": [
+      "Warm stained casing",
+      "deep sill",
+      "separate upper transom lights",
+      "double-hung lower sash and meeting rail"
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "lighting_render_presentation"
+    ]
+  }
+}

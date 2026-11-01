@@ -1,0 +1,79 @@
+{
+  "asset_id": "settlement_workshop",
+  "semantic_identity": "Open-front Clockwork miniature workshop with exposed boiler and workbench",
+  "intended_function": "Present a usable Clockwork production building whose machinery and work area remain visible at settlement distance.",
+  "dimensions_inches": [
+    26,
+    20,
+    20
+  ],
+  "citizen_scale": {
+    "citizen_height_inches": 0.5,
+    "ratio_or_view": "20-inch building height is 40 half-inch citizen-heights; use the supplied dimensions and a schematic rather than generated people."
+  },
+  "silhouette_requirements": [
+    "Compact stone plinth and joined timber frame.",
+    "Open front and side bays.",
+    "Raised narrow ridge canopy supported by visible trusses.",
+    "Boiler stack, copper pipe, gauge, flywheel and workbench visible from the front three-quarter view."
+  ],
+  "construction_materials": [
+    {
+      "part": "plinth",
+      "construction": "Fitted stone blocks with restrained seams.",
+      "material": "Weathered light stone."
+    },
+    {
+      "part": "frame and bench",
+      "construction": "Joined oak posts, braces, bench, tool rail and board wall.",
+      "material": "Warm worn oak and dark stained timber."
+    },
+    {
+      "part": "canopy",
+      "construction": "Raised narrow ridge roof on explicit timber trusses, set back enough not to cover machinery.",
+      "material": "Dark standing-seam iron."
+    },
+    {
+      "part": "boiler and pipework",
+      "construction": "Riveted pressure shell, separate flanges, exposed wheel and connected pipe runs.",
+      "material": "Sooty iron, aged copper, and restrained brass."
+    }
+  ],
+  "art_direction": "Clockwork: tactile miniature industrial construction with readable wood, stone, iron and copper.",
+  "faction_identity": "Clockwork",
+  "gameplay_distance_readability": "At settlement scale, keep the boiler, tall stack, flywheel and open-front workshop role visible; don't let the canopy or roof hide the machinery.",
+  "source_photo_constraints": null,
+  "visual_references": [
+    {
+      "path": "art/settlement_workshop/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+      "role": "accepted production incumbent",
+      "provenance": "Actual Godot RoomScale production render."
+    },
+    {
+      "path": "art/settlement_workshop/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+      "role": "rejected roof-heavy challenger",
+      "provenance": "Actual Godot production render; closed roof hides machinery."
+    },
+    {
+      "path": "art/settlement_workshop/visual_director/round-01/approved-target-r01.png",
+      "role": "approved visual target",
+      "provenance": "Selected raised-canopy concept from a three-way image comparison; Luna pixel review."
+    },
+    {
+      "path": "art/settlement_workshop/visual_director/reference-pack/scale-guide.svg",
+      "role": "dimension-derived scale schematic",
+      "provenance": "Exact ArtBrief dimensions at 12 SVG pixels per inch; 0.5-inch citizen shown as a 6-pixel marker."
+    }
+  ],
+  "prohibited_failure_modes": [
+    "Do not hide the boiler, gauge, flywheel or workbench behind the roof.",
+    "No disconnected roof or unsupported overhang.",
+    "Do not remove the live workshop gear/steam contract.",
+    "Do not change the 26 x 20 x 20 inch envelope, RoomDefinition landmarks or activity stations."
+  ],
+  "roomdefinition_authority": "ArtBrief dimensions are 26 x 20 x 20 inches. RoomDefinition owns workshop location, activity stations, collision, navigation and gameplay state; rendering geometry remains presentation only.",
+  "separate_room_assets": [
+    "RoomDefinition workshop interactions and activity stations",
+    "steam emitter and production-owned animation nodes"
+  ]
+}

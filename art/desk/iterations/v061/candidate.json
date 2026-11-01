@@ -1,0 +1,229 @@
+{
+  "asset_files": [
+    "art/desk/iterations/v061/generated/desk.tscn",
+    "art/desk/iterations/v061/generated/desk.glb",
+    "art/desk/iterations/v061/generated/desk_review_wrapper.gd",
+    "art/desk/iterations/v061/generated/generation-record.json",
+    "art/desk/iterations/v061/generated/model-metrics.json"
+  ],
+  "asset_id": "desk",
+  "candidate_id": "desk-v061",
+  "created_at_utc": "2026-11-01T12:42:07+00:00",
+  "evaluation_file": "art/desk/iterations/v061/evaluation.json",
+  "generation_result": {
+    "command": [
+      "C:/Users/Zero/python_projects/ai/roomscale/.venv/Scripts/python.exe",
+      "scripts/art_factory/generators/visual_director_desk_v061_blender.py",
+      "--output",
+      "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale\\art\\desk\\iterations\\v061\\generated",
+      "--reference",
+      "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/art/desk/visual_director/round-01/incumbent-edit-r01.png",
+      "--blender",
+      "C:/Users/Zero/python_projects/ai/roomscale/.tools/blender-5.2.3/blender-5.2.3-windows-x64/blender.exe"
+    ],
+    "exit_code": 0,
+    "recorded_at_utc": "2026-11-01T12:42:08+00:00",
+    "status": "pass"
+  },
+  "parent_candidate_id": "desk-v060",
+  "recipe_file": "art/desk/iterations/v061/recipe.json",
+  "renders": [
+    {
+      "asset_id": "desk",
+      "camera": {
+        "actual_camera_position": "(203.1683, 272.0435, -0.000009)",
+        "distance_inches": 330.0,
+        "focus": "(0.0, 12.0, 0.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 52.0,
+        "yaw_radians": 1.5707963267949
+      },
+      "candidate_id": "desk-v061",
+      "captured_at_utc": "2026-11-01T12:42:20+00:00",
+      "draw_calls": 1236.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 2.0,
+      "path": "art/desk/iterations/v061/render-runs/run-001/room-scale.png",
+      "phase": "room-scale",
+      "primitives": 604623.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_photo_luna",
+      "sha256": "315d7019360e0455ce43858064c91b4748ea163e449280549233406e09829309"
+    },
+    {
+      "asset_id": "desk",
+      "camera": {
+        "actual_camera_position": "(-0.000018, 272.0435, -203.1683)",
+        "distance_inches": 330.0,
+        "focus": "(0.0, 12.0, 0.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 52.0,
+        "yaw_radians": 3.14159265358979
+      },
+      "candidate_id": "desk-v061",
+      "captured_at_utc": "2026-11-01T12:42:20+00:00",
+      "draw_calls": 1273.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 2.0,
+      "path": "art/desk/iterations/v061/render-runs/run-001/room-scale-opposite-angle.png",
+      "phase": "room-scale-opposite-angle",
+      "primitives": 642933.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_photo_luna",
+      "sha256": "1b4142847c97003456ea913e4f8c3c041fecc8c068198968d0e449540a3cbb1c"
+    },
+    {
+      "asset_id": "desk",
+      "camera": {
+        "actual_camera_position": "(-4.233153, 46.82436, 52.5827)",
+        "distance_inches": 64.0,
+        "focus": "(-16.0, 4.0, 6.5)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 42.0,
+        "yaw_radians": 0.25
+      },
+      "candidate_id": "desk-v061",
+      "captured_at_utc": "2026-11-01T12:42:20+00:00",
+      "draw_calls": 2258.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 40.0,
+      "path": "art/desk/iterations/v061/render-runs/run-001/settlement-scale.png",
+      "phase": "settlement-scale",
+      "primitives": 1122207.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_photo_luna",
+      "sha256": "998f898c61de6c268f97a947ed89a65f4770561f916a3a68695c00c65478df41"
+    },
+    {
+      "asset_id": "desk",
+      "camera": {
+        "actual_camera_position": "(-19.57633, 59.44052, 19.11333)",
+        "distance_inches": 72.1833676147461,
+        "focus": "(30.0, 15.0, 47.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 38.0,
+        "yaw_radians": 4.2
+      },
+      "candidate_id": "desk-v061",
+      "captured_at_utc": "2026-11-01T12:42:20+00:00",
+      "draw_calls": 531.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 40.0,
+      "path": "art/desk/iterations/v061/render-runs/run-001/asset-three-quarter.png",
+      "phase": "asset-three-quarter",
+      "primitives": 196686.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_photo_luna",
+      "sha256": "b6d2b2aec554aadc597800b0b3240b84f9ca784cafadc5346ae6862807e4e023"
+    },
+    {
+      "asset_id": "desk",
+      "camera": {
+        "actual_camera_position": "(75.9883, 59.44052, 13.52531)",
+        "distance_inches": 72.1833676147461,
+        "focus": "(30.0, 15.0, 47.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 38.0,
+        "yaw_radians": 2.2
+      },
+      "candidate_id": "desk-v061",
+      "captured_at_utc": "2026-11-01T12:42:20+00:00",
+      "draw_calls": 1491.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 40.0,
+      "path": "art/desk/iterations/v061/render-runs/run-001/asset-opposite-three-quarter.png",
+      "phase": "asset-opposite-three-quarter",
+      "primitives": 710840.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_photo_luna",
+      "sha256": "9044fb29c5ace4094131f18d6f5337f04f831b9f9042a4fc2aa2e85939a137e9"
+    },
+    {
+      "asset_id": "desk",
+      "camera": {
+        "actual_camera_position": "(-26.88111, 59.44052, 46.86411)",
+        "distance_inches": 72.1833676147461,
+        "focus": "(30.0, 15.0, 47.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 38.0,
+        "yaw_radians": 4.71
+      },
+      "candidate_id": "desk-v061",
+      "captured_at_utc": "2026-11-01T12:42:20+00:00",
+      "draw_calls": 901.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 40.0,
+      "path": "art/desk/iterations/v061/render-runs/run-001/asset-profile.png",
+      "phase": "asset-profile",
+      "primitives": 287089.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_photo_luna",
+      "sha256": "2e83916c06b12146aa49e0fa71baf77ccc167fe8a6fc2791c66b6fd9fc30e640"
+    },
+    {
+      "asset_id": "desk",
+      "camera": {
+        "actual_camera_position": "(-0.493347, 38.57429, 14.8145)",
+        "distance_inches": 50.2145166015625,
+        "focus": "(30.0, 15.0, 47.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 359.9999)",
+        "tilt_degrees": 28.0,
+        "yaw_radians": 3.9
+      },
+      "candidate_id": "desk-v061",
+      "captured_at_utc": "2026-11-01T12:42:20+00:00",
+      "draw_calls": 259.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 40.0,
+      "path": "art/desk/iterations/v061/render-runs/run-001/asset-detail.png",
+      "phase": "asset-detail",
+      "primitives": 60480.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_photo_luna",
+      "sha256": "c3a62b0cfb3d081afd2c2ceff015f849ad31606f3c294869182f7a69f51c1688"
+    }
+  ],
+  "schema_version": 1,
+  "status": "rejected",
+  "technical_validation": {
+    "asset_path": "res://art/desk/iterations/v061/generated/desk.tscn",
+    "bounds": {
+      "position": [
+        -33.0,
+        0.0,
+        -15.0
+      ],
+      "size": [
+        66.0,
+        30.0,
+        30.0
+      ]
+    },
+    "engine": "4.7.2-stable (official)",
+    "import_exit_code": 0,
+    "issues": [],
+    "log": "art/desk/iterations/v061/technical-validation.log",
+    "mesh_count": 22,
+    "recorded_at_utc": "2026-11-01T12:42:14+00:00",
+    "report": "art/desk/iterations/v061/technical-validation.json",
+    "status": "pass",
+    "surface_count": 22,
+    "triangle_count": 8712,
+    "validation_exit_code": 0
+  },
+  "version": 61
+}

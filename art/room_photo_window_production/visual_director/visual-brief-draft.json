@@ -1,0 +1,54 @@
+{
+  "art_direction": "RoomScale category: architectural_opening. A source-matched residential double-hung window assembly, fitted exactly inside a 96 by 68 inch reconstructed opening. The warm stained-oak trim, projecting sill, separate sash rails and stiles, centre mullions, upper transom lights, clear glass and small sash hardware should approach the photographed room rather than use the existing flat glass panel and box frame.",
+  "asset_id": "room_photo_window_production",
+  "citizen_scale": {
+    "citizen_height_inches": 0.5,
+    "ratio_or_view": "Use the exact 68-inch height against a 0.5-inch citizen; derive a schematic if generated scale is inaccurate."
+  },
+  "construction_materials": [
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "photographic warm stained oak with fine grain and satin wear",
+      "part": "frame"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "clear household glazing with restrained reflectance",
+      "part": "glass"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "aged brass and steel sash locks",
+      "part": "hardware"
+    }
+  ],
+  "dimensions_inches": [
+    96.0,
+    68.0,
+    4.0
+  ],
+  "faction_identity": null,
+  "gameplay_distance_readability": "Keep required features legible at the ArtBrief gameplay camera distances: 2.0, 12.0, 64.0, 330.0 inches.",
+  "intended_function": "A source-matched residential double-hung window assembly, fitted exactly inside a 96 by 68 inch reconstructed opening. The warm stained-oak trim, projecting sill, separate sash rails and stiles, centre mullions, upper transom lights, clear glass and small sash hardware should approach the photographed room rather than use the existing flat glass panel and box frame.",
+  "prohibited_failure_modes": [
+    "do not change the RoomDefinition opening, object dimensions, position, collision, navigation, or simulation identity",
+    "do not add presentation geometry to collision, navigation, selection, or task logic",
+    "do not substitute shader recoloring for the described constructed asset"
+  ],
+  "roomdefinition_authority": "ArtBrief dimensions are (96.0, 68.0, 4.0); source RoomDefinition: rooms/room_photo_luna.json. RoomDefinition remains authoritative for placement and gameplay.",
+  "semantic_identity": "photographic double-hung transom window",
+  "separate_room_assets": [],
+  "silhouette_requirements": [
+    "deep stained-oak casing, projecting sill and fitted jambs",
+    "double-hung sash with upper transom lights, centre mullions, meeting rail and sash hardware",
+    "credible clear glass and source-matched warm timber response"
+  ],
+  "source_photo_constraints": "Inspect the listed source images and state which visible features are evidenced, which are occluded, and which construction details remain assumptions: photo_holder/Sample (1).jpg",
+  "visual_references": [
+    {
+      "path": "photo_holder/Sample (1).jpg",
+      "provenance": "ArtBrief reference_images",
+      "role": "source image"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "method": "blender_visual_director_target_transfer",
+  "instructions": "Use art/display_cabinet/visual_director/round-01/approved-target-r01.png as the approved appearance incumbent. Produce a measured, target-driven RoomScale asset, preserve the ArtBrief envelope and RoomDefinition gameplay state, and keep separate room objects outside this mesh.",
+  "parameters": {
+    "asset_type": "display_cabinet",
+    "geometry_units": "inches",
+    "outputs": [
+      "asset.glb",
+      "generation-record.json"
+    ],
+    "visual_director_strategy": "initial",
+    "visual_director_target": "art/display_cabinet/visual_director/round-01/approved-target-r01.png"
+  },
+  "source_inputs": [
+    "art/display_cabinet/brief.json",
+    "art/display_cabinet/visual_director/round-01/approved-target-r01.png",
+    "scripts/art_factory/generators/visual_director_batch02_blender.py",
+    "scripts/art_factory/generators/production_batch01_blender.py",
+    "art/display_cabinet/brief.json",
+    "rooms/room_photo_luna.json"
+  ],
+  "tool": "RoomScale Visual Director Blender target-transfer generator",
+  "tool_version": "Blender 5.2.3",
+  "material_method": "Versioned target-specific authored geometry with embedded per-material PBR maps and dedicated glazing/material responses.",
+  "post_processing": [
+    "apply modeled edge treatment",
+    "unwrap authored components with scale-aware UVs",
+    "batch by material",
+    "export GLB with embedded textures"
+  ],
+  "import_configuration": {
+    "format": "GLB with embedded PBR textures",
+    "renderer": "gl_compatibility",
+    "units": "inches",
+    "axes": "Blender X width / Y depth / Z up exported to Godot X width / Y up / Z depth"
+  },
+  "deterministic_seed": 2516,
+  "generator_command": [
+    ".venv/Scripts/python.exe",
+    "{project_root}/scripts/art_factory/generators/visual_director_batch02_blender.py"
+  ]
+}

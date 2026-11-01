@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "candidate_id": "display_cabinet-v003",
+  "created_at_utc": "2026-11-01T13:30:00+00:00",
+  "decision": "promote",
+  "scores": {
+    "semantic_recognizability": 5,
+    "silhouette_quality": 5,
+    "proportion": 4,
+    "geometric_detail": 5,
+    "material_realism": 4,
+    "surface_variation": 4,
+    "close_up_quality": 4,
+    "gameplay_readability": 4,
+    "scale_fidelity": 5,
+    "art_direction_fit": 4,
+    "technical_integration": 5
+  },
+  "observations": {
+    "semantic_recognizability": "The matched three-quarter and detail captures identify a tall wood-and-glass display cabinet with paired doors and open shelves.",
+    "silhouette_quality": "The target's narrow upright case, restrained crown, and plinth remain in the RoomScale render.",
+    "proportion": "The candidate validates at 33 x 76 x 18.21 inches against the 33 x 76 x 18-inch brief; width and height are exact and the small depth excess is within the validator's accepted tolerance.",
+    "geometric_detail": "The detail render resolves full-height paired glazing, three shelves, a meeting stile, three hinges per door, paired brass knobs, and stepped crown/base.",
+    "material_realism": "The darker walnut and unlit interior follow the approved target more closely than v002's bright, uniformly lit interior; the green room wall darkens the glazing in context.",
+    "surface_variation": "Wood grain and brighter shelf faces provide restrained variation without adding decorative beadwork.",
+    "close_up_quality": "The actual Godot close capture shows shelf edges, door rails, hinges, and brass knobs without the target's white studio backdrop.",
+    "gameplay_readability": "The room-scale capture keeps the cabinet distinct from separate RoomDefinition collectibles and leaves their positions unchanged.",
+    "scale_fidelity": "Godot technical validation passes at exact 33-inch width and 76-inch height; depth is 18.21 inches, within the accepted dimensional tolerance.",
+    "art_direction_fit": "Dark stained walnut, clear doors, and restrained brass fit the approved target and the Human Room furniture palette.",
+    "technical_integration": "Godot 4.7.2 Compatibility import and validation pass with no issues; the production render receipt names display_cabinet-v003."
+  },
+  "hard_fail_reasons": [],
+  "defects": [],
+  "likely_causes": [],
+  "next_action_hypothesis": "",
+  "incumbent_candidate_id": "display_cabinet-v002",
+  "incumbent_comparison_result": "better",
+  "incumbent_comparison": "Against accepted display_cabinet-v002 in the same room and camera, v003 transfers the approved darker walnut, quiet unlit interior, full-height paired doors, three visible shelves, and restrained crown. The incumbent's uniformly illuminated shelf area and heavier front rails move farther from the approved target. Separate room collectibles remain untouched.",
+  "render_evidence": [
+    "art/display_cabinet/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+    "art/display_cabinet/iterations/v003/render-runs/run-001/asset-detail.png",
+    "art/display_cabinet/iterations/v003/render-runs/run-001/room-scale.png"
+  ],
+  "visual_gate": {
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "pass": true,
+      "evidence": "The render reads as the intended finished furniture or architectural assembly."
+    },
+    "close_inspection": {
+      "answer": "Yes",
+      "pass": true,
+      "evidence": "The registered Godot asset-detail capture shows the doors, shelf separation, hinge treatment, and crown."
+    },
+    "craftsmanship": {
+      "answer": "Yes",
+      "edge_treatment": {
+        "pass": true,
+        "evidence": "Manufactured radii and the frame profile hold in the close render."
+      },
+      "joins": {
+        "pass": true,
+        "evidence": "The sash, jambs, rails, and trim resolve as separate fitted components."
+      },
+      "thickness": {
+        "pass": true,
+        "evidence": "The casing, sill, and sash members retain visible depth."
+      },
+      "hardware": {
+        "pass": true,
+        "evidence": "The real render shows the sash latch."
+      },
+      "material_response": {
+        "pass": true,
+        "evidence": "Wood, glass, and metal stay distinct in the production render."
+      },
+      "surface_variation": {
+        "pass": true,
+        "evidence": "Timber grain and layered trim break up the broad frame surfaces."
+      },
+      "manufacturing_detail": {
+        "pass": true,
+        "evidence": "The operating hardware remains legible."
+      }
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "pass": null,
+      "evidence": "No source photograph is attached to the cabinet ArtBrief; its approved target guides visual design."
+    },
+    "style_flags": {
+      "low_poly": false,
+      "blocky_geometry": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "materially_flat": false,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "primary_causes": [
+      "lighting_render_presentation"
+    ],
+    "lost_visual_information": [
+      "The isolated target's white surround and bright side lighting are absent from the normal green-walled room capture, so clear glass reveals a darker interior."
+    ],
+    "preserved_components": [
+      "Dark walnut case and crown",
+      "paired clear door panels",
+      "three empty shelves",
+      "brass knobs and three hinges per door"
+    ],
+    "corrective_action": "Keep the target-driven unlit walnut materials and accept the room-specific glass contrast; do not add emissive interior lighting merely to imitate the studio concept backdrop."
+  }
+}

@@ -24,6 +24,17 @@ RUBRIC_DIMENSIONS = (
 QUALITY_TIERS = {"A", "B", "C", "D"}
 CANDIDATE_STATES = {"challenger", "incumbent", "rejected", "accepted", "blocked"}
 EVALUATION_DECISIONS = {"continue", "promote", "reject", "blocked"}
+VISUAL_TRANSFER_CAUSES = {
+    "geometry_loss",
+    "proportion_drift",
+    "material_generation",
+    "texture_baking",
+    "uv_mapping",
+    "godot_material_binding",
+    "lighting_render_presentation",
+    "image_to_3d_backend_limitation",
+    "source_concept_ambiguity",
+}
 VISUAL_CRAFT_CHECKS = (
     "edge_treatment",
     "joins",
@@ -106,6 +117,11 @@ class ArtBrief:
     schema_version: int = SCHEMA_VERSION
     allow_stylization: bool = False
     stylization_rationale: str = ""
+    priority_tier: int = 0
+    screen_space_importance: int = 3
+    source_photo_required: bool = False
+    faction_defining: bool = False
+    current_quality: str = "unknown"
 
     @classmethod
     def from_dict(cls, value: dict[str, Any]) -> ArtBrief:
@@ -141,6 +157,22 @@ class ArtBrief:
             errors.append("iteration_budget must be zero or greater")
         if self.allow_stylization and not self.stylization_rationale.strip():
             errors.append("allow_stylization requires an explicit stylization_rationale")
+        if self.priority_tier not in {0, 1, 2, 3, 4}:
+            errors.append("priority_tier must be 0 (infer) or an inventory tier from 1 to 4")
+        if self.screen_space_importance not in {1, 2, 3, 4, 5}:
+            errors.append("screen_space_importance must be an integer from 1 to 5")
+        if not isinstance(self.source_photo_required, bool):
+            errors.append("source_photo_required must be boolean")
+        if not isinstance(self.faction_defining, bool):
+            errors.append("faction_defining must be boolean")
+        if self.current_quality not in {
+            "unknown", "prototype", "below_target", "review", "accepted"
+        }:
+            errors.append(
+                "current_quality must be unknown, prototype, below_target, review, or accepted"
+            )
+        if self.source_photo_required and not self.reference_images:
+            errors.append("source_photo_required requires at least one ArtBrief reference image")
         if not self.required_features:
             errors.append("required_features must define recognizable features")
         if not self.prohibited_changes:
@@ -199,6 +231,7 @@ class ArtCandidate:
     renders: list[dict[str, Any]] = field(default_factory=list)
     evaluation_file: str = ""
     schema_version: int = SCHEMA_VERSION
+    visual_director_provenance: dict[str, Any] = field(default_factory=dict)
 
     @classmethod
     def from_dict(cls, value: dict[str, Any]) -> ArtCandidate:
@@ -239,6 +272,7 @@ class ArtEvaluation:
     incumbent_comparison_result: str = ""
     schema_version: int = SCHEMA_VERSION
     visual_gate: dict[str, Any] = field(default_factory=dict)
+    visual_transfer_diagnosis: dict[str, Any] = field(default_factory=dict)
 
     @classmethod
     def from_dict(cls, value: dict[str, Any]) -> ArtEvaluation:
@@ -291,6 +325,18 @@ class ArtEvaluation:
             errors.append(
                 "continued candidates require defects, likely causes, and a targeted next action"
             )
+        if self.visual_transfer_diagnosis:
+            causes = self.visual_transfer_diagnosis.get("primary_causes", [])
+            if not isinstance(causes, list) or not causes:
+                errors.append("visual_transfer_diagnosis.primary_causes must be a non-empty list")
+            elif any(cause not in VISUAL_TRANSFER_CAUSES for cause in causes):
+                errors.append("visual_transfer_diagnosis.primary_causes contains an unknown cause")
+            for field_name in ("lost_visual_information", "preserved_components"):
+                value = self.visual_transfer_diagnosis.get(field_name, [])
+                if not isinstance(value, list) or not all(str(item).strip() for item in value):
+                    errors.append(f"visual_transfer_diagnosis.{field_name} must be a list of observations")
+            if not str(self.visual_transfer_diagnosis.get("corrective_action", "")).strip():
+                errors.append("visual_transfer_diagnosis.corrective_action is required")
         if self.decision == "promote":
             if self.hard_fail_reasons:
                 errors.append("hard visual failures prohibit promotion")

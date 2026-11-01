@@ -8,7 +8,9 @@
     330.0
   ],
   "category": "settlement_structure",
+  "current_quality": "below_target",
   "display_name": "Clockwork Workshop",
+  "faction_defining": true,
   "gameplay_invariants": {
     "activity_stations_remain_room_definition_owned": true,
     "boiler_steam_and_workshop_animation_nodes_remain_production_owned": true,
@@ -20,7 +22,7 @@
     20.0,
     20.0
   ],
-  "iteration_budget": 5,
+  "iteration_budget": 8,
   "materials": {
     "boiler": "sooty iron with layered copper hoops",
     "foundation": "weathered stone and oiled timber",
@@ -28,6 +30,7 @@
     "pipework": "aged copper with brass gauge fittings",
     "windows": "amber glass with dark iron mullions"
   },
+  "priority_tier": 1,
   "prohibited_changes": [
     "do not change RoomDefinition landmarks, activity stations, work durations, or citizen assignments",
     "do not add render meshes to collision, navigation, traversability, selection, or work-site calculations",
@@ -44,7 +47,9 @@
     "fit the existing 26 by 20 by 20 inch local presentation envelope"
   ],
   "schema_version": 1,
+  "screen_space_importance": 4,
   "semantic_type": "clockwork settlement workshop",
+  "source_photo_required": false,
   "source_room_definition": "",
   "stylization_rationale": "RoomScale's approved art direction is a detailed miniature steampunk civilization rendered as a cinematic miniature diorama. This allows deliberate scale-driven stylization, while each asset must still read as a physically assembled object with believable joinery, distinct material response and close-range manufacturing detail; it does not permit placeholder, primitive or materially flat construction.",
   "visual_target": "A hand-built clockwork workshop at miniature scale, with a timber-and-stone base, visible framing, individually joined wall boards, standing-seam roof wings, a riveted dark-iron boiler, copper pressure lines, an exposed flywheel, a usable workbench, and warm glazed openings. Keep the roof open enough to read its machinery from strategy view. Materials should show grain, worn iron, aged copper, and restrained brass under RoomScale lighting. Render in the approved cinematic miniature-diorama style, with scale-driven stylization but tangible, carefully manufactured construction."

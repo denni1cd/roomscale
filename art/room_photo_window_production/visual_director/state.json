@@ -1,0 +1,201 @@
+{
+  "approved_visual_target": {
+    "approval": "pass",
+    "approved_at_utc": "2026-11-01T13:11:55+00:00",
+    "concept_id": "window-transom-source-match-r01",
+    "path": "art/room_photo_window_production/visual_director/round-01/approved-target-r01.png",
+    "review_method": "pixel inspection; review evidence recorded by Luna",
+    "review_path": "art/room_photo_window_production/visual_director/round-01/visual-development.md",
+    "sha256": "9c1d6b5d103f1e3840bcb44dd79a12a7ff53df07d859d9d5ed91154feba421c1"
+  },
+  "asset_id": "room_photo_window_production",
+  "best_3d_candidate": {
+    "candidate_file": "art/room_photo_window_production/iterations/v004/candidate.json",
+    "candidate_id": "room_photo_window_production-v004",
+    "evaluation_file": "art/room_photo_window_production/iterations/v004/evaluation.json",
+    "updated_at_utc": "2026-11-01T13:20:55+00:00"
+  },
+  "candidate_history": [
+    {
+      "candidate_file": "art/room_photo_window_production/iterations/v003/candidate.json",
+      "candidate_id": "room_photo_window_production-v003",
+      "created_at_utc": "2026-11-01T13:15:38+00:00",
+      "parent_candidate_id": "",
+      "recipe_file": "art/room_photo_window_production/iterations/v003/recipe.json",
+      "visual_director_attempt": 1,
+      "visual_director_provenance": {
+        "approved_visual_target": {
+          "approval": "pass",
+          "approved_at_utc": "2026-11-01T13:11:55+00:00",
+          "concept_id": "window-transom-source-match-r01",
+          "path": "art/room_photo_window_production/visual_director/round-01/approved-target-r01.png",
+          "review_method": "pixel inspection; review evidence recorded by Luna",
+          "review_path": "art/room_photo_window_production/visual_director/round-01/visual-development.md",
+          "sha256": "9c1d6b5d103f1e3840bcb44dd79a12a7ff53df07d859d9d5ed91154feba421c1"
+        },
+        "case_file": "art/room_photo_window_production/visual_director/state.json",
+        "policy": {
+          "inputs": {
+            "category": "architectural_opening",
+            "current_quality": "below_target",
+            "faction_defining": false,
+            "inferred": [],
+            "priority_tier": 1,
+            "screen_space_importance": 5,
+            "source_images_present": true,
+            "source_photo_required": true
+          },
+          "reasons": [
+            "Tier 1 scene-defining asset",
+            "very high screen-space importance",
+            "source-photo character is required for a prominent asset",
+            "current production quality is below target"
+          ],
+          "required": true
+        },
+        "status": "approved",
+        "strategy": "initial",
+        "target_episode_attempt": 1
+      }
+    },
+    {
+      "candidate_file": "art/room_photo_window_production/iterations/v004/candidate.json",
+      "candidate_id": "room_photo_window_production-v004",
+      "created_at_utc": "2026-11-01T13:17:46+00:00",
+      "parent_candidate_id": "room_photo_window_production-v003",
+      "recipe_file": "art/room_photo_window_production/iterations/v004/recipe.json",
+      "visual_director_attempt": 2,
+      "visual_director_provenance": {
+        "approved_visual_target": {
+          "approval": "pass",
+          "approved_at_utc": "2026-11-01T13:11:55+00:00",
+          "concept_id": "window-transom-source-match-r01",
+          "path": "art/room_photo_window_production/visual_director/round-01/approved-target-r01.png",
+          "review_method": "pixel inspection; review evidence recorded by Luna",
+          "review_path": "art/room_photo_window_production/visual_director/round-01/visual-development.md",
+          "sha256": "9c1d6b5d103f1e3840bcb44dd79a12a7ff53df07d859d9d5ed91154feba421c1"
+        },
+        "case_file": "art/room_photo_window_production/visual_director/state.json",
+        "policy": {
+          "inputs": {
+            "category": "architectural_opening",
+            "current_quality": "below_target",
+            "faction_defining": false,
+            "inferred": [],
+            "priority_tier": 1,
+            "screen_space_importance": 5,
+            "source_images_present": true,
+            "source_photo_required": true
+          },
+          "reasons": [
+            "Tier 1 scene-defining asset",
+            "very high screen-space importance",
+            "source-photo character is required for a prominent asset",
+            "current production quality is below target"
+          ],
+          "required": true
+        },
+        "status": "approved",
+        "strategy": "targeted_correction",
+        "target_episode_attempt": 2
+      }
+    }
+  ],
+  "case_file": "art/room_photo_window_production/visual_director/state.json",
+  "policy": {
+    "inputs": {
+      "category": "architectural_opening",
+      "current_quality": "below_target",
+      "faction_defining": false,
+      "inferred": [],
+      "priority_tier": 1,
+      "screen_space_importance": 5,
+      "source_images_present": true,
+      "source_photo_required": true
+    },
+    "reasons": [
+      "Tier 1 scene-defining asset",
+      "very high screen-space importance",
+      "source-photo character is required for a prominent asset",
+      "current production quality is below target"
+    ],
+    "required": true
+  },
+  "production_asset": {
+    "accepted_at_utc": "2026-11-01T13:20:55+00:00",
+    "candidate_id": "room_photo_window_production-v004",
+    "dimensions_inches": [
+      96.0,
+      68.0,
+      4.0
+    ],
+    "path": "art/room_photo_window_production/iterations/v004/generated/asset.glb",
+    "semantic_type": "photographic double-hung transom window",
+    "sha256": "2ac833c5e331a5f7a2b191df4808074e089607fc33ca264bc6d8b21083b15d61",
+    "status": "accepted"
+  },
+  "schema_version": 1,
+  "status": "production_pass",
+  "target_episode": {
+    "attempts": [
+      {
+        "attempt": 1,
+        "candidate_id": "room_photo_window_production-v003",
+        "decision": "continue",
+        "evaluated_at_utc": "2026-11-01T13:17:35+00:00",
+        "evaluation_file": "art/room_photo_window_production/iterations/v003/evaluation.json",
+        "incumbent_comparison_result": "better",
+        "status": "evaluated",
+        "strategy": "initial",
+        "visual_transfer_diagnosis": {
+          "corrective_action": "For attempt 2, keep v003's approved-target-driven geometry and move the latch assembly onto the centre stile's camera-facing surface; compare the same Godot close capture before revisiting the glass material.",
+          "lost_visual_information": [
+            "The target's centered sash latch is hidden behind the centre stile in the Godot detail view.",
+            "The target's warm neutral glazing context is replaced by the cool empty outdoor/room backdrop."
+          ],
+          "preserved_components": [
+            "Warm stained casing",
+            "deep sill",
+            "separate upper transom lights",
+            "double-hung lower sash and meeting rail"
+          ],
+          "primary_causes": [
+            "geometry_loss",
+            "lighting_render_presentation"
+          ]
+        }
+      },
+      {
+        "attempt": 2,
+        "candidate_id": "room_photo_window_production-v004",
+        "decision": "promote",
+        "evaluated_at_utc": "2026-11-01T13:20:55+00:00",
+        "evaluation_file": "art/room_photo_window_production/iterations/v004/evaluation.json",
+        "incumbent_comparison_result": "better",
+        "status": "evaluated",
+        "strategy": "targeted_correction",
+        "visual_transfer_diagnosis": {
+          "corrective_action": "Keep v004 as a source-matched production improvement: the frame, divided transom, sash rail, visible latch, and clear outdoor view pass the source-photo gate. Stop this episode with the minor pane-count difference recorded rather than reopening concept generation or adding material variants.",
+          "lost_visual_information": [
+            "The target has four upper lights while v004 has five narrow panes.",
+            "The camera-facing latch is present but smaller than it appears in the target studio render."
+          ],
+          "preserved_components": [
+            "stained-oak casing and deep sill",
+            "divided transom",
+            "double-hung sash meeting rail",
+            "visible central latch",
+            "existing opening and room landmarks"
+          ],
+          "primary_causes": [
+            "geometry_loss"
+          ]
+        }
+      }
+    ],
+    "status": "production_pass",
+    "target_sha256": "9c1d6b5d103f1e3840bcb44dd79a12a7ff53df07d859d9d5ed91154feba421c1"
+  },
+  "updated_at_utc": "2026-11-01T13:20:55+00:00",
+  "visual_brief_file": "art/room_photo_window_production/visual_director/visual-brief-draft.json"
+}

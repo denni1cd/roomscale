@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "roomscale-visual-brief.schema.json",
+  "title": "RoomScale VisualBrief",
+  "type": "object",
+  "required": [
+    "asset_id",
+    "semantic_identity",
+    "intended_function",
+    "dimensions_inches",
+    "citizen_scale",
+    "silhouette_requirements",
+    "construction_materials",
+    "art_direction",
+    "gameplay_distance_readability",
+    "visual_references",
+    "prohibited_failure_modes",
+    "roomdefinition_authority"
+  ],
+  "properties": {
+    "asset_id": {"type": "string"},
+    "semantic_identity": {"type": "string"},
+    "intended_function": {"type": "string"},
+    "dimensions_inches": {
+      "type": "array",
+      "items": {"type": "number", "exclusiveMinimum": 0},
+      "minItems": 3,
+      "maxItems": 3,
+      "description": "[width, height, depth] from the existing ArtBrief/RoomDefinition."
+    },
+    "citizen_scale": {
+      "type": "object",
+      "required": ["citizen_height_inches", "ratio_or_view"],
+      "properties": {
+        "citizen_height_inches": {"const": 0.5},
+        "ratio_or_view": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "silhouette_requirements": {"type": "array", "items": {"type": "string"}},
+    "construction_materials": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["part", "construction", "material"],
+        "properties": {
+          "part": {"type": "string"},
+          "construction": {"type": "string"},
+          "material": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "art_direction": {"type": "string"},
+    "faction_identity": {"type": ["string", "null"]},
+    "gameplay_distance_readability": {"type": "string"},
+    "source_photo_constraints": {
+      "type": ["string", "null"],
+      "description": "Visible evidence, what is occluded, and which assumptions are not source evidence."
+    },
+    "visual_references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "role"],
+        "properties": {
+          "path": {"type": "string"},
+          "role": {"type": "string"},
+          "provenance": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "prohibited_failure_modes": {"type": "array", "items": {"type": "string"}},
+    "roomdefinition_authority": {"type": "string"},
+    "separate_room_assets": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": false
+}

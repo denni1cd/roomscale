@@ -1,0 +1,126 @@
+{
+  "approved_visual_target": {
+    "approval": "pass",
+    "approved_at_utc": "2026-11-01T13:11:55+00:00",
+    "concept_id": "display-cabinet-walnut-center-r01",
+    "path": "art/display_cabinet/visual_director/round-01/approved-target-r01.png",
+    "review_method": "pixel inspection; review evidence recorded by Luna",
+    "review_path": "art/display_cabinet/visual_director/round-01/visual-development.md",
+    "sha256": "a0fe5cef719d1a9385b6298b885dfcc6e2d3e9669b9e639f7bd0b8178c03a8fb"
+  },
+  "asset_id": "display_cabinet",
+  "best_3d_candidate": {
+    "candidate_file": "art/display_cabinet/iterations/v003/candidate.json",
+    "candidate_id": "display_cabinet-v003",
+    "evaluation_file": "art/display_cabinet/iterations/v003/evaluation.json",
+    "updated_at_utc": "2026-11-01T13:17:38+00:00"
+  },
+  "candidate_history": [
+    {
+      "candidate_file": "art/display_cabinet/iterations/v003/candidate.json",
+      "candidate_id": "display_cabinet-v003",
+      "created_at_utc": "2026-11-01T13:15:01+00:00",
+      "parent_candidate_id": "",
+      "recipe_file": "art/display_cabinet/iterations/v003/recipe.json",
+      "visual_director_attempt": 1,
+      "visual_director_provenance": {
+        "approved_visual_target": {
+          "approval": "pass",
+          "approved_at_utc": "2026-11-01T13:11:55+00:00",
+          "concept_id": "display-cabinet-walnut-center-r01",
+          "path": "art/display_cabinet/visual_director/round-01/approved-target-r01.png",
+          "review_method": "pixel inspection; review evidence recorded by Luna",
+          "review_path": "art/display_cabinet/visual_director/round-01/visual-development.md",
+          "sha256": "a0fe5cef719d1a9385b6298b885dfcc6e2d3e9669b9e639f7bd0b8178c03a8fb"
+        },
+        "case_file": "art/display_cabinet/visual_director/state.json",
+        "policy": {
+          "inputs": {
+            "category": "room_furniture",
+            "current_quality": "accepted",
+            "faction_defining": false,
+            "inferred": [],
+            "priority_tier": 1,
+            "screen_space_importance": 4,
+            "source_images_present": false,
+            "source_photo_required": false
+          },
+          "reasons": [
+            "Tier 1 scene-defining asset",
+            "high screen-space importance"
+          ],
+          "required": true
+        },
+        "status": "approved",
+        "strategy": "initial",
+        "target_episode_attempt": 1
+      }
+    }
+  ],
+  "case_file": "art/display_cabinet/visual_director/state.json",
+  "policy": {
+    "inputs": {
+      "category": "room_furniture",
+      "current_quality": "accepted",
+      "faction_defining": false,
+      "inferred": [],
+      "priority_tier": 1,
+      "screen_space_importance": 4,
+      "source_images_present": false,
+      "source_photo_required": false
+    },
+    "reasons": [
+      "Tier 1 scene-defining asset",
+      "high screen-space importance"
+    ],
+    "required": true
+  },
+  "production_asset": {
+    "accepted_at_utc": "2026-11-01T13:17:38+00:00",
+    "candidate_id": "display_cabinet-v003",
+    "dimensions_inches": [
+      33.0,
+      76.0,
+      18.0
+    ],
+    "path": "art/display_cabinet/iterations/v003/generated/asset.glb",
+    "semantic_type": "tall wooden glass-front display cabinet",
+    "sha256": "8c15eca7a425ae995bffeca013876c63aae8efd0e383649cfb046bcebe371d02",
+    "status": "accepted"
+  },
+  "schema_version": 1,
+  "status": "production_pass",
+  "target_episode": {
+    "attempts": [
+      {
+        "attempt": 1,
+        "candidate_id": "display_cabinet-v003",
+        "decision": "promote",
+        "evaluated_at_utc": "2026-11-01T13:17:35+00:00",
+        "evaluation_file": "art/display_cabinet/iterations/v003/evaluation.json",
+        "incumbent_comparison_result": "better",
+        "status": "evaluated",
+        "strategy": "initial",
+        "visual_transfer_diagnosis": {
+          "corrective_action": "Keep the target-driven unlit walnut materials and accept the room-specific glass contrast; do not add emissive interior lighting merely to imitate the studio concept backdrop.",
+          "lost_visual_information": [
+            "The isolated target's white surround and bright side lighting are absent from the normal green-walled room capture, so clear glass reveals a darker interior."
+          ],
+          "preserved_components": [
+            "Dark walnut case and crown",
+            "paired clear door panels",
+            "three empty shelves",
+            "brass knobs and three hinges per door"
+          ],
+          "primary_causes": [
+            "lighting_render_presentation"
+          ]
+        }
+      }
+    ],
+    "status": "production_pass",
+    "target_sha256": "a0fe5cef719d1a9385b6298b885dfcc6e2d3e9669b9e639f7bd0b8178c03a8fb"
+  },
+  "updated_at_utc": "2026-11-01T13:17:38+00:00",
+  "visual_brief_file": "art/display_cabinet/visual_director/visual-brief-draft.json"
+}

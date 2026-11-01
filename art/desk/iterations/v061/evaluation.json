@@ -1,0 +1,118 @@
+{
+  "candidate_id": "desk-v061",
+  "created_at_utc": "2026-11-01T12:43:56+00:00",
+  "decision": "reject",
+  "defects": [
+    "asset-three-quarter.png, asset-profile.png, and asset-detail.png render the smoked-glass top, graphite frame, and fittings as a nearly black mass.",
+    "The tabletop edge and broad reflection from the approved image target are absent or too weak to read in the close production views.",
+    "Although the paired columns, under-glass rail, and T-feet exist, their component and material hierarchy is obscured.",
+    "The actual room-scale render keeps the desk silhouette but leaves it competing with the dark monitor/chair cluster; it is not a visible improvement over desk-v007."
+  ],
+  "hard_fail_reasons": [
+    "The actual Godot Compatibility production captures fail the dominant material-response requirement: the glass edge/reflection and separation among glass, graphite, satin fittings, and rubber do not read clearly.",
+    "The v061 three-quarter, profile, and detail captures remain substantially darker and less differentiated than the matched desk-v007 production captures, so v007 remains the incumbent."
+  ],
+  "incumbent_candidate_id": "desk-v007",
+  "incumbent_comparison": "v061 preserves the multipart v059/v060 geometry and validates at exact 66 x 30 x 30-inch bounds. In matched production views, however, its top and support frame collapse toward black, while v007 retains a more legible top plane and brighter glass/material highlights. The override log confirms 22 meshes were processed, but the production pixels do not show the intended hierarchy. v007 remains the incumbent.",
+  "incumbent_comparison_result": "worse",
+  "likely_causes": [
+    "Both GLTF material-factor trials and the candidate-local native StandardMaterial3D override trial fail under the same Compatibility production path, so copying nominal property values has not reproduced v007's effective visual response.",
+    "The present evidence does not isolate whether the remaining difference comes from effective per-surface material assignment, renderer/environment response, or their interaction; the actual close PNGs establish the failure but not a single engine-level cause.",
+    "The dark desk value also competes with the separate black monitors and chair in the room-scale view, reducing visible separation at the intended gameplay distance."
+  ],
+  "next_action_hypothesis": "Stop desk-specific material parameter variants and keep desk-v007. If this desk returns to active work, first run a controlled material/render diagnosis with v007 and v061 under identical camera, lights, renderer, and verified per-surface effective material values; resume challenger production only after that comparison identifies a correctable stage. Do not change RoomDefinition or create another generic desk shader variant.",
+  "observations": {
+    "art_direction_fit": "The restrained contemporary workstation palette fits the Human Room, but the near-black production response makes this candidate a poor visual endpoint.",
+    "close_up_quality": "asset-three-quarter.png, asset-profile.png, and asset-detail.png show the broad glass top, supports, rail, and feet but bury their edges and fittings in darkness.",
+    "gameplay_readability": "room-scale.png retains the standing-desk silhouette and exact scene placement, yet the desk blends with the monitor/chair cluster more than v007 and the approved target.",
+    "geometric_detail": "The mesh retains the two-stage posts, under-glass rail, mounting structures, separate fittings, and T-feet; technical validation reports 22 meshes and 8,712 triangles.",
+    "material_realism": "The dominant glass and graphite surfaces render nearly black; the broad reflection, bright continuous edge, and distinct satin/rubber responses from the visual target are not present.",
+    "proportion": "Godot reports the exact 66 x 30 x 30-inch bounds, with the floor datum at zero and no RoomDefinition change.",
+    "scale_fidelity": "The candidate validates at the exact VisualBrief/RoomDefinition dimensions and retains the same 0.5-inch citizen context; this confirms the envelope, not visual material quality.",
+    "semantic_recognizability": "The asset-three-quarter and room-scale views still read as a standing computer desk from its broad plane, paired columns, and feet.",
+    "silhouette_quality": "The wide thin top, open knee space, paired columns, and perpendicular T-feet remain in the correct major arrangement.",
+    "source_resemblance": "The main standing-desk silhouette is preserved, but the photo's readable smoked-glass plane and reflective edge character are missing.",
+    "surface_variation": "Glass, frame, fittings, and rubber merge into a nearly uniform dark mass in the close views rather than separating into controlled materials.",
+    "technical_integration": "Godot 4.7.2 Compatibility imports and renders the candidate through the normal RoomScale path. Validation passes at 22 meshes, 22 surfaces, 8,712 triangles, exact bounds, and no reported issues; the visual material gate still fails."
+  },
+  "render_evidence": [
+    "art/desk/iterations/v061/render-runs/run-001/asset-three-quarter.png",
+    "art/desk/iterations/v061/render-runs/run-001/asset-profile.png",
+    "art/desk/iterations/v061/render-runs/run-001/asset-detail.png",
+    "art/desk/iterations/v061/render-runs/run-001/room-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 2,
+    "close_up_quality": 2,
+    "gameplay_readability": 3,
+    "geometric_detail": 4,
+    "material_realism": 1,
+    "proportion": 5,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 5,
+    "source_resemblance": 2,
+    "surface_variation": 1,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The three-quarter, profile, and detail captures show major supports but leave the glass edge and attached fittings difficult to inspect because most materials collapse toward black.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "asset-profile.png retains a thin continuous panel, but its edge is almost black and not visibly finished to the target's glass edge response.",
+        "pass": false
+      },
+      "hardware": {
+        "evidence": "Mounts and fittings are present in the model but merge into the dark tabletop/frame in asset-detail.png.",
+        "pass": false
+      },
+      "joins": {
+        "evidence": "The support geometry is connected, but the post-to-rail and mount joins are not clearly legible against the near-black surfaces.",
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "The close view does not communicate the separate manufactured glass, coated frame, satin fitting, and rubber components.",
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "The glass and coated metal are substantially darker than the approved target and desk-v007's matched production capture.",
+        "pass": false
+      },
+      "pass": false,
+      "surface_variation": {
+        "evidence": "The tabletop and supporting components visually merge rather than show restrained but distinct material response.",
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "The profile retains a thin continuous glass slab with no large thickness or silhouette defect.",
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The close production images do not read as a finished smoked-glass workstation because the main materials and edge treatment are nearly black.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "No",
+      "applicable": true,
+      "evidence": "Although the top and standing frame silhouette match the photograph, the glass's visible edge and broad reflective character do not survive in the actual Godot captures.",
+      "pass": false
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  }
+}

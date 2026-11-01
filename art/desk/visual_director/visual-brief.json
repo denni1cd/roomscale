@@ -1,0 +1,42 @@
+{
+  "asset_id": "desk",
+  "semantic_identity": "Dark smoked-glass computer standing desk",
+  "intended_function": "Support the separately defined computer workstation and provide the existing RoomDefinition-owned DESK_TOP surface.",
+  "dimensions_inches": [66, 30, 30],
+  "citizen_scale": {
+    "citizen_height_inches": 0.5,
+    "ratio_or_view": "A 30-inch desk is 60 citizen-heights; use a 1:60 scale cue."
+  },
+  "silhouette_requirements": [
+    "Wide, thin rectangular tabletop.",
+    "Two separate standing-height lift columns.",
+    "Two perpendicular T-feet with low levelers.",
+    "Open knee space and visible paired supports at gameplay distance."
+  ],
+  "construction_materials": [
+    {"part": "top", "construction": "One continuous flat panel with a finished thin edge", "material": "dark smoked tempered glass"},
+    {"part": "frame and lift columns", "construction": "Two telescoping square columns attached below the glass by discrete plates and a slim support rail", "material": "graphite powder-coated steel"},
+    {"part": "T-feet", "construction": "Broad low-profile perpendicular rails with concealed leveling pads", "material": "graphite steel and black rubber"},
+    {"part": "fasteners", "construction": "Sparse fasteners below the tabletop only", "material": "satin steel"}
+  ],
+  "art_direction": "Human Room: restrained contemporary domestic-office furniture, realistic glass and coated metal, polished but not cinematic.",
+  "faction_identity": null,
+  "gameplay_distance_readability": "Read as one large dark glass working surface on two distinct supports and T-feet; retain clear open space beneath the top.",
+  "source_photo_constraints": "photo_holder/Sample (2).jpg shows a dark glass computer desk and black standing-desk supports, partly occluded by two monitors and other equipment. The precise underside, rail layout, fasteners, and lift details are not fully visible; treat them as bounded construction assumptions. Do not add wood, a drawer, cable tray, room props, or a new support silhouette.",
+  "visual_references": [
+    {"path": "photo_holder/Sample (2).jpg", "role": "source photo", "provenance": "repository room-reconstruction source; desk visible behind the monitors"},
+    {"path": "art/desk/iterations/v007/render-runs/run-002/asset-three-quarter.png", "role": "current production incumbent", "provenance": "Godot Art Factory production render"},
+    {"path": "art/desk/visual_director/round-01/incumbent-edit-r01.png", "role": "approved image target", "provenance": "image-generator targeted edit of candidate A after Luna pixel review"},
+    {"path": "art/desk/visual_director/reference-pack/scale-guide.svg", "role": "dimension-derived scale schematic", "provenance": "drawn from the existing 66 x 30 x 30-inch ArtBrief and 0.5-inch citizen scale; schematic, not source photography"}
+  ],
+  "prohibited_failure_modes": [
+    "A fused fractured mesh, torn sheets, jagged gaps, floating or disconnected components.",
+    "A vertical tabletop or a single central leg replacing the two supports.",
+    "Unexplained raised discs, pucks, or fasteners on the glass surface.",
+    "Featureless near-black glass with no readable edge or material separation.",
+    "Invented furniture features that contradict the source or visible props merged into the desk.",
+    "Geometry outside or rescaled non-uniformly to fit the 66 x 30 x 30-inch envelope."
+  ],
+  "roomdefinition_authority": "RoomDefinition rooms/room_photo_luna.json owns computer-desk id, position (30,0,47), yaw 0, 66 x 30 x 30-inch dimensions, navigation blocking/padding, and the DESK_TOP surface. Visual concepts and the mesh may not alter these gameplay fields.",
+  "separate_room_assets": ["two monitors", "monitor mounts", "keyboard", "chair", "loose cables", "floor and room shell"]
+}

@@ -1,0 +1,61 @@
+{
+  "art_direction": "RoomScale category: settlement_structure. A hand-built clockwork workshop at miniature scale, with a timber-and-stone base, visible framing, individually joined wall boards, standing-seam roof wings, a riveted dark-iron boiler, copper pressure lines, an exposed flywheel, a usable workbench, and warm glazed openings. Keep the roof open enough to read its machinery from strategy view. Materials should show grain, worn iron, aged copper, and restrained brass under RoomScale lighting. Render in the approved cinematic miniature-diorama style, with scale-driven stylization but tangible, carefully manufactured construction.",
+  "asset_id": "settlement_workshop",
+  "citizen_scale": {
+    "citizen_height_inches": 0.5,
+    "ratio_or_view": "Use the exact 20-inch height against a 0.5-inch citizen; derive a schematic if generated scale is inaccurate."
+  },
+  "construction_materials": [
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "sooty iron with layered copper hoops",
+      "part": "boiler"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "weathered stone and oiled timber",
+      "part": "foundation"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "dark stained wood, forged iron, and oxidized standing-seam metal",
+      "part": "frame_and_roof"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "aged copper with brass gauge fittings",
+      "part": "pipework"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "amber glass with dark iron mullions",
+      "part": "windows"
+    }
+  ],
+  "dimensions_inches": [
+    26.0,
+    20.0,
+    20.0
+  ],
+  "faction_identity": "clockwork settlement workshop",
+  "gameplay_distance_readability": "Keep required features legible at the ArtBrief gameplay camera distances: 2.0, 12.0, 64.0, 330.0 inches.",
+  "intended_function": "A hand-built clockwork workshop at miniature scale, with a timber-and-stone base, visible framing, individually joined wall boards, standing-seam roof wings, a riveted dark-iron boiler, copper pressure lines, an exposed flywheel, a usable workbench, and warm glazed openings. Keep the roof open enough to read its machinery from strategy view. Materials should show grain, worn iron, aged copper, and restrained brass under RoomScale lighting. Render in the approved cinematic miniature-diorama style, with scale-driven stylization but tangible, carefully manufactured construction.",
+  "prohibited_failure_modes": [
+    "do not change RoomDefinition landmarks, activity stations, work durations, or citizen assignments",
+    "do not add render meshes to collision, navigation, traversability, selection, or work-site calculations",
+    "do not remove the production steam emitter or animated workshop gear contract",
+    "do not add canonical-room-specific placement or simulation logic"
+  ],
+  "roomdefinition_authority": "ArtBrief dimensions are (26.0, 20.0, 20.0); source RoomDefinition: not specified. RoomDefinition remains authoritative for placement and gameplay.",
+  "semantic_identity": "clockwork settlement workshop",
+  "separate_room_assets": [],
+  "silhouette_requirements": [
+    "recognizable open-front miniature workshop silhouette",
+    "boiler, stack, copper pipework, gauge, workbench, and exposed gear remain distinct",
+    "visible joins, wall-board variation, roof seams, and fasteners",
+    "material categories remain distinguishable in the production settlement view",
+    "fit the existing 26 by 20 by 20 inch local presentation envelope"
+  ],
+  "source_photo_constraints": null,
+  "visual_references": []
+}

@@ -1,0 +1,56 @@
+{
+  "deterministic_seed": null,
+  "generator_command": [
+    "C:/Users/Zero/python_projects/ai/roomscale/.venv/Scripts/python.exe",
+    "scripts/art_factory/generators/visual_director_desk_v059_blender.py",
+    "--output",
+    "{output_dir}",
+    "--reference",
+    "{project_root}/art/desk/visual_director/round-01/incumbent-edit-r01.png",
+    "--blender",
+    "C:/Users/Zero/python_projects/ai/roomscale/.tools/blender-5.2.3/blender-5.2.3-windows-x64/blender.exe"
+  ],
+  "import_configuration": {
+    "candidate_root": "Node3D",
+    "format": "Godot PackedScene wrapper with Blender-exported Y-up GLB child",
+    "probe": "candidate-local reflection probe, candidate excluded from capture",
+    "renderer": "existing Compatibility renderer"
+  },
+  "instructions": "Use the approved RoomScale Visual Director target and VisualBrief to author a multipart dark glass standing desk. Preserve the exact 66 x 30 x 30 inch RoomDefinition envelope, two separate lift columns, uninterrupted glass plane, narrow under-glass support, perpendicular T-feet, and separate monitors/room props. Keep gameplay geometry, object placement, orientation, surface, and navigation entirely RoomDefinition-owned. Render through the standard Godot Art Factory path and keep desk-v007 incumbent unless strict visual criteria pass.",
+  "material_method": "GLTF metallic-roughness PBR: transparent smoked glass with restrained clearcoat, graphite metallic-roughness steel, satin fittings, and rough rubber levelers.",
+  "method": "visual_director_source_constrained_multipart_blender_model",
+  "parameters": {
+    "outputs": [
+      "desk.tscn",
+      "desk.glb",
+      "desk_review_wrapper.gd",
+      "generation-record.json",
+      "model-metrics.json"
+    ],
+    "target_bounds_inches": [
+      66,
+      30,
+      30
+    ],
+    "visual_brief": "art/desk/visual_director/visual-brief.json",
+    "visual_target": "art/desk/visual_director/round-01/incumbent-edit-r01.png"
+  },
+  "post_processing": [
+    "Component-authored hard-surface meshes with manufactured edge radii, separate glass/steel/rubber materials, and connected support geometry.",
+    "Y-up GLB export, candidate-local review wrapper and reflection probe.",
+    "Existing Art Factory Godot import/validation and six-view production render; inspect pixels against approved target and incumbent."
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "art/desk/visual_director/visual-brief.json",
+    "art/desk/visual_director/round-01/incumbent-edit-r01.png",
+    "art/desk/visual_director/reference-pack/scale-guide.svg",
+    "photo_holder/Sample (2).jpg",
+    "art/desk/brief.json",
+    "art/desk/iterations/v007/evaluation.json",
+    "art/desk/iterations/v058/evaluation.json",
+    "rooms/room_photo_luna.json"
+  ],
+  "tool": "Blender Python/bpy plus RoomScale Art Factory",
+  "tool_version": "Blender 5.2.3; Godot 4.7.2"
+}

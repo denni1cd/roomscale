@@ -20,7 +20,12 @@ These promotions improve specific assets. They do not satisfy the scene-wide pro
 
 ## Evidence references
 
+- [Visual Director Batch 2 — desk concept-to-production application](visual_director_batch-02.md)
 - [Batch 1 visual review and matched views](batch-01/visual-review.md)
 - [Current full visible-art inventory](visual_inventory.md)
 - [Preserved Batch 0 performance](performance.json)
 - [Batch 1 performance](batch-01/performance-batch1.json)
+
+## Source-photo targeting note
+
+The Visual Director's first application selected the photographed, instantiated desk in `room_photo_luna`. The supplied room-photo set does not show a sofa or fireplace; those backlog labels should not be treated as observed source furniture without another reference or room-specific evidence. The current photo set does show the desk, hammock, and display cabinet. Batch 0 inventory/material findings remain the baseline and are not reopened by this note.

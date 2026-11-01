@@ -8,7 +8,9 @@
     330.0
   ],
   "category": "architectural_opening",
+  "current_quality": "below_target",
   "display_name": "Reconstructed Room Double-Hung Window",
+  "faction_defining": false,
   "gameplay_invariants": {
     "RoomDefinition_dimensions_and_landmarks_remain_authoritative": true,
     "landmarks_activity_stations_and_citizen_assignments_are_unchanged": true,
@@ -19,12 +21,13 @@
     68.0,
     4.0
   ],
-  "iteration_budget": 1,
+  "iteration_budget": 4,
   "materials": {
     "frame": "photographic warm stained oak with fine grain and satin wear",
     "glass": "clear household glazing with restrained reflectance",
     "hardware": "aged brass and steel sash locks"
   },
+  "priority_tier": 1,
   "prohibited_changes": [
     "do not change the RoomDefinition opening, object dimensions, position, collision, navigation, or simulation identity",
     "do not add presentation geometry to collision, navigation, selection, or task logic",
@@ -40,7 +43,9 @@
     "credible clear glass and source-matched warm timber response"
   ],
   "schema_version": 1,
+  "screen_space_importance": 5,
   "semantic_type": "photographic double-hung transom window",
+  "source_photo_required": true,
   "source_room_definition": "rooms/room_photo_luna.json",
   "stylization_rationale": "",
   "visual_target": "A source-matched residential double-hung window assembly, fitted exactly inside a 96 by 68 inch reconstructed opening. The warm stained-oak trim, projecting sill, separate sash rails and stiles, centre mullions, upper transom lights, clear glass and small sash hardware should approach the photographed room rather than use the existing flat glass panel and box frame."

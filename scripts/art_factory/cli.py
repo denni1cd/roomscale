@@ -10,6 +10,7 @@ from typing import Any
 from .factory import ArtFactory
 from .godot_bridge import GodotArtBridge
 from .models import ArtBrief, ArtEvaluation, ArtRecipe
+from .visual_director import VisualDirectorGateRequired
 
 
 def _read_json(path: Path) -> dict[str, Any]:
@@ -67,6 +68,36 @@ def parser() -> argparse.ArgumentParser:
     verify.add_argument("asset_id")
 
     commands.add_parser("registry", help="show the stable accepted-asset registry")
+
+    visual_director = commands.add_parser(
+        "visual-director", help="prepare and record policy-gated visual target development"
+    )
+    visual_director_commands = visual_director.add_subparsers(
+        dest="visual_director_command", required=True
+    )
+    visual_status = visual_director_commands.add_parser(
+        "status", help="show policy, target, best 3D candidate, and production asset"
+    )
+    visual_status.add_argument("asset_id")
+    visual_prepare = visual_director_commands.add_parser(
+        "prepare", help="open a visual-development case and scaffold its VisualBrief"
+    )
+    visual_prepare.add_argument("asset_id")
+    visual_approve = visual_director_commands.add_parser(
+        "approve", help="record a pixel-reviewed approved visual target"
+    )
+    visual_approve.add_argument("asset_id")
+    visual_approve.add_argument("--target", required=True, help="project-relative image path")
+    visual_approve.add_argument("--review", required=True, help="project-relative pixel-review evidence")
+    visual_approve.add_argument("--concept-id", default="")
+    visual_backlog = visual_director_commands.add_parser(
+        "backlog",
+        help="stop a reviewed target episode and preserve its best 3D/production assets",
+    )
+    visual_backlog.add_argument("asset_id")
+    visual_backlog.add_argument(
+        "--reason", required=True, help="specific unresolved visual-transfer defect"
+    )
     return result
 
 
@@ -78,9 +109,23 @@ def main(argv: list[str] | None = None) -> int:
         print(factory.save_brief(brief))
     elif args.command == "generate":
         recipe = ArtRecipe.from_dict(_read_json(args.recipe))
-        candidate = factory.generate_candidate(
-            args.asset_id, recipe, args.timeout, parent_candidate_id=args.parent
-        )
+        try:
+            candidate = factory.generate_candidate(
+                args.asset_id, recipe, args.timeout, parent_candidate_id=args.parent
+            )
+        except VisualDirectorGateRequired as exc:
+            print(json.dumps({
+                "status": "visual_director_required",
+                "asset_id": exc.asset_id,
+                "reasons": exc.reasons,
+                "case_file": exc.case_file,
+                "visual_brief_file": exc.visual_brief_file,
+                "next_step": (
+                    "Generate and pixel-review concept directions, then record a passing target "
+                    "with `roomscale-art visual-director approve`."
+                ),
+            }, indent=2))
+            return 3
         print(json.dumps(candidate.to_dict(), indent=2))
         return 0 if candidate.generation_result.get("status") == "pass" else 2
     elif args.command == "validate":
@@ -104,6 +149,18 @@ def main(argv: list[str] | None = None) -> int:
         return 0 if passed else 2
     elif args.command == "registry":
         print(json.dumps(factory.registry.read(), indent=2))
+    elif args.command == "visual-director":
+        if args.visual_director_command == "status":
+            result = factory.visual_director_status(args.asset_id)
+        elif args.visual_director_command == "prepare":
+            result = factory.prepare_visual_director(args.asset_id)
+        elif args.visual_director_command == "backlog":
+            result = factory.backlog_visual_director_case(args.asset_id, args.reason)
+        else:
+            result = factory.approve_visual_target(
+                args.asset_id, args.target, args.review, concept_id=args.concept_id
+            )
+        print(json.dumps(result, indent=2))
     return 0
 
 

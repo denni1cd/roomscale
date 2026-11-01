@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "method": "visual_director_source_constrained_multipart_blender_model",
+  "instructions": "Respond to desk-v059's Godot material failure without changing geometry: retain the approved RoomScale Visual Director target, exact 66 x 30 x 30 inch envelope, separate lift columns, uninterrupted glass plane, under-glass rail, T-feet, and separate monitors/room props. Apply the proven desk-v007 material factors for smoked glass, graphite steel, satin fittings, and rubber using standard GLTF PBR values. Keep gameplay geometry, object placement, orientation, surface, and navigation entirely RoomDefinition-owned. Render through the standard Godot Art Factory path and keep desk-v007 incumbent unless strict visual criteria pass.",
+  "parameters": {
+    "target_bounds_inches": [66, 30, 30],
+    "visual_target": "art/desk/visual_director/round-01/incumbent-edit-r01.png",
+    "visual_brief": "art/desk/visual_director/visual-brief.json",
+    "material_correction": "Use desk-v007's proven StandardMaterial3D base colors, metallic, roughness, alpha, clearcoat, and rim factors as the starting point; v059's darker GLTF factors render nearly black in Godot Compatibility.",
+    "outputs": [
+      "desk.tscn",
+      "desk.glb",
+      "desk_review_wrapper.gd",
+      "generation-record.json",
+      "model-metrics.json"
+    ]
+  },
+  "source_inputs": [
+    "art/desk/visual_director/visual-brief.json",
+    "art/desk/visual_director/round-01/incumbent-edit-r01.png",
+    "art/desk/visual_director/reference-pack/scale-guide.svg",
+    "photo_holder/Sample (2).jpg",
+    "art/desk/brief.json",
+    "art/desk/iterations/v007/evaluation.json",
+    "art/desk/iterations/v058/evaluation.json",
+    "art/desk/iterations/v059/render-runs/run-001/asset-three-quarter.png",
+    "art/desk/iterations/v059/render-runs/run-001/asset-detail.png",
+    "art/desk/iterations/v059/technical-validation.json",
+    "rooms/room_photo_luna.json"
+  ],
+  "tool": "Blender Python/bpy plus RoomScale Art Factory",
+  "tool_version": "Blender 5.2.3; Godot 4.7.2",
+  "post_processing": [
+    "Component-authored hard-surface meshes with manufactured edge radii, separate glass/steel/rubber materials, and connected support geometry.",
+    "Y-up GLB export, candidate-local review wrapper and reflection probe.",
+    "Existing Art Factory Godot import/validation and six-view production render; inspect pixels against approved target and incumbent."
+  ],
+  "material_method": "GLTF metallic-roughness PBR factors aligned with the visibly stronger desk-v007 StandardMaterial3D values after pixel inspection of the v059 Godot render.",
+  "import_configuration": {
+    "candidate_root": "Node3D",
+    "format": "Godot PackedScene wrapper with Blender-exported Y-up GLB child",
+    "probe": "candidate-local reflection probe, candidate excluded from capture",
+    "renderer": "existing Compatibility renderer"
+  },
+  "deterministic_seed": null,
+  "generator_command": [
+    "C:/Users/Zero/python_projects/ai/roomscale/.venv/Scripts/python.exe",
+    "scripts/art_factory/generators/visual_director_desk_v060_blender.py",
+    "--output",
+    "{output_dir}",
+    "--reference",
+    "{project_root}/art/desk/visual_director/round-01/incumbent-edit-r01.png",
+    "--blender",
+    "C:/Users/Zero/python_projects/ai/roomscale/.tools/blender-5.2.3/blender-5.2.3-windows-x64/blender.exe"
+  ]
+}
