@@ -1,18 +1,18 @@
-# Production Art Backlog — Updated after Batch 16
+# Production Art Backlog — Updated after Batch 17
 
 This is the post-POC production backlog. It preserves POC 2.5 evidence and acceptance results; the entries below are not POC 2.5 regressions or changes to its acceptance amendment.
 
-## Current priority after Batch 16
+## Current priority after Batch 17
 
-1. **Desk transfer follow-up.** desk-v007 remains the production incumbent but fails the strict visual gate for material separation and glazing. Batch 2's v059-v061 work reached a material/render diagnosis plateau. Resume only with a materially different, controlled material/render strategy.
-2. **Room shell trim.** Batch 13 used all three Visual Director attempts; v002 is the best current review candidate but misses close-craft and surface-variation gates, and no candidate was promoted. Reopen only with a new mesh/render diagnosis. Keep RoomDefinition dimensions and gameplay authority intact.
-3. **French-door opening.** The new r03 target episode used three candidates. v010 is the best 3D review candidate: exact 66 × 82 × 4-inch bounds and visible six-hinge placement, but its image-authored oak still has repetitive grain. The materially different v011 procedural oak is nearly flat. Keep exterior garden context outside the mesh and resume only with a genuinely different non-repeating oak strategy.
+1. **Room shell trim.** Batch 13 used all three Visual Director attempts; v002 remains the best current review but misses close-craft and surface-variation gates. The next pass needs a new mesh/render diagnosis before any fresh target episode; preserve RoomDefinition dimensions and gameplay authority.
+2. **French-door opening.** The r03 target episode exhausted three candidates. v010 remains the best 3D review candidate at exact 66 × 82 × 4-inch bounds with visible hinge placement, but the oak repeats; v011's materially different procedural oak is nearly flat. Keep garden context outside the mesh.
+3. **Desk transfer.** The r01 episode remains at three attempts. A current matched rerender makes v061 the best 3D review candidate because its probe restores broad room reflections and its constructed underframe reads better than v007. It still renders too green and transparent against the source and target; preserve v007 in production and do not generate a fourth r01 variant.
 4. **Faction visual identity.** Preserve Clockwork building candidates and citizen-v089 as best-current review art; Verdant needs distinctive organic construction and dimensional foliage, and Scavenger needs salvage silhouettes/materials.
 5. **Visible ceiling.** It is hidden in the representative open-top gameplay camera and should wait for a view where it is visible.
 
 ## Whole-scene and cumulative status
 
-Across Batches 5-16 there were no new canonical registry promotions; the canonical registry remains at 15 entries. The current inventory covers 95 visible-art classes across 21 RoomDefinitions and 318 room object records: 48 Tier 1, 11 Tier 2, and 36 Tier 3. Eight Tier 1 classes have accepted registry status and two more link to Art Factory asset families; the other 38 Tier 1 classes are not registered as unique production assets. Registry status does not itself establish a current strict-gate pass: the inventory records no Tier 1 strict-gate PASS, while the desk and Clockwork citizen incumbent re-audits are known failures. Seven Tier 1 furniture classes have explicit best-current review candidates (household bookcase, chair, assembly table, workbench, wardrobe, floor cabinet, and side table), all still below target. Tier 2 has one linked asset family and 10 unregistered classes. The inventory flags 70 classes as programmer-art or primitive-driven (26 Tier 1, 10 Tier 2, 34 Tier 3). Runtime geometry is 93 builder sites across 13 scripts, including the shared trim-profile helper.
+Across Batches 5-17 there were no new canonical registry promotions; the canonical registry remains at 15 entries. The current inventory covers 95 visible-art classes across 21 RoomDefinitions and 318 room object records: 48 Tier 1, 11 Tier 2, and 36 Tier 3. Eight Tier 1 classes have accepted registry status and two more link to Art Factory asset families; the other 38 Tier 1 classes are not registered as unique production assets. Registry status does not itself establish a current strict-gate pass: the inventory records no Tier 1 strict-gate PASS, while the desk and Clockwork citizen incumbent re-audits are known failures. Seven Tier 1 furniture classes have explicit best-current review candidates (household bookcase, chair, assembly table, workbench, wardrobe, floor cabinet, and side table), all still below target. Tier 2 has one linked asset family and 10 unregistered classes. The inventory flags 70 classes as programmer-art or primitive-driven (26 Tier 1, 10 Tier 2, 34 Tier 3). Runtime geometry is 93 builder sites across 13 scripts, including the shared trim-profile helper.
 
 Batch 10 made no integrated production-quality furniture gain. Batch 15 tested a materially different construction and calm-wood strategy on the same five furniture assets. The new planked tops and quieter grain improve four best-current candidates, but no model meets the strict visual gate; v005 remains best for the floor cabinet. All five episodes are backlogged at their third strategy. Batch 11 approved the household-bookcase target but the initial Blender invocation was blocked. Batch 14 resumed that same candidate record with Blender configured, evaluated three strategies, and backlogged the target without promoting a model. Batch 12 improved the shared lighting presentation modestly without changing geometry or the registry; its matched captures and performance records are in the [Batch 12 lighting review](batch-12-lighting.md). Batch 13 completed three trim candidates but did not meet the close-craft gate; see the [Batch 13 trim review](batch-13-room-shell.md). See the [Batch 14 bookcase transfer review](batch-14-bookcase.md) and [Batch 15 furniture review](batch-15-room-a-b-furniture.md).
 
@@ -36,6 +36,12 @@ The new r03 French-door target was pixel-inspected and approved by Codex; it is 
 
 The matched reconstructed-room overview did not show an obvious game-scale quality gain. A warmed 50-citizen comparison of review candidate v005 to v010 showed no rendering-cost regression across room, settlement, or citizen views. The Art Factory suite passed 27 tests; the changed Python files passed Ruff and compilation. See the [Batch 16 French-door review](batch-16-french-door.md) and matched JSON in `batch-16/`.
 
+## Batch 17 disposition
+
+The desk r01 episode remains backlogged at its three-strategy limit. Current same-project production captures used Godot 4.7.2 Compatibility, the same reconstructed-room RoomDefinition, camera positions and 50 citizens for v007 and v061. Direct pixel inspection by Codex—not a new Luna review—shows v061 has broader reflections and more readable support construction than v007 in close views, while the room overview still shows no obvious scene-wide transformation. The v061 candidate-local ReflectionProbe is the material-response difference: a no-probe control with the same scene geometry and effective StandardMaterial3D values loses the broad room reflection.
+
+The current re-evaluation makes v061 the best 3D review candidate, but does not pass source-character or craftsmanship gates: the tabletop remains too green/transparent, and its leading edge is too dark. v007 remains the production asset and the canonical registry remains at 15 entries. In one warmed 50-citizen sample, the v061 probe added about 0.53 ms to room-view median frame time versus its no-probe control; settlement and citizen samples showed little change. The 50-citizen room-scale showcase remains visibly prototype-heavy, with green cutaway walls, plain floors, and sparse low-detail furnishings. See the [Batch 17 desk material/reflection control](batch-17-desk-control.md) and its raw JSON measurements.
+
 ## Promoted production assets
 
 - Batch 1: `settlement_depot-v005`, `settlement_housing-v004`, and `room_bookcase_production-v001`.
@@ -44,7 +50,7 @@ The matched reconstructed-room overview did not show an obvious game-scale quali
 
 These are scoped improvements. The inventory still contains substantial unregistered room furniture, runtime-generated geometry, and incomplete faction-specific art.
 
-Batches 5–15 did not change the production registry; Batch 12 changed scene-wide lighting settings, and Batch 15 added no runtime promotion. The Room A/B furniture best-current candidates, the French-door v005, chair v006, bookcase v003, and trim v002 remain outside accepted production; see the batch reports linked above.
+Batches 5–17 did not change the production registry; Batch 12 changed scene-wide lighting settings, and Batch 15 added no runtime promotion. Review-only candidates remain outside accepted production, including desk-v061 (with desk-v007 retained in production), French door v010, trim v002, Room A bookcase v003, and the Batch 15 furniture candidates. See the batch reports linked above.
 
 ## Batch 1 promotion detail
 

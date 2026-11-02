@@ -10,16 +10,17 @@
   },
   "asset_id": "desk",
   "best_3d_candidate": {
-    "accepted_at_utc": "2026-10-25T13:35:00+00:00",
-    "candidate_id": "desk-v007",
-    "path": "art/desk/iterations/v007/generated/desk.tscn"
+    "candidate_file": "art/desk/iterations/v061/candidate.json",
+    "candidate_id": "desk-v061",
+    "evaluation_file": "art/desk/iterations/v061/evaluation.json",
+    "updated_at_utc": "2026-11-02T11:13:13+00:00"
   },
   "candidate_history": [
     {
+      "candidate_file": "art/desk/iterations/v059/candidate.json",
       "candidate_id": "desk-v059",
       "created_at_utc": "2026-11-01T12:37:56+00:00",
       "parent_candidate_id": "desk-v007",
-      "candidate_file": "art/desk/iterations/v059/candidate.json",
       "recipe_file": "art/desk/iterations/v059/recipe.json",
       "visual_director_attempt": 1,
       "visual_director_provenance": {
@@ -32,15 +33,15 @@
           "review_path": "art/desk/visual_director/round-01/visual-development.md",
           "sha256": "4a84c2e1f348f051cc634a90271d65c8e5d18bfbb3046b226691af40d79f4fef"
         },
-        "strategy": "initial",
-        "legacy_record": true
+        "legacy_record": true,
+        "strategy": "initial"
       }
     },
     {
+      "candidate_file": "art/desk/iterations/v060/candidate.json",
       "candidate_id": "desk-v060",
       "created_at_utc": "2026-11-01T12:40:47+00:00",
       "parent_candidate_id": "desk-v059",
-      "candidate_file": "art/desk/iterations/v060/candidate.json",
       "recipe_file": "art/desk/iterations/v060/recipe.json",
       "visual_director_attempt": 2,
       "visual_director_provenance": {
@@ -53,15 +54,15 @@
           "review_path": "art/desk/visual_director/round-01/visual-development.md",
           "sha256": "4a84c2e1f348f051cc634a90271d65c8e5d18bfbb3046b226691af40d79f4fef"
         },
-        "strategy": "targeted_correction",
-        "legacy_record": true
+        "legacy_record": true,
+        "strategy": "targeted_correction"
       }
     },
     {
+      "candidate_file": "art/desk/iterations/v061/candidate.json",
       "candidate_id": "desk-v061",
       "created_at_utc": "2026-11-01T12:42:07+00:00",
       "parent_candidate_id": "desk-v060",
-      "candidate_file": "art/desk/iterations/v061/candidate.json",
       "recipe_file": "art/desk/iterations/v061/recipe.json",
       "visual_director_attempt": 3,
       "visual_director_provenance": {
@@ -74,8 +75,8 @@
           "review_path": "art/desk/visual_director/round-01/visual-development.md",
           "sha256": "4a84c2e1f348f051cc634a90271d65c8e5d18bfbb3046b226691af40d79f4fef"
         },
-        "strategy": "alternate_strategy",
-        "legacy_record": true
+        "legacy_record": true,
+        "strategy": "alternate_strategy"
       }
     }
   ],
@@ -107,42 +108,59 @@
   "schema_version": 1,
   "status": "backlog",
   "target_episode": {
-    "target_sha256": "4a84c2e1f348f051cc634a90271d65c8e5d18bfbb3046b226691af40d79f4fef",
-    "status": "backlog",
     "attempts": [
       {
-        "candidate_id": "desk-v059",
-        "strategy": "initial",
         "attempt": 1,
-        "status": "evaluated",
+        "candidate_id": "desk-v059",
+        "decision": "continue",
         "evaluation_file": "art/desk/iterations/v059/evaluation.json",
-        "decision": "continue",
         "incumbent_comparison_result": "worse",
-        "legacy_record": true
+        "legacy_record": true,
+        "status": "evaluated",
+        "strategy": "initial"
       },
       {
-        "candidate_id": "desk-v060",
-        "strategy": "targeted_correction",
         "attempt": 2,
-        "status": "evaluated",
-        "evaluation_file": "art/desk/iterations/v060/evaluation.json",
+        "candidate_id": "desk-v060",
         "decision": "continue",
+        "evaluation_file": "art/desk/iterations/v060/evaluation.json",
         "incumbent_comparison_result": "worse",
-        "legacy_record": true
+        "legacy_record": true,
+        "status": "evaluated",
+        "strategy": "targeted_correction"
       },
       {
-        "candidate_id": "desk-v061",
-        "strategy": "alternate_strategy",
         "attempt": 3,
-        "status": "evaluated",
-        "evaluation_file": "art/desk/iterations/v061/evaluation.json",
+        "candidate_id": "desk-v061",
         "decision": "reject",
+        "evaluation_file": "art/desk/iterations/v061/evaluation-run-001.json",
         "incumbent_comparison_result": "worse",
-        "legacy_record": true
+        "legacy_record": true,
+        "status": "evaluated",
+        "strategy": "alternate_strategy"
       }
     ],
-    "backlog_reason": "Three desk material-path candidates (GLTF baseline, matched GLTF factors, native Godot overrides) did not recover the approved target material hierarchy. Desk work is paused; preserve desk-v007 and resume only with a materially different controlled strategy."
+    "backlog_reason": "The approved r01 episode remains exhausted after three strategies. Current matched rerender makes v061 the best 3D review candidate because its reflection probe restores broad room reflections and its underframe is more readable than v007. The effective material values are correctly assigned, but the glass still reads too green and transparent against the source and approved target; the 330-inch overview shows no obvious room-wide quality gain. Keep v007 in production, retain v061 as best current review, and move the queue to room-shell trim.",
+    "status": "backlog",
+    "target_sha256": "4a84c2e1f348f051cc634a90271d65c8e5d18bfbb3046b226691af40d79f4fef",
+    "reassessments": [
+      {
+        "candidate_id": "desk-v061",
+        "reviewed_at_utc": "2026-11-02T11:13:49+00:00",
+        "evaluation_file": "art/desk/iterations/v061/evaluation.json",
+        "incumbent_comparison_result": "better",
+        "supersedes_for_current_review": "art/desk/iterations/v061/evaluation-run-001.json",
+        "evidence": [
+          "art/desk/iterations/v007/render-runs/run-004/asset-three-quarter.png",
+          "art/desk/iterations/v061/render-runs/run-002/asset-three-quarter.png",
+          "verification/art_factory_production/batch-17/desk-v061-no-probe/asset-three-quarter.png",
+          "verification/art_factory_production/batch-17/desk-material-effective-values.json"
+        ],
+        "reason": "Current matched rerender shows v061 has stronger reflection and construction than v007; effective material values are assigned correctly. Removing only v061\u2019s room reflection probe removes the broad reflection. The glass is still too green and transparent, so the photo-character gate remains failed."
+      }
+    ]
   },
-  "updated_at_utc": "2026-11-01T13:05:08+00:00",
-  "visual_brief_file": "art/desk/visual_director/visual-brief-draft.json"
+  "updated_at_utc": "2026-11-02T11:13:49+00:00",
+  "visual_brief_file": "art/desk/visual_director/visual-brief-draft.json",
+  "backlog_reason": "The approved r01 episode remains exhausted after three strategies. Current matched rerender makes v061 the best 3D review candidate because its reflection probe restores broad room reflections and its underframe is more readable than v007. The effective material values are correctly assigned, but the glass still reads too green and transparent against the source and approved target; the 330-inch overview shows no obvious room-wide quality gain. Keep v007 in production, retain v061 as best current review, and move the queue to room-shell trim."
 }

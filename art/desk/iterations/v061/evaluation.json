@@ -1,118 +1,156 @@
 {
   "candidate_id": "desk-v061",
-  "created_at_utc": "2026-11-01T12:43:56+00:00",
-  "decision": "reject",
+  "created_at_utc": "2026-11-02T11:13:07+00:00",
+  "decision": "continue",
   "defects": [
-    "asset-three-quarter.png, asset-profile.png, and asset-detail.png render the smoked-glass top, graphite frame, and fittings as a nearly black mass.",
-    "The tabletop edge and broad reflection from the approved image target are absent or too weak to read in the close production views.",
-    "Although the paired columns, under-glass rail, and T-feet exist, their component and material hierarchy is obscured.",
-    "The actual room-scale render keeps the desk silhouette but leaves it competing with the dark monitor/chair cluster; it is not a visible improvement over desk-v007."
+    "The run-002 tabletop shows a broad room reflection, but it reads greener and more transparent than the photographed smoked-glass desk; floor and wall colors show through too strongly.",
+    "The front glass edge is still a thin dark line rather than the source photo and approved target’s clearly lit glass edge.",
+    "The room overview makes v061’s material and construction gain modest; it does not transform the room at the 330-inch view."
   ],
   "hard_fail_reasons": [
-    "The actual Godot Compatibility production captures fail the dominant material-response requirement: the glass edge/reflection and separation among glass, graphite, satin fittings, and rubber do not read clearly.",
-    "The v061 three-quarter, profile, and detail captures remain substantially darker and less differentiated than the matched desk-v007 production captures, so v007 remains the incumbent."
+    "The source-character gate remains unmet: the smoked top is too transparent and green in the production room render.",
+    "The target’s continuous bright edge response is still not carried into the production three-quarter and detail views."
   ],
   "incumbent_candidate_id": "desk-v007",
-  "incumbent_comparison": "v061 preserves the multipart v059/v060 geometry and validates at exact 66 x 30 x 30-inch bounds. In matched production views, however, its top and support frame collapse toward black, while v007 retains a more legible top plane and brighter glass/material highlights. The override log confirms 22 meshes were processed, but the production pixels do not show the intended hierarchy. v007 remains the incumbent.",
-  "incumbent_comparison_result": "worse",
+  "incumbent_comparison": "In same-current-project run-004 versus run-002, v061 has the stronger constructed underframe and more readable broad glass reflection. Its candidate-local reflection probe is the key response: a controlled no-probe wrapper keeps the same geometry and effective materials but loses the room reflections. The v061 close views are better than v007, while its translucent green cast remains off target.",
+  "incumbent_comparison_result": "better",
   "likely_causes": [
-    "Both GLTF material-factor trials and the candidate-local native StandardMaterial3D override trial fail under the same Compatibility production path, so copying nominal property values has not reproduced v007's effective visual response.",
-    "The present evidence does not isolate whether the remaining difference comes from effective per-surface material assignment, renderer/environment response, or their interaction; the actual close PNGs establish the failure but not a single engine-level cause.",
-    "The dark desk value also competes with the separate black monitors and chair in the room-scale view, reducing visible separation at the intended gameplay distance."
+    "material_generation",
+    "lighting_render_presentation"
   ],
-  "next_action_hypothesis": "Stop desk-specific material parameter variants and keep desk-v007. If this desk returns to active work, first run a controlled material/render diagnosis with v007 and v061 under identical camera, lights, renderer, and verified per-surface effective material values; resume challenger production only after that comparison identifies a correctable stage. Do not change RoomDefinition or create another generic desk shader variant.",
+  "next_action_hypothesis": "Set desk-v061 as the best current review candidate, keep desk-v007 in the production registry, and leave the approved r01 episode backlogged at its three-strategy limit. Move to room-shell trim. Revisit the desk only under a newly approved Visual Director target and a materially different source-conditioned strategy that controls tabletop opacity and edge reflection.",
   "observations": {
-    "art_direction_fit": "The restrained contemporary workstation palette fits the Human Room, but the near-black production response makes this candidate a poor visual endpoint.",
-    "close_up_quality": "asset-three-quarter.png, asset-profile.png, and asset-detail.png show the broad glass top, supports, rail, and feet but bury their edges and fittings in darkness.",
-    "gameplay_readability": "room-scale.png retains the standing-desk silhouette and exact scene placement, yet the desk blends with the monitor/chair cluster more than v007 and the approved target.",
-    "geometric_detail": "The mesh retains the two-stage posts, under-glass rail, mounting structures, separate fittings, and T-feet; technical validation reports 22 meshes and 8,712 triangles.",
-    "material_realism": "The dominant glass and graphite surfaces render nearly black; the broad reflection, bright continuous edge, and distinct satin/rubber responses from the visual target are not present.",
-    "proportion": "Godot reports the exact 66 x 30 x 30-inch bounds, with the floor datum at zero and no RoomDefinition change.",
-    "scale_fidelity": "The candidate validates at the exact VisualBrief/RoomDefinition dimensions and retains the same 0.5-inch citizen context; this confirms the envelope, not visual material quality.",
-    "semantic_recognizability": "The asset-three-quarter and room-scale views still read as a standing computer desk from its broad plane, paired columns, and feet.",
-    "silhouette_quality": "The wide thin top, open knee space, paired columns, and perpendicular T-feet remain in the correct major arrangement.",
-    "source_resemblance": "The main standing-desk silhouette is preserved, but the photo's readable smoked-glass plane and reflective edge character are missing.",
-    "surface_variation": "Glass, frame, fittings, and rubber merge into a nearly uniform dark mass in the close views rather than separating into controlled materials.",
-    "technical_integration": "Godot 4.7.2 Compatibility imports and renders the candidate through the normal RoomScale path. Validation passes at 22 meshes, 22 surfaces, 8,712 triangles, exact bounds, and no reported issues; the visual material gate still fails."
+    "art_direction_fit": "The multipart standing desk now fits the contemporary room more deliberately than v007, though the green transmission tint makes the top too conspicuous.",
+    "close_up_quality": "The run-002 detail view shows separate columns, rail, saddles, feet and fittings; the glass edge still lacks the target’s brighter continuous highlight.",
+    "gameplay_readability": "The tabletop plane and paired support frame are more distinguishable than v007 in the room and three-quarter views, but the room-scale gain remains modest.",
+    "geometric_detail": "Twenty-two separate components preserve the paired telescoping columns, under-glass rail, collars, saddles, T-feet, levelers and fittings.",
+    "material_realism": "The matched effective StandardMaterial3D values are correct and the probe restores broad reflection; the 0.58 alpha and room-color transmission still make the glass too green and transparent.",
+    "proportion": "The validated v061 scene remains exactly 66 x 30 x 30 inches and fits the existing RoomDefinition placement.",
+    "scale_fidelity": "The desk retains the authoritative 66 x 30 x 30-inch visual envelope; no RoomDefinition center, orientation, navigation footprint or surface anchor changed.",
+    "semantic_recognizability": "The room-scale and close captures clearly read as a standing computer desk with a broad top and T-frame supports.",
+    "silhouette_quality": "Run-002 preserves a wide thin top, open knee space, two supports and perpendicular feet.",
+    "source_resemblance": "The shape and reflection character approach the photographed desk, but its near-black smoked surface is still greener and more see-through than the source.",
+    "surface_variation": "The probe reveals separation between glass, graphite and room reflections, but the green wall transmission and dark metal still compress the value hierarchy.",
+    "technical_integration": "Godot 4.7.2 imported and rendered the 22-mesh PackedScene through the production resolver with exact bounds and 50 active citizens."
   },
   "render_evidence": [
-    "art/desk/iterations/v061/render-runs/run-001/asset-three-quarter.png",
-    "art/desk/iterations/v061/render-runs/run-001/asset-profile.png",
-    "art/desk/iterations/v061/render-runs/run-001/asset-detail.png",
-    "art/desk/iterations/v061/render-runs/run-001/room-scale.png"
+    "art/desk/iterations/v061/render-runs/run-002/asset-three-quarter.png",
+    "art/desk/iterations/v061/render-runs/run-002/asset-profile.png",
+    "art/desk/iterations/v061/render-runs/run-002/asset-detail.png",
+    "art/desk/iterations/v061/render-runs/run-002/room-scale.png"
   ],
   "schema_version": 1,
   "scores": {
-    "art_direction_fit": 2,
-    "close_up_quality": 2,
-    "gameplay_readability": 3,
+    "art_direction_fit": 3,
+    "close_up_quality": 3,
+    "gameplay_readability": 4,
     "geometric_detail": 4,
-    "material_realism": 1,
+    "material_realism": 3,
     "proportion": 5,
     "scale_fidelity": 5,
     "semantic_recognizability": 5,
     "silhouette_quality": 5,
-    "source_resemblance": 2,
-    "surface_variation": 1,
+    "source_resemblance": 3,
+    "surface_variation": 3,
     "technical_integration": 5
   },
   "visual_gate": {
     "close_inspection": {
       "answer": "No",
-      "evidence": "The three-quarter, profile, and detail captures show major supports but leave the glass edge and attached fittings difficult to inspect because most materials collapse toward black.",
+      "evidence": "Run-002 shows the model’s support construction clearly; the leading glass edge and tabletop material hierarchy still fall short of a finished source-faithful desk.",
       "pass": false
     },
     "craftsmanship": {
       "answer": "No",
       "edge_treatment": {
-        "evidence": "asset-profile.png retains a thin continuous panel, but its edge is almost black and not visibly finished to the target's glass edge response.",
+        "evidence": "The three-quarter and detail renders show a continuous thin edge, but its highlight stays too dark against the approved target.",
+        "evidence_refs": [
+          "art/desk/iterations/v061/render-runs/run-002/asset-three-quarter.png",
+          "art/desk/iterations/v061/render-runs/run-002/asset-detail.png"
+        ],
         "pass": false
       },
       "hardware": {
-        "evidence": "Mounts and fittings are present in the model but merge into the dark tabletop/frame in asset-detail.png.",
+        "evidence": "The small mounts and fasteners exist but remain difficult to read against the dark support structure in the detail capture.",
+        "evidence_refs": [
+          "art/desk/iterations/v061/render-runs/run-002/asset-detail.png"
+        ],
         "pass": false
       },
       "joins": {
-        "evidence": "The support geometry is connected, but the post-to-rail and mount joins are not clearly legible against the near-black surfaces.",
-        "pass": false
+        "evidence": "The run-002 detail shows saddles and the continuous under-glass rail connecting the columns to the top.",
+        "evidence_refs": [
+          "art/desk/iterations/v061/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": true
       },
       "manufacturing_detail": {
-        "evidence": "The close view does not communicate the separate manufactured glass, coated frame, satin fitting, and rubber components.",
-        "pass": false
+        "evidence": "The close view distinguishes the paired column stages, overlap collars, rail, saddles and perpendicular feet.",
+        "evidence_refs": [
+          "art/desk/iterations/v061/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": true
       },
       "material_response": {
-        "evidence": "The glass and coated metal are substantially darker than the approved target and desk-v007's matched production capture.",
+        "evidence": "The reflection probe adds broad room reflection, but transmitted green wall/floor values overwhelm the dark smoked-glass character.",
+        "evidence_refs": [
+          "art/desk/iterations/v061/render-runs/run-002/asset-three-quarter.png",
+          "art/desk/iterations/v061/render-runs/run-002/asset-detail.png"
+        ],
         "pass": false
       },
       "pass": false,
       "surface_variation": {
-        "evidence": "The tabletop and supporting components visually merge rather than show restrained but distinct material response.",
+        "evidence": "The tabletop is distinct from the support, yet glass tint and graphite values still merge into a dark green-black palette.",
+        "evidence_refs": [
+          "art/desk/iterations/v061/render-runs/run-002/asset-three-quarter.png",
+          "art/desk/iterations/v061/render-runs/run-002/asset-detail.png"
+        ],
         "pass": false
       },
       "thickness": {
-        "evidence": "The profile retains a thin continuous glass slab with no large thickness or silhouette defect.",
+        "evidence": "The profile render retains a thin desktop with no oversized glass slab or silhouette break.",
+        "evidence_refs": [
+          "art/desk/iterations/v061/render-runs/run-002/asset-profile.png"
+        ],
         "pass": true
       }
     },
     "neutral_viewer_realism": {
       "answer": "No",
-      "evidence": "The close production images do not read as a finished smoked-glass workstation because the main materials and edge treatment are nearly black.",
+      "evidence": "In the matched production close captures, the glass is recognizably a desk top, but green wall and floor transmission keep it from reading as the near-black smoked glass in the source and approved target.",
       "pass": false
     },
     "photo_character": {
       "answer": "No",
       "applicable": true,
-      "evidence": "Although the top and standing frame silhouette match the photograph, the glass's visible edge and broad reflective character do not survive in the actual Godot captures.",
+      "evidence": "The production render preserves the source silhouette and now has broad reflections, but the table is too transparent and green and the bright front glass edge remains weak.",
       "pass": false
     },
     "style_flags": {
       "blocky_geometry": false,
       "low_poly": false,
-      "materially_flat": true,
+      "materially_flat": false,
       "placeholder_geometry": false,
       "primitive_geometry": false,
       "simplified_programmer_art": false,
       "substantially_stylized": false
     }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Keep v061 as best current review, retain v007 in production, preserve the three-attempt r01 backlog, and move to trim. A future desk episode needs a newly approved target and a materially different treatment of opacity and edge reflection.",
+    "lost_visual_information": [
+      "The source and approved target present dark smoked glass with a clearer continuous edge highlight; run-002 transmits too much green wall and floor color.",
+      "The 330-inch room overview still gives only a modest screen-space gain over v007."
+    ],
+    "preserved_components": [
+      "Exact 66 x 30 x 30-inch envelope and RoomDefinition-owned placement.",
+      "The 22-part desk construction: twin telescoping columns, under-glass rail, fittings, and perpendicular T-feet.",
+      "Godot-native glass, graphite, satin and rubber materials remain assigned to their intended mesh groups."
+    ],
+    "primary_causes": [
+      "material_generation",
+      "lighting_render_presentation"
+    ]
   }
 }
