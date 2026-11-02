@@ -1,0 +1,56 @@
+{
+  "deterministic_seed": 2613,
+  "generator_command": [
+    "python",
+    "{project_root}/scripts/art_factory/generators/production_batch01_blender.py"
+  ],
+  "import_configuration": {
+    "axes": "Blender X width / Y depth / Z up exported to Godot X width / Y up / Z depth",
+    "format": "GLB with embedded PBR materials",
+    "normalization": "fit source geometry to ArtBrief dimensions without altering RoomDefinition",
+    "renderer": "gl_compatibility",
+    "units": "inches"
+  },
+  "instructions": "Correct the measured v009 depth overshoot while preserving its visible hinge transfer and image-authored oak approach. Retain the exact 66 x 82 x 4 inch envelope, paired leaves, two columns by four rows of clear lights per leaf, jamb, casing, threshold, round knob on the left, and horizontal lever on the right. Recess the casing and inner bead together enough to fit front-mounted hinge plates, barrels, and screw heads entirely inside the 4-inch depth limit. Use a broader deterministic per-member UV scale for the r03 oak albedo to reduce the repeated fine vertical streaks while keeping grain aligned with each timber member. Keep exterior foliage out of the door mesh and preserve all RoomDefinition and gameplay invariants.",
+  "material_method": "Pixel-reviewed r03 stained-oak albedo mapped to separate timber members with reduced deterministic UV density and per-member phase variation; embedded generated roughness and tangent-normal maps; separate clear glazing and aged brass",
+  "method": "round-03-envelope-constrained-hardware-and-board-scale-oak",
+  "parameters": {
+    "asset_type": "french_door",
+    "diagnosis_ref": "room_photo_french_door_production-v009",
+    "generation_variant": "round03_front_mounted_hardware_and_oak",
+    "geometry_units": "inches",
+    "materially_different_strategy": false,
+    "outputs": [
+      "asset.glb",
+      "generation-record.json"
+    ],
+    "visual_director_strategy": "targeted_correction",
+    "visual_director_target": "art/room_photo_french_door_production/visual_director/round-03/approved-target-r03.png"
+  },
+  "post_processing": [
+    "Bevel the timber frame, casing, threshold, separate hinge plates, barrels, and screw heads.",
+    "Keep all mesh geometry within 66 x 82 x 4 inches; ArtBrief allows 0.01 inch per-axis measurement tolerance.",
+    "Keep front-mounted hinge plates visible while constraining the hinge barrel and screws to the depth envelope.",
+    "Inspect board grain at close and three-quarter cameras for reduced repeated streaking.",
+    "Godot validation must reject any per-axis bounds error greater than 0.01 inches.",
+    "Do not modify RoomDefinition, collision, navigation, selection, simulation, or add foliage to the door mesh."
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "scripts/art_factory/generators/production_batch01_blender.py",
+    "art/room_photo_french_door_production/brief.json",
+    "art/room_photo_french_door_production/sources/sintra-door-pair-cc-by-4.0.jpg",
+    "art/room_photo_french_door_production/sources/ai-generated-stained-oak-albedo-r03.png",
+    "art/room_photo_french_door_production/visual_director/round-03/approved-target-r03.png",
+    "art/room_photo_french_door_production/visual_director/round-03/pixel-review-r03.md",
+    "art/room_photo_french_door_production/iterations/v009/candidate.json",
+    "art/room_photo_french_door_production/iterations/v009/evaluation.json",
+    "art/room_photo_french_door_production/iterations/v009/technical-validation.json",
+    "art/room_photo_french_door_production/iterations/v009/render-runs/run-002/asset-detail.png",
+    "art/room_photo_french_door_production/iterations/v009/render-runs/run-002/asset-three-quarter.png",
+    "art/room_photo_french_door_production/iterations/v009/render-runs/run-002/room-scale.png",
+    "rooms/room_photo_luna.json"
+  ],
+  "tool": "Blender scripted assembled-mesh production with embedded PBR maps",
+  "tool_version": "Blender 5.2.3 LTS"
+}

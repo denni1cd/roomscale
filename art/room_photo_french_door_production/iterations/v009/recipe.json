@@ -1,0 +1,56 @@
+{
+  "deterministic_seed": 2613,
+  "generator_command": [
+    "python",
+    "{project_root}/scripts/art_factory/generators/production_batch01_blender.py"
+  ],
+  "import_configuration": {
+    "axes": "Blender X width / Y depth / Z up exported to Godot X width / Y up / Z depth",
+    "format": "GLB with embedded PBR materials",
+    "normalization": "fit source geometry to ArtBrief dimensions without altering RoomDefinition",
+    "renderer": "gl_compatibility",
+    "units": "inches"
+  },
+  "instructions": "Transfer the currently approved round-03 French-door target into the exact 66 x 82 x 4 inch envelope. Keep two paired leaves with two columns by four rows of clear glass lights per leaf, the existing jamb, casing, threshold, central round knob on the left leaf, and horizontal lever on the right. Use the lower-contrast r03 stained-oak albedo with deterministic per-member UV variation so grain follows separate timber parts without identical repeating boards. Mount three brass butt-hinge assemblies per leaf just proud of the projecting casing face; each must show both plates, a barrel, and screw heads in the registered front and three-quarter views. Preserve transparent glass and keep all garden context outside the asset. Do not change RoomDefinition, placement, collision, navigation, selection, or simulation.",
+  "material_method": "Pixel-reviewed r03 stained-oak albedo mapped to separate timber members with deterministic UV phase and density variation; embedded generated roughness and tangent-normal maps; separate clear glazing and aged brass",
+  "method": "round-03-front-mounted-hardware-with-authored-oak-albedo",
+  "parameters": {
+    "asset_type": "french_door",
+    "diagnosis_ref": "room_photo_french_door_production-v008",
+    "generation_variant": "round03_front_mounted_hardware_and_oak",
+    "geometry_units": "inches",
+    "materially_different_strategy": true,
+    "outputs": [
+      "asset.glb",
+      "generation-record.json"
+    ],
+    "visual_director_strategy": "initial",
+    "visual_director_target": "art/room_photo_french_door_production/visual_director/round-03/approved-target-r03.png"
+  },
+  "post_processing": [
+    "Bevel the timber frame, casing, threshold, separate hinge plates, barrels, and screw heads.",
+    "Use two columns by four rows of clear glazing on each leaf and retain the target handle pairing.",
+    "Place hinge plates immediately proud of the casing front face to prevent casing occlusion.",
+    "Verify mapped wood grain at registered detail and three-quarter camera distances.",
+    "Godot import must report exact 66 x 82 x 4 inch bounds with no opaque backing behind the glass.",
+    "Keep garden foliage out of the mesh and do not modify the production RoomDefinition."
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "scripts/art_factory/generators/production_batch01_blender.py",
+    "art/room_photo_french_door_production/brief.json",
+    "art/room_photo_french_door_production/sources/sintra-door-pair-cc-by-4.0.jpg",
+    "art/room_photo_french_door_production/sources/ai-generated-stained-oak-albedo-r03.png",
+    "art/room_photo_french_door_production/visual_director/round-03/approved-target-r03.png",
+    "art/room_photo_french_door_production/visual_director/round-03/pixel-review-r03.md",
+    "art/room_photo_french_door_production/iterations/v005/candidate.json",
+    "art/room_photo_french_door_production/iterations/v005/evaluation.json",
+    "art/room_photo_french_door_production/iterations/v008/candidate.json",
+    "art/room_photo_french_door_production/iterations/v008/evaluation.json",
+    "art/room_photo_french_door_production/iterations/v008/render-runs/run-001/asset-detail.png",
+    "art/room_photo_french_door_production/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+    "rooms/room_photo_luna.json"
+  ],
+  "tool": "Blender scripted assembled-mesh production with embedded PBR maps",
+  "tool_version": "Blender 5.2.3 LTS"
+}

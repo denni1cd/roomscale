@@ -670,6 +670,23 @@ def pbr_material(
         ray = np.sin((x * 9.0 + 0.10 * y) * math.tau + np.sin(y * 3.0 * math.tau) * 0.25)
         height = fiber * 0.12 + ray * 0.05 + random_field * 0.025
         variation = fiber * 0.06 + ray * 0.03 + random_field * 0.008
+    elif grain == "french_oak_anisotropic":
+        drift = 0.05 * np.sin(y * 2.0 * math.tau) + 0.018 * np.sin(y * 6.0 * math.tau)
+        fiber = np.sin((x * 4.6 + drift + 0.012 * np.sin(y * 17.0 * math.tau)) * math.tau)
+        cathedral = np.sin(
+            (x * 1.55 + 0.09 * np.sin(y * 2.7 * math.tau)) * math.tau
+            + np.sin(y * 4.1 * math.tau) * 0.48
+        )
+        rays = np.sin((x * 10.5 + 0.04 * np.sin(y * 3.5 * math.tau)) * math.tau)
+        coarse = (
+            random_field
+            + np.roll(random_field, 1, axis=1)
+            + np.roll(random_field, -1, axis=1)
+            + np.roll(random_field, 2, axis=1)
+            + np.roll(random_field, -2, axis=1)
+        ) / 5.0
+        height = fiber * 0.14 + cathedral * 0.11 + rays * 0.035 + coarse * 0.018
+        variation = fiber * 0.11 + cathedral * 0.095 + rays * 0.018 + coarse * 0.012
     elif grain == "bookcase_oak_fine":
         fiber = np.sin(
             (x * 24.0 + 0.025 * np.sin(y * 1.8 * math.tau) + 0.008 * np.sin(y * 11.0 * math.tau))
@@ -747,6 +764,8 @@ def pbr_material(
         if grain == "furniture_oak_calm"
         else 0.18
         if grain == "bookcase_oak_fine"
+        else 0.16
+        if grain == "french_oak_anisotropic"
         else 0.24
         if grain in {"wood", "french_oak", "stone", "fabric"}
         else 0.12
@@ -1708,21 +1727,39 @@ def build_window(mats):
 
 
 def build_french_door(mats, generation_variant: str = ""):
+    round03 = generation_variant in {
+        "round03_front_mounted_hardware_and_oak",
+        "round03_procedural_anisotropic_oak",
+    }
     round02 = generation_variant in {
         "round02_hardware_and_material",
         "round02_alternate_baked_oak",
+        "round03_front_mounted_hardware_and_oak",
+        "round03_procedural_anisotropic_oak",
     }
-    alternate_material = generation_variant == "round02_alternate_baked_oak"
+    alternate_material = generation_variant in {
+        "round02_alternate_baked_oak",
+        "round03_procedural_anisotropic_oak",
+    }
     width, depth, height = 66.0, 4.0, 82.0
     jamb_width = 2.5
-    casing_front_y = -1.72
+    # The round-03 hinge barrel and screws are constrained to the front edge of
+    # the authoritative 4-inch depth envelope. Recess the stepped casing and
+    # its bead together to leave room for face-mounted hardware.
+    casing_front_y = -1.38 if round03 else -1.72
     door_depth = 2.0
     door_front_y = -door_depth * 0.5
 
     # The reference has reddish, near-full-height divided glazing. Give this
     # asset its own timber and transparent-glass materials so other batch assets
     # retain their existing material response.
-    grain_profile = "french_oak_soft" if alternate_material else "french_oak"
+    grain_profile = (
+        "french_oak_anisotropic"
+        if generation_variant == "round03_procedural_anisotropic_oak"
+        else "french_oak_soft"
+        if alternate_material
+        else "french_oak"
+    )
     oak = pbr_material(
         "French door quarter-sawn oak" if alternate_material else "French door reddish stained oak",
         (0.37, 0.20, 0.11) if alternate_material else (0.34, 0.13, 0.052),
@@ -1805,7 +1842,7 @@ def build_french_door(mats, generation_variant: str = ""):
         )
         box(
             "French door inner casing bead",
-            (side * (width * 0.5 - jamb_width - 0.25), -1.86, height * 0.5),
+            (side * (width * 0.5 - jamb_width - 0.25), casing_front_y - 0.14, height * 0.5),
             (0.42, 0.25, height - 0.55),
             oak_high,
             0.055,
@@ -1828,7 +1865,7 @@ def build_french_door(mats, generation_variant: str = ""):
     )
     box(
         "French door head casing bead",
-        (0.0, -1.86, height - head_height + 0.27),
+        (0.0, casing_front_y - 0.14, height - head_height + 0.27),
         (width - 0.60, 0.25, 0.42),
         oak_high,
         0.055,
@@ -1987,6 +2024,9 @@ def build_french_door(mats, generation_variant: str = ""):
                     )
 
         # Three physically separate outer hinges per leaf with barrels and screw heads.
+        # The stepped casing projects in front of the leaf and jamb faces, so the
+        # hardware must sit just proud of its outer face. Placing these plates at
+        # the door face buries them behind the casing in the Godot production view.
         plate_offset = 0.66 if round02 else 0.49
         plate_width = 1.05 if round02 else 0.78
         plate_depth = 0.24 if round02 else 0.18
@@ -1994,6 +2034,11 @@ def build_french_door(mats, generation_variant: str = ""):
         hinge_barrel_radius = 0.30 if round02 else 0.18
         plate_bevel = 0.12 if round02 else 0.075
         screw_radius = 0.135 if round02 else 0.075
+        hinge_plate_y = (
+            casing_front_y - 0.54 * 0.5 - plate_depth * 0.5 - 0.025
+            if round03
+            else door_front_y - (0.14 if round02 else 0.10)
+        )
         plate_leaf_x = hinge_x - hinge_side * plate_offset
         plate_jamb_x = hinge_x + hinge_side * plate_offset
         hinge_inset = 8.5 if round02 else 10.0
@@ -2004,22 +2049,26 @@ def build_french_door(mats, generation_variant: str = ""):
         ):
             box(
                 "French door outer hinge leaf plate",
-                (plate_leaf_x, door_front_y - (0.14 if round02 else 0.10), hinge_z),
+                (plate_leaf_x, hinge_plate_y, hinge_z),
                 (plate_width, plate_depth, plate_height),
                 hardware,
                 plate_bevel,
             )
             box(
                 "French door jamb hinge leaf plate",
-                (plate_jamb_x, door_front_y - (0.14 if round02 else 0.10), hinge_z),
+                (plate_jamb_x, hinge_plate_y, hinge_z),
                 (plate_width, plate_depth, plate_height),
                 hardware,
                 plate_bevel,
             )
             cylinder(
                 "French door visible hinge barrel",
-                (hinge_x, door_front_y - (0.30 if round02 else 0.22), hinge_z),
-                hinge_barrel_radius,
+                (
+                    hinge_x,
+                    hinge_plate_y + 0.035 if round03 else hinge_plate_y - plate_depth * 0.5 - 0.06,
+                    hinge_z,
+                ),
+                0.24 if round03 else hinge_barrel_radius,
                 plate_height + (0.25 if round02 else 0.10),
                 hardware_high,
                 "Z",
@@ -2035,7 +2084,9 @@ def build_french_door(mats, generation_variant: str = ""):
                             "French door hinge screw head",
                             (
                                 plate_x + dx,
-                                door_front_y - (0.34 if round02 else 0.24),
+                                hinge_plate_y - plate_depth * 0.5 - 0.025
+                                if round03
+                                else door_front_y - (0.34 if round02 else 0.24),
                                 hinge_z + dz,
                             ),
                             screw_radius,
@@ -2124,6 +2175,7 @@ def build_french_door(mats, generation_variant: str = ""):
 
 def apply_modifiers_and_merge_by_material(
     randomize_french_door_oak_uvs: bool = False,
+    broaden_round03_door_grain: bool = False,
     randomize_furniture_wood_uvs: bool = False,
 ):
     """Bake manufactured edge profiles, unwrap, and merge into material batches."""
@@ -2158,7 +2210,11 @@ def apply_modifiers_and_merge_by_material(
             # rails and stiles do not reuse the same cathedral figure.
             seed = sum(ord(char) for char in obj.name) + 2042
             uv_rng = np.random.default_rng(seed)
-            scale = float(uv_rng.uniform(0.82, 1.18))
+            scale = (
+                float(uv_rng.uniform(0.54, 0.76))
+                if broaden_round03_door_grain
+                else float(uv_rng.uniform(0.82, 1.18))
+            )
             offset_u = float(uv_rng.uniform(0.0, 1.0))
             offset_v = float(uv_rng.uniform(0.0, 1.0))
             uv_layer = obj.data.uv_layers.active
@@ -2257,7 +2313,14 @@ def run_blender_generation(
             f"ROOMSCALE_BATCH01_GEOMETRY_BOUNDS_BLENDER min={tuple(round(v, 3) for v in minimum)} max={tuple(round(v, 3) for v in maximum)} extent={tuple(round(v, 3) for v in maximum - minimum)}"
         )
     apply_modifiers_and_merge_by_material(
-        randomize_french_door_oak_uvs=generation_variant == "round02_hardware_and_material"
+        randomize_french_door_oak_uvs=generation_variant
+        in {
+            "round02_hardware_and_material",
+            "round03_front_mounted_hardware_and_oak",
+            "round03_procedural_anisotropic_oak",
+        },
+        broaden_round03_door_grain=generation_variant
+        in {"round03_front_mounted_hardware_and_oak", "round03_procedural_anisotropic_oak"},
     )
     bpy.ops.object.select_all(action="SELECT")
     output_path.parent.mkdir(parents=True, exist_ok=True)

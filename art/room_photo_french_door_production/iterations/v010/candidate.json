@@ -1,0 +1,271 @@
+{
+  "asset_files": [
+    "art/room_photo_french_door_production/iterations/v010/generated/asset.glb",
+    "art/room_photo_french_door_production/iterations/v010/generated/generation-record.json"
+  ],
+  "asset_id": "room_photo_french_door_production",
+  "candidate_id": "room_photo_french_door_production-v010",
+  "created_at_utc": "2026-11-02T10:45:23+00:00",
+  "evaluation_file": "art/room_photo_french_door_production/iterations/v010/evaluation.json",
+  "generation_attempts": [
+    {
+      "command": [
+        "python",
+        "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/scripts/art_factory/generators/production_batch01_blender.py"
+      ],
+      "execution_number": 1,
+      "exit_code": 0,
+      "log_file": "art/room_photo_french_door_production/iterations/v010/generation.log",
+      "output_dir": "art/room_photo_french_door_production/iterations/v010/generated",
+      "recorded_at_utc": "2026-11-02T10:45:29+00:00",
+      "status": "pass"
+    }
+  ],
+  "generation_result": {
+    "command": [
+      "python",
+      "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/scripts/art_factory/generators/production_batch01_blender.py"
+    ],
+    "execution_number": 1,
+    "exit_code": 0,
+    "log_file": "art/room_photo_french_door_production/iterations/v010/generation.log",
+    "output_dir": "art/room_photo_french_door_production/iterations/v010/generated",
+    "recorded_at_utc": "2026-11-02T10:45:29+00:00",
+    "status": "pass"
+  },
+  "parent_candidate_id": "room_photo_french_door_production-v009",
+  "recipe_file": "art/room_photo_french_door_production/iterations/v010/recipe.json",
+  "renders": [
+    {
+      "asset_id": "room_photo_french_door_production",
+      "camera": {
+        "actual_camera_position": "(203.1683, 272.0435, -0.000009)",
+        "distance_inches": 330.0,
+        "focus": "(0.0, 12.0, 0.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 52.0,
+        "yaw_radians": 1.5707963267949
+      },
+      "candidate_id": "room_photo_french_door_production-v010",
+      "captured_at_utc": "2026-11-02T10:46:05+00:00",
+      "draw_calls": 1200.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 2.0,
+      "path": "art/room_photo_french_door_production/iterations/v010/render-runs/run-001/room-scale.png",
+      "phase": "room-scale",
+      "primitives": 650863.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_photo_luna",
+      "sha256": "92db75054539ca4ee82949386722ddc1d217c80835254327998eec05ce7e2e81"
+    },
+    {
+      "asset_id": "room_photo_french_door_production",
+      "camera": {
+        "actual_camera_position": "(-0.000018, 272.0435, -203.1683)",
+        "distance_inches": 330.0,
+        "focus": "(0.0, 12.0, 0.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 52.0,
+        "yaw_radians": 3.14159265358979
+      },
+      "candidate_id": "room_photo_french_door_production-v010",
+      "captured_at_utc": "2026-11-02T10:46:05+00:00",
+      "draw_calls": 1234.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 2.0,
+      "path": "art/room_photo_french_door_production/iterations/v010/render-runs/run-001/room-scale-opposite-angle.png",
+      "phase": "room-scale-opposite-angle",
+      "primitives": 696233.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_photo_luna",
+      "sha256": "7bf351d239976738d3c6189721c3abe24480a7f7227a690afa9e1ca73df2f92e"
+    },
+    {
+      "asset_id": "room_photo_french_door_production",
+      "camera": {
+        "actual_camera_position": "(-4.233153, 46.82436, 52.5827)",
+        "distance_inches": 64.0,
+        "focus": "(-16.0, 4.0, 6.5)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 42.0,
+        "yaw_radians": 0.25
+      },
+      "candidate_id": "room_photo_french_door_production-v010",
+      "captured_at_utc": "2026-11-02T10:46:05+00:00",
+      "draw_calls": 2201.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 2.0,
+      "path": "art/room_photo_french_door_production/iterations/v010/render-runs/run-001/settlement-scale.png",
+      "phase": "settlement-scale",
+      "primitives": 1200665.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_photo_luna",
+      "sha256": "470bb5dc9b951c3aeea290a57b00ea76a96d36735ce6054f38fc55bf19edc772"
+    },
+    {
+      "asset_id": "room_photo_french_door_production",
+      "camera": {
+        "actual_camera_position": "(-7.836151, 71.77892, 18.67321)",
+        "distance_inches": 82.1632928466797,
+        "focus": "(-78.0, 41.0, -11.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0001)",
+        "tilt_degrees": 22.0,
+        "yaw_radians": 1.17069460218501
+      },
+      "candidate_id": "room_photo_french_door_production-v010",
+      "captured_at_utc": "2026-11-02T10:46:05+00:00",
+      "draw_calls": 220.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 46.0,
+      "path": "art/room_photo_french_door_production/iterations/v010/render-runs/run-001/asset-three-quarter.png",
+      "phase": "asset-three-quarter",
+      "primitives": 360414.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_photo_luna",
+      "sha256": "454e21e1ad2fdcd69f4d776cbbe14cf0371c43ca0f5dafba19b3535ef2aedfb9"
+    },
+    {
+      "asset_id": "room_photo_french_door_production",
+      "camera": {
+        "actual_camera_position": "(-2.366432, 71.77892, -20.11204)",
+        "distance_inches": 82.1632928466797,
+        "focus": "(-78.0, 41.0, -11.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 22.0,
+        "yaw_radians": 1.69069460218501
+      },
+      "candidate_id": "room_photo_french_door_production-v010",
+      "captured_at_utc": "2026-11-02T10:46:05+00:00",
+      "draw_calls": 233.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 46.0,
+      "path": "art/room_photo_french_door_production/iterations/v010/render-runs/run-001/asset-interior-oblique.png",
+      "phase": "asset-interior-oblique",
+      "primitives": 332688.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_photo_luna",
+      "sha256": "0c9525215a53b97274dc610549f7e042258d4c18d9dd7688debba5bdd9976791"
+    },
+    {
+      "asset_id": "room_photo_french_door_production",
+      "camera": {
+        "actual_camera_position": "(-2.565956, 71.77892, -0.361863)",
+        "distance_inches": 82.1632928466797,
+        "focus": "(-78.0, 41.0, -11.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0001)",
+        "tilt_degrees": 22.0,
+        "yaw_radians": 1.43069460218501
+      },
+      "candidate_id": "room_photo_french_door_production-v010",
+      "captured_at_utc": "2026-11-02T10:46:05+00:00",
+      "draw_calls": 220.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 46.0,
+      "path": "art/room_photo_french_door_production/iterations/v010/render-runs/run-001/asset-profile.png",
+      "phase": "asset-profile",
+      "primitives": 359044.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_photo_luna",
+      "sha256": "964b5f390a64036de00f121749ddd61e90b1706c9beccee1f5b4afdc4706d148"
+    },
+    {
+      "asset_id": "room_photo_french_door_production",
+      "camera": {
+        "actual_camera_position": "(-23.06415, 61.19287, -3.252635)",
+        "distance_inches": 59.04,
+        "focus": "(-78.0, 41.0, -11.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 20.0,
+        "yaw_radians": 1.43069460218501
+      },
+      "candidate_id": "room_photo_french_door_production-v010",
+      "captured_at_utc": "2026-11-02T10:46:05+00:00",
+      "draw_calls": 128.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 46.0,
+      "path": "art/room_photo_french_door_production/iterations/v010/render-runs/run-001/asset-detail.png",
+      "phase": "asset-detail",
+      "primitives": 195908.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_photo_luna",
+      "sha256": "cbb24c8668f54967e0bea64bb8f8b99aaeca28cea7b93abf82bd7269a6ae958d"
+    }
+  ],
+  "schema_version": 1,
+  "status": "challenger",
+  "technical_validation": {
+    "asset_path": "res://art/room_photo_french_door_production/iterations/v010/generated/asset.glb",
+    "bounds": {
+      "position": [
+        -33.0,
+        0.0,
+        -2.0
+      ],
+      "size": [
+        66.0,
+        82.0,
+        4.0
+      ]
+    },
+    "engine": "4.7.2-stable (official)",
+    "import_exit_code": 0,
+    "issues": [],
+    "log": "art/room_photo_french_door_production/iterations/v010/technical-validation.log",
+    "mesh_count": 6,
+    "recorded_at_utc": "2026-11-02T10:59:10+00:00",
+    "report": "art/room_photo_french_door_production/iterations/v010/technical-validation.json",
+    "status": "pass",
+    "surface_count": 6,
+    "triangle_count": 59188,
+    "validation_exit_code": 0
+  },
+  "version": 10,
+  "visual_director_provenance": {
+    "approved_visual_target": {
+      "approval": "pass",
+      "approved_at_utc": "2026-11-02T10:33:26+00:00",
+      "concept_id": "room_photo_french_door-pair-r03",
+      "path": "art/room_photo_french_door_production/visual_director/round-03/approved-target-r03.png",
+      "review_method": "pixel inspection; review evidence recorded by Codex",
+      "review_path": "art/room_photo_french_door_production/visual_director/round-03/pixel-review-r03.md",
+      "sha256": "381f0ec6dbd63f51032f5e9b8e276e90a9b9d82d247f4172982d66e179900be7"
+    },
+    "case_file": "art/room_photo_french_door_production/visual_director/state.json",
+    "policy": {
+      "inputs": {
+        "category": "architectural_opening",
+        "current_quality": "below_target",
+        "faction_defining": false,
+        "inferred": [],
+        "priority_tier": 1,
+        "screen_space_importance": 5,
+        "source_images_present": true,
+        "source_photo_required": true
+      },
+      "reasons": [
+        "Tier 1 scene-defining asset",
+        "very high screen-space importance",
+        "source-photo character is required for a prominent asset",
+        "current production quality is below target"
+      ],
+      "required": true
+    },
+    "status": "approved",
+    "strategy": "targeted_correction",
+    "target_episode_attempt": 2
+  }
+}

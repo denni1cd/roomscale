@@ -1,19 +1,20 @@
 {
   "approved_visual_target": {
     "approval": "pass",
-    "approved_at_utc": "2026-11-02T06:40:22+00:00",
-    "concept_id": "room_photo_french_door-pair-r02",
-    "path": "art/room_photo_french_door_production/visual_director/round-02/approved-target-r02.png",
-    "review_method": "pixel inspection; review evidence recorded by Luna",
-    "review_path": "art/room_photo_french_door_production/visual_director/round-02/pixel-review-r02.md",
-    "sha256": "a401dfda146a05351afd5e19cc1b378770fd3b0f4f8689154570a177e1cd6f40"
+    "approved_at_utc": "2026-11-02T10:33:26+00:00",
+    "concept_id": "room_photo_french_door-pair-r03",
+    "path": "art/room_photo_french_door_production/visual_director/round-03/approved-target-r03.png",
+    "review_method": "pixel inspection; review evidence recorded by Codex",
+    "review_path": "art/room_photo_french_door_production/visual_director/round-03/pixel-review-r03.md",
+    "sha256": "381f0ec6dbd63f51032f5e9b8e276e90a9b9d82d247f4172982d66e179900be7"
   },
   "asset_id": "room_photo_french_door_production",
+  "backlog_reason": "Three attempts on approved r03 are complete. Retain v010 as the best 3D review candidate: exact 66 x 82 x 4 inch bounds and readable hinge placement, but its r03 image-authored oak still repeats narrow grain. The materially different v011 procedural oak is nearly flat. The reconstructed room exterior remains blue-gray rather than the target garden; keep context outside the door mesh and backlog it separately.",
   "best_3d_candidate": {
-    "candidate_file": "art/room_photo_french_door_production/iterations/v005/candidate.json",
-    "candidate_id": "room_photo_french_door_production-v005",
-    "evaluation_file": "art/room_photo_french_door_production/iterations/v005/evaluation.json",
-    "updated_at_utc": "2026-11-02T05:54:01+00:00"
+    "candidate_file": "art/room_photo_french_door_production/iterations/v010/candidate.json",
+    "candidate_id": "room_photo_french_door_production-v010",
+    "evaluation_file": "art/room_photo_french_door_production/iterations/v010/evaluation.json",
+    "updated_at_utc": "2026-11-02T10:47:13+00:00"
   },
   "candidate_history": [
     {
@@ -267,6 +268,132 @@
         "strategy": "alternate_strategy",
         "target_episode_attempt": 3
       }
+    },
+    {
+      "candidate_file": "art/room_photo_french_door_production/iterations/v009/candidate.json",
+      "candidate_id": "room_photo_french_door_production-v009",
+      "created_at_utc": "2026-11-02T10:37:52+00:00",
+      "parent_candidate_id": "room_photo_french_door_production-v008",
+      "recipe_file": "art/room_photo_french_door_production/iterations/v009/recipe.json",
+      "visual_director_attempt": 1,
+      "visual_director_provenance": {
+        "approved_visual_target": {
+          "approval": "pass",
+          "approved_at_utc": "2026-11-02T10:33:26+00:00",
+          "concept_id": "room_photo_french_door-pair-r03",
+          "path": "art/room_photo_french_door_production/visual_director/round-03/approved-target-r03.png",
+          "review_method": "pixel inspection; review evidence recorded by Codex",
+          "review_path": "art/room_photo_french_door_production/visual_director/round-03/pixel-review-r03.md",
+          "sha256": "381f0ec6dbd63f51032f5e9b8e276e90a9b9d82d247f4172982d66e179900be7"
+        },
+        "case_file": "art/room_photo_french_door_production/visual_director/state.json",
+        "policy": {
+          "inputs": {
+            "category": "architectural_opening",
+            "current_quality": "below_target",
+            "faction_defining": false,
+            "inferred": [],
+            "priority_tier": 1,
+            "screen_space_importance": 5,
+            "source_images_present": true,
+            "source_photo_required": true
+          },
+          "reasons": [
+            "Tier 1 scene-defining asset",
+            "very high screen-space importance",
+            "source-photo character is required for a prominent asset",
+            "current production quality is below target"
+          ],
+          "required": true
+        },
+        "status": "approved",
+        "strategy": "initial",
+        "target_episode_attempt": 1
+      }
+    },
+    {
+      "candidate_file": "art/room_photo_french_door_production/iterations/v010/candidate.json",
+      "candidate_id": "room_photo_french_door_production-v010",
+      "created_at_utc": "2026-11-02T10:45:23+00:00",
+      "parent_candidate_id": "room_photo_french_door_production-v009",
+      "recipe_file": "art/room_photo_french_door_production/iterations/v010/recipe.json",
+      "visual_director_attempt": 2,
+      "visual_director_provenance": {
+        "approved_visual_target": {
+          "approval": "pass",
+          "approved_at_utc": "2026-11-02T10:33:26+00:00",
+          "concept_id": "room_photo_french_door-pair-r03",
+          "path": "art/room_photo_french_door_production/visual_director/round-03/approved-target-r03.png",
+          "review_method": "pixel inspection; review evidence recorded by Codex",
+          "review_path": "art/room_photo_french_door_production/visual_director/round-03/pixel-review-r03.md",
+          "sha256": "381f0ec6dbd63f51032f5e9b8e276e90a9b9d82d247f4172982d66e179900be7"
+        },
+        "case_file": "art/room_photo_french_door_production/visual_director/state.json",
+        "policy": {
+          "inputs": {
+            "category": "architectural_opening",
+            "current_quality": "below_target",
+            "faction_defining": false,
+            "inferred": [],
+            "priority_tier": 1,
+            "screen_space_importance": 5,
+            "source_images_present": true,
+            "source_photo_required": true
+          },
+          "reasons": [
+            "Tier 1 scene-defining asset",
+            "very high screen-space importance",
+            "source-photo character is required for a prominent asset",
+            "current production quality is below target"
+          ],
+          "required": true
+        },
+        "status": "approved",
+        "strategy": "targeted_correction",
+        "target_episode_attempt": 2
+      }
+    },
+    {
+      "candidate_file": "art/room_photo_french_door_production/iterations/v011/candidate.json",
+      "candidate_id": "room_photo_french_door_production-v011",
+      "created_at_utc": "2026-11-02T10:48:25+00:00",
+      "parent_candidate_id": "room_photo_french_door_production-v010",
+      "recipe_file": "art/room_photo_french_door_production/iterations/v011/recipe.json",
+      "visual_director_attempt": 3,
+      "visual_director_provenance": {
+        "approved_visual_target": {
+          "approval": "pass",
+          "approved_at_utc": "2026-11-02T10:33:26+00:00",
+          "concept_id": "room_photo_french_door-pair-r03",
+          "path": "art/room_photo_french_door_production/visual_director/round-03/approved-target-r03.png",
+          "review_method": "pixel inspection; review evidence recorded by Codex",
+          "review_path": "art/room_photo_french_door_production/visual_director/round-03/pixel-review-r03.md",
+          "sha256": "381f0ec6dbd63f51032f5e9b8e276e90a9b9d82d247f4172982d66e179900be7"
+        },
+        "case_file": "art/room_photo_french_door_production/visual_director/state.json",
+        "policy": {
+          "inputs": {
+            "category": "architectural_opening",
+            "current_quality": "below_target",
+            "faction_defining": false,
+            "inferred": [],
+            "priority_tier": 1,
+            "screen_space_importance": 5,
+            "source_images_present": true,
+            "source_photo_required": true
+          },
+          "reasons": [
+            "Tier 1 scene-defining asset",
+            "very high screen-space importance",
+            "source-photo character is required for a prominent asset",
+            "current production quality is below target"
+          ],
+          "required": true
+        },
+        "status": "approved",
+        "strategy": "alternate_strategy",
+        "target_episode_attempt": 3
+      }
     }
   ],
   "case_file": "art/room_photo_french_door_production/visual_director/state.json",
@@ -296,51 +423,97 @@
     "attempts": [
       {
         "attempt": 1,
-        "candidate_id": "room_photo_french_door_production-v006",
-        "failure_reason": "RuntimeError: ROOMSCALE_BLENDER_EXECUTABLE must point to the approved local Blender install",
-        "status": "blocked",
-        "strategy": "initial"
+        "candidate_id": "room_photo_french_door_production-v009",
+        "decision": "continue",
+        "evaluated_at_utc": "2026-11-02T10:41:50+00:00",
+        "evaluation_file": "art/room_photo_french_door_production/iterations/v009/evaluation.json",
+        "generation_executions": 1,
+        "incumbent_comparison_result": "better",
+        "status": "evaluated",
+        "strategy": "initial",
+        "visual_transfer_diagnosis": {
+          "corrective_action": "Keep the geometry and image-authored material strategy. Reposition the stepped casing and constrain front-mounted hardware to the 4-inch depth envelope; refine per-member texture scale/phase to reduce repeated streaks, then rerun exact bound validation and the matched captures.",
+          "lost_visual_information": [
+            "Generated depth extends 0.615 inches past the exact ArtBrief envelope.",
+            "Target oak figure is broad and varied; candidate grain resolves as narrow repeating vertical streaks.",
+            "Target garden colors cannot be established in a reconstructed room with blue-gray exterior context."
+          ],
+          "preserved_components": [
+            "Paired French-door silhouette and exact width and height.",
+            "Target four-row divided-light layout on each leaf.",
+            "Visible six-hinge layout with separate plates, barrels, and screw heads.",
+            "Round knob on the left leaf and horizontal lever on the right leaf.",
+            "RoomDefinition, placement, collision, navigation, selection, and simulation remain unchanged."
+          ],
+          "primary_causes": [
+            "geometry_loss",
+            "material_generation",
+            "lighting_render_presentation"
+          ]
+        }
       },
       {
         "attempt": 2,
-        "candidate_id": "room_photo_french_door_production-v007",
-        "failure_reason": "RuntimeError: ROOMSCALE_BLENDER_EXECUTABLE must point to the approved local Blender install",
-        "status": "blocked",
-        "strategy": "targeted_correction"
-      },
-      {
-        "attempt": 3,
-        "candidate_id": "room_photo_french_door_production-v008",
+        "candidate_id": "room_photo_french_door_production-v010",
         "decision": "continue",
-        "evaluated_at_utc": "2026-11-02T06:52:58+00:00",
-        "evaluation_file": "art/room_photo_french_door_production/iterations/v008/evaluation.json",
-        "incumbent_comparison_result": "same",
+        "evaluated_at_utc": "2026-11-02T10:47:13+00:00",
+        "evaluation_file": "art/room_photo_french_door_production/iterations/v010/evaluation.json",
+        "generation_executions": 1,
+        "incumbent_comparison_result": "better",
         "status": "evaluated",
-        "strategy": "alternate_strategy",
+        "strategy": "targeted_correction",
         "visual_transfer_diagnosis": {
-          "corrective_action": "Close round-02 after three bounded attempts and retain v005 as best current. Keep v008's four-row layout; backlog readable hinges, visible non-repeating oak, and review-room greenery context. Do not promote.",
+          "corrective_action": "Preserve v010 geometry and exact bounds. Switch only the oak material method to broader anisotropic procedural PBR with deterministic per-board phase variation, then compare the same Godot captures. Keep exterior foliage outside the mesh.",
           "lost_visual_information": [
-            "Six brass hinges remain difficult to identify.",
-            "Oak has little visible figure at the registered camera distance.",
-            "Target garden is absent from the current room render; foliage does not belong in the door mesh."
+            "The target has broader varied board-aligned oak figure; the candidate still repeats narrow linear streaks.",
+            "The target shows garden color through clear glass, while the supplied production room has blue-gray exterior context."
           ],
           "preserved_components": [
-            "Exact 66 x 82 x 4 inch bounds and paired silhouette",
-            "Target-matching four-row divided lights per leaf",
-            "Separate hinges, clear-glass material, casing, and threshold",
-            "Unchanged RoomDefinition, collision, navigation, and simulation"
+            "Exact 66 x 82 x 4 inch bounds.",
+            "Paired silhouette with four rows of divided lights per leaf.",
+            "Six exposed hinge locations with separate plates and barrels.",
+            "Target knob and lever pairing.",
+            "Unchanged RoomDefinition, placement, collision, navigation, selection, and simulation."
           ],
           "primary_causes": [
             "material_generation",
-            "geometry_loss",
+            "lighting_render_presentation"
+          ]
+        }
+      },
+      {
+        "attempt": 3,
+        "candidate_id": "room_photo_french_door_production-v011",
+        "decision": "reject",
+        "evaluated_at_utc": "2026-11-02T10:50:14+00:00",
+        "evaluation_file": "art/room_photo_french_door_production/iterations/v011/evaluation.json",
+        "generation_executions": 1,
+        "incumbent_comparison_result": "worse",
+        "status": "evaluated",
+        "strategy": "alternate_strategy",
+        "visual_transfer_diagnosis": {
+          "corrective_action": "Reject this procedural material alternative and retain v010 as the episode best. Backlog non-repeating source-conditioned oak authoring and any exterior context work as separate problems; do not add garden foliage to the door mesh.",
+          "lost_visual_information": [
+            "The target oak has visible flowing grain and board-level variation; the candidate is nearly uniform brown.",
+            "The room’s exterior is blue-gray and does not show the target garden through the glass."
+          ],
+          "preserved_components": [
+            "Exact 66 x 82 x 4 inch bounds.",
+            "Paired silhouette and four-row divided lights per leaf.",
+            "Six exposed hinge locations and the target handle pairing.",
+            "Unchanged RoomDefinition, placement, collision, navigation, selection, and simulation."
+          ],
+          "primary_causes": [
+            "material_generation",
             "lighting_render_presentation"
           ]
         }
       }
     ],
+    "backlog_reason": "Three attempts on approved r03 are complete. Retain v010 as the best 3D review candidate: exact 66 x 82 x 4 inch bounds and readable hinge placement, but its r03 image-authored oak still repeats narrow grain. The materially different v011 procedural oak is nearly flat. The reconstructed room exterior remains blue-gray rather than the target garden; keep context outside the door mesh and backlog it separately.",
     "status": "backlog",
-    "target_sha256": "a401dfda146a05351afd5e19cc1b378770fd3b0f4f8689154570a177e1cd6f40"
+    "target_sha256": "381f0ec6dbd63f51032f5e9b8e276e90a9b9d82d247f4172982d66e179900be7"
   },
-  "updated_at_utc": "2026-11-02T06:52:58+00:00",
+  "updated_at_utc": "2026-11-02T10:50:24+00:00",
   "visual_brief_file": "art/room_photo_french_door_production/visual_director/visual-brief-draft.json"
 }

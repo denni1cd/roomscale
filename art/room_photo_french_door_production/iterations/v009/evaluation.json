@@ -1,0 +1,161 @@
+{
+  "candidate_id": "room_photo_french_door_production-v009",
+  "created_at_utc": "2026-11-02T10:40:47+00:00",
+  "decision": "continue",
+  "defects": [
+    "Asset depth is 4.615 inches rather than the exact 4 inches required by the ArtBrief.",
+    "R03 oak shows narrow, repetitive vertical grain rather than the target’s broader board-aligned figure.",
+    "The production room has a blue-gray exterior behind the door, so its render cannot demonstrate the target garden color through clear glazing."
+  ],
+  "hard_fail_reasons": [
+    "Godot-measured asset depth is 4.615 inches, exceeding the ArtBrief depth of 4.0 inches; the bridge technical validator incorrectly returned pass."
+  ],
+  "incumbent_candidate_id": "room_photo_french_door_production-v005",
+  "incumbent_comparison": "Against v005, v009 transfers the approved four-row glazing layout and makes all six outer hinge plates visible in the production detail and three-quarter renders. The r03 oak map adds visible figure, although its narrow repeated striations remain stronger and more regular than the target. v009 is not eligible for promotion because its measured depth is 4.615 inches against the exact 4-inch brief; retain v005 as best current review until a within-envelope challenger passes.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "geometry_loss",
+    "material_generation",
+    "lighting_render_presentation"
+  ],
+  "next_action_hypothesis": "For attempt 2, fit all casing and hinge geometry inside the exact 66 x 82 x 4-inch envelope: move the stepped casing back slightly, align front-mounted hinge plates with its face, and constrain barrel and screw-head depth to the existing 4-inch envelope. Preserve the four-row target and r03 albedo, then inspect whether per-member UV mapping reduces repeated streaks. Also correct the technical validator so it rejects out-of-brief depth rather than reporting pass.",
+  "observations": {
+    "art_direction_fit": "The paired oak door, four rows of divided lights, round left knob, right lever, and visible brass hinges follow target r03; the wood figure is too linear and the measured depth is out of specification.",
+    "close_up_quality": "The detail render resolves timber texture and six outer hinge assemblies; hinge knuckles and screw heads still occupy few pixels and the grain repeats as narrow vertical streaks.",
+    "gameplay_readability": "The room overview reads as a distinct pair of doors in the existing opening. Furniture occlusion and normal gameplay distance leave hinge and grain detail secondary.",
+    "geometric_detail": "Separate stiles, rails, four-by-two lights, casing, threshold, two plates per hinge, six barrels, and screw heads are present in the generated mesh.",
+    "material_realism": "The r03 albedo is visible, but the board grain is narrow and repetitive. The reconstructed room shows a blue-gray exterior through the glazing, so it cannot establish the target garden color.",
+    "proportion": "The paired leaves, substantial rails, muntins, and casing retain the approved target proportions in the registered view.",
+    "scale_fidelity": "Godot reports 66 x 82 x 4.615 inches; the brief requires 66 x 82 x 4 inches, so the candidate fails its dimensional contract.",
+    "semantic_recognizability": "Both detail and room-scale captures read as a residential French double door.",
+    "silhouette_quality": "Two closed leaves, central meeting stile, four rows of divided lights, stepped surround, and threshold match the target layout.",
+    "source_resemblance": "The paired layout, timber, glazing, hardware placement, and handles transfer; the measured depth and repeated grain depart from target r03.",
+    "surface_variation": "The image-authored material adds visible wood figure, but similar vertical striations repeat across stiles and rails.",
+    "technical_integration": "Godot imports six surfaces without import issues and the production renderer loads the asset, but measured depth exceeds the brief by 0.615 inches. The generic bridge reported pass despite this mismatch."
+  },
+  "render_evidence": [
+    "art/room_photo_french_door_production/iterations/v009/render-runs/run-002/asset-detail.png",
+    "art/room_photo_french_door_production/iterations/v009/render-runs/run-002/asset-three-quarter.png",
+    "art/room_photo_french_door_production/iterations/v009/render-runs/run-002/room-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 3,
+    "gameplay_readability": 4,
+    "geometric_detail": 4,
+    "material_realism": 3,
+    "proportion": 4,
+    "scale_fidelity": 2,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 4,
+    "source_resemblance": 3,
+    "surface_variation": 3,
+    "technical_integration": 2
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The detail render shows all six hinge locations and visible grain, but knuckles and screw heads remain subdued, the oak figure repeats, and the asset exceeds its required depth.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "The three-quarter render shows beveled leaves, stepped casing, inner bead, and threshold.",
+        "evidence_refs": [
+          "art/room_photo_french_door_production/iterations/v009/render-runs/run-002/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "evidence": "Construction details are improved, but the depth contract fails and the close material/hardware transfer remains short of target r03.",
+      "hardware": {
+        "evidence": "The detail and three-quarter renders show three brass hinge plates on each outer leaf; the knuckles are visible but narrow.",
+        "evidence_refs": [
+          "art/room_photo_french_door_production/iterations/v009/render-runs/run-002/asset-detail.png",
+          "art/room_photo_french_door_production/iterations/v009/render-runs/run-002/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "joins": {
+        "evidence": "The detail view shows the muntins joining the stiles and cross rails around separate rectangular lights.",
+        "evidence_refs": [
+          "art/room_photo_french_door_production/iterations/v009/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "Hinge assemblies are now exposed, but barrel separation and screw heads are still too fine to match target r03 at the registered camera distance.",
+        "evidence_refs": [
+          "art/room_photo_french_door_production/iterations/v009/render-runs/run-002/asset-detail.png",
+          "art/room_photo_french_door_production/iterations/v009/render-runs/run-002/asset-three-quarter.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "The r03 albedo transfers color and grain, but repeated streaks remain and the room context provides no greenery behind the glass.",
+        "evidence_refs": [
+          "art/room_photo_french_door_production/iterations/v009/render-runs/run-002/asset-detail.png",
+          "art/room_photo_french_door_production/iterations/v009/render-runs/run-002/asset-three-quarter.png",
+          "art/room_photo_french_door_production/iterations/v009/render-runs/run-002/room-scale.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "Narrow vertical grain repeats across several boards in the detail and three-quarter views.",
+        "evidence_refs": [
+          "art/room_photo_french_door_production/iterations/v009/render-runs/run-002/asset-detail.png",
+          "art/room_photo_french_door_production/iterations/v009/render-runs/run-002/asset-three-quarter.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "The three-quarter view shows the stepped casing and door leaf depth.",
+        "evidence_refs": [
+          "art/room_photo_french_door_production/iterations/v009/render-runs/run-002/asset-three-quarter.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The door is recognizable and its hinges are more visible, but repetitive grain and the out-of-brief depth prevent a finished target transfer.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "No",
+      "applicable": true,
+      "evidence": "The paired form, four-row lights, handles, and visible brass hardware transfer; the oak figure remains repetitive and the room render has blue-gray exterior context rather than the target garden.",
+      "pass": false
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Keep the geometry and image-authored material strategy. Reposition the stepped casing and constrain front-mounted hardware to the 4-inch depth envelope; refine per-member texture scale/phase to reduce repeated streaks, then rerun exact bound validation and the matched captures.",
+    "lost_visual_information": [
+      "Generated depth extends 0.615 inches past the exact ArtBrief envelope.",
+      "Target oak figure is broad and varied; candidate grain resolves as narrow repeating vertical streaks.",
+      "Target garden colors cannot be established in a reconstructed room with blue-gray exterior context."
+    ],
+    "preserved_components": [
+      "Paired French-door silhouette and exact width and height.",
+      "Target four-row divided-light layout on each leaf.",
+      "Visible six-hinge layout with separate plates, barrels, and screw heads.",
+      "Round knob on the left leaf and horizontal lever on the right leaf.",
+      "RoomDefinition, placement, collision, navigation, selection, and simulation remain unchanged."
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "material_generation",
+      "lighting_render_presentation"
+    ]
+  }
+}

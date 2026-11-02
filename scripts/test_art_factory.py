@@ -6,6 +6,7 @@ import json
 import sys
 import tempfile
 import unittest
+from dataclasses import replace
 from pathlib import Path
 
 from art_factory.factory import ArtFactory
@@ -184,6 +185,30 @@ class ArtFactoryTest(unittest.TestCase):
         self.assertEqual(make_brief().validate(), [])
         self.assertEqual(make_recipe().validate(), [])
 
+    def test_dimension_tolerance_must_be_finite_and_non_negative(self) -> None:
+        self.assertNotIn("dimension_tolerance_inches", make_brief().to_dict())
+        self.assertEqual(replace(make_brief(), dimension_tolerance_inches=0.01).validate(), [])
+        self.assertTrue(
+            any(
+                "dimension_tolerance_inches" in error
+                for error in replace(make_brief(), dimension_tolerance_inches=-0.01).validate()
+            )
+        )
+        self.assertTrue(
+            any(
+                "dimension_tolerance_inches" in error
+                for error in replace(
+                    make_brief(), dimension_tolerance_inches=float("nan")
+                ).validate()
+            )
+        )
+        self.assertTrue(
+            any(
+                "dimension_tolerance_inches" in error
+                for error in replace(make_brief(), dimension_tolerance_inches="0.01").validate()
+            )
+        )
+
     def test_visual_target_approval_records_the_actual_pixel_reviewer(self) -> None:
         target = self.root / "art/test-desk/visual_director/round-01/target.png"
         review = self.root / "art/test-desk/visual_director/round-01/pixel-review.md"
@@ -307,7 +332,9 @@ class ArtFactoryTest(unittest.TestCase):
         self.assertEqual(candidate.status, "blocked")
         initial_log = self.root / "art/test-desk/iterations/v001/generation.log"
         self.assertIn("initial execution blocked", initial_log.read_text(encoding="utf-8"))
-        self.factory.backlog_visual_director_case("test-desk", "Generator dependency was unavailable.")
+        self.factory.backlog_visual_director_case(
+            "test-desk", "Generator dependency was unavailable."
+        )
 
         resumed = self.factory.retry_candidate_generation(candidate.candidate_id)
         self.assertEqual(resumed.candidate_id, candidate.candidate_id)
@@ -323,9 +350,7 @@ class ArtFactoryTest(unittest.TestCase):
         )
         self.assertEqual(len(state["target_episode"]["attempts"]), 1)
         self.assertEqual(state["target_episode"]["attempts"][0]["attempt"], 1)
-        self.assertEqual(
-            state["target_episode"]["attempts"][0]["status"], "awaiting_render_review"
-        )
+        self.assertEqual(state["target_episode"]["attempts"][0]["status"], "awaiting_render_review")
         self.assertEqual(state["target_episode"]["attempts"][0]["generation_executions"], 2)
         self.assertEqual(state["status"], "in_progress")
         self.assertNotIn("backlog_reason", state)

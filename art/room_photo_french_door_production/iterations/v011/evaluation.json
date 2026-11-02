@@ -1,0 +1,155 @@
+{
+  "candidate_id": "room_photo_french_door_production-v011",
+  "created_at_utc": "2026-11-02T10:49:46+00:00",
+  "decision": "reject",
+  "defects": [
+    "The procedural oak renders as a nearly uniform brown surface with little visible grain or board variation.",
+    "The production room context remains blue-gray beyond the clear glass rather than the target garden; foliage must stay outside the door mesh."
+  ],
+  "hard_fail_reasons": [
+    "The alternate procedural oak material reads nearly flat and fails the source-conditioned target material gate."
+  ],
+  "incumbent_candidate_id": "room_photo_french_door_production-v010",
+  "incumbent_comparison": "Compared with v010, v011 keeps the exact envelope and exposed hinge positions but its procedural oak renders nearly as a uniform brown field, losing the visible figure that v010 retains. The alternate material strategy is inferior at both detail and room scale; preserve v010 as the best 3D review candidate and v005 as the current historical best review candidate until the production asset is promoted.",
+  "incumbent_comparison_result": "worse",
+  "likely_causes": [
+    "material_generation",
+    "lighting_render_presentation"
+  ],
+  "next_action_hypothesis": "Close this approved target episode after its three bounded attempts. Retain v010 as the best 3D review candidate because it preserves visible image-authored grain and the exact envelope. Backlog broad, non-repeating stained oak material authoring and exterior garden context for the next architectural-opening batch; do not insert foliage into the door mesh.",
+  "observations": {
+    "art_direction_fit": "The pair, four-row glazing, handles, and hinges are structurally correct, but the near-uniform procedural brown misses the target’s visible stained-oak figure.",
+    "close_up_quality": "The registered detail view shows the construction clearly, but oak has little visible grain or board variation at close range.",
+    "gameplay_readability": "The room overview reads as a pair of French doors in the existing opening; material detail is not legible at this distance.",
+    "geometric_detail": "Separate stiles, rails, lights, casing, threshold, and exposed hinge components are present.",
+    "material_realism": "The alternate procedural map appears almost flat brown in the Godot close and three-quarter views.",
+    "proportion": "Paired leaves, four-row glazing, stiles, rails, and surround retain the target proportions.",
+    "scale_fidelity": "Godot reports exact 66 x 82 x 4 inch bounds within 0.01 inch per axis.",
+    "semantic_recognizability": "Close and room captures both read as a residential French double door.",
+    "silhouette_quality": "The closed pair, divided lights, meeting stile, casing, and threshold match the target layout.",
+    "source_resemblance": "The geometry and hardware placements transfer, but this alternate loses the source target’s wood figure and board-level variation.",
+    "surface_variation": "No meaningful wood figure resolves in the candidate detail view; surfaces read as almost uniformly colored.",
+    "technical_integration": "Godot imports six surfaces without issues, verifies the exact bounds, and renders the production asset."
+  },
+  "render_evidence": [
+    "art/room_photo_french_door_production/iterations/v011/render-runs/run-001/asset-detail.png",
+    "art/room_photo_french_door_production/iterations/v011/render-runs/run-001/asset-three-quarter.png",
+    "art/room_photo_french_door_production/iterations/v011/render-runs/run-001/room-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 2,
+    "close_up_quality": 2,
+    "gameplay_readability": 4,
+    "geometric_detail": 4,
+    "material_realism": 2,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 4,
+    "source_resemblance": 2,
+    "surface_variation": 1,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The detail view shows assembled geometry but the procedural material reads as a flat brown field with no resolved board variation.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "The three-quarter capture shows beveled frame members and stepped surround.",
+        "evidence_refs": [
+          "art/room_photo_french_door_production/iterations/v011/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "evidence": "The geometry and exact bounds pass, but the alternate oak material is not a credible transfer of the approved stained-oak target.",
+      "hardware": {
+        "evidence": "Six brass hinge assemblies remain exposed in the detail and three-quarter captures.",
+        "evidence_refs": [
+          "art/room_photo_french_door_production/iterations/v011/render-runs/run-001/asset-detail.png",
+          "art/room_photo_french_door_production/iterations/v011/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "joins": {
+        "evidence": "The muntins meet the rails and stiles around the clear rectangular lights.",
+        "evidence_refs": [
+          "art/room_photo_french_door_production/iterations/v011/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "The detail shows hinge plates, barrels, handle pair, muntin joints, and threshold construction.",
+        "evidence_refs": [
+          "art/room_photo_french_door_production/iterations/v011/render-runs/run-001/asset-detail.png",
+          "art/room_photo_french_door_production/iterations/v011/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "material_response": {
+        "evidence": "The procedural oak is nearly uniform brown and lacks the visible natural grain in target r03.",
+        "evidence_refs": [
+          "art/room_photo_french_door_production/iterations/v011/render-runs/run-001/asset-detail.png",
+          "art/room_photo_french_door_production/iterations/v011/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "The candidate detail has little visible board-to-board or longitudinal surface variation.",
+        "evidence_refs": [
+          "art/room_photo_french_door_production/iterations/v011/render-runs/run-001/asset-detail.png",
+          "art/room_photo_french_door_production/iterations/v011/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "The three-quarter view shows the door and casing thickness within the exact envelope.",
+        "evidence_refs": [
+          "art/room_photo_french_door_production/iterations/v011/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The door is recognizable and dimensionally correct, but the nearly uniform procedural brown misses the target’s visible oak figure.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "No",
+      "applicable": true,
+      "evidence": "The structure transfers, but the procedural surface loses the target oak figure; exterior garden context is absent from the room.",
+      "pass": false
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Reject this procedural material alternative and retain v010 as the episode best. Backlog non-repeating source-conditioned oak authoring and any exterior context work as separate problems; do not add garden foliage to the door mesh.",
+    "lost_visual_information": [
+      "The target oak has visible flowing grain and board-level variation; the candidate is nearly uniform brown.",
+      "The room’s exterior is blue-gray and does not show the target garden through the glass."
+    ],
+    "preserved_components": [
+      "Exact 66 x 82 x 4 inch bounds.",
+      "Paired silhouette and four-row divided lights per leaf.",
+      "Six exposed hinge locations and the target handle pairing.",
+      "Unchanged RoomDefinition, placement, collision, navigation, selection, and simulation."
+    ],
+    "primary_causes": [
+      "material_generation",
+      "lighting_render_presentation"
+    ]
+  }
+}

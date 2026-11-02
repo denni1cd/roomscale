@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 import re
 from dataclasses import asdict, dataclass, field
 from typing import Any
@@ -122,6 +123,7 @@ class ArtBrief:
     source_photo_required: bool = False
     faction_defining: bool = False
     current_quality: str = "unknown"
+    dimension_tolerance_inches: float | None = None
 
     @classmethod
     def from_dict(cls, value: dict[str, Any]) -> ArtBrief:
@@ -132,6 +134,8 @@ class ArtBrief:
     def to_dict(self) -> dict[str, Any]:
         result = asdict(self)
         result["intended_dimensions"] = list(self.intended_dimensions)
+        if self.dimension_tolerance_inches is None:
+            result.pop("dimension_tolerance_inches")
         return result
 
     def validate(self) -> list[str]:
@@ -175,6 +179,13 @@ class ArtBrief:
             errors.append(
                 "current_quality must be unknown, prototype, below_target, review, or accepted"
             )
+        if self.dimension_tolerance_inches is not None and (
+            isinstance(self.dimension_tolerance_inches, bool)
+            or not isinstance(self.dimension_tolerance_inches, (int, float))
+            or not math.isfinite(self.dimension_tolerance_inches)
+            or self.dimension_tolerance_inches < 0.0
+        ):
+            errors.append("dimension_tolerance_inches must be a finite non-negative number")
         if self.source_photo_required and not self.reference_images:
             errors.append("source_photo_required requires at least one ArtBrief reference image")
         if not self.required_features:

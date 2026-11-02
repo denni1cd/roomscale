@@ -99,11 +99,11 @@ SHELL_RULES: dict[str, dict[str, Any]] = {
         "gameplay_importance": "medium — room identity and camera/light context",
         "visual_prominence": "high; windows and doors are high-contrast architectural anchors",
         "approx_screen_space_importance": "high for reconstructed rooms with large openings",
-        "current_visual_quality": "photographed window v004 is accepted and integrated; source-conditioned French-door v005 is the best review candidate but fails the strict gate for hinge readability, natural grain, and the greenery-facing glass view; other room openings retain RoomDefinition-driven presentation",
+        "current_visual_quality": "photographed window v004 is accepted and integrated; French-door v010 is the best 3D review candidate with exact bounds and readable hinge placement, but its oak grain remains repetitive and the review room has no target garden context; no door candidate passes the strict visual gate, and other room openings retain RoomDefinition-driven presentation",
         "programmer_art_or_primitive": True,
         "photo_resemblance_required": True,
         "recommended_production_method": "Source-matched modular window/door components and physically credible glass; preserve opening dimensions",
-        "backlog_status": "Retain window v004 and document its five-versus-four transom-pane mismatch; French-door v005 remains review-only after three bounded source-conditioned attempts, with hinge readability and exterior context still unresolved",
+        "backlog_status": "Retain window v004 and document its five-versus-four transom-pane mismatch; French-door round-03 exhausted three attempts with v010 retained as best 3D review and no promotion; non-repeating oak and exterior garden context remain backlogged, with exterior context kept outside the door mesh",
     },
 }
 
@@ -381,9 +381,9 @@ def kind_family(kind: str, name: str) -> tuple[str, str]:
 def current_asset_state(asset_id: str, context: dict[str, Any]) -> dict[str, Any]:
     production = context["production_registry"].get(asset_id, {})
     review = context["review_registry"].get(asset_id, {})
-    visual_director = load_json(
-        ROOT / "art" / asset_id / "visual_director" / "state.json", {}
-    ) or {}
+    visual_director = (
+        load_json(ROOT / "art" / asset_id / "visual_director" / "state.json", {}) or {}
+    )
     has_brief = asset_id in context["art_briefs"]
     best_3d_candidate = visual_director.get("best_3d_candidate") or {}
     exists = has_brief or bool(production) or bool(review) or bool(best_3d_candidate)
@@ -402,11 +402,7 @@ def current_asset_state(asset_id: str, context: dict[str, Any]) -> dict[str, Any
         if best_3d_candidate
         else None
     )
-    status = (
-        "best_current_review"
-        if review
-        else str(production.get("status", "not registered"))
-    )
+    status = "best_current_review" if review else str(production.get("status", "not registered"))
     evaluation: dict[str, Any] = {}
     candidate_match = re.search(r"-v(\d+)$", candidate_id)
     evaluation_path: Path | None = None

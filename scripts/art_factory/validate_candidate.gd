@@ -59,6 +59,18 @@ func run() -> void:
 			var expected: Array = brief.get("intended_dimensions", [])
 			if expected.size() == 3 and bounds.size.is_finite():
 				var expected_size := Vector3(float(expected[0]), float(expected[1]), float(expected[2]))
+				var dimension_tolerance := -1.0
+				var tolerance_value: Variant = brief.get("dimension_tolerance_inches", null)
+				if typeof(tolerance_value) in [TYPE_FLOAT, TYPE_INT]:
+					dimension_tolerance = float(tolerance_value)
+				if dimension_tolerance >= 0.0:
+					var dimension_error := Vector3(
+						absf(bounds.size.x - expected_size.x),
+						absf(bounds.size.y - expected_size.y),
+						absf(bounds.size.z - expected_size.z)
+					)
+					if maxf(dimension_error.x, maxf(dimension_error.y, dimension_error.z)) > dimension_tolerance:
+						issues.append("candidate bounds exceed per-axis dimension tolerance: measured=%s expected=%s tolerance=%.4f inches" % [bounds.size, expected_size, dimension_tolerance])
 				var ratios := Vector3(bounds.size.x / expected_size.x, bounds.size.y / expected_size.y, bounds.size.z / expected_size.z)
 				var smallest := minf(ratios.x, minf(ratios.y, ratios.z))
 				var largest := maxf(ratios.x, maxf(ratios.y, ratios.z))

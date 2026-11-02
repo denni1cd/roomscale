@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "method": "round-03-alternate-procedural-anisotropic-oak-material",
+  "instructions": "Use v010 as the geometry and envelope baseline. Preserve its exact 66 x 82 x 4 inch bounds, paired leaves, two columns by four rows of clear glass lights per leaf, jamb, casing, threshold, exposed six-hinge arrangement, left round knob, and right horizontal lever. Switch only the timber albedo method from the repeating image tile to a baked anisotropic procedural PBR with broad cathedral figure, fine rays, gentle board-level variation, and deterministic per-member UV phase. Keep grain aligned with rails and stiles and avoid uniform flat brown. Do not change the RoomDefinition or gameplay state; keep outdoor scenery outside the door mesh.",
+  "parameters": {
+    "asset_type": "french_door",
+    "geometry_units": "inches",
+    "generation_variant": "round03_procedural_anisotropic_oak",
+    "diagnosis_ref": "room_photo_french_door_production-v010",
+    "materially_different_strategy": true,
+    "visual_director_strategy": "alternate_strategy",
+    "visual_director_target": "art/room_photo_french_door_production/visual_director/round-03/approved-target-r03.png",
+    "outputs": ["asset.glb", "generation-record.json"]
+  },
+  "source_inputs": [
+    "scripts/art_factory/generators/production_batch01_blender.py",
+    "art/room_photo_french_door_production/brief.json",
+    "art/room_photo_french_door_production/sources/sintra-door-pair-cc-by-4.0.jpg",
+    "art/room_photo_french_door_production/visual_director/round-03/approved-target-r03.png",
+    "art/room_photo_french_door_production/visual_director/round-03/pixel-review-r03.md",
+    "art/room_photo_french_door_production/iterations/v010/candidate.json",
+    "art/room_photo_french_door_production/iterations/v010/evaluation.json",
+    "art/room_photo_french_door_production/iterations/v010/technical-validation.json",
+    "art/room_photo_french_door_production/iterations/v010/render-runs/run-001/asset-detail.png",
+    "art/room_photo_french_door_production/iterations/v010/render-runs/run-001/asset-three-quarter.png",
+    "art/room_photo_french_door_production/iterations/v010/render-runs/run-001/room-scale.png",
+    "rooms/room_photo_luna.json"
+  ],
+  "tool": "Blender scripted assembled-mesh production with embedded PBR maps",
+  "tool_version": "Blender 5.2.3 LTS",
+  "material_method": "Baked Blender-authored anisotropic procedural oak PBR with broad cathedral figure, fine longitudinal rays, gentle board-level variation, generated roughness and tangent-normal maps, and deterministic per-member UV phase; separate clear glazing and aged brass",
+  "post_processing": [
+    "Preserve v010 validated geometry and exact bounds.",
+    "Bake broad anisotropic grain and restrained per-board variation into embedded PBR maps.",
+    "Retain the approved four-row divided-light arrangement and the six exposed hinges.",
+    "Inspect the oak at registered close and three-quarter camera distances for natural figure without repeated stripes.",
+    "Keep outdoor foliage outside the door mesh and the RoomDefinition unchanged."
+  ],
+  "import_configuration": {
+    "format": "GLB with embedded PBR materials",
+    "units": "inches",
+    "axes": "Blender X width / Y depth / Z up exported to Godot X width / Y up / Z depth",
+    "normalization": "fit source geometry to ArtBrief dimensions without altering RoomDefinition",
+    "renderer": "gl_compatibility"
+  },
+  "deterministic_seed": 2613,
+  "generator_command": [
+    "python",
+    "{project_root}/scripts/art_factory/generators/production_batch01_blender.py"
+  ]
+}
