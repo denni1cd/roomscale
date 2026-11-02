@@ -99,11 +99,11 @@ SHELL_RULES: dict[str, dict[str, Any]] = {
         "gameplay_importance": "medium — room identity and camera/light context",
         "visual_prominence": "high; windows and doors are high-contrast architectural anchors",
         "approx_screen_space_importance": "high for reconstructed rooms with large openings",
-        "current_visual_quality": "photographed window v004 is accepted and integrated; French-door v010 is the best 3D review candidate with exact bounds and readable hinge placement, but its oak grain remains repetitive and the review room has no target garden context; no door candidate passes the strict visual gate, and other room openings retain RoomDefinition-driven presentation",
+        "current_visual_quality": "photographed window v004 is accepted and integrated; French-door v010 is the best 3D review candidate with exact bounds and readable hinge placement, but its oak grain remains repetitive and its uniformly blue-gray panes cannot establish transparency against the blank review exterior; no door candidate passes the strict visual gate, and other room openings retain RoomDefinition-driven presentation",
         "programmer_art_or_primitive": True,
         "photo_resemblance_required": True,
         "recommended_production_method": "Source-matched modular window/door components and physically credible glass; preserve opening dimensions",
-        "backlog_status": "Retain window v004 and document its five-versus-four transom-pane mismatch; French-door round-03 exhausted three attempts with v010 retained as best 3D review and no promotion; non-repeating oak and exterior garden context remain backlogged, with exterior context kept outside the door mesh",
+        "backlog_status": "Retain window v004 and document its five-versus-four transom-pane mismatch; French-door round-03 exhausted three attempts with v010 retained as best 3D review and no promotion; non-repeating oak, verified glazing, and source-supported exterior garden context remain backlogged, with exterior context kept outside the door mesh",
     },
 }
 
