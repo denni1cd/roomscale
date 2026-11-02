@@ -1,0 +1,156 @@
+{
+  "candidate_id": "room_side_table-v001",
+  "created_at_utc": "2026-11-02T04:54:49.941631+00:00",
+  "decision": "continue",
+  "defects": [
+    "the top occupies most of the close crop; drawer, turned leg joints, and lower shelf appear, but the feet are cut and the wood reads as beige",
+    "wood and metal values do not separate clearly under production lighting",
+    "standard close cameras crop the furniture silhouette"
+  ],
+  "hard_fail_reasons": [
+    "Side table is not ready for promotion: material hierarchy and close framing visibly diverge from its approved target."
+  ],
+  "incumbent_candidate_id": "",
+  "incumbent_comparison": "No Art Factory production incumbent exists for this stable ID. This first challenger has not yet earned replacement of the catalog/procedural furniture fallback.",
+  "incumbent_comparison_result": "first_pass",
+  "likely_causes": [
+    "wood albedo is too bright for the production room response",
+    "the default high-angle close camera is too near for these furniture bounds",
+    "alternate yaw exits the room for furniture placed near a wall"
+  ],
+  "next_action_hypothesis": "Use one targeted remediation to darken non-metal wood while retaining metal values, and change the candidate camera to a full-object interior quarter view with lower tilt. Keep the approved target and RoomDefinition envelope.",
+  "observations": {
+    "art_direction_fit": "The side table loses the approved contrast between oak, walnut, and metal under the room renderer.",
+    "close_up_quality": "The candidate-specific side table close render does not show the full assembly at once.",
+    "gameplay_readability": "The side table role is identifiable in the 330-inch room overview; fine hardware is not.",
+    "geometric_detail": "The side table has separate constructed components, but some target joinery is hidden by camera and value grouping.",
+    "material_realism": "The side table wood renders substantially paler than the approved warm-oak direction.",
+    "proportion": "The generated side table scene passes the stated RoomDefinition bounds; the viewed proportions remain plausible.",
+    "scale_fidelity": "The candidate bounds validate against the dimensions supplied by the RoomDefinition for this side table.",
+    "semantic_recognizability": "The production side table render reads as its intended furniture role.",
+    "silhouette_quality": "The candidate has an apron, drawer, four leg assemblies, and lower shelf; the steep close view hides its compact proportions.",
+    "surface_variation": "The broad wood faces on the side table have weak grain contrast in the production render.",
+    "technical_integration": "The side table loads through the Art Factory review registry and passes Godot 4.7.2 bounds validation."
+  },
+  "render_evidence": [
+    "art/room_side_table/iterations/v001/render-runs/run-001/asset-three-quarter.png",
+    "art/room_side_table/iterations/v001/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 2,
+    "close_up_quality": 2,
+    "gameplay_readability": 3,
+    "geometric_detail": 3,
+    "material_realism": 2,
+    "proportion": 4,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "surface_variation": 2,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The side table detail view crops important parts of the object and leaves target material transitions indistinct.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "Side table perimeter edges carry a continuous small radius.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v001/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v001/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "Side table hardware exists but does not separate clearly from the pale render at this framing.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v001/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v001/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "joins": {
+        "evidence": "Side table seams exist, but the join pattern is hard to distinguish in the recorded close view.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v001/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v001/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "Side table fitted details are present but not convincingly legible in these views.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v001/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v001/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "Side table wood appears pale and smooth instead of retaining the approved warm-oak response.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v001/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v001/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "Side table large wood faces show low grain contrast in the production render.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v001/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v001/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "Side table work surfaces and case panels have visible authored thickness.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v001/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v001/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The side table has uniformly lit broad faces and cropped joins, so this render does not yet read as finished human-room furniture.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "The ArtBrief has no source photograph; this is a generated design target.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": true,
+      "low_poly": false,
+      "materially_flat": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Darken non-metal wood surfaces only; frame the whole furniture form from room-interior quarter angles at a lower camera tilt; preserve the target and geometry for this attempt.",
+    "lost_visual_information": [
+      "Side table loses the target warm-oak/walnut value separation in the production render",
+      "the top occupies most of the close crop; drawer, turned leg joints, and lower shelf appear, but the feet are cut and the wood reads as beige",
+      "small joinery/hardware is less readable than in the concept target"
+    ],
+    "preserved_components": [
+      "technically valid side table scene and RoomDefinition envelope",
+      "separate furniture parts and intended silhouette",
+      "review-only Art Factory registry resolution"
+    ],
+    "primary_causes": [
+      "material_generation",
+      "lighting_render_presentation"
+    ]
+  }
+}

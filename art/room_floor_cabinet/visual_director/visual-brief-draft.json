@@ -1,0 +1,57 @@
+{
+  "art_direction": "RoomScale category: room_furniture. A compact deep 21-inch floor cabinet with a raised oak top, framed walnut face stiles, two inset drawer fronts with dovetailed corners and aged brass cup pulls, solid side panels, a recessed plinth and distinct short feet. Keep it inside 26 x 21 x 24 inches.",
+  "asset_id": "room_floor_cabinet",
+  "citizen_scale": {
+    "citizen_height_inches": 0.5,
+    "ratio_or_view": "Use the exact 21-inch height against a 0.5-inch citizen; derive a schematic if generated scale is inaccurate."
+  },
+  "construction_materials": [
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "walnut face frame and oak side panels",
+      "part": "carcass"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "contrasting oak with clear grain direction and dovetail joints",
+      "part": "drawers"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "aged brass cup pulls and dark iron fasteners",
+      "part": "hardware"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "dark honey oak slab with eased edges and end grain",
+      "part": "top"
+    }
+  ],
+  "dimensions_inches": [
+    26.0,
+    21.0,
+    24.0
+  ],
+  "faction_identity": null,
+  "gameplay_distance_readability": "Keep required features legible at the ArtBrief gameplay camera distances: 2.0, 12.0, 64.0, 330.0 inches.",
+  "intended_function": "A compact deep 21-inch floor cabinet with a raised oak top, framed walnut face stiles, two inset drawer fronts with dovetailed corners and aged brass cup pulls, solid side panels, a recessed plinth and distinct short feet. Keep it inside 26 x 21 x 24 inches.",
+  "prohibited_failure_modes": [
+    "do not change RoomDefinition dimensions, position, object identity, collision, navigation, activity stations, or interaction targets",
+    "do not add presentation geometry to collision, navigation, selection, or task logic",
+    "do not substitute shader or color changes for visible furniture construction"
+  ],
+  "roomdefinition_authority": "ArtBrief dimensions are (26.0, 21.0, 24.0); source RoomDefinition: rooms/room_b.json. RoomDefinition remains authoritative for placement and gameplay.",
+  "semantic_identity": "human workshop floor storage cabinet",
+  "separate_room_assets": [],
+  "silhouette_requirements": [
+    "raised top with visible thickness and eased perimeter",
+    "two separate inset drawer fronts with reveals and dovetail corners",
+    "framed front stiles, rails and substantial side panels",
+    "paired aged brass cup pulls",
+    "recessed plinth and short feet",
+    "visible oak-to-walnut separation",
+    "complete fit inside 26 x 21 x 24 inches"
+  ],
+  "source_photo_constraints": null,
+  "visual_references": []
+}

@@ -1,0 +1,55 @@
+{
+  "allow_stylization": false,
+  "asset_id": "room_chair",
+  "camera_distances": [
+    2.0,
+    12.0,
+    64.0,
+    330.0
+  ],
+  "category": "room_furniture",
+  "current_quality": "prototype",
+  "display_name": "Room A Chair",
+  "faction_defining": false,
+  "gameplay_invariants": {
+    "RoomDefinition_dimensions_and_landmarks_remain_authoritative": true,
+    "landmarks_activity_stations_and_citizen_assignments_are_unchanged": true,
+    "render_meshes_do_not_create_collision_navigation_selection_or_simulation_state": true
+  },
+  "intended_dimensions": [
+    25.0,
+    19.0,
+    23.0
+  ],
+  "iteration_budget": 5,
+  "materials": {
+    "finish": "hand-worn satin with restrained grain contrast",
+    "frame": "darker walnut legs, spindles and stretchers",
+    "joins": "visible seat tenons, pegged stretchers and spindle joints",
+    "seat": "warm oak with shallow dished surface and shaped perimeter"
+  },
+  "priority_tier": 1,
+  "prohibited_changes": [
+    "do not change RoomDefinition dimensions, position, object identity, collision, navigation, activity stations, or interaction targets",
+    "do not add presentation geometry to collision, navigation, selection, or task logic",
+    "do not substitute shader or color changes for visible furniture construction"
+  ],
+  "quality_tier": "B",
+  "reference_images": [],
+  "required_features": [
+    "broad dished seat with shaped edge",
+    "four turned and slightly splayed legs",
+    "low curved crest rail and three short spindles",
+    "joined stretchers on all sides",
+    "visible wood joinery within the envelope",
+    "compact readable chair silhouette",
+    "complete fit inside 25 x 19 x 23 inches"
+  ],
+  "schema_version": 1,
+  "screen_space_importance": 4,
+  "semantic_type": "compact low human workshop chair",
+  "source_photo_required": false,
+  "source_room_definition": "rooms/room_a.json",
+  "stylization_rationale": "",
+  "visual_target": "A deliberately low, broad workshop chair sized exactly to the unusual 25 x 19 x 23 inch Room A envelope. Give it a gently dished solid oak seat, four individually turned and slightly splayed legs, a low curved crest rail with three short shaped spindles, and a complete lower stretcher frame. It must remain visibly chair-like at normal Room A viewing distance without exceeding the supplied bounds."
+}

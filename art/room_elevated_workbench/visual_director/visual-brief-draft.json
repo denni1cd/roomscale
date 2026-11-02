@@ -1,0 +1,57 @@
+{
+  "art_direction": "RoomScale category: room_furniture. A robust 36-inch-high maker workbench fitted to the Room B envelope: thick joined oak slab with dog holes and darker end-grain breadboard ends, inset drawer bank and deep apron, four substantial legs with visible mortise-and-tenon joinery, a full lower stretcher frame, a black iron shoulder vise with screw and wood handle, and separate worn steel hardware. Preserve the 58 x 36 x 30 inch envelope and keep the BENCH_SURFACE interaction plane at y=36 inches.",
+  "asset_id": "room_elevated_workbench",
+  "citizen_scale": {
+    "citizen_height_inches": 0.5,
+    "ratio_or_view": "Use the exact 36-inch height against a 0.5-inch citizen; derive a schematic if generated scale is inaccurate."
+  },
+  "construction_materials": [
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "matching oak drawer fronts with small aged brass pulls",
+      "part": "drawer"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "darker walnut/oak with visible joinery shoulders and subtle chamfers",
+      "part": "frame"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "aged black iron vise plates and steel screw with turned wood handle",
+      "part": "hardware"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "warm honey oak with readable end grain, hand-worn edges and restrained dog holes",
+      "part": "top"
+    }
+  ],
+  "dimensions_inches": [
+    58.0,
+    36.0,
+    30.0
+  ],
+  "faction_identity": null,
+  "gameplay_distance_readability": "Keep required features legible at the ArtBrief gameplay camera distances: 2.0, 12.0, 64.0, 330.0 inches.",
+  "intended_function": "A robust 36-inch-high maker workbench fitted to the Room B envelope: thick joined oak slab with dog holes and darker end-grain breadboard ends, inset drawer bank and deep apron, four substantial legs with visible mortise-and-tenon joinery, a full lower stretcher frame, a black iron shoulder vise with screw and wood handle, and separate worn steel hardware. Preserve the 58 x 36 x 30 inch envelope and keep the BENCH_SURFACE interaction plane at y=36 inches.",
+  "prohibited_failure_modes": [
+    "do not change RoomDefinition dimensions, position, object identity, collision, navigation, activity stations, or interaction targets",
+    "do not add presentation geometry to collision, navigation, selection, or task logic",
+    "do not substitute shader or color changes for visible furniture construction"
+  ],
+  "roomdefinition_authority": "ArtBrief dimensions are (58.0, 36.0, 30.0); source RoomDefinition: rooms/room_b.json. RoomDefinition remains authoritative for placement and gameplay.",
+  "semantic_identity": "human maker workshop workbench",
+  "separate_room_assets": [],
+  "silhouette_requirements": [
+    "thick multi-board worktop with end grain at both ends",
+    "workholding dog holes and realistic shoulder vise jaw, screw and handle",
+    "deep apron with two small drawers and distinct drawer reveals",
+    "four stout legs with pegged mortise-and-tenon joinery",
+    "lower stretcher frame on all four sides",
+    "separated oak, walnut, iron, steel and brass material response",
+    "clean support under the existing BENCH_SURFACE at exactly 36 inches"
+  ],
+  "source_photo_constraints": null,
+  "visual_references": []
+}

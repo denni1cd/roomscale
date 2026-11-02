@@ -1,0 +1,167 @@
+{
+  "candidate_id": "room_elevated_workbench-v002",
+  "created_at_utc": "2026-11-02T04:59:45.138045+00:00",
+  "decision": "continue",
+  "defects": [
+    "Elevated workbench: no convincing directional wood grain or satin material response."
+  ],
+  "hard_fail_reasons": [
+    "Elevated workbench: v002 still misses its approved material character; its visible surfaces remain procedural, and the gameplay framing defect persists."
+  ],
+  "incumbent_candidate_id": "room_elevated_workbench-v001",
+  "incumbent_comparison": "Compared with v001, v002 improves the room-interior framing and its darkened wood is marginally less pale, but the approved timber response remains unmet.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "material_generation",
+    "lighting_render_presentation"
+  ],
+  "next_action_hypothesis": "Use a per-asset procedural wood-grain ShaderMaterial with anisotropic board grain and a satin response; size gameplay framing from the tall axis; preserve the target and the authored RoomDefinition envelope.",
+  "observations": {
+    "art_direction_fit": "The three-quarter and interior oblique captures show the vise and full frame, while the gameplay capture is still top-heavy; wide wood faces retain weak, non-directional grain.",
+    "close_up_quality": "The three-quarter and interior oblique captures show the vise and full frame, while the gameplay capture is still top-heavy; wide wood faces retain weak, non-directional grain.",
+    "gameplay_readability": "The three-quarter and interior oblique captures show the vise and full frame, while the gameplay capture is still top-heavy; wide wood faces retain weak, non-directional grain.",
+    "geometric_detail": "The three-quarter and interior oblique captures show the vise and full frame, while the gameplay capture is still top-heavy; wide wood faces retain weak, non-directional grain.",
+    "material_realism": "The three-quarter and interior oblique captures show the vise and full frame, while the gameplay capture is still top-heavy; wide wood faces retain weak, non-directional grain.",
+    "proportion": "The three-quarter and interior oblique captures show the vise and full frame, while the gameplay capture is still top-heavy; wide wood faces retain weak, non-directional grain.",
+    "scale_fidelity": "The three-quarter and interior oblique captures show the vise and full frame, while the gameplay capture is still top-heavy; wide wood faces retain weak, non-directional grain.",
+    "semantic_recognizability": "Six-board top, dog holes, drawer bank, shoulder vise and stretcher frame are visible; the darker correction improves value separation slightly, but the grain remains mottled and the straight component edges still read as a constructed game asset.",
+    "silhouette_quality": "The three-quarter and interior oblique captures show the vise and full frame, while the gameplay capture is still top-heavy; wide wood faces retain weak, non-directional grain.",
+    "surface_variation": "The three-quarter and interior oblique captures show the vise and full frame, while the gameplay capture is still top-heavy; wide wood faces retain weak, non-directional grain.",
+    "technical_integration": "The three-quarter and interior oblique captures show the vise and full frame, while the gameplay capture is still top-heavy; wide wood faces retain weak, non-directional grain."
+  },
+  "render_evidence": [
+    "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-gameplay-distance.png",
+    "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-three-quarter.png",
+    "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-interior-oblique.png",
+    "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 2,
+    "close_up_quality": 3,
+    "gameplay_readability": 3,
+    "geometric_detail": 3,
+    "material_realism": 2,
+    "proportion": 4,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "surface_variation": 2,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "Elevated workbench: the complete silhouette is framed, but material grain and component transitions remain visibly synthetic in close inspection.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "Elevated workbench: broad edges have a repeated soft radius; small profile changes look machine-smoothed rather than hand-finished.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-interior-oblique.png",
+          "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "Elevated workbench: the authored hardware is present and visible, though it appears applied to simple forms.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-interior-oblique.png",
+          "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "joins": {
+        "evidence": "Elevated workbench: visible seams and pegs indicate separate parts, but their alignment does not convincingly show fitted joinery.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-interior-oblique.png",
+          "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "Elevated workbench: the main components are individually modeled, but small details lack the surface and edge refinement of finished furniture.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-interior-oblique.png",
+          "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "Elevated workbench: wood stays bright and matte under room lighting; the darker v002 albedo does not reproduce the target satin response.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-interior-oblique.png",
+          "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "Elevated workbench: broad wood areas show fine mottling, but no directional grain, board-to-board variation, or convincing finish wear.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-interior-oblique.png",
+          "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "Elevated workbench: primary panels and top have readable thickness in the three-quarter render.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-interior-oblique.png",
+          "art/room_elevated_workbench/iterations/v002/render-runs/run-003/asset-detail.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The three-quarter and interior oblique captures show the vise and full frame, while the gameplay capture is still top-heavy; wide wood faces retain weak, non-directional grain.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "This ArtBrief uses an approved generated visual target and has no source photograph.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": true,
+      "low_poly": false,
+      "materially_flat": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Replace the shared StandardMaterial wood response with a separate, directional procedural wood shader; calculate gameplay distance from object height; preserve all target and RoomDefinition dimensions.",
+    "lost_visual_information": [
+      "The three-quarter and interior oblique captures show the vise and full frame, while the gameplay capture is still top-heavy; wide wood faces retain weak, non-directional grain.",
+      "Directional grain and satin highlights are not transferred by the shared noise texture."
+    ],
+    "preserved_components": [
+      "Elevated workbench: dimensions pass technical validation and the constructed components are present.",
+      "Elevated workbench: production RoomDefinition review and gameplay dimensions remain unchanged."
+    ],
+    "primary_causes": [
+      "material_generation",
+      "lighting_render_presentation"
+    ]
+  }
+}

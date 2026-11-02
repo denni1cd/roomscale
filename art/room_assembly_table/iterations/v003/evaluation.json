@@ -1,0 +1,170 @@
+{
+  "candidate_id": "room_assembly_table-v003",
+  "created_at_utc": "2026-11-02T05:07:41.455264+00:00",
+  "decision": "continue",
+  "defects": [
+    "Directional grain improves the table finish, but the room stool obscures the front in the close view and component profiles remain simple.",
+    "The target’s medium-scale construction and shaped edge detail are still missing.",
+    "The Room B drafting stool obscures the table front from the selected close-oblique camera."
+  ],
+  "hard_fail_reasons": [
+    "Directional grain improves the table finish, but the room stool obscures the front in the close view and component profiles remain simple. The approved transfer gate requires more than the current material improvement; the family is not ready for production promotion."
+  ],
+  "incumbent_candidate_id": "room_assembly_table-v002",
+  "incumbent_comparison": "Compared with v002, v003 materially improves the timber color and directional grain, and the integrated room captures retain the full asset at gameplay distance. The top and leg construction are visible, but the stool at the room position obscures much of the front in the close oblique. The approved target’s fitted edges and joinery are still replaced by repeated simple members. No stable production incumbent exists, so v003 remains a best-current review candidate rather than a replacement.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "geometry_loss",
+    "material_generation"
+  ],
+  "next_action_hypothesis": "Backlog this asset after its three approved-target attempts. Resume only with a production mesh workflow that authors shaped casework, turned or curved members, credible fitted joints and target-specific proportions; avoid another material-only loop.",
+  "observations": {
+    "art_direction_fit": "The top and leg construction are visible, but the stool at the room position obscures much of the front in the close oblique. The approved target’s fitted edges and joinery are still replaced by repeated simple members.",
+    "close_up_quality": "The top and leg construction are visible, but the stool at the room position obscures much of the front in the close oblique. The approved target’s fitted edges and joinery are still replaced by repeated simple members.",
+    "gameplay_readability": "The top and leg construction are visible, but the stool at the room position obscures much of the front in the close oblique. The approved target’s fitted edges and joinery are still replaced by repeated simple members.",
+    "geometric_detail": "The top and leg construction are visible, but the stool at the room position obscures much of the front in the close oblique. The approved target’s fitted edges and joinery are still replaced by repeated simple members.",
+    "material_realism": "The top and leg construction are visible, but the stool at the room position obscures much of the front in the close oblique. The approved target’s fitted edges and joinery are still replaced by repeated simple members.",
+    "proportion": "The top and leg construction are visible, but the stool at the room position obscures much of the front in the close oblique. The approved target’s fitted edges and joinery are still replaced by repeated simple members.",
+    "scale_fidelity": "The top and leg construction are visible, but the stool at the room position obscures much of the front in the close oblique. The approved target’s fitted edges and joinery are still replaced by repeated simple members.",
+    "semantic_recognizability": "The candidate reads as an assembly table from the broad top, apron, lower frame, vise and bench dogs.",
+    "silhouette_quality": "The top and leg construction are visible, but the stool at the room position obscures much of the front in the close oblique. The approved target’s fitted edges and joinery are still replaced by repeated simple members.",
+    "surface_variation": "The top and leg construction are visible, but the stool at the room position obscures much of the front in the close oblique. The approved target’s fitted edges and joinery are still replaced by repeated simple members.",
+    "technical_integration": "The top and leg construction are visible, but the stool at the room position obscures much of the front in the close oblique. The approved target’s fitted edges and joinery are still replaced by repeated simple members."
+  },
+  "render_evidence": [
+    "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-gameplay-distance.png",
+    "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+    "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-interior-oblique.png",
+    "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 2,
+    "gameplay_readability": 3,
+    "geometric_detail": 3,
+    "material_realism": 3,
+    "proportion": 4,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "surface_variation": 3,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The top and leg construction are visible, but the stool at the room position obscures much of the front in the close oblique. The approved target’s fitted edges and joinery are still replaced by repeated simple members. Close inspection still shows repeated flat faces and simplified transitions.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "Assembly table: the repeating eased edges are consistent, but the same radius covers nearly every exposed edge instead of following a hand-shaped profile.",
+        "evidence_refs": [
+          "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+          "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "hardware": {
+        "evidence": "Assembly table: the authored hardware and fasteners remain visible in the latest close and oblique captures.",
+        "evidence_refs": [
+          "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+          "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "joins": {
+        "evidence": "Assembly table: seams and pegs show component boundaries, but the render does not show convincing fitted joinery at the broad joints.",
+        "evidence_refs": [
+          "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+          "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "Assembly table: major parts are separated, but edges and joinery still lack the carved, fitted detail shown in the approved target.",
+        "evidence_refs": [
+          "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+          "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "Assembly table: the wood now has a warmer satin response and directional grain; the dark trim and metal remain separate.",
+        "evidence_refs": [
+          "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+          "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "surface_variation": {
+        "evidence": "Assembly table: directional grain is visible, but it repeats with similar scale across members and lacks the target’s knots and board-level variation.",
+        "evidence_refs": [
+          "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+          "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "Assembly table: the main top, panels and supporting members have visible, technically plausible thickness.",
+        "evidence_refs": [
+          "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+          "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_assembly_table/iterations/v003/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "Directional grain improves the table finish, but the room stool obscures the front in the close view and component profiles remain simple. The broad geometry and repeated edge treatment remain recognizably procedural at normal viewing distance.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "The ArtBrief uses an approved generated target and has no source photograph.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": true,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Keep the approved target and record v003 as best-current review art. Backlog the transfer until a mesh-authoring backend can build the missing target-specific shape and joinery; do not use another shader-only pass.",
+    "lost_visual_information": [
+      "The top and leg construction are visible, but the stool at the room position obscures much of the front in the close oblique. The approved target’s fitted edges and joinery are still replaced by repeated simple members.",
+      "The approved target carries more convincing medium-scale profiles and individualized construction than the candidate scene."
+    ],
+    "preserved_components": [
+      "Assembly table: the RoomDefinition dimensions and gameplay placement are unchanged.",
+      "Assembly table: the target’s principal role, major subassemblies and hardware remain represented.",
+      "Separate wood shader and authored hardware materials load through the review registry."
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "material_generation"
+    ]
+  }
+}

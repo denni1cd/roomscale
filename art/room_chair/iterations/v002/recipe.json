@@ -1,0 +1,44 @@
+{
+  "deterministic_seed": 2514,
+  "generator_command": [
+    "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale\\.tools\\godot-4.7.2\\Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generate_furniture_candidate.gd"
+  ],
+  "import_configuration": {
+    "axis": "Godot X width / Y up / Z depth",
+    "format": "Godot-native PackedScene",
+    "normalization": "mesh bounds validated against exact ArtBrief envelope; runtime visual normalization preserves RoomDefinition dimensions",
+    "renderer": "gl_compatibility",
+    "units": "inches"
+  },
+  "instructions": "A deliberately low, broad workshop chair sized exactly to the unusual 25 x 19 x 23 inch Room A envelope. Give it a gently dished solid oak seat, four individually turned and slightly splayed legs, a low curved crest rail with three short shaped spindles, and a complete lower stretcher frame. It must remain visibly chair-like at normal Room A viewing distance without exceeding the supplied bounds. Targeted correction: reduce only non-metal wood albedo by 30 percent and retain the separate brass/iron response.",
+  "material_method": "Reusable StandardMaterial3D wood, iron, steel and brass with scale-aware surface texture and separate material response; joinery and furniture construction are modeled as distinct meshes. Round 02 applies a wood-only albedo reduction after the first production capture showed cream-colored oak; metallic hardware stays at the incumbent value.",
+  "method": "godot_procedural_room_furniture",
+  "parameters": {
+    "diagnosis_ref": "room_chair-v001",
+    "outputs": [
+      "room_chair.tscn"
+    ],
+    "refinement": "roomscale_joinery_v2_material_correction",
+    "visual_director_strategy": "targeted_correction"
+  },
+  "post_processing": [
+    "import as a native Godot PackedScene",
+    "retain individually constructed mesh parts with separate wood and hardware materials",
+    "fit modeled presentation entirely within the RoomDefinition envelope"
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "art/room_chair/visual_director/round-01/approved-target-r01.png",
+    "scripts/art_factory/generate_furniture_candidate.gd",
+    "scripts/visuals/visual_geometry.gd",
+    "scripts/visuals/material_library.gd",
+    "rooms/room_a.json"
+  ],
+  "tool": "Godot native furniture component authoring via RoomScale Art Factory",
+  "tool_version": "Godot 4.7.2"
+}

@@ -1,0 +1,55 @@
+{
+  "allow_stylization": false,
+  "asset_id": "room_floor_cabinet",
+  "camera_distances": [
+    2.0,
+    12.0,
+    64.0,
+    330.0
+  ],
+  "category": "room_furniture",
+  "current_quality": "prototype",
+  "display_name": "Room B Floor Cabinet",
+  "faction_defining": false,
+  "gameplay_invariants": {
+    "RoomDefinition_dimensions_and_landmarks_remain_authoritative": true,
+    "landmarks_activity_stations_and_citizen_assignments_are_unchanged": true,
+    "render_meshes_do_not_create_collision_navigation_selection_or_simulation_state": true
+  },
+  "intended_dimensions": [
+    26.0,
+    21.0,
+    24.0
+  ],
+  "iteration_budget": 5,
+  "materials": {
+    "carcass": "walnut face frame and oak side panels",
+    "drawers": "contrasting oak with clear grain direction and dovetail joints",
+    "hardware": "aged brass cup pulls and dark iron fasteners",
+    "top": "dark honey oak slab with eased edges and end grain"
+  },
+  "priority_tier": 1,
+  "prohibited_changes": [
+    "do not change RoomDefinition dimensions, position, object identity, collision, navigation, activity stations, or interaction targets",
+    "do not add presentation geometry to collision, navigation, selection, or task logic",
+    "do not substitute shader or color changes for visible furniture construction"
+  ],
+  "quality_tier": "B",
+  "reference_images": [],
+  "required_features": [
+    "raised top with visible thickness and eased perimeter",
+    "two separate inset drawer fronts with reveals and dovetail corners",
+    "framed front stiles, rails and substantial side panels",
+    "paired aged brass cup pulls",
+    "recessed plinth and short feet",
+    "visible oak-to-walnut separation",
+    "complete fit inside 26 x 21 x 24 inches"
+  ],
+  "schema_version": 1,
+  "screen_space_importance": 4,
+  "semantic_type": "human workshop floor storage cabinet",
+  "source_photo_required": false,
+  "source_room_definition": "rooms/room_b.json",
+  "stylization_rationale": "",
+  "visual_target": "A compact deep 21-inch floor cabinet with a raised oak top, framed walnut face stiles, two inset drawer fronts with dovetailed corners and aged brass cup pulls, solid side panels, a recessed plinth and distinct short feet. Keep it inside 26 x 21 x 24 inches."
+}

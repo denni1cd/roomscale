@@ -1,0 +1,57 @@
+{
+  "art_direction": "RoomScale category: room_furniture. A compact 24-inch-high assembly table with a thick honey-oak worktop, darker breadboard ends, four tapered square legs, a shaped front apron with one dovetailed drawer and brass cup pull, a lower cross-stretcher, and a small iron face vise. It should look lighter and lower than the elevated workbench while retaining deliberate cabinetmaker construction.",
+  "asset_id": "room_assembly_table",
+  "citizen_scale": {
+    "citizen_height_inches": 0.5,
+    "ratio_or_view": "Use the exact 24-inch height against a 0.5-inch citizen; derive a schematic if generated scale is inaccurate."
+  },
+  "construction_materials": [
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "medium walnut apron, tapered legs and lower stretchers",
+      "part": "frame"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "aged iron face vise and brass cup pull",
+      "part": "hardware"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "visible drawer dovetails, tenon shoulders and small wedges",
+      "part": "joinery"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "honey oak boards with visible end grain and restrained tool wear",
+      "part": "top"
+    }
+  ],
+  "dimensions_inches": [
+    42.0,
+    24.0,
+    32.0
+  ],
+  "faction_identity": null,
+  "gameplay_distance_readability": "Keep required features legible at the ArtBrief gameplay camera distances: 2.0, 12.0, 64.0, 330.0 inches.",
+  "intended_function": "A compact 24-inch-high assembly table with a thick honey-oak worktop, darker breadboard ends, four tapered square legs, a shaped front apron with one dovetailed drawer and brass cup pull, a lower cross-stretcher, and a small iron face vise. It should look lighter and lower than the elevated workbench while retaining deliberate cabinetmaker construction.",
+  "prohibited_failure_modes": [
+    "do not change RoomDefinition dimensions, position, object identity, collision, navigation, activity stations, or interaction targets",
+    "do not add presentation geometry to collision, navigation, selection, or task logic",
+    "do not substitute shader or color changes for visible furniture construction"
+  ],
+  "roomdefinition_authority": "ArtBrief dimensions are (42.0, 24.0, 32.0); source RoomDefinition: rooms/room_b.json. RoomDefinition remains authoritative for placement and gameplay.",
+  "semantic_identity": "human workshop assembly table",
+  "separate_room_assets": [],
+  "silhouette_requirements": [
+    "thick board worktop with end-grain ends",
+    "one framed front drawer with dovetails and brass cup pull",
+    "four tapered legs with visible apron joinery",
+    "lower cross-stretcher",
+    "small iron vise with screw and handle",
+    "separated oak, walnut, iron and brass surfaces",
+    "complete fit inside 42 x 24 x 32 inches"
+  ],
+  "source_photo_constraints": null,
+  "visual_references": []
+}

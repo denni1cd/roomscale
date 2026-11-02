@@ -1,0 +1,156 @@
+{
+  "candidate_id": "room_chair-v001",
+  "created_at_utc": "2026-11-02T04:54:49.802785+00:00",
+  "decision": "continue",
+  "defects": [
+    "the seat dominates the 3/4 image; crest and spindles show, but the turned-leg and stretcher silhouette is partly cropped",
+    "wood and metal values do not separate clearly under production lighting",
+    "standard close cameras crop the furniture silhouette"
+  ],
+  "hard_fail_reasons": [
+    "Low workshop chair is not ready for promotion: material hierarchy and close framing visibly diverge from its approved target."
+  ],
+  "incumbent_candidate_id": "",
+  "incumbent_comparison": "No Art Factory production incumbent exists for this stable ID. This first challenger has not yet earned replacement of the catalog/procedural furniture fallback.",
+  "incumbent_comparison_result": "first_pass",
+  "likely_causes": [
+    "wood albedo is too bright for the production room response",
+    "the default high-angle close camera is too near for these furniture bounds",
+    "alternate yaw exits the room for furniture placed near a wall"
+  ],
+  "next_action_hypothesis": "Use one targeted remediation to darken non-metal wood while retaining metal values, and change the candidate camera to a full-object interior quarter view with lower tilt. Keep the approved target and RoomDefinition envelope.",
+  "observations": {
+    "art_direction_fit": "The low workshop chair loses the approved contrast between oak, walnut, and metal under the room renderer.",
+    "close_up_quality": "The candidate-specific low workshop chair close render does not show the full assembly at once.",
+    "gameplay_readability": "The low workshop chair role is identifiable in the 330-inch room overview; fine hardware is not.",
+    "geometric_detail": "The low workshop chair has separate constructed components, but some target joinery is hidden by camera and value grouping.",
+    "material_realism": "The low workshop chair wood renders substantially paler than the approved warm-oak direction.",
+    "proportion": "The generated low workshop chair scene passes the stated RoomDefinition bounds; the viewed proportions remain plausible.",
+    "scale_fidelity": "The candidate bounds validate against the dimensions supplied by the RoomDefinition for this low workshop chair.",
+    "semantic_recognizability": "The production low workshop chair render reads as its intended furniture role.",
+    "silhouette_quality": "The render shows a broad seat, short back, and joined legs; the high close camera makes its low profile read more like a small table.",
+    "surface_variation": "The broad wood faces on the low workshop chair have weak grain contrast in the production render.",
+    "technical_integration": "The low workshop chair loads through the Art Factory review registry and passes Godot 4.7.2 bounds validation."
+  },
+  "render_evidence": [
+    "art/room_chair/iterations/v001/render-runs/run-001/asset-three-quarter.png",
+    "art/room_chair/iterations/v001/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 2,
+    "close_up_quality": 2,
+    "gameplay_readability": 3,
+    "geometric_detail": 3,
+    "material_realism": 2,
+    "proportion": 4,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "surface_variation": 2,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The low workshop chair detail view crops important parts of the object and leaves target material transitions indistinct.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "Low workshop chair perimeter edges carry a continuous small radius.",
+        "evidence_refs": [
+          "art/room_chair/iterations/v001/render-runs/run-001/asset-three-quarter.png",
+          "art/room_chair/iterations/v001/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "Low workshop chair hardware exists but does not separate clearly from the pale render at this framing.",
+        "evidence_refs": [
+          "art/room_chair/iterations/v001/render-runs/run-001/asset-three-quarter.png",
+          "art/room_chair/iterations/v001/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "joins": {
+        "evidence": "Low workshop chair seams exist, but the join pattern is hard to distinguish in the recorded close view.",
+        "evidence_refs": [
+          "art/room_chair/iterations/v001/render-runs/run-001/asset-three-quarter.png",
+          "art/room_chair/iterations/v001/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "Low workshop chair fitted details are present but not convincingly legible in these views.",
+        "evidence_refs": [
+          "art/room_chair/iterations/v001/render-runs/run-001/asset-three-quarter.png",
+          "art/room_chair/iterations/v001/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "Low workshop chair wood appears pale and smooth instead of retaining the approved warm-oak response.",
+        "evidence_refs": [
+          "art/room_chair/iterations/v001/render-runs/run-001/asset-three-quarter.png",
+          "art/room_chair/iterations/v001/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "Low workshop chair large wood faces show low grain contrast in the production render.",
+        "evidence_refs": [
+          "art/room_chair/iterations/v001/render-runs/run-001/asset-three-quarter.png",
+          "art/room_chair/iterations/v001/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "Low workshop chair work surfaces and case panels have visible authored thickness.",
+        "evidence_refs": [
+          "art/room_chair/iterations/v001/render-runs/run-001/asset-three-quarter.png",
+          "art/room_chair/iterations/v001/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The low workshop chair has uniformly lit broad faces and cropped joins, so this render does not yet read as finished human-room furniture.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "The ArtBrief has no source photograph; this is a generated design target.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": true,
+      "low_poly": false,
+      "materially_flat": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Darken non-metal wood surfaces only; frame the whole furniture form from room-interior quarter angles at a lower camera tilt; preserve the target and geometry for this attempt.",
+    "lost_visual_information": [
+      "Low workshop chair loses the target warm-oak/walnut value separation in the production render",
+      "the seat dominates the 3/4 image; crest and spindles show, but the turned-leg and stretcher silhouette is partly cropped",
+      "small joinery/hardware is less readable than in the concept target"
+    ],
+    "preserved_components": [
+      "technically valid low workshop chair scene and RoomDefinition envelope",
+      "separate furniture parts and intended silhouette",
+      "review-only Art Factory registry resolution"
+    ],
+    "primary_causes": [
+      "material_generation",
+      "lighting_render_presentation"
+    ]
+  }
+}

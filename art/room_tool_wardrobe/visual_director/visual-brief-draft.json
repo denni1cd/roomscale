@@ -1,0 +1,57 @@
+{
+  "art_direction": "RoomScale category: room_furniture. A narrow 70-inch tool wardrobe with an inset framed carcass, full-width moulded crown and plinth, paired tall recessed-panel doors with separate stiles and rails, real brass butt hinges and pull handles, and one open side tool bay with fitted shelves and individually readable handled chisels and files. Keep all parts within 42 x 70 x 22 inches.",
+  "asset_id": "room_tool_wardrobe",
+  "citizen_scale": {
+    "citizen_height_inches": 0.5,
+    "ratio_or_view": "Use the exact 70-inch height against a 0.5-inch citizen; derive a schematic if generated scale is inaccurate."
+  },
+  "construction_materials": [
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "warm stained oak with darker walnut face frame and crown",
+      "part": "carcass"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "framed oak panels with raised center fields",
+      "part": "doors"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "aged brass hinges and pulls, dark steel blades",
+      "part": "hardware"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "dark walnut shelves and varied tool handles",
+      "part": "tool bay"
+    }
+  ],
+  "dimensions_inches": [
+    42.0,
+    70.0,
+    22.0
+  ],
+  "faction_identity": null,
+  "gameplay_distance_readability": "Keep required features legible at the ArtBrief gameplay camera distances: 2.0, 12.0, 64.0, 330.0 inches.",
+  "intended_function": "A narrow 70-inch tool wardrobe with an inset framed carcass, full-width moulded crown and plinth, paired tall recessed-panel doors with separate stiles and rails, real brass butt hinges and pull handles, and one open side tool bay with fitted shelves and individually readable handled chisels and files. Keep all parts within 42 x 70 x 22 inches.",
+  "prohibited_failure_modes": [
+    "do not change RoomDefinition dimensions, position, object identity, collision, navigation, activity stations, or interaction targets",
+    "do not add presentation geometry to collision, navigation, selection, or task logic",
+    "do not substitute shader or color changes for visible furniture construction"
+  ],
+  "roomdefinition_authority": "ArtBrief dimensions are (42.0, 70.0, 22.0); source RoomDefinition: rooms/room_b.json. RoomDefinition remains authoritative for placement and gameplay.",
+  "semantic_identity": "human workshop tool wardrobe cabinet",
+  "separate_room_assets": [],
+  "silhouette_requirements": [
+    "paired tall inset-panel doors with distinct rails and stiles",
+    "separate crown moulding and stepped plinth",
+    "visible brass hinges and handles with mounts",
+    "open side tool bay with shelves",
+    "individually modeled chisels and files",
+    "contrasting carcass, door panels and hardware",
+    "complete fit inside 42 x 70 x 22 inches"
+  ],
+  "source_photo_constraints": null,
+  "visual_references": []
+}

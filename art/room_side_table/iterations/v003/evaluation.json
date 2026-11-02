@@ -1,0 +1,169 @@
+{
+  "candidate_id": "room_side_table-v003",
+  "created_at_utc": "2026-11-02T05:07:41.466957+00:00",
+  "decision": "continue",
+  "defects": [
+    "The darker grain improves material hierarchy, but the large planes and basic turned leg profile still look like a procedural component model.",
+    "The target’s medium-scale construction and shaped edge detail are still missing."
+  ],
+  "hard_fail_reasons": [
+    "The darker grain improves material hierarchy, but the large planes and basic turned leg profile still look like a procedural component model. The approved transfer gate requires more than the current material improvement; the family is not ready for production promotion."
+  ],
+  "incumbent_candidate_id": "room_side_table-v002",
+  "incumbent_comparison": "Compared with v002, v003 materially improves the timber color and directional grain, and the integrated room captures retain the full asset at gameplay distance. The finish now has directional grain and a stronger oak-to-walnut distinction, but the top, apron and shelf still use straight-sided components; the turned leg profiles lack the target’s fuller shaping and edge refinement. No stable production incumbent exists, so v003 remains a best-current review candidate rather than a replacement.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "geometry_loss",
+    "material_generation"
+  ],
+  "next_action_hypothesis": "Backlog this asset after its three approved-target attempts. Resume only with a production mesh workflow that authors shaped casework, turned or curved members, credible fitted joints and target-specific proportions; avoid another material-only loop.",
+  "observations": {
+    "art_direction_fit": "The finish now has directional grain and a stronger oak-to-walnut distinction, but the top, apron and shelf still use straight-sided components; the turned leg profiles lack the target’s fuller shaping and edge refinement.",
+    "close_up_quality": "The finish now has directional grain and a stronger oak-to-walnut distinction, but the top, apron and shelf still use straight-sided components; the turned leg profiles lack the target’s fuller shaping and edge refinement.",
+    "gameplay_readability": "The finish now has directional grain and a stronger oak-to-walnut distinction, but the top, apron and shelf still use straight-sided components; the turned leg profiles lack the target’s fuller shaping and edge refinement.",
+    "geometric_detail": "The finish now has directional grain and a stronger oak-to-walnut distinction, but the top, apron and shelf still use straight-sided components; the turned leg profiles lack the target’s fuller shaping and edge refinement.",
+    "material_realism": "The finish now has directional grain and a stronger oak-to-walnut distinction, but the top, apron and shelf still use straight-sided components; the turned leg profiles lack the target’s fuller shaping and edge refinement.",
+    "proportion": "The finish now has directional grain and a stronger oak-to-walnut distinction, but the top, apron and shelf still use straight-sided components; the turned leg profiles lack the target’s fuller shaping and edge refinement.",
+    "scale_fidelity": "The finish now has directional grain and a stronger oak-to-walnut distinction, but the top, apron and shelf still use straight-sided components; the turned leg profiles lack the target’s fuller shaping and edge refinement.",
+    "semantic_recognizability": "The broad top, fitted drawer and pull, apron, lower shelf and four turned legs read as a side table.",
+    "silhouette_quality": "The finish now has directional grain and a stronger oak-to-walnut distinction, but the top, apron and shelf still use straight-sided components; the turned leg profiles lack the target’s fuller shaping and edge refinement.",
+    "surface_variation": "The finish now has directional grain and a stronger oak-to-walnut distinction, but the top, apron and shelf still use straight-sided components; the turned leg profiles lack the target’s fuller shaping and edge refinement.",
+    "technical_integration": "The finish now has directional grain and a stronger oak-to-walnut distinction, but the top, apron and shelf still use straight-sided components; the turned leg profiles lack the target’s fuller shaping and edge refinement."
+  },
+  "render_evidence": [
+    "art/room_side_table/iterations/v003/render-runs/run-001/asset-gameplay-distance.png",
+    "art/room_side_table/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+    "art/room_side_table/iterations/v003/render-runs/run-001/asset-interior-oblique.png",
+    "art/room_side_table/iterations/v003/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 3,
+    "gameplay_readability": 3,
+    "geometric_detail": 3,
+    "material_realism": 3,
+    "proportion": 4,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "surface_variation": 3,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The finish now has directional grain and a stronger oak-to-walnut distinction, but the top, apron and shelf still use straight-sided components; the turned leg profiles lack the target’s fuller shaping and edge refinement. Close inspection still shows repeated flat faces and simplified transitions.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "Side table: the repeating eased edges are consistent, but the same radius covers nearly every exposed edge instead of following a hand-shaped profile.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v003/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v003/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_side_table/iterations/v003/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "hardware": {
+        "evidence": "Side table: the authored hardware and fasteners remain visible in the latest close and oblique captures.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v003/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v003/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_side_table/iterations/v003/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "joins": {
+        "evidence": "Side table: seams and pegs show component boundaries, but the render does not show convincing fitted joinery at the broad joints.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v003/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v003/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_side_table/iterations/v003/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "Side table: major parts are separated, but edges and joinery still lack the carved, fitted detail shown in the approved target.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v003/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v003/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_side_table/iterations/v003/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "Side table: the wood now has a warmer satin response and directional grain; the dark trim and metal remain separate.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v003/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v003/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_side_table/iterations/v003/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "surface_variation": {
+        "evidence": "Side table: directional grain is visible, but it repeats with similar scale across members and lacks the target’s knots and board-level variation.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v003/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v003/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_side_table/iterations/v003/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "Side table: the main top, panels and supporting members have visible, technically plausible thickness.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v003/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v003/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_side_table/iterations/v003/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The darker grain improves material hierarchy, but the large planes and basic turned leg profile still look like a procedural component model. The broad geometry and repeated edge treatment remain recognizably procedural at normal viewing distance.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "The ArtBrief uses an approved generated target and has no source photograph.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": true,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Keep the approved target and record v003 as best-current review art. Backlog the transfer until a mesh-authoring backend can build the missing target-specific shape and joinery; do not use another shader-only pass.",
+    "lost_visual_information": [
+      "The finish now has directional grain and a stronger oak-to-walnut distinction, but the top, apron and shelf still use straight-sided components; the turned leg profiles lack the target’s fuller shaping and edge refinement.",
+      "The approved target carries more convincing medium-scale profiles and individualized construction than the candidate scene."
+    ],
+    "preserved_components": [
+      "Side table: the RoomDefinition dimensions and gameplay placement are unchanged.",
+      "Side table: the target’s principal role, major subassemblies and hardware remain represented.",
+      "Separate wood shader and authored hardware materials load through the review registry."
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "material_generation"
+    ]
+  }
+}

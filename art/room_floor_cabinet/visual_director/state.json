@@ -1,0 +1,247 @@
+{
+  "approved_visual_target": {
+    "approval": "pass",
+    "approved_at_utc": "2026-11-02T04:46:38+00:00",
+    "concept_id": "room_floor_cabinet-family-r01",
+    "path": "art/room_floor_cabinet/visual_director/round-01/approved-target-r01.png",
+    "review_method": "pixel inspection; review evidence recorded by Luna",
+    "review_path": "art/room_floor_cabinet/visual_director/round-01/pixel-review-r01.md",
+    "sha256": "52e3af80c041fc69a5013a4f744f3d2a8b298ecec7aa04971112395fa8a0af71"
+  },
+  "asset_id": "room_floor_cabinet",
+  "best_3d_candidate": {
+    "candidate_file": "art/room_floor_cabinet/iterations/v003/candidate.json",
+    "candidate_id": "room_floor_cabinet-v003",
+    "evaluation_file": "art/room_floor_cabinet/iterations/v003/evaluation.json",
+    "updated_at_utc": "2026-11-02T05:07:47+00:00"
+  },
+  "candidate_history": [
+    {
+      "candidate_file": "art/room_floor_cabinet/iterations/v001/candidate.json",
+      "candidate_id": "room_floor_cabinet-v001",
+      "created_at_utc": "2026-11-02T04:49:31+00:00",
+      "parent_candidate_id": "",
+      "recipe_file": "art/room_floor_cabinet/iterations/v001/recipe.json",
+      "visual_director_attempt": 1,
+      "visual_director_provenance": {
+        "approved_visual_target": {
+          "approval": "pass",
+          "approved_at_utc": "2026-11-02T04:46:38+00:00",
+          "concept_id": "room_floor_cabinet-family-r01",
+          "path": "art/room_floor_cabinet/visual_director/round-01/approved-target-r01.png",
+          "review_method": "pixel inspection; review evidence recorded by Luna",
+          "review_path": "art/room_floor_cabinet/visual_director/round-01/pixel-review-r01.md",
+          "sha256": "52e3af80c041fc69a5013a4f744f3d2a8b298ecec7aa04971112395fa8a0af71"
+        },
+        "case_file": "art/room_floor_cabinet/visual_director/state.json",
+        "policy": {
+          "inputs": {
+            "category": "room_furniture",
+            "current_quality": "prototype",
+            "faction_defining": false,
+            "inferred": [],
+            "priority_tier": 1,
+            "screen_space_importance": 4,
+            "source_images_present": false,
+            "source_photo_required": false
+          },
+          "reasons": [
+            "Tier 1 scene-defining asset",
+            "high screen-space importance"
+          ],
+          "required": true
+        },
+        "status": "approved",
+        "strategy": "initial",
+        "target_episode_attempt": 1
+      }
+    },
+    {
+      "candidate_file": "art/room_floor_cabinet/iterations/v002/candidate.json",
+      "candidate_id": "room_floor_cabinet-v002",
+      "created_at_utc": "2026-11-02T04:54:57+00:00",
+      "parent_candidate_id": "room_floor_cabinet-v001",
+      "recipe_file": "art/room_floor_cabinet/iterations/v002/recipe.json",
+      "visual_director_attempt": 2,
+      "visual_director_provenance": {
+        "approved_visual_target": {
+          "approval": "pass",
+          "approved_at_utc": "2026-11-02T04:46:38+00:00",
+          "concept_id": "room_floor_cabinet-family-r01",
+          "path": "art/room_floor_cabinet/visual_director/round-01/approved-target-r01.png",
+          "review_method": "pixel inspection; review evidence recorded by Luna",
+          "review_path": "art/room_floor_cabinet/visual_director/round-01/pixel-review-r01.md",
+          "sha256": "52e3af80c041fc69a5013a4f744f3d2a8b298ecec7aa04971112395fa8a0af71"
+        },
+        "case_file": "art/room_floor_cabinet/visual_director/state.json",
+        "policy": {
+          "inputs": {
+            "category": "room_furniture",
+            "current_quality": "prototype",
+            "faction_defining": false,
+            "inferred": [],
+            "priority_tier": 1,
+            "screen_space_importance": 4,
+            "source_images_present": false,
+            "source_photo_required": false
+          },
+          "reasons": [
+            "Tier 1 scene-defining asset",
+            "high screen-space importance"
+          ],
+          "required": true
+        },
+        "status": "approved",
+        "strategy": "targeted_correction",
+        "target_episode_attempt": 2
+      }
+    },
+    {
+      "candidate_file": "art/room_floor_cabinet/iterations/v003/candidate.json",
+      "candidate_id": "room_floor_cabinet-v003",
+      "created_at_utc": "2026-11-02T05:04:19+00:00",
+      "parent_candidate_id": "room_floor_cabinet-v002",
+      "recipe_file": "art/room_floor_cabinet/iterations/v003/recipe.json",
+      "visual_director_attempt": 3,
+      "visual_director_provenance": {
+        "approved_visual_target": {
+          "approval": "pass",
+          "approved_at_utc": "2026-11-02T04:46:38+00:00",
+          "concept_id": "room_floor_cabinet-family-r01",
+          "path": "art/room_floor_cabinet/visual_director/round-01/approved-target-r01.png",
+          "review_method": "pixel inspection; review evidence recorded by Luna",
+          "review_path": "art/room_floor_cabinet/visual_director/round-01/pixel-review-r01.md",
+          "sha256": "52e3af80c041fc69a5013a4f744f3d2a8b298ecec7aa04971112395fa8a0af71"
+        },
+        "case_file": "art/room_floor_cabinet/visual_director/state.json",
+        "policy": {
+          "inputs": {
+            "category": "room_furniture",
+            "current_quality": "prototype",
+            "faction_defining": false,
+            "inferred": [],
+            "priority_tier": 1,
+            "screen_space_importance": 4,
+            "source_images_present": false,
+            "source_photo_required": false
+          },
+          "reasons": [
+            "Tier 1 scene-defining asset",
+            "high screen-space importance"
+          ],
+          "required": true
+        },
+        "status": "approved",
+        "strategy": "alternate_strategy",
+        "target_episode_attempt": 3
+      }
+    }
+  ],
+  "case_file": "art/room_floor_cabinet/visual_director/state.json",
+  "policy": {
+    "inputs": {
+      "category": "room_furniture",
+      "current_quality": "prototype",
+      "faction_defining": false,
+      "inferred": [],
+      "priority_tier": 1,
+      "screen_space_importance": 4,
+      "source_images_present": false,
+      "source_photo_required": false
+    },
+    "reasons": [
+      "Tier 1 scene-defining asset",
+      "high screen-space importance"
+    ],
+    "required": true
+  },
+  "production_asset": null,
+  "schema_version": 1,
+  "status": "backlog",
+  "target_episode": {
+    "attempts": [
+      {
+        "attempt": 1,
+        "candidate_id": "room_floor_cabinet-v001",
+        "decision": "continue",
+        "evaluated_at_utc": "2026-11-02T04:54:49+00:00",
+        "evaluation_file": "art/room_floor_cabinet/iterations/v001/evaluation.json",
+        "incumbent_comparison_result": "first_pass",
+        "status": "evaluated",
+        "strategy": "initial",
+        "visual_transfer_diagnosis": {
+          "corrective_action": "Darken non-metal wood surfaces only; frame the whole furniture form from room-interior quarter angles at a lower camera tilt; preserve the target and geometry for this attempt.",
+          "lost_visual_information": [
+            "Floor cabinet loses the target warm-oak/walnut value separation in the production render",
+            "the 3/4 view is dominated by the pale top; two drawer fronts appear but feet, side panels, and plinth are partly outside the crop",
+            "small joinery/hardware is less readable than in the concept target"
+          ],
+          "preserved_components": [
+            "technically valid floor cabinet scene and RoomDefinition envelope",
+            "separate furniture parts and intended silhouette",
+            "review-only Art Factory registry resolution"
+          ],
+          "primary_causes": [
+            "material_generation",
+            "lighting_render_presentation"
+          ]
+        }
+      },
+      {
+        "attempt": 2,
+        "candidate_id": "room_floor_cabinet-v002",
+        "decision": "continue",
+        "evaluated_at_utc": "2026-11-02T04:59:50+00:00",
+        "evaluation_file": "art/room_floor_cabinet/iterations/v002/evaluation.json",
+        "incumbent_comparison_result": "better",
+        "status": "evaluated",
+        "strategy": "targeted_correction",
+        "visual_transfer_diagnosis": {
+          "corrective_action": "Replace the shared StandardMaterial wood response with a separate, directional procedural wood shader; calculate gameplay distance from object height; preserve all target and RoomDefinition dimensions.",
+          "lost_visual_information": [
+            "The close view has complete framing and readable drawer layout; broad grain and edge transitions remain procedural, with limited material separation.",
+            "Directional grain and satin highlights are not transferred by the shared noise texture."
+          ],
+          "preserved_components": [
+            "Floor cabinet: dimensions pass technical validation and the constructed components are present.",
+            "Floor cabinet: production RoomDefinition review and gameplay dimensions remain unchanged."
+          ],
+          "primary_causes": [
+            "material_generation",
+            "lighting_render_presentation"
+          ]
+        }
+      },
+      {
+        "attempt": 3,
+        "candidate_id": "room_floor_cabinet-v003",
+        "decision": "continue",
+        "evaluated_at_utc": "2026-11-02T05:07:47+00:00",
+        "evaluation_file": "art/room_floor_cabinet/iterations/v003/evaluation.json",
+        "incumbent_comparison_result": "better",
+        "status": "evaluated",
+        "strategy": "alternate_strategy",
+        "visual_transfer_diagnosis": {
+          "corrective_action": "Keep the approved target and record v003 as best-current review art. Backlog the transfer until a mesh-authoring backend can build the missing target-specific shape and joinery; do not use another shader-only pass.",
+          "lost_visual_information": [
+            "The new grain and darker framing improve the drawer hierarchy, but the flat sides, repeated panel edges and small applied hardware do not carry the target’s shaped casework and fitted drawer construction.",
+            "The approved target carries more convincing medium-scale profiles and individualized construction than the candidate scene."
+          ],
+          "preserved_components": [
+            "Floor cabinet: the RoomDefinition dimensions and gameplay placement are unchanged.",
+            "Floor cabinet: the target’s principal role, major subassemblies and hardware remain represented.",
+            "Separate wood shader and authored hardware materials load through the review registry."
+          ],
+          "primary_causes": [
+            "geometry_loss",
+            "material_generation"
+          ]
+        }
+      }
+    ],
+    "status": "backlog",
+    "target_sha256": "52e3af80c041fc69a5013a4f744f3d2a8b298ecec7aa04971112395fa8a0af71"
+  },
+  "updated_at_utc": "2026-11-02T05:07:47+00:00",
+  "visual_brief_file": "art/room_floor_cabinet/visual_director/visual-brief-draft.json"
+}

@@ -7,6 +7,15 @@ var asset_id := ""
 var expected_asset_path := ""
 var captures: Array[Dictionary] = []
 
+const ROOM_FURNITURE_ASSET_IDS := [
+	"room_elevated_workbench",
+	"room_assembly_table",
+	"room_tool_wardrobe",
+	"room_floor_cabinet",
+	"room_chair",
+	"room_side_table",
+]
+
 
 func _initialize() -> void:
 	call_deferred("run")
@@ -145,6 +154,15 @@ func run() -> void:
 	var profile_yaw := 0.62 + PI * 0.5
 	var detail_yaw := 0.25
 	var target := asset_node.global_position + Vector3.UP * dimensions.y * 0.5
+	if asset_id in ROOM_FURNITURE_ASSET_IDS:
+		# The default close framing was built for the photographed room and clips
+		# large furniture. Keep all views inside the playable room, on the front
+		# and open-side quarter, and frame the whole constructed silhouette.
+		close_distance = maxf(54.0, dimensions.length() * 1.24)
+		three_quarter_yaw = 0.62
+		opposite_yaw = 0.25
+		profile_yaw = 0.12
+		detail_yaw = 0.48
 	if asset_id == "desk":
 		# Keep close cameras inside the source room. The default 0.62-rad camera
 		# lands behind the south wall for this desk's near-corner placement.
@@ -226,6 +244,9 @@ func run() -> void:
 			detail_yaw = PI
 	var asset_tilt := 38.0
 	var detail_tilt := 28.0
+	if asset_id in ROOM_FURNITURE_ASSET_IDS:
+		asset_tilt = 24.0
+		detail_tilt = 18.0
 	if asset_id in ["room_photo_window_production", "room_photo_french_door_production"]:
 		asset_tilt = 22.0
 		detail_tilt = 20.0
@@ -237,6 +258,10 @@ func run() -> void:
 		asset_tilt = 15.0
 		detail_tilt = 12.0
 	var follow_citizen: Node3D = asset_node if asset_id == "citizen" else null
+	if asset_id in ROOM_FURNITURE_ASSET_IDS:
+		var gameplay_distance := maxf(64.0, dimensions.y * 1.16)
+		if not await _capture(scene, "asset-gameplay-distance", target, gameplay_distance, 28.0, three_quarter_yaw, follow_citizen):
+			return
 	if asset_id == "citizen":
 		# The ArtBrief's gameplay-scale distance is intentionally separate from
 		# settlement framing and close inspection. It proves the citizen remains
@@ -246,7 +271,7 @@ func run() -> void:
 	if not await _capture(scene, "asset-three-quarter", target, close_distance, asset_tilt, three_quarter_yaw, follow_citizen):
 		return
 	var alternate_phase := "asset-opposite-three-quarter"
-	if asset_id in ["hammock_with_stand", "room_photo_window_production", "room_photo_french_door_production"]:
+	if asset_id in ROOM_FURNITURE_ASSET_IDS or asset_id in ["hammock_with_stand", "room_photo_window_production", "room_photo_french_door_production"]:
 		alternate_phase = "asset-interior-oblique"
 	if not await _capture(scene, alternate_phase, target, close_distance, asset_tilt, opposite_yaw, follow_citizen):
 		return
@@ -273,6 +298,8 @@ func run() -> void:
 		detail_tilt = asset_tilt
 	if asset_id.begins_with("settlement_"):
 		detail_distance *= 0.6
+	if asset_id in ROOM_FURNITURE_ASSET_IDS:
+		detail_distance = maxf(maxf(30.0, dimensions.length() * 0.88), dimensions.y * 1.25)
 	if not await _capture(scene, "asset-detail", target, detail_distance, detail_tilt, detail_yaw, follow_citizen):
 		return
 	var controlled_citizen_yaws := OS.get_environment("ROOMSCALE_ART_FACTORY_CITIZEN_YAW_SWEEP_DEGREES")

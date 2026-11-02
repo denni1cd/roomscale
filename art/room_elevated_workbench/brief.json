@@ -1,0 +1,55 @@
+{
+  "allow_stylization": false,
+  "asset_id": "room_elevated_workbench",
+  "camera_distances": [
+    2.0,
+    12.0,
+    64.0,
+    330.0
+  ],
+  "category": "room_furniture",
+  "current_quality": "prototype",
+  "display_name": "Room B Elevated Workbench",
+  "faction_defining": false,
+  "gameplay_invariants": {
+    "RoomDefinition_dimensions_and_landmarks_remain_authoritative": true,
+    "landmarks_activity_stations_and_citizen_assignments_are_unchanged": true,
+    "render_meshes_do_not_create_collision_navigation_selection_or_simulation_state": true
+  },
+  "intended_dimensions": [
+    58.0,
+    36.0,
+    30.0
+  ],
+  "iteration_budget": 5,
+  "materials": {
+    "drawer": "matching oak drawer fronts with small aged brass pulls",
+    "frame": "darker walnut/oak with visible joinery shoulders and subtle chamfers",
+    "hardware": "aged black iron vise plates and steel screw with turned wood handle",
+    "top": "warm honey oak with readable end grain, hand-worn edges and restrained dog holes"
+  },
+  "priority_tier": 1,
+  "prohibited_changes": [
+    "do not change RoomDefinition dimensions, position, object identity, collision, navigation, activity stations, or interaction targets",
+    "do not add presentation geometry to collision, navigation, selection, or task logic",
+    "do not substitute shader or color changes for visible furniture construction"
+  ],
+  "quality_tier": "B",
+  "reference_images": [],
+  "required_features": [
+    "thick multi-board worktop with end grain at both ends",
+    "workholding dog holes and realistic shoulder vise jaw, screw and handle",
+    "deep apron with two small drawers and distinct drawer reveals",
+    "four stout legs with pegged mortise-and-tenon joinery",
+    "lower stretcher frame on all four sides",
+    "separated oak, walnut, iron, steel and brass material response",
+    "clean support under the existing BENCH_SURFACE at exactly 36 inches"
+  ],
+  "schema_version": 1,
+  "screen_space_importance": 4,
+  "semantic_type": "human maker workshop workbench",
+  "source_photo_required": false,
+  "source_room_definition": "rooms/room_b.json",
+  "stylization_rationale": "",
+  "visual_target": "A robust 36-inch-high maker workbench fitted to the Room B envelope: thick joined oak slab with dog holes and darker end-grain breadboard ends, inset drawer bank and deep apron, four substantial legs with visible mortise-and-tenon joinery, a full lower stretcher frame, a black iron shoulder vise with screw and wood handle, and separate worn steel hardware. Preserve the 58 x 36 x 30 inch envelope and keep the BENCH_SURFACE interaction plane at y=36 inches."
+}

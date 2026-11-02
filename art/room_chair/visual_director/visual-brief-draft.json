@@ -1,0 +1,57 @@
+{
+  "art_direction": "RoomScale category: room_furniture. A deliberately low, broad workshop chair sized exactly to the unusual 25 x 19 x 23 inch Room A envelope. Give it a gently dished solid oak seat, four individually turned and slightly splayed legs, a low curved crest rail with three short shaped spindles, and a complete lower stretcher frame. It must remain visibly chair-like at normal Room A viewing distance without exceeding the supplied bounds.",
+  "asset_id": "room_chair",
+  "citizen_scale": {
+    "citizen_height_inches": 0.5,
+    "ratio_or_view": "Use the exact 19-inch height against a 0.5-inch citizen; derive a schematic if generated scale is inaccurate."
+  },
+  "construction_materials": [
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "hand-worn satin with restrained grain contrast",
+      "part": "finish"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "darker walnut legs, spindles and stretchers",
+      "part": "frame"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "visible seat tenons, pegged stretchers and spindle joints",
+      "part": "joins"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "warm oak with shallow dished surface and shaped perimeter",
+      "part": "seat"
+    }
+  ],
+  "dimensions_inches": [
+    25.0,
+    19.0,
+    23.0
+  ],
+  "faction_identity": null,
+  "gameplay_distance_readability": "Keep required features legible at the ArtBrief gameplay camera distances: 2.0, 12.0, 64.0, 330.0 inches.",
+  "intended_function": "A deliberately low, broad workshop chair sized exactly to the unusual 25 x 19 x 23 inch Room A envelope. Give it a gently dished solid oak seat, four individually turned and slightly splayed legs, a low curved crest rail with three short shaped spindles, and a complete lower stretcher frame. It must remain visibly chair-like at normal Room A viewing distance without exceeding the supplied bounds.",
+  "prohibited_failure_modes": [
+    "do not change RoomDefinition dimensions, position, object identity, collision, navigation, activity stations, or interaction targets",
+    "do not add presentation geometry to collision, navigation, selection, or task logic",
+    "do not substitute shader or color changes for visible furniture construction"
+  ],
+  "roomdefinition_authority": "ArtBrief dimensions are (25.0, 19.0, 23.0); source RoomDefinition: rooms/room_a.json. RoomDefinition remains authoritative for placement and gameplay.",
+  "semantic_identity": "compact low human workshop chair",
+  "separate_room_assets": [],
+  "silhouette_requirements": [
+    "broad dished seat with shaped edge",
+    "four turned and slightly splayed legs",
+    "low curved crest rail and three short spindles",
+    "joined stretchers on all sides",
+    "visible wood joinery within the envelope",
+    "compact readable chair silhouette",
+    "complete fit inside 25 x 19 x 23 inches"
+  ],
+  "source_photo_constraints": null,
+  "visual_references": []
+}

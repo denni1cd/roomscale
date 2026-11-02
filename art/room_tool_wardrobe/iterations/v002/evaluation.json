@@ -1,0 +1,168 @@
+{
+  "candidate_id": "room_tool_wardrobe-v002",
+  "created_at_utc": "2026-11-02T04:59:45.139347+00:00",
+  "decision": "continue",
+  "defects": [
+    "Tool wardrobe: no convincing directional wood grain or satin material response.",
+    "Tool wardrobe: gameplay-distance camera crops the cabinet crown."
+  ],
+  "hard_fail_reasons": [
+    "Tool wardrobe: v002 still misses its approved material character; its visible surfaces remain procedural, and the gameplay framing defect persists. The 64-inch gameplay view crops the crown."
+  ],
+  "incumbent_candidate_id": "room_tool_wardrobe-v001",
+  "incumbent_comparison": "Compared with v001, v002 improves the room-interior framing and its darkened wood is marginally less pale, but the approved timber response remains unmet. The full-object close view still clips the top at gameplay distance.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "material_generation",
+    "lighting_render_presentation"
+  ],
+  "next_action_hypothesis": "Use a per-asset procedural wood-grain ShaderMaterial with anisotropic board grain and a satin response; size gameplay framing from the tall axis; preserve the target and the authored RoomDefinition envelope.",
+  "observations": {
+    "art_direction_fit": "The close view supports the wardrobe role and joinery layout, but the fixed 64-inch gameplay view crops the top; material response remains too pale and noise-like.",
+    "close_up_quality": "The close view supports the wardrobe role and joinery layout, but the fixed 64-inch gameplay view crops the top; material response remains too pale and noise-like.",
+    "gameplay_readability": "The close view supports the wardrobe role and joinery layout, but the fixed 64-inch gameplay view crops the top; material response remains too pale and noise-like.",
+    "geometric_detail": "The close view supports the wardrobe role and joinery layout, but the fixed 64-inch gameplay view crops the top; material response remains too pale and noise-like.",
+    "material_realism": "The close view supports the wardrobe role and joinery layout, but the fixed 64-inch gameplay view crops the top; material response remains too pale and noise-like.",
+    "proportion": "The close view supports the wardrobe role and joinery layout, but the fixed 64-inch gameplay view crops the top; material response remains too pale and noise-like.",
+    "scale_fidelity": "The close view supports the wardrobe role and joinery layout, but the fixed 64-inch gameplay view crops the top; material response remains too pale and noise-like.",
+    "semantic_recognizability": "The cabinet carcass, raised doors, hinges, crown, five open shelves and stored tools read clearly in the close render. At 64 inches, the gameplay view cuts off the crown, and the large panels still show mottled rather than directional wood.",
+    "silhouette_quality": "The close view supports the wardrobe role and joinery layout, but the fixed 64-inch gameplay view crops the top; material response remains too pale and noise-like.",
+    "surface_variation": "The close view supports the wardrobe role and joinery layout, but the fixed 64-inch gameplay view crops the top; material response remains too pale and noise-like.",
+    "technical_integration": "The close view supports the wardrobe role and joinery layout, but the fixed 64-inch gameplay view crops the top; material response remains too pale and noise-like."
+  },
+  "render_evidence": [
+    "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-gameplay-distance.png",
+    "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-three-quarter.png",
+    "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-interior-oblique.png",
+    "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 2,
+    "close_up_quality": 2,
+    "gameplay_readability": 2,
+    "geometric_detail": 3,
+    "material_realism": 2,
+    "proportion": 4,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 4,
+    "surface_variation": 2,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "Tool wardrobe: the complete silhouette is framed, but material grain and component transitions remain visibly synthetic in close inspection.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "Tool wardrobe: broad edges have a repeated soft radius; small profile changes look machine-smoothed rather than hand-finished.",
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "Tool wardrobe: the authored hardware is present and visible, though it appears applied to simple forms.",
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "joins": {
+        "evidence": "Tool wardrobe: visible seams and pegs indicate separate parts, but their alignment does not convincingly show fitted joinery.",
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "Tool wardrobe: the main components are individually modeled, but small details lack the surface and edge refinement of finished furniture.",
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "Tool wardrobe: wood stays bright and matte under room lighting; the darker v002 albedo does not reproduce the target satin response.",
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "Tool wardrobe: broad wood areas show fine mottling, but no directional grain, board-to-board variation, or convincing finish wear.",
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "Tool wardrobe: primary panels and top have readable thickness in the three-quarter render.",
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_tool_wardrobe/iterations/v002/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The close view supports the wardrobe role and joinery layout, but the fixed 64-inch gameplay view crops the top; material response remains too pale and noise-like.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "This ArtBrief uses an approved generated visual target and has no source photograph.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": true,
+      "low_poly": false,
+      "materially_flat": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Replace the shared StandardMaterial wood response with a separate, directional procedural wood shader; calculate gameplay distance from object height; preserve all target and RoomDefinition dimensions.",
+    "lost_visual_information": [
+      "The close view supports the wardrobe role and joinery layout, but the fixed 64-inch gameplay view crops the top; material response remains too pale and noise-like.",
+      "Directional grain and satin highlights are not transferred by the shared noise texture."
+    ],
+    "preserved_components": [
+      "Tool wardrobe: dimensions pass technical validation and the constructed components are present.",
+      "Tool wardrobe: production RoomDefinition review and gameplay dimensions remain unchanged."
+    ],
+    "primary_causes": [
+      "material_generation",
+      "lighting_render_presentation"
+    ]
+  }
+}

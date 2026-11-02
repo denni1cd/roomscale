@@ -9,6 +9,7 @@ static func box(parent: Node3D, label: String, size: Vector3, at: Vector3, categ
 	item.position = at
 	item.mesh = rounded_box(size, bevel)
 	item.material_override = Materials.get_material(category, color)
+	item.set_meta("roomscale_material_category", category)
 	parent.add_child(item)
 	return item
 
@@ -59,6 +60,7 @@ static func cylinder(parent: Node3D, label: String, radius: float, height: float
 	item.mesh = _meshes[key]
 	item.position = at
 	item.material_override = Materials.get_material(category, color)
+	item.set_meta("roomscale_material_category", category)
 	parent.add_child(item)
 	return item
 

@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "method": "godot_procedural_room_furniture",
+  "instructions": "A compact deep 21-inch floor cabinet with a raised oak top, framed walnut face stiles, two inset drawer fronts with dovetailed corners and aged brass cup pulls, solid side panels, a recessed plinth and distinct short feet. Keep it inside 26 x 21 x 24 inches. Targeted correction: reduce only non-metal wood albedo by 30 percent and retain the separate brass/iron response.",
+  "parameters": {
+    "refinement": "roomscale_joinery_v2_material_correction",
+    "visual_director_strategy": "targeted_correction",
+    "diagnosis_ref": "room_floor_cabinet-v001",
+    "outputs": [
+      "room_floor_cabinet.tscn"
+    ]
+  },
+  "source_inputs": [
+    "art/room_floor_cabinet/visual_director/round-01/approved-target-r01.png",
+    "scripts/art_factory/generate_furniture_candidate.gd",
+    "scripts/visuals/visual_geometry.gd",
+    "scripts/visuals/material_library.gd",
+    "rooms/room_b.json"
+  ],
+  "tool": "Godot native furniture component authoring via RoomScale Art Factory",
+  "tool_version": "Godot 4.7.2",
+  "post_processing": [
+    "import as a native Godot PackedScene",
+    "retain individually constructed mesh parts with separate wood and hardware materials",
+    "fit modeled presentation entirely within the RoomDefinition envelope"
+  ],
+  "material_method": "Reusable StandardMaterial3D wood, iron, steel and brass with scale-aware surface texture and separate material response; joinery and furniture construction are modeled as distinct meshes. Round 02 applies a wood-only albedo reduction after the first production capture showed cream-colored oak; metallic hardware stays at the incumbent value.",
+  "import_configuration": {
+    "format": "Godot-native PackedScene",
+    "renderer": "gl_compatibility",
+    "units": "inches",
+    "normalization": "mesh bounds validated against exact ArtBrief envelope; runtime visual normalization preserves RoomDefinition dimensions",
+    "axis": "Godot X width / Y up / Z depth"
+  },
+  "deterministic_seed": 2513,
+  "generator_command": [
+    "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale\\.tools\\godot-4.7.2\\Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generate_furniture_candidate.gd"
+  ]
+}

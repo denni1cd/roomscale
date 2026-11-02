@@ -1,11 +1,11 @@
-# Production Art Backlog — Updated after Batch 4
+# Production Art Backlog — Updated after Batch 5
 
 This is the post-POC production backlog. It preserves POC 2.5 evidence and acceptance results; the entries below are not POC 2.5 regressions or changes to its acceptance amendment.
 
-## Current priority after Batch 4
+## Current priority after Batch 5
 
-1. **Room A/B major furniture family — next batch.** The refreshed inventory identifies instantiated Tier 1 assembly tables (4 definitions), chairs (6), side tables (6), elevated workbenches (4), floor cabinets (4), and tool wardrobes (4). These remain catalog imports or procedural/detailed-furniture fallbacks in the active rooms. Build a coordinated, materially constructed 5–6 asset family; preserve each RoomDefinition envelope and gameplay interaction. Reuse accepted assets only where the object role and silhouette actually fit.
-2. **French door source and production model.** The source photograph does not show the door. `room_photo_french_door_production-v002` remains continue because its hinges/latch are unreadable and glazing looks opaque. Its stale `asset_id` has been removed from the production room. Source an appropriate door reference before another bounded, source-conditioned attempt.
+1. **French door source and production model — next batch.** The source photograph does not show the door. `room_photo_french_door_production-v002` remains below target because its hinges/latch are unreadable and glazing looks opaque. Its stale `asset_id` has been removed from the production room. Source an appropriately licensed, relevant door reference before another bounded, source-conditioned attempt.
+2. **Room A/B furniture geometry follow-up.** Batch 5 approved six Visual Director targets and produced 18 technically valid candidates. The v003 material method improved warm wood color and grain, but all six still fail the production craftsmanship gate because target-specific profiles and joinery remain simple component geometry. The Visual Director attempt budgets are exhausted; preserve v003 as best-current review art and resume only with a genuine mesh-authoring backend that can build shaped casework, turned/curved members, and fitted joints. Do not run another shader-only loop.
 3. **Desk transfer follow-up.** `desk-v007` remains the production incumbent but fails the strict visual gate for material separation and glazing. Batch 2’s v059–v061 work reached a material/render diagnosis plateau. Do not restart parameter-only iterations; resume only with a materially different material/render strategy.
 4. **Room shell beyond finishes.** Batch 4 accepted photo-room carpet v003 and green paint v002. The floor is still a RoomDefinition sheet and the shell still uses segmented planes; keep geometry/gameplay authoritative. Room A/B boards, trim, ceilings, and lighting need source/style-specific review instead of reusing the photo-room carpet or wall color indiscriminately.
 5. **Faction visual identity.** Preserve current Clockwork building production and citizen-v089 as best-current review art. Verdant needs distinctive organic construction and dimensional foliage; Scavenger needs salvage silhouettes/materials. Avoid color-only variants and another citizen-only loop.
@@ -17,6 +17,8 @@ This is the post-POC production backlog. It preserves POC 2.5 evidence and accep
 - Batch 4: `room_shell_floor-v003` and `room_shell_wall_finish-v002`.
 
 These are scoped improvements. The inventory still contains substantial unregistered room furniture, runtime-generated geometry, and incomplete faction-specific art.
+
+Batch 5 did not change the production registry. The six Room A/B furniture candidates remain review-only and below target; see [Batch 5 furniture transfer review](batch-05-room-a-b-furniture.md).
 
 ## Batch 1 promotion detail
 

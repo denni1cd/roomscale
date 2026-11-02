@@ -1,0 +1,55 @@
+{
+  "allow_stylization": false,
+  "asset_id": "room_side_table",
+  "camera_distances": [
+    2.0,
+    12.0,
+    64.0,
+    330.0
+  ],
+  "category": "room_furniture",
+  "current_quality": "prototype",
+  "display_name": "Room A Side Table",
+  "faction_defining": false,
+  "gameplay_invariants": {
+    "RoomDefinition_dimensions_and_landmarks_remain_authoritative": true,
+    "landmarks_activity_stations_and_citizen_assignments_are_unchanged": true,
+    "render_meshes_do_not_create_collision_navigation_selection_or_simulation_state": true
+  },
+  "intended_dimensions": [
+    20.0,
+    20.0,
+    17.0
+  ],
+  "iteration_budget": 5,
+  "materials": {
+    "apron": "darker walnut shaped apron and drawer frame",
+    "hardware": "aged brass pull and dark iron pins",
+    "legs": "turned walnut with collars and foot details",
+    "shelf": "dark oak framed lower shelf with inset panel",
+    "top": "honey oak boards with end grain and eased perimeter"
+  },
+  "priority_tier": 1,
+  "prohibited_changes": [
+    "do not change RoomDefinition dimensions, position, object identity, collision, navigation, activity stations, or interaction targets",
+    "do not add presentation geometry to collision, navigation, selection, or task logic",
+    "do not substitute shader or color changes for visible furniture construction"
+  ],
+  "quality_tier": "B",
+  "reference_images": [],
+  "required_features": [
+    "oak top with real thickness and softened edge",
+    "front drawer with reveal and brass pull",
+    "shaped apron and four turned legs",
+    "lower framed shelf with inset panel",
+    "visible apron-to-leg joints and varied grain direction",
+    "complete fit inside 20 x 20 x 17 inches"
+  ],
+  "schema_version": 1,
+  "screen_space_importance": 4,
+  "semantic_type": "human workshop occasional side table",
+  "source_photo_required": false,
+  "source_room_definition": "rooms/room_a.json",
+  "stylization_rationale": "",
+  "visual_target": "A compact 20-inch occasional side table with a shaped honey-oak top and softened edge, one fitted drawer with aged brass pull, shaped apron, four individually turned legs, and lower inset shelf with distinct rails. Preserve the 20 x 20 x 17 inch Room A envelope."
+}
