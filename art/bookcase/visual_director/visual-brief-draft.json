@@ -1,0 +1,56 @@
+{
+  "art_direction": "RoomScale category: room_furniture. A believable freestanding household bookcase, 32 inches wide, 63 inches tall and 17 inches deep. Use warm stained oak with a restrained, fine grain; deep walnut face-frame stiles and rails; solid nosed shelves; framed side panels; a joined crown and plinth; small, fitted aged-brass shelf pins; and shaped feet. Include a modest, orderly collection of cloth- and leather-bound books with muted varied spines. Show finished edges and convincing board thickness. Keep the silhouette, shelf spacing, and detail density appropriate to a real human room. Preserve the exact 32 x 63 x 17 inch envelope.",
+  "asset_id": "bookcase",
+  "citizen_scale": {
+    "citizen_height_inches": 0.5,
+    "ratio_or_view": "Use the exact 63-inch height against a 0.5-inch citizen; derive a schematic if generated scale is inaccurate."
+  },
+  "construction_materials": [
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "warm stained oak with fine longitudinal grain and restrained satin response",
+      "part": "carcass"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "a modest arranged collection of cloth- and leather-bound books with varied muted spine colors",
+      "part": "contents"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "deep walnut stiles, rails, shaped nosings and inset side panels",
+      "part": "face_frame"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "small, believable aged brass shelf pins and fasteners",
+      "part": "hardware"
+    }
+  ],
+  "dimensions_inches": [
+    32.0,
+    63.0,
+    17.0
+  ],
+  "faction_identity": null,
+  "gameplay_distance_readability": "Keep required features legible at the ArtBrief gameplay camera distances: 2.0, 12.0, 64.0, 330.0 inches.",
+  "intended_function": "A believable freestanding household bookcase, 32 inches wide, 63 inches tall and 17 inches deep. Use warm stained oak with a restrained, fine grain; deep walnut face-frame stiles and rails; solid nosed shelves; framed side panels; a joined crown and plinth; small, fitted aged-brass shelf pins; and shaped feet. Include a modest, orderly collection of cloth- and leather-bound books with muted varied spines. Show finished edges and convincing board thickness. Keep the silhouette, shelf spacing, and detail density appropriate to a real human room. Preserve the exact 32 x 63 x 17 inch envelope.",
+  "prohibited_failure_modes": [
+    "do not change RoomDefinition dimensions, position, object identity, collision, navigation, activity stations, or interaction targets",
+    "do not add presentation geometry to collision, navigation, selection, or task logic",
+    "do not use the Room B workshop parts rack as a household bookcase substitute",
+    "do not substitute shader or color changes for visible furniture construction"
+  ],
+  "roomdefinition_authority": "ArtBrief dimensions are (32.0, 63.0, 17.0); source RoomDefinition: rooms/room_a.json. RoomDefinition remains authoritative for placement and gameplay.",
+  "semantic_identity": "freestanding household bookcase",
+  "separate_room_assets": [],
+  "silhouette_requirements": [
+    "full-depth fitted shelves with a visible front face frame and solid nosings",
+    "five useful shelf levels with varied, individually modeled book groups",
+    "framed side panels, shaped feet and a joined crown and plinth",
+    "visible joinery, eased edges, believable board thickness and varied grain direction",
+    "complete fit inside the authoritative 32 x 63 x 17 inch Room A envelope"
+  ],
+  "source_photo_constraints": null,
+  "visual_references": []
+}

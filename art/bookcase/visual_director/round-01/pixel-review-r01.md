@@ -1,0 +1,5 @@
+# Pixel review — Room A household bookcase target r01
+
+**Review result: pass.** I inspected the generated image at full size. It shows a complete freestanding household bookcase in a front three-quarter view, with five distinct shelf openings, visible framed side panels, substantial nosed shelves, a joined crown and plinth, shaped feet, fine board-aligned wood figure, and orderly muted books. The object reads as a residential bookcase rather than the Room B workshop parts rack. No crop, text, watermark, person, or unrelated room prop is present.
+
+The target has a dark warm oak appearance and moderately strong grain. The modeled candidate should preserve the reference's board-level construction while keeping grain contrast more restrained at Room A gameplay distance. The image cannot prove exact physical dimensions, fitting, collision separation, or production-scale readability; those remain mandatory 3D and integrated-scene checks. The approved envelope remains 32 × 63 × 17 inches from `rooms/room_a.json`.

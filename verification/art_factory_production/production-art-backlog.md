@@ -1,20 +1,20 @@
-# Production Art Backlog - Updated after Batch 10
+# Production Art Backlog - Updated after Batch 11
 
 This is the post-POC production backlog. It preserves POC 2.5 evidence and acceptance results; the entries below are not POC 2.5 regressions or changes to its acceptance amendment.
 
-## Current priority after Batch 10
+## Current priority after Batch 11
 
-1. **Live Room A furniture fallback.** The refreshed inventory still resolves the active Room A bookcase and chair through the `detailed_furniture` catalog fallback. Inspect whether existing accepted room-bookcase production art can replace a live fallback without changing RoomDefinition geometry; otherwise select a fresh, source-supported asset and run the strict pipeline. Batch 10's five furniture episodes are exhausted and remain review-only.
-2. **French-door opening.** Batch 9's round-02 v008 matches the four-row pane layout but remains too flat in wood and has unreadable hinges; v005 remains best current review. The episode is backlogged. Resume only with a materially different hinge/material strategy and greenery in review-room context, never foliage in the door mesh.
-3. **Desk transfer follow-up.** `desk-v007` remains the production incumbent but fails the strict visual gate for material separation and glazing. Batch 2's v059-v061 work reached a material/render diagnosis plateau. Resume only with a materially different material/render strategy.
-4. **Room shell beyond finishes.** Batch 4 accepted photo-room carpet v003 and green paint v002. The floor is still a RoomDefinition sheet and the shell still uses segmented planes; keep geometry/gameplay authoritative. Room A/B boards, trim, ceilings, and lighting need source/style-specific review.
+1. **Lighting and environment.** Tier 1 and scene-wide, but not yet measured as a bounded whole-scene pass. Review representative Room A/B and settlement captures, then adjust only the settings that improve material response, miniature scale and the human-room / civilization contrast without compromising active gameplay.
+2. **Room shell beyond finishes.** Batch 4 accepted photo-room carpet v003 and green paint v002. The floor is still a RoomDefinition sheet and the shell still uses segmented planes; keep geometry/gameplay authoritative. Trim and ceiling need source/style-specific review.
+3. **French-door opening.** Batch 9's round-02 v008 matches the four-row pane layout but remains too flat in wood and has unreadable hinges; v005 remains best current review. The episode is backlogged. Resume only with a materially different hinge/material strategy and greenery in review-room context, never foliage in the door mesh.
+4. **Desk transfer follow-up.** `desk-v007` remains the production incumbent but fails the strict visual gate for material separation and glazing. Batch 2's v059-v061 work reached a material/render diagnosis plateau. Resume only with a materially different material/render strategy.
 5. **Faction visual identity.** Preserve current Clockwork building production and citizen-v089 as best-current review art. Verdant needs distinctive organic construction and dimensional foliage; Scavenger needs salvage silhouettes/materials. Avoid color-only variants and another citizen-only loop.
 
 ## Whole-scene and cumulative status
 
-Batches 5-10 made no new canonical registry promotion. The current inventory covers 95 visible-art classes across 21 RoomDefinitions and 318 room object records: 48 Tier 1, 11 Tier 2, and 36 Tier 3. Eight Tier 1 classes currently have accepted production entries. Runtime geometry builder sites number 91 across 12 scripts. Batch 10 made no gameplay-code or RoomDefinition change; its Room A/B production renders showed no integrated improvement.
+Batches 5-11 made no new canonical registry promotion. The current inventory covers 95 visible-art classes across 21 RoomDefinitions and 318 room object records: 48 Tier 1, 11 Tier 2, and 36 Tier 3. Eight Tier 1 classes currently have accepted production entries. Runtime geometry builder sites number 91 across 12 scripts. Batch 10 made no gameplay-code or RoomDefinition change; its Room A/B production renders showed no integrated improvement. Batch 11 approved a household-bookcase target but produced no model because Blender was not configured in the generation process.
 
-The French door remains review-only: v005 is best current, v008 is an evaluated challenger, and the round-02 target episode is exhausted. Batch 10's five new furniture challengers corrected key envelope errors but still fail realism and craftsmanship. The best current candidates are workbench v008, assembly table v007, wardrobe v007, floor cabinet v005, and side table v007. See the [Batch 10 Room A/B furniture transfer](batch-10-room-a-b-furniture.md), [Batch 5 furniture transfer review](batch-05-room-a-b-furniture.md), [Batch 6 French-door transfer review](batch-06-french-door.md), [Batch 7 chair geometry pilot](batch-07-room-a-b-furniture-geometry.md), [Batch 8 furniture geometry and finish](batch-08-room-a-b-furniture-geometry.md), and [Batch 9 French-door transfer](batch-09-french-door.md).
+The French door remains review-only: v005 is best current, v008 is an evaluated challenger, and the round-02 target episode is exhausted. Batch 10's five new furniture challengers corrected key envelope errors but still fail realism and craftsmanship. The best current candidates are workbench v008, assembly table v007, wardrobe v007, floor cabinet v005, and side table v007. The Room A household bookcase target is approved but its only Art Factory attempt was blocked before Blender launch; it has no best 3D candidate. See the [Batch 11 Room A bookcase attempt](batch-11-room-a-bookcase.md), [Batch 10 Room A/B furniture transfer](batch-10-room-a-b-furniture.md), [Batch 5 furniture transfer review](batch-05-room-a-b-furniture.md), [Batch 6 French-door transfer review](batch-06-french-door.md), [Batch 7 chair geometry pilot](batch-07-room-a-b-furniture-geometry.md), [Batch 8 furniture geometry and finish](batch-08-room-a-b-furniture-geometry.md), and [Batch 9 French-door transfer](batch-09-french-door.md).
 
 ## Promoted production assets
 
@@ -24,7 +24,7 @@ The French door remains review-only: v005 is best current, v008 is an evaluated 
 
 These are scoped improvements. The inventory still contains substantial unregistered room furniture, runtime-generated geometry, and incomplete faction-specific art.
 
-Batches 5–10 did not change the production registry. The earlier Room A/B furniture candidates, Batch 10's five challengers, the French-door v005, and chair v006 remain review-only and below target; see the batch reports linked above.
+Batches 5–11 did not change the production registry. The earlier Room A/B furniture candidates, Batch 10's five challengers, the French-door v005, chair v006, and the blocked household-bookcase attempt remain outside accepted production; see the batch reports linked above.
 
 ## Batch 1 promotion detail
 

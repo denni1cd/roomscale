@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "deterministic_seed": 3016,
+  "generator_command": [
+    "python",
+    "{project_root}/scripts/art_factory/generators/visual_director_furniture_blender.py"
+  ],
+  "method": "blender_household_bookcase_r01",
+  "tool": "Blender-authored household furniture with fitted cabinet joinery",
+  "tool_version": "Blender 5.2.3 LTS",
+  "instructions": "Create a fresh, individually authored residential bookcase from the approved Visual Director target. This asset is for the live Room A household bookcase, not the Room B workshop parts rack. Preserve the exact 32 x 63 x 17 inch ArtBrief envelope. Model a solid carcass with framed side panels, five useful open shelf compartments, four interior shelves with thick nosings, joined face-frame rails and stiles, an integrated crown and plinth, shaped feet, restrained fitted brass shelf pins, and varied individually modeled books with muted spines. Include believable thickness, eased edges, and separated oak/walnut construction. Keep grain fine and board-aligned; do not create broad repeating waves or an oily plastic highlight. Do not add trays, tools, drawer fronts, doors, glazing, labels, or decorative writing. Export render geometry only. Do not edit RoomDefinitions or add geometry to collision, navigation, selection, interaction, activity, assignment, or simulation systems.",
+  "material_method": "Embedded warm oak, dark walnut, aged brass, cloth book bindings, and warm ivory page-edge PBR; deterministic per-object timber UV variation",
+  "parameters": {
+    "asset_type": "household_bookcase",
+    "generation_variant": "bookcase_household_r01_initial",
+    "outputs": ["asset.glb", "generation-record.json"],
+    "visual_director_strategy": "initial",
+    "visual_director_target": "art/bookcase/visual_director/round-01/candidate-bookcase-r01.png"
+  },
+  "source_inputs": [
+    "art/bookcase/brief.json",
+    "art/bookcase/visual_director/visual-brief-draft.json",
+    "art/bookcase/visual_director/state.json",
+    "art/bookcase/visual_director/round-01/candidate-bookcase-r01.png",
+    "art/bookcase/visual_director/round-01/pixel-review-r01.md",
+    "rooms/room_a.json",
+    "scripts/art_factory/generators/visual_director_furniture_blender.py",
+    "scripts/art_factory/generators/production_batch01_blender.py"
+  ],
+  "import_configuration": {
+    "format": "GLB with embedded PBR materials",
+    "renderer": "gl_compatibility",
+    "units": "inches",
+    "axis": "Blender X width / Y depth / Z height; glTF exporter and Godot importer convert Blender Z-up to Godot Y-up",
+    "normalization": "Validate source bounds against the exact ArtBrief envelope; RoomDefinition remains authoritative for runtime dimensions and landmarks"
+  },
+  "post_processing": [
+    "Import the GLB through the Art Factory and validate it in Godot 4.7.2.",
+    "Reject any candidate whose generated visual geometry exceeds its ArtBrief envelope.",
+    "Capture all standardized candidate-specific production render phases before evaluation.",
+    "Keep generated bookcase and book meshes outside collision, navigation, selection, and simulation."
+  ]
+}

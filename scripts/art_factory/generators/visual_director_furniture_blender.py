@@ -11,6 +11,7 @@ import sys
 from pathlib import Path
 
 ASSETS = {
+    "bookcase": {"type": "household_bookcase", "dimensions": (32.0, 63.0, 17.0)},
     "room_elevated_workbench": {"type": "workbench", "dimensions": (58.0, 36.0, 30.0)},
     "room_assembly_table": {"type": "assembly_table", "dimensions": (42.0, 24.0, 32.0)},
     "room_tool_wardrobe": {"type": "tool_wardrobe", "dimensions": (42.0, 70.0, 22.0)},
@@ -960,11 +961,270 @@ def build_side_table(base, mats):
             )
 
 
+def build_household_bookcase(base, mats):
+    """Build the Room A domestic bookcase, distinct from the Room B parts rack."""
+    width, depth = 32.0, 17.0
+    front = -depth * 0.5
+    inner_width = 27.2
+
+    # The four feet meet the broad plinth; the outer case dimensions remain exact.
+    for x in (-13.2, 13.2):
+        for y in (-6.7, 6.7):
+            _box(
+                base,
+                "Household bookcase shaped foot",
+                (x, y, 1.1),
+                (3.0, 2.5, 2.2),
+                mats["walnut"],
+                0.34,
+            )
+    _box(
+        base,
+        "Household bookcase recessed plinth",
+        (0.0, 0.0, 2.0),
+        (width, depth, 3.6),
+        mats["walnut"],
+        0.24,
+    )
+    _box(
+        base,
+        "Household bookcase plinth oak bead",
+        (0.0, front + 0.28, 3.2),
+        (width - 1.1, 0.56, 0.54),
+        mats["oak_light"],
+        0.13,
+    )
+
+    case_bottom, case_top = 4.1, 59.2
+    side_height = case_top - case_bottom
+    for side in (-1, 1):
+        side_x = side * 15.25
+        _box(
+            base,
+            "Household bookcase solid oak side panel",
+            (side_x, 0.0, (case_bottom + case_top) * 0.5),
+            (1.35, depth - 1.1, side_height),
+            mats["oak"],
+            0.16,
+        )
+        # Recessed-looking fields and narrow walnut rails expose the panel build.
+        outside_x = side * 15.88
+        for panel_bottom, panel_top in ((7.0, 30.1), (32.0, 56.2)):
+            _box(
+                base,
+                "Household bookcase inset side field",
+                (outside_x, 0.0, (panel_bottom + panel_top) * 0.5),
+                (0.10, 12.4, panel_top - panel_bottom),
+                mats["oak_light"],
+                0.045,
+            )
+            for rail_y in (-6.3, 6.3):
+                _box(
+                    base,
+                    "Household bookcase side panel stile",
+                    (outside_x + side * 0.035, rail_y, (panel_bottom + panel_top) * 0.5),
+                    (0.12, 0.42, panel_top - panel_bottom + 0.18),
+                    mats["walnut"],
+                    0.055,
+                )
+            for rail_z in (panel_bottom, panel_top):
+                _box(
+                    base,
+                    "Household bookcase side panel rail",
+                    (outside_x + side * 0.035, 0.0, rail_z),
+                    (0.12, 12.9, 0.42),
+                    mats["walnut"],
+                    0.055,
+                )
+
+    # A single fitted back and face-frame stiles keep the open book bays structural.
+    _box(
+        base,
+        "Household bookcase recessed oak back",
+        (0.0, 7.95, (case_bottom + case_top) * 0.5),
+        (inner_width, 0.82, side_height),
+        mats["walnut"],
+        0.10,
+    )
+    for x in (-14.0, 14.0):
+        _box(
+            base,
+            "Household bookcase walnut face-frame stile",
+            (x, front + 0.38, (case_bottom + case_top) * 0.5),
+            (2.05, 0.62, side_height),
+            mats["walnut"],
+            0.13,
+        )
+        _box(
+            base,
+            "Household bookcase oak stile bead",
+            (x + (-0.52 if x < 0.0 else 0.52), front + 0.03, (case_bottom + case_top) * 0.5),
+            (0.28, 0.18, side_height - 0.6),
+            mats["oak_light"],
+            0.07,
+        )
+
+    shelf_levels = [4.55, 15.25, 26.0, 36.75, 47.5]
+    for index, z in enumerate(shelf_levels):
+        shelf_material = mats["oak"] if index % 2 == 0 else mats["oak_light"]
+        _box(
+            base,
+            f"Household bookcase fitted shelf {index + 1}",
+            (0.0, 0.0, z),
+            (inner_width, depth - 2.0, 0.86),
+            shelf_material,
+            0.12,
+        )
+        _box(
+            base,
+            f"Household bookcase solid shelf nosing {index + 1}",
+            (0.0, front + 0.72, z + 0.16),
+            (inner_width - 0.08, 0.54, 0.56),
+            mats["walnut"] if index in (1, 3) else mats["oak_light"],
+            0.12,
+        )
+        for x in (-12.9, 12.9):
+            base.cylinder(
+                f"Household bookcase brass shelf pin {index + 1}",
+                (x, front + 1.1, z - 0.62),
+                0.075,
+                0.16,
+                mats["brass"],
+                "Y",
+                16,
+                0.012,
+            )
+
+    # Layered crown rails and top cap are joined to the side panels and back.
+    _box(
+        base,
+        "Household bookcase crown lower rail",
+        (0.0, 0.0, 59.6),
+        (width - 0.4, depth - 0.5, 1.15),
+        mats["walnut"],
+        0.14,
+    )
+    _box(
+        base,
+        "Household bookcase crown ogee band",
+        (0.0, front + 0.38, 60.55),
+        (width - 0.15, 0.76, 1.05),
+        mats["oak_light"],
+        0.20,
+    )
+    _box(
+        base,
+        "Household bookcase solid crown cap",
+        (0.0, 0.0, 62.15),
+        (width, depth, 1.7),
+        mats["oak"],
+        0.27,
+    )
+
+    book_materials = [
+        base.pbr_material(
+            "Household bookcase forest cloth bindings", (0.10, 0.18, 0.15), 0.0, 0.72, "fabric"
+        ),
+        base.pbr_material(
+            "Household bookcase navy cloth bindings", (0.08, 0.13, 0.19), 0.0, 0.70, "fabric"
+        ),
+        base.pbr_material(
+            "Household bookcase oxblood leather bindings", (0.27, 0.09, 0.065), 0.0, 0.63, "fabric"
+        ),
+        base.pbr_material(
+            "Household bookcase russet cloth bindings", (0.39, 0.22, 0.11), 0.0, 0.72, "fabric"
+        ),
+        base.pbr_material(
+            "Household bookcase olive linen bindings", (0.31, 0.30, 0.18), 0.0, 0.76, "fabric"
+        ),
+    ]
+    gilt = base.pbr_material(
+        "Household bookcase aged gold spine tooling", (0.56, 0.39, 0.17), 0.62, 0.39, "metal"
+    )
+    page_material = base.pbr_material(
+        "Household bookcase warm ivory page edges", (0.70, 0.62, 0.45), 0.0, 0.82, "paper"
+    )
+
+    # Each compartment has a distinct book grouping, leaving visible shelf space.
+    patterns = [
+        [
+            (0.00, 0.94, 6.3, 0),
+            (1.02, 1.20, 7.2, 1),
+            (2.30, 0.88, 5.9, 3),
+            (3.27, 1.16, 6.8, 2),
+            (4.50, 1.05, 6.1, 4),
+        ],
+        [
+            (-1.4, 0.88, 6.5, 2),
+            (-0.45, 1.05, 7.0, 3),
+            (0.70, 1.20, 6.1, 4),
+            (2.00, 0.94, 7.4, 0),
+            (3.05, 1.12, 6.7, 1),
+            (4.25, 0.98, 5.8, 2),
+        ],
+        [
+            (-5.4, 0.98, 6.7, 4),
+            (-4.35, 1.20, 7.1, 0),
+            (-3.06, 0.88, 6.0, 1),
+            (-2.12, 1.10, 7.5, 2),
+            (-0.95, 0.96, 6.4, 3),
+        ],
+        [
+            (-1.8, 1.00, 7.2, 1),
+            (-0.73, 0.90, 6.3, 0),
+            (0.25, 1.18, 7.6, 4),
+            (1.50, 1.02, 6.5, 2),
+            (2.60, 1.15, 7.0, 3),
+            (3.82, 0.96, 6.2, 1),
+        ],
+        [
+            (-5.9, 0.92, 6.0, 3),
+            (-4.9, 1.12, 6.6, 2),
+            (-3.7, 0.97, 7.2, 4),
+            (-2.65, 1.16, 6.5, 0),
+            (-1.4, 0.94, 6.9, 1),
+        ],
+    ]
+    for row, books in enumerate(patterns):
+        shelf_z = shelf_levels[row]
+        for book_index, (x, book_width, book_height, color_index) in enumerate(books):
+            book_depth = 3.7 + (book_index % 3) * 0.22
+            book_y = -4.35 + (book_index % 2) * 0.30
+            book_z = shelf_z + 0.43 + book_height * 0.5
+            cover = book_materials[color_index]
+            _box(
+                base,
+                f"Household bookcase clothbound volume r{row + 1} b{book_index + 1}",
+                (x, book_y, book_z),
+                (book_width, book_depth, book_height),
+                cover,
+                0.10,
+            )
+            _box(
+                base,
+                f"Household bookcase ivory page block r{row + 1} b{book_index + 1}",
+                (x, book_y + 0.24, book_z),
+                (book_width * 0.74, book_depth * 0.84, book_height * 0.88),
+                page_material,
+                0.045,
+            )
+            for band_z in (book_z - book_height * 0.34, book_z + book_height * 0.34):
+                _box(
+                    base,
+                    f"Household bookcase gilt spine band r{row + 1} b{book_index + 1}",
+                    (x, book_y - book_depth * 0.5 - 0.03, band_z),
+                    (book_width * 0.8, 0.055, 0.10),
+                    gilt,
+                    0.022,
+                )
+
+
 def _run_in_blender(asset_type: str, output_file: Path, generation_variant: str = "") -> None:
     base = _base_module()
     base.clear_scene()
     mats = _materials(base, generation_variant)
     builders = {
+        "household_bookcase": build_household_bookcase,
         "workbench": build_workbench,
         "assembly_table": build_assembly_table,
         "tool_wardrobe": build_tool_wardrobe,
