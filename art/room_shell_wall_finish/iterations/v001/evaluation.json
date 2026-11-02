@@ -1,0 +1,150 @@
+{
+  "candidate_id": "room_shell_wall_finish-v001",
+  "created_at_utc": "2026-11-02T04:02:21+00:00",
+  "decision": "continue",
+  "defects": [
+    "Opposite edge bands differ by mean 6.1 RGB levels horizontally and 6.7 vertically.",
+    "The 12-inch projection repeat is visible as tonal squares in the close capture.",
+    "The default detail view includes separate wall art in the review area."
+  ],
+  "hard_fail_reasons": [
+    "The current room render shows repeated square tonal patches instead of a continuous plain painted wall."
+  ],
+  "incumbent_candidate_id": "",
+  "incumbent_comparison": "No stable registered wall finish exists. The former paint shader is the baseline; v001 has better color and real texture, but its square repeats are not acceptable.",
+  "incumbent_comparison_result": "",
+  "likely_causes": [
+    "The target was not edge-prepared for repetition.",
+    "The 12-inch repeat magnifies low-frequency swatch variation into visible patches.",
+    "The close focus did not select a clear wall region away from separate room objects."
+  ],
+  "next_action_hypothesis": "Use a pixel-reviewed tileable target, reduce world-space repeat to 24 inches, and focus on an uninterrupted southwest part of the south wall.",
+  "observations": {
+    "art_direction_fit": "The green color and matte response fit the photograph, but visible patches depart from its continuous plain wall.",
+    "close_up_quality": "The material is legible on the south wall, but visible repeats and separate wall art reduce the clean review area.",
+    "gameplay_readability": "The room retains a plain dark-green wall read at room scale; opening, baseboard, crown, and cutaway remain unchanged.",
+    "geometric_detail": "This is a material-only candidate; wall edges and openings remain RoomDefinition-owned.",
+    "material_realism": "The deep muted green approaches the source, but the 12-inch world repeat reads as square patches in the close view.",
+    "proportion": "The 156 x 108 x 2-inch sample bounds and all RoomDefinition wall segments remain unchanged.",
+    "scale_fidelity": "Godot validates the 156 x 108 x 2-inch presentation sample; runtime dimensions remain RoomDefinition-owned.",
+    "semantic_recognizability": "The dark green surface reads as painted interior wall, with trim and openings separate.",
+    "silhouette_quality": "The plain wall silhouette, cutaway, and openings remain unchanged.",
+    "source_resemblance": "The color family matches the photographed walls, but periodic patching is not present in the source.",
+    "surface_variation": "Fine paint stipple is visible without new panel geometry; the larger repeat interrupts its consistency.",
+    "technical_integration": "Godot 4.7.2 validates the candidate and the production resolver binds it to paint segments without fallback."
+  },
+  "render_evidence": [
+    "art/room_shell_wall_finish/iterations/v001/render-runs/run-001/room-scale.png",
+    "art/room_shell_wall_finish/iterations/v001/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 3,
+    "gameplay_readability": 4,
+    "geometric_detail": 3,
+    "material_realism": 3,
+    "proportion": 5,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 5,
+    "source_resemblance": 3,
+    "surface_variation": 4,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The close capture shows repeated tonal squares and includes unrelated wall art in the review area.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "The production close view reveals repeated square variation across the painted surface.",
+        "evidence_refs": [
+          "art/room_shell_wall_finish/iterations/v001/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "hardware": {
+        "evidence": "Not applicable to a painted wall; window and door hardware remain separate.",
+        "evidence_refs": [
+          "art/room_shell_wall_finish/iterations/v001/render-runs/run-001/room-scale.png"
+        ],
+        "pass": true
+      },
+      "joins": {
+        "evidence": "Wall segment and opening joins remain RoomDefinition-owned; no candidate geometry was introduced.",
+        "evidence_refs": [
+          "art/room_shell_wall_finish/iterations/v001/render-runs/run-001/room-scale.png"
+        ],
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "Not applicable to this material-only asset; room shell geometry, casing, and trim remain separate.",
+        "evidence_refs": [
+          "art/room_shell_wall_finish/iterations/v001/render-runs/run-001/room-scale.png"
+        ],
+        "pass": true
+      },
+      "material_response": {
+        "evidence": "The green painted surface remains matte in the production close view; roughness is 0.94.",
+        "evidence_refs": [
+          "art/room_shell_wall_finish/iterations/v001/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "surface_variation": {
+        "evidence": "Fine stipple is present, but the larger repeat is visible and inconsistent with uninterrupted paint.",
+        "evidence_refs": [
+          "art/room_shell_wall_finish/iterations/v001/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "Not applicable to this paint material; existing RoomDefinition wall thickness is unchanged.",
+        "evidence_refs": [
+          "art/room_shell_wall_finish/iterations/v001/render-runs/run-001/room-scale.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The repeated 12-inch patches are visible on the plain wall and weaken the painted-wall read.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "No",
+      "applicable": true,
+      "evidence": "The photographed wall is plain continuous green paint; the production capture shows a repeated patch pattern.",
+      "pass": false
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Make the approved target pixel-seamless, lower repetition to 24 inches per tile, and use a close view away from separate art and openings.",
+    "lost_visual_information": [
+      "Broad tonal regions in the approved swatch repeat as visible square patches.",
+      "The source wall is uninterrupted plain paint."
+    ],
+    "preserved_components": [
+      "Deep muted forest-green color",
+      "Matte painted drywall character",
+      "Existing wall dimensions, cutaway, openings, baseboards, and crown"
+    ],
+    "primary_causes": [
+      "uv_mapping",
+      "texture_baking"
+    ]
+  }
+}

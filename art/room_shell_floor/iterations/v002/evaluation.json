@@ -1,0 +1,144 @@
+{
+  "candidate_id": "room_shell_floor-v002",
+  "created_at_utc": "2026-11-02T04:07:05+00:00",
+  "decision": "continue",
+  "defects": [
+    "The current production-light color is still noticeably brighter than the source photograph."
+  ],
+  "hard_fail_reasons": [
+    "The floor remains too bright for confident source-photo acceptance under the production lighting."
+  ],
+  "incumbent_candidate_id": "room_shell_floor-v001",
+  "incumbent_comparison": "Compared with room_shell_floor-v001, the corrected target removes repeat seams, relocates the close camera to clear floor, and lowers the sampled room value from about RGB 242/236/231 to 178/171/159. It is the best 3D candidate so far, but remains lighter than the source.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "RoomScale ambient and fill lighting amplify the approved albedo target."
+  ],
+  "next_action_hypothesis": "Keep the approved target and normal response, lower only the recorded linear albedo multiplier from 0.66 to 0.46, and compare the same room-scale and clear close views.",
+  "observations": {
+    "art_direction_fit": "The source-matched carpet improves the floor read over both the bright v001 render and the procedural fallback, but still needs a lower production-light value.",
+    "close_up_quality": "The clear southwest patch shows carpet fibers with no visible periodic boundary; unrelated set shadows remain at the edge of the capture.",
+    "gameplay_readability": "At full-room distance the material remains quiet and all floor collision, navigation, and object placement remain unchanged.",
+    "geometric_detail": "The candidate adds no room geometry; the approved target contributes dense short-pile detail in its albedo and low-strength normal map.",
+    "material_realism": "The floor is matte and has a restrained warm gray-beige hue, but room-scale samples near RGB 178/171/159 remain lighter than the photographed carpet.",
+    "proportion": "RoomDefinition still controls the 156 x 144-inch floor and its height; the sample scene validates at those dimensions.",
+    "scale_fidelity": "The presentation sample is exactly 156 x 1 x 144 inches and is not used for runtime geometry.",
+    "semantic_recognizability": "The room-scale surface reads as continuous warm gray-beige residential carpet; short looped fibers are visible in close inspection.",
+    "silhouette_quality": "The existing room floor silhouette is unchanged; this asset supplies a presentation material only.",
+    "source_resemblance": "The color family and low pile match the photograph, but the current production render is brighter than the visible carpet in the source.",
+    "surface_variation": "Short-pile flecks read at close range without the broad 8-inch edge seam from v001; processed target edges match within one RGB level.",
+    "technical_integration": "Godot validates the embedded material and the RoomScale renderer resolves the v002 candidate through the explicit review registry."
+  },
+  "render_evidence": [
+    "art/room_shell_floor/iterations/v002/render-runs/run-001/room-scale.png",
+    "art/room_shell_floor/iterations/v002/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 4,
+    "gameplay_readability": 4,
+    "geometric_detail": 4,
+    "material_realism": 3,
+    "proportion": 5,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 5,
+    "source_resemblance": 3,
+    "surface_variation": 4,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "Yes",
+      "evidence": "The clear floor capture shows dense short pile and no visible swatch boundary; the small far-edge shadows are from other RoomScale objects.",
+      "pass": true
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "The approved target has exact opposite-edge continuity to within one RGB level; no tile seam appears in the Godot close capture.",
+        "evidence_refs": [
+          "art/room_shell_floor/iterations/v002/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "Not applicable and not visible for a carpet finish; no hardware is part of this asset.",
+        "evidence_refs": [
+          "art/room_shell_floor/iterations/v002/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "joins": {
+        "evidence": "The floor material remains continuous across the room view; geometry and collision stay with RoomDefinition.",
+        "evidence_refs": [
+          "art/room_shell_floor/iterations/v002/render-runs/run-001/room-scale.png"
+        ],
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "This carpet iteration is texture-only; the room floor has no fabricated panels or hardware, and its structural build remains unchanged.",
+        "evidence_refs": [
+          "art/room_shell_floor/iterations/v002/render-runs/run-001/room-scale.png"
+        ],
+        "pass": true
+      },
+      "material_response": {
+        "evidence": "The carpet is matte, but the full-room sample remains brighter than the source photograph under production lighting.",
+        "evidence_refs": [
+          "art/room_shell_floor/iterations/v002/render-runs/run-001/room-scale.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "Fine dense pile is visible without an obvious repeating square or broad motif.",
+        "evidence_refs": [
+          "art/room_shell_floor/iterations/v002/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "thickness": {
+        "evidence": "Cannot be assessed from a material-only candidate; floor thickness remains RoomDefinition-owned and the sample does not change it.",
+        "evidence_refs": [
+          "art/room_shell_floor/iterations/v002/render-runs/run-001/room-scale.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "evidence": "The room-scale floor reads as residential carpet rather than a repeating board or color-only plane.",
+      "pass": true
+    },
+    "photo_character": {
+      "answer": "No",
+      "applicable": true,
+      "evidence": "The carpet type and hue family are close, but the production floor still renders lighter than the photographed carpet.",
+      "pass": false
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Keep the approved target and map generation; apply a smaller linear albedo multiplier and rerender the same room overview and clear close patch.",
+    "lost_visual_information": [
+      "The current RoomScale lighting keeps the floor brighter than the photographed gray-beige carpet."
+    ],
+    "preserved_components": [
+      "Dense short-pile fiber character",
+      "Seamless warm gray-beige target",
+      "RoomDefinition floor footprint, height, collision, navigation, and objects"
+    ],
+    "primary_causes": [
+      "lighting_render_presentation"
+    ]
+  }
+}

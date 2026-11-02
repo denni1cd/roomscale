@@ -1,0 +1,70 @@
+{
+  "deterministic_seed": 43001,
+  "generator_command": [
+    "{project_root}/.tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generators/generate_room_shell_surface.gd"
+  ],
+  "import_configuration": {
+    "edge_repeat_max_delta_rgb": 1,
+    "format": "Node3D PackedScene with embedded ImageTextures and one BoxMesh sample",
+    "material_repeat_inches": 8.0,
+    "renderer": "gl_compatibility",
+    "runtime_geometry": "unchanged RoomDefinition-driven shell",
+    "texture_projection": "world-space triplanar on RoomDefinition meshes",
+    "units": "inches"
+  },
+  "instructions": "Copy the pixel-reviewed, seamless Visual Director albedo target without repainting. Derive only a restrained normal map and uniform roughness texture. Keep the sample scene presentation-only; RoomDefinition remains authoritative for all runtime geometry, openings, collisions and navigation.",
+  "material_method": "Approved seamless albedo copied byte-for-byte; restrained image-derived normal, uniform roughness, world-space triplanar projection, and recipe-recorded linear tint.",
+  "method": "godot_room_surface_pbr",
+  "parameters": {
+    "albedo_tint": [
+      0.46,
+      0.46,
+      0.44
+    ],
+    "bump_scale": 0.018,
+    "diagnosis_ref": "room_shell_floor-v002",
+    "edge_blend_pixels": 48,
+    "edge_prepared_target": true,
+    "gameplay_geometry_changed": false,
+    "normal_scale": 0.055,
+    "outputs": [
+      "asset.tscn",
+      "albedo.png",
+      "normal.png",
+      "roughness.png",
+      "generation-record.json"
+    ],
+    "repeat_inches": 8.0,
+    "roughness": 0.97,
+    "runtime_room_definition_is_authoritative": true,
+    "source_candidate": "room_shell_floor-v002",
+    "visual_director_strategy": "targeted_correction",
+    "visual_director_target": "art/room_shell_floor/visual_director/round-02/approved-target-r02.png"
+  },
+  "post_processing": [
+    "validate candidate bounds and embedded texture resources through the Godot Art Factory validator",
+    "render the candidate through the room_photo_luna production room route with explicit validated review-only dependencies",
+    "inspect full-room, clear surface close-up, wall/floor joins, texture repeat, tint, openings, and source color transfer",
+    "compare candidate against the existing RoomScale appearance and representative Room A/B views",
+    "apply targeted linear tint correction from the v002 room-scale diagnosis while preserving approved albedo target and material maps"
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "art/room_shell_floor/brief.json",
+    "art/room_shell_floor/visual_director/round-02/approved-target-r02.png",
+    "art/room_shell_floor/visual_director/round-02/visual-development.md",
+    "photo_holder/Sample (1).jpg",
+    "rooms/room_photo_luna.json",
+    "scripts/art_factory/generators/generate_room_shell_surface.gd",
+    "scripts/art_factory/tileable_texture.gd",
+    "art/room_shell_floor/iterations/v002/evaluation.json",
+    "art/room_shell_floor/iterations/v002/render-runs/run-001/room-scale.png"
+  ],
+  "tool": "Godot 4.7.2 headless Art Factory room-surface generator",
+  "tool_version": "Godot 4.7.2-stable"
+}

@@ -1,0 +1,151 @@
+{
+  "candidate_id": "room_shell_floor-v001",
+  "created_at_utc": "2026-11-02T04:02:21+00:00",
+  "decision": "continue",
+  "defects": [
+    "Opposite target borders differ by mean 48.3 RGB levels horizontally and 50.5 vertically.",
+    "Room-scale carpet samples near RGB 242/236/231 versus RGB 202/199/193 for the existing material.",
+    "The detail capture is dominated by the central green floor seat."
+  ],
+  "hard_fail_reasons": [
+    "The approved image has an edge discontinuity that becomes a visible repeat seam in the room.",
+    "The production render is substantially brighter than the existing floor and the close camera is occluded."
+  ],
+  "incumbent_candidate_id": "",
+  "incumbent_comparison": "The procedural fallback is the only stable floor material. It is less detailed but materially closer in value; v001 is not a production improvement.",
+  "incumbent_comparison_result": "",
+  "likely_causes": [
+    "The generated swatch was copied directly without periodic edge preparation.",
+    "The source texture is bound with white albedo under RoomScale ambient and fill lighting.",
+    "The review framing targeted the geometric center rather than a clear carpet patch."
+  ],
+  "next_action_hypothesis": "Use a pixel-reviewed seamless target, preserve the existing floor tint as a recorded linear albedo multiplier, focus on the clear southwest floor patch, and compare in the same production scene.",
+  "observations": {
+    "art_direction_fit": "The gray-beige color and short pile fit, but over-bright transfer and repeat edges weaken the source match.",
+    "close_up_quality": "The detail camera focuses on the central green floor seat, which occludes the carpet and prevents a clean material review.",
+    "gameplay_readability": "The floor remains continuous and collision/navigation geometry is unchanged, though the pale field is brighter than the photographed carpet.",
+    "geometric_detail": "Godot imports one sample mesh and the map carries short-fiber detail; room geometry remains separate.",
+    "material_realism": "The room-scale render samples near RGB 242/236/231 in clear floor patches, about 40 levels brighter than the fallback at the same locations.",
+    "proportion": "The 156 x 144-inch floor footprint and height remain owned by the room definition.",
+    "scale_fidelity": "Godot validates the sample at exactly 156 x 1 x 144 inches; it supplies a material only.",
+    "semantic_recognizability": "The material is visibly carpet, but its bright repeated field is not yet a strong source match.",
+    "silhouette_quality": "RoomDefinition floor geometry is unchanged; this material asset defines no new silhouette.",
+    "source_resemblance": "The render is substantially lighter than the photographed warm-gray carpet and shows a repeat seam absent from the source.",
+    "surface_variation": "The close view contains fine carpet loops, but the 8-inch repeat exposes a visible periodic boundary because target edges do not match.",
+    "technical_integration": "Godot 4.7.2 validates the candidate and the production resolver loads it through the review registry without fallback."
+  },
+  "render_evidence": [
+    "art/room_shell_floor/iterations/v001/render-runs/run-002/room-scale.png",
+    "art/room_shell_floor/iterations/v001/render-runs/run-002/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 2,
+    "gameplay_readability": 3,
+    "geometric_detail": 3,
+    "material_realism": 2,
+    "proportion": 5,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 5,
+    "source_resemblance": 2,
+    "surface_variation": 4,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The close capture is obstructed by the green floor seat and the texture has a measurable repeat seam.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "The repeat boundary is visible because horizontal and vertical target edge bands differ substantially.",
+        "evidence_refs": [
+          "art/room_shell_floor/iterations/v001/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "hardware": {
+        "evidence": "Not applicable to a carpet material; no hardware belongs to this asset.",
+        "evidence_refs": [
+          "art/room_shell_floor/iterations/v001/render-runs/run-002/room-scale.png"
+        ],
+        "pass": true
+      },
+      "joins": {
+        "evidence": "RoomDefinition floor geometry is unchanged; material joins are judged by the continuous room-scale surface.",
+        "evidence_refs": [
+          "art/room_shell_floor/iterations/v001/render-runs/run-002/room-scale.png"
+        ],
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "Not applicable to a material-only candidate; no fabricated geometry is introduced.",
+        "evidence_refs": [
+          "art/room_shell_floor/iterations/v001/render-runs/run-002/room-scale.png"
+        ],
+        "pass": true
+      },
+      "material_response": {
+        "evidence": "The full-room render is roughly 40 RGB levels brighter than the fallback in clear floor regions.",
+        "evidence_refs": [
+          "art/room_shell_floor/iterations/v001/render-runs/run-002/room-scale.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "The close capture shows dense short fibers and restrained warm-gray variation, although the edge repeat remains defective.",
+        "evidence_refs": [
+          "art/room_shell_floor/iterations/v001/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "thickness": {
+        "evidence": "Not applicable to this material-only candidate; the existing RoomDefinition owns floor thickness.",
+        "evidence_refs": [
+          "art/room_shell_floor/iterations/v001/render-runs/run-002/room-scale.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The room-scale carpet is too pale for the source and the repeated swatch edge is visible in close inspection.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "No",
+      "applicable": true,
+      "evidence": "The source photograph shows muted gray-beige carpet; the current room render is much lighter and its repeat seams are not present in the photo.",
+      "pass": false
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Use a pixel-reviewed tileable albedo, blend opposite-edge bands, apply a recorded subdued albedo multiplier, and frame an unoccluded floor patch.",
+    "lost_visual_information": [
+      "The repeated texture exposes edge discontinuities absent from the photographed continuous carpet.",
+      "Room lighting raises the carpet value above the restrained warm-gray source appearance."
+    ],
+    "preserved_components": [
+      "Warm gray-beige carpet color family",
+      "Dense short-pile fiber identity",
+      "RoomDefinition floor dimensions, collision, and navigation"
+    ],
+    "primary_causes": [
+      "uv_mapping",
+      "lighting_render_presentation"
+    ]
+  }
+}

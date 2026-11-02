@@ -19,6 +19,12 @@ func run() -> void:
 	var registry_path := OS.get_environment("ROOMSCALE_ART_REGISTRY")
 	var room_file := OS.get_environment("ROOMSCALE_ART_FACTORY_ROOM_FILE")
 	expected_asset_path = OS.get_environment("ROOMSCALE_ART_FACTORY_EXPECTED_ASSET")
+	var brief_path := OS.get_environment("ROOMSCALE_ART_FACTORY_BRIEF")
+	var brief_value: Variant = JSON.parse_string(FileAccess.get_file_as_string(brief_path)) if not brief_path.is_empty() else null
+	if not brief_value is Dictionary:
+		_fail("ArtBrief is required for candidate-specific production framing")
+		return
+	var brief: Dictionary = brief_value
 	if asset_id.is_empty() or candidate_id.is_empty() or output_directory.is_empty() or registry_path.is_empty():
 		_fail("asset, candidate, output directory, and registry override are required")
 		return
@@ -48,17 +54,42 @@ func run() -> void:
 		_fail("RoomDefinition did not initialize in the production scene")
 		return
 	var room_id := String(definition.get("id", ""))
-	var asset_node := _find_asset_node(scene)
-	if asset_node == null:
-		_fail("production resolver did not instantiate stable asset id %s" % asset_id)
+	var is_room_surface := String(brief.get("category", "")) == "room_surface"
+	var asset_node: Node3D
+	var surface_material: StandardMaterial3D
+	var loaded_asset_path := ""
+	var loaded_candidate_id := ""
+	var loaded_registry_status := ""
+	var loaded_review_only := false
+	if is_room_surface:
+		asset_node = _find_surface_asset_node(scene)
+		if asset_node == null:
+			_fail("production room did not apply registered surface material %s" % asset_id)
+			return
+		surface_material = _find_registered_surface_material(scene)
+		if surface_material == null:
+			_fail("production room did not expose registered surface material %s" % asset_id)
+			return
+		loaded_asset_path = String(surface_material.get_meta("visual_source", ""))
+		loaded_candidate_id = String(surface_material.get_meta("visual_asset_candidate_id", ""))
+		loaded_registry_status = String(surface_material.get_meta("visual_asset_registry_status", ""))
+		loaded_review_only = bool(surface_material.get_meta("visual_asset_review_only", false))
+	else:
+		asset_node = _find_asset_node(scene)
+		if asset_node == null:
+			_fail("production resolver did not instantiate stable asset id %s" % asset_id)
+			return
+		loaded_asset_path = String(asset_node.get_meta("visual_source", ""))
+		loaded_candidate_id = String(asset_node.get_meta("visual_asset_candidate_id", ""))
+		loaded_registry_status = String(asset_node.get_meta("visual_asset_registry_status", ""))
+		loaded_review_only = bool(asset_node.get_meta("visual_asset_review_only", false))
+	if loaded_asset_path != expected_asset_path:
+		_fail("candidate was not loaded through the production resolver: expected=%s loaded=%s" % [expected_asset_path, loaded_asset_path])
 		return
-	if String(asset_node.get_meta("visual_source", "")) != expected_asset_path:
-		_fail("candidate was not loaded through the production resolver: expected=%s loaded=%s" % [expected_asset_path, asset_node.get_meta("visual_source", "")])
-		return
-	if String(asset_node.get_meta("visual_asset_candidate_id", "")) != candidate_id:
+	if loaded_candidate_id != candidate_id:
 		_fail("production resolver did not report candidate id %s" % candidate_id)
 		return
-	if not bool(asset_node.get_meta("visual_asset_review_only", false)):
+	if not loaded_review_only:
 		_fail("candidate render must use an explicit review-only showcase registry")
 		return
 	var selected_citizen_id := -1
@@ -107,8 +138,6 @@ func run() -> void:
 		var settlement_focus := (workshop.global_position + work_area.global_position) * 0.5 + Vector3.UP * 4.0
 		if not await _capture(scene, "settlement-scale", settlement_focus, 64.0, 42.0, 0.25):
 			return
-	var brief_path := OS.get_environment("ROOMSCALE_ART_FACTORY_BRIEF")
-	var brief: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(brief_path))
 	var dimensions := _vector3(brief.get("intended_dimensions", [1.0, 1.0, 1.0]))
 	var close_distance := maxf(2.2, dimensions.length() * 0.72)
 	var three_quarter_yaw := 0.62
@@ -174,6 +203,27 @@ func run() -> void:
 		opposite_yaw = interior_yaw + 0.26
 		profile_yaw = interior_yaw
 		detail_yaw = interior_yaw
+	if is_room_surface:
+		var room_dimensions: Array = definition.get("dimensions", [156.0, 144.0])
+		var room_depth := float(room_dimensions[1]) if room_dimensions.size() > 1 else 144.0
+		var wall_height := float(definition.get("wall_height", dimensions.y))
+		if asset_id == "room_shell_floor":
+			# This open southwest floor patch avoids the central seat, hammock mat,
+			# desk, and cabinet while keeping close material captures in the live room.
+			target = Vector3(-35.0, floor_center.y + 0.15, 14.0)
+			close_distance = 38.0
+			three_quarter_yaw = 0.15
+			opposite_yaw = 0.45
+			profile_yaw = -0.15
+			detail_yaw = 0.15
+		else:
+			# The south wall is uninterrupted in this source RoomDefinition.
+			target = Vector3(-35.0, wall_height * 0.5, room_depth * 0.5 - 1.0)
+			close_distance = 55.0
+			three_quarter_yaw = PI + 0.24
+			opposite_yaw = PI - 0.24
+			profile_yaw = PI
+			detail_yaw = PI
 	var asset_tilt := 38.0
 	var detail_tilt := 28.0
 	if asset_id in ["room_photo_window_production", "room_photo_french_door_production"]:
@@ -217,6 +267,10 @@ func run() -> void:
 		detail_tilt = 38.0
 	if asset_id in ["room_photo_window_production", "room_photo_french_door_production"]:
 		detail_distance = maxf(44.0, dimensions.y * 0.72)
+	if is_room_surface:
+		detail_distance = 24.0 if asset_id == "room_shell_floor" else 32.0
+		asset_tilt = 82.0 if asset_id == "room_shell_floor" else 12.0
+		detail_tilt = asset_tilt
 	if asset_id.begins_with("settlement_"):
 		detail_distance *= 0.6
 	if not await _capture(scene, "asset-detail", target, detail_distance, detail_tilt, detail_yaw, follow_citizen):
@@ -246,14 +300,14 @@ func run() -> void:
 		"asset_id": asset_id,
 		"candidate_id": candidate_id,
 		"registry_mode": OS.get_environment("ROOMSCALE_ART_REGISTRY_MODE"),
-		"candidate_status": String(asset_node.get_meta("visual_asset_registry_status", "")),
+		"candidate_status": loaded_registry_status,
 		"review_label": "BEST CURRENT / PRODUCTION ART FOLLOW-UP REQUIRED",
 		"registry_path": OS.get_environment("ROOMSCALE_ART_REGISTRY"),
 		"selected_citizen_id": selected_citizen_id,
 		"selected_citizen_carrying": selected_citizen_carrying,
 		"controlled_citizen_yaw_sweep": controlled_citizen_receipt,
-		"loaded_asset_path": String(asset_node.get_meta("visual_source", "")),
-		"loaded_candidate_id": String(asset_node.get_meta("visual_asset_candidate_id", "")),
+		"loaded_asset_path": loaded_asset_path,
+		"loaded_candidate_id": loaded_candidate_id,
 		"viewport": [root.size.x, root.size.y],
 		"captures": captures,
 		"performance": {
@@ -373,6 +427,30 @@ func _find_asset_node(scene: Node3D) -> Node3D:
 			continue
 		if String(node.get_meta("visual_source", "")) == expected_asset_path:
 			return node as Node3D
+	return null
+
+
+func _find_registered_surface_material(scene: Node3D) -> StandardMaterial3D:
+	for node_variant in scene.find_children("*", "MeshInstance3D", true, false):
+		var mesh_instance := node_variant as MeshInstance3D
+		if mesh_instance.mesh == null:
+			continue
+		for surface_index in range(mesh_instance.mesh.get_surface_count()):
+			var material := mesh_instance.get_active_material(surface_index) as StandardMaterial3D
+			if material != null and String(material.get_meta("visual_asset_id", "")) == asset_id:
+				return material
+	return null
+
+
+func _find_surface_asset_node(scene: Node3D) -> Node3D:
+	for node_variant in scene.find_children("*", "MeshInstance3D", true, false):
+		var mesh_instance := node_variant as MeshInstance3D
+		if mesh_instance.mesh == null:
+			continue
+		for surface_index in range(mesh_instance.mesh.get_surface_count()):
+			var material := mesh_instance.get_active_material(surface_index) as StandardMaterial3D
+			if material != null and String(material.get_meta("visual_asset_id", "")) == asset_id:
+				return mesh_instance
 	return null
 
 

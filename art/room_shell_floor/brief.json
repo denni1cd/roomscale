@@ -1,0 +1,54 @@
+{
+  "allow_stylization": false,
+  "asset_id": "room_shell_floor",
+  "camera_distances": [
+    12.0,
+    64.0,
+    160.0,
+    330.0
+  ],
+  "category": "room_surface",
+  "current_quality": "prototype",
+  "display_name": "Reconstructed Room Carpet Floor",
+  "faction_defining": false,
+  "gameplay_invariants": {
+    "RoomDefinition_floor_dimensions_and_height_remain_authoritative": true,
+    "collision_navigation_and_floor_center_remain_unchanged": true,
+    "floor_surface_is_presentation_only": true,
+    "only_room_photo_luna_uses_this_source_specific_carpet": true
+  },
+  "intended_dimensions": [
+    156.0,
+    1.0,
+    144.0
+  ],
+  "iteration_budget": 3,
+  "materials": {
+    "carpet": "dense, low residential pile with warm gray-beige and restrained charcoal/ivory fibers; matte, soft roughness, subtle directional and height variation"
+  },
+  "priority_tier": 1,
+  "prohibited_changes": [
+    "do not change RoomDefinition dimensions, floor center, height, collision, navigation, or object placement",
+    "do not add rugs, objects, borders, or carpet seams that are not evidenced by the source",
+    "do not apply this source-specific carpet to rooms whose RoomDefinition calls for wood flooring",
+    "do not substitute a color-only or roughness-only shader adjustment for a real carpet surface"
+  ],
+  "quality_tier": "B",
+  "reference_images": [
+    "photo_holder/Sample (1).jpg"
+  ],
+  "required_features": [
+    "source-matched muted warm gray-beige carpet color",
+    "small, dense pile fibers with believable textile variation",
+    "seamless repeat without tiles, boards, stripes, or large motifs",
+    "reads as a full-size human-room floor, not an oversized fiber macro",
+    "remains legible in both room overview and close material inspection"
+  ],
+  "schema_version": 1,
+  "screen_space_importance": 5,
+  "semantic_type": "photo-matched residential carpet floor surface",
+  "source_photo_required": true,
+  "source_room_definition": "rooms/room_photo_luna.json",
+  "stylization_rationale": "",
+  "visual_target": "A continuous, believable human-scale residential carpet floor that matches the supplied RoomScale room photograph: muted warm gray-beige, dense short pile, subtle natural fiber variation, matte response and soft contact shadows. Replace the broad synthetic plank-like or noise-only read with a convincingly textile surface. Preserve the exact 156 by 144 inch room footprint and the existing floor height; the material should tile without visible seams and remain quiet at normal gameplay distance."
+}

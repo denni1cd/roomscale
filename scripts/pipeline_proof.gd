@@ -1355,7 +1355,8 @@ func _appearance_color(appearance: Variant, field: String, fallback: Color) -> C
 
 func _appearance_material(appearance: Dictionary, color: Color, default_roughness: float) -> StandardMaterial3D:
 	var category := String(appearance.get("material", "other")).to_lower()
-	var material := MaterialLibrary.get_material(category, color, default_roughness).duplicate() as StandardMaterial3D
+	var asset_id := String(appearance.get("asset_id", "")).to_lower()
+	var material := MaterialLibrary.registered_surface_material(asset_id) if not asset_id.is_empty() else (MaterialLibrary.get_material(category, color, default_roughness).duplicate() as StandardMaterial3D)
 	match category:
 		"metal":
 			material.metallic = 0.72

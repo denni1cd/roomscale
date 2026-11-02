@@ -1,0 +1,166 @@
+{
+  "approved_visual_target": {
+    "approval": "pass",
+    "approved_at_utc": "2026-11-02T04:02:56+00:00",
+    "concept_id": "room-shell-wall-paint-r02",
+    "path": "art/room_shell_wall_finish/visual_director/round-02/approved-target-r02.png",
+    "review_method": "pixel inspection; review evidence recorded by Luna",
+    "review_path": "art/room_shell_wall_finish/visual_director/round-02/visual-development.md",
+    "sha256": "bdf8c9e6e17ffc73e723efa87b6b4f792abdc1cc299f69f57ad04dd1fb046e49"
+  },
+  "asset_id": "room_shell_wall_finish",
+  "best_3d_candidate": {
+    "candidate_file": "art/room_shell_wall_finish/iterations/v002/candidate.json",
+    "candidate_id": "room_shell_wall_finish-v002",
+    "evaluation_file": "art/room_shell_wall_finish/iterations/v002/evaluation.json",
+    "updated_at_utc": "2026-11-02T04:12:40+00:00"
+  },
+  "candidate_history": [
+    {
+      "candidate_file": "art/room_shell_wall_finish/iterations/v001/candidate.json",
+      "candidate_id": "room_shell_wall_finish-v001",
+      "created_at_utc": "2026-11-02T03:50:32+00:00",
+      "parent_candidate_id": "",
+      "recipe_file": "art/room_shell_wall_finish/iterations/v001/recipe.json",
+      "visual_director_attempt": 1,
+      "visual_director_provenance": {
+        "approved_visual_target": {
+          "approval": "pass",
+          "approved_at_utc": "2026-11-02T03:46:28+00:00",
+          "concept_id": "room-shell-wall-paint-r01",
+          "path": "art/room_shell_wall_finish/visual_director/round-01/approved-target-r01.png",
+          "review_method": "pixel inspection; review evidence recorded by Luna",
+          "review_path": "art/room_shell_wall_finish/visual_director/round-01/visual-development.md",
+          "sha256": "b694b8bdc9a2991ba6b03cdbc0544c5f5bdc013bc707a45232c4fcb119f3bf6b"
+        },
+        "case_file": "art/room_shell_wall_finish/visual_director/state.json",
+        "policy": {
+          "inputs": {
+            "category": "room_surface",
+            "current_quality": "prototype",
+            "faction_defining": false,
+            "inferred": [],
+            "priority_tier": 1,
+            "screen_space_importance": 5,
+            "source_images_present": true,
+            "source_photo_required": true
+          },
+          "reasons": [
+            "Tier 1 scene-defining asset",
+            "very high screen-space importance",
+            "source-photo character is required for a prominent asset"
+          ],
+          "required": true
+        },
+        "status": "approved",
+        "strategy": "initial",
+        "target_episode_attempt": 1
+      }
+    },
+    {
+      "candidate_file": "art/room_shell_wall_finish/iterations/v002/candidate.json",
+      "candidate_id": "room_shell_wall_finish-v002",
+      "created_at_utc": "2026-11-02T04:03:10+00:00",
+      "parent_candidate_id": "room_shell_wall_finish-v001",
+      "recipe_file": "art/room_shell_wall_finish/iterations/v002/recipe.json",
+      "visual_director_attempt": 1,
+      "visual_director_provenance": {
+        "approved_visual_target": {
+          "approval": "pass",
+          "approved_at_utc": "2026-11-02T04:02:56+00:00",
+          "concept_id": "room-shell-wall-paint-r02",
+          "path": "art/room_shell_wall_finish/visual_director/round-02/approved-target-r02.png",
+          "review_method": "pixel inspection; review evidence recorded by Luna",
+          "review_path": "art/room_shell_wall_finish/visual_director/round-02/visual-development.md",
+          "sha256": "bdf8c9e6e17ffc73e723efa87b6b4f792abdc1cc299f69f57ad04dd1fb046e49"
+        },
+        "case_file": "art/room_shell_wall_finish/visual_director/state.json",
+        "policy": {
+          "inputs": {
+            "category": "room_surface",
+            "current_quality": "prototype",
+            "faction_defining": false,
+            "inferred": [],
+            "priority_tier": 1,
+            "screen_space_importance": 5,
+            "source_images_present": true,
+            "source_photo_required": true
+          },
+          "reasons": [
+            "Tier 1 scene-defining asset",
+            "very high screen-space importance",
+            "source-photo character is required for a prominent asset"
+          ],
+          "required": true
+        },
+        "status": "approved",
+        "strategy": "initial",
+        "target_episode_attempt": 1
+      }
+    }
+  ],
+  "case_file": "art/room_shell_wall_finish/visual_director/state.json",
+  "policy": {
+    "inputs": {
+      "category": "room_surface",
+      "current_quality": "prototype",
+      "faction_defining": false,
+      "inferred": [],
+      "priority_tier": 1,
+      "screen_space_importance": 5,
+      "source_images_present": true,
+      "source_photo_required": true
+    },
+    "reasons": [
+      "Tier 1 scene-defining asset",
+      "very high screen-space importance",
+      "source-photo character is required for a prominent asset"
+    ],
+    "required": true
+  },
+  "production_asset": {
+    "accepted_at_utc": "2026-11-02T04:12:40+00:00",
+    "candidate_id": "room_shell_wall_finish-v002",
+    "dimensions_inches": [
+      156.0,
+      108.0,
+      2.0
+    ],
+    "path": "art/room_shell_wall_finish/iterations/v002/generated/asset.tscn",
+    "semantic_type": "photo-matched painted room wall finish",
+    "sha256": "95d8d59d1604617377f012ef7e382e4ece54dfce44288393dd4693001f9179dc",
+    "status": "accepted"
+  },
+  "schema_version": 1,
+  "status": "production_pass",
+  "target_episode": {
+    "attempts": [
+      {
+        "attempt": 1,
+        "candidate_id": "room_shell_wall_finish-v002",
+        "decision": "promote",
+        "evaluated_at_utc": "2026-11-02T04:08:29+00:00",
+        "evaluation_file": "art/room_shell_wall_finish/iterations/v002/evaluation.json",
+        "incumbent_comparison_result": "first_pass",
+        "status": "evaluated",
+        "strategy": "initial",
+        "visual_transfer_diagnosis": {
+          "corrective_action": "No material-transfer correction is required; preserve the approved seamless target, 24-inch repeat, and 0.94 roughness.",
+          "lost_visual_information": [],
+          "preserved_components": [
+            "Deep muted green source color",
+            "Plain wall construction and separate wood trim",
+            "All RoomDefinition openings, wall segments, collision, navigation, and cutaway"
+          ],
+          "primary_causes": [
+            "material_generation"
+          ]
+        }
+      }
+    ],
+    "status": "production_pass",
+    "target_sha256": "bdf8c9e6e17ffc73e723efa87b6b4f792abdc1cc299f69f57ad04dd1fb046e49"
+  },
+  "updated_at_utc": "2026-11-02T04:12:40+00:00",
+  "visual_brief_file": "art/room_shell_wall_finish/visual_director/visual-brief-draft.json"
+}

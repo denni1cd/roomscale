@@ -1,0 +1,47 @@
+{
+  "asset_id": "room_shell_floor",
+  "art_direction": "A dense, low residential carpet in muted warm gray-beige/taupe with short tightly packed fibers, restrained darker and lighter flecks, matte response, and no broad motifs. The image target is a seamless material swatch; the full room footprint, height, collision, and navigation remain supplied by RoomDefinition.",
+  "dimensions_inches": [
+    156.0,
+    1.0,
+    144.0
+  ],
+  "intended_function": "Provide the photo-specific carpet material for the full floor in room_photo_luna while keeping RoomDefinition authoritative for its 156 by 144 inch footprint and floor height.",
+  "semantic_identity": "photo-matched low-pile residential carpet material",
+  "faction_identity": null,
+  "citizen_scale": {
+    "citizen_height_inches": 0.5,
+    "ratio_or_view": "The production room uses the exact 0.5-inch citizen height; this material does not redefine scale."
+  },
+  "construction_materials": [
+    {
+      "part": "floor finish",
+      "material": "muted warm gray-beige carpet",
+      "construction": "continuous surface; small short-pile fibers; no inferred fiber composition"
+    }
+  ],
+  "source_photo_constraints": "Sample (1) shows warm gray-beige carpet across the visible floor, with shadowed areas beneath the hammock and desk. The short carpet texture and overall color family are evidenced; fiber composition, exact pile height, and hidden floor areas are not. The image does not show a carpet seam, rug border, board, stripe, or large repeat motif. Match the source under RoomScale lighting rather than infer a fabric brand or fiber type.",
+  "silhouette_requirements": [
+    "continuous carpet surface across the exact RoomDefinition floor",
+    "no visible tile seam, rug boundary, board, stripe, or broad motif",
+    "fiber variation is readable only at close view and remains quiet at room scale"
+  ],
+  "separate_room_assets": [
+    "RoomDefinition floor mesh, collision, navigation, furniture, and floor height"
+  ],
+  "prohibited_failure_modes": [
+    "do not alter floor dimensions, height, center, collision, navigation, or object placement",
+    "do not add rugs, border strips, or carpet joints not shown in the photograph",
+    "do not stretch fibers into large loops or use a broad, high-contrast repeating pattern",
+    "do not apply this photo-specific carpet to unrelated rooms"
+  ],
+  "gameplay_distance_readability": "Keep the floor quiet at the 64, 160, and 330-inch views; resolve short-pile texture in the 12-inch view without visible repetition.",
+  "roomdefinition_authority": "RoomDefinition rooms/room_photo_luna.json remains authoritative for the 156 x 144-inch floor, height, collision, navigation, and object placements.",
+  "visual_references": [
+    {
+      "path": "photo_holder/Sample (1).jpg",
+      "provenance": "ArtBrief reference_images",
+      "role": "source photograph"
+    }
+  ]
+}

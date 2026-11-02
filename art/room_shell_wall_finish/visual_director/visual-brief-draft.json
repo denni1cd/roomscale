@@ -1,0 +1,50 @@
+{
+  "asset_id": "room_shell_wall_finish",
+  "art_direction": "A plain painted interior wall finish matching the source room\u2019s deep muted forest-green/blue-green color. Use restrained fine roller stipple and broad, low-amplitude tonal variation with matte eggshell response. Keep window and door openings, casing, baseboards, crown, wall art, and cutaway geometry separate.",
+  "dimensions_inches": [
+    156.0,
+    108.0,
+    2.0
+  ],
+  "intended_function": "Provide a photo-specific wall-paint material on existing wall segments in room_photo_luna. The ArtBrief sample is evidence only; RoomDefinition controls every runtime segment, opening, and cutaway.",
+  "semantic_identity": "photo-matched plain painted drywall finish",
+  "faction_identity": null,
+  "citizen_scale": {
+    "citizen_height_inches": 0.5,
+    "ratio_or_view": "The production room uses the exact 0.5-inch citizen height; this material does not redefine scale."
+  },
+  "construction_materials": [
+    {
+      "part": "painted wall finish",
+      "material": "deep muted forest green/teal eggshell paint",
+      "construction": "plain wall with subtle fine roller stipple; product and exact sheen are uncertain"
+    }
+  ],
+  "source_photo_constraints": "Sample (1) shows plain deep green/teal painted walls, separate stained-wood trim, and visible windows. The broad hue and plain-wall construction are evidenced. Exact paint formula and sheen are uncertain because the room is photographed in mixed daylight and shadow. Wall art and fixtures are separate objects; do not turn them into painted wall geometry.",
+  "silhouette_requirements": [
+    "plain continuous wall planes around existing openings",
+    "consistent color and matte response across wall segments",
+    "baseboards, crown, casing, wall art, doors, windows, and cutaway remain separate"
+  ],
+  "separate_room_assets": [
+    "RoomDefinition wall segments and openings",
+    "wood baseboards and crown",
+    "registered windows and French doors",
+    "wall art and room objects"
+  ],
+  "prohibited_failure_modes": [
+    "do not alter wall positions, height, thickness, openings, collision, navigation, or cutaway behavior",
+    "do not invent paneling, wainscoting, wallpaper, built-ins, or decorative joints",
+    "do not merge or recolor separate wood trim, casing, windows, doors, or wall art",
+    "do not create a visible repeated square patch pattern"
+  ],
+  "gameplay_distance_readability": "Keep the deep green wall field calm at 64, 160, and 330 inches; show only subtle paint stipple at the 12-inch close view.",
+  "roomdefinition_authority": "RoomDefinition rooms/room_photo_luna.json remains authoritative for all wall segments, openings, height, thickness, collision, navigation, and cutaway behavior.",
+  "visual_references": [
+    {
+      "path": "photo_holder/Sample (1).jpg",
+      "provenance": "ArtBrief reference_images",
+      "role": "source photograph"
+    }
+  ]
+}

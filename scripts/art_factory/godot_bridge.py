@@ -87,6 +87,7 @@ class GodotArtBridge:
         candidate_id: str,
         timeout_seconds: int = 1200,
         room_file: str = "verification/poc2/candidates/primary/attempt-7/room_photo_luna.json",
+        review_candidate_ids: list[str] | None = None,
     ) -> dict[str, Any]:
         candidate = self.factory.load_candidate(candidate_id)
         if candidate.technical_validation.get("status") != "pass":
@@ -128,6 +129,37 @@ class GodotArtBridge:
             "accepted_at_utc": candidate.created_at_utc,
             "dimensions_inches": list(brief.intended_dimensions),
         }
+        for review_candidate_id in review_candidate_ids or []:
+            review_candidate = self.factory.load_candidate(review_candidate_id)
+            if review_candidate.asset_id == candidate.asset_id:
+                raise ValueError(
+                    f"candidate {candidate_id} already overrides asset id {candidate.asset_id}; "
+                    f"cannot also add {review_candidate_id}"
+                )
+            if review_candidate.status == "blocked" or not review_candidate.asset_files:
+                raise ValueError(
+                    f"review-only dependency has no generated asset: {review_candidate_id}"
+                )
+            if review_candidate.technical_validation.get("status") != "pass":
+                raise ValueError(
+                    f"review-only dependency needs passing Godot validation: {review_candidate_id}"
+                )
+            dependency_asset = self.project_root / review_candidate.asset_files[0]
+            if not dependency_asset.is_file():
+                raise FileNotFoundError(
+                    f"review-only dependency asset is missing: {dependency_asset}"
+                )
+            dependency_brief = self.factory.load_brief(review_candidate.asset_id)
+            override["entries"][review_candidate.asset_id] = {
+                "status": "best_current_review",
+                "review_label": "BEST CURRENT / PRODUCTION ART FOLLOW-UP REQUIRED",
+                "semantic_type": dependency_brief.semantic_type,
+                "path": review_candidate.asset_files[0],
+                "candidate_id": review_candidate.candidate_id,
+                "sha256": sha256_file(dependency_asset),
+                "accepted_at_utc": review_candidate.created_at_utc,
+                "dimensions_inches": list(dependency_brief.intended_dimensions),
+            }
         atomic_write_json(registry_relative, override)
         environment = os.environ.copy()
         environment.update(

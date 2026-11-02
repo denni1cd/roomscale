@@ -1,0 +1,136 @@
+{
+  "candidate_id": "room_shell_wall_finish-v002",
+  "created_at_utc": "2026-11-02T04:07:05+00:00",
+  "decision": "promote",
+  "defects": [],
+  "hard_fail_reasons": [],
+  "incumbent_candidate_id": "",
+  "incumbent_comparison": "No accepted wall-finish asset is registered. Compared with the former generic paint material and v001 review render, the corrected target preserves the source color, removes repeated square patches, and gives a consistent matte wall read.",
+  "incumbent_comparison_result": "first_pass",
+  "likely_causes": [],
+  "next_action_hypothesis": "",
+  "observations": {
+    "art_direction_fit": "The continuous plain painted finish matches the photographed wall character without invented paneling.",
+    "close_up_quality": "The south-wall close capture is continuous and source-colored; a separate wall object enters only at the far image edge.",
+    "gameplay_readability": "The dark green wall field is quiet at room scale and stays distinct from oak trim, windows, and door geometry.",
+    "geometric_detail": "No geometry is introduced; the existing shell is still segmented around the source openings.",
+    "material_realism": "The wall remains matte with fine restrained stipple; the repeated square patches from v001 are no longer visible at the 24-inch world repeat.",
+    "proportion": "The material sample is 156 x 108 x 2 inches; the RoomDefinition continues to own runtime dimensions and openings.",
+    "scale_fidelity": "RoomDefinition wall height, thickness, positions, and opening dimensions are unchanged.",
+    "semantic_recognizability": "The room reads as a plain deep green painted interior wall with separate wood trim and source-specific windows.",
+    "silhouette_quality": "All existing wall planes, openings, and the room cutaway remain unchanged.",
+    "source_resemblance": "The photographed deep forest-green/teal color and uninterrupted wall character are preserved; paint product and exact sheen remain uncertain.",
+    "surface_variation": "A close view retains subtle green paint texture without a broad motif or square repeat.",
+    "technical_integration": "Godot validates the scene, the material is loaded through AssetRegistry in normal room construction, and no registered-asset error appears."
+  },
+  "render_evidence": [
+    "art/room_shell_wall_finish/iterations/v002/render-runs/run-001/room-scale.png",
+    "art/room_shell_wall_finish/iterations/v002/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 4,
+    "gameplay_readability": 4,
+    "geometric_detail": 4,
+    "material_realism": 4,
+    "proportion": 5,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 5,
+    "source_resemblance": 4,
+    "surface_variation": 4,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "Yes",
+      "evidence": "The production close view shows restrained paint stipple and no square repeat boundary.",
+      "pass": true
+    },
+    "craftsmanship": {
+      "answer": "Yes",
+      "edge_treatment": {
+        "evidence": "The texture repeats without an edge discontinuity, and wall segment edges remain clean.",
+        "evidence_refs": [
+          "art/room_shell_wall_finish/iterations/v002/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "Not applicable and not visible to this material asset; window and door hardware are separate.",
+        "evidence_refs": [
+          "art/room_shell_wall_finish/iterations/v002/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "joins": {
+        "evidence": "Opening and wall segments meet using the existing RoomDefinition construction; no join gaps or texture discontinuities are visible.",
+        "evidence_refs": [
+          "art/room_shell_wall_finish/iterations/v002/render-runs/run-001/room-scale.png"
+        ],
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "The green wall pass adds no fabricated paneling; all trim, openings, and shell construction stay outside this paint-only surface asset.",
+        "evidence_refs": [
+          "art/room_shell_wall_finish/iterations/v002/render-runs/run-001/room-scale.png"
+        ],
+        "pass": true
+      },
+      "material_response": {
+        "evidence": "The paint remains matte and consistent across the uninterrupted south-wall patch under RoomScale lighting.",
+        "evidence_refs": [
+          "art/room_shell_wall_finish/iterations/v002/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "surface_variation": {
+        "evidence": "Fine stipple remains visible at close range and stays quiet in the room overview.",
+        "evidence_refs": [
+          "art/room_shell_wall_finish/iterations/v002/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "thickness": {
+        "evidence": "Cannot be assessed from a material-only candidate; RoomDefinition wall thickness is unchanged.",
+        "evidence_refs": [
+          "art/room_shell_wall_finish/iterations/v002/render-runs/run-001/room-scale.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "evidence": "The room-scale wall reads as continuous matte interior paint, with trim and openings remaining separate.",
+      "pass": true
+    },
+    "photo_character": {
+      "answer": "Yes",
+      "applicable": true,
+      "evidence": "The production wall preserves the source photograph’s deep green painted character and plain construction; exact formula and sheen remain uncertain.",
+      "pass": true
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "No material-transfer correction is required; preserve the approved seamless target, 24-inch repeat, and 0.94 roughness.",
+    "lost_visual_information": [],
+    "preserved_components": [
+      "Deep muted green source color",
+      "Plain wall construction and separate wood trim",
+      "All RoomDefinition openings, wall segments, collision, navigation, and cutaway"
+    ],
+    "primary_causes": [
+      "material_generation"
+    ]
+  }
+}

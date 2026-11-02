@@ -1,0 +1,136 @@
+{
+  "candidate_id": "room_shell_floor-v003",
+  "created_at_utc": "2026-11-02T04:20:00+00:00",
+  "decision": "promote",
+  "defects": [],
+  "hard_fail_reasons": [],
+  "incumbent_candidate_id": "room_shell_floor-v002",
+  "incumbent_comparison": "Against v002 and a same-camera room render with the prior generic floor material, v003 removes the over-bright look and preserves a continuous, fine short-pile read. Current room layout, windows, objects, openings, camera, and RoomDefinition are unchanged.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [],
+  "next_action_hypothesis": "",
+  "observations": {
+    "art_direction_fit": "The muted, softly varied carpet supports the photographed residential room without adding a rug or invented pattern.",
+    "close_up_quality": "Candidate-specific clear-floor close capture retains fine carpet texture with no obvious seam.",
+    "gameplay_readability": "The carpet remains visually quiet beneath furniture and does not compete with interactable objects.",
+    "geometric_detail": "No new geometry is introduced; carpet texture and restrained normal detail supply the surface detail.",
+    "material_realism": "The corrected output is matte warm gray-beige; the v002 over-brightness is reduced while fibers remain visible.",
+    "proportion": "The 156 x 144 inch floor remains authored by RoomDefinition; the candidate sample does not change its size.",
+    "scale_fidelity": "RoomDefinition retains floor height, footprint, collision, navigation and all furniture positions.",
+    "semantic_recognizability": "The room-scale surface reads as short-pile residential carpet, distinct from the green walls and wood trim.",
+    "silhouette_quality": "This is a material-only floor treatment; the original RoomDefinition footprint and cutaway remain unchanged.",
+    "source_resemblance": "The warm gray-beige carpet hue and low-contrast short pile match the visible source photograph; exact fiber and color under lighting remain uncertain.",
+    "surface_variation": "The close capture shows dense short fibers without a visible tile boundary or broad repeating motif.",
+    "technical_integration": "Godot 4.7.2 validation passes; the registered material resolves in the production room route and its bounds match the room floor."
+  },
+  "render_evidence": [
+    "art/room_shell_floor/iterations/v003/render-runs/run-002/room-scale.png",
+    "art/room_shell_floor/iterations/v003/render-runs/run-002/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 4,
+    "gameplay_readability": 5,
+    "geometric_detail": 4,
+    "material_realism": 4,
+    "proportion": 5,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 5,
+    "source_resemblance": 4,
+    "surface_variation": 4,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "Yes",
+      "evidence": "Candidate-specific close capture shows fine short pile and no visible repeat seam at the inspected floor patch.",
+      "pass": true
+    },
+    "craftsmanship": {
+      "answer": "Yes",
+      "edge_treatment": {
+        "evidence": "The approved seamless target differs by zero mean RGB across opposite edges; v003 close view shows no tile seam.",
+        "evidence_refs": [
+          "art/room_shell_floor/iterations/v003/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "The carpet surface has no hardware; none is present in the floor-specific close capture.",
+        "evidence_refs": [
+          "art/room_shell_floor/iterations/v003/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "joins": {
+        "evidence": "Room-scale capture shows the candidate carpet continuous across the complete RoomDefinition floor and meeting existing walls without a gap.",
+        "evidence_refs": [
+          "art/room_shell_floor/iterations/v003/render-runs/run-002/room-scale.png"
+        ],
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "RoomDefinition constructs the floor sheet; this carpet candidate contributes image maps only and adds no fabricated border or assembly.",
+        "evidence_refs": [
+          "art/room_shell_floor/iterations/v003/render-runs/run-002/room-scale.png"
+        ],
+        "pass": true
+      },
+      "material_response": {
+        "evidence": "In the matched room render, v003 is matte and substantially closer in value to the photographed carpet than the washed-out baseline and v002.",
+        "evidence_refs": [
+          "art/room_shell_floor/iterations/v003/render-runs/run-002/room-scale.png"
+        ],
+        "pass": true
+      },
+      "surface_variation": {
+        "evidence": "At floor close range, compact pile fibers create fine non-directional variation without square repeats.",
+        "evidence_refs": [
+          "art/room_shell_floor/iterations/v003/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "thickness": {
+        "evidence": "Floor thickness cannot be judged from this material-only capture; RoomDefinition remains authoritative and unchanged.",
+        "evidence_refs": [
+          "art/room_shell_floor/iterations/v003/render-runs/run-002/room-scale.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "evidence": "The integrated room reads as a muted residential carpeted floor beneath the preserved furniture and openings.",
+      "pass": true
+    },
+    "photo_character": {
+      "answer": "Yes",
+      "applicable": true,
+      "evidence": "The room carpet remains warm gray-beige with restrained variation, consistent with the photographed floor; exact fiber scale is uncertain.",
+      "pass": true
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "The v002 diagnosis led to a single linear tint correction; v003 now transfers the approved target more closely. Keep its target, repeat scale, roughness and material maps.",
+    "lost_visual_information": [],
+    "preserved_components": [
+      "Warm gray-beige photographed carpet character",
+      "Dense low-contrast short-pile variation",
+      "RoomDefinition floor footprint, height, collision, navigation and objects"
+    ],
+    "primary_causes": [
+      "material_generation"
+    ]
+  }
+}

@@ -41,6 +41,12 @@ func resolve(object: Dictionary) -> Dictionary:
 		recipe["asset_registry_candidate_id"] = String(registered.get("candidate_id", ""))
 		recipe["asset_registry_status"] = String(registered.get("status", ""))
 		recipe["asset_registry_review_only"] = bool(registered.get("registry_review_only", false))
+	elif appearance.has("asset_id") and not String(appearance.get("asset_id", "")).is_empty():
+		# An explicit stable asset reference is a contract. Do not quietly route it
+		# back to catalog geometry when the canonical registry has no such asset.
+		recipe["asset_registry_id"] = stable_asset_id
+		recipe["asset_registry_required"] = true
+		recipe["asset_registry_error"] = "asset id is not registered"
 	return recipe
 
 

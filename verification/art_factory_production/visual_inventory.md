@@ -1,6 +1,6 @@
 # RoomScale Full Visible-Art Inventory
 
-Generated: `2026-11-01T02:37:18+00:00`
+Generated: `2026-11-02T04:14:04+00:00`
 
 Starting state: POC 2.5 closure `1e111d37325e7ad00030266efec201796b7fc07d`
 Purpose: production prioritization only; no POC 2.5 reopening.
@@ -9,7 +9,7 @@ Purpose: production prioritization only; no POC 2.5 reopening.
 
 - RoomDefinition files: 21 (2 playable Room A/B; 19 candidate/scenario variants).
 - Room object records / unique object classes: 318 / 79.
-- Canonical Art Factory registry entries: 12; visual catalog entries: 10; material categories: 17.
+- Canonical Art Factory registry entries: 15; visual catalog entries: 10; material categories: 17.
 - Runtime GDScript files with procedural/dynamic geometry: 12; geometry builder sites: 79.
 - Active scenes with visible art nodes or a runtime presentation controller: 1.
 - Catalogued asset classes and presentation systems: 95.
@@ -59,9 +59,9 @@ The inventory joins source-defined room content with the canonical/review asset 
 | Tier 1 | `room_tool_wardrobe` — Tool Wardrobe | 1 | planned `room_tool_wardrobe`; wardrobe → catalog detailed_furniture fallback | Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below. | reuse shared quality furniture where it fits; use source-conditioned Art Factory production for distinctive photographed objects |
 | Tier 1 | `room_wood_rocking_chair` — Wood rocking chair | 0 | planned `room_wood_rocking_chair`; rocking_chair → Art Factory registry asset | Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below. | reuse shared quality furniture where it fits; use source-conditioned Art Factory production for distinctive photographed objects |
 | Tier 1 | `room_wooden_rocking_chair` — Wooden rocking chair | 0 | planned `room_wooden_rocking_chair`; rocking_chair → Art Factory registry asset | Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below. | reuse shared quality furniture where it fits; use source-conditioned Art Factory production for distinctive photographed objects |
-| Tier 1 | `room_shell_floor` — Floor | 2 | planned `room_shell_floor`; runtime-built / shared presentation | procedural plank shader now adds board joints and grain; the integrated overview still reads as a broad, lightly varied plane without source-matched PBR response | Room-scale seamless PBR material authored as a bounded Art Factory candidate; preserve RoomDefinition extents and floor height |
-| Tier 1 | `room_shell_openings` — Openings | 2 | planned `room_shell_openings`; runtime-built / shared presentation | procedural frames, muntins, glass panels, and simple exterior cards | Source-matched modular window/door components and physically credible glass; preserve opening dimensions |
-| Tier 1 | `room_shell_wall_finish` — Wall Finish | 2 | planned `room_shell_wall_finish`; runtime-built / shared presentation | large flat color fields with box-segment construction; paint lacks a dedicated textured finish | RoomDefinition-driven modular wall finish and source-matched PBR material; keep openings and wall dimensions authoritative |
+| Tier 1 | `room_shell_floor` — Floor | 2 | `room_shell_floor` exists; runtime-built / shared presentation | accepted Art Factory carpet material v003 adds source-matched warm gray-beige short pile and seamless PBR response; RoomDefinition still owns a simple floor sheet, so this is a surface-material improvement rather than a geometry replacement | Retain accepted v003 carpet maps and tint; preserve RoomDefinition extents, height, collision, navigation, and furniture positions |
+| Tier 1 | `room_shell_openings` — Openings | 2 | planned `room_shell_openings`; runtime-built / shared presentation | photographed window v004 is accepted and integrated; French-door candidate v002 remains continue because glazing/hardware are weak and the source image does not depict a door; other room openings retain RoomDefinition-driven presentation | Source-matched modular window/door components and physically credible glass; preserve opening dimensions |
+| Tier 1 | `room_shell_wall_finish` — Wall Finish | 2 | `room_shell_wall_finish` exists; runtime-built / shared presentation | accepted Art Factory matte deep-green paint finish v002 provides a continuous, source-colored surface with restrained stipple; the source-appropriate plain wall planes and RoomDefinition openings remain authoritative | Retain accepted v002 wall material; continue the separate trim/opening construction backlog without inventing wall paneling |
 | Tier 1 | `clockwork_citizen` — Clockwork Citizen | None | `clockwork_citizen` exists; linked `citizen` | MPFB2 anatomical rig and workwear are best-current review art; strict visual result remains continue Strict result: `{'citizen': 'continue'}`. | Reuse current MPFB2 anatomy/rig and fitted role-workwear; prioritize broad role coverage, animation and LOD rather than restarting a citizen-only loop |
 | Tier 1 | `clockwork_settlement` — Clockwork Settlement | None | `clockwork_settlement` exists; linked `settlement_workshop`, `settlement_housing`, `settlement_depot`, `settlement_workarea` | modular timber/iron/copper Art Factory buildings with meaningful detail; broad room ground and context remain sparse | Reuse and batch-coordinate existing accepted settlement building family; prioritize shared materials and contextual ground/infrastructure |
 | Tier 1 | `lighting_and_environment` — Lighting And Environment | None | planned `lighting_and_environment`; runtime-built / shared presentation | single directional key, broad omni fill, ambient color, and small boiler light; AO and reflections are not consistently present | Bounded Godot environment/material tuning against matched production views, only where it improves the integrated scene |

@@ -1,4 +1,5 @@
 extends RefCounted
+const AssetRegistry := preload("res://scripts/visuals/asset_registry.gd")
 ## Shared lit materials and deterministic textures; no per-frame generation.
 static var _cache: Dictionary = {}
 static var _definitions: Dictionary = {}
@@ -6,6 +7,8 @@ static var _textures: Dictionary = {}
 static var _normal_textures: Dictionary = {}
 static var _loaded := false
 static var _floor_cache: Dictionary = {}
+static var _registered_surface_cache: Dictionary = {}
+static var _surface_failure_reported: Dictionary = {}
 
 static func floor_material(color: Color) -> ShaderMaterial:
 	var key := color.to_html()
@@ -15,6 +18,69 @@ static func floor_material(color: Color) -> ShaderMaterial:
 		material.set_shader_parameter("timber_color", color)
 		_floor_cache[key] = material
 	return _floor_cache[key]
+
+static func registered_surface_material(asset_id: String) -> StandardMaterial3D:
+	if _registered_surface_cache.has(asset_id):
+		return _registered_surface_copy(asset_id, _registered_surface_cache[asset_id] as StandardMaterial3D)
+	var registry := AssetRegistry.new()
+	if not registry.valid:
+		return _registered_surface_failure(asset_id, "production registry is invalid")
+	var entry := registry.lookup(asset_id)
+	if entry.is_empty():
+		return _registered_surface_failure(asset_id, "asset id is not registered")
+	var resolution_error := String(entry.get("resolution_error", ""))
+	if not resolution_error.is_empty():
+		return _registered_surface_failure(asset_id, resolution_error)
+	var packed := load(String(entry.get("resolved_path", ""))) as PackedScene
+	if packed == null:
+		return _registered_surface_failure(asset_id, "registered surface is not an instantiable scene")
+	var sample := packed.instantiate() as Node3D
+	if sample == null:
+		return _registered_surface_failure(asset_id, "registered surface root is not Node3D")
+	var found: StandardMaterial3D
+	var surface_source := String(entry.get("resolved_path", ""))
+	var surface_candidate_id := String(entry.get("candidate_id", ""))
+	var surface_review_only := bool(entry.get("registry_review_only", false))
+	for mesh_variant in sample.find_children("*", "MeshInstance3D", true, false):
+		var mesh_instance := mesh_variant as MeshInstance3D
+		if mesh_instance.mesh == null:
+			continue
+		for surface_index in range(mesh_instance.mesh.get_surface_count()):
+			var candidate_material := mesh_instance.get_active_material(surface_index) as StandardMaterial3D
+			if candidate_material != null:
+				found = candidate_material.duplicate(true) as StandardMaterial3D
+				break
+		if found != null:
+			break
+	sample.free()
+	if found == null:
+		return _registered_surface_failure(asset_id, "registered surface contains no StandardMaterial3D")
+	found.set_meta("visual_asset_id", asset_id)
+	found.set_meta("visual_source", surface_source)
+	found.set_meta("visual_asset_candidate_id", surface_candidate_id)
+	found.set_meta("visual_asset_review_only", surface_review_only)
+	found.set_meta("visual_asset_registry_status", String(entry.get("status", "")))
+	_registered_surface_cache[asset_id] = found
+	return _registered_surface_copy(asset_id, found)
+
+
+static func _registered_surface_copy(asset_id: String, source: StandardMaterial3D) -> StandardMaterial3D:
+	var material := source.duplicate(true) as StandardMaterial3D
+	for key in ["visual_asset_id", "visual_source", "visual_asset_candidate_id", "visual_asset_review_only", "visual_asset_registry_status"]:
+		if source.has_meta(key):
+			material.set_meta(key, source.get_meta(key))
+	return material
+
+
+static func _registered_surface_failure(asset_id: String, reason: String) -> StandardMaterial3D:
+	if not _surface_failure_reported.has(asset_id):
+		_surface_failure_reported[asset_id] = true
+		push_error("ROOMSCALE_REQUIRED_VISUAL_ASSET_FAILURE asset=%s: %s" % [asset_id, reason])
+	var material := StandardMaterial3D.new()
+	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	material.albedo_color = Color.MAGENTA
+	return material
+
 
 static func get_material(category: String, color: Color, roughness: float = 0.8) -> StandardMaterial3D:
 	if not _loaded:

@@ -53,6 +53,12 @@ def parser() -> argparse.ArgumentParser:
     render.add_argument(
         "--room-file", default="verification/poc2/candidates/primary/attempt-7/room_photo_luna.json"
     )
+    render.add_argument(
+        "--with-candidate",
+        action="append",
+        default=[],
+        help="additional validated candidate used as a review-only dependency in the same room render",
+    )
 
     evaluate = commands.add_parser(
         "record-evaluation", help="validate and store evidence-backed evaluation JSON"
@@ -140,7 +146,9 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(result, indent=2))
     elif args.command == "render":
         result = GodotArtBridge(factory, args.godot).render_candidate(
-            args.candidate_id, room_file=args.room_file
+            args.candidate_id,
+            room_file=args.room_file,
+            review_candidate_ids=args.with_candidate,
         )
         print(json.dumps(result, indent=2))
     elif args.command == "record-evaluation":

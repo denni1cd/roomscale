@@ -23,6 +23,17 @@ func _initialize() -> void:
 	fixture.appearance.archetype = "unknown_photo_archetype"
 	resolver.render(parent, fixture, _fallback)
 	assert(fallback_count == 3, "unknown semantics retain fallback")
+	var missing_reference := {
+		"kind": "door",
+		"dimensions": [36.0, 80.0, 2.0],
+		"appearance": {"archetype": "french_door", "asset_id": "room_photo_french_door_production"},
+	}
+	var missing_recipe: Dictionary = resolver.resolve(missing_reference)
+	assert(bool(missing_recipe.get("asset_registry_required", false)))
+	assert(String(missing_recipe.get("asset_registry_error", "")) == "asset id is not registered")
+	resolver.render(parent, missing_reference, _fallback)
+	assert(fallback_count == 3, "an explicit unregistered asset reference must not use procedural fallback")
+	assert(parent.get_meta("visual_source") == "required_asset_failure")
 	var registry_path := "user://poc25_art_factory_test_registry.json"
 	var registry_file := FileAccess.open(registry_path, FileAccess.WRITE)
 	registry_file.store_string(JSON.stringify({"schema_version": 1, "entries": {

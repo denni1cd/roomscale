@@ -1,6 +1,7 @@
 extends SceneTree
 ## Standalone real-population renderer measurements; no simulation shortcuts.
 var results: Array[Dictionary] = []
+var benchmark_room := "room_a"
 
 func _initialize() -> void:
 	call_deferred("_run")
@@ -10,7 +11,10 @@ func _run() -> void:
 		push_error("Performance benchmark requires the real renderer")
 		quit(1)
 		return
-	OS.set_environment("ROOMSCALE_ROOM", "room_a")
+	var requested_room := OS.get_environment("ROOMSCALE_PERFORMANCE_ROOM")
+	if not requested_room.is_empty():
+		benchmark_room = requested_room
+	OS.set_environment("ROOMSCALE_ROOM", benchmark_room)
 	OS.set_environment("ROOMSCALE_ROOM_FILE", "")
 	OS.set_environment("ROOMSCALE_CIVILIZATION", "clockwork")
 	OS.set_environment("ROOMSCALE_NO_MENU", "1")
@@ -83,6 +87,7 @@ func _run() -> void:
 	var report := {
 		"engine": Engine.get_version_info().string,
 		"renderer": RenderingServer.get_current_rendering_method(),
+		"room_id": benchmark_room,
 		"vsync": "disabled",
 		"art_registry_path": OS.get_environment("ROOMSCALE_ART_REGISTRY"),
 		"art_registry_mode": OS.get_environment("ROOMSCALE_ART_REGISTRY_MODE"),
