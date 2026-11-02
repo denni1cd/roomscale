@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "method": "blender_salvage_wide_single_bay_depot",
+  "instructions": "Rebuild from the approved wide gantry composition using one broad central loading bay with no intermediate front posts, two enlarged fixed appliance panels at the outer sides, and a simple centered rope block and plain hook visibly carried by the front crossbeam. Make the open unloading path and paired blue/cream panels read before roof detail at the 64-inch gameplay camera. Use a single shallow asymmetric roof supported from the outer timber posts, large readable storage forms outside the center route, and no gear-like, brass-banded, or cylindrical focal hardware. Fit the 24 x 13 x 20 inch envelope; presentation only.",
+  "tool": "Blender component authoring with embedded PBR maps through the RoomScale Art Factory",
+  "tool_version": "Blender 5.2.3+; Godot 4.7.2-stable Compatibility production renderer",
+  "deterministic_seed": 20261102,
+  "generator_command": [
+    "{project_root}/.venv/Scripts/python.exe",
+    "{project_root}/scripts/art_factory/generators/scavenger_depot_pipeline.py",
+    "{project_root}",
+    "{output_dir}"
+  ],
+  "source_inputs": [
+    "art/scavenger_depot/brief.json",
+    "art/scavenger_depot/visual_director/round-01/approved-target-r01.png",
+    "art/scavenger_depot/visual_director/round-01/visual-development.md",
+    "art/settlement_depot/brief.json",
+    "art/settlement_depot/iterations/v005/generated/asset.glb",
+    "verification/art_factory_production/batch-03/scavenger-room-a/settlement-scale.png",
+    "scripts/art_factory/generators/scavenger_depot_blender.py",
+    "scripts/art_factory/generators/scavenger_depot_pipeline.py",
+    "scripts/art_factory/generators/scavenger_workshop_blender.py",
+    "scripts/art_factory/generators/production_batch01_blender.py",
+    "scripts/civilization_presentation.gd",
+    "art/scavenger_depot/iterations/v001/review-luna.md",
+    "art/scavenger_depot/iterations/v001/render-runs/run-001/settlement-scale.png"
+  ],
+  "parameters": {
+    "visual_director_strategy": "targeted_correction",
+    "visual_director_target": "art/scavenger_depot/visual_director/round-01/approved-target-r01.png",
+    "material_strategy": "broad_scale_patina",
+    "material_palette": {
+      "enamel_blue": [
+        0.12,
+        0.39,
+        0.54
+      ],
+      "enamel_cream": [
+        0.82,
+        0.76,
+        0.62
+      ],
+      "enamel_ochre": [
+        0.62,
+        0.24,
+        0.1
+      ],
+      "galvanized": [
+        0.42,
+        0.47,
+        0.48
+      ]
+    },
+    "output_envelope_inches": [
+      24.0,
+      13.0,
+      20.0
+    ],
+    "gameplay_geometry_changed": false,
+    "outputs": [
+      "scavenger_depot.glb",
+      "generation-record.json",
+      "materials/depot_timber_basecolor.png",
+      "materials/depot_timber_normal.png",
+      "materials/depot_timber_roughness.png",
+      "materials/depot_timber_light_basecolor.png",
+      "materials/depot_timber_light_normal.png",
+      "materials/depot_timber_light_roughness.png",
+      "materials/depot_enamel_blue_basecolor.png",
+      "materials/depot_enamel_blue_normal.png",
+      "materials/depot_enamel_blue_roughness.png",
+      "materials/depot_enamel_cream_basecolor.png",
+      "materials/depot_enamel_cream_normal.png",
+      "materials/depot_enamel_cream_roughness.png",
+      "materials/depot_enamel_ochre_basecolor.png",
+      "materials/depot_enamel_ochre_normal.png",
+      "materials/depot_enamel_ochre_roughness.png",
+      "materials/depot_galvanized_basecolor.png",
+      "materials/depot_galvanized_normal.png",
+      "materials/depot_galvanized_roughness.png",
+      "materials/depot_canvas_basecolor.png",
+      "materials/depot_canvas_normal.png",
+      "materials/depot_canvas_roughness.png"
+    ],
+    "layout_strategy": "wide_single_bay",
+    "hoist_strategy": "simple_rope_block",
+    "diagnosis_ref": "scavenger_depot-v001"
+  },
+  "post_processing": [
+    "Validate the GLB in Godot against the exact 24 x 13 x 20 inch envelope and verify PBR bindings.",
+    "Render close, 64-inch settlement, and 330-inch room views through the review-only Scavenger presentation registry.",
+    "Have Luna inspect actual Godot pixels against the approved concept and the current gameplay capture; retain the production registry until the candidate passes its gates."
+  ],
+  "material_method": "Component-modeled salvaged timber, two enlarged fixed blue and cream appliance panels, broad mismatched sheet roof and plain iron rope hoist, with baked PBR patina; no Clockwork-coded center hardware.",
+  "import_configuration": {
+    "format": "GLB with embedded PBR texture maps",
+    "up_axis": "glTF Y up converted from Blender Z up",
+    "renderer": "Godot Compatibility",
+    "units": "inches",
+    "presentation_only": true,
+    "collision_navigation_selection_and_work_contracts": "not present in visual asset"
+  }
+}

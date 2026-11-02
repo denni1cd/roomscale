@@ -2,7 +2,7 @@
   "schema_version": 1,
   "title": "RoomScale Art Factory Production Deployment — Full Visible-Art Inventory",
   "source_commit": "1e111d37325e7ad00030266efec201796b7fc07d",
-  "generated_at_utc": "2026-11-02T13:48:54+00:00",
+  "generated_at_utc": "2026-11-02T14:30:13+00:00",
   "inventory_scope": "Playable room definitions, reconstructed/candidate RoomDefinitions, canonical and review registries, visual/material catalogs, static scenes, and runtime code that creates visible geometry/material/light/presentation nodes.",
   "coverage": {
     "room_definition_files_scanned": 21,
@@ -485,77 +485,77 @@
       "geometry_builder_sites": [
         {
           "function": "_build_mpfb_scavenger_details",
-          "line": 461,
+          "line": 488,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_build_mpfb_scavenger_details",
-          "line": 463,
+          "line": 490,
           "constructors": [
             "SphereMesh.new()"
           ]
         },
         {
           "function": "_style_verdant_citizen",
-          "line": 577,
+          "line": 604,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_style_verdant_citizen",
-          "line": 579,
+          "line": 606,
           "constructors": [
             "SphereMesh.new()"
           ]
         },
         {
           "function": "_box",
-          "line": 1022,
+          "line": 1049,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_box",
-          "line": 1024,
+          "line": 1051,
           "constructors": [
             "BoxMesh.new()"
           ]
         },
         {
           "function": "_sphere",
-          "line": 1034,
+          "line": 1061,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_sphere",
-          "line": 1036,
+          "line": 1063,
           "constructors": [
             "SphereMesh.new()"
           ]
         },
         {
           "function": "_cylinder",
-          "line": 1050,
+          "line": 1077,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_cylinder",
-          "line": 1052,
+          "line": 1079,
           "constructors": [
             "CylinderMesh.new()"
           ]
         },
         {
           "function": "_shared_leaf_mesh",
-          "line": 1085,
+          "line": 1112,
           "constructors": [
             "SurfaceTool.new()"
           ]
@@ -8204,11 +8204,11 @@
       "gameplay_importance": "high — structures establish the civilization's settlement identity",
       "visual_prominence": "high at settlement scale; several structures repeat in the active room",
       "approx_screen_space_importance": "medium at room overview; high in settlement inspection views",
-      "current_visual_quality": "reuses the accepted Clockwork building family with presentation-only scrap roof and side panels; the set is coherent and game geometry is preserved, but the cladding remains simple and faction character is modest",
+      "current_visual_quality": "reuses the accepted Clockwork building family with presentation-only scrap roof and side panels; the review-only Scavenger Depot v003 improves the correctly framed Room A gameplay read, but its hoist and side storage remain too small and close craft is below target",
       "programmer_art_or_primitive": true,
       "photo_resemblance_required": false,
-      "recommended_production_method": "Build a cohesive salvage-material kit that fits the existing modular building surfaces; retain authoritative site dimensions and gameplay structures",
-      "backlog_status": "Scavenger building identity, layered salvage materials, and attachment quality need a later bounded architecture batch",
+      "recommended_production_method": "Continue with the next high-prominence Scavenger structure, starting with housing; retain the Depot v003 review candidate and preserve authoritative site dimensions and gameplay structures",
+      "backlog_status": "Scavenger workshop and Depot target episodes are backlogged after three attempts; Depot v003 remains review-only, and later work should address the remaining settlement structures without adding a fourth Depot candidate",
       "asset_factory_id": "scavenger_settlement",
       "art_factory_id_exists_before_deployment": false,
       "existing_visual_catalog_id_exists": false,
@@ -8241,7 +8241,7 @@
       "visual_director_status": null,
       "strict_evaluation_path": null,
       "strict_gate_result": null,
-      "production_art_backlog_status": "Scavenger building identity, layered salvage materials, and attachment quality need a later bounded architecture batch",
+      "production_art_backlog_status": "Scavenger workshop and Depot target episodes are backlogged after three attempts; Depot v003 remains review-only, and later work should address the remaining settlement structures without adding a fourth Depot candidate",
       "linked_runtime_geometry_sources": [
         "scripts/visuals/settlement_composition.gd"
       ]

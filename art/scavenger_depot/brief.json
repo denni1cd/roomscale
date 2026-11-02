@@ -1,0 +1,58 @@
+{
+  "allow_stylization": true,
+  "asset_id": "scavenger_depot",
+  "camera_distances": [
+    2.0,
+    12.0,
+    64.0,
+    330.0
+  ],
+  "category": "settlement_structure",
+  "current_quality": "below_target",
+  "display_name": "Scavenger Settlement Depot",
+  "faction_defining": true,
+  "gameplay_invariants": {
+    "existing_depot_contracts_and_citizen_assignments_remain": true,
+    "render_meshes_do_not_create_collision_navigation_selection_or_work_sites": true,
+    "resource_storage_and_construction_state_remain_system_owned": true,
+    "room_definition_landmark_is_authoritative": true
+  },
+  "intended_dimensions": [
+    24.0,
+    13.0,
+    20.0
+  ],
+  "iteration_budget": 8,
+  "materials": {
+    "hardware": "ordinary iron hinges, straps, bolts and rope; avoid decorative brass or gears",
+    "loading_bay": "large readable reused door panels, rough loading sill and a hand-pulled rope hoist",
+    "primary_frame": "reused timber and visibly repaired domestic furniture boards",
+    "roof": "mismatched galvanized sheet, appliance enamel and patched fabric with folded seams",
+    "storage": "distinct slatted crates, wire baskets, household tins and one repaired barrel"
+  },
+  "priority_tier": 1,
+  "prohibited_changes": [
+    "do not change RoomDefinition landmarks, dimensions, resource storage, construction state or citizen assignments",
+    "do not add render meshes to collision, navigation, selection, traversability or work-site calculations",
+    "do not add canonical-room-specific placement or simulation logic",
+    "do not use a brown/rust recolor as the only faction change",
+    "do not use decorative gears, copper trim, boilers or Clockwork machinery"
+  ],
+  "quality_tier": "B",
+  "reference_images": [],
+  "required_features": [
+    "distinctive asymmetric depot silhouette built from reused household and industrial parts rather than a Clockwork reskin",
+    "open loading face with large read-at-distance salvage panels and a clear unloading path",
+    "visible roof supports, folded sheet edges and believable wall and awning attachments",
+    "several large useful storage forms that read separately at the 64-inch gameplay camera",
+    "weathered wood, chipped enamel, galvanized scrap, wire and fabric remain distinct in production lighting",
+    "fit the existing 24 by 13 by 20 inch local presentation envelope"
+  ],
+  "schema_version": 1,
+  "screen_space_importance": 4,
+  "semantic_type": "Scavenger supply depot assembled from reclaimed household and industrial parts",
+  "source_photo_required": false,
+  "source_room_definition": "",
+  "stylization_rationale": "RoomScale uses a miniature-diorama art direction. Scale-driven stylization is allowed, while the depot must read as a functional, carefully assembled salvage structure with believable joins and distinct materials.",
+  "visual_target": "Create a compact Scavenger supply depot from recognizable reclaimed household and industrial parts. Preserve an open loading face, the existing 24 x 13 x 20 inch site envelope and gameplay-owned placement. Give it a broken asymmetrical roof made from large mismatched sheets and one patched fabric section, visibly carried by timber posts and braces. Build its walls from repaired drawer boards and salvaged appliance doors. Make the loading sill, hand-pulled rope hoist, wire storage baskets and a few slatted crates large enough to read at the 64-inch settlement camera. Use eclectic, visibly repaired construction and several broad material blocks for faction identity; avoid Clockwork gears, boilers, copper trim and decorative brass. Keep the rear and side structure stable, physically attached and recognizable from both settlement overview and close inspection."
+}

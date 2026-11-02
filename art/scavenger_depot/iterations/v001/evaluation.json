@@ -1,0 +1,153 @@
+{
+  "candidate_id": "scavenger_depot-v001",
+  "created_at_utc": "2026-11-02T14:10:03+00:00",
+  "decision": "continue",
+  "defects": [
+    "At 64 inches the Depot reads as a cluster of small stalls; the single unloading route and broad paired appliance panels are not the first read.",
+    "The centered hoist is obscured by a dark cylindrical and gear-like focal cue that pulls toward Clockwork.",
+    "The 330-inch room capture is too distant to show a room-level improvement."
+  ],
+  "hard_fail_reasons": [
+    "Gameplay-scale silhouette and Scavenger function score 2/5: the clear unloading bay and paired panels do not read at the matched 64-inch camera.",
+    "The central hoist and faction focal point materially diverge from the approved target; do not promote v001."
+  ],
+  "incumbent_candidate_id": "",
+  "incumbent_comparison": "First candidate. The close view has plausible timber framing and differentiated sheets, but the 64-inch capture loses the approved wide gantry read and the 330-inch room capture is inconclusive.",
+  "incumbent_comparison_result": "first_pass",
+  "likely_causes": [
+    "geometry_loss",
+    "proportion_drift"
+  ],
+  "next_action_hypothesis": "Keep the approved target and make a substantial target-faithful geometry correction: remove intermediate front supports, enlarge the fixed side panels, simplify the central rope block and hook, and strengthen the one-bay silhouette. Compare again at the same 64-inch camera.",
+  "observations": {
+    "art_direction_fit": "Timber and reclaimed sheet materials suggest Scavenger construction, but the centered dark hoist mechanism and stall-like layout drift from the approved direction.",
+    "close_up_quality": "The close render has plausible perimeter supports and layered roof sheets, but the loading bay is less open and less target-faithful than the approved image.",
+    "gameplay_readability": "Luna scores 2/5. At the identical 64-inch camera, the central loading path, paired appliance slabs and centered hand hoist are not the first read.",
+    "geometric_detail": "The close view shows layered roof sheets, posts, door panels and side storage, but the center hoist and unloading route lose definition in the gameplay frame.",
+    "material_realism": "Timber and sheet surfaces separate under production lighting; the dark metal and gold-toned hoist details create an unintended Clockwork cue.",
+    "proportion": "The major structure fits the 23.63 x 12.18 x 18.72 inch technical bounds, but the side panels are too small relative to the opening for a clear gameplay read.",
+    "scale_fidelity": "Godot validates 23.63 x 12.18 x 18.72 inches against the 24 x 13 x 20 inch envelope; the 330-inch room view is too distant to show an asset-level improvement.",
+    "semantic_recognizability": "At 64 inches, side roof planes and a dark central mechanism dominate; the intended supply depot and open loading face are weak.",
+    "silhouette_quality": "The candidate reads as adjacent small roofed stalls rather than the approved broad, asymmetric gantry bay.",
+    "surface_variation": "The close view shows broad roof and wood variation, while those distinctions are subdued in the settlement capture.",
+    "technical_integration": "Godot 4.7.2 imported and rendered the candidate through a review-only registry; validation passed with 10 meshes, 10 surfaces and 60,492 triangles."
+  },
+  "render_evidence": [
+    "art/scavenger_depot/iterations/v001/render-runs/run-001/asset-three-quarter.png",
+    "art/scavenger_depot/iterations/v001/render-runs/run-001/asset-profile.png",
+    "art/scavenger_depot/iterations/v001/render-runs/run-001/settlement-scale.png",
+    "art/scavenger_depot/iterations/v001/render-runs/run-001/room-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 2,
+    "close_up_quality": 3,
+    "gameplay_readability": 2,
+    "geometric_detail": 3,
+    "material_realism": 3,
+    "proportion": 3,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 2,
+    "silhouette_quality": 2,
+    "surface_variation": 3,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The close render has supported perimeter framing, but the approved wide opening, prominent paired panels and central hoist do not all read clearly.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "Roof sheets and door slabs have softened edges in the close production render.",
+        "evidence_refs": [
+          "art/scavenger_depot/iterations/v001/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "Door straps are present, but the central dark pulley shapes read as a Clockwork mechanism rather than a simple hand hoist.",
+        "evidence_refs": [
+          "art/scavenger_depot/iterations/v001/render-runs/run-001/settlement-scale.png"
+        ],
+        "pass": false
+      },
+      "joins": {
+        "evidence": "Perimeter roof supports are visible, but the central hoist load path and its relationship to the front crossbeam are not clear.",
+        "evidence_refs": [
+          "art/scavenger_depot/iterations/v001/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "The loading route, panel attachment and hand-hoist function are not legible together at the gameplay camera.",
+        "evidence_refs": [
+          "art/scavenger_depot/iterations/v001/render-runs/run-001/settlement-scale.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "Timber, enamel and galvanized sheets separate under the production lighting.",
+        "evidence_refs": [
+          "art/scavenger_depot/iterations/v001/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "surface_variation": {
+        "evidence": "The close capture shows broad variation in the roof sheets and timber, with small details lost at settlement distance.",
+        "evidence_refs": [
+          "art/scavenger_depot/iterations/v001/render-runs/run-001/asset-three-quarter.png",
+          "art/scavenger_depot/iterations/v001/render-runs/run-001/settlement-scale.png"
+        ],
+        "pass": true
+      },
+      "thickness": {
+        "evidence": "The roof sheets, timber members and enamel panels show layered thickness in the close capture.",
+        "evidence_refs": [
+          "art/scavenger_depot/iterations/v001/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The close view is a coherent stylized game asset, but it does not read as a realistic depot matching the approved craft target.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "The ArtBrief has no photographic source requirement or reference image.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": true
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "For the next target-preserving attempt, remove intermediate front supports, enlarge the side appliance panels, replace the circular hoist shapes with a simple readable rope block and plain hook, and check the same 64-inch gameplay camera before polishing small details.",
+    "lost_visual_information": [
+      "The approved single wide loading bay becomes a group of small roofed stalls at 64 inches.",
+      "The two broad fixed appliance panels no longer frame one clear central path.",
+      "The central plain rope hoist becomes a dark, gear-like focal shape.",
+      "The 330-inch room capture does not show a room-scale improvement."
+    ],
+    "preserved_components": [
+      "The major structure fits the approved 24 x 13 x 20 inch envelope.",
+      "Timber framing and overlapping mismatched sheets remain recognizable in close view.",
+      "Perimeter roof supports and useful side storage are present."
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "proportion_drift"
+    ]
+  }
+}

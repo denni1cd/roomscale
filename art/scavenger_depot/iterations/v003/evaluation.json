@@ -1,0 +1,161 @@
+{
+  "candidate_id": "scavenger_depot-v003",
+  "created_at_utc": "2026-11-02T14:27:43+00:00",
+  "decision": "continue",
+  "defects": [
+    "The plain rope hoist remains too small or obscured to register at 64 inches.",
+    "Side crates and wire storage remain too small to read as useful depot storage at gameplay distance.",
+    "The roof reads more regular and rectangular than the approved asymmetric gantry, and close-view craft remains below the production bar."
+  ],
+  "hard_fail_reasons": [
+    "Gameplay feature readability remains below the gate: the hoist and side storage score 2/5 at the matched 64-inch Room A camera.",
+    "Close-view craft and material finish score 3/5, below the production threshold."
+  ],
+  "incumbent_candidate_id": "scavenger_depot-v002",
+  "incumbent_comparison": "Using the corrected Room A captures, v003 clearly improves over v001 and v002: large blue and cream panels frame a readable open center route and the depot is distinguishable among settlement structures. The 330-inch overview remains too distant for storage or unloading detail.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "geometry_loss",
+    "proportion_drift"
+  ],
+  "next_action_hypothesis": "Backlog this target episode after the third bounded strategy. Preserve v003 as best current review; any future separately approved target episode should enlarge the plain wood-and-rope hoist and one side storage form while preserving the clear center route, large paired doors and supported roof.",
+  "observations": {
+    "art_direction_fit": "The paired salvaged appliance doors, timber frame and sheet roof read as Scavenger with no conspicuous Clockwork gear, brass or boiler cue.",
+    "close_up_quality": "The close view shows an understandable, supported open-front Depot, but the hoist and storage scale and overall joinery finish still miss the approved craft target.",
+    "gameplay_readability": "Luna scores the 64-inch first read 4/5. The blue and cream slabs frame a clear empty center route and strongly improve the repeated Scavenger settlement read.",
+    "geometric_detail": "The close view shows supported timber framing, sheet attachments and an open loading route; the simple hoist and side storage are too small in gameplay views.",
+    "material_realism": "Blue and cream enamel, timber and mixed roof sheets separate clearly in the close and 64-inch Room A captures, though finish is below the target craft level.",
+    "proportion": "The 23.63 x 12.18 x 18.61 inch Godot bounds fit the 24 x 13 x 20 inch envelope; the enlarged panels frame the opening effectively.",
+    "scale_fidelity": "Godot validates 23.63 x 12.18 x 18.61 inches against the requested 24 x 13 x 20 inch envelope; the 330-inch room overview is too distant for storage detail.",
+    "semantic_recognizability": "The blue and cream appliance panels around a clear central bay make the Depot distinctly Scavenger and distinguish it from nearby settlement structures.",
+    "silhouette_quality": "The open front and paired slabs read at 64 inches, while the roof remains more regular and rectangular than the approved asymmetric gantry.",
+    "surface_variation": "Broad enamel repairs and mismatched roof sheets remain identifiable at gameplay scale; finer material variation is primarily visible close up.",
+    "technical_integration": "Godot 4.7.2 imported and rendered v003 through the review-only resolver in the actual Room A gameplay fixture; validation passed with 10 meshes, 10 surfaces and 52,048 triangles."
+  },
+  "render_evidence": [
+    "art/scavenger_depot/iterations/v003/render-runs/run-005/settlement-scale.png",
+    "art/scavenger_depot/iterations/v003/render-runs/run-005/settlement-scale-opposite-angle.png",
+    "art/scavenger_depot/iterations/v003/render-runs/run-005/settlement-scale-side-angle.png",
+    "art/scavenger_depot/iterations/v003/render-runs/run-005/asset-three-quarter.png",
+    "art/scavenger_depot/iterations/v003/render-runs/run-005/asset-profile.png",
+    "art/scavenger_depot/iterations/v003/render-runs/run-005/room-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 3,
+    "gameplay_readability": 4,
+    "geometric_detail": 3,
+    "material_realism": 3,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "surface_variation": 3,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The close view shows a coherent supported Depot, but the hoist and storage remain undersized and overall finish misses the approved craftsmanship target.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "The enamel slabs have eased edges and the roof sheets show folded, layered edges in the close Room A render.",
+        "evidence_refs": [
+          "art/scavenger_depot/iterations/v003/render-runs/run-005/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "The plain rope block and hook are too small or obscured at gameplay scale to read as a hand hoist.",
+        "evidence_refs": [
+          "art/scavenger_depot/iterations/v003/render-runs/run-005/settlement-scale.png",
+          "art/scavenger_depot/iterations/v003/render-runs/run-005/settlement-scale-opposite-angle.png",
+          "art/scavenger_depot/iterations/v003/render-runs/run-005/settlement-scale-side-angle.png"
+        ],
+        "pass": false
+      },
+      "joins": {
+        "evidence": "Perimeter posts, beams and roof battens visibly support the roof; the roof silhouette remains more regular than the approved target.",
+        "evidence_refs": [
+          "art/scavenger_depot/iterations/v003/render-runs/run-005/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "The central path reads, but useful side storage is too small to register at the gameplay camera.",
+        "evidence_refs": [
+          "art/scavenger_depot/iterations/v003/render-runs/run-005/settlement-scale.png",
+          "art/scavenger_depot/iterations/v003/render-runs/run-005/settlement-scale-opposite-angle.png",
+          "art/scavenger_depot/iterations/v003/render-runs/run-005/settlement-scale-side-angle.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "Weathered timber, blue and cream enamel, and galvanized sheets remain distinct under Room A lighting.",
+        "evidence_refs": [
+          "art/scavenger_depot/iterations/v003/render-runs/run-005/asset-three-quarter.png",
+          "art/scavenger_depot/iterations/v003/render-runs/run-005/settlement-scale.png"
+        ],
+        "pass": true
+      },
+      "surface_variation": {
+        "evidence": "Broad sheet patches and appliance repair areas are visible, with finer texture detail reserved for close inspection.",
+        "evidence_refs": [
+          "art/scavenger_depot/iterations/v003/render-runs/run-005/asset-three-quarter.png",
+          "art/scavenger_depot/iterations/v003/render-runs/run-005/settlement-scale.png"
+        ],
+        "pass": true
+      },
+      "thickness": {
+        "evidence": "Roof sheets, timber members and appliance slabs show readable thickness in the close view.",
+        "evidence_refs": [
+          "art/scavenger_depot/iterations/v003/render-runs/run-005/asset-three-quarter.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The candidate reads as a coherent stylized game asset, but its close craftsmanship and underscaled hoist/storage remain below the production target.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "The ArtBrief has no photographic source requirement or reference image.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": true
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Backlog the current target episode after attempt three and preserve v003 as best current review. If the asset returns under a separately approved target episode, enlarge the plain wood-and-rope hoist and one side storage form while keeping the open center route and paired enamel slabs.",
+    "lost_visual_information": [
+      "The plain rope block and hook are too small or obscured to identify at 64 inches.",
+      "One side crate or wire basket is not large enough to read as useful depot storage at gameplay scale.",
+      "The approved target has a more visibly asymmetric, gantry-like roof than the regular rectangular roof in v003.",
+      "The 330-inch room overview is too distant to assess loading details."
+    ],
+    "preserved_components": [
+      "Large blue and cream appliance slabs frame a clearly empty center route at 64 inches.",
+      "The repeated settlement view distinguishes this Depot from nearby buildings and establishes Scavenger identity.",
+      "The roof edge and timber perimeter supports have a plausible load path.",
+      "The local bounds fit the requested presentation envelope and gameplay state is unchanged."
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "proportion_drift"
+    ]
+  }
+}

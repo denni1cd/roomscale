@@ -198,6 +198,8 @@ func _apply_scavenger_settlement(scene: Node3D) -> void:
 	var resolver := VisualResolver.new()
 	var scavenger_workshop_entry: Dictionary = resolver.registry.lookup("scavenger_workshop")
 	var has_scavenger_workshop_art := not scavenger_workshop_entry.is_empty()
+	var scavenger_depot_entry: Dictionary = resolver.registry.lookup("scavenger_depot")
+	var has_scavenger_depot_art := not scavenger_depot_entry.is_empty()
 	var details := Node3D.new()
 	details.name = "ScavengerVisualPass"
 	details.set_meta("presentation_only", true)
@@ -236,6 +238,31 @@ func _apply_scavenger_settlement(scene: Node3D) -> void:
 					"kind": "scavenger_workshop",
 					"appearance": {"asset_id": "scavenger_workshop"},
 					"dimensions": [26.0, 20.0, 20.0],
+				},
+				func(_parent: Node3D, _object: Dictionary) -> void: pass
+			)
+			continue
+		if building_name == "Depot" and has_scavenger_depot_art:
+			# Candidate registries replace only the Depot's presentation meshes.
+			# Gameplay structures and production art remain untouched unless this
+			# distinct Scavenger asset is explicitly accepted into the registry.
+			for node_name in ["ArtPresentation", "ClockworkDetails"]:
+				var previous_art := building.get_node_or_null(node_name) as Node3D
+				if previous_art != null:
+					previous_art.visible = false
+			for child in building.get_children():
+				if child is MeshInstance3D or child is Label3D:
+					child.visible = false
+			var asset_root := Node3D.new()
+			asset_root.name = "ScavengerArtPresentation"
+			asset_root.set_meta("presentation_only", true)
+			building.add_child(asset_root)
+			resolver.render(
+				asset_root,
+				{
+					"kind": "scavenger_depot",
+					"appearance": {"asset_id": "scavenger_depot"},
+					"dimensions": [24.0, 13.0, 20.0],
 				},
 				func(_parent: Node3D, _object: Dictionary) -> void: pass
 			)

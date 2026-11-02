@@ -171,6 +171,7 @@ class GodotArtBridge:
                 "ROOMSCALE_ART_FACTORY_ASSET_ID": candidate.asset_id,
                 "ROOMSCALE_ART_FACTORY_CANDIDATE": candidate_id,
                 "ROOMSCALE_ART_FACTORY_ROOM_FILE": room_file,
+                "ROOMSCALE_ROOM": Path(room_file).stem,
                 "ROOMSCALE_ART_FACTORY_EXPECTED_ASSET": self._resource_path(relative_asset),
                 "ROOMSCALE_ART_FACTORY_RENDER_DIR": str(run_root),
                 "ROOMSCALE_ART_FACTORY_BRIEF": str(

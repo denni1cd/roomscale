@@ -146,8 +146,30 @@ func run() -> void:
 	var work_area := scene.get_node_or_null("Settlement/WorkArea") as Node3D
 	if workshop != null and work_area != null:
 		var settlement_focus := (workshop.global_position + work_area.global_position) * 0.5 + Vector3.UP * 4.0
+		var settlement_subject_names := {
+			"scavenger_workshop": "Workshop",
+			"settlement_workshop": "Workshop",
+			"scavenger_depot": "Depot",
+			"settlement_depot": "Depot",
+			"scavenger_housing": "Housing",
+			"settlement_housing": "Housing",
+			"scavenger_workarea": "WorkArea",
+			"settlement_workarea": "WorkArea",
+		}
+		var settlement_subject_name := String(settlement_subject_names.get(asset_id, ""))
+		if not settlement_subject_name.is_empty():
+			var settlement_subject := scene.get_node_or_null("Settlement/" + settlement_subject_name) as Node3D
+			if settlement_subject != null:
+				var brief_dimensions: Array = brief.get("intended_dimensions", [0.0, 8.0, 0.0])
+				var subject_height := float(brief_dimensions[1]) if brief_dimensions.size() > 1 else 8.0
+				settlement_focus = settlement_subject.global_position + Vector3.UP * subject_height * 0.5
 		if not await _capture(scene, "settlement-scale", settlement_focus, 64.0, 42.0, 0.25):
 			return
+		if not settlement_subject_name.is_empty():
+			if not await _capture(scene, "settlement-scale-opposite-angle", settlement_focus, 64.0, 42.0, 0.25 + PI):
+				return
+			if not await _capture(scene, "settlement-scale-side-angle", settlement_focus, 64.0, 42.0, 0.25 + PI * 0.5):
+				return
 	var dimensions := _vector3(brief.get("intended_dimensions", [1.0, 1.0, 1.0]))
 	var close_distance := maxf(2.2, dimensions.length() * 0.72)
 	var three_quarter_yaw := 0.62

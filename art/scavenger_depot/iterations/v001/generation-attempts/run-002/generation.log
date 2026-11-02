@@ -1,0 +1,17 @@
+SCAVENGER_DEPOT_BLENDER C:\Users\Zero\python_projects\ai\roomscale\.tools\blender-5.2.3\blender-5.2.3-windows-x64\blender.exe
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)
+
+Blender quit
+Traceback (most recent call last):
+  File "C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale\scripts\art_factory\generators\scavenger_depot_blender.py", line 236, in <module>
+    main(Path(os.sys.argv[-2]).resolve(), Path(os.sys.argv[-1]).resolve())
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale\scripts\art_factory\generators\scavenger_depot_blender.py", line 200, in main
+    _, material_names = _build(output)
+                        ~~~~~~^^^^^^^^
+  File "C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale\scripts\art_factory\generators\scavenger_depot_blender.py", line 144, in _build
+    salvage._cube("Appliance panel lower repair patch", (width * 0.68, 0.12, 0.72), (x + 0.20, -9.08, 2.15), mats["enamel_ochre" if door_mat == mats["enamel_blue"] else mats["enamel_blue"]], 0.06)
+                                                                                                             ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: bpy.data.materials['Scavenger depot faded blue enamel']
+
+Error: script failed, file: 'C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale\scripts\art_factory\generators\scavenger_depot_blender.py', exiting.
