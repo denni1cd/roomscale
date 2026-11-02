@@ -1,11 +1,11 @@
-# Production Art Backlog — Updated after Batch 18
+# Production Art Backlog — Updated after Batch 19
 
 This is the post-POC production backlog. It preserves POC 2.5 evidence and acceptance results; the entries below are not POC 2.5 regressions or changes to its acceptance amendment.
 
-## Current priority after Batch 18
+## Current priority after Batch 19
 
-1. **Faction visual identity.** Preserve Clockwork building candidates and citizen-v089 as best-current review art; prioritize a distinctive Verdant or Scavenger structure/silhouette with source-supported construction.
-2. **Human-room large built-ins.** Continue with unregistered, high-screen-space photographed architecture and furniture after the existing target episodes are reviewed; keep source-photo uncertainty explicit.
+1. **Clockwork workshop target episode.** v008 is the best current 3D review candidate and v004 remains production; make one final materially different canopy transfer attempt, then stop this episode at three strategies.
+2. **Faction visual identity.** After the bounded workshop attempt, prioritize a distinctive Verdant or Scavenger structure/silhouette with source-supported construction; preserve Clockwork building candidates and citizen-v089 as best-current review art.
 3. **Room shell trim and French door.** Both approved-target episodes have exhausted three strategies. Trim v002 remains best current but misses close-craft and grain; French-door v010 has exact bounds and readable hinges but repetitive oak. The blue-gray pane capture cannot establish transparency. Preserve room dimensions; keep any garden context outside the door mesh.
 4. **Desk transfer.** The r01 episode remains at three attempts. A current matched rerender makes v061 the best 3D review candidate because its probe restores broad room reflections and its constructed underframe reads better than v007. It still renders too green and transparent against the source and target; preserve v007 in production and do not generate a fourth r01 variant.
 5. **Visible ceiling.** It is hidden in the representative open-top gameplay camera and should wait for a view where it is visible.
@@ -45,6 +45,10 @@ The current re-evaluation makes v061 the best 3D review candidate, but does not 
 ## Batch 18 disposition
 
 Direct pixel review reconfirmed the trim and French-door candidate dispositions without creating new variants: trim v002 remains best current, v003 remains rejected, and French-door v010 remains best current after the r03 episode. The French-door panes appear uniform blue-gray against an equally blank exterior, so the current render cannot establish target-like transparency or garden transfer. No promotion or production/runtime change occurred. The latest 50-citizen whole-scene capture remains prototype-heavy and shows no obvious visual transformation. Existing Batch 13 and Batch 16 performance samples remain applicable because this batch changed no runtime content. See the [Batch 18 architecture review](batch-18-human-room-architecture-review.md).
+
+## Batch 19 disposition
+
+The Luna-approved Clockwork workshop r01 episode resumed for attempt 2. v008 replaces the split incumbent wings with a tied gable and improves the roof assembly, but omits the broad lower cover and raised upper ridge shown in the approved target. Keep v008 as best-current 3D review and v004 in the canonical production registry; no promotion occurred. Matched 50-citizen renders show a small 0.16 ms p95 increase in room/settlement views and flat citizen performance. Whole-scene settlement captures show no broad transformation. The inventory now follows Visual Director best-3D state ahead of the legacy showcase entry. One alternate strategy remains; after that, move on. See [Batch 19](batch-19-clockwork-workshop.md).
 
 ## Promoted production assets
 

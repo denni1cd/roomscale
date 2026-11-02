@@ -1,0 +1,278 @@
+{
+  "asset_files": [
+    "art/settlement_workshop/iterations/v008/generated/settlement_workshop.tscn",
+    "art/settlement_workshop/iterations/v008/generated/generation-record.json"
+  ],
+  "asset_id": "settlement_workshop",
+  "candidate_id": "settlement_workshop-v008",
+  "created_at_utc": "2026-11-02T11:31:22+00:00",
+  "evaluation_file": "art/settlement_workshop/iterations/v008/evaluation.json",
+  "generation_attempts": [
+    {
+      "command": [
+        ".tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--path",
+        "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale",
+        "--script",
+        "res://scripts/art_factory/generators/generate_workshop_ridge_correction.gd"
+      ],
+      "execution_number": 1,
+      "exit_code": 0,
+      "log_file": "art/settlement_workshop/iterations/v008/generation.log",
+      "output_dir": "art/settlement_workshop/iterations/v008/generated",
+      "recorded_at_utc": "2026-11-02T11:31:23+00:00",
+      "status": "pass"
+    }
+  ],
+  "generation_result": {
+    "command": [
+      ".tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+      "--headless",
+      "--path",
+      "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale",
+      "--script",
+      "res://scripts/art_factory/generators/generate_workshop_ridge_correction.gd"
+    ],
+    "execution_number": 1,
+    "exit_code": 0,
+    "log_file": "art/settlement_workshop/iterations/v008/generation.log",
+    "output_dir": "art/settlement_workshop/iterations/v008/generated",
+    "recorded_at_utc": "2026-11-02T11:31:23+00:00",
+    "status": "pass"
+  },
+  "parent_candidate_id": "settlement_workshop-v004",
+  "recipe_file": "art/settlement_workshop/iterations/v008/recipe.json",
+  "renders": [
+    {
+      "asset_id": "settlement_workshop",
+      "camera": {
+        "actual_camera_position": "(203.1683, 272.0435, -0.000009)",
+        "distance_inches": 330.0,
+        "focus": "(0.0, 12.0, 0.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 52.0,
+        "yaw_radians": 1.5707963267949
+      },
+      "candidate_id": "settlement_workshop-v008",
+      "captured_at_utc": "2026-11-02T11:31:55+00:00",
+      "draw_calls": 1232.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 33.0,
+      "path": "art/settlement_workshop/iterations/v008/render-runs/run-001/room-scale.png",
+      "phase": "room-scale",
+      "primitives": 612851.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_photo_luna",
+      "sha256": "cd07c29ba2c9fed1b2a6c5177a113e85299e4881c58f8e64b3c0c1bb289ee55c"
+    },
+    {
+      "asset_id": "settlement_workshop",
+      "camera": {
+        "actual_camera_position": "(-0.000018, 272.0435, -203.1683)",
+        "distance_inches": 330.0,
+        "focus": "(0.0, 12.0, 0.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 52.0,
+        "yaw_radians": 3.14159265358979
+      },
+      "candidate_id": "settlement_workshop-v008",
+      "captured_at_utc": "2026-11-02T11:31:55+00:00",
+      "draw_calls": 1269.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 33.0,
+      "path": "art/settlement_workshop/iterations/v008/render-runs/run-001/room-scale-opposite-angle.png",
+      "phase": "room-scale-opposite-angle",
+      "primitives": 651161.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_photo_luna",
+      "sha256": "622e9075996dad0d6e985b98e3d3c2130847c29d5e5af63864a1169d2c548a71"
+    },
+    {
+      "asset_id": "settlement_workshop",
+      "camera": {
+        "actual_camera_position": "(-4.233153, 46.82436, 52.5827)",
+        "distance_inches": 64.0,
+        "focus": "(-16.0, 4.0, 6.5)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 42.0,
+        "yaw_radians": 0.25
+      },
+      "candidate_id": "settlement_workshop-v008",
+      "captured_at_utc": "2026-11-02T11:31:55+00:00",
+      "draw_calls": 2258.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 33.0,
+      "path": "art/settlement_workshop/iterations/v008/render-runs/run-001/settlement-scale.png",
+      "phase": "settlement-scale",
+      "primitives": 1134497.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_photo_luna",
+      "sha256": "d489011b4138de3eb6b3556f8f3d83471b9bfba60dc71bfcce9a4a90eece40a1"
+    },
+    {
+      "asset_id": "settlement_workshop",
+      "camera": {
+        "actual_camera_position": "(-26.71433, 14.54787, 26.41123)",
+        "distance_inches": 27.6614978027344,
+        "focus": "(-42.0, 6.0, 5.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 18.0,
+        "yaw_radians": 0.62
+      },
+      "candidate_id": "settlement_workshop-v008",
+      "captured_at_utc": "2026-11-02T11:31:55+00:00",
+      "draw_calls": 981.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 33.0,
+      "path": "art/settlement_workshop/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+      "phase": "asset-three-quarter",
+      "primitives": 633326.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_photo_luna",
+      "sha256": "1fa244144429aae61cabb3836b24cd2b0483c4d3b7ed2279ffa7852aaa642743"
+    },
+    {
+      "asset_id": "settlement_workshop",
+      "camera": {
+        "actual_camera_position": "(-57.28567, 14.54787, -16.41123)",
+        "distance_inches": 27.6614978027344,
+        "focus": "(-42.0, 6.0, 5.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 18.0,
+        "yaw_radians": 3.76159265358979
+      },
+      "candidate_id": "settlement_workshop-v008",
+      "captured_at_utc": "2026-11-02T11:31:55+00:00",
+      "draw_calls": 1956.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 33.0,
+      "path": "art/settlement_workshop/iterations/v008/render-runs/run-001/asset-opposite-three-quarter.png",
+      "phase": "asset-opposite-three-quarter",
+      "primitives": 1076787.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_photo_luna",
+      "sha256": "b64f443266d92b31348cf574266aee9615bcc2d430b44b399a4749207e749208"
+    },
+    {
+      "asset_id": "settlement_workshop",
+      "camera": {
+        "actual_camera_position": "(-20.58877, 14.54787, -10.28567)",
+        "distance_inches": 27.6614978027344,
+        "focus": "(-42.0, 6.0, 5.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 18.0,
+        "yaw_radians": 2.1907963267949
+      },
+      "candidate_id": "settlement_workshop-v008",
+      "captured_at_utc": "2026-11-02T11:31:55+00:00",
+      "draw_calls": 1183.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 33.0,
+      "path": "art/settlement_workshop/iterations/v008/render-runs/run-001/asset-profile.png",
+      "phase": "asset-profile",
+      "primitives": 776770.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_photo_luna",
+      "sha256": "2aa6c5672351f0b862af431a06e07f55de62679d09ed8a591bef8a02d7b6d8a4"
+    },
+    {
+      "asset_id": "settlement_workshop",
+      "camera": {
+        "actual_camera_position": "(-38.75293, 10.26443, 17.71657)",
+        "distance_inches": 13.8,
+        "focus": "(-42.0, 6.0, 5.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(639.9999, 360.0)",
+        "tilt_degrees": 18.0,
+        "yaw_radians": 0.25
+      },
+      "candidate_id": "settlement_workshop-v008",
+      "captured_at_utc": "2026-11-02T11:31:55+00:00",
+      "draw_calls": 1132.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 33.0,
+      "path": "art/settlement_workshop/iterations/v008/render-runs/run-001/asset-detail.png",
+      "phase": "asset-detail",
+      "primitives": 874966.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_photo_luna",
+      "sha256": "7347e2440545c78228181dcd996c041e4e9821e93101e7bc9db6c8b9e1fd35c3"
+    }
+  ],
+  "schema_version": 1,
+  "status": "challenger",
+  "technical_validation": {
+    "asset_path": "res://art/settlement_workshop/iterations/v008/generated/settlement_workshop.tscn",
+    "bounds": {
+      "position": [
+        -13.0,
+        0.0,
+        -10.0
+      ],
+      "size": [
+        26.0,
+        19.939998626709,
+        20.0
+      ]
+    },
+    "engine": "4.7.2-stable (official)",
+    "import_exit_code": 0,
+    "issues": [],
+    "log": "art/settlement_workshop/iterations/v008/technical-validation.log",
+    "mesh_count": 112,
+    "recorded_at_utc": "2026-11-02T11:31:37+00:00",
+    "report": "art/settlement_workshop/iterations/v008/technical-validation.json",
+    "status": "pass",
+    "surface_count": 112,
+    "triangle_count": 23808,
+    "validation_exit_code": 0
+  },
+  "version": 8,
+  "visual_director_provenance": {
+    "approved_visual_target": {
+      "approval": "pass",
+      "approved_at_utc": "2026-11-01T13:11:55+00:00",
+      "concept_id": "clockwork-workshop-raised-canopy-r01",
+      "path": "art/settlement_workshop/visual_director/round-01/approved-target-r01.png",
+      "review_method": "pixel inspection; review evidence recorded by Luna",
+      "review_path": "art/settlement_workshop/visual_director/round-01/visual-development.md",
+      "sha256": "9313647a47a2c7ea5c71840499e0e8202e8191e02e72435fb58c7238eb7037b5"
+    },
+    "case_file": "art/settlement_workshop/visual_director/state.json",
+    "policy": {
+      "inputs": {
+        "category": "settlement_structure",
+        "current_quality": "below_target",
+        "faction_defining": true,
+        "inferred": [],
+        "priority_tier": 1,
+        "screen_space_importance": 4,
+        "source_images_present": false,
+        "source_photo_required": false
+      },
+      "reasons": [
+        "Tier 1 scene-defining asset",
+        "high screen-space importance",
+        "current production quality is below target"
+      ],
+      "required": true
+    },
+    "status": "approved",
+    "strategy": "targeted_correction",
+    "target_episode_attempt": 2
+  }
+}

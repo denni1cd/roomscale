@@ -9,11 +9,11 @@
     "sha256": "9313647a47a2c7ea5c71840499e0e8202e8191e02e72435fb58c7238eb7037b5"
   },
   "asset_id": "settlement_workshop",
-  "backlog_reason": "v007 replaces the target raised-ridge canopy with an undersized one-sided awning and does not beat accepted v004; keep v004, and resume only with a supported continuous canopy that preserves an open machine lane.",
   "best_3d_candidate": {
-    "accepted_at_utc": "2026-10-25T14:53:55+00:00",
-    "candidate_id": "settlement_workshop-v004",
-    "path": "art/settlement_workshop/iterations/v004/generated/settlement_workshop.tscn"
+    "candidate_file": "art/settlement_workshop/iterations/v008/candidate.json",
+    "candidate_id": "settlement_workshop-v008",
+    "evaluation_file": "art/settlement_workshop/iterations/v008/evaluation.json",
+    "updated_at_utc": "2026-11-02T11:42:09+00:00"
   },
   "candidate_history": [
     {
@@ -56,6 +56,47 @@
         "strategy": "initial",
         "target_episode_attempt": 1
       }
+    },
+    {
+      "candidate_file": "art/settlement_workshop/iterations/v008/candidate.json",
+      "candidate_id": "settlement_workshop-v008",
+      "created_at_utc": "2026-11-02T11:31:22+00:00",
+      "parent_candidate_id": "settlement_workshop-v004",
+      "recipe_file": "art/settlement_workshop/iterations/v008/recipe.json",
+      "visual_director_attempt": 2,
+      "visual_director_provenance": {
+        "approved_visual_target": {
+          "approval": "pass",
+          "approved_at_utc": "2026-11-01T13:11:55+00:00",
+          "concept_id": "clockwork-workshop-raised-canopy-r01",
+          "path": "art/settlement_workshop/visual_director/round-01/approved-target-r01.png",
+          "review_method": "pixel inspection; review evidence recorded by Luna",
+          "review_path": "art/settlement_workshop/visual_director/round-01/visual-development.md",
+          "sha256": "9313647a47a2c7ea5c71840499e0e8202e8191e02e72435fb58c7238eb7037b5"
+        },
+        "case_file": "art/settlement_workshop/visual_director/state.json",
+        "policy": {
+          "inputs": {
+            "category": "settlement_structure",
+            "current_quality": "below_target",
+            "faction_defining": true,
+            "inferred": [],
+            "priority_tier": 1,
+            "screen_space_importance": 4,
+            "source_images_present": false,
+            "source_photo_required": false
+          },
+          "reasons": [
+            "Tier 1 scene-defining asset",
+            "high screen-space importance",
+            "current production quality is below target"
+          ],
+          "required": true
+        },
+        "status": "approved",
+        "strategy": "targeted_correction",
+        "target_episode_attempt": 2
+      }
     }
   ],
   "case_file": "art/settlement_workshop/visual_director/state.json",
@@ -83,7 +124,7 @@
     "path": "art/settlement_workshop/iterations/v004/generated/settlement_workshop.tscn"
   },
   "schema_version": 1,
-  "status": "backlog",
+  "status": "in_progress",
   "target_episode": {
     "attempts": [
       {
@@ -111,12 +152,37 @@
             "proportion_drift"
           ]
         }
+      },
+      {
+        "attempt": 2,
+        "candidate_id": "settlement_workshop-v008",
+        "decision": "continue",
+        "evaluated_at_utc": "2026-11-02T11:42:09+00:00",
+        "evaluation_file": "art/settlement_workshop/iterations/v008/evaluation.json",
+        "generation_executions": 1,
+        "incumbent_comparison_result": "better",
+        "status": "evaluated",
+        "strategy": "targeted_correction",
+        "visual_transfer_diagnosis": {
+          "corrective_action": "Use one alternate component-authoring strategy to build a broader two-tier canopy around a chimney opening, with connected supports and the open front retained.",
+          "lost_visual_information": [
+            "The wide, layered canopy hierarchy in the approved target is reduced to a single gable over the bench bay.",
+            "The broad lower roof and raised upper ridge do not span the structure together."
+          ],
+          "preserved_components": [
+            "Boiler, stack, copper fittings, gear, and workbench remain legible.",
+            "The open machine lane, 26 x 20 x 20-inch envelope, and incumbent gameplay-owned contracts remain."
+          ],
+          "primary_causes": [
+            "geometry_loss",
+            "proportion_drift"
+          ]
+        }
       }
     ],
-    "backlog_reason": "v007 replaces the target raised-ridge canopy with an undersized one-sided awning and does not beat accepted v004; keep v004, and resume only with a supported continuous canopy that preserves an open machine lane.",
-    "status": "backlog",
+    "status": "remediation_needed",
     "target_sha256": "9313647a47a2c7ea5c71840499e0e8202e8191e02e72435fb58c7238eb7037b5"
   },
-  "updated_at_utc": "2026-11-01T13:20:55+00:00",
+  "updated_at_utc": "2026-11-02T11:42:09+00:00",
   "visual_brief_file": "art/settlement_workshop/visual_director/visual-brief-draft.json"
 }

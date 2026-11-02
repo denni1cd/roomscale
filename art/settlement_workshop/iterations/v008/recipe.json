@@ -1,0 +1,70 @@
+{
+  "deterministic_seed": 2517,
+  "generator_command": [
+    ".tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generators/generate_workshop_ridge_correction.gd"
+  ],
+  "import_configuration": {
+    "format": "native Godot PackedScene",
+    "presentation_only": true,
+    "renderer": "gl_compatibility",
+    "scale": "inches"
+  },
+  "instructions": "Use the accepted v004 workshop as the geometry incumbent and correct only the roof diagnosis from v007. Replace the disconnected split wings with one raised, tied gable over the workbench bay. Keep the left boiler and flue lane open, preserve the 26 x 20 x 20 inch envelope, and retain all accepted machinery, materials, boardwork, tools, and gameplay contracts.",
+  "material_method": "Reuse v004 roof, timber, and copper material instances for the new canopy components; do not change the accepted boiler or workshop materials.",
+  "method": "godot_workshop_incumbent_ridge_canopy",
+  "parameters": {
+    "canopy": {
+      "back_z": 8.2,
+      "clear_machine_lane": "x < -1.6; keep the boiler at x=-6.5 and stack unobstructed",
+      "eave_left_xy": [
+        -1.6,
+        14.6
+      ],
+      "eave_right_xy": [
+        10.4,
+        14.6
+      ],
+      "front_z": -8.2,
+      "ridge_xy": [
+        4.4,
+        17.45
+      ],
+      "support_start_y": 8.8,
+      "truss_z": [
+        -7.0,
+        0.0,
+        7.0
+      ]
+    },
+    "diagnosis_ref": "settlement_workshop-v007",
+    "incumbent_candidate_id": "settlement_workshop-v004",
+    "incumbent_scene": "art/settlement_workshop/iterations/v004/generated/settlement_workshop.tscn",
+    "outputs": [
+      "settlement_workshop.tscn",
+      "generation-record.json"
+    ],
+    "visual_director_strategy": "targeted_correction",
+    "visual_director_target": "art/settlement_workshop/visual_director/round-01/approved-target-r01.png"
+  },
+  "post_processing": [
+    "pack the accepted incumbent plus roof-only correction into a native PackedScene",
+    "validate envelope and production resolver path in Godot"
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "art/settlement_workshop/brief.json",
+    "art/settlement_workshop/visual_director/round-01/approved-target-r01.png",
+    "art/settlement_workshop/iterations/v004/generated/settlement_workshop.tscn",
+    "art/settlement_workshop/iterations/v007/evaluation.json",
+    "scripts/art_factory/generators/generate_workshop_ridge_correction.gd",
+    "scripts/visuals/visual_geometry.gd",
+    "scripts/visuals/material_library.gd"
+  ],
+  "tool": "RoomScale Art Factory incumbent-preserving roof correction",
+  "tool_version": "Godot 4.7.2 stable"
+}

@@ -1,0 +1,147 @@
+{
+  "candidate_id": "settlement_workshop-v008",
+  "created_at_utc": "2026-11-02T11:36:39+00:00",
+  "decision": "continue",
+  "defects": [
+    "The gable only spans the workbench bay; the approved target has a broad lower roof and a second raised ridge canopy across the structure.",
+    "The settlement-scale capture does not establish a meaningful whole-scene art improvement."
+  ],
+  "hard_fail_reasons": [
+    "The target-defining broad raised-roof silhouette is absent, so the candidate is not ready to replace production."
+  ],
+  "incumbent_candidate_id": "settlement_workshop-v004",
+  "incumbent_comparison": "Matched Godot three-quarter and detail captures show v008 replaces v004's separated wings with one tied gable and keeps the machinery readable. The gable is a clearer roof assembly, but it covers only the bench bay and remains smaller than the approved raised-canopy composition. Keep v004 in the canonical production registry while testing one alternate geometry strategy.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "The correction was constrained to the original bench-bay footprint, preserving the machine lane but under-transferring the approved roof proportions.",
+    "The generator authored one roof tier and omitted the target's broad lower cover and raised upper ridge."
+  ],
+  "next_action_hypothesis": "Make the final Visual Director attempt with a different component-authoring strategy: extend a broad, supported lower canopy over the workshop, add a compact raised ridge tier, preserve a chimney opening and the open front, and remain inside the 26 x 20 x 20-inch envelope. Keep gameplay landmarks and machinery nodes authoritative.",
+  "observations": {
+    "art_direction_fit": "The timber-and-metal gable supports Clockwork identity, though the missing raised roof tier leaves the approved concept only partly transferred.",
+    "close_up_quality": "The detail capture keeps the boiler, flywheel, workbench, and connected canopy frame readable together; no broken connection is evident.",
+    "gameplay_readability": "The asset remains attached to its established landmark and the boiler/flue lane is uncovered; no presentation mesh changes gameplay geometry.",
+    "geometric_detail": "The close capture shows three trusses, tied beams, diagonal braces, standing seams, wall courses, boiler fittings, gear, and bench tools.",
+    "material_realism": "Matte dark roof panels, warm timber, copper seams, and iron machinery separate in production lighting.",
+    "proportion": "Validation holds the unchanged 26 x 19.94 x 20-inch envelope; within it, the canopy remains proportionally too small relative to the target structure.",
+    "scale_fidelity": "The validated presentation bounds remain within the 26 x 20 x 20-inch brief and are unchanged from v004.",
+    "semantic_recognizability": "The production three-quarter capture clearly reads as the Clockwork boiler-and-workbench workshop, with both defining machinery and the new gable visible.",
+    "silhouette_quality": "The new continuous gable is more coherent than the split wings, but its limited bench-bay span does not reproduce the approved broad lower roof and raised upper ridge.",
+    "surface_variation": "Roof seams and board courses create visible variation while the existing machinery and copper fittings add finer accents.",
+    "technical_integration": "Godot 4.7.2 validation reports no issues at 112 meshes and 23,808 triangles, and the exact v008 scene loads through the review-only production resolver."
+  },
+  "render_evidence": [
+    "art/settlement_workshop/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+    "art/settlement_workshop/iterations/v008/render-runs/run-001/asset-detail.png",
+    "art/settlement_workshop/iterations/v008/render-runs/run-001/settlement-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 4,
+    "gameplay_readability": 4,
+    "geometric_detail": 4,
+    "material_realism": 4,
+    "proportion": 3,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 3,
+    "surface_variation": 4,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "Yes",
+      "evidence": "The detail capture keeps the braced roof frame and the principal machinery legible, with no visibly disconnected canopy member.",
+      "pass": true
+    },
+    "craftsmanship": {
+      "answer": "Yes",
+      "edge_treatment": {
+        "evidence": "The roof edges finish with a ridge cap and copper seam lines in the detail capture.",
+        "evidence_refs": [
+          "art/settlement_workshop/iterations/v008/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "Copper boiler hoops, pipe fittings, gear teeth, and small fasteners remain legible alongside the new roof.",
+        "evidence_refs": [
+          "art/settlement_workshop/iterations/v008/render-runs/run-001/asset-detail.png",
+          "art/settlement_workshop/iterations/v008/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "joins": {
+        "evidence": "The three trusses, tie beams, braces, and upright posts visibly meet as one frame in the close view.",
+        "evidence_refs": [
+          "art/settlement_workshop/iterations/v008/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "The canopy has a continuous ridge and visible bracing while the boiler, flywheel, and bench stay assembled below it.",
+        "evidence_refs": [
+          "art/settlement_workshop/iterations/v008/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "material_response": {
+        "evidence": "Dark roof metal, warm timber, copper, and iron remain distinct under the standard production light.",
+        "evidence_refs": [
+          "art/settlement_workshop/iterations/v008/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "surface_variation": {
+        "evidence": "Board courses, roof seams, and copper accents break up the broad faces without a new material overlay.",
+        "evidence_refs": [
+          "art/settlement_workshop/iterations/v008/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "thickness": {
+        "evidence": "The roof panels, timber members, wall boards, and plinth show separate material depth in the detail capture.",
+        "evidence_refs": [
+          "art/settlement_workshop/iterations/v008/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "evidence": "In the three-quarter capture, a viewer can identify a timber-and-metal Clockwork workshop with boiler, flue, gear, and bench.",
+      "pass": true
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "The ArtBrief has no source photograph; the approved image is a design target.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Use one alternate component-authoring strategy to build a broader two-tier canopy around a chimney opening, with connected supports and the open front retained.",
+    "lost_visual_information": [
+      "The wide, layered canopy hierarchy in the approved target is reduced to a single gable over the bench bay.",
+      "The broad lower roof and raised upper ridge do not span the structure together."
+    ],
+    "preserved_components": [
+      "Boiler, stack, copper fittings, gear, and workbench remain legible.",
+      "The open machine lane, 26 x 20 x 20-inch envelope, and incumbent gameplay-owned contracts remain."
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "proportion_drift"
+    ]
+  }
+}

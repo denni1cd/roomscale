@@ -388,18 +388,18 @@ def current_asset_state(asset_id: str, context: dict[str, Any]) -> dict[str, Any
     best_3d_candidate = visual_director.get("best_3d_candidate") or {}
     exists = has_brief or bool(production) or bool(review) or bool(best_3d_candidate)
     candidate_id = str(
-        review.get("candidate_id")
+        best_3d_candidate.get("candidate_id")
+        or review.get("candidate_id")
         or production.get("candidate_id")
-        or best_3d_candidate.get("candidate_id")
         or ""
     )
     candidate_source = (
-        "legacy review registry"
+        "Visual Director best 3D candidate"
+        if best_3d_candidate
+        else "legacy review registry"
         if review
         else "production registry"
         if production
-        else "Visual Director best 3D candidate"
-        if best_3d_candidate
         else None
     )
     status = "best_current_review" if review else str(production.get("status", "not registered"))
@@ -425,7 +425,11 @@ def current_asset_state(asset_id: str, context: dict[str, Any]) -> dict[str, Any
                 "verification/poc25/final/strict-incumbent-visual-gate-reaudit.json"
             )
             break
-    if strict_result is None and review:
+    if (
+        strict_result is None
+        and review
+        and (not best_3d_candidate or str(review.get("candidate_id", "")) == candidate_id)
+    ):
         strict_result = (
             str(review.get("strict_pilot_gate_status", "")).split(" — ")[0].lower() or None
         )

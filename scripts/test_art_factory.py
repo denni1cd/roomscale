@@ -9,6 +9,7 @@ import unittest
 from dataclasses import replace
 from pathlib import Path
 
+from art_factory import visual_inventory
 from art_factory.factory import ArtFactory
 from art_factory.models import (
     RUBRIC_DIMENSIONS,
@@ -167,6 +168,53 @@ class ArtFactoryTest(unittest.TestCase):
             {"production_path": True, "camera_distance_inches": 2.0, "resolution": [1280, 720]},
         )
         return candidate.candidate_id
+
+    def test_visual_inventory_prefers_current_visual_director_candidate(self) -> None:
+        state_path = self.root / "art/test-settlement/visual_director/state.json"
+        state_path.parent.mkdir(parents=True)
+        state_path.write_text(
+            json.dumps(
+                {
+                    "status": "in_progress",
+                    "best_3d_candidate": {"candidate_id": "test-settlement-v003"},
+                }
+            ),
+            encoding="utf-8",
+        )
+        evaluation_path = self.root / "art/test-settlement/iterations/v003/evaluation.json"
+        evaluation_path.parent.mkdir(parents=True)
+        evaluation_path.write_text(json.dumps({"decision": "continue"}), encoding="utf-8")
+
+        previous_root = visual_inventory.ROOT
+        visual_inventory.ROOT = self.root
+        self.addCleanup(setattr, visual_inventory, "ROOT", previous_root)
+        state = visual_inventory.current_asset_state(
+            "test-settlement",
+            {
+                "production_registry": {
+                    "test-settlement": {
+                        "candidate_id": "test-settlement-v001",
+                        "status": "accepted",
+                    }
+                },
+                "review_registry": {
+                    "test-settlement": {
+                        "candidate_id": "test-settlement-v002",
+                        "strict_pilot_gate_status": "promote",
+                    }
+                },
+                "art_briefs": {"test-settlement"},
+                "strict_incumbent_audit": {},
+            },
+        )
+
+        self.assertEqual(state["best_current_candidate"], "test-settlement-v003")
+        self.assertEqual(
+            state["best_current_candidate_source"], "Visual Director best 3D candidate"
+        )
+        self.assertEqual(state["strict_evaluation_decision"], "continue")
+        self.assertIsNone(state["strict_gate_result"])
+        self.assertEqual(state["production_registry_status"], "accepted")
 
     def submit_evaluation(self, candidate_id: str, **overrides: object) -> None:
         evaluation = make_evaluation(candidate_id, **overrides)
@@ -669,16 +717,29 @@ class VisualDirectorIntegrityTest(unittest.TestCase):
     def test_production_state_registry_evaluation_and_receipts_agree(self) -> None:
         registry = self._read_json(self.root / "art/registry.json")
         cases = (
-            ("display_cabinet", "display_cabinet-v003", "production_pass", "v003"),
+            (
+                "display_cabinet",
+                "display_cabinet-v003",
+                "production_pass",
+                "v003",
+                "display_cabinet-v003",
+            ),
             (
                 "room_photo_window_production",
                 "room_photo_window_production-v004",
                 "production_pass",
                 "v004",
+                "room_photo_window_production-v004",
             ),
-            ("settlement_workshop", "settlement_workshop-v004", "backlog", "v004"),
+            (
+                "settlement_workshop",
+                "settlement_workshop-v004",
+                "in_progress",
+                "v004",
+                "settlement_workshop-v008",
+            ),
         )
-        for asset_id, production_id, expected_state, version in cases:
+        for asset_id, production_id, expected_state, version, best_3d_id in cases:
             with self.subTest(asset_id=asset_id):
                 asset_root = self.root / "art" / asset_id
                 state = self._read_json(asset_root / "visual_director/state.json")
@@ -689,7 +750,7 @@ class VisualDirectorIntegrityTest(unittest.TestCase):
                 entry = registry["entries"][asset_id]
                 production = state["production_asset"]
                 self.assertEqual(state["status"], expected_state)
-                self.assertEqual(state["best_3d_candidate"]["candidate_id"], production_id)
+                self.assertEqual(state["best_3d_candidate"]["candidate_id"], best_3d_id)
                 self.assertEqual(production["candidate_id"], production_id)
                 self.assertEqual(entry["candidate_id"], production_id)
                 self.assertEqual(candidate["candidate_id"], production_id)
@@ -716,6 +777,18 @@ class VisualDirectorIntegrityTest(unittest.TestCase):
                         render_registry["entries"][asset_id]["candidate_id"], production_id
                     )
                     self.assertEqual(render_registry["entries"][asset_id]["path"], asset_path)
+                if best_3d_id != production_id:
+                    best_version = best_3d_id.rsplit("-v", maxsplit=1)[1]
+                    best_root = asset_root / "iterations" / f"v{int(best_version):03d}"
+                    best_candidate = self._read_json(best_root / "candidate.json")
+                    best_evaluation = self._read_json(best_root / "evaluation.json")
+                    self.assertEqual(best_candidate["candidate_id"], best_3d_id)
+                    self.assertEqual(best_evaluation["candidate_id"], best_3d_id)
+                    self.assertEqual(
+                        state["best_3d_candidate"]["evaluation_file"],
+                        f"art/{asset_id}/iterations/v{int(best_version):03d}/evaluation.json",
+                    )
+                    self.assertEqual(best_evaluation["incumbent_comparison_result"], "better")
 
         workshop_state = self._read_json(
             self.root / "art/settlement_workshop/visual_director/state.json"
@@ -729,7 +802,9 @@ class VisualDirectorIntegrityTest(unittest.TestCase):
         self.assertEqual(failed_candidate["candidate_id"], "settlement_workshop-v007")
         self.assertEqual(failed_evaluation["decision"], "continue")
         self.assertEqual(failed_evaluation["incumbent_candidate_id"], "settlement_workshop-v004")
-        self.assertIn("canopy", workshop_state["backlog_reason"].lower())
+        self.assertEqual(workshop_state["target_episode"]["status"], "remediation_needed")
+        self.assertNotIn("backlog_reason", workshop_state)
+        self.assertNotIn("backlog_reason", workshop_state["target_episode"])
 
     def test_batch_craftsmanship_evidence_is_asset_specific_and_render_linked(self) -> None:
         cases = (

@@ -2,7 +2,7 @@
   "schema_version": 1,
   "title": "RoomScale Art Factory Production Deployment — Full Visible-Art Inventory",
   "source_commit": "1e111d37325e7ad00030266efec201796b7fc07d",
-  "generated_at_utc": "2026-11-02T11:23:55+00:00",
+  "generated_at_utc": "2026-11-02T11:43:38+00:00",
   "inventory_scope": "Playable room definitions, reconstructed/candidate RoomDefinitions, canonical and review registries, visual/material catalogs, static scenes, and runtime code that creates visible geometry/material/light/presentation nodes.",
   "coverage": {
     "room_definition_files_scanned": 21,
@@ -1858,11 +1858,11 @@
       "gameplay_geometry_coupling": "navigation footprint stored in RoomDefinition",
       "canonical_registry_status": "accepted",
       "assigned_candidate_strict_gate_result": null,
-      "assigned_candidate_legacy_evaluation_decision": "promote",
-      "best_current_candidate": "settlement_workshop-v004",
-      "best_current_candidate_source": "legacy review registry",
-      "visual_director_status": "backlog",
-      "strict_evaluation_path": "art/settlement_workshop/iterations/v004/evaluation.json",
+      "assigned_candidate_legacy_evaluation_decision": "continue",
+      "best_current_candidate": "settlement_workshop-v008",
+      "best_current_candidate_source": "Visual Director best 3D candidate",
+      "visual_director_status": "in_progress",
+      "strict_evaluation_path": "art/settlement_workshop/iterations/v008/evaluation.json",
       "production_art_backlog_status": "covered by production-art backlog",
       "recommended_production_method": "reuse the matching accepted Art Factory building and shared family materials",
       "priority_tier": "Tier 1 — Scene-defining",
@@ -3343,7 +3343,7 @@
             "runtime_source_type": "Art Factory registry asset",
             "catalog_asset": "res://assets/generated/writing_desk.glb",
             "catalog_fallback": "detailed_furniture",
-            "strict_gate_result": "fail"
+            "strict_gate_result": null
           }
         },
         {
@@ -3367,7 +3367,7 @@
             "runtime_source_type": "Art Factory registry asset",
             "catalog_asset": "res://assets/generated/writing_desk.glb",
             "catalog_fallback": "detailed_furniture",
-            "strict_gate_result": "fail"
+            "strict_gate_result": null
           }
         }
       ],
@@ -3390,7 +3390,7 @@
           "runtime_source_type": "Art Factory registry asset",
           "catalog_asset": "res://assets/generated/writing_desk.glb",
           "catalog_fallback": "detailed_furniture",
-          "strict_gate_result": "fail"
+          "strict_gate_result": null
         }
       ],
       "active_room_definition_instances": 0,
@@ -3408,20 +3408,20 @@
         "room_definition_examples": 2
       },
       "current_visual_quality": "Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below.",
-      "programmer_art_or_primitive": true,
-      "programmer_art_assessment_basis": "runtime procedural fallback or strict visual gate failure",
+      "programmer_art_or_primitive": null,
+      "programmer_art_assessment_basis": "unknown; assigned Art Factory identity alone is not treated as evidence",
       "source_photo_resemblance_requirement": true,
       "photo_room_examples": [
         "room_photo_luna"
       ],
       "gameplay_geometry_coupling": "goal-surface ID/anchor stored in RoomDefinition; navigation footprint stored in RoomDefinition",
       "canonical_registry_status": "accepted",
-      "assigned_candidate_strict_gate_result": "fail",
-      "assigned_candidate_legacy_evaluation_decision": "promote",
-      "best_current_candidate": "desk-v007",
-      "best_current_candidate_source": "legacy review registry",
+      "assigned_candidate_strict_gate_result": null,
+      "assigned_candidate_legacy_evaluation_decision": "continue",
+      "best_current_candidate": "desk-v061",
+      "best_current_candidate_source": "Visual Director best 3D candidate",
       "visual_director_status": "backlog",
-      "strict_evaluation_path": "art/desk/iterations/v007/evaluation.json",
+      "strict_evaluation_path": "art/desk/iterations/v061/evaluation.json",
       "production_art_backlog_status": "covered by production-art backlog",
       "recommended_production_method": "reuse shared quality furniture where it fits; use source-conditioned Art Factory production for distinctive photographed objects",
       "priority_tier": "Tier 1 — Scene-defining",
@@ -3697,7 +3697,7 @@
             "runtime_source_type": "Art Factory registry asset",
             "catalog_asset": "res://assets/generated/writing_desk.glb",
             "catalog_fallback": "detailed_furniture",
-            "strict_gate_result": "fail"
+            "strict_gate_result": null
           }
         },
         {
@@ -3721,7 +3721,7 @@
             "runtime_source_type": "Art Factory registry asset",
             "catalog_asset": "res://assets/generated/writing_desk.glb",
             "catalog_fallback": "detailed_furniture",
-            "strict_gate_result": "fail"
+            "strict_gate_result": null
           }
         },
         {
@@ -3745,7 +3745,7 @@
             "runtime_source_type": "Art Factory registry asset",
             "catalog_asset": "res://assets/generated/writing_desk.glb",
             "catalog_fallback": "detailed_furniture",
-            "strict_gate_result": "fail"
+            "strict_gate_result": null
           }
         },
         {
@@ -3769,7 +3769,7 @@
             "runtime_source_type": "Art Factory registry asset",
             "catalog_asset": "res://assets/generated/writing_desk.glb",
             "catalog_fallback": "detailed_furniture",
-            "strict_gate_result": "fail"
+            "strict_gate_result": null
           }
         },
         {
@@ -3793,7 +3793,7 @@
             "runtime_source_type": "Art Factory registry asset",
             "catalog_asset": "res://assets/generated/writing_desk.glb",
             "catalog_fallback": "detailed_furniture",
-            "strict_gate_result": "fail"
+            "strict_gate_result": null
           }
         },
         {
@@ -3817,7 +3817,7 @@
             "runtime_source_type": "Art Factory registry asset",
             "catalog_asset": "res://assets/generated/writing_desk.glb",
             "catalog_fallback": "detailed_furniture",
-            "strict_gate_result": "fail"
+            "strict_gate_result": null
           }
         }
       ],
@@ -3840,7 +3840,7 @@
           "runtime_source_type": "Art Factory registry asset",
           "catalog_asset": "res://assets/generated/writing_desk.glb",
           "catalog_fallback": "detailed_furniture",
-          "strict_gate_result": "fail"
+          "strict_gate_result": null
         }
       ],
       "active_room_definition_instances": 0,
@@ -3858,8 +3858,8 @@
         "room_definition_examples": 6
       },
       "current_visual_quality": "Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below.",
-      "programmer_art_or_primitive": true,
-      "programmer_art_assessment_basis": "runtime procedural fallback or strict visual gate failure",
+      "programmer_art_or_primitive": null,
+      "programmer_art_assessment_basis": "unknown; assigned Art Factory identity alone is not treated as evidence",
       "source_photo_resemblance_requirement": true,
       "photo_room_examples": [
         "room_photo_luna"
@@ -4537,12 +4537,12 @@
       "photo_room_examples": [],
       "gameplay_geometry_coupling": "goal-surface ID/anchor stored in RoomDefinition; navigation footprint stored in RoomDefinition",
       "canonical_registry_status": "accepted",
-      "assigned_candidate_strict_gate_result": "fail",
-      "assigned_candidate_legacy_evaluation_decision": "promote",
-      "best_current_candidate": "desk-v007",
-      "best_current_candidate_source": "legacy review registry",
+      "assigned_candidate_strict_gate_result": null,
+      "assigned_candidate_legacy_evaluation_decision": "continue",
+      "best_current_candidate": "desk-v061",
+      "best_current_candidate_source": "Visual Director best 3D candidate",
       "visual_director_status": "backlog",
-      "strict_evaluation_path": "art/desk/iterations/v007/evaluation.json",
+      "strict_evaluation_path": "art/desk/iterations/v061/evaluation.json",
       "production_art_backlog_status": "covered by production-art backlog",
       "recommended_production_method": "reuse shared quality furniture where it fits; use source-conditioned Art Factory production for distinctive photographed objects",
       "priority_tier": "Tier 1 — Scene-defining",
@@ -7796,7 +7796,7 @@
       "gameplay_geometry_coupling": "RoomDefinition owns shell/floor extents, wall dimensions, opening locations, trim, and camera cutaway semantics; material/mesh changes must not alter them",
       "canonical_registry_status": "accepted",
       "best_current_candidate": "room_shell_floor-v003",
-      "best_current_candidate_source": "production registry",
+      "best_current_candidate_source": "Visual Director best 3D candidate",
       "visual_director_status": "production_pass",
       "strict_evaluation_path": "art/room_shell_floor/iterations/v003/evaluation.json",
       "production_art_backlog_status": "Batch 4 accepted the floor finish; keep it in the cumulative visual baseline and revisit only if matched gameplay views show a source-transfer defect",
@@ -7898,7 +7898,7 @@
       "gameplay_geometry_coupling": "RoomDefinition owns shell/floor extents, wall dimensions, opening locations, trim, and camera cutaway semantics; material/mesh changes must not alter them",
       "canonical_registry_status": "accepted",
       "best_current_candidate": "room_shell_wall_finish-v002",
-      "best_current_candidate_source": "production registry",
+      "best_current_candidate_source": "Visual Director best 3D candidate",
       "visual_director_status": "production_pass",
       "strict_evaluation_path": "art/room_shell_wall_finish/iterations/v002/evaluation.json",
       "production_art_backlog_status": "Batch 4 accepted the wall finish; window v004 is accepted, while French-door construction remains backlogged pending a door reference and readable glass/hardware",
@@ -8032,11 +8032,11 @@
           "existing_art_factory_id": "settlement_workshop",
           "production_registry_status": "accepted",
           "review_registry_status": "best_current_review",
-          "best_current_candidate": "settlement_workshop-v004",
-          "best_current_candidate_source": "legacy review registry",
-          "visual_director_status": "backlog",
-          "strict_evaluation_decision": "promote",
-          "strict_evaluation_path": "art/settlement_workshop/iterations/v004/evaluation.json",
+          "best_current_candidate": "settlement_workshop-v008",
+          "best_current_candidate_source": "Visual Director best 3D candidate",
+          "visual_director_status": "in_progress",
+          "strict_evaluation_decision": "continue",
+          "strict_evaluation_path": "art/settlement_workshop/iterations/v008/evaluation.json",
           "strict_gate_result": null,
           "strict_gate_evidence_path": null
         },
@@ -8084,7 +8084,7 @@
         }
       },
       "best_current_candidate": {
-        "settlement_workshop": "settlement_workshop-v004",
+        "settlement_workshop": "settlement_workshop-v008",
         "settlement_housing": "settlement_housing-v002",
         "settlement_depot": "settlement_depot-v003",
         "settlement_workarea": "settlement_workarea-v005"

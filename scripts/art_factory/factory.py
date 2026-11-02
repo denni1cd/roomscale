@@ -1043,6 +1043,10 @@ class ArtFactory:
                     }
                 )
                 episode["status"] = "in_progress"
+            if episode.get("status") != "backlog":
+                episode.pop("backlog_reason", None)
+                state["status"] = "in_progress"
+                state.pop("backlog_reason", None)
             state["target_episode"] = episode
         state["updated_at_utc"] = _now_utc()
         state["production_asset"] = self._production_asset_record(candidate.asset_id)
@@ -1083,6 +1087,9 @@ class ArtFactory:
             state["status"] = "backlog"
         else:
             episode["status"] = "remediation_needed"
+            episode.pop("backlog_reason", None)
+            state["status"] = "in_progress"
+            state.pop("backlog_reason", None)
         state["target_episode"] = episode
         state["updated_at_utc"] = _now_utc()
         atomic_write_json(case_path, state)
