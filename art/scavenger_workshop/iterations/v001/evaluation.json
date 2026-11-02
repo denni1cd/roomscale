@@ -1,0 +1,150 @@
+{
+  "candidate_id": "scavenger_workshop-v001",
+  "created_at_utc": "2026-11-02T13:32:44+00:00",
+  "decision": "continue",
+  "defects": [
+    "The long low front eave dominates the settlement view.",
+    "The bench and tool wall are difficult to read from the gameplay-style camera.",
+    "The human-room overview does not show the workshop clearly enough to claim a room-scale improvement."
+  ],
+  "hard_fail_reasons": [
+    "At settlement distance the large front roof plane hides too much of the work bay, so the target's readable bench and tool wall are not carried into gameplay framing."
+  ],
+  "incumbent_candidate_id": "",
+  "incumbent_comparison": "This is the first Art Factory candidate for the separate Scavenger workshop identity; current production uses the generic Clockwork workshop presentation with Scavenger scrap overlays. Luna identifies a distinct local salvage silhouette, but the captures do not establish a room-wide improvement.",
+  "incumbent_comparison_result": "first_pass",
+  "likely_causes": [
+    "geometry_loss",
+    "lighting_render_presentation"
+  ],
+  "next_action_hypothesis": "For v002, shorten and slightly raise the front roof edge, preserve a visible brace from the frame to the eave, and use the exposed front bay to reveal the bench and tool wall in the same 64-inch production view.",
+  "observations": {
+    "art_direction_fit": "The canopy, timber frame, and cream/blue appliance panels establish a local Scavenger salvage look, while the hidden work bay weakens the target match.",
+    "close_up_quality": "The 23-inch production close view shows the intended salvage parts and joins, with the small tools still less defined than the target.",
+    "gameplay_readability": "Luna scored gameplay readability 2/5: the roof dominates the 64-inch settlement view and the interior work area is hard to see.",
+    "geometric_detail": "The close view shows a vise, drawer cabinet, rails, and roof ribs; the work area and tool wall lose definition from the settlement camera.",
+    "material_realism": "Baked wood, enamel, galvanized sheet, and canvas maps produce different surface responses, but the gameplay capture compresses those distinctions.",
+    "proportion": "The 25.9 by 18.7 by 19.4 inch source bounds pass the brief tolerance; visually the roof depth is large relative to the visible work area.",
+    "scale_fidelity": "The registered production resolver fits the workshop to the 26 by 20 by 20 inch brief envelope; the human-room capture is too wide to judge a room-scale improvement.",
+    "semantic_recognizability": "The corrugated canopy and mismatched appliance panels establish a recognizable salvage workshop in the registered 64-inch settlement capture.",
+    "silhouette_quality": "The asymmetric roof and panel wings create a new outline, although the canopy occupies most of the top silhouette and hides the open bay.",
+    "surface_variation": "The close capture shows weathered panel and plank variation; at settlement distance only the large color blocks survive.",
+    "technical_integration": "Godot 4.7.2 imported the GLB, measured finite bounds, and resolved the exact candidate through the explicit review_showcase registry in the Scavenger production scene."
+  },
+  "render_evidence": [
+    "art/scavenger_workshop/iterations/v001/render-runs/run-001/asset-three-quarter.png",
+    "art/scavenger_workshop/iterations/v001/render-runs/run-001/settlement-scale.png",
+    "art/scavenger_workshop/iterations/v001/render-runs/run-001/room-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 3,
+    "gameplay_readability": 2,
+    "geometric_detail": 3,
+    "material_realism": 3,
+    "proportion": 3,
+    "scale_fidelity": 3,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "surface_variation": 3,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The 23-inch view shows the broad construction, but the small tools and joins remain soft, and Luna found that the work area does not hold together from the settlement camera.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "Rounded edges are visible on the appliance surrounds, drawer faces, timber tops, and cast vise in the close view.",
+        "evidence_refs": [
+          "art/scavenger_workshop/iterations/v001/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "The settlement capture loses the small handles and fasteners against the roof and timber, so the appliance reuse is not yet strongly signaled at play distance.",
+        "evidence_refs": [
+          "art/scavenger_workshop/iterations/v001/render-runs/run-001/settlement-scale.png"
+        ],
+        "pass": false
+      },
+      "joins": {
+        "evidence": "Posts meet the bearers and diagonal knees; visible shoe plates and fasteners reinforce those frame joints.",
+        "evidence_refs": [
+          "art/scavenger_workshop/iterations/v001/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "The hanging tools and useful work area are obscured in the settlement capture, so their designed function does not read clearly at gameplay framing.",
+        "evidence_refs": [
+          "art/scavenger_workshop/iterations/v001/render-runs/run-001/settlement-scale.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "Cream enamel, blue-green enamel, wood, and galvanized sheet remain distinct in the close production render.",
+        "evidence_refs": [
+          "art/scavenger_workshop/iterations/v001/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "surface_variation": {
+        "evidence": "Baked maps show worn plank grain and irregular enamel/galvanized patches in the close capture.",
+        "evidence_refs": [
+          "art/scavenger_workshop/iterations/v001/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "thickness": {
+        "evidence": "The roof sheets, appliance doors, and shelf boards show measurable edge thickness from the three-quarter camera.",
+        "evidence_refs": [
+          "art/scavenger_workshop/iterations/v001/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "In the settlement view the long repeating roof plane and compressed wall details still read as a stylized game model, below the brief's high-quality miniature target.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "The approved ArtBrief has no photographic source requirement or reference image.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": true
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Shorten and slightly raise the front eave, make its support brace legible, and use the additional open area to expose the workbench and tool wall in the same production settlement camera.",
+    "lost_visual_information": [
+      "the open bench bay under the front roof",
+      "the tool wall and hand-tool silhouettes",
+      "small appliance handles and panel joins"
+    ],
+    "preserved_components": [
+      "asymmetric salvage canopy silhouette",
+      "cream and blue-green appliance panels",
+      "reclaimed timber support frame",
+      "separate enamel, wood, galvanized, and canvas material families"
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "lighting_render_presentation"
+    ]
+  }
+}

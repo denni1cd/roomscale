@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "method": "blender_household_salvage_repair_workshop",
+  "instructions": "Build a distinctly Scavenger open-front repair workshop from reused household structures, not a Clockwork reskin. Follow the approved appliance-panel lean-to target. Use believable load-bearing timber posts, knee braces and purlins; a one-slope corrugated roof with a short supported eave; chipped cream and blue-green appliance doors; a drawer-front workbench; a visible tool wall; useful tins, a vise and a wire parts basket; and a small patched canvas panel. Preserve a clear front opening and fit the 26 x 20 x 20 inch local presentation envelope. Add no collision, navigation, selection, work-site, or simulation data.",
+  "tool": "Blender hard-surface miniature asset maker through the RoomScale Art Factory",
+  "tool_version": "Blender 5.2.3+; Godot 4.7.2-stable Compatibility production renderer",
+  "deterministic_seed": 20261102,
+  "generator_command": [
+    "{project_root}/.venv/Scripts/python.exe",
+    "{project_root}/scripts/art_factory/generators/scavenger_workshop_pipeline.py",
+    "{project_root}",
+    "{output_dir}"
+  ],
+  "source_inputs": [
+    "art/scavenger_workshop/brief.json",
+    "art/scavenger_workshop/visual_director/round-01/approved-target-r01.png",
+    "scripts/art_factory/generators/scavenger_workshop_blender.py",
+    "scripts/art_factory/generators/scavenger_workshop_pipeline.py",
+    "scripts/civilization_presentation.gd"
+  ],
+  "parameters": {
+    "visual_director_strategy": "initial",
+    "visual_director_target": "art/scavenger_workshop/visual_director/round-01/approved-target-r01.png",
+    "output_envelope_inches": [26.0, 20.0, 20.0],
+    "gameplay_geometry_changed": false,
+    "outputs": [
+      "scavenger_workshop.glb",
+      "generation-record.json",
+      "materials/timber_basecolor.png",
+      "materials/timber_normal.png",
+      "materials/timber_roughness.png",
+      "materials/timber_light_basecolor.png",
+      "materials/timber_light_normal.png",
+      "materials/timber_light_roughness.png",
+      "materials/enamel_cream_basecolor.png",
+      "materials/enamel_cream_normal.png",
+      "materials/enamel_cream_roughness.png",
+      "materials/enamel_teal_basecolor.png",
+      "materials/enamel_teal_normal.png",
+      "materials/enamel_teal_roughness.png",
+      "materials/enamel_ochre_basecolor.png",
+      "materials/enamel_ochre_normal.png",
+      "materials/enamel_ochre_roughness.png",
+      "materials/galvanized_basecolor.png",
+      "materials/galvanized_normal.png",
+      "materials/galvanized_roughness.png",
+      "materials/canvas_basecolor.png",
+      "materials/canvas_normal.png",
+      "materials/canvas_roughness.png"
+    ]
+  },
+  "post_processing": [
+    "Import the GLB through Godot and check proportional fit and material bindings.",
+    "Capture the standard asset, settlement, and human-room production views through the review-only registry.",
+    "Pixel-review close and gameplay-distance renders, diagnose target-to-3D transfer, and keep the candidate unpromoted until it beats the current Scavenger presentation."
+  ],
+  "material_method": "Component-modeled Blender geometry with baked tileable color, tangent-normal, and roughness maps for reclaimed wood, chipped appliance enamel, galvanized roofing, and canvas; blackened iron and oxide fasteners use restrained Principled PBR values.",
+  "import_configuration": {
+    "format": "GLB with embedded PBR texture maps",
+    "up_axis": "glTF Y up converted from Blender Z up",
+    "renderer": "Godot Compatibility",
+    "units": "inches",
+    "presentation_only": true,
+    "collision_navigation_selection_and_work_contracts": "not present in visual asset"
+  }
+}

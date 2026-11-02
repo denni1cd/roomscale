@@ -1,0 +1,58 @@
+{
+  "allow_stylization": true,
+  "asset_id": "scavenger_workshop",
+  "camera_distances": [
+    2.0,
+    12.0,
+    64.0,
+    330.0
+  ],
+  "category": "settlement_structure",
+  "current_quality": "below_target",
+  "display_name": "Scavenger Settlement Workshop",
+  "faction_defining": true,
+  "gameplay_invariants": {
+    "asset_is_presentation_only": true,
+    "dimensions_and_site_are_room_definition_owned": true,
+    "existing_workshop_station_and_construction_contracts_remain": true,
+    "render_meshes_do_not_create_collision_navigation_or_selection": true
+  },
+  "intended_dimensions": [
+    26.0,
+    20.0,
+    20.0
+  ],
+  "iteration_budget": 8,
+  "materials": {
+    "base_and_frame": "weathered plywood, reused drawer carcasses, and visibly fastened timber",
+    "canopy_and_panels": "bent galvanized sheet, chipped appliance enamel, and patched canvas",
+    "hardware": "ordinary salvaged hinges, screws, straps, and brackets; avoid decorative brass",
+    "work_area": "worn wood worktop, household tins and jars, and useful hand tools",
+    "supports": "reused angle brackets, wire rack sections, and stable concrete or timber feet"
+  },
+  "priority_tier": 1,
+  "prohibited_changes": [
+    "do not change RoomDefinition landmarks, dimensions, activity stations, work durations, or citizen assignments",
+    "do not add render meshes to collision, navigation, traversability, selection, or work-site calculations",
+    "preserve the existing workshop construction, animation, and interaction contracts",
+    "do not add canonical-room-specific placement or simulation logic",
+    "do not rely on recoloring a Clockwork building or adding decorative panels as the only identity change"
+  ],
+  "quality_tier": "B",
+  "reference_images": [],
+  "required_features": [
+    "a distinctive asymmetric silhouette made from repurposed household structures, not a Clockwork building reskin",
+    "an open and readable working front with bench, shelves, and tools visible",
+    "legible load paths and believable attachment of roof panels, appliance doors, and supports",
+    "clearly reused domestic objects such as enamel appliance panels, drawer parts, wire baskets, or patched fabric",
+    "weathered wood, chipped enamel, galvanized scrap, and fabric remain distinguishable under production lighting",
+    "fit the existing 26 by 20 by 20 inch local presentation envelope"
+  ],
+  "schema_version": 1,
+  "screen_space_importance": 4,
+  "semantic_type": "Scavenger settlement repair workshop assembled from reused household materials",
+  "source_photo_required": false,
+  "source_room_definition": "",
+  "stylization_rationale": "RoomScale uses a miniature-diorama art direction. Scale-driven stylization is allowed, but the object must read as a deliberately assembled and functional salvage workshop with tangible materials and credible joins; it cannot be a primitive recolor or a loose pile of props.",
+  "visual_target": "A compact, open-front Scavenger repair workshop built from recognizably reused household parts. Use an asymmetric lean-to silhouette with a patched sheet-metal roof, appliance enamel panels and drawer sections, a stable timber frame, and a visible bench and tool wall. Make the attachment of every large panel and roof edge physically understandable. Preserve an unobstructed view into the work area. Distinguish the faction through improvised reuse and mismatched construction, not a brown/rust palette alone; avoid Clockwork boilers, decorative gears, and brass trim. Keep the model within 26 by 20 by 20 inches and change no gameplay-owned placement or geometry."
+}

@@ -1,0 +1,106 @@
+{
+  "deterministic_seed": 20261102,
+  "generator_command": [
+    "{project_root}/.venv/Scripts/python.exe",
+    "{project_root}/scripts/art_factory/generators/scavenger_workshop_pipeline.py",
+    "{project_root}",
+    "{output_dir}"
+  ],
+  "import_configuration": {
+    "collision_navigation_selection_and_work_contracts": "not present in visual asset",
+    "format": "GLB with embedded PBR texture maps",
+    "presentation_only": true,
+    "renderer": "Godot Compatibility",
+    "units": "inches",
+    "up_axis": "glTF Y up converted from Blender Z up"
+  },
+  "instructions": "Run the final bounded Scavenger workshop attempt as a materially different rear-set canopy strategy. Move the single-slope corrugated roof to the rear half so the front appliance doors, drawer bench and work bay remain uncovered in the matched 64-inch settlement view. Keep a clearly supported edge with posts, bearer, purlins and side braces. Use broad-scale baked enamel and galvanized patina with large readable color blocks. Preserve the approved salvage-workshop identity and 26 x 20 x 20 inch visual envelope. Do not add gameplay data or change simulation behavior.",
+  "material_method": "A new baked broad-scale patina method maps enamel corrosion and galvanized oxidation into large area masks, paired with high-contrast appliance palette blocks. This replaces v001-v002's fine tile-detail wear treatment and is combined with a rear-set, openly braced roof geometry strategy.",
+  "method": "blender_household_salvage_repair_workshop",
+  "parameters": {
+    "diagnosis_ref": "scavenger_workshop-v002",
+    "gameplay_geometry_changed": false,
+    "material_palette": {
+      "enamel_cream": [
+        0.72,
+        0.66,
+        0.51
+      ],
+      "enamel_ochre": [
+        0.55,
+        0.2,
+        0.105
+      ],
+      "enamel_teal": [
+        0.1,
+        0.29,
+        0.33
+      ],
+      "galvanized": [
+        0.39,
+        0.44,
+        0.445
+      ]
+    },
+    "material_strategy": "broad_scale_patina",
+    "materially_different_strategy": true,
+    "output_envelope_inches": [
+      26.0,
+      20.0,
+      20.0
+    ],
+    "outputs": [
+      "scavenger_workshop.glb",
+      "generation-record.json",
+      "materials/timber_basecolor.png",
+      "materials/timber_normal.png",
+      "materials/timber_roughness.png",
+      "materials/timber_light_basecolor.png",
+      "materials/timber_light_normal.png",
+      "materials/timber_light_roughness.png",
+      "materials/enamel_cream_basecolor.png",
+      "materials/enamel_cream_normal.png",
+      "materials/enamel_cream_roughness.png",
+      "materials/enamel_teal_basecolor.png",
+      "materials/enamel_teal_normal.png",
+      "materials/enamel_teal_roughness.png",
+      "materials/enamel_ochre_basecolor.png",
+      "materials/enamel_ochre_normal.png",
+      "materials/enamel_ochre_roughness.png",
+      "materials/galvanized_basecolor.png",
+      "materials/galvanized_normal.png",
+      "materials/galvanized_roughness.png",
+      "materials/canvas_basecolor.png",
+      "materials/canvas_normal.png",
+      "materials/canvas_roughness.png"
+    ],
+    "roof": {
+      "back_y": 9.45,
+      "back_z": 19.05,
+      "front_y": 0.35,
+      "front_z": 18.35,
+      "support_strategy": "rear-set roof front bearer on four posts, continuous purlins, and side braces visibly carry the short canopy over the back work wall"
+    },
+    "source_candidate": "scavenger_workshop-v002",
+    "visual_director_strategy": "alternate_strategy",
+    "visual_director_target": "art/scavenger_workshop/visual_director/round-01/approved-target-r01.png"
+  },
+  "post_processing": [
+    "Import the candidate in Godot and verify the 26 x 20 x 20 inch envelope and PBR bindings.",
+    "Capture close, settlement-scale and room-scale views through the Scavenger review-only registry, using the same cameras as v002.",
+    "Luna must inspect actual v003 pixels beside the approved target and v002 settlement capture. Record whether the work bay and faction identity read at gameplay distance."
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "art/scavenger_workshop/brief.json",
+    "art/scavenger_workshop/visual_director/round-01/approved-target-r01.png",
+    "art/scavenger_workshop/iterations/v002/evaluation.json",
+    "art/scavenger_workshop/iterations/v002/review-luna.md",
+    "art/scavenger_workshop/iterations/v002/render-runs/run-001/settlement-scale.png",
+    "scripts/art_factory/generators/scavenger_workshop_blender.py",
+    "scripts/art_factory/generators/scavenger_workshop_pipeline.py",
+    "scripts/civilization_presentation.gd"
+  ],
+  "tool": "Blender hard-surface miniature asset maker through the RoomScale Art Factory",
+  "tool_version": "Blender 5.2.3+; Godot 4.7.2-stable Compatibility production renderer"
+}

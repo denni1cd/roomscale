@@ -8,6 +8,7 @@ extends Node
 const CivilizationDefinition := preload("res://scripts/civilization_definition.gd")
 const MaterialLibrary := preload("res://scripts/visuals/material_library.gd")
 const Geometry := preload("res://scripts/visuals/visual_geometry.gd")
+const VisualResolver := preload("res://scripts/visuals/visual_resolver.gd")
 static var _leaf_mesh: ArrayMesh
 
 
@@ -194,6 +195,9 @@ func _apply_scavenger_settlement(scene: Node3D) -> void:
 	var settlement := scene.get_node("Settlement") as Node3D
 	if settlement.has_node("ScavengerVisualPass"):
 		return
+	var resolver := VisualResolver.new()
+	var scavenger_workshop_entry: Dictionary = resolver.registry.lookup("scavenger_workshop")
+	var has_scavenger_workshop_art := not scavenger_workshop_entry.is_empty()
 	var details := Node3D.new()
 	details.name = "ScavengerVisualPass"
 	details.set_meta("presentation_only", true)
@@ -209,6 +213,32 @@ func _apply_scavenger_settlement(scene: Node3D) -> void:
 		var building_name: String = ["Workshop", "Depot", "Housing", "WorkArea"][building_index]
 		var building := settlement.get_node_or_null(building_name) as Node3D
 		if building == null:
+			continue
+		if building_name == "Workshop" and has_scavenger_workshop_art:
+			# The faction-specific asset comes only from the registry. This lets
+			# review_showcase renders replace the generic Clockwork presentation,
+			# while ordinary production keeps using its current accepted art until
+			# this distinct Scavenger asset is explicitly accepted.
+			for node_name in ["ArtPresentation", "ClockworkDetails"]:
+				var previous_art := building.get_node_or_null(node_name) as Node3D
+				if previous_art != null:
+					previous_art.visible = false
+			for child in building.get_children():
+				if child is MeshInstance3D or child is Label3D:
+					child.visible = false
+			var asset_root := Node3D.new()
+			asset_root.name = "ScavengerArtPresentation"
+			asset_root.set_meta("presentation_only", true)
+			building.add_child(asset_root)
+			resolver.render(
+				asset_root,
+				{
+					"kind": "scavenger_workshop",
+					"appearance": {"asset_id": "scavenger_workshop"},
+					"dimensions": [26.0, 20.0, 20.0],
+				},
+				func(_parent: Node3D, _object: Dictionary) -> void: pass
+			)
 			continue
 		var overlay := Node3D.new()
 		overlay.name = "ScrapCladding"

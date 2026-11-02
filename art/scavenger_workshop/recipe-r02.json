@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "method": "blender_household_salvage_repair_workshop",
+  "instructions": "Correct the v001 settlement-camera defect found by Luna. Set the roof front edge back to y=-5.2 and lower than the rear so the open front bay is no longer buried under a deep low eave. Keep the roof panels, purlins, front bearer, and main posts connected at the roof edge; keep the visible side bracing load path. Preserve the cream and blue-green appliance panels, drawer bench, tool wall, and wire basket, but make the work area survive the existing 64-inch gameplay-style camera. Keep the 26 x 20 x 20 inch envelope and add no gameplay geometry.",
+  "tool": "Blender hard-surface miniature asset maker through the RoomScale Art Factory",
+  "tool_version": "Blender 5.2.3+; Godot 4.7.2-stable Compatibility production renderer",
+  "deterministic_seed": 20261102,
+  "generator_command": [
+    "{project_root}/.venv/Scripts/python.exe",
+    "{project_root}/scripts/art_factory/generators/scavenger_workshop_pipeline.py",
+    "{project_root}",
+    "{output_dir}"
+  ],
+  "source_inputs": [
+    "art/scavenger_workshop/brief.json",
+    "art/scavenger_workshop/visual_director/round-01/approved-target-r01.png",
+    "art/scavenger_workshop/iterations/v001/evaluation.json",
+    "art/scavenger_workshop/iterations/v001/review-luna.md",
+    "art/scavenger_workshop/iterations/v001/render-runs/run-001/settlement-scale.png",
+    "scripts/art_factory/generators/scavenger_workshop_blender.py",
+    "scripts/art_factory/generators/scavenger_workshop_pipeline.py",
+    "scripts/civilization_presentation.gd"
+  ],
+  "parameters": {
+    "visual_director_strategy": "targeted_correction",
+    "visual_director_target": "art/scavenger_workshop/visual_director/round-01/approved-target-r01.png",
+    "diagnosis_ref": "scavenger_workshop-v001",
+    "source_candidate": "scavenger_workshop-v001",
+    "roof": {
+      "front_y": -5.2,
+      "back_y": 9.45,
+      "front_z": 16.2,
+      "back_z": 18.55,
+      "support_strategy": "front bearer and posts meet the raised eave; four roof purlins transfer loads to the back frame"
+    },
+    "output_envelope_inches": [26.0, 20.0, 20.0],
+    "gameplay_geometry_changed": false,
+    "outputs": [
+      "scavenger_workshop.glb",
+      "generation-record.json",
+      "materials/timber_basecolor.png",
+      "materials/timber_normal.png",
+      "materials/timber_roughness.png",
+      "materials/timber_light_basecolor.png",
+      "materials/timber_light_normal.png",
+      "materials/timber_light_roughness.png",
+      "materials/enamel_cream_basecolor.png",
+      "materials/enamel_cream_normal.png",
+      "materials/enamel_cream_roughness.png",
+      "materials/enamel_teal_basecolor.png",
+      "materials/enamel_teal_normal.png",
+      "materials/enamel_teal_roughness.png",
+      "materials/enamel_ochre_basecolor.png",
+      "materials/enamel_ochre_normal.png",
+      "materials/enamel_ochre_roughness.png",
+      "materials/galvanized_basecolor.png",
+      "materials/galvanized_normal.png",
+      "materials/galvanized_roughness.png",
+      "materials/canvas_basecolor.png",
+      "materials/canvas_normal.png",
+      "materials/canvas_roughness.png"
+    ]
+  },
+  "post_processing": [
+    "Import the candidate in Godot; verify envelope proportions and PBR binding.",
+    "Capture the standard asset, settlement, and human-room views under the Scavenger review_showcase registry.",
+    "Luna must pixel-review v002's actual Godot close and settlement-distance images. Preserve the room-scale limitation unless a real room overview shows otherwise."
+  ],
+  "material_method": "Retain v001's baked tileable PBR material families and component-level Blender modeling. Change the canopy depth, pitch, bearer and support geometry to expose the work bay in game framing.",
+  "import_configuration": {
+    "format": "GLB with embedded PBR texture maps",
+    "up_axis": "glTF Y up converted from Blender Z up",
+    "renderer": "Godot Compatibility",
+    "units": "inches",
+    "presentation_only": true,
+    "collision_navigation_selection_and_work_contracts": "not present in visual asset"
+  }
+}

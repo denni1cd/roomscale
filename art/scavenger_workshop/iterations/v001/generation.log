@@ -1,0 +1,28 @@
+SCAVENGER_WORKSHOP_BLENDER C:\Users\Zero\python_projects\ai\roomscale\.tools\blender-5.2.3\blender-5.2.3-windows-x64\blender.exe
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)
+
+Blender quit
+C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale\scripts\art_factory\generators\scavenger_workshop_blender.py:148: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+Traceback (most recent call last):
+  File "C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale\scripts\art_factory\generators\scavenger_workshop_blender.py", line 541, in <module>
+    main(Path(args[0]), Path(args[1]))
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale\scripts\art_factory\generators\scavenger_workshop_blender.py", line 497, in main
+    object_counts, material_names = _build(output / "materials")
+                                    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale\scripts\art_factory\generators\scavenger_workshop_blender.py", line 327, in _build
+    mats["timber"] = _material("Reclaimed cedar and drawer wood", (0.30, 0.19, 0.11), 0.0, 0.82, output, "timber", "wood")
+                     ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale\scripts\art_factory\generators\scavenger_workshop_blender.py", line 156, in _material
+    color_image, normal_image, rough_image = _texture_family(output, family, base, kind)
+                                             ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale\scripts\art_factory\generators\scavenger_workshop_blender.py", line 131, in _texture_family
+    color_image = _write_texture(output / f"{family}_basecolor.png", color_pixels, size)
+  File "C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale\scripts\art_factory\generators\scavenger_workshop_blender.py", line 39, in _write_texture
+    image.pack()
+    ~~~~~~~~~~^^
+RuntimeError: Error: Unable to pack file, source path 'C:\materials\timber_basecolor.png' not found
+
+
+Error: script failed, file: 'C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale\scripts\art_factory\generators\scavenger_workshop_blender.py', exiting.

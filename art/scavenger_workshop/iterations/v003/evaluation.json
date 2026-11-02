@@ -1,0 +1,152 @@
+{
+  "candidate_id": "scavenger_workshop-v003",
+  "created_at_utc": "2026-11-02T13:46:46+00:00",
+  "decision": "continue",
+  "defects": [
+    "The matched settlement view still does not make the front work bay materially more readable than v002.",
+    "Hand tools and small salvage details remain unresolved at gameplay distance.",
+    "The human-room overview is too distant to show a room-wide change.",
+    "A bright cog inside the workshop adds a mild Clockwork cue."
+  ],
+  "hard_fail_reasons": [
+    "Gameplay readability remains 3/5: the matched 64-inch capture does not materially improve on v002, and small tools still collapse at settlement distance.",
+    "The close view remains below the approved concept in material richness and crafted detail, so this candidate does not meet the production promotion gate."
+  ],
+  "incumbent_candidate_id": "scavenger_workshop-v002",
+  "incumbent_comparison": "v003 is the best current review candidate because the exposed bay improves close-range quality, proportion and scale fidelity; at the identical 64-inch gameplay camera it is not materially more readable than v002, and the 330-inch room view remains inconclusive.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "geometry_loss",
+    "lighting_render_presentation"
+  ],
+  "next_action_hypothesis": "Backlog this approved-target episode after its third bounded attempt. If the workshop is revisited under a new target episode, prioritize a stronger large-scale work-bay silhouette and remove the residual cog cue; do not add a fourth candidate to this episode.",
+  "observations": {
+    "art_direction_fit": "The salvage appliance panels and open work bay fit the Scavenger brief; remove the bright cog cue in any future target episode.",
+    "close_up_quality": "The open bay, bench and supported roof are clearer in the 27.7-inch view; target-level surface richness and small crafted joins are still missing.",
+    "gameplay_readability": "Luna rates this 3/5. At the matched 64-inch view v003 does not read materially better than v002; work bay details and tools remain small.",
+    "geometric_detail": "The close view exposes the bench, shelves and rear tool wall more clearly than v002; small tools remain too small at settlement distance.",
+    "material_realism": "Broad baked enamel and galvanized color variation separates the reused materials, while the overall finish remains simpler than the approved concept.",
+    "proportion": "Godot validates the asset at 25.90 by 19.16 by 19.36 inches, within the intended 26 by 20 by 20 inch envelope.",
+    "scale_fidelity": "The local envelope passes technical bounds. In the 330-inch room overview the structure remains too small for a room-wide improvement claim.",
+    "semantic_recognizability": "Mismatched appliance doors, sheet metal and timber identify a Scavenger repair shop overall; the bright cog adds a mild Clockwork association.",
+    "silhouette_quality": "The rear-set canopy exposes more of the front bay close up, but the 64-inch view remains small and roof-heavy.",
+    "surface_variation": "Large color areas remain visible in the close render, but fine wear does not materially transfer to the gameplay camera.",
+    "technical_integration": "Godot 4.7.2 imported and rendered the candidate through the review-only production path with 10 meshes, 10 surfaces and 107,784 triangles."
+  },
+  "render_evidence": [
+    "art/scavenger_workshop/iterations/v003/render-runs/run-002/asset-three-quarter.png",
+    "art/scavenger_workshop/iterations/v003/render-runs/run-002/asset-detail.png",
+    "art/scavenger_workshop/iterations/v003/render-runs/run-002/settlement-scale.png",
+    "art/scavenger_workshop/iterations/v003/render-runs/run-002/room-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 4,
+    "gameplay_readability": 3,
+    "geometric_detail": 3,
+    "material_realism": 3,
+    "proportion": 4,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "surface_variation": 3,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The work bay is clearer close up, but the finish and small joins remain below the approved concept and the target craft level.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "Close captures show eased appliance corners, rolled roof edges and softened timber edges.",
+        "evidence_refs": [
+          "art/scavenger_workshop/iterations/v003/render-runs/run-002/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "Roof rivets and appliance hardware exist, but their small forms do not read clearly at the gameplay camera.",
+        "evidence_refs": [
+          "art/scavenger_workshop/iterations/v003/render-runs/run-002/settlement-scale.png"
+        ],
+        "pass": false
+      },
+      "joins": {
+        "evidence": "The rear-set roof edge lands on a bearer carried by posts, with side braces providing a readable load path.",
+        "evidence_refs": [
+          "art/scavenger_workshop/iterations/v003/render-runs/run-002/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "The bench and shelves are easier to see close up, but small hand tools and salvaged details still collapse at settlement distance.",
+        "evidence_refs": [
+          "art/scavenger_workshop/iterations/v003/render-runs/run-002/settlement-scale.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "The close production render separates weathered timber, enamel and galvanized roofing under the current lighting.",
+        "evidence_refs": [
+          "art/scavenger_workshop/iterations/v003/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "surface_variation": {
+        "evidence": "Broad baked patina creates larger enamel and metal variation close up, though it is subdued at gameplay distance.",
+        "evidence_refs": [
+          "art/scavenger_workshop/iterations/v003/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "thickness": {
+        "evidence": "Roof sheets, appliance panels, drawer fronts and timber members show layered thickness in the close production render.",
+        "evidence_refs": [
+          "art/scavenger_workshop/iterations/v003/render-runs/run-002/asset-three-quarter.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The close view is coherent but remains visibly stylized and below the approved concept in material richness and crafted detail.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "The approved ArtBrief has no photographic source requirement or reference image.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": true
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Backlog this target episode at attempt three. A future new target episode should test a stronger game-scale work-bay massing and remove the residual Clockwork cog cue.",
+    "lost_visual_information": [
+      "small hand tools and household salvage parts at the 64-inch gameplay view",
+      "the approved concept's richer handcrafted surface response",
+      "a visible workshop-level transformation in the 330-inch room overview"
+    ],
+    "preserved_components": [
+      "rear-set roof exposes the work bay and tool wall more clearly in close views",
+      "posts, bearer and side braces create a credible roof support path",
+      "mismatched appliance panels and timber framing preserve Scavenger identity"
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "lighting_render_presentation"
+    ]
+  }
+}

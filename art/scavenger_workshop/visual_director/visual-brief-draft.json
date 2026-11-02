@@ -1,0 +1,63 @@
+{
+  "art_direction": "RoomScale category: settlement_structure. A compact, open-front Scavenger repair workshop built from recognizably reused household parts. Use an asymmetric lean-to silhouette with a patched sheet-metal roof, appliance enamel panels and drawer sections, a stable timber frame, and a visible bench and tool wall. Make the attachment of every large panel and roof edge physically understandable. Preserve an unobstructed view into the work area. Distinguish the faction through improvised reuse and mismatched construction, not a brown/rust palette alone; avoid Clockwork boilers, decorative gears, and brass trim. Keep the model within 26 by 20 by 20 inches and change no gameplay-owned placement or geometry.",
+  "asset_id": "scavenger_workshop",
+  "citizen_scale": {
+    "citizen_height_inches": 0.5,
+    "ratio_or_view": "Use the exact 20-inch height against a 0.5-inch citizen; derive a schematic if generated scale is inaccurate."
+  },
+  "construction_materials": [
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "weathered plywood, reused drawer carcasses, and visibly fastened timber",
+      "part": "base_and_frame"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "bent galvanized sheet, chipped appliance enamel, and patched canvas",
+      "part": "canopy_and_panels"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "ordinary salvaged hinges, screws, straps, and brackets; avoid decorative brass",
+      "part": "hardware"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "worn wood worktop, household tins and jars, and useful hand tools",
+      "part": "work_area"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "reused angle brackets, wire rack sections, and stable concrete or timber feet",
+      "part": "supports"
+    }
+  ],
+  "dimensions_inches": [
+    26.0,
+    20.0,
+    20.0
+  ],
+  "faction_identity": "Scavenger settlement repair workshop assembled from reused household materials",
+  "gameplay_distance_readability": "Keep required features legible at the ArtBrief gameplay camera distances: 2.0, 12.0, 64.0, 330.0 inches.",
+  "intended_function": "A compact, open-front Scavenger repair workshop built from recognizably reused household parts. Use an asymmetric lean-to silhouette with a patched sheet-metal roof, appliance enamel panels and drawer sections, a stable timber frame, and a visible bench and tool wall. Make the attachment of every large panel and roof edge physically understandable. Preserve an unobstructed view into the work area. Distinguish the faction through improvised reuse and mismatched construction, not a brown/rust palette alone; avoid Clockwork boilers, decorative gears, and brass trim. Keep the model within 26 by 20 by 20 inches and change no gameplay-owned placement or geometry.",
+  "prohibited_failure_modes": [
+    "do not change RoomDefinition landmarks, dimensions, activity stations, work durations, or citizen assignments",
+    "do not add render meshes to collision, navigation, traversability, selection, or work-site calculations",
+    "preserve the existing workshop construction, animation, and interaction contracts",
+    "do not add canonical-room-specific placement or simulation logic",
+    "do not rely on recoloring a Clockwork building or adding decorative panels as the only identity change"
+  ],
+  "roomdefinition_authority": "ArtBrief dimensions are (26.0, 20.0, 20.0); source RoomDefinition: not specified. RoomDefinition remains authoritative for placement and gameplay.",
+  "semantic_identity": "Scavenger settlement repair workshop assembled from reused household materials",
+  "separate_room_assets": [],
+  "silhouette_requirements": [
+    "a distinctive asymmetric silhouette made from repurposed household structures, not a Clockwork building reskin",
+    "an open and readable working front with bench, shelves, and tools visible",
+    "legible load paths and believable attachment of roof panels, appliance doors, and supports",
+    "clearly reused domestic objects such as enamel appliance panels, drawer parts, wire baskets, or patched fabric",
+    "weathered wood, chipped enamel, galvanized scrap, and fabric remain distinguishable under production lighting",
+    "fit the existing 26 by 20 by 20 inch local presentation envelope"
+  ],
+  "source_photo_constraints": null,
+  "visual_references": []
+}

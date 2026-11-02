@@ -1,10 +1,10 @@
-# Production Art Backlog — Updated after Batch 20
+# Production Art Backlog — Updated after Batch 21
 
 This is the post-POC production backlog. It preserves POC 2.5 evidence and acceptance results; the entries below are not POC 2.5 regressions or changes to its acceptance amendment.
 
-## Current priority after Batch 20
+## Current priority after Batch 21
 
-1. **Faction visual identity.** The Clockwork workshop r01 episode has exhausted its three strategies. Select a source-supported Verdant or Scavenger structure or equipment asset with strong scene/faction prominence; build a meaningful silhouette and construction upgrade, not a recolor. Keep the whole-settlement view as the integrated comparison.
+1. **Faction visual identity.** The Scavenger workshop r01 episode has exhausted its three strategies; v003 is best current but did not materially improve the matched gameplay view and remains review-only. Next, target the high-prominence Scavenger settlement architecture from the inventory: it repeats across the active settlement and still reuses Clockwork structures with simple scrap overlays. Build a meaningful salvage construction/material kit that fits existing sites. Keep the whole-settlement view as the integrated comparison. Avoid another citizen iteration loop until a bounded role-kit batch is ready.
 2. **Clockwork workshop target episode.** v008 remains the best current 3D candidate; v004 remains production. v009's upper tier is oversized and disconnected, and Luna's pixel review found it less coherent than v008. The r01 episode is backlogged after three strategies. Do not make a fourth variant against the same approved target.
 3. **Room shell trim and French door.** Both approved-target episodes have exhausted three strategies. Trim v002 remains best current but misses close-craft and grain; French-door v010 has exact bounds and readable hinges but repetitive oak. The blue-gray pane capture cannot establish transparency. Preserve room dimensions; keep any garden context outside the door mesh.
 4. **Desk transfer.** The r01 episode remains at three attempts. A current matched rerender makes v061 the best 3D review candidate because its probe restores broad room reflections and its constructed underframe reads better than v007. It still renders too green and transparent against the source and target; preserve v007 in production and do not generate a fourth r01 variant.
@@ -58,6 +58,12 @@ Godot 4.7.2 validation passed at 26 × 19.94 × 20 inches, 158 meshes/surfaces, 
 
 The matched settlement-scale v008/v009 captures show a wider workshop canopy but no obvious scene-wide transformation. The workshop remains small in frame and the surrounding settlement remains visibly sparse and prototype-like. In warmed 50-citizen samples, v009 versus v008 room median/p95 was 3.080/3.620 vs 2.976/3.527 ms, settlement was 2.760/3.350 vs 2.657/3.289 ms, and citizen was 2.470/3.020 vs 2.316/2.948 ms. These single-session values indicate a small frame-time increase; settlement draw calls rose from 1,390 to 1,598. See [Batch 20](batch-20-clockwork-workshop-final.md) and its [v008](batch-20/performance-v008.json) and [v009](batch-20/performance-v009.json) raw samples.
 
+## Batch 21 disposition
+
+The Luna-approved Scavenger workshop target received three bounded Blender transfers. v002 improved the 64-inch gameplay readability score from 2/5 to 3/5; v003's rear-set, braced roof improves the close work-bay view and is the best current 3D candidate, but Luna found no material readability jump over v002 at the matched gameplay camera. The 330-inch room overview remains inconclusive. Godot validation passed at 25.90 × 19.16 × 19.36 inches, 10 meshes/surfaces, and 107,784 triangles. The episode is backlogged at attempt three; no candidate was promoted, and the production registry remains unchanged. See [Batch 21](batch-21-scavenger-workshop-final.md).
+
+The next inventory priority is the Scavenger settlement architecture family: it repeats across the active settlement, remains built from the accepted Clockwork family with simple scrap overlays, and offers a larger opportunity for meaningful faction identity than another isolated workshop-detail pass.
+
 ## Promoted production assets
 
 - Batch 1: `settlement_depot-v005`, `settlement_housing-v004`, and `room_bookcase_production-v001`.
@@ -66,7 +72,7 @@ The matched settlement-scale v008/v009 captures show a wider workshop canopy but
 
 These are scoped improvements. The inventory still contains substantial unregistered room furniture, runtime-generated geometry, and incomplete faction-specific art.
 
-Batches 5–18 did not change the production registry; Batch 12 changed scene-wide lighting settings, and Batch 15 added no runtime promotion. Review-only candidates remain outside accepted production, including desk-v061 (with desk-v007 retained in production), French door v010, trim v002, Room A bookcase v003, and the Batch 15 furniture candidates. See the batch reports linked above.
+No canonical production assets were promoted in Batches 5–21; Batch 12 changed scene-wide lighting settings, and Batch 15 added no runtime promotion. Review-only candidates remain outside accepted production, including desk-v061 (with desk-v007 retained in production), French door v010, trim v002, Room A bookcase v003, the Batch 15 furniture candidates, and Scavenger workshop v003. See the batch reports linked above.
 
 ## Batch 1 promotion detail
 

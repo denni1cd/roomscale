@@ -1,0 +1,149 @@
+{
+  "candidate_id": "scavenger_workshop-v002",
+  "created_at_utc": "2026-11-02T13:38:34+00:00",
+  "decision": "continue",
+  "defects": [
+    "The canopy still occupies most of the settlement-distance silhouette.",
+    "The tool wall and small salvage parts remain difficult to read at 64 inches.",
+    "The human-room overview does not support a claim of visible room-wide improvement."
+  ],
+  "hard_fail_reasons": [
+    "At settlement scale the roof continues to dominate and the tool wall/small salvage remain hard to read, below the target's clear working-front requirement."
+  ],
+  "incumbent_candidate_id": "scavenger_workshop-v001",
+  "incumbent_comparison": "v002 is a better gameplay-distance transfer than v001: the opening and appliance panels read more clearly at the identical 64-inch camera. Both still occupy too little of the human-room overview to demonstrate a room-wide change.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "geometry_loss",
+    "lighting_render_presentation"
+  ],
+  "next_action_hypothesis": "For the final Visual Director attempt, test a rear-set high canopy with a visibly braced edge, then compare it against v002 at the same settlement camera; keep the human-room conclusion limited to captured evidence.",
+  "observations": {
+    "art_direction_fit": "The salvage silhouette is stronger than v001 because the bench and mismatched doors show through the opening; the target's useful tool wall is still under-read.",
+    "close_up_quality": "The close production image shows the open bay and major construction, but does not yet carry the target's strong legibility for the tool wall and small joins.",
+    "gameplay_readability": "Luna scored v002 3/5, up from 2/5 for v001: the front bay and appliance panels are easier to distinguish at 64 inches, while the roof still dominates.",
+    "geometric_detail": "The close view shows the bench, drawers, appliance doors, roof seams and frame; Luna found that tools and small salvage details remain difficult to read at settlement scale.",
+    "material_realism": "Baked enamel, galvanized sheet, canvas and wood surfaces remain distinct in the close capture, but their smaller wear detail compresses at the gameplay camera.",
+    "proportion": "The model keeps the v001 envelope at 25.9 by 18.7 by 19.4 inches, but the roof remains visually broad relative to its work bay.",
+    "scale_fidelity": "The production resolver preserves the 26 by 20 by 20 inch presentation envelope; the human-room overview is too wide to support a room-wide improvement claim.",
+    "semantic_recognizability": "In the 64-inch production capture the cream/blue salvaged doors and timber canopy read as a Scavenger repair workshop, distinct from the Clockwork steam-room structures.",
+    "silhouette_quality": "The shorter high front edge opens the silhouette; the roof still owns most of its visible mass and the wall/tool details remain small.",
+    "surface_variation": "The close image retains grain and enamel wear, while the settlement view mostly keeps large roof and panel color areas.",
+    "technical_integration": "Godot 4.7.2 validated the imported GLB and rendered the exact v002 resource through the review-only resolver in the Scavenger production presentation."
+  },
+  "render_evidence": [
+    "art/scavenger_workshop/iterations/v002/render-runs/run-001/asset-three-quarter.png",
+    "art/scavenger_workshop/iterations/v002/render-runs/run-001/settlement-scale.png",
+    "art/scavenger_workshop/iterations/v002/render-runs/run-001/room-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 3,
+    "gameplay_readability": 3,
+    "geometric_detail": 3,
+    "material_realism": 3,
+    "proportion": 3,
+    "scale_fidelity": 3,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "surface_variation": 3,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The close capture shows the major assembly, but the smaller work tools and panel connections still need stronger evidence and do not transfer clearly to the gameplay camera.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "The close capture shows eased appliance corners, rolled roof edges, and softened timber and drawer edges.",
+        "evidence_refs": [
+          "art/scavenger_workshop/iterations/v002/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "The settlement image shows the appliance panels but loses most small fasteners, hinges and tool fittings at this viewing distance.",
+        "evidence_refs": [
+          "art/scavenger_workshop/iterations/v002/render-runs/run-001/settlement-scale.png"
+        ],
+        "pass": false
+      },
+      "joins": {
+        "evidence": "The shortened eave now lands on a front bearer above the posts, and the three-quarter view exposes the frame supports below it.",
+        "evidence_refs": [
+          "art/scavenger_workshop/iterations/v002/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "The workbench is easier to see, but the tool wall and minor household salvage still do not read clearly at the settlement distance.",
+        "evidence_refs": [
+          "art/scavenger_workshop/iterations/v002/render-runs/run-001/settlement-scale.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "The close view separates worn wood, cream/teal enamel, and galvanized roofing under production lighting.",
+        "evidence_refs": [
+          "art/scavenger_workshop/iterations/v002/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "surface_variation": {
+        "evidence": "Baked color, normal and roughness images contribute separate grain and worn-paint response in the close render.",
+        "evidence_refs": [
+          "art/scavenger_workshop/iterations/v002/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "thickness": {
+        "evidence": "Sheet corrugations, drawer faces and timber members show layered thickness in the close production render.",
+        "evidence_refs": [
+          "art/scavenger_workshop/iterations/v002/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "At the settlement camera the broad repeated roof plane and compressed fittings still read as a stylized game model rather than the target's crafted miniature workshop.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "The approved ArtBrief has no photographic source requirement or reference image.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": true
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Test a materially different rear-set canopy arrangement that leaves the foreground work bay open to the 64-inch view, with the edge landing on a clear bearer and braces.",
+    "lost_visual_information": [
+      "the tool wall and small salvage parts from the approved target",
+      "the working-front opening remains visually subordinate to the broad canopy",
+      "panel fasteners and handles at the 64-inch camera"
+    ],
+    "preserved_components": [
+      "the appliance doors and drawer-front work area are easier to see than in v001",
+      "the supported asymmetric roof and timber frame retain a Scavenger salvage silhouette",
+      "the human-room overview correctly remains inconclusive about room-wide change"
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "lighting_render_presentation"
+    ]
+  }
+}
