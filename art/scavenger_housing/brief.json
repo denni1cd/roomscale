@@ -1,0 +1,57 @@
+{
+  "allow_stylization": true,
+  "asset_id": "scavenger_housing",
+  "camera_distances": [
+    2.0,
+    12.0,
+    64.0,
+    330.0
+  ],
+  "category": "settlement_structure",
+  "current_quality": "below_target",
+  "display_name": "Scavenger Settlement Housing",
+  "faction_defining": true,
+  "gameplay_invariants": {
+    "citizen_housing_identity_and_autonomy_remain_simulation_owned": true,
+    "render_meshes_do_not_create_collision_navigation_selection_or_housing_logic": true,
+    "room_definition_landmark_is_authoritative": true
+  },
+  "intended_dimensions": [
+    17.0,
+    7.0,
+    9.0
+  ],
+  "iteration_budget": 3,
+  "materials": {
+    "door_panels": "two broad blue and cream salvaged appliance slabs with simple iron straps and visible repairs",
+    "porch_and_storage": "one shared uneven timber landing with a small crate or household storage box at the outer edge",
+    "primary_frame": "reclaimed drawer boards, pallet timber, and repaired domestic furniture panels",
+    "roof": "asymmetric mismatched galvanized sheets, appliance enamel patches, and one weathered canvas piece",
+    "vent": "plain reused exhaust pipe or capped household flue, without boiler or gear styling",
+    "windows": "small reuse glass panes in timber frames with ordinary iron fasteners"
+  },
+  "priority_tier": 1,
+  "prohibited_changes": [
+    "do not change RoomDefinition landmarks, dimensions, housing identity, or citizen assignments",
+    "do not add render meshes to collision, navigation, selection, housing, or work-site calculations",
+    "do not add canonical-room-specific placement or simulation logic",
+    "do not use Clockwork gears, boiler details, decorative brass, or copper trim as the faction treatment"
+  ],
+  "quality_tier": "B",
+  "reference_images": [],
+  "required_features": [
+    "two individually recognizable compact homes that remain distinct as a pair at the 64-inch gameplay camera",
+    "a small blue or cream salvaged appliance door on each home, readable before small trim detail",
+    "two related but visibly different low roof silhouettes made from reused sheet, timber, and limited canvas",
+    "visible timber corner posts, board cladding, door straps, small framed windows, and one simple shared landing",
+    "materials remain distinct under Room A production lighting and establish a clear Scavenger identity",
+    "fit the existing 17 by 7 by 9 inch local presentation envelope"
+  ],
+  "schema_version": 1,
+  "screen_space_importance": 4,
+  "semantic_type": "paired miniature Scavenger worker cottages built from salvaged household materials",
+  "source_photo_required": false,
+  "source_room_definition": "",
+  "stylization_rationale": "RoomScale uses a detailed miniature-diorama art direction. Deliberate scale-driven stylization is allowed, but the paired cottages must read as physically assembled homes with believable framing, distinct materials, and clear gameplay-scale identity.",
+  "visual_target": "Create two compact lived-in Scavenger cottages on the existing shared 17 x 7 x 9 inch site. Keep each home individually recognizable and make the pair readable at the 64-inch settlement camera. Use repaired drawer boards and pallet timber, one broad faded-blue appliance door and one broad cream appliance door, small reuse-glass windows, and restrained iron straps. Give the two roofs related but different silhouettes: one shallow asymmetric sheet canopy and one short patched lean-to with a canvas repair. Show a shared uneven porch landing and one small household storage form at the outside edge. Use broad material blocks and clear shape differences instead of tiny trim. Include at most one plain capped vent. Avoid gears, boilers, copper trim, brass ornament, or a Clockwork cottage reskin. Preserve all simulation and RoomDefinition data."
+}

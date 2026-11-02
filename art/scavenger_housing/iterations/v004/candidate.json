@@ -1,0 +1,335 @@
+{
+  "asset_files": [
+    "art/scavenger_housing/iterations/v004/generation-attempts/run-002/generated/scavenger_housing.glb"
+  ],
+  "asset_id": "scavenger_housing",
+  "candidate_id": "scavenger_housing-v004",
+  "created_at_utc": "2026-11-02T14:59:31+00:00",
+  "evaluation_file": "art/scavenger_housing/iterations/v004/evaluation.json",
+  "generation_attempts": [
+    {
+      "command": [
+        "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/.venv/Scripts/python.exe",
+        "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/scripts/art_factory/generators/scavenger_housing_pipeline.py",
+        "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale",
+        "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale\\art\\scavenger_housing\\iterations\\v004\\generated"
+      ],
+      "execution_number": 1,
+      "exit_code": 1,
+      "log_file": "art/scavenger_housing/iterations/v004/generation.log",
+      "output_dir": "art/scavenger_housing/iterations/v004/generated",
+      "recorded_at_utc": "2026-11-02T14:59:37+00:00",
+      "status": "fail"
+    },
+    {
+      "command": [
+        "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/.venv/Scripts/python.exe",
+        "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/scripts/art_factory/generators/scavenger_housing_pipeline.py",
+        "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale",
+        "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale\\art\\scavenger_housing\\iterations\\v004\\generation-attempts\\run-002\\generated"
+      ],
+      "execution_number": 2,
+      "exit_code": 0,
+      "log_file": "art/scavenger_housing/iterations/v004/generation-attempts/run-002/generation.log",
+      "output_dir": "art/scavenger_housing/iterations/v004/generation-attempts/run-002/generated",
+      "recorded_at_utc": "2026-11-02T15:00:16+00:00",
+      "status": "pass"
+    }
+  ],
+  "generation_result": {
+    "command": [
+      "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/.venv/Scripts/python.exe",
+      "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/scripts/art_factory/generators/scavenger_housing_pipeline.py",
+      "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale",
+      "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale\\art\\scavenger_housing\\iterations\\v004\\generation-attempts\\run-002\\generated"
+    ],
+    "execution_number": 2,
+    "exit_code": 0,
+    "log_file": "art/scavenger_housing/iterations/v004/generation-attempts/run-002/generation.log",
+    "output_dir": "art/scavenger_housing/iterations/v004/generation-attempts/run-002/generated",
+    "recorded_at_utc": "2026-11-02T15:00:16+00:00",
+    "status": "pass"
+  },
+  "parent_candidate_id": "scavenger_housing-v003",
+  "recipe_file": "art/scavenger_housing/iterations/v004/recipe.json",
+  "renders": [
+    {
+      "asset_id": "scavenger_housing",
+      "camera": {
+        "actual_camera_position": "(0.0, 272.0435, 203.1683)",
+        "distance_inches": 330.0,
+        "focus": "(0.0, 12.0, 0.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 52.0,
+        "yaw_radians": 0.0
+      },
+      "candidate_id": "scavenger_housing-v004",
+      "captured_at_utc": "2026-11-02T15:00:48+00:00",
+      "draw_calls": 1047.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 19.0,
+      "path": "art/scavenger_housing/iterations/v004/render-runs/run-001/room-scale.png",
+      "phase": "room-scale",
+      "primitives": 504850.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "31ecd81bb20986bba1662355c30ba91f1b92c21f969a2b5c073751ff20a706bf"
+    },
+    {
+      "asset_id": "scavenger_housing",
+      "camera": {
+        "actual_camera_position": "(203.1683, 272.0435, -0.000009)",
+        "distance_inches": 330.0,
+        "focus": "(0.0, 12.0, 0.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 52.0,
+        "yaw_radians": 1.5707963267949
+      },
+      "candidate_id": "scavenger_housing-v004",
+      "captured_at_utc": "2026-11-02T15:00:48+00:00",
+      "draw_calls": 1047.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 19.0,
+      "path": "art/scavenger_housing/iterations/v004/render-runs/run-001/room-scale-opposite-angle.png",
+      "phase": "room-scale-opposite-angle",
+      "primitives": 505234.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "792d416114f482df4d361502672afebb119567eae4bd6230f122b37a5a852877"
+    },
+    {
+      "asset_id": "scavenger_housing",
+      "camera": {
+        "actual_camera_position": "(-13.23315, 46.32436, 112.0827)",
+        "distance_inches": 64.0,
+        "focus": "(-25.0, 3.5, 66.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 42.0,
+        "yaw_radians": 0.25
+      },
+      "candidate_id": "scavenger_housing-v004",
+      "captured_at_utc": "2026-11-02T15:00:48+00:00",
+      "draw_calls": 1859.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 19.0,
+      "path": "art/scavenger_housing/iterations/v004/render-runs/run-001/settlement-scale.png",
+      "phase": "settlement-scale",
+      "primitives": 955812.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "e0a8fe93c144c7aded7ef1985bcf1aae77e94b84bf385a1cb2667e5e87a07d3e"
+    },
+    {
+      "asset_id": "scavenger_housing",
+      "camera": {
+        "actual_camera_position": "(-36.76685, 46.32436, 19.9173)",
+        "distance_inches": 64.0,
+        "focus": "(-25.0, 3.5, 66.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 42.0,
+        "yaw_radians": 3.39159265358979
+      },
+      "candidate_id": "scavenger_housing-v004",
+      "captured_at_utc": "2026-11-02T15:00:48+00:00",
+      "draw_calls": 1541.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 19.0,
+      "path": "art/scavenger_housing/iterations/v004/render-runs/run-001/settlement-scale-opposite-angle.png",
+      "phase": "settlement-scale-opposite-angle",
+      "primitives": 811540.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "23a43a13cf5214061108fa5627dfdbe7c610387706bb3ef248de70f1f5be09c1"
+    },
+    {
+      "asset_id": "scavenger_housing",
+      "camera": {
+        "actual_camera_position": "(21.0827, 46.32436, 54.23315)",
+        "distance_inches": 64.0,
+        "focus": "(-25.0, 3.5, 66.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 42.0,
+        "yaw_radians": 1.8207963267949
+      },
+      "candidate_id": "scavenger_housing-v004",
+      "captured_at_utc": "2026-11-02T15:00:48+00:00",
+      "draw_calls": 1123.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 19.0,
+      "path": "art/scavenger_housing/iterations/v004/render-runs/run-001/settlement-scale-side-angle.png",
+      "phase": "settlement-scale-side-angle",
+      "primitives": 750528.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "1f22e0b1f84c9871b5803230d209854f5da337a6ec94968c306503e029c57994"
+    },
+    {
+      "asset_id": "scavenger_housing",
+      "camera": {
+        "actual_camera_position": "(-18.25202, 12.57364, 75.45216)",
+        "distance_inches": 14.7380328369141,
+        "focus": "(-25.0, 3.5, 66.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 38.0,
+        "yaw_radians": 0.62
+      },
+      "candidate_id": "scavenger_housing-v004",
+      "captured_at_utc": "2026-11-02T15:00:48+00:00",
+      "draw_calls": 1135.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 36.0,
+      "path": "art/scavenger_housing/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+      "phase": "asset-three-quarter",
+      "primitives": 712668.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "e7182335e884241a9fe8a1f2f2dd44a7cb36a6682a25bd3d054aa16b51f1ee2b"
+    },
+    {
+      "asset_id": "scavenger_housing",
+      "camera": {
+        "actual_camera_position": "(-31.74798, 12.57364, 56.54784)",
+        "distance_inches": 14.7380328369141,
+        "focus": "(-25.0, 3.5, 66.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 38.0,
+        "yaw_radians": 3.76159265358979
+      },
+      "candidate_id": "scavenger_housing-v004",
+      "captured_at_utc": "2026-11-02T15:00:48+00:00",
+      "draw_calls": 581.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 36.0,
+      "path": "art/scavenger_housing/iterations/v004/render-runs/run-001/asset-opposite-three-quarter.png",
+      "phase": "asset-opposite-three-quarter",
+      "primitives": 308508.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "049cfe6ae16b95b61c1ed674f8b1ac978f75f6e03ae42bc105e6f417960663e3"
+    },
+    {
+      "asset_id": "scavenger_housing",
+      "camera": {
+        "actual_camera_position": "(-15.54784, 12.57364, 59.25201)",
+        "distance_inches": 14.7380328369141,
+        "focus": "(-25.0, 3.5, 66.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(639.9999, 360.0)",
+        "tilt_degrees": 38.0,
+        "yaw_radians": 2.1907963267949
+      },
+      "candidate_id": "scavenger_housing-v004",
+      "captured_at_utc": "2026-11-02T15:00:48+00:00",
+      "draw_calls": 278.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 36.0,
+      "path": "art/scavenger_housing/iterations/v004/render-runs/run-001/asset-profile.png",
+      "phase": "asset-profile",
+      "primitives": 230388.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "acf18a7b2f40065a0da5039d576f35cc9793fdf053e76459f6408d9951a81bbc"
+    },
+    {
+      "asset_id": "scavenger_housing",
+      "camera": {
+        "actual_camera_position": "(-23.24152, 7.279246, 72.88676)",
+        "distance_inches": 8.05,
+        "focus": "(-25.0, 3.5, 66.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(639.9999, 360.0001)",
+        "tilt_degrees": 28.0,
+        "yaw_radians": 0.25
+      },
+      "candidate_id": "scavenger_housing-v004",
+      "captured_at_utc": "2026-11-02T15:00:48+00:00",
+      "draw_calls": 1349.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 36.0,
+      "path": "art/scavenger_housing/iterations/v004/render-runs/run-001/asset-detail.png",
+      "phase": "asset-detail",
+      "primitives": 841802.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "eeeddfbd3a8d200ea8f4b62496dcc8867fe3bdc13fd4796ebc41e420307f76fc"
+    }
+  ],
+  "schema_version": 1,
+  "status": "challenger",
+  "technical_validation": {
+    "asset_path": "res://art/scavenger_housing/iterations/v004/generation-attempts/run-002/generated/scavenger_housing.glb",
+    "bounds": {
+      "position": [
+        -8.32999992370605,
+        0.119999885559082,
+        -4.37000036239624
+      ],
+      "size": [
+        16.6599998474121,
+        6.51499938964844,
+        8.84795188903809
+      ]
+    },
+    "engine": "4.7.2-stable (official)",
+    "import_exit_code": 0,
+    "issues": [],
+    "log": "art/scavenger_housing/iterations/v004/technical-validation.log",
+    "mesh_count": 1,
+    "recorded_at_utc": "2026-11-02T15:00:33+00:00",
+    "report": "art/scavenger_housing/iterations/v004/technical-validation.json",
+    "status": "pass",
+    "surface_count": 9,
+    "triangle_count": 38068,
+    "validation_exit_code": 0
+  },
+  "version": 4,
+  "visual_director_provenance": {
+    "approved_visual_target": {
+      "approval": "pass",
+      "approved_at_utc": "2026-11-02T14:45:20+00:00",
+      "concept_id": "direction-b-refined-r01",
+      "path": "art/scavenger_housing/visual_director/round-01/approved-target-r01.png",
+      "review_method": "pixel inspection; review evidence recorded by Luna",
+      "review_path": "art/scavenger_housing/visual_director/round-01/pixel-review.md",
+      "sha256": "6a43ba677ff8be6ad768544000cd5045f31cc315516340ef4d9a4095ff99ca05"
+    },
+    "case_file": "art/scavenger_housing/visual_director/state.json",
+    "policy": {
+      "inputs": {
+        "category": "settlement_structure",
+        "current_quality": "below_target",
+        "faction_defining": true,
+        "inferred": [],
+        "priority_tier": 1,
+        "screen_space_importance": 4,
+        "source_images_present": false,
+        "source_photo_required": false
+      },
+      "reasons": [
+        "Tier 1 scene-defining asset",
+        "high screen-space importance",
+        "current production quality is below target"
+      ],
+      "required": true
+    },
+    "status": "approved",
+    "strategy": "alternate_strategy",
+    "target_episode_attempt": 3
+  }
+}

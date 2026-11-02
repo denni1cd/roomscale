@@ -1,0 +1,150 @@
+{
+  "candidate_id": "scavenger_housing-v004",
+  "created_at_utc": "2026-11-02T15:06:10+00:00",
+  "decision": "continue",
+  "defects": [
+    "Geometric detail, material realism, surface variation and close-up quality remain 3/5, below the production thresholds.",
+    "Semantic recognizability scores 4/5, below the 5/5 production threshold.",
+    "The alternate tile-detail pass changes close-range texture subtly but does not improve the gameplay view or overall craft score."
+  ],
+  "hard_fail_reasons": [],
+  "incumbent_candidate_id": "scavenger_housing-v003",
+  "incumbent_comparison": "v004 preserves v003's passing 64-inch roof separation, door read, supports, and dimensions. Tile-detail PBR adds only subtle close-range variation and does not improve geometry/detail, material realism, or gameplay integration scores.",
+  "incumbent_comparison_result": "same",
+  "likely_causes": [
+    "material_generation",
+    "geometry_loss"
+  ],
+  "next_action_hypothesis": "Backlog this approved target after its third bounded candidate. Preserve v003 as the clearest gameplay-read candidate and v004 as a review-only material alternate. Any later work should use a separately scoped target or a materially different asset strategy rather than generating a fourth candidate against this episode.",
+  "observations": {
+    "art_direction_fit": "Reclaimed timber, canvas, galvanized sheets and appliance doors establish Scavenger identity. No Clockwork cues or support defects are visible.",
+    "close_up_quality": "The close view is coherent and materially differentiated, but its overall craft and finish remain at 3/5.",
+    "gameplay_readability": "At the Room A 64-inch camera the lower lean-to remains separated from the canopy and the blue and cream doors still read, scoring 4/5.",
+    "geometric_detail": "Close inspection shows plausible roof supports, posts, beams, braces, window frames and door hardware, but overall joinery detail remains 3/5 against the target craft bar.",
+    "material_realism": "Tile-detail PBR adds subtle wood, enamel and roof response. The change is modest and the score remains 3/5.",
+    "proportion": "Godot measures 16.66 x 6.515 x 8.848 inches, inside the specified 17 x 7 x 9 inch envelope; the doors and shared porch retain useful proportions.",
+    "scale_fidelity": "The candidate fits the 17 x 7 x 9 inch envelope at 16.66 x 6.515 x 8.848 inches and preserves the successful 64-inch roof separation.",
+    "semantic_recognizability": "The two cottages, roof separation and blue/cream doors read as Scavenger housing, but the overall settlement-scale first read is not strong enough for a 5/5 identity score.",
+    "silhouette_quality": "The high asymmetric canopy and lower set-back lean-to remain distinct in the 64-inch front, opposite and side views.",
+    "surface_variation": "Nine material surfaces preserve distinct materials; subtle additional PBR detail does not raise the surface-variation score above 3/5.",
+    "technical_integration": "Godot 4.7.2 imports and renders the review-only candidate in actual Room A. Validation reports one mesh object, nine material surfaces, 38,068 triangles, no issues, and in-envelope dimensions."
+  },
+  "render_evidence": [
+    "art/scavenger_housing/iterations/v004/render-runs/run-001/settlement-scale.png",
+    "art/scavenger_housing/iterations/v004/render-runs/run-001/settlement-scale-opposite-angle.png",
+    "art/scavenger_housing/iterations/v004/render-runs/run-001/settlement-scale-side-angle.png",
+    "art/scavenger_housing/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+    "art/scavenger_housing/iterations/v004/render-runs/run-001/asset-profile.png",
+    "art/scavenger_housing/iterations/v004/render-runs/run-001/room-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 3,
+    "gameplay_readability": 4,
+    "geometric_detail": 3,
+    "material_realism": 3,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 4,
+    "surface_variation": 3,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "Yes",
+      "evidence": "The close Room A view shows roof sheets, visible posts and braces, appliance doors, windows and a shared supported porch; no hard construction defect is visible.",
+      "pass": true
+    },
+    "craftsmanship": {
+      "answer": "Yes",
+      "edge_treatment": {
+        "evidence": "Roof sheets, door slabs and porch planks show readable edges and thickness.",
+        "evidence_refs": [
+          "art/scavenger_housing/iterations/v004/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "Simple iron straps and pulls remain visible on both appliance doors.",
+        "evidence_refs": [
+          "art/scavenger_housing/iterations/v004/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "joins": {
+        "evidence": "Posts, headers, roof purlins and braces visibly support both roof sections.",
+        "evidence_refs": [
+          "art/scavenger_housing/iterations/v004/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "The roof seam, corner supports, shared porch and simple door hardware form a plausible paired-housing assembly.",
+        "evidence_refs": [
+          "art/scavenger_housing/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+          "art/scavenger_housing/iterations/v004/render-runs/run-001/settlement-scale.png"
+        ],
+        "pass": true
+      },
+      "material_response": {
+        "evidence": "Weathered timber, faded enamel, canvas and galvanized sheets respond as distinct materials, although overall material quality scores 3/5.",
+        "evidence_refs": [
+          "art/scavenger_housing/iterations/v004/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "surface_variation": {
+        "evidence": "The close view shows board, canvas and metal variation; the subtle alternate PBR does not raise the rubric score above 3/5.",
+        "evidence_refs": [
+          "art/scavenger_housing/iterations/v004/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "thickness": {
+        "evidence": "Roof sheets, timber members, appliance slabs and porch boards retain physical thickness.",
+        "evidence_refs": [
+          "art/scavenger_housing/iterations/v004/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "evidence": "The close view reads as assembled miniature cottages with supported roofs and material differences rather than placeholder forms.",
+      "pass": true
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "The ArtBrief has no photographic source requirement or reference image.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": true
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Backlog after attempt three. Preserve v003 as the best gameplay-read candidate and v004 as a review-only material alternate; any future work needs a separately scoped target or a materially different strategy.",
+    "lost_visual_information": [
+      "The target's close material character is only partially transferred; tile-detail PBR changes surface response subtly.",
+      "The target's construction detail remains more compelling than the candidate's close-range joinery and material finish."
+    ],
+    "preserved_components": [
+      "The two roof silhouettes, broad blue and cream doors, and shared porch remain readable at 64 inches.",
+      "Visible supports and reclaimed construction preserve plausible Scavenger housing form.",
+      "The model fits the specified envelope and renders through the review-only Room A production path."
+    ],
+    "primary_causes": [
+      "material_generation",
+      "geometry_loss"
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+SCAVENGER_HOUSING_BLENDER C:\Users\Zero\python_projects\ai\roomscale\.tools\blender-5.2.3\blender-5.2.3-windows-x64\blender.exe
+INFO Draco is available, use library at C:\Users\Zero\python_projects\ai\roomscale\.tools\blender-5.2.3\blender-5.2.3-windows-x64\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_draco_bridge.dll
+INFO MeshOptimizer is available, use library at C:\Users\Zero\python_projects\ai\roomscale\.tools\blender-5.2.3\blender-5.2.3-windows-x64\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_meshopt_bridge.dll
+09:59:37 | INFO: Starting glTF 2.0 export
+09:59:37 | INFO: Extracting primitive: Cube.001
+09:59:37 | WARNING: Cube.001: Could not calculate tangents. Please try to triangulate the mesh first.
+09:59:37 | INFO: Primitives created: 9
+09:59:37 | INFO: Finished glTF 2.0 export in 0.22795319557189941 s
+
+Warning: Cube.001: Could not calculate tangents. Please try to triangulate the mesh first.
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)
+
+Blender quit
+Traceback (most recent call last):
+  File "C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale\scripts\art_factory\generators\scavenger_housing_blender.py", line 188, in <module>
+    main(Path(sys.argv[-2]).resolve(), Path(sys.argv[-1]).resolve())
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale\scripts\art_factory\generators\scavenger_housing_blender.py", line 168, in main
+    "material_strategy": material_strategy,
+                         ^^^^^^^^^^^^^^^^^
+NameError: name 'material_strategy' is not defined
+
+Error: script failed, file: 'C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale\scripts\art_factory\generators\scavenger_housing_blender.py', exiting.

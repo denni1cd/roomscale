@@ -1,0 +1,154 @@
+{
+  "candidate_id": "scavenger_housing-v002",
+  "created_at_utc": "2026-11-02T14:51:34+00:00",
+  "decision": "continue",
+  "defects": [
+    "The shallow canopy and patched lean-to merge into a continuous roof silhouette at gameplay scale.",
+    "The pair exceeds the requested width slightly because the shared porch boards extend beyond the housing envelope.",
+    "Material and small construction detail are more apparent in the close view than at the 64-inch Room A camera."
+  ],
+  "hard_fail_reasons": [
+    "The 64-inch Room A view does not preserve the two separate roof silhouettes and the homes merge into one duplex-like mass.",
+    "Godot bounds exceed the 17-inch width envelope by 0.272 inches."
+  ],
+  "incumbent_candidate_id": "",
+  "incumbent_comparison": "First pass against the generic Scavenger housing treatment in Room A: broad blue and cream doors and reclaimed timber improve faction identity, but the connected roof profiles make the pair read as one duplex-like block at 64 inches.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "geometry_loss",
+    "proportion_drift"
+  ],
+  "next_action_hypothesis": "Reduce the mesh to at most 17 inches wide, preserve the shared porch and broad door slabs, and separate the two roof shapes: give one cottage a shallow asymmetric canopy and the other a short lean-to with a visible canvas patch. Keep each roof edge and its corner supports visually distinct from the neighboring cottage.",
+  "observations": {
+    "art_direction_fit": "The blue and cream salvaged appliance doors, weathered boards, canvas and mismatched sheet metal fit the Scavenger faction; there are no Clockwork cues on the homes.",
+    "close_up_quality": "The close view shows a coherent, supported pair with visible boards and hardware; the roof profiles still transfer less clearly than the target.",
+    "gameplay_readability": "In the actual Room A 64-inch view the door colors register, but the two homes merge into a single duplex-like mass.",
+    "geometric_detail": "The close view shows timber posts, bracing, doors and windows; the 64-inch view loses the distinction between the two cottage structures.",
+    "material_realism": "Weathered timber, enamel doors and galvanized roofing separate in the close view, while most finer surface variation falls away at 64 inches.",
+    "proportion": "The pair fills the local envelope convincingly, but Godot measures 17.272 x 6.573 x 8.761 inches, exceeding the specified width by 0.272 inches.",
+    "scale_fidelity": "The candidate remains near the requested dimensions but fails the width bound at 17.272 inches; its 64-inch gameplay view also weakens the paired-home read.",
+    "semantic_recognizability": "At 64 inches the blue and cream appliance doors plus reclaimed timber signal Scavenger housing, though the pair reads as one duplex-like block.",
+    "silhouette_quality": "The close render has two roof heights, but in the Room A gameplay view their continuous sheet coverage merges into one broad roof silhouette.",
+    "surface_variation": "Broad blue and cream slabs and roof color patches survive close inspection, but the distinct patched lean-to treatment does not read at gameplay scale.",
+    "technical_integration": "Godot 4.7.2 imports the GLB and renders it through the review-only resolver in rooms/room_a.json. Validation reports 185 mesh surfaces, 49,948 triangles and no import errors; the measured width is over the brief."
+  },
+  "render_evidence": [
+    "art/scavenger_housing/iterations/v002/render-runs/run-002/settlement-scale.png",
+    "art/scavenger_housing/iterations/v002/render-runs/run-002/settlement-scale-opposite-angle.png",
+    "art/scavenger_housing/iterations/v002/render-runs/run-002/settlement-scale-side-angle.png",
+    "art/scavenger_housing/iterations/v002/render-runs/run-002/asset-three-quarter.png",
+    "art/scavenger_housing/iterations/v002/render-runs/run-002/asset-profile.png",
+    "art/scavenger_housing/iterations/v002/render-runs/run-002/room-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 4,
+    "close_up_quality": 4,
+    "gameplay_readability": 3,
+    "geometric_detail": 3,
+    "material_realism": 3,
+    "proportion": 3,
+    "scale_fidelity": 3,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "surface_variation": 3,
+    "technical_integration": 4
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "Yes",
+      "evidence": "The close Room A render shows timber posts, braces, visible door hardware, roof sheet edges and distinct surface materials.",
+      "pass": true
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "The close render shows eased appliance slabs, rounded timber edges and thin roof-sheet profiles.",
+        "evidence_refs": [
+          "art/scavenger_housing/iterations/v002/render-runs/run-002/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "Both doors have simple pulls and iron straps visible in the close Room A render.",
+        "evidence_refs": [
+          "art/scavenger_housing/iterations/v002/render-runs/run-002/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "joins": {
+        "evidence": "Posts, headers, diagonal braces and porch supports provide visible connections and load paths in the close view.",
+        "evidence_refs": [
+          "art/scavenger_housing/iterations/v002/render-runs/run-002/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "At the 64-inch camera the roof sheets visually connect the two homes, hiding the target's separate canopy and lean-to construction.",
+        "evidence_refs": [
+          "art/scavenger_housing/iterations/v002/render-runs/run-002/settlement-scale.png",
+          "art/scavenger_housing/iterations/v002/render-runs/run-002/settlement-scale-side-angle.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "Weathered timber, blue and cream enamel, canvas and galvanized sheets respond distinctly under Room A lighting.",
+        "evidence_refs": [
+          "art/scavenger_housing/iterations/v002/render-runs/run-002/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "surface_variation": {
+        "evidence": "Close inspection shows board-to-board color variation and patched roof materials.",
+        "evidence_refs": [
+          "art/scavenger_housing/iterations/v002/render-runs/run-002/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "thickness": {
+        "evidence": "The roof sheets, appliance slabs and shared porch boards show readable thickness at close range.",
+        "evidence_refs": [
+          "art/scavenger_housing/iterations/v002/render-runs/run-002/asset-three-quarter.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "evidence": "The close render reads as assembled miniature housing with material variation and visible supports, rather than untextured placeholder forms.",
+      "pass": true
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "The ArtBrief has no photographic source requirement or reference image.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": true
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Shorten the porch board span to fit the 17-inch envelope and separate the roof silhouettes in 3D: keep one shallow asymmetric sheet canopy and make the second a clearly lower, shorter lean-to with a broad canvas repair and visible corner supports. Preserve the door blocks and shared porch.",
+    "lost_visual_information": [
+      "The two separately profiled cottage roofs merge into one continuous sheet silhouette at 64 inches.",
+      "The brief's shallow canopy versus short patched lean-to distinction is visible in the close view but weak at gameplay distance.",
+      "The shared porch extends the exported width to 17.272 inches, above the requested 17-inch envelope."
+    ],
+    "preserved_components": [
+      "Broad blue and cream appliance doors remain visible in the Room A gameplay view.",
+      "Reclaimed timber construction, roof supports, shared porch, windows and simple hardware transfer to the close render.",
+      "The housing reads as Scavenger and has no Clockwork cues."
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "proportion_drift"
+    ]
+  }
+}

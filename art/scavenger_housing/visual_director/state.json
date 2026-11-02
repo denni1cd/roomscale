@@ -1,0 +1,255 @@
+{
+  "approved_visual_target": {
+    "approval": "pass",
+    "approved_at_utc": "2026-11-02T14:45:20+00:00",
+    "concept_id": "direction-b-refined-r01",
+    "path": "art/scavenger_housing/visual_director/round-01/approved-target-r01.png",
+    "review_method": "pixel inspection; review evidence recorded by Luna",
+    "review_path": "art/scavenger_housing/visual_director/round-01/pixel-review.md",
+    "sha256": "6a43ba677ff8be6ad768544000cd5045f31cc315516340ef4d9a4095ff99ca05"
+  },
+  "asset_id": "scavenger_housing",
+  "best_3d_candidate": {
+    "candidate_file": "art/scavenger_housing/iterations/v003/candidate.json",
+    "candidate_id": "scavenger_housing-v003",
+    "evaluation_file": "art/scavenger_housing/iterations/v003/evaluation.json",
+    "updated_at_utc": "2026-11-02T14:58:59+00:00"
+  },
+  "candidate_history": [
+    {
+      "candidate_file": "art/scavenger_housing/iterations/v002/candidate.json",
+      "candidate_id": "scavenger_housing-v002",
+      "created_at_utc": "2026-11-02T14:46:05+00:00",
+      "parent_candidate_id": "",
+      "recipe_file": "art/scavenger_housing/iterations/v002/recipe.json",
+      "visual_director_attempt": 1,
+      "visual_director_provenance": {
+        "approved_visual_target": {
+          "approval": "pass",
+          "approved_at_utc": "2026-11-02T14:45:20+00:00",
+          "concept_id": "direction-b-refined-r01",
+          "path": "art/scavenger_housing/visual_director/round-01/approved-target-r01.png",
+          "review_method": "pixel inspection; review evidence recorded by Luna",
+          "review_path": "art/scavenger_housing/visual_director/round-01/pixel-review.md",
+          "sha256": "6a43ba677ff8be6ad768544000cd5045f31cc315516340ef4d9a4095ff99ca05"
+        },
+        "case_file": "art/scavenger_housing/visual_director/state.json",
+        "policy": {
+          "inputs": {
+            "category": "settlement_structure",
+            "current_quality": "below_target",
+            "faction_defining": true,
+            "inferred": [],
+            "priority_tier": 1,
+            "screen_space_importance": 4,
+            "source_images_present": false,
+            "source_photo_required": false
+          },
+          "reasons": [
+            "Tier 1 scene-defining asset",
+            "high screen-space importance",
+            "current production quality is below target"
+          ],
+          "required": true
+        },
+        "status": "approved",
+        "strategy": "initial",
+        "target_episode_attempt": 1
+      }
+    },
+    {
+      "candidate_file": "art/scavenger_housing/iterations/v003/candidate.json",
+      "candidate_id": "scavenger_housing-v003",
+      "created_at_utc": "2026-11-02T14:54:24+00:00",
+      "parent_candidate_id": "scavenger_housing-v002",
+      "recipe_file": "art/scavenger_housing/iterations/v003/recipe.json",
+      "visual_director_attempt": 2,
+      "visual_director_provenance": {
+        "approved_visual_target": {
+          "approval": "pass",
+          "approved_at_utc": "2026-11-02T14:45:20+00:00",
+          "concept_id": "direction-b-refined-r01",
+          "path": "art/scavenger_housing/visual_director/round-01/approved-target-r01.png",
+          "review_method": "pixel inspection; review evidence recorded by Luna",
+          "review_path": "art/scavenger_housing/visual_director/round-01/pixel-review.md",
+          "sha256": "6a43ba677ff8be6ad768544000cd5045f31cc315516340ef4d9a4095ff99ca05"
+        },
+        "case_file": "art/scavenger_housing/visual_director/state.json",
+        "policy": {
+          "inputs": {
+            "category": "settlement_structure",
+            "current_quality": "below_target",
+            "faction_defining": true,
+            "inferred": [],
+            "priority_tier": 1,
+            "screen_space_importance": 4,
+            "source_images_present": false,
+            "source_photo_required": false
+          },
+          "reasons": [
+            "Tier 1 scene-defining asset",
+            "high screen-space importance",
+            "current production quality is below target"
+          ],
+          "required": true
+        },
+        "status": "approved",
+        "strategy": "targeted_correction",
+        "target_episode_attempt": 2
+      }
+    },
+    {
+      "candidate_file": "art/scavenger_housing/iterations/v004/candidate.json",
+      "candidate_id": "scavenger_housing-v004",
+      "created_at_utc": "2026-11-02T14:59:31+00:00",
+      "parent_candidate_id": "scavenger_housing-v003",
+      "recipe_file": "art/scavenger_housing/iterations/v004/recipe.json",
+      "visual_director_attempt": 3,
+      "visual_director_provenance": {
+        "approved_visual_target": {
+          "approval": "pass",
+          "approved_at_utc": "2026-11-02T14:45:20+00:00",
+          "concept_id": "direction-b-refined-r01",
+          "path": "art/scavenger_housing/visual_director/round-01/approved-target-r01.png",
+          "review_method": "pixel inspection; review evidence recorded by Luna",
+          "review_path": "art/scavenger_housing/visual_director/round-01/pixel-review.md",
+          "sha256": "6a43ba677ff8be6ad768544000cd5045f31cc315516340ef4d9a4095ff99ca05"
+        },
+        "case_file": "art/scavenger_housing/visual_director/state.json",
+        "policy": {
+          "inputs": {
+            "category": "settlement_structure",
+            "current_quality": "below_target",
+            "faction_defining": true,
+            "inferred": [],
+            "priority_tier": 1,
+            "screen_space_importance": 4,
+            "source_images_present": false,
+            "source_photo_required": false
+          },
+          "reasons": [
+            "Tier 1 scene-defining asset",
+            "high screen-space importance",
+            "current production quality is below target"
+          ],
+          "required": true
+        },
+        "status": "approved",
+        "strategy": "alternate_strategy",
+        "target_episode_attempt": 3
+      }
+    }
+  ],
+  "case_file": "art/scavenger_housing/visual_director/state.json",
+  "policy": {
+    "inputs": {
+      "category": "settlement_structure",
+      "current_quality": "below_target",
+      "faction_defining": true,
+      "inferred": [],
+      "priority_tier": 1,
+      "screen_space_importance": 4,
+      "source_images_present": false,
+      "source_photo_required": false
+    },
+    "reasons": [
+      "Tier 1 scene-defining asset",
+      "high screen-space importance",
+      "current production quality is below target"
+    ],
+    "required": true
+  },
+  "production_asset": null,
+  "schema_version": 1,
+  "status": "backlog",
+  "target_episode": {
+    "attempts": [
+      {
+        "attempt": 1,
+        "candidate_id": "scavenger_housing-v002",
+        "decision": "continue",
+        "evaluated_at_utc": "2026-11-02T14:52:40+00:00",
+        "evaluation_file": "art/scavenger_housing/iterations/v002/evaluation.json",
+        "generation_executions": 1,
+        "incumbent_comparison_result": "better",
+        "status": "evaluated",
+        "strategy": "initial",
+        "visual_transfer_diagnosis": {
+          "corrective_action": "Shorten the porch board span to fit the 17-inch envelope and separate the roof silhouettes in 3D: keep one shallow asymmetric sheet canopy and make the second a clearly lower, shorter lean-to with a broad canvas repair and visible corner supports. Preserve the door blocks and shared porch.",
+          "lost_visual_information": [
+            "The two separately profiled cottage roofs merge into one continuous sheet silhouette at 64 inches.",
+            "The brief's shallow canopy versus short patched lean-to distinction is visible in the close view but weak at gameplay distance.",
+            "The shared porch extends the exported width to 17.272 inches, above the requested 17-inch envelope."
+          ],
+          "preserved_components": [
+            "Broad blue and cream appliance doors remain visible in the Room A gameplay view.",
+            "Reclaimed timber construction, roof supports, shared porch, windows and simple hardware transfer to the close render.",
+            "The housing reads as Scavenger and has no Clockwork cues."
+          ],
+          "primary_causes": [
+            "geometry_loss",
+            "proportion_drift"
+          ]
+        }
+      },
+      {
+        "attempt": 2,
+        "candidate_id": "scavenger_housing-v003",
+        "decision": "continue",
+        "evaluated_at_utc": "2026-11-02T14:58:59+00:00",
+        "evaluation_file": "art/scavenger_housing/iterations/v003/evaluation.json",
+        "generation_executions": 1,
+        "incumbent_comparison_result": "better",
+        "status": "evaluated",
+        "strategy": "targeted_correction",
+        "visual_transfer_diagnosis": {
+          "corrective_action": "Use the last alternate strategy for tile-detail PBR maps and a few clearer board and sheet overlaps while preserving the passing roof silhouette, colors, porch, bounds, and nine-material render surface budget.",
+          "lost_visual_information": [
+            "Fine weathering and material response visible in the target do not yet carry through strongly in the close Godot render.",
+            "Small board repairs and sheet overlaps are less articulated than the target's close-up craft."
+          ],
+          "preserved_components": [
+            "Two homes with distinct roof profiles now read at 64 inches.",
+            "The wide blue and cream appliance slabs remain legible around the shared porch.",
+            "The silhouette fits the specified envelope and has no Clockwork cues."
+          ],
+          "primary_causes": [
+            "material_generation",
+            "geometry_loss"
+          ]
+        }
+      },
+      {
+        "attempt": 3,
+        "candidate_id": "scavenger_housing-v004",
+        "decision": "continue",
+        "evaluated_at_utc": "2026-11-02T15:06:47+00:00",
+        "evaluation_file": "art/scavenger_housing/iterations/v004/evaluation.json",
+        "generation_executions": 2,
+        "incumbent_comparison_result": "same",
+        "status": "evaluated",
+        "strategy": "alternate_strategy",
+        "visual_transfer_diagnosis": {
+          "corrective_action": "Backlog after attempt three. Preserve v003 as the best gameplay-read candidate and v004 as a review-only material alternate; any future work needs a separately scoped target or a materially different strategy.",
+          "lost_visual_information": [
+            "The target's close material character is only partially transferred; tile-detail PBR changes surface response subtly.",
+            "The target's construction detail remains more compelling than the candidate's close-range joinery and material finish."
+          ],
+          "preserved_components": [
+            "The two roof silhouettes, broad blue and cream doors, and shared porch remain readable at 64 inches.",
+            "Visible supports and reclaimed construction preserve plausible Scavenger housing form.",
+            "The model fits the specified envelope and renders through the review-only Room A production path."
+          ],
+          "primary_causes": [
+            "material_generation",
+            "geometry_loss"
+          ]
+        }
+      }
+    ],
+    "status": "backlog",
+    "target_sha256": "6a43ba677ff8be6ad768544000cd5045f31cc315516340ef4d9a4095ff99ca05"
+  },
+  "updated_at_utc": "2026-11-02T15:06:47+00:00",
+  "visual_brief_file": "art/scavenger_housing/visual_director/visual-brief-draft.json"
+}

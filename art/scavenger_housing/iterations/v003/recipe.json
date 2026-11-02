@@ -1,0 +1,74 @@
+{
+  "deterministic_seed": 20261103,
+  "generator_command": [
+    "{project_root}/.venv/Scripts/python.exe",
+    "{project_root}/scripts/art_factory/generators/scavenger_housing_pipeline.py",
+    "{project_root}",
+    "{output_dir}"
+  ],
+  "import_configuration": {
+    "collision_navigation_selection_and_work_contracts": "not present in visual asset",
+    "format": "GLB with embedded PBR texture maps",
+    "presentation_only": true,
+    "renderer": "Godot Compatibility",
+    "units": "inches",
+    "up_axis": "glTF Y up converted from Blender Z up"
+  },
+  "instructions": "Correct v002's transfer loss. Keep the wide faded-blue and cream appliance doors and single shared porch. Reduce the total bounds to at most 17 x 7 x 9 inches. Separate the left cottage's broad shallow asymmetric canopy from the right cottage's shorter, lower, set-back lean-to with a wide canvas repair; retain a visible roof gap and distinct corner supports at the 64-inch Room A camera. Preserve plausible load paths, small windows and Scavenger materials, with no Clockwork ornament. Merge authored mesh objects by material before export to reduce render surfaces without removing construction detail. Presentation only; no gameplay changes.",
+  "material_method": "Preserve broad faction-color blocks and physically readable supports while using PBR patina for close-range material response. Distinct roof geometry, not roof color alone, must distinguish the homes at gameplay scale.",
+  "method": "blender_distinct_canopy_and_setback_lean_to",
+  "parameters": {
+    "diagnosis_ref": "scavenger_housing-v002",
+    "gameplay_geometry_changed": false,
+    "layout_strategy": "separate_canopy_and_lean_to",
+    "material_palette": {
+      "enamel_blue": [
+        0.1,
+        0.38,
+        0.55
+      ],
+      "enamel_cream": [
+        0.78,
+        0.7,
+        0.55
+      ],
+      "galvanized": [
+        0.48,
+        0.52,
+        0.52
+      ],
+      "rust": [
+        0.39,
+        0.18,
+        0.1
+      ]
+    },
+    "material_strategy": "broad_scale_patina",
+    "materially_different_strategy": false,
+    "output_envelope_inches": [
+      17.0,
+      7.0,
+      9.0
+    ],
+    "outputs": [
+      "scavenger_housing.glb"
+    ],
+    "visual_director_strategy": "targeted_correction"
+  },
+  "post_processing": [],
+  "schema_version": 1,
+  "source_inputs": [
+    "art/scavenger_housing/brief.json",
+    "art/scavenger_housing/visual_director/round-01/approved-target-r01.png",
+    "art/scavenger_housing/visual_director/round-01/pixel-review.md",
+    "art/scavenger_housing/iterations/v002/evaluation.json",
+    "art/scavenger_housing/iterations/v002/technical-validation.json",
+    "scripts/art_factory/generators/scavenger_housing_blender.py",
+    "scripts/art_factory/generators/scavenger_housing_pipeline.py",
+    "scripts/art_factory/generators/scavenger_workshop_blender.py",
+    "scripts/art_factory/generators/production_batch01_blender.py",
+    "scripts/civilization_presentation.gd"
+  ],
+  "tool": "Blender component authoring with geometry-built timber, enamel repairs and overlapping PBR roof sheets.",
+  "tool_version": "Blender 5.2.3+; Godot 4.7.2-stable Compatibility production renderer"
+}

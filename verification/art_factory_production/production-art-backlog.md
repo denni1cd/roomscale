@@ -1,10 +1,10 @@
-# Production Art Backlog — Updated after Batch 22
+# Production Art Backlog — Updated after Batch 23
 
 This is the post-POC production backlog. It preserves POC 2.5 evidence and acceptance results; the entries below are not POC 2.5 regressions or changes to its acceptance amendment.
 
-## Current priority after Batch 22
+## Current priority after Batch 23
 
-1. **Faction visual identity.** The Scavenger workshop r01 and Depot r01 episodes have each exhausted three strategies and remain review-only. The Depot's v003 improves the correctly framed Room A gameplay read, but its hoist and side storage remain too small and its close craft misses the production gate. Continue with the next high-prominence Scavenger structure from the inventory, starting with housing; preserve all existing sites, dimensions, and gameplay contracts. Avoid another citizen iteration loop until a bounded role-kit batch is ready.
+1. **Faction visual identity.** The Scavenger workshop, Depot, and housing approved-target episodes have each exhausted three strategies and remain review-only. Depot v003 reads its doors and route in the corrected Room A camera but misses the hoist/storage and close-craft gates. Housing v003 now separates the paired roof silhouettes at 64 inches and fits its 17 x 7 x 9 inch envelope; v004's alternate material pass does not raise geometry or material quality above 3/5. Continue with the next high-prominence Scavenger structure, starting with the Work Area; retain the best current review candidates and preserve all sites, dimensions, and gameplay contracts. Avoid another citizen iteration loop until a bounded role-kit batch is ready.
 2. **Clockwork workshop target episode.** v008 remains the best current 3D candidate; v004 remains production. v009's upper tier is oversized and disconnected, and Luna's pixel review found it less coherent than v008. The r01 episode is backlogged after three strategies. Do not make a fourth variant against the same approved target.
 3. **Room shell trim and French door.** Both approved-target episodes have exhausted three strategies. Trim v002 remains best current but misses close-craft and grain; French-door v010 has exact bounds and readable hinges but repetitive oak. The blue-gray pane capture cannot establish transparency. Preserve room dimensions; keep any garden context outside the door mesh.
 4. **Desk transfer.** The r01 episode remains at three attempts. A current matched rerender makes v061 the best 3D review candidate because its probe restores broad room reflections and its constructed underframe reads better than v007. It still renders too green and transparent against the source and target; preserve v007 in production and do not generate a fourth r01 variant.
