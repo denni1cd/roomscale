@@ -1,0 +1,174 @@
+{
+  "candidate_id": "room_chair-v006",
+  "created_at_utc": "2026-11-02T00:00:00Z",
+  "decision": "continue",
+  "defects": [
+    "The deeper dish is still hard to read in the installed production view, and the seat remains a broad slab instead of the target’s carved, integrated seat-and-rim form.",
+    "Leaf-profile spindles are now broad, but the crest and back joints remain simplified and the turned leg/stretcher profiles lack the target’s distinct bead and collar construction.",
+    "The chair finish is more balanced than v005, but grain is too fine and uniform across each part, without knots or member-level variation; walnut posts remain dark.",
+    "Visible pegs mark joins but the construction still lacks convincing fitted shoulders and carved transitions."
+  ],
+  "hard_fail_reasons": [
+    "The target’s carved seat shaping, profiled joinery and individual wood variation remain materially underrepresented; the candidate still reads as procedural review art rather than production furniture."
+  ],
+  "incumbent_candidate_id": "room_chair-v005",
+  "incumbent_comparison": "Compared with v005, v006 uses flattened leaf-profile back spindles, a deeper dished seat and a chair-specific satin wood shader. The chair-specific finish reduces the orange cast, restores visible oak/walnut separation and makes the custom surfaces read coherently. The production views still show a restrained, almost flat-looking seat center, high-frequency grain that lacks target knots and carved board variation, a thin simple crest, and dark rear posts. These changes improve the best review candidate but do not satisfy the production realism or craftsmanship gates.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "geometry_loss",
+    "texture_baking",
+    "image_to_3d_backend_limitation"
+  ],
+  "next_action_hypothesis": "Backlog the transfer after the third round-02 attempt. Resume only with a materially different production backend or authored texture workflow that can reproduce the target’s carved seat rim, component-specific bead/collar joinery, and distinctive board grain; retain v006 as the best review candidate and do not promote it.",
+  "observations": {
+    "art_direction_fit": "The candidate now carries the round-02 target’s broad leaf-spindle vocabulary and warm brown timber, but misses its richly carved joinery and individually varied finish.",
+    "close_up_quality": "The detail view shows a more nuanced satin wood response and leaf-shaped spindles, but the center dish, bead/collar transitions and broad joint shoulders remain understated.",
+    "gameplay_readability": "At gameplay distance, seat/back/frame parts separate more clearly than in v004 and the chair type is unambiguous.",
+    "geometric_detail": "The deeper dished seat, flattened leaf spindles, curved crest, turned legs and closed ends are authored; the target’s carved rim, turned collars and fitted joints remain simplified.",
+    "material_realism": "The chair-specific finish removes the strong orange cast and separates oak from walnut, but the grain looks overly fine and the rear walnut parts remain too dark.",
+    "proportion": "The mesh measures 23.58 x 18.71 x 20.75 inches, within the 25 x 19 x 23 inch brief, and has 0.058 inch positive floor clearance.",
+    "scale_fidelity": "Godot reports dimensions 23.58 x 18.71 x 20.75 inches and a lowest y bound of 0.058 inch, inside the 25 x 19 x 23 inch envelope.",
+    "semantic_recognizability": "The bowed crest, leaf-shaped spindles, broad seat, four splayed legs and lower stretchers read as a workshop chair from gameplay and close views.",
+    "silhouette_quality": "The fuller flattened spindle silhouettes approach the target more closely than v005, but the crest is thin and the low back still lacks the target’s strong turned-post shape.",
+    "surface_variation": "Grain is now visible on the seat, crest and members, but its dense repeated frequency lacks target knots, end grain and board-level variation.",
+    "technical_integration": "Godot 4.7.2 generation, validation and review-showcase rendering pass with 29 meshes, 29 surfaces, 74,752 triangles and no validation issues."
+  },
+  "render_evidence": [
+    "art/room_chair/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+    "art/room_chair/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+    "art/room_chair/iterations/v006/render-runs/run-001/asset-interior-oblique.png",
+    "art/room_chair/iterations/v006/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 3,
+    "gameplay_readability": 4,
+    "geometric_detail": 4,
+    "material_realism": 3,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 4,
+    "surface_variation": 3,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "Close inspection shows weak seat dish, thin crest, low-contrast joints, generic turned transitions and uniform dense grain without the target’s knots or board variation.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "The seat rim is softened and the dish is deeper, but its center contour remains difficult to read and the target’s sculpted seat edge is still absent.",
+        "evidence_refs": [
+          "art/room_chair/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_chair/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_chair/iterations/v006/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_chair/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "hardware": {
+        "evidence": "The target has no metal hardware; the wooden pins fit its construction, though they do not yet convey the target’s carved joinery.",
+        "evidence_refs": [
+          "art/room_chair/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_chair/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_chair/iterations/v006/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_chair/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "joins": {
+        "evidence": "Pins identify the frame connections, but the post-to-seat and stretcher joints lack clear shoulders and fitted turned collars.",
+        "evidence_refs": [
+          "art/room_chair/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_chair/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_chair/iterations/v006/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_chair/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "The leaf-profile spindles and closed turned members are progress; bead collars, carving, seat contour and fitted shoulders remain too simple for believable craftsmanship.",
+        "evidence_refs": [
+          "art/room_chair/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_chair/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_chair/iterations/v006/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_chair/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "The chair finish has a satin highlight, but walnut posts are still too dark and the oak reads as finely striped instead of richly figured timber.",
+        "evidence_refs": [
+          "art/room_chair/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_chair/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_chair/iterations/v006/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_chair/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "Grain appears on all wood members but repeats at a narrow, dense frequency and does not show the target’s knots or board-level changes.",
+        "evidence_refs": [
+          "art/room_chair/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_chair/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_chair/iterations/v006/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_chair/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "The seat slab, crest, back posts, legs and stretchers retain continuous plausible thickness in the detail and oblique captures.",
+        "evidence_refs": [
+          "art/room_chair/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_chair/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_chair/iterations/v006/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_chair/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The leaf-shaped spindles and warm brown finish improve the chair, but the seat, crest and joints remain visibly procedural and the target’s wood construction is not carried into the render.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "The ArtBrief uses an approved generated target and has no source photograph.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Keep v006 as the best review candidate and backlog the transfer. A future pass should use a materially different mesh/texture workflow to build the target’s sculpted seat rim and fitted collars and apply board-level grain with knots and calmer, broader variation.",
+    "lost_visual_information": [
+      "The target’s hand-shaped seat dish and rolled edge are reduced to a broad surface whose curvature is hard to read.",
+      "The turned posts, crest and stretcher joints lack the target’s bead collars, shoulders and convincing fitted construction.",
+      "The target’s individually varied wood boards and visible knots are reduced to repeated fine lines across the chair."
+    ],
+    "preserved_components": [
+      "The chair has the target’s principal parts, low silhouette, flattened back spindles and curved crest.",
+      "The corrected mesh winding, closed ends, rounded seat rim and positive floor clearance are preserved within the exact brief envelope.",
+      "RoomDefinition placement and gameplay state remain unchanged; the Art Factory registry still has no accepted room_chair candidate."
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "texture_baking",
+      "image_to_3d_backend_limitation"
+    ]
+  }
+}

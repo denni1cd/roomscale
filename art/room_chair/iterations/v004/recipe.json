@@ -1,0 +1,54 @@
+{
+  "deterministic_seed": 2606,
+  "generator_command": [
+    "{project_root}/.tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generate_furniture_candidate.gd"
+  ],
+  "import_configuration": {
+    "axis": "Godot X width / Y up / Z depth",
+    "format": "Godot-native PackedScene",
+    "normalization": "exact mesh bounds are validated against the ArtBrief envelope; runtime visual normalization preserves RoomDefinition dimensions",
+    "renderer": "gl_compatibility",
+    "units": "inches"
+  },
+  "instructions": "Fresh approved-target episode after Batch 5's three shader/component attempts. Replace the low chair's rounded-box seat and straight cylindrical members with a dished sculpted seat surface, interpolated lathed bead/cove/taper profiles for the four splayed legs and three shaped spindles, an oval curved crest sweep, turned back posts, and fitted oval stretchers with visible tenon pegs. Match round-02's low silhouette and warm oak/walnut response; keep every vertex inside the authoritative 25 x 19 x 23 inch envelope and preserve all RoomDefinition/gameplay state.",
+  "material_method": "Retain separate warm-oak and walnut directional wood materials from the prior best candidate. The new strategy is vertex-authored custom geometry using Godot ArrayMesh/SurfaceTool; do not count material/shader change as the improvement.",
+  "method": "godot_procedural_room_furniture",
+  "parameters": {
+    "asset_type": "room_chair",
+    "diagnosis_ref": "room_chair-v003",
+    "materially_different_strategy": true,
+    "outputs": [
+      "room_chair.tscn"
+    ],
+    "refinement": "mesh_authored_joinery_v4",
+    "visual_director_strategy": "initial",
+    "visual_director_target": "art/room_chair/visual_director/round-02/approved-target-r02.png"
+  },
+  "post_processing": [
+    "save as a Godot-native PackedScene through the candidate pipeline",
+    "validate the dished seat and all profiled/swept mesh bounds against the exact ArtBrief envelope",
+    "inspect seat shape, lathed turned profiles, curved crest, spindles, and tenon joints in standardized Godot views",
+    "preserve the directional oak/walnut materials and metal materials separately"
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "art/room_chair/visual_director/round-02/approved-target-r02.png",
+    "art/room_chair/visual_director/round-02/pixel-review-r02.md",
+    "art/room_chair/visual_director/round-02/generation-prompt.md",
+    "art/room_chair/iterations/v003/evaluation.json",
+    "art/room_chair/iterations/v003/generated/room_chair.tscn",
+    "scripts/art_factory/generate_furniture_candidate.gd",
+    "scripts/visuals/visual_geometry.gd",
+    "scripts/visuals/material_library.gd",
+    "scripts/art_factory/roomscale_woodgrain_v3.gdshader",
+    "art/room_chair/brief.json",
+    "rooms/room_a.json"
+  ],
+  "tool": "Godot ArrayMesh and SurfaceTool furniture authoring with lathed turnings, dished seat surface, and swept curved crest",
+  "tool_version": "Godot 4.7.2"
+}

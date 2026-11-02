@@ -64,6 +64,345 @@ static func cylinder(parent: Node3D, label: String, radius: float, height: float
 	parent.add_child(item)
 	return item
 
+
+static func lathe_profile(
+	parent: Node3D,
+	label: String,
+	start: Vector3,
+	finish: Vector3,
+	profile: Array[Vector2],
+	category: String,
+	color: Color,
+	radial_segments: int = 32
+) -> MeshInstance3D:
+	"""Build a turned member from normalized-height/radius stations and align it between endpoints."""
+	var direction := finish - start
+	var length := direction.length()
+	if length < 0.001 or profile.size() < 2:
+		return null
+	var cache_key := "lathe:%s:%s:%d" % [length, profile, radial_segments]
+	if not _meshes.has(cache_key):
+		var samples: Array[Vector2] = []
+		for index in range(profile.size() - 1):
+			var p0: Vector2 = profile[maxi(index - 1, 0)]
+			var p1: Vector2 = profile[index]
+			var p2: Vector2 = profile[index + 1]
+			var p3: Vector2 = profile[mini(index + 2, profile.size() - 1)]
+			for step in range(4):
+				var t := float(step) / 4.0
+				var t2 := t * t
+				var t3 := t2 * t
+				var radius := 0.5 * (
+					2.0 * p1.y
+					+ (-p0.y + p2.y) * t
+					+ (2.0 * p0.y - 5.0 * p1.y + 4.0 * p2.y - p3.y) * t2
+					+ (-p0.y + 3.0 * p1.y - 3.0 * p2.y + p3.y) * t3
+				)
+				samples.append(Vector2(lerpf(p1.x, p2.x, t), maxf(0.025, radius)))
+		samples.append(profile[profile.size() - 1])
+		var surface := SurfaceTool.new()
+		surface.begin(Mesh.PRIMITIVE_TRIANGLES)
+		for ring in range(samples.size() - 1):
+			var lower := samples[ring]
+			var upper := samples[ring + 1]
+			for segment in range(radial_segments):
+				var angle0 := TAU * float(segment) / float(radial_segments)
+				var angle1 := TAU * float(segment + 1) / float(radial_segments)
+				var radial0 := Vector3(cos(angle0), 0.0, sin(angle0))
+				var radial1 := Vector3(cos(angle1), 0.0, sin(angle1))
+				var lower0 := Vector3(radial0.x * lower.y, (lower.x - 0.5) * length, radial0.z * lower.y)
+				var lower1 := Vector3(radial1.x * lower.y, (lower.x - 0.5) * length, radial1.z * lower.y)
+				var upper0 := Vector3(radial0.x * upper.y, (upper.x - 0.5) * length, radial0.z * upper.y)
+				var upper1 := Vector3(radial1.x * upper.y, (upper.x - 0.5) * length, radial1.z * upper.y)
+				# Godot uses clockwise front faces. Reverse the outward geometric winding.
+				for point in [lower0, upper1, upper0, lower0, lower1, upper1]:
+					var radial := Vector3(point.x, 0.0, point.z).normalized()
+					surface.set_normal(radial)
+					surface.set_uv(Vector2(atan2(radial.z, radial.x) / TAU, point.y / length + 0.5))
+					surface.add_vertex(point)
+			# Close both ends so splayed feet and fitted members do not show open rings.
+			var bottom := samples[0]
+			var top := samples[samples.size() - 1]
+			for segment in range(radial_segments):
+				var angle0 := TAU * float(segment) / float(radial_segments)
+				var angle1 := TAU * float(segment + 1) / float(radial_segments)
+				var p0 := Vector3(cos(angle0) * bottom.y, (bottom.x - 0.5) * length, sin(angle0) * bottom.y)
+				var p1 := Vector3(cos(angle1) * bottom.y, (bottom.x - 0.5) * length, sin(angle1) * bottom.y)
+				var q0 := Vector3(cos(angle0) * top.y, (top.x - 0.5) * length, sin(angle0) * top.y)
+				var q1 := Vector3(cos(angle1) * top.y, (top.x - 0.5) * length, sin(angle1) * top.y)
+				_append_triangle(surface, Vector3(0.0, (bottom.x - 0.5) * length, 0.0), Vector3.DOWN, Vector2(0.5, 0.5), p0, Vector3.DOWN, Vector2(0.0, 0.0), p1, Vector3.DOWN, Vector2(1.0, 0.0))
+				_append_triangle(surface, Vector3(0.0, (top.x - 0.5) * length, 0.0), Vector3.UP, Vector2(0.5, 0.5), q1, Vector3.UP, Vector2(1.0, 0.0), q0, Vector3.UP, Vector2(0.0, 0.0))
+		_meshes[cache_key] = surface.commit()
+	var item := MeshInstance3D.new()
+	item.name = label
+	item.mesh = _meshes[cache_key]
+	item.position = (start + finish) * 0.5
+	item.quaternion = Quaternion(Vector3.UP, direction.normalized())
+	item.material_override = Materials.get_material(category, color)
+	item.set_meta("roomscale_material_category", category)
+	parent.add_child(item)
+	return item
+
+
+static func elliptical_profile(
+	parent: Node3D,
+	label: String,
+	start: Vector3,
+	finish: Vector3,
+	profile: Array[Vector3],
+	category: String,
+	color: Color,
+	radial_segments: int = 32
+) -> MeshInstance3D:
+	"""Build a turned member with independent width and depth radii at each height."""
+	var direction := finish - start
+	var length := direction.length()
+	if length < 0.001 or profile.size() < 2:
+		return null
+	var cache_key := "ellipse-profile:%s:%s:%d" % [length, profile, radial_segments]
+	if not _meshes.has(cache_key):
+		var samples: Array[Vector3] = []
+		for index in range(profile.size() - 1):
+			var p0: Vector3 = profile[maxi(index - 1, 0)]
+			var p1: Vector3 = profile[index]
+			var p2: Vector3 = profile[index + 1]
+			var p3: Vector3 = profile[mini(index + 2, profile.size() - 1)]
+			for step in range(4):
+				var t := float(step) / 4.0
+				var t2 := t * t
+				var t3 := t2 * t
+				var station := Vector3.ZERO
+				for axis in range(3):
+					station[axis] = 0.5 * (
+						2.0 * p1[axis]
+						+ (-p0[axis] + p2[axis]) * t
+						+ (2.0 * p0[axis] - 5.0 * p1[axis] + 4.0 * p2[axis] - p3[axis]) * t2
+						+ (-p0[axis] + 3.0 * p1[axis] - 3.0 * p2[axis] + p3[axis]) * t3
+					)
+				station.y = maxf(0.025, station.y)
+				station.z = maxf(0.025, station.z)
+				samples.append(station)
+		samples.append(profile[profile.size() - 1])
+		var surface := SurfaceTool.new()
+		surface.begin(Mesh.PRIMITIVE_TRIANGLES)
+		for ring in range(samples.size() - 1):
+			var lower := samples[ring]
+			var upper := samples[ring + 1]
+			for segment in range(radial_segments):
+				var angle0 := TAU * float(segment) / float(radial_segments)
+				var angle1 := TAU * float(segment + 1) / float(radial_segments)
+				var radial0 := Vector3(cos(angle0), 0.0, sin(angle0))
+				var radial1 := Vector3(cos(angle1), 0.0, sin(angle1))
+				var lower0 := Vector3(radial0.x * lower.y, (lower.x - 0.5) * length, radial0.z * lower.z)
+				var lower1 := Vector3(radial1.x * lower.y, (lower.x - 0.5) * length, radial1.z * lower.z)
+				var upper0 := Vector3(radial0.x * upper.y, (upper.x - 0.5) * length, radial0.z * upper.z)
+				var upper1 := Vector3(radial1.x * upper.y, (upper.x - 0.5) * length, radial1.z * upper.z)
+				for point in [lower0, upper1, upper0, lower0, lower1, upper1]:
+					var local_normal := Vector3(point.x / maxf(lower.y, 0.025), 0.0, point.z / maxf(lower.z, 0.025)).normalized()
+					surface.set_normal(local_normal)
+					surface.set_uv(Vector2(atan2(local_normal.z, local_normal.x) / TAU, point.y / length + 0.5))
+					surface.add_vertex(point)
+			for segment in range(radial_segments):
+				var angle0 := TAU * float(segment) / float(radial_segments)
+				var angle1 := TAU * float(segment + 1) / float(radial_segments)
+				var lower0 := Vector3(cos(angle0) * lower.y, (lower.x - 0.5) * length, sin(angle0) * lower.z)
+				var lower1 := Vector3(cos(angle1) * lower.y, (lower.x - 0.5) * length, sin(angle1) * lower.z)
+				var upper0 := Vector3(cos(angle0) * upper.y, (upper.x - 0.5) * length, sin(angle0) * upper.z)
+				var upper1 := Vector3(cos(angle1) * upper.y, (upper.x - 0.5) * length, sin(angle1) * upper.z)
+				_append_triangle(surface, Vector3(0.0, (lower.x - 0.5) * length, 0.0), Vector3.DOWN, Vector2(0.5, 0.5), lower0, Vector3.DOWN, Vector2(0.0, 0.0), lower1, Vector3.DOWN, Vector2(1.0, 0.0))
+				_append_triangle(surface, Vector3(0.0, (upper.x - 0.5) * length, 0.0), Vector3.UP, Vector2(0.5, 0.5), upper1, Vector3.UP, Vector2(1.0, 0.0), upper0, Vector3.UP, Vector2(0.0, 0.0))
+		_meshes[cache_key] = surface.commit()
+	var item := MeshInstance3D.new()
+	item.name = label
+	item.mesh = _meshes[cache_key]
+	item.position = (start + finish) * 0.5
+	item.quaternion = Quaternion(Vector3.UP, direction.normalized())
+	item.material_override = Materials.get_material(category, color)
+	item.set_meta("roomscale_material_category", category)
+	parent.add_child(item)
+	return item
+
+
+static func swept_oval(
+	parent: Node3D,
+	label: String,
+	path: Array[Vector3],
+	radius_y: float,
+	radius_z: float,
+	category: String,
+	color: Color,
+	radial_segments: int = 16
+) -> MeshInstance3D:
+	"""Sweep an oval section along a curved path to author shaped rails and rails with a real bow."""
+	if path.size() < 2:
+		return null
+	var cache_key := "sweep:%s:%s:%s:%d" % [path, radius_y, radius_z, radial_segments]
+	if not _meshes.has(cache_key):
+		var rings: Array[PackedVector3Array] = []
+		var normals: Array[PackedVector3Array] = []
+		for path_index in range(path.size()):
+			var before: Vector3 = path[maxi(path_index - 1, 0)]
+			var after: Vector3 = path[mini(path_index + 1, path.size() - 1)]
+			var tangent := (after - before).normalized()
+			var depth_axis := Vector3.FORWARD
+			if absf(tangent.dot(depth_axis)) > 0.94:
+				depth_axis = Vector3.RIGHT
+			var up_axis := tangent.cross(depth_axis).normalized()
+			depth_axis = up_axis.cross(tangent).normalized()
+			var ring: PackedVector3Array = []
+			var ring_normals: PackedVector3Array = []
+			for segment in range(radial_segments):
+				var angle := TAU * float(segment) / float(radial_segments)
+				var depth_component := cos(angle)
+				var up_component := sin(angle)
+				var radial := depth_axis * depth_component + up_axis * up_component
+				var point := path[path_index] + depth_axis * (depth_component * radius_z) + up_axis * (up_component * radius_y)
+				var normal := (depth_axis * (depth_component / radius_z) + up_axis * (up_component / radius_y)).normalized()
+				ring.append(point)
+				ring_normals.append(normal if normal.length_squared() > 0.0 else radial.normalized())
+			rings.append(ring)
+			normals.append(ring_normals)
+		var surface := SurfaceTool.new()
+		surface.begin(Mesh.PRIMITIVE_TRIANGLES)
+		for ring_index in range(path.size() - 1):
+			for segment in range(radial_segments):
+				var next_segment := (segment + 1) % radial_segments
+				var a: Vector3 = rings[ring_index][segment]
+				var b: Vector3 = rings[ring_index + 1][segment]
+				var c: Vector3 = rings[ring_index + 1][next_segment]
+				var d: Vector3 = rings[ring_index][next_segment]
+				var normal_a: Vector3 = normals[ring_index][segment]
+				var normal_b: Vector3 = normals[ring_index + 1][segment]
+				var normal_c: Vector3 = normals[ring_index + 1][next_segment]
+				var normal_d: Vector3 = normals[ring_index][next_segment]
+				var outward := normal_a + normal_b + normal_c + normal_d
+				var uv0 := Vector2(float(segment) / radial_segments, float(ring_index) / (path.size() - 1))
+				var uv1 := Vector2(float(next_segment) / radial_segments, float(ring_index) / (path.size() - 1))
+				var uv2 := Vector2(float(next_segment) / radial_segments, float(ring_index + 1) / (path.size() - 1))
+				var uv3 := Vector2(float(segment) / radial_segments, float(ring_index + 1) / (path.size() - 1))
+				if (b - a).cross(c - a).dot(outward) >= 0.0:
+					_append_triangle(surface, a, normal_a, uv0, b, normal_b, uv3, c, normal_c, uv2)
+					_append_triangle(surface, a, normal_a, uv0, c, normal_c, uv2, d, normal_d, uv1)
+				else:
+					_append_triangle(surface, a, normal_a, uv0, c, normal_c, uv2, b, normal_b, uv3)
+					_append_triangle(surface, a, normal_a, uv0, d, normal_d, uv1, c, normal_c, uv2)
+		_meshes[cache_key] = surface.commit()
+	var item := MeshInstance3D.new()
+	item.name = label
+	item.mesh = _meshes[cache_key]
+	item.material_override = Materials.get_material(category, color)
+	item.set_meta("roomscale_material_category", category)
+	parent.add_child(item)
+	return item
+
+
+static func dished_seat(
+	parent: Node3D,
+	label: String,
+	width: float,
+	depth: float,
+	top_y: float,
+	thickness: float,
+	dish_depth: float,
+	category: String,
+	color: Color
+) -> MeshInstance3D:
+	"""Create one shaped slab with a dished top, softened superellipse perimeter, and solid sides."""
+	var cache_key := "dished-seat:%s:%s:%s:%s:%s" % [width, depth, top_y, thickness, dish_depth]
+	if not _meshes.has(cache_key):
+		var surface := SurfaceTool.new()
+		surface.begin(Mesh.PRIMITIVE_TRIANGLES)
+		var radial_steps := 10
+		var radial_segments := 48
+		var center := Vector3(0.0, top_y - dish_depth, 0.0)
+		for ring in range(radial_steps):
+			var inner_r := float(ring) / radial_steps
+			var outer_r := float(ring + 1) / radial_steps
+			for segment in range(radial_segments):
+				var angle0 := TAU * float(segment) / radial_segments
+				var angle1 := TAU * float(segment + 1) / radial_segments
+				var a := _seat_surface_point(width, depth, inner_r, angle0, top_y, dish_depth)
+				var b := _seat_surface_point(width, depth, outer_r, angle0, top_y, dish_depth)
+				var c := _seat_surface_point(width, depth, outer_r, angle1, top_y, dish_depth)
+				var d := _seat_surface_point(width, depth, inner_r, angle1, top_y, dish_depth)
+				if ring == 0:
+					_append_triangle(surface, center, Vector3.UP, Vector2(0.5, 0.5), c, _seat_normal(c, width, depth, dish_depth), Vector2(1.0, 0.0), b, _seat_normal(b, width, depth, dish_depth), Vector2(1.0, 1.0))
+				else:
+					_append_triangle(surface, a, _seat_normal(a, width, depth, dish_depth), Vector2(inner_r, angle0 / TAU), c, _seat_normal(c, width, depth, dish_depth), Vector2(outer_r, angle1 / TAU), b, _seat_normal(b, width, depth, dish_depth), Vector2(outer_r, angle0 / TAU))
+					_append_triangle(surface, a, _seat_normal(a, width, depth, dish_depth), Vector2(inner_r, angle0 / TAU), d, _seat_normal(d, width, depth, dish_depth), Vector2(inner_r, angle1 / TAU), c, _seat_normal(c, width, depth, dish_depth), Vector2(outer_r, angle1 / TAU))
+		var edge_profile: Array[Vector2] = [
+			Vector2(1.0, 0.0), Vector2(0.994, 0.05), Vector2(0.982, 0.13),
+			Vector2(0.966, 0.25), Vector2(0.955, 0.39), Vector2(0.955, thickness - 0.16),
+			Vector2(0.966, thickness)
+		]
+		for ring in range(edge_profile.size() - 1):
+			var upper := edge_profile[ring]
+			var lower := edge_profile[ring + 1]
+			for segment in range(radial_segments):
+				var angle0 := TAU * float(segment) / radial_segments
+				var angle1 := TAU * float(segment + 1) / radial_segments
+				var radial0 := Vector3(cos(angle0), 0.0, sin(angle0)).normalized()
+				var radial1 := Vector3(cos(angle1), 0.0, sin(angle1)).normalized()
+				var upper0 := _seat_surface_point(width, depth, upper.x, angle0, top_y - upper.y, 0.0)
+				var upper1 := _seat_surface_point(width, depth, upper.x, angle1, top_y - upper.y, 0.0)
+				var lower0 := _seat_surface_point(width, depth, lower.x, angle0, top_y - lower.y, 0.0)
+				var lower1 := _seat_surface_point(width, depth, lower.x, angle1, top_y - lower.y, 0.0)
+				var normal0 := (radial0 + Vector3.UP * (0.42 if ring < 3 else 0.0)).normalized()
+				var normal1 := (radial1 + Vector3.UP * (0.42 if ring < 3 else 0.0)).normalized()
+				_append_triangle(surface, upper0, normal0, Vector2(0.0, 1.0), upper1, normal1, Vector2(1.0, 1.0), lower1, normal1, Vector2(1.0, 0.0))
+				_append_triangle(surface, upper0, normal0, Vector2(0.0, 1.0), lower1, normal1, Vector2(1.0, 0.0), lower0, normal0, Vector2(0.0, 0.0))
+		var bottom_center := Vector3(0.0, top_y - thickness, 0.0)
+		for segment in range(radial_segments):
+			var angle0 := TAU * float(segment) / radial_segments
+			var angle1 := TAU * float(segment + 1) / radial_segments
+			var bottom0 := _seat_surface_point(width * 0.965, depth * 0.965, 1.0, angle0, top_y - thickness, 0.0)
+			var bottom1 := _seat_surface_point(width * 0.965, depth * 0.965, 1.0, angle1, top_y - thickness, 0.0)
+			_append_triangle(surface, bottom_center, Vector3.DOWN, Vector2(0.5, 0.5), bottom0, Vector3.DOWN, Vector2(0.0, 0.0), bottom1, Vector3.DOWN, Vector2(1.0, 0.0))
+		_meshes[cache_key] = surface.commit()
+	var item := MeshInstance3D.new()
+	item.name = label
+	item.mesh = _meshes[cache_key]
+	item.material_override = Materials.get_material(category, color)
+	item.set_meta("roomscale_material_category", category)
+	parent.add_child(item)
+	return item
+
+
+static func _seat_surface_point(width: float, depth: float, radius: float, angle: float, top_y: float, dish_depth: float) -> Vector3:
+	var x_unit := cos(angle)
+	var z_unit := sin(angle)
+	var x_shape := signf(x_unit) * sqrt(absf(x_unit))
+	var z_shape := signf(z_unit) * sqrt(absf(z_unit))
+	var y := top_y - dish_depth * (1.0 - radius * radius)
+	return Vector3(width * 0.5 * radius * x_shape, y, depth * 0.5 * radius * z_shape)
+
+
+static func _seat_normal(point: Vector3, width: float, depth: float, dish_depth: float) -> Vector3:
+	return Vector3(2.0 * dish_depth * point.x / (width * width * 0.25), 1.0, 2.0 * dish_depth * point.z / (depth * depth * 0.25)).normalized()
+
+
+static func _append_triangle(
+	surface: SurfaceTool,
+	a: Vector3,
+	normal_a: Vector3,
+	uv_a: Vector2,
+	b: Vector3,
+	normal_b: Vector3,
+	uv_b: Vector2,
+	c: Vector3,
+	normal_c: Vector3,
+	uv_c: Vector2
+) -> void:
+	surface.set_normal(normal_c)
+	surface.set_uv(uv_c)
+	surface.add_vertex(c)
+	surface.set_normal(normal_b)
+	surface.set_uv(uv_b)
+	surface.add_vertex(b)
+	surface.set_normal(normal_a)
+	surface.set_uv(uv_a)
+	surface.add_vertex(a)
+
 static func gear(parent: Node3D, label: String, radius: float, at: Vector3, teeth: int = 12) -> Node3D:
 	var root := Node3D.new()
 	root.name = label

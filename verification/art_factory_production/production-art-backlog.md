@@ -2,14 +2,13 @@
 
 This is the post-POC production backlog. It preserves POC 2.5 evidence and acceptance results; the entries below are not POC 2.5 regressions or changes to its acceptance amendment.
 
-## Current priority after Batch 6
+## Current priority after Batch 7
 
-1. **Room A/B furniture geometry follow-up — next batch.** Batch 5 approved six Visual Director targets and produced 18 technically valid candidates. The v003 material method improved warm wood color and grain, but all six still fail the production craftsmanship gate because target-specific profiles and joinery remain simple component geometry. The Visual Director attempt budgets are exhausted; preserve v003 as best-current review art and resume only with a genuine mesh-authoring backend that can build shaped casework, turned/curved members, and fitted joints. Do not run another shader-only loop.
-2. **French door source and production model.** Batch 6 sourced a relevant CC BY 4.0 door reference and evaluated v003–v005 within the approved target episode. v005 is the best review candidate, but the hinges still do not read, its oak grain is too repetitive, and the current room gives blue sky through the glazing instead of the reference garden. Preserve it as review-only. Resume after a materially different hinge/material approach is available and the exterior-context limitation has a room-compatible solution; do not add a synthetic backdrop to the asset.
+1. **Room A/B furniture geometry — next batch.** Batch 7 used one fresh Visual Director target to pilot a Godot-authored mesh workflow on the chair. Candidate v006 is the best review result after three attempts: the custom front-face winding, closed turnings, shaped seat edge, leaf spindles, and chair-specific wood finish are materially better than v003. The strict visual gate still fails on the carved seat, joinery, and wood variation. Do not reopen this target episode. Use the geometry pilot to develop fresh round-02 targets and meaningful geometry for the five remaining Tier 1 assets: elevated workbench, assembly table, tool wardrobe, floor cabinet, and side table. Promote only assets that pass their own strict gate.
+2. **French door source and production model.** Batch 6 sourced a relevant CC BY 4.0 door reference and evaluated v003–v005 within its approved target episode. v005 is the best review candidate, but the hinges still do not read, its oak grain is too repetitive, and the current room gives blue sky through the glazing instead of the reference garden. Preserve it as review-only. Resume after a materially different hinge/material approach is available and the exterior-context limitation has a room-compatible solution; do not add a synthetic backdrop to the asset.
 3. **Desk transfer follow-up.** `desk-v007` remains the production incumbent but fails the strict visual gate for material separation and glazing. Batch 2’s v059–v061 work reached a material/render diagnosis plateau. Do not restart parameter-only iterations; resume only with a materially different material/render strategy.
 4. **Room shell beyond finishes.** Batch 4 accepted photo-room carpet v003 and green paint v002. The floor is still a RoomDefinition sheet and the shell still uses segmented planes; keep geometry/gameplay authoritative. Room A/B boards, trim, ceilings, and lighting need source/style-specific review instead of reusing the photo-room carpet or wall color indiscriminately.
 5. **Faction visual identity.** Preserve current Clockwork building production and citizen-v089 as best-current review art. Verdant needs distinctive organic construction and dimensional foliage; Scavenger needs salvage silhouettes/materials. Avoid color-only variants and another citizen-only loop.
-
 ## Promoted production assets
 
 - Batch 1: `settlement_depot-v005`, `settlement_housing-v004`, and `room_bookcase_production-v001`.
@@ -18,7 +17,7 @@ This is the post-POC production backlog. It preserves POC 2.5 evidence and accep
 
 These are scoped improvements. The inventory still contains substantial unregistered room furniture, runtime-generated geometry, and incomplete faction-specific art.
 
-Batch 5 and Batch 6 did not change the production registry. The six Room A/B furniture candidates and the French-door v005 remain review-only and below target; see [Batch 5 furniture transfer review](batch-05-room-a-b-furniture.md) and [Batch 6 French-door transfer review](batch-06-french-door.md).
+Batches 5–7 did not change the production registry. The six Room A/B furniture candidates, the French-door v005, and chair v006 remain review-only and below target; see [Batch 5 furniture transfer review](batch-05-room-a-b-furniture.md), [Batch 6 French-door transfer review](batch-06-french-door.md), and [Batch 7 chair geometry pilot](batch-07-room-a-b-furniture-geometry.md).
 
 ## Batch 1 promotion detail
 

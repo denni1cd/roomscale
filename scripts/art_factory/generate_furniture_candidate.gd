@@ -4,6 +4,7 @@ extends SceneTree
 const G := preload("res://scripts/visuals/visual_geometry.gd")
 const Materials := preload("res://scripts/visuals/material_library.gd")
 const ROOM_WOODGRAIN_V3 := preload("res://scripts/art_factory/roomscale_woodgrain_v3.gdshader")
+const ROOM_CHAIR_WOODFINISH_V4 := preload("res://scripts/art_factory/room_chair_woodfinish_v4.gdshader")
 
 
 func _initialize() -> void:
@@ -26,7 +27,7 @@ func run() -> void:
 		_fail("unsupported room furniture generator method")
 		return
 	var refinement := String(recipe.get("parameters", {}).get("refinement", ""))
-	if refinement not in ["blockout_v1", "joinery_and_fabric_v2", "visibility_and_material_v3", "floor_contact_joinery_v3", "double_sided_canvas_v4", "roomscale_joinery_v1", "roomscale_joinery_v2_material_correction", "roomscale_directional_woodgrain_v3"]:
+	if refinement not in ["blockout_v1", "joinery_and_fabric_v2", "visibility_and_material_v3", "floor_contact_joinery_v3", "double_sided_canvas_v4", "roomscale_joinery_v1", "roomscale_joinery_v2_material_correction", "roomscale_directional_woodgrain_v3", "mesh_authored_joinery_v4", "mesh_authored_leaf_joinery_v5"]:
 		_fail("unsupported room furniture refinement: %s" % refinement)
 		return
 	var asset_id := String(brief.get("asset_id", ""))
@@ -38,7 +39,11 @@ func run() -> void:
 		"room_assembly_table": _assembly_table(asset)
 		"room_tool_wardrobe": _tool_wardrobe(asset)
 		"room_floor_cabinet": _floor_cabinet(asset)
-		"room_chair": _low_room_chair(asset)
+		"room_chair":
+			if refinement in ["mesh_authored_joinery_v4", "mesh_authored_leaf_joinery_v5"]:
+				_low_room_chair_mesh_authored(asset)
+			else:
+				_low_room_chair(asset)
 		"room_side_table": _side_table(asset)
 		"office_chair": _office_chair(asset, refinement)
 		"rocking_chair": _rocking_chair(asset, refinement)
@@ -50,8 +55,12 @@ func run() -> void:
 			return
 	if asset_id in ["room_elevated_workbench", "room_assembly_table", "room_tool_wardrobe", "room_floor_cabinet", "room_chair", "room_side_table"] and refinement == "roomscale_joinery_v2_material_correction":
 		_apply_roomscale_wood_correction(asset)
-	if asset_id in ["room_elevated_workbench", "room_assembly_table", "room_tool_wardrobe", "room_floor_cabinet", "room_chair", "room_side_table"] and refinement == "roomscale_directional_woodgrain_v3":
-		_apply_roomscale_directional_woodgrain(asset)
+	if asset_id in ["room_elevated_workbench", "room_assembly_table", "room_tool_wardrobe", "room_floor_cabinet", "room_chair", "room_side_table"] and refinement in ["roomscale_directional_woodgrain_v3", "mesh_authored_joinery_v4", "mesh_authored_leaf_joinery_v5"]:
+		_apply_roomscale_directional_woodgrain(
+			asset,
+			0.86 if refinement == "mesh_authored_leaf_joinery_v5" else (0.78 if refinement == "mesh_authored_joinery_v4" else 0.68),
+			refinement == "mesh_authored_leaf_joinery_v5"
+		)
 	_assign_owner(asset, asset)
 	root.add_child(asset)
 	await process_frame
@@ -96,7 +105,7 @@ func _apply_roomscale_wood_correction(parent: Node3D) -> void:
 		mesh_instance.material_override = corrected_by_color[key]
 
 
-func _apply_roomscale_directional_woodgrain(parent: Node3D) -> void:
+func _apply_roomscale_directional_woodgrain(parent: Node3D, tone_scale: float = 0.68, chair_finish_v4: bool = false) -> void:
 	# Round 02 still used the shared isotropic noise texture and produced pale,
 	# mottled surfaces. Round 03 uses a per-wood-part shader with grain aligned
 	# to the component's long axis; hardware keeps its authored metal material.
@@ -111,9 +120,19 @@ func _apply_roomscale_directional_woodgrain(parent: Node3D) -> void:
 		var key := source.albedo_color.to_html()
 		if not materials_by_color.has(key):
 			var wood_material := ShaderMaterial.new()
-			wood_material.shader = ROOM_WOODGRAIN_V3
+			wood_material.shader = ROOM_CHAIR_WOODFINISH_V4 if chair_finish_v4 else ROOM_WOODGRAIN_V3
 			var timber_tint := source.albedo_color
-			if timber_tint.get_luminance() > 0.08:
+			if chair_finish_v4 and timber_tint.get_luminance() > 0.08:
+				# The chair-specific finish reduces the orange cast while keeping
+				# distinct oak and walnut values from the authored part palette.
+				timber_tint.r *= 0.84
+				timber_tint.g *= 0.78
+				timber_tint.b *= 0.68
+			elif chair_finish_v4:
+				timber_tint.r *= 0.90
+				timber_tint.g *= 0.82
+				timber_tint.b *= 0.72
+			elif timber_tint.get_luminance() > 0.08:
 				# The source palette renders too yellow under the room's bright key
 				# light; keep oak warm while reducing its green and blue response.
 				timber_tint.r *= 0.87
@@ -125,7 +144,7 @@ func _apply_roomscale_directional_woodgrain(parent: Node3D) -> void:
 				timber_tint.g *= 0.76
 				timber_tint.b *= 0.68
 			wood_material.set_shader_parameter("timber_color", timber_tint)
-			wood_material.set_shader_parameter("tone_scale", 0.68)
+			wood_material.set_shader_parameter("tone_scale", tone_scale)
 			materials_by_color[key] = wood_material
 		mesh_instance.material_override = materials_by_color[key]
 
@@ -320,6 +339,79 @@ func _low_room_chair(parent: Node3D) -> void:
 		var x := -4.6 + float(index) * 4.6
 		_pipe(parent, "ShapedSpindle_%02d" % index, Vector3(x, 11.7, -8.65), Vector3(x, 17.7, -8.65), 0.32, "wood", oak)
 		G.cylinder(parent, "SpindleTurn_%02d" % index, 0.43, 0.55, Vector3(x, 15.2, -8.65), "wood", walnut)
+
+
+func _low_room_chair_mesh_authored(parent: Node3D) -> void:
+	var oak := Color("9a8067")
+	var oak_light := Color("b09272")
+	var walnut := Color("805b42")
+	var peg_color := Color("d0a16f")
+	# A continuous custom seat mesh replaces the former box seat and front lip.
+	G.dished_seat(parent, "Sculpted_Dished_Oak_Seat", 22.4, 17.3, 11.35, 1.95, 0.80, "wood", oak)
+
+	# Lathed turned legs have bead/cove transitions and splay out to the floor.
+	var leg_profile: Array[Vector2] = [
+		Vector2(0.0, 0.42), Vector2(0.055, 0.58), Vector2(0.12, 0.66), Vector2(0.17, 0.76),
+		Vector2(0.22, 0.88), Vector2(0.27, 0.83), Vector2(0.32, 0.60), Vector2(0.42, 0.56),
+		Vector2(0.54, 0.72), Vector2(0.63, 0.84), Vector2(0.69, 0.76), Vector2(0.74, 0.58),
+		Vector2(0.83, 0.55), Vector2(0.92, 0.62), Vector2(1.0, 0.48)
+	]
+	for x_side in [-1, 1]:
+		for z_side in [-1, 1]:
+			var foot := Vector3(float(x_side) * 10.9, 0.55, float(z_side) * 9.5)
+			var shoulder := Vector3(float(x_side) * 8.55, 9.45, float(z_side) * 6.45)
+			G.lathe_profile(parent, "Turned_Splayed_Leg_%d_%d" % [x_side, z_side], foot, shoulder, leg_profile, "wood", walnut)
+			G.cylinder(parent, "Seat_Tenon_Peg_%d_%d" % [x_side, z_side], 0.22, 0.10, Vector3(float(x_side) * 8.3, 11.16, float(z_side) * 6.3), "wood", peg_color)
+
+	# Fitted oval stretchers use shaped end shoulders; visible pins show their through-tenons.
+	var stretcher_profile: Array[Vector2] = [
+		Vector2(0.0, 0.27), Vector2(0.08, 0.37), Vector2(0.16, 0.47), Vector2(0.25, 0.43),
+		Vector2(0.42, 0.35), Vector2(0.58, 0.35), Vector2(0.75, 0.43), Vector2(0.84, 0.47),
+		Vector2(0.92, 0.37), Vector2(1.0, 0.27)
+	]
+	for z_side in [-1, 1]:
+		var z := float(z_side) * 8.25
+		G.lathe_profile(parent, "Fitted_Side_Stretcher_%d" % z_side, Vector3(-9.9, 4.0, z), Vector3(9.9, 4.0, z), stretcher_profile, "wood", oak_light)
+	for x_side in [-1, 1]:
+		var x := float(x_side) * 9.7
+		G.lathe_profile(parent, "Fitted_Cross_Stretcher_%d" % x_side, Vector3(x, 4.0, 8.25), Vector3(x, 4.0, -8.25), stretcher_profile, "wood", walnut)
+		G.cylinder(parent, "Front_Stretcher_Through_Tenon_%d" % x_side, 0.22, 0.12, Vector3(x, 4.0, 9.02), "wood", peg_color).rotation.x = PI * 0.5
+		G.cylinder(parent, "Rear_Stretcher_Through_Tenon_%d" % x_side, 0.22, 0.12, Vector3(x, 4.0, -9.02), "wood", peg_color).rotation.x = -PI * 0.5
+	for z_side in [-1, 1]:
+		for x_side in [-1, 1]:
+			G.cylinder(parent, "Side_Stretcher_Through_Tenon_%d_%d" % [x_side, z_side], 0.22, 0.12, Vector3(float(x_side) * 10.62, 4.0, float(z_side) * 8.25), "wood", peg_color).rotation.z = PI * 0.5 * float(x_side)
+
+	# The back continues from the seat as turned posts and three shaped, tapered spindles.
+	var post_profile: Array[Vector2] = [
+		Vector2(0.0, 0.40), Vector2(0.08, 0.50), Vector2(0.16, 0.63), Vector2(0.23, 0.54),
+		Vector2(0.35, 0.45), Vector2(0.65, 0.45), Vector2(0.79, 0.56), Vector2(0.88, 0.62),
+		Vector2(0.95, 0.48), Vector2(1.0, 0.39)
+	]
+	for x_side in [-1, 1]:
+		G.lathe_profile(parent, "Turned_Back_Post_%d" % x_side, Vector3(float(x_side) * 8.25, 10.8, -7.1), Vector3(float(x_side) * 8.95, 17.7, -9.0), post_profile, "wood", walnut)
+
+	var spindle_profile: Array[Vector3] = [
+		Vector3(0.0, 0.17, 0.16), Vector3(0.08, 0.26, 0.20), Vector3(0.22, 0.40, 0.25),
+		Vector3(0.36, 0.72, 0.28), Vector3(0.50, 0.86, 0.26), Vector3(0.64, 0.72, 0.28),
+		Vector3(0.82, 0.40, 0.25), Vector3(0.94, 0.25, 0.19), Vector3(1.0, 0.17, 0.16)
+	]
+	for index in range(3):
+		var x := -4.5 + float(index) * 4.5
+		G.elliptical_profile(parent, "Flattened_Leaf_Spindle_%02d" % index, Vector3(x, 11.25, -8.15), Vector3(x, 17.1, -9.0), spindle_profile, "wood", oak_light)
+
+	# A swept oval crest has a real crown curve and rounded, shaped section.
+	var crest_path: Array[Vector3] = []
+	for index in range(19):
+		var t := float(index) / 18.0
+		var x := lerpf(-9.65, 9.65, t)
+		var normalized_x := x / 9.65
+		var y := 17.55 + 0.34 * (1.0 - normalized_x * normalized_x)
+		crest_path.append(Vector3(x, y, -9.35))
+	G.swept_oval(parent, "Curved_Sculpted_Crest_Rail", crest_path, 0.88, 0.66, "wood", oak_light)
+
+	# End-grain pegs on the seat fascia make the seat-to-frame assembly visible at close range.
+	for x_side in [-1, 1]:
+		G.cylinder(parent, "Seat_Fascia_Peg_%d" % x_side, 0.16, 0.10, Vector3(float(x_side) * 8.1, 10.15, 8.48), "wood", peg_color).rotation.x = PI * 0.5
 
 
 func _side_table(parent: Node3D) -> void:

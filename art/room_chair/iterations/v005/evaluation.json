@@ -1,0 +1,174 @@
+{
+  "candidate_id": "room_chair-v005",
+  "created_at_utc": "2026-11-02T00:00:00Z",
+  "decision": "continue",
+  "defects": [
+    "The seat perimeter now has a softened profile, but the shallow dish remains nearly invisible in the production views and the thick slab still dominates the silhouette.",
+    "The turned spindle members are smooth, round balusters; the approved target has broader, leaf-shaped spindles and individually shaped turnings.",
+    "The orange wood response is too saturated and the grain repeats uniformly, with little member or board variation.",
+    "Tenon pegs are visible but do not yet make the frame joints appear fitted or carved."
+  ],
+  "hard_fail_reasons": [
+    "The chair remains procedurally generic against the approved target: the dish and shaped joinery do not read clearly, wood response is overly saturated, and the turned spindles lack target-specific form."
+  ],
+  "incumbent_candidate_id": "room_chair-v004",
+  "incumbent_comparison": "Compared with v004, v005 corrects the custom mesh winding, closes the lathed members and rounds the seat perimeter. The front-facing turned forms are now lit and readable, the warm wood separates the seat and back, the tenon pins are more visible, and the measured bounds sit 0.058 inch above the floor. The seat dish remains difficult to read, the wood is too orange and uniform, and the spindles and joinery lack the target’s individualized, flattened shaping. This is a clear technical and readability improvement, but it still fails the strict craftsmanship and realism gates.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "geometry_loss",
+    "material_generation",
+    "texture_baking"
+  ],
+  "next_action_hypothesis": "Use the final approved-target attempt to make one targeted target-detail correction: replace the rotational round balusters with flattened leaf-profile spindles, deepen the dished seat, warm and desaturate the timber while retaining separation between oak and walnut, and keep the corrected winding, closed ends, rounded rim and in-envelope placement.",
+  "observations": {
+    "art_direction_fit": "The candidate carries the target’s chair type and turned wood vocabulary, but misses its broad leaf-shaped spindles, richer carved turning and more nuanced warm brown finish.",
+    "close_up_quality": "Close views show a smooth, almost flat seat with a thick rim, uniform lathe profiles and small exposed pegs rather than tailored joinery.",
+    "gameplay_readability": "The chair silhouette is unambiguous at gameplay distance; seat/back/frame contrast is substantially improved over v004.",
+    "geometric_detail": "Front-facing turnings, capped ends and a rounded seat edge are visible, but the spindles are round and the dish and fitted joints remain weak.",
+    "material_realism": "The walnut/oak separation is now readable, but the seat and crest are oversaturated orange and the front posts remain very dark.",
+    "proportion": "The candidate measures 23.58 x 18.71 x 20.75 inches, within the 25 x 19 x 23 inch envelope; it sits 0.058 inch above the floor.",
+    "scale_fidelity": "The validated mesh fits the authoritative 25 x 19 x 23 inch envelope and its lowest bound is 0.058 inch above y=0.",
+    "semantic_recognizability": "The four splayed legs, shaped seat, three separate back spindles and crest read clearly as a chair from gameplay and close views.",
+    "silhouette_quality": "The swept crest and leg profiles improve the silhouette, but the back still reads as narrow round balusters rather than the broad shaped spindles in the target.",
+    "surface_variation": "The grain stretches along each component but repeats at similar scale without knots, board-level differences or meaningful end grain.",
+    "technical_integration": "Godot 4.7.2 generation, validation and production-path rendering pass with 29 meshes, 29 surfaces, 76,288 triangles and no reported technical issues."
+  },
+  "render_evidence": [
+    "art/room_chair/iterations/v005/render-runs/run-001/asset-gameplay-distance.png",
+    "art/room_chair/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+    "art/room_chair/iterations/v005/render-runs/run-001/asset-interior-oblique.png",
+    "art/room_chair/iterations/v005/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 3,
+    "gameplay_readability": 4,
+    "geometric_detail": 4,
+    "material_realism": 3,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "surface_variation": 2,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The target-specific broad spindle shapes, richer turned profiles, visible seat dish and convincing fitted joints are still absent from the detail and oblique views.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "The seat now has a softened perimeter, but it remains a thick, largely flat slab; the target has a fuller sculpted dish and a more integrated rim.",
+        "evidence_refs": [
+          "art/room_chair/iterations/v005/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_chair/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+          "art/room_chair/iterations/v005/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_chair/iterations/v005/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "hardware": {
+        "evidence": "The target has no metal hardware; wooden pegs are appropriate, though their size and placement are not yet convincing joinery.",
+        "evidence_refs": [
+          "art/room_chair/iterations/v005/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_chair/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+          "art/room_chair/iterations/v005/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_chair/iterations/v005/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "joins": {
+        "evidence": "The brighter pegs mark stretcher and seat positions, but they do not yet read as fitted through-tenons or turned shoulders.",
+        "evidence_refs": [
+          "art/room_chair/iterations/v005/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_chair/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+          "art/room_chair/iterations/v005/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_chair/iterations/v005/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "The larger turning and closed ends help, but the target’s leaf-shaped spindles, stronger turned shoulders and convincing joinery remain missing.",
+        "evidence_refs": [
+          "art/room_chair/iterations/v005/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_chair/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+          "art/room_chair/iterations/v005/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_chair/iterations/v005/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "Lighting is repaired, but the oak now reads too bright and orange while the walnut posts remain near-black.",
+        "evidence_refs": [
+          "art/room_chair/iterations/v005/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_chair/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+          "art/room_chair/iterations/v005/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_chair/iterations/v005/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "The shader repeats similar directional grain across the seat and members and lacks knots or board-specific variation.",
+        "evidence_refs": [
+          "art/room_chair/iterations/v005/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_chair/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+          "art/room_chair/iterations/v005/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_chair/iterations/v005/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "The seat, crest, turned members and stretchers show continuous structural thickness in close views.",
+        "evidence_refs": [
+          "art/room_chair/iterations/v005/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_chair/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+          "art/room_chair/iterations/v005/render-runs/run-001/asset-interior-oblique.png",
+          "art/room_chair/iterations/v005/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The corrected surfaces make the chair readable, but the orange uniform wood and generic round back spindles still look procedural beside the approved target.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "The ArtBrief uses an approved generated target and has no source photograph.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "For the final round-02 attempt, use a flattened leaf-shaped spindle cross section and deepen the seat dish; shift the bright oak back toward warm brown and make walnut leg/back colors visible under the same corrected front-face lighting. Preserve the closed lathe surfaces, rounded seat rim, exact room placement and envelope.",
+    "lost_visual_information": [
+      "The broad, tapered leaf profile and carved face of each target spindle are reduced to smooth cylindrical balusters.",
+      "The target seat’s dish is too subtle to read in production views and the thick edge still looks separate from the seat surface.",
+      "The target’s warm brown variation is reduced to orange uniform grain over dark, near-black posts."
+    ],
+    "preserved_components": [
+      "The corrected custom mesh surfaces, capped turned members, curved crest and rounded seat edge are preserved.",
+      "The measured mesh remains inside the authoritative envelope with slight positive floor clearance.",
+      "The candidate is review-only; RoomDefinition placement, gameplay state and the canonical art registry remain unchanged."
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "material_generation",
+      "texture_baking"
+    ]
+  }
+}

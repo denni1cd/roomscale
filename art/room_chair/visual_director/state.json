@@ -1,19 +1,19 @@
 {
   "approved_visual_target": {
     "approval": "pass",
-    "approved_at_utc": "2026-11-02T04:46:38+00:00",
-    "concept_id": "room_chair-family-r01",
-    "path": "art/room_chair/visual_director/round-01/approved-target-r01.png",
+    "approved_at_utc": "2026-11-02T06:00:58+00:00",
+    "concept_id": "room_chair-family-r02",
+    "path": "art/room_chair/visual_director/round-02/approved-target-r02.png",
     "review_method": "pixel inspection; review evidence recorded by Luna",
-    "review_path": "art/room_chair/visual_director/round-01/pixel-review-r01.md",
-    "sha256": "3fbf10f0be56c539d625dc299ead2b7f2bfb3eaadc43bb7722540d09b94dc899"
+    "review_path": "art/room_chair/visual_director/round-02/pixel-review-r02.md",
+    "sha256": "732281b9e6f1b589ffadc36feeb0c30cb3d972e72bf7b8cbfe14f62248ebda91"
   },
   "asset_id": "room_chair",
   "best_3d_candidate": {
-    "candidate_file": "art/room_chair/iterations/v003/candidate.json",
-    "candidate_id": "room_chair-v003",
-    "evaluation_file": "art/room_chair/iterations/v003/evaluation.json",
-    "updated_at_utc": "2026-11-02T05:07:47+00:00"
+    "candidate_file": "art/room_chair/iterations/v006/candidate.json",
+    "candidate_id": "room_chair-v006",
+    "evaluation_file": "art/room_chair/iterations/v006/evaluation.json",
+    "updated_at_utc": "2026-11-02T06:10:48+00:00"
   },
   "candidate_history": [
     {
@@ -135,6 +135,126 @@
         "strategy": "alternate_strategy",
         "target_episode_attempt": 3
       }
+    },
+    {
+      "candidate_file": "art/room_chair/iterations/v004/candidate.json",
+      "candidate_id": "room_chair-v004",
+      "created_at_utc": "2026-11-02T06:03:00+00:00",
+      "parent_candidate_id": "room_chair-v003",
+      "recipe_file": "art/room_chair/iterations/v004/recipe.json",
+      "visual_director_attempt": 1,
+      "visual_director_provenance": {
+        "approved_visual_target": {
+          "approval": "pass",
+          "approved_at_utc": "2026-11-02T06:00:58+00:00",
+          "concept_id": "room_chair-family-r02",
+          "path": "art/room_chair/visual_director/round-02/approved-target-r02.png",
+          "review_method": "pixel inspection; review evidence recorded by Luna",
+          "review_path": "art/room_chair/visual_director/round-02/pixel-review-r02.md",
+          "sha256": "732281b9e6f1b589ffadc36feeb0c30cb3d972e72bf7b8cbfe14f62248ebda91"
+        },
+        "case_file": "art/room_chair/visual_director/state.json",
+        "policy": {
+          "inputs": {
+            "category": "room_furniture",
+            "current_quality": "prototype",
+            "faction_defining": false,
+            "inferred": [],
+            "priority_tier": 1,
+            "screen_space_importance": 4,
+            "source_images_present": false,
+            "source_photo_required": false
+          },
+          "reasons": [
+            "Tier 1 scene-defining asset",
+            "high screen-space importance"
+          ],
+          "required": true
+        },
+        "status": "approved",
+        "strategy": "initial",
+        "target_episode_attempt": 1
+      }
+    },
+    {
+      "candidate_file": "art/room_chair/iterations/v005/candidate.json",
+      "candidate_id": "room_chair-v005",
+      "created_at_utc": "2026-11-02T06:07:46+00:00",
+      "parent_candidate_id": "room_chair-v004",
+      "recipe_file": "art/room_chair/iterations/v005/recipe.json",
+      "visual_director_attempt": 2,
+      "visual_director_provenance": {
+        "approved_visual_target": {
+          "approval": "pass",
+          "approved_at_utc": "2026-11-02T06:00:58+00:00",
+          "concept_id": "room_chair-family-r02",
+          "path": "art/room_chair/visual_director/round-02/approved-target-r02.png",
+          "review_method": "pixel inspection; review evidence recorded by Luna",
+          "review_path": "art/room_chair/visual_director/round-02/pixel-review-r02.md",
+          "sha256": "732281b9e6f1b589ffadc36feeb0c30cb3d972e72bf7b8cbfe14f62248ebda91"
+        },
+        "case_file": "art/room_chair/visual_director/state.json",
+        "policy": {
+          "inputs": {
+            "category": "room_furniture",
+            "current_quality": "prototype",
+            "faction_defining": false,
+            "inferred": [],
+            "priority_tier": 1,
+            "screen_space_importance": 4,
+            "source_images_present": false,
+            "source_photo_required": false
+          },
+          "reasons": [
+            "Tier 1 scene-defining asset",
+            "high screen-space importance"
+          ],
+          "required": true
+        },
+        "status": "approved",
+        "strategy": "targeted_correction",
+        "target_episode_attempt": 2
+      }
+    },
+    {
+      "candidate_file": "art/room_chair/iterations/v006/candidate.json",
+      "candidate_id": "room_chair-v006",
+      "created_at_utc": "2026-11-02T06:10:01+00:00",
+      "parent_candidate_id": "room_chair-v005",
+      "recipe_file": "art/room_chair/iterations/v006/recipe.json",
+      "visual_director_attempt": 3,
+      "visual_director_provenance": {
+        "approved_visual_target": {
+          "approval": "pass",
+          "approved_at_utc": "2026-11-02T06:00:58+00:00",
+          "concept_id": "room_chair-family-r02",
+          "path": "art/room_chair/visual_director/round-02/approved-target-r02.png",
+          "review_method": "pixel inspection; review evidence recorded by Luna",
+          "review_path": "art/room_chair/visual_director/round-02/pixel-review-r02.md",
+          "sha256": "732281b9e6f1b589ffadc36feeb0c30cb3d972e72bf7b8cbfe14f62248ebda91"
+        },
+        "case_file": "art/room_chair/visual_director/state.json",
+        "policy": {
+          "inputs": {
+            "category": "room_furniture",
+            "current_quality": "prototype",
+            "faction_defining": false,
+            "inferred": [],
+            "priority_tier": 1,
+            "screen_space_importance": 4,
+            "source_images_present": false,
+            "source_photo_required": false
+          },
+          "reasons": [
+            "Tier 1 scene-defining asset",
+            "high screen-space importance"
+          ],
+          "required": true
+        },
+        "status": "approved",
+        "strategy": "alternate_strategy",
+        "target_episode_attempt": 3
+      }
     }
   ],
   "case_file": "art/room_chair/visual_director/state.json",
@@ -162,26 +282,27 @@
     "attempts": [
       {
         "attempt": 1,
-        "candidate_id": "room_chair-v001",
+        "candidate_id": "room_chair-v004",
         "decision": "continue",
-        "evaluated_at_utc": "2026-11-02T04:54:49+00:00",
-        "evaluation_file": "art/room_chair/iterations/v001/evaluation.json",
-        "incumbent_comparison_result": "first_pass",
+        "evaluated_at_utc": "2026-11-02T06:06:26+00:00",
+        "evaluation_file": "art/room_chair/iterations/v004/evaluation.json",
+        "incumbent_comparison_result": "better",
         "status": "evaluated",
         "strategy": "initial",
         "visual_transfer_diagnosis": {
-          "corrective_action": "Darken non-metal wood surfaces only; frame the whole furniture form from room-interior quarter angles at a lower camera tilt; preserve the target and geometry for this attempt.",
+          "corrective_action": "Retain the custom mesh strategy and round-02 target. Correct triangle winding to Godot front-face convention, close exposed lathe ends, form a narrow rolled seat edge, and raise timber tone for this mesh refinement. Render again before considering broader reuse.",
           "lost_visual_information": [
-            "Low workshop chair loses the target warm-oak/walnut value separation in the production render",
-            "the seat dominates the 3/4 image; crest and spindles show, but the turned-leg and stretcher silhouette is partly cropped",
-            "small joinery/hardware is less readable than in the concept target"
+            "The target’s warm wood value and clear separation between seat, crest, posts and turned members are lost in the dark production render.",
+            "The seat dish and softened perimeter do not read clearly because the surface meets a hard side wall.",
+            "The target’s fitted construction remains weak: turned ends are open and the wooden pins are too small and low-contrast."
           ],
           "preserved_components": [
-            "technically valid low workshop chair scene and RoomDefinition envelope",
-            "separate furniture parts and intended silhouette",
-            "review-only Art Factory registry resolution"
+            "The chair silhouette now includes a dished seat, turned legs and back posts, shaped spindles, a curved crest and separate stretchers.",
+            "The mesh remains within the 25 x 19 x 23 inch envelope apart from 0.07 inch floor penetration.",
+            "RoomDefinition placement and gameplay state are unchanged; the candidate is review-only."
           ],
           "primary_causes": [
+            "geometry_loss",
             "material_generation",
             "lighting_render_presentation"
           ]
@@ -189,61 +310,64 @@
       },
       {
         "attempt": 2,
-        "candidate_id": "room_chair-v002",
+        "candidate_id": "room_chair-v005",
         "decision": "continue",
-        "evaluated_at_utc": "2026-11-02T04:59:50+00:00",
-        "evaluation_file": "art/room_chair/iterations/v002/evaluation.json",
+        "evaluated_at_utc": "2026-11-02T06:08:45+00:00",
+        "evaluation_file": "art/room_chair/iterations/v005/evaluation.json",
         "incumbent_comparison_result": "better",
         "status": "evaluated",
         "strategy": "targeted_correction",
         "visual_transfer_diagnosis": {
-          "corrective_action": "Replace the shared StandardMaterial wood response with a separate, directional procedural wood shader; calculate gameplay distance from object height; preserve all target and RoomDefinition dimensions.",
+          "corrective_action": "For the final round-02 attempt, use a flattened leaf-shaped spindle cross section and deepen the seat dish; shift the bright oak back toward warm brown and make walnut leg/back colors visible under the same corrected front-face lighting. Preserve the closed lathe surfaces, rounded seat rim, exact room placement and envelope.",
           "lost_visual_information": [
-            "The complete silhouette is in frame, but the approved target has a clearer raised crest/back and more chair-like seat-to-back relationship. The render keeps the fixed dimensions but does not transfer the target silhouette convincingly.",
-            "Directional grain and satin highlights are not transferred by the shared noise texture."
+            "The broad, tapered leaf profile and carved face of each target spindle are reduced to smooth cylindrical balusters.",
+            "The target seat’s dish is too subtle to read in production views and the thick edge still looks separate from the seat surface.",
+            "The target’s warm brown variation is reduced to orange uniform grain over dark, near-black posts."
           ],
           "preserved_components": [
-            "Compact workshop chair: dimensions pass technical validation and the constructed components are present.",
-            "Compact workshop chair: production RoomDefinition review and gameplay dimensions remain unchanged."
+            "The corrected custom mesh surfaces, capped turned members, curved crest and rounded seat edge are preserved.",
+            "The measured mesh remains inside the authoritative envelope with slight positive floor clearance.",
+            "The candidate is review-only; RoomDefinition placement, gameplay state and the canonical art registry remain unchanged."
           ],
           "primary_causes": [
-            "source_concept_ambiguity",
             "geometry_loss",
-            "material_generation"
+            "material_generation",
+            "texture_baking"
           ]
         }
       },
       {
         "attempt": 3,
-        "candidate_id": "room_chair-v003",
+        "candidate_id": "room_chair-v006",
         "decision": "continue",
-        "evaluated_at_utc": "2026-11-02T05:07:47+00:00",
-        "evaluation_file": "art/room_chair/iterations/v003/evaluation.json",
+        "evaluated_at_utc": "2026-11-02T06:10:48+00:00",
+        "evaluation_file": "art/room_chair/iterations/v006/evaluation.json",
         "incumbent_comparison_result": "better",
         "status": "evaluated",
         "strategy": "alternate_strategy",
         "visual_transfer_diagnosis": {
-          "corrective_action": "Keep the approved target and record v003 as best-current review art. Backlog the transfer until a mesh-authoring backend can build the missing target-specific shape and joinery; do not use another shader-only pass.",
+          "corrective_action": "Keep v006 as the best review candidate and backlog the transfer. A future pass should use a materially different mesh/texture workflow to build the target’s sculpted seat rim and fitted collars and apply board-level grain with knots and calmer, broader variation.",
           "lost_visual_information": [
-            "The candidate stays inside the 25 x 19 x 23 inch authoritative envelope and now has directional grain. Its low crest/back relationship still diverges from the approved spindle-chair target, and the turned legs and joinery are represented by simple cylindrical members.",
-            "The approved target carries more convincing medium-scale profiles and individualized construction than the candidate scene."
+            "The target’s hand-shaped seat dish and rolled edge are reduced to a broad surface whose curvature is hard to read.",
+            "The turned posts, crest and stretcher joints lack the target’s bead collars, shoulders and convincing fitted construction.",
+            "The target’s individually varied wood boards and visible knots are reduced to repeated fine lines across the chair."
           ],
           "preserved_components": [
-            "Compact workshop chair: the RoomDefinition dimensions and gameplay placement are unchanged.",
-            "Compact workshop chair: the target’s principal role, major subassemblies and hardware remain represented.",
-            "Separate wood shader and authored hardware materials load through the review registry."
+            "The chair has the target’s principal parts, low silhouette, flattened back spindles and curved crest.",
+            "The corrected mesh winding, closed ends, rounded seat rim and positive floor clearance are preserved within the exact brief envelope.",
+            "RoomDefinition placement and gameplay state remain unchanged; the Art Factory registry still has no accepted room_chair candidate."
           ],
           "primary_causes": [
             "geometry_loss",
-            "proportion_drift",
-            "source_concept_ambiguity"
+            "texture_baking",
+            "image_to_3d_backend_limitation"
           ]
         }
       }
     ],
     "status": "backlog",
-    "target_sha256": "3fbf10f0be56c539d625dc299ead2b7f2bfb3eaadc43bb7722540d09b94dc899"
+    "target_sha256": "732281b9e6f1b589ffadc36feeb0c30cb3d972e72bf7b8cbfe14f62248ebda91"
   },
-  "updated_at_utc": "2026-11-02T05:07:47+00:00",
+  "updated_at_utc": "2026-11-02T06:10:48+00:00",
   "visual_brief_file": "art/room_chair/visual_director/visual-brief-draft.json"
 }

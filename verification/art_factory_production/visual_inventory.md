@@ -1,6 +1,6 @@
 # RoomScale Full Visible-Art Inventory
 
-Generated: `2026-11-02T05:55:58+00:00`
+Generated: `2026-11-02T06:11:58+00:00`
 
 Starting state: POC 2.5 closure `1e111d37325e7ad00030266efec201796b7fc07d`
 Purpose: production prioritization only; no POC 2.5 reopening.
@@ -10,7 +10,7 @@ Purpose: production prioritization only; no POC 2.5 reopening.
 - RoomDefinition files: 21 (2 playable Room A/B; 19 candidate/scenario variants).
 - Room object records / unique object classes: 318 / 79.
 - Canonical Art Factory registry entries: 15; visual catalog entries: 10; material categories: 17.
-- Runtime GDScript files with procedural/dynamic geometry: 12; geometry builder sites: 79.
+- Runtime GDScript files with procedural/dynamic geometry: 12; geometry builder sites: 87.
 - Active scenes with visible art nodes or a runtime presentation controller: 1.
 - Catalogued asset classes and presentation systems: 95.
 
@@ -30,7 +30,7 @@ The inventory joins source-defined room content with the canonical/review asset 
 | Tier 1 | `room_broad_irregular_stone_fireplace_with_raised_hearth` — Broad irregular-stone fireplace with raised hearth | 0 | planned `room_broad_irregular_stone_fireplace_with_raised_hearth`; fireplace → procedural fallback | Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below. | reuse shared quality furniture where it fits; use source-conditioned Art Factory production for distinctive photographed objects |
 | Tier 1 | `room_cabinet_collectibles_lower` — cabinet-collectibles-lower | 0 | planned `room_cabinet_collectibles_lower`; boxed_collectibles → procedural fallback | Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below. | reuse shared quality furniture where it fits; use source-conditioned Art Factory production for distinctive photographed objects |
 | Tier 1 | `room_cabinet_collectibles_upper` — cabinet-collectibles-upper | 0 | planned `room_cabinet_collectibles_upper`; boxed_collectibles → procedural fallback | Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below. | reuse shared quality furniture where it fits; use source-conditioned Art Factory production for distinctive photographed objects |
-| Tier 1 | `room_chair` — Chair | 1 | `room_chair` exists; chair → catalog detailed_furniture fallback | Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below. | reuse shared quality furniture where it fits; use source-conditioned Art Factory production for distinctive photographed objects |
+| Tier 1 | `room_chair` — Chair | 1 | `room_chair` review candidate v006; runtime still uses catalog detailed_furniture fallback | Best-current v006 improves sculpted geometry but fails the strict gate on seat shaping, fitted joints, and wood variation. | use a different mesh/texture workflow after the target episode backlog |
 | Tier 1 | `desk` — Computer desk | 0 | `desk` exists; desk → Art Factory registry asset | Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below. Strict result: `fail`. | reuse shared quality furniture where it fits; use source-conditioned Art Factory production for distinctive photographed objects |
 | Tier 1 | `room_computer_on_chair` — computer-on-chair | 0 | planned `room_computer_on_chair`; computer_tower → procedural fallback | Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below. | reuse shared quality furniture where it fits; use source-conditioned Art Factory production for distinctive photographed objects |
 | Tier 1 | `room_dark_computer_desk` — Dark computer desk | 0 | planned `room_dark_computer_desk`; desk → Art Factory registry asset | Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below. | reuse shared quality furniture where it fits; use source-conditioned Art Factory production for distinctive photographed objects |
@@ -129,3 +129,7 @@ Coverage limitation: Static inventory enumerates source-defined asset classes an
 Production batches should coordinate high-impact room surfaces and furniture with visible settlement architecture, all civilization citizen presentation, traversal, and shared lighting/material response. Continue across asset classes rather than polishing one asset indefinitely.
 
 The JSON is the source of truth for stable semantic identities and per-class fields. Re-run `python scripts/art_factory/visual_inventory.py` after a meaningful production batch to refresh automated coverage and occurrences.
+
+## Batch 7 chair review
+
+`room_chair-v006` is the best current review candidate after the approved round-02 target episode reached its three-attempt limit. It is not in the canonical registry; Room A still resolves to the detailed furniture fallback. See [Batch 7 chair geometry pilot](batch-07-room-a-b-furniture-geometry.md).

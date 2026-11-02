@@ -1,0 +1,164 @@
+{
+  "candidate_id": "room_chair-v004",
+  "created_at_utc": "2026-11-02T00:00:00Z",
+  "decision": "continue",
+  "defects": [
+    "The turned profiles and dished seat are present, but reversed custom surface winding appears to leave large faces poorly lit or visible from their backs; v004 is substantially darker than v003 in the same room capture.",
+    "The seat perimeter transitions directly into a hard side wall, so the target’s softened sculpted edge and shallow dish are weakly expressed.",
+    "The lathed legs and posts have uncapped ends, and the small dark pegs do not make fitted joints legible at normal inspection distance."
+  ],
+  "hard_fail_reasons": [
+    "The run-002 production views have dark, visually muddy surfaces and unresolved manufacturing transitions; the strict realism and craftsmanship gates fail."
+  ],
+  "incumbent_candidate_id": "room_chair-v003",
+  "incumbent_comparison": "Compared with v003, v004 replaces the slab seat, straight cylindrical stretchers and plain back members with a dished seat surface, turned profiles, swept crest and shaped spindles. The silhouette now reads clearly as a chair and the envelope stays within the 25 x 19 x 23 inch brief, although the lower bounds extend 0.07 inch below the floor. In the run-002 production renders, the wood is much too dark, seat shaping and edge transitions are hard to read, and several turned members have visibly open ends. This is a meaningful geometry advance but not production-ready.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "geometry_loss",
+    "material_generation",
+    "lighting_render_presentation"
+  ],
+  "next_action_hypothesis": "Keep the round-02 target and the authored-mesh approach. Correct custom triangle winding to match Godot front-face convention, cap the exposed leg ends, introduce a narrow rolled seat perimeter, and raise the wood tone for this authored-mesh refinement. Regenerate and inspect the production views before deciding whether this geometry approach can be reused.",
+  "observations": {
+    "art_direction_fit": "The new silhouette follows the generated round-02 target more closely than v003, but the target’s warm, shaped joinery and softly finished seat are not yet carried into the render.",
+    "close_up_quality": "The detail and interior-oblique views reveal uncapped turned members, hard seat edges and small low-contrast pegs.",
+    "gameplay_readability": "The gameplay-distance view reads as a chair, though the dark frame loses separation between seat, crest and supports.",
+    "geometric_detail": "Custom turned legs, shaped spindles, swept crest, tenon pins and a dished seat replace primitive straight members, although end caps and soft transitions are absent.",
+    "material_realism": "The same room capture makes v004 timber markedly darker than v003; the grain is barely legible on the seat and the wood planes blend into one dark mass.",
+    "proportion": "Measured extents are 23.58 x 18.84 x 20.75 inches against a 25 x 19 x 23 inch limit; the chair reads low and broad as intended, with a 0.07 inch floor penetration.",
+    "scale_fidelity": "The mesh bounds remain within the authoritative width, height and depth limits; only the lowest vertex is 0.07 inch below y=0.",
+    "semantic_recognizability": "The four legs, seat, three spindles and crest make the object unambiguously chair-shaped in the production room and isolated views.",
+    "silhouette_quality": "The curved crest and separated spindles improve the silhouette over v003, but the rear posts and crest remain dark and less readable than the target.",
+    "surface_variation": "Directional grain remains present but is muted by the dark tone and is not varied by board or member.",
+    "technical_integration": "Godot 4.7.2 generated and rendered the candidate through the production capture path, with 29 meshes, 29 surfaces, 40,736 triangles and no technical validation issues."
+  },
+  "render_evidence": [
+    "art/room_chair/iterations/v004/render-runs/run-002/asset-gameplay-distance.png",
+    "art/room_chair/iterations/v004/render-runs/run-002/asset-three-quarter.png",
+    "art/room_chair/iterations/v004/render-runs/run-002/asset-interior-oblique.png",
+    "art/room_chair/iterations/v004/render-runs/run-002/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 2,
+    "gameplay_readability": 3,
+    "geometric_detail": 4,
+    "material_realism": 2,
+    "proportion": 4,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "surface_variation": 2,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The detail and oblique captures show an unsoftened seat perimeter, exposed ends on turned members, and pegs that barely separate from the timber.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "The dish is shallow and its perimeter turns into a hard, angular side wall rather than the target’s softly shaped seat edge.",
+        "evidence_refs": [
+          "art/room_chair/iterations/v004/render-runs/run-002/asset-three-quarter.png",
+          "art/room_chair/iterations/v004/render-runs/run-002/asset-interior-oblique.png",
+          "art/room_chair/iterations/v004/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "hardware": {
+        "evidence": "The target calls for a wooden chair without metal hardware; the authored wooden tenon pegs are appropriate in material, though their scale and contrast need improvement.",
+        "evidence_refs": [
+          "art/room_chair/iterations/v004/render-runs/run-002/asset-three-quarter.png",
+          "art/room_chair/iterations/v004/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "joins": {
+        "evidence": "Tenon pins are modeled but too small and dark to communicate fitted leg, stretcher and seat joints.",
+        "evidence_refs": [
+          "art/room_chair/iterations/v004/render-runs/run-002/asset-three-quarter.png",
+          "art/room_chair/iterations/v004/render-runs/run-002/asset-interior-oblique.png",
+          "art/room_chair/iterations/v004/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "Custom turning and crest geometry are advances, but open ends, hard seat edges and weakly legible joins remain visible.",
+        "evidence_refs": [
+          "art/room_chair/iterations/v004/render-runs/run-002/asset-three-quarter.png",
+          "art/room_chair/iterations/v004/render-runs/run-002/asset-interior-oblique.png",
+          "art/room_chair/iterations/v004/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "The wood render is markedly darker than v003 and suppresses the grain and part-to-part separation.",
+        "evidence_refs": [
+          "art/room_chair/iterations/v004/render-runs/run-002/asset-gameplay-distance.png",
+          "art/room_chair/iterations/v004/render-runs/run-002/asset-three-quarter.png",
+          "art/room_chair/iterations/v004/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "Directional wood grain is barely visible on the dark seat and is repeated without board-level variation.",
+        "evidence_refs": [
+          "art/room_chair/iterations/v004/render-runs/run-002/asset-three-quarter.png",
+          "art/room_chair/iterations/v004/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "The seat slab, stretcher members and turned posts have continuous, plausible visible thickness in the room and detail views.",
+        "evidence_refs": [
+          "art/room_chair/iterations/v004/render-runs/run-002/asset-three-quarter.png",
+          "art/room_chair/iterations/v004/render-runs/run-002/asset-interior-oblique.png",
+          "art/room_chair/iterations/v004/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The v004 production view reads as a chair, but its seat and frame collapse into a dark red-brown mass; custom surface orientation and hard transitions make it feel unfinished beside the approved target.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "The ArtBrief uses an approved generated target and has no source photograph.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Retain the custom mesh strategy and round-02 target. Correct triangle winding to Godot front-face convention, close exposed lathe ends, form a narrow rolled seat edge, and raise timber tone for this mesh refinement. Render again before considering broader reuse.",
+    "lost_visual_information": [
+      "The target’s warm wood value and clear separation between seat, crest, posts and turned members are lost in the dark production render.",
+      "The seat dish and softened perimeter do not read clearly because the surface meets a hard side wall.",
+      "The target’s fitted construction remains weak: turned ends are open and the wooden pins are too small and low-contrast."
+    ],
+    "preserved_components": [
+      "The chair silhouette now includes a dished seat, turned legs and back posts, shaped spindles, a curved crest and separate stretchers.",
+      "The mesh remains within the 25 x 19 x 23 inch envelope apart from 0.07 inch floor penetration.",
+      "RoomDefinition placement and gameplay state are unchanged; the candidate is review-only."
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "material_generation",
+      "lighting_render_presentation"
+    ]
+  }
+}
