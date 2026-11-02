@@ -810,16 +810,45 @@ class ArtFactory:
             )
             attempts = episode.setdefault("attempts", [])
             if not any(item.get("candidate_id") == candidate.candidate_id for item in attempts):
-                attempts.append(
-                    {
-                        "candidate_id": candidate.candidate_id,
-                        "strategy": candidate.visual_director_provenance.get("strategy"),
-                        "attempt": candidate.visual_director_provenance.get(
-                            "target_episode_attempt"
-                        ),
-                        "status": "awaiting_render_review",
-                    }
-                )
+                generation_result = candidate.generation_result or {}
+                attempt_record = {
+                    "candidate_id": candidate.candidate_id,
+                    "strategy": candidate.visual_director_provenance.get("strategy"),
+                    "attempt": candidate.visual_director_provenance.get("target_episode_attempt"),
+                    "status": (
+                        "blocked"
+                        if candidate.status == "blocked"
+                        or generation_result.get("status") != "pass"
+                        else "awaiting_render_review"
+                    ),
+                }
+                if attempt_record["status"] == "blocked":
+                    failure_reason = generation_result.get(
+                        "reason"
+                    ) or candidate.technical_validation.get(
+                        "reason", "generation did not produce a candidate mesh"
+                    )
+                    generation_log = self._candidate_root(candidate) / "generation.log"
+                    if generation_log.is_file():
+                        log_lines = [
+                            line.strip()
+                            for line in generation_log.read_text(
+                                encoding="utf-8", errors="replace"
+                            ).splitlines()
+                            if line.strip()
+                        ]
+                        exception_line = next(
+                            (
+                                line
+                                for line in reversed(log_lines)
+                                if line.startswith(("RuntimeError:", "ValueError:", "Error:"))
+                            ),
+                            None,
+                        )
+                        if exception_line:
+                            failure_reason = exception_line
+                    attempt_record["failure_reason"] = failure_reason
+                attempts.append(attempt_record)
             episode["status"] = "in_progress"
             state["target_episode"] = episode
         state["updated_at_utc"] = _now_utc()

@@ -1,0 +1,56 @@
+{
+  "deterministic_seed": 2613,
+  "generator_command": [
+    "python",
+    "{project_root}/scripts/art_factory/generators/production_batch01_blender.py"
+  ],
+  "import_configuration": {
+    "axes": "Blender X width / Y depth / Z up exported to Godot X width / Y up / Z depth",
+    "format": "GLB with embedded PBR materials",
+    "normalization": "fit source geometry to ArtBrief dimensions without altering RoomDefinition",
+    "renderer": "gl_compatibility",
+    "units": "inches"
+  },
+  "instructions": "Create a materially different third round-02 transfer. Preserve the exact envelope, jamb, casing, threshold, paired leaves, and two-by-four clear glass lights per leaf. Build six brass butt hinges with separate plates, barrels, and screw heads. Use low-contrast procedural quarter-sawn oak PBR with distinct oak, muntin, and reveal material values; do not use sampled-image albedo. Keep glass transparent and the door free of foliage. Leave RoomDefinition and gameplay systems unchanged.",
+  "material_method": "Generate low-contrast procedural quarter-sawn oak PBR maps in Blender; use separate clear-glass and brass materials embedded in GLB. Distinguish main timber, muntins, and reveals by material values. The generated candidate uses shared timber UV mapping without per-member grain phase variation.",
+  "method": "blender_round02_procedural_oak_and_separate_hardware",
+  "parameters": {
+    "asset_type": "french_door",
+    "diagnosis_ref": "room_photo_french_door_production-v005",
+    "generation_variant": "round02_alternate_baked_oak",
+    "geometry_units": "inches",
+    "materially_different_strategy": true,
+    "outputs": [
+      "asset.glb",
+      "generation-record.json"
+    ],
+    "visual_director_strategy": "alternate_strategy",
+    "visual_director_target": "art/room_photo_french_door_production/visual_director/round-02/approved-target-r02.png"
+  },
+  "post_processing": [
+    "bevel frame and separate brass hardware",
+    "generate embedded low-contrast procedural quarter-sawn oak PBR with distinct timber, muntin, and reveal values",
+    "batch by material and export embedded GLB materials",
+    "retain two columns by four rows of glazing per leaf and six hinges",
+    "validate exact 66 x 82 x 4 inch bounds and absence of opaque glass backing",
+    "inspect grain, hinge readability, transparency, and seams in production renders",
+    "keep exterior context out of the door mesh"
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "scripts/art_factory/generators/production_batch01_blender.py",
+    "art/room_photo_french_door_production/brief.json",
+    "art/room_photo_french_door_production/sources/sintra-door-pair-cc-by-4.0.jpg",
+    "art/room_photo_french_door_production/sources/source-attribution.json",
+    "art/room_photo_french_door_production/visual_director/round-02/approved-target-r02.png",
+    "art/room_photo_french_door_production/visual_director/round-02/pixel-review-r02.md",
+    "art/room_photo_french_door_production/iterations/v005/generated/asset.glb",
+    "art/room_photo_french_door_production/iterations/v005/evaluation.json",
+    "art/room_photo_french_door_production/iterations/v005/render-runs/run-001/asset-detail.png",
+    "art/room_photo_french_door_production/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+    "art/room_photo_french_door_production/iterations/v003/review/room_photo_luna.json",
+    "rooms/room_photo_luna.json"
+  ],
+  "tool": "Blender procedural PBR material authoring with individually built brass hardware and mesh-level grain variation",
+  "tool_version": "Blender 5.2.3"
+}\n

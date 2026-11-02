@@ -1,0 +1,160 @@
+{
+  "candidate_id": "room_photo_french_door_production-v008",
+  "created_at_utc": "2026-11-02T06:52:26+00:00",
+  "decision": "continue",
+  "defects": [
+    "Six modeled hinges still read as small marks in Godot captures.",
+    "Procedural oak removes v005's obvious repetition but is materially flat at close view.",
+    "Review room has blank blue exterior behind this opening; do not put foliage in the door mesh.",
+    "v008 matches the target's four rows of lights per leaf, unlike v005."
+  ],
+  "hard_fail_reasons": [
+    "Six outer hinges are not clearly readable in the registered views.",
+    "Procedural oak reads nearly uniform at close view and does not transfer the target's natural timber character.",
+    "Room render shows blue pane context instead of the target garden; the room has no greenery behind this opening, so the view does not establish whether the glazing itself transfers correctly."
+  ],
+  "incumbent_candidate_id": "room_photo_french_door_production-v005",
+  "incumbent_comparison": "In the same production harness, v008 matches the approved round-02 four-row lights per leaf and reduces v005's strong repeating oak figure. Its procedural oak reads nearly flat, while v005 has more visible detail despite repetition. Six hinges remain tiny marks. Both show pale-blue panes against the room's blank blue exterior, so the target garden is absent. This trades one material defect for another; retain v005 as best current review. Neither passes.",
+  "incumbent_comparison_result": "same",
+  "likely_causes": [
+    "material_generation",
+    "geometry_loss",
+    "lighting_render_presentation"
+  ],
+  "next_action_hypothesis": "Close the round-02 target episode after three bounded attempts. Keep v005 as best current review because v008's flatter material does not outweigh its pane layout. Backlog readable hinges, visibly grained non-repeating oak, and review-room greenery for testing clear glass. Do not promote or change gameplay authority.",
+  "observations": {
+    "art_direction_fit": "Pair, four-row lights, surround, and threshold fit the target, but near-flat oak and blue pane context remain below it.",
+    "close_up_quality": "Detail shows divided lights and handles, while hinges remain tiny and oak has little visible grain.",
+    "gameplay_readability": "Room-scale view reads as a paired French door, but does not make hinge detail readable.",
+    "geometric_detail": "Separate leaves, rails, muntins, stops, casing, threshold, and hinges exist; hinge construction is too small to read.",
+    "material_realism": "Procedural oak reads as nearly uniform brown. Pale-blue panes show current room context, not target greenery.",
+    "proportion": "Godot reports exact bounds; paired leaves and four-row lights match the round-02 target.",
+    "scale_fidelity": "Godot reports exact 66 x 82 x 4 inch bounds and fit without RoomDefinition changes.",
+    "semantic_recognizability": "Three-quarter and room views read as a paired residential French door.",
+    "silhouette_quality": "Paired leaves, meeting stile, four rows of lights, surround, and threshold match the target silhouette.",
+    "source_resemblance": "Pair silhouette and four-row lights transfer, but target-like grain, readable hinges, and garden-facing panes do not appear.",
+    "surface_variation": "Views show little natural oak figure; lower contrast reduces repetition but leaves wood too flat.",
+    "technical_integration": "Godot 4.7.2 imports six surfaces, 59,188 triangles, no issues, exact bounds, and successful production captures."
+  },
+  "render_evidence": [
+    "art/room_photo_french_door_production/iterations/v008/render-runs/run-001/asset-detail.png",
+    "art/room_photo_french_door_production/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+    "art/room_photo_french_door_production/iterations/v008/render-runs/run-001/room-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 2,
+    "gameplay_readability": 4,
+    "geometric_detail": 4,
+    "material_realism": 2,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 4,
+    "source_resemblance": 3,
+    "surface_variation": 2,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "Registered detail shows tiny hinge marks and little natural grain.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "Three-quarter shows stepped casing, inner bead, jambs, and beveled edges.",
+        "evidence_refs": [
+          "art/room_photo_french_door_production/iterations/v008/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "Detail does not resolve the six outer plates and barrels as readable hinges.",
+        "evidence_refs": [
+          "art/room_photo_french_door_production/iterations/v008/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "joins": {
+        "evidence": "Detail shows muntins joining stiles and rails around separate lights.",
+        "evidence_refs": [
+          "art/room_photo_french_door_production/iterations/v008/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "Separate hinges and stops exist, but hinges are too small to read.",
+        "evidence_refs": [
+          "art/room_photo_french_door_production/iterations/v008/render-runs/run-001/asset-detail.png",
+          "art/room_photo_french_door_production/iterations/v008/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "Oak is nearly uniform; panes show the room's blue exterior context.",
+        "evidence_refs": [
+          "art/room_photo_french_door_production/iterations/v008/render-runs/run-001/asset-detail.png",
+          "art/room_photo_french_door_production/iterations/v008/render-runs/run-001/room-scale.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "Registered views show little natural grain on timber.",
+        "evidence_refs": [
+          "art/room_photo_french_door_production/iterations/v008/render-runs/run-001/asset-detail.png",
+          "art/room_photo_french_door_production/iterations/v008/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "Three-quarter shows casing, jambs, meeting stiles, rails, and threshold.",
+        "evidence_refs": [
+          "art/room_photo_french_door_production/iterations/v008/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "Pair is recognizable, but near-flat oak, unreadable hinges, and blue context do not reach the target's finished appearance.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "No",
+      "applicable": true,
+      "evidence": "Pair and four-row lights match, but readable brass hinges, natural timber, and garden-facing appearance are absent in the render.",
+      "pass": false
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Close round-02 after three bounded attempts and retain v005 as best current. Keep v008's four-row layout; backlog readable hinges, visible non-repeating oak, and review-room greenery context. Do not promote.",
+    "lost_visual_information": [
+      "Six brass hinges remain difficult to identify.",
+      "Oak has little visible figure at the registered camera distance.",
+      "Target garden is absent from the current room render; foliage does not belong in the door mesh."
+    ],
+    "preserved_components": [
+      "Exact 66 x 82 x 4 inch bounds and paired silhouette",
+      "Target-matching four-row divided lights per leaf",
+      "Separate hinges, clear-glass material, casing, and threshold",
+      "Unchanged RoomDefinition, collision, navigation, and simulation"
+    ],
+    "primary_causes": [
+      "material_generation",
+      "geometry_loss",
+      "lighting_render_presentation"
+    ]
+  }
+}

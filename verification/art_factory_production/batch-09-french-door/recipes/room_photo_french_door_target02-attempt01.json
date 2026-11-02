@@ -1,0 +1,58 @@
+{
+  "deterministic_seed": 2613,
+  "generator_command": [
+    "python",
+    "{project_root}/scripts/art_factory/generators/production_batch01_blender.py"
+  ],
+  "import_configuration": {
+    "axes": "Blender X width / Y depth / Z up exported to Godot X width / Y up / Z depth",
+    "format": "GLB with embedded PBR materials",
+    "normalization": "fit source geometry to ArtBrief dimensions without altering RoomDefinition",
+    "renderer": "gl_compatibility",
+    "units": "inches"
+  },
+  "instructions": "Create the first mesh transfer for the approved round-02 French-door target. Preserve the exact 66 x 82 x 4 inch envelope, paired-leaf silhouette, jamb, casing, threshold, and target handle pair. Follow the round-02 target and source photograph with two columns by four rows of clear glass lights per leaf. Replace the tiny dark outer hinge marks with six front-readable, physically built brass butt-hinge assemblies: each has two distinct leaf plates, a visible barrel, and screw heads, scaled to match the target. Use the lower-contrast r03 stained-oak albedo and vary repeat phase/scale per timber member to prevent adjacent rails and stiles from sharing the same figure. Keep glazing transparent, do not add an opaque backing or synthetic foliage to the door, and leave RoomDefinition, collision, navigation, selection, and simulation unchanged.",
+  "material_method": "Blender-authored divided-light door geometry with enlarged separate butt-hinge plates, barrels, and fasteners; use the pixel-reviewed lower-contrast r03 stained-oak albedo with deterministic per-part UV phase and texel-density variation, separate PBR glass and brass, and embedded GLB materials.",
+  "method": "blender_round02_french_door_hardware_and_per_part_oak_uvs",
+  "parameters": {
+    "asset_type": "french_door",
+    "diagnosis_ref": "room_photo_french_door_production-v005",
+    "generation_variant": "round02_hardware_and_material",
+    "geometry_units": "inches",
+    "materially_different_strategy": true,
+    "outputs": [
+      "asset.glb",
+      "generation-record.json"
+    ],
+    "visual_director_strategy": "initial",
+    "visual_director_target": "art/room_photo_french_door_production/visual_director/round-02/approved-target-r02.png"
+  },
+  "post_processing": [
+    "apply manufactured edge bevels and weighted normals to the door frame and physical hinge hardware",
+    "unwrap separate timber parts with scale-aware UVs, then apply deterministic per-part repeat phase and restrained scale variation",
+    "batch meshes by shared material and export embedded PBR textures to GLB",
+    "retain two columns by four rows of clear glazing on each leaf and six distinct visible brass hinges",
+    "validate the exact 66 x 82 x 4 inch bounds and confirm the glass has no opaque backing",
+    "inspect glass, hinge readability, wood variation, and seams in the same close, three-quarter, and room captures",
+    "keep the door asset free of exterior foliage so room context remains separate"
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "scripts/art_factory/generators/production_batch01_blender.py",
+    "art/room_photo_french_door_production/brief.json",
+    "art/room_photo_french_door_production/sources/sintra-door-pair-cc-by-4.0.jpg",
+    "art/room_photo_french_door_production/sources/source-attribution.json",
+    "art/room_photo_french_door_production/sources/ai-generated-stained-oak-albedo-r03.png",
+    "art/room_photo_french_door_production/sources/ai-generated-stained-oak-albedo-r03-review.md",
+    "art/room_photo_french_door_production/visual_director/round-02/approved-target-r02.png",
+    "art/room_photo_french_door_production/visual_director/round-02/pixel-review-r02.md",
+    "art/room_photo_french_door_production/iterations/v005/generated/asset.glb",
+    "art/room_photo_french_door_production/iterations/v005/evaluation.json",
+    "art/room_photo_french_door_production/iterations/v005/render-runs/run-001/asset-detail.png",
+    "art/room_photo_french_door_production/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+    "art/room_photo_french_door_production/iterations/v003/review/room_photo_luna.json",
+    "rooms/room_photo_luna.json"
+  ],
+  "tool": "Blender background authoring through RoomScale Art Factory with per-component oak UV variation",
+  "tool_version": "Blender 5.2.3"
+}

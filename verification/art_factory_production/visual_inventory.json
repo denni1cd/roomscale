@@ -2,7 +2,7 @@
   "schema_version": 1,
   "title": "RoomScale Art Factory Production Deployment — Full Visible-Art Inventory",
   "source_commit": "1e111d37325e7ad00030266efec201796b7fc07d",
-  "generated_at_utc": "2026-11-02T06:13:01.432406+00:00",
+  "generated_at_utc": "2026-11-02T06:54:09+00:00",
   "inventory_scope": "Playable room definitions, reconstructed/candidate RoomDefinitions, canonical and review registries, visual/material catalogs, static scenes, and runtime code that creates visible geometry/material/light/presentation nodes.",
   "coverage": {
     "room_definition_files_scanned": 21,
@@ -52,7 +52,7 @@
       "wood"
     ],
     "runtime_scripts_with_primitive_or_dynamic_mesh_builders": 12,
-    "runtime_geometry_builder_sites": 87,
+    "runtime_geometry_builder_sites": 91,
     "runtime_presentation_sources_by_role": {
       "citizen cargo, badges, and fallback body geometry": [
         {
@@ -126,7 +126,7 @@
         },
         {
           "path": "scripts/visuals/visual_geometry.gd",
-          "site_count": 12,
+          "site_count": 16,
           "constructors": [
             "MeshInstance3D.new()",
             "CylinderMesh.new()",
@@ -1073,43 +1073,71 @@
           ]
         },
         {
+          "function": "profiled_beam",
+          "line": 187,
+          "constructors": [
+            "SurfaceTool.new()"
+          ]
+        },
+        {
+          "function": "profiled_beam",
+          "line": 224,
+          "constructors": [
+            "MeshInstance3D.new()"
+          ]
+        },
+        {
+          "function": "raised_panel",
+          "line": 281,
+          "constructors": [
+            "SurfaceTool.new()"
+          ]
+        },
+        {
+          "function": "raised_panel",
+          "line": 303,
+          "constructors": [
+            "MeshInstance3D.new()"
+          ]
+        },
+        {
           "function": "elliptical_profile",
-          "line": 186,
+          "line": 352,
           "constructors": [
             "SurfaceTool.new()"
           ]
         },
         {
           "function": "elliptical_profile",
-          "line": 215,
+          "line": 381,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "swept_oval",
-          "line": 265,
+          "line": 431,
           "constructors": [
             "SurfaceTool.new()"
           ]
         },
         {
           "function": "swept_oval",
-          "line": 290,
+          "line": 456,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "dished_seat",
-          "line": 313,
+          "line": 479,
           "constructors": [
             "SurfaceTool.new()"
           ]
         },
         {
           "function": "dished_seat",
-          "line": 362,
+          "line": 528,
           "constructors": [
             "MeshInstance3D.new()"
           ]
@@ -3207,19 +3235,19 @@
         "playable_room_instances": 1,
         "room_definition_examples": 6
       },
-      "current_visual_quality": "Best review candidate room_chair-v006 improves the chair geometry, but the strict visual gate still fails on the carved seat, fitted joins, and wood variation; runtime continues to resolve the detailed_furniture fallback.",
-      "programmer_art_or_primitive": true,
-      "programmer_art_assessment_basis": "canonical runtime still uses the detailed_furniture fallback; v006 is review-only",
+      "current_visual_quality": "Mixed runtime sources; active resolution, Art Factory assignment, and strict status are reported separately below.",
+      "programmer_art_or_primitive": null,
+      "programmer_art_assessment_basis": "unknown; assigned Art Factory identity alone is not treated as evidence",
       "source_photo_resemblance_requirement": false,
       "photo_room_examples": [],
       "gameplay_geometry_coupling": "navigation footprint stored in RoomDefinition",
       "canonical_registry_status": "not registered",
-      "assigned_candidate_strict_gate_result": "fail",
-      "assigned_candidate_legacy_evaluation_decision": "continue",
-      "best_current_candidate": "room_chair-v006",
-      "strict_evaluation_path": "art/room_chair/iterations/v006/evaluation.json",
-      "production_art_backlog_status": "round-02 target episode exhausted after three attempts; v006 best current review; below strict gate",
-      "recommended_production_method": "backlog until a materially different mesh and texture workflow can reproduce the carved seat rim, fitted joinery, and target-specific wood variation",
+      "assigned_candidate_strict_gate_result": null,
+      "assigned_candidate_legacy_evaluation_decision": null,
+      "best_current_candidate": null,
+      "strict_evaluation_path": null,
+      "production_art_backlog_status": "not individually named in current backlog; assess by tier during batch planning",
+      "recommended_production_method": "reuse shared quality furniture where it fits; use source-conditioned Art Factory production for distinctive photographed objects",
       "priority_tier": "Tier 1 — Scene-defining",
       "linked_runtime_geometry_sources": [
         "scripts/pipeline_proof.gd"

@@ -73,6 +73,9 @@ def dispatch_to_blender() -> int:
     asset_id = os.environ["ROOMSCALE_ART_FACTORY_ASSET_ID"]
     asset = ASSETS[asset_id]
     output_file = output_dir / "asset.glb"
+    recipe_path = Path(os.environ["ROOMSCALE_ART_FACTORY_RECIPE"])
+    recipe = json.loads(recipe_path.read_text(encoding="utf-8"))
+    generation_variant = str(recipe.get("parameters", {}).get("generation_variant", ""))
     blender = os.environ.get("ROOMSCALE_BLENDER_EXECUTABLE", "")
     if not blender:
         raise RuntimeError(
@@ -87,14 +90,13 @@ def dispatch_to_blender() -> int:
         "--",
         asset["type"],
         str(output_file),
+        generation_variant,
     ]
     result = subprocess.run(command, cwd=project_root, check=False)
     if result.returncode or not output_file.is_file():
         # Blender's background Python runner can print an uncaught script
         # exception and still return zero on some Windows builds.
         return result.returncode or 2
-    recipe_path = Path(os.environ["ROOMSCALE_ART_FACTORY_RECIPE"])
-    recipe = json.loads(recipe_path.read_text(encoding="utf-8"))
     generation_record = {
         "asset_id": asset_id,
         "asset_type": asset["type"],
@@ -105,6 +107,7 @@ def dispatch_to_blender() -> int:
         "source_inputs": recipe.get("source_inputs", []),
         "geometry": "authored modular mesh assemblies with bevelled edges, framed openings, and fit-for-purpose component detail",
         "materials": "embedded PBR base-colour, roughness, and tangent-normal textures for wood, stone, iron, copper, and paper as applicable",
+        "generation_variant": generation_variant,
     }
     (output_dir / "generation-record.json").write_text(
         json.dumps(generation_record, indent=2) + "\n", encoding="utf-8"
@@ -662,6 +665,11 @@ def pbr_material(
         cathedral = np.sin((x * 2.0 + 0.12 * y) * math.tau + np.sin(y * 4.0 * math.tau) * 0.65)
         height = fiber * 0.20 + cathedral * 0.14 + random_field * 0.035
         variation = fiber * 0.24 + cathedral * 0.17 + random_field * 0.025
+    elif grain == "french_oak_soft":
+        fiber = np.sin((x * 4.2 + 0.07 * np.sin(y * 1.5 * math.tau)) * math.tau)
+        ray = np.sin((x * 9.0 + 0.10 * y) * math.tau + np.sin(y * 3.0 * math.tau) * 0.25)
+        height = fiber * 0.12 + ray * 0.05 + random_field * 0.025
+        variation = fiber * 0.06 + ray * 0.03 + random_field * 0.008
     elif grain == "copper":
         height = random_field * 0.055 + np.sin(x * 40.0 + y * 23.0) * 0.035
         variation = random_field * 0.035 + np.sin(x * 16.0 + y * 24.0) * 0.035
@@ -1666,7 +1674,12 @@ def build_window(mats):
             obj.data.materials.append(mats["window_oak"])
 
 
-def build_french_door(mats):
+def build_french_door(mats, generation_variant: str = ""):
+    round02 = generation_variant in {
+        "round02_hardware_and_material",
+        "round02_alternate_baked_oak",
+    }
+    alternate_material = generation_variant == "round02_alternate_baked_oak"
     width, depth, height = 66.0, 4.0, 82.0
     jamb_width = 2.5
     casing_front_y = -1.72
@@ -1676,36 +1689,68 @@ def build_french_door(mats):
     # The reference has reddish, near-full-height divided glazing. Give this
     # asset its own timber and transparent-glass materials so other batch assets
     # retain their existing material response.
+    grain_profile = "french_oak_soft" if alternate_material else "french_oak"
     oak = pbr_material(
-        "French door reddish stained oak", (0.34, 0.13, 0.052), 0.0, 0.39, "french_oak"
+        "French door quarter-sawn oak" if alternate_material else "French door reddish stained oak",
+        (0.37, 0.20, 0.11) if alternate_material else (0.34, 0.13, 0.052),
+        0.0,
+        0.45 if alternate_material else 0.39,
+        grain_profile,
     )
     oak_high = pbr_material(
-        "French door oak edge grain", (0.46, 0.19, 0.07), 0.0, 0.36, "french_oak"
+        "French door oak board variation" if alternate_material else "French door oak edge grain",
+        (0.46, 0.27, 0.16) if alternate_material else (0.46, 0.19, 0.07),
+        0.0,
+        0.42 if alternate_material else 0.36,
+        grain_profile,
     )
     oak_dark = pbr_material(
-        "French door dark oak reveal", (0.18, 0.055, 0.024), 0.0, 0.43, "french_oak"
+        "French door oak end-grain and reveals"
+        if alternate_material
+        else "French door dark oak reveal",
+        (0.24, 0.12, 0.07) if alternate_material else (0.18, 0.055, 0.024),
+        0.0,
+        0.48 if alternate_material else 0.43,
+        grain_profile,
     )
     glass = pbr_material(
         "French door clear household glazing", (0.96, 0.98, 0.93), 0.0, 0.045, "metal", 0.08
     )
     hardware = pbr_material(
-        "French door aged dark brass hardware", (0.40, 0.27, 0.095), 0.72, 0.31, "metal"
+        "French door aged dark brass hardware"
+        if not round02
+        else "French door warm aged brass hardware",
+        (0.40, 0.27, 0.095) if not round02 else (0.48, 0.32, 0.105),
+        0.72 if not round02 else 0.66,
+        0.31 if not round02 else 0.28,
+        "metal",
     )
     hardware_high = pbr_material(
-        "French door brass wear highlights", (0.64, 0.45, 0.17), 0.70, 0.27, "metal"
+        "French door brass wear highlights"
+        if not round02
+        else "French door bright brass highlights",
+        (0.64, 0.45, 0.17) if not round02 else (0.82, 0.61, 0.25),
+        0.70 if not round02 else 0.62,
+        0.27 if not round02 else 0.25,
+        "metal",
     )
     if hasattr(glass, "surface_render_method"):
         glass.surface_render_method = "BLENDED"
-    oak_albedo = (
-        Path(__file__).resolve().parents[3]
-        / "art"
-        / "room_photo_french_door_production"
-        / "sources"
-        / "ai-generated-stained-oak-albedo-r01.png"
-    )
-    replace_base_color_with_image(oak, oak_albedo, 1.0)
-    replace_base_color_with_image(oak_high, oak_albedo, 1.16)
-    replace_base_color_with_image(oak_dark, oak_albedo, 0.68)
+    if not alternate_material:
+        oak_albedo = (
+            Path(__file__).resolve().parents[3]
+            / "art"
+            / "room_photo_french_door_production"
+            / "sources"
+            / (
+                "ai-generated-stained-oak-albedo-r03.png"
+                if round02
+                else "ai-generated-stained-oak-albedo-r01.png"
+            )
+        )
+        replace_base_color_with_image(oak, oak_albedo, 1.0)
+        replace_base_color_with_image(oak_high, oak_albedo, 1.08 if round02 else 1.16)
+        replace_base_color_with_image(oak_dark, oak_albedo, 0.80 if round02 else 0.68)
 
     # Keep the complete casing inside the authoritative 66 x 82 x 4 inch
     # opening envelope. The structural jamb and front casing are separate parts.
@@ -1786,7 +1831,7 @@ def build_french_door(mats):
     inner_stile = 1.35
     vertical_muntin = 0.48
     horizontal_muntin = 0.48
-    row_count = 5
+    row_count = 4 if round02 else 5
     pane_y = 0.0
     pane_depth = 0.10
 
@@ -1909,45 +1954,63 @@ def build_french_door(mats):
                     )
 
         # Three physically separate outer hinges per leaf with barrels and screw heads.
-        plate_leaf_x = hinge_x - hinge_side * 0.49
-        plate_jamb_x = hinge_x + hinge_side * 0.49
-        for hinge_z in (leaf_bottom + 10.0, (leaf_bottom + leaf_top) * 0.5, leaf_top - 10.0):
+        plate_offset = 0.66 if round02 else 0.49
+        plate_width = 1.05 if round02 else 0.78
+        plate_depth = 0.24 if round02 else 0.18
+        plate_height = 6.35 if round02 else 4.35
+        hinge_barrel_radius = 0.30 if round02 else 0.18
+        plate_bevel = 0.12 if round02 else 0.075
+        screw_radius = 0.135 if round02 else 0.075
+        plate_leaf_x = hinge_x - hinge_side * plate_offset
+        plate_jamb_x = hinge_x + hinge_side * plate_offset
+        hinge_inset = 8.5 if round02 else 10.0
+        for hinge_z in (
+            leaf_bottom + hinge_inset,
+            (leaf_bottom + leaf_top) * 0.5,
+            leaf_top - hinge_inset,
+        ):
             box(
                 "French door outer hinge leaf plate",
-                (plate_leaf_x, door_front_y - 0.10, hinge_z),
-                (0.78, 0.18, 4.35),
+                (plate_leaf_x, door_front_y - (0.14 if round02 else 0.10), hinge_z),
+                (plate_width, plate_depth, plate_height),
                 hardware,
-                0.075,
+                plate_bevel,
             )
             box(
                 "French door jamb hinge leaf plate",
-                (plate_jamb_x, door_front_y - 0.10, hinge_z),
-                (0.78, 0.18, 4.35),
+                (plate_jamb_x, door_front_y - (0.14 if round02 else 0.10), hinge_z),
+                (plate_width, plate_depth, plate_height),
                 hardware,
-                0.075,
+                plate_bevel,
             )
             cylinder(
                 "French door visible hinge barrel",
-                (hinge_x, door_front_y - 0.22, hinge_z),
-                0.18,
-                4.45,
+                (hinge_x, door_front_y - (0.30 if round02 else 0.22), hinge_z),
+                hinge_barrel_radius,
+                plate_height + (0.25 if round02 else 0.10),
                 hardware_high,
                 "Z",
-                24,
-                0.035,
+                32 if round02 else 24,
+                0.05 if round02 else 0.035,
             )
             for plate_x in (plate_leaf_x, plate_jamb_x):
-                for dx in (-0.20, 0.20):
-                    for dz in (-1.45, 1.45):
+                screw_offset_x = 0.31 if round02 else 0.20
+                screw_offset_z = 2.12 if round02 else 1.45
+                for dx in (-screw_offset_x, screw_offset_x):
+                    for dz in (-screw_offset_z, screw_offset_z):
                         cylinder(
                             "French door hinge screw head",
-                            (plate_x + dx, door_front_y - 0.24, hinge_z + dz),
-                            0.075,
-                            0.07,
+                            (
+                                plate_x + dx,
+                                door_front_y - (0.34 if round02 else 0.24),
+                                hinge_z + dz,
+                            ),
+                            screw_radius,
+                            0.12 if round02 else 0.07,
                             hardware_high,
                             "Y",
-                            16,
-                            0.018,
+                            24 if round02 else 16,
+                            0.025 if round02 else 0.018,
                         )
 
         # A camera-facing matched pair reflects the target: a knob on the left
@@ -2026,7 +2089,7 @@ def build_french_door(mats):
     )
 
 
-def apply_modifiers_and_merge_by_material():
+def apply_modifiers_and_merge_by_material(randomize_french_door_oak_uvs: bool = False):
     """Bake manufactured edge profiles, unwrap, and merge into material batches."""
     mesh_objects = [obj for obj in bpy.context.scene.objects if obj.type == "MESH"]
     for obj in mesh_objects:
@@ -2048,6 +2111,25 @@ def apply_modifiers_and_merge_by_material():
             bpy.ops.uv.smart_project(island_margin=0.025, scale_to_bounds=False)
         except RuntimeError:
             pass
+        if (
+            randomize_french_door_oak_uvs
+            and obj.data.materials
+            and obj.data.materials[0].name.startswith("French door")
+            and "brass" not in obj.data.materials[0].name.lower()
+            and "glazing" not in obj.data.materials[0].name.lower()
+        ):
+            # Vary repeat phase and texel density per timber part so adjacent
+            # rails and stiles do not reuse the same cathedral figure.
+            seed = sum(ord(char) for char in obj.name) + 2042
+            uv_rng = np.random.default_rng(seed)
+            scale = float(uv_rng.uniform(0.82, 1.18))
+            offset_u = float(uv_rng.uniform(0.0, 1.0))
+            offset_v = float(uv_rng.uniform(0.0, 1.0))
+            uv_layer = obj.data.uv_layers.active
+            if uv_layer is not None:
+                for loop in uv_layer.data:
+                    loop.uv.x = loop.uv.x * scale + offset_u
+                    loop.uv.y = loop.uv.y * scale + offset_v
         bpy.ops.object.mode_set(mode="OBJECT")
     material_groups: dict[str, list] = {}
     for obj in [item for item in bpy.context.scene.objects if item.type == "MESH"]:
@@ -2064,7 +2146,9 @@ def apply_modifiers_and_merge_by_material():
         bpy.context.object.name = "MaterialBatch_" + material_name.replace(" ", "_")
 
 
-def run_blender_generation(asset_type: str, output_path: Path) -> None:
+def run_blender_generation(
+    asset_type: str, output_path: Path, generation_variant: str = ""
+) -> None:
     clear_scene()
     mats = set_up_materials()
     builders = {
@@ -2079,7 +2163,10 @@ def run_blender_generation(asset_type: str, output_path: Path) -> None:
     builder = builders.get(asset_type)
     if builder is None:
         raise ValueError(f"unsupported production batch asset type: {asset_type}")
-    builder(mats)
+    if asset_type == "french_door":
+        builder(mats, generation_variant)
+    else:
+        builder(mats)
     corners = [
         obj.matrix_world @ Vector(corner)
         for obj in bpy.context.scene.objects
@@ -2104,7 +2191,9 @@ def run_blender_generation(asset_type: str, output_path: Path) -> None:
         print(
             f"ROOMSCALE_BATCH01_GEOMETRY_BOUNDS_BLENDER min={tuple(round(v, 3) for v in minimum)} max={tuple(round(v, 3) for v in maximum)} extent={tuple(round(v, 3) for v in maximum - minimum)}"
         )
-    apply_modifiers_and_merge_by_material()
+    apply_modifiers_and_merge_by_material(
+        randomize_french_door_oak_uvs=generation_variant == "round02_hardware_and_material"
+    )
     bpy.ops.object.select_all(action="SELECT")
     output_path.parent.mkdir(parents=True, exist_ok=True)
     bpy.ops.export_scene.gltf(
@@ -2129,9 +2218,12 @@ def run_blender_generation(asset_type: str, output_path: Path) -> None:
 def main() -> int:
     if IN_BLENDER:
         arguments = sys.argv[sys.argv.index("--") + 1 :] if "--" in sys.argv else []
-        if len(arguments) != 2:
-            raise SystemExit("Blender invocation requires <asset_type> <output.glb> after --")
-        run_blender_generation(arguments[0], Path(arguments[1]))
+        if len(arguments) not in {2, 3}:
+            raise SystemExit(
+                "Blender invocation requires <asset_type> <output.glb> [generation_variant] after --"
+            )
+        generation_variant = arguments[2] if len(arguments) == 3 else ""
+        run_blender_generation(arguments[0], Path(arguments[1]), generation_variant)
         return 0
     return dispatch_to_blender()
 

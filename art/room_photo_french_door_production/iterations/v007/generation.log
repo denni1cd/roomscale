@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale/scripts/art_factory/generators/production_batch01_blender.py", line 2207, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale/scripts/art_factory/generators/production_batch01_blender.py", line 2203, in main
+    return dispatch_to_blender()
+  File "C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale/scripts/art_factory/generators/production_batch01_blender.py", line 81, in dispatch_to_blender
+    raise RuntimeError(
+        "ROOMSCALE_BLENDER_EXECUTABLE must point to the approved local Blender install"
+    )
+RuntimeError: ROOMSCALE_BLENDER_EXECUTABLE must point to the approved local Blender install
