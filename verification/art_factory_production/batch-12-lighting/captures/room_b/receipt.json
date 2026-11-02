@@ -1,0 +1,154 @@
+{
+	"engine": {
+		"build": "official",
+		"hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+		"hex": 263938,
+		"major": 4,
+		"minor": 7,
+		"patch": 2,
+		"status": "stable",
+		"string": "4.7.2-stable (official)",
+		"timestamp": 0
+	},
+	"population": 50,
+	"profile": "compare",
+	"profiles": {
+		"baseline": {
+			"captures": [
+				{
+					"camera": {
+						"distance_inches": 330.0,
+						"focus": "(0.0, 12.0, 0.0)",
+						"fov_degrees": 55.0,
+						"position": "(0.0, 272.0435, 203.1683)",
+						"tilt_degrees": 52.0,
+						"yaw_radians": 0.0
+					},
+					"draw_calls": 970.0,
+					"fps": 49.0,
+					"path": "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale\\verification\\art_factory_production\\batch-12-lighting\\captures\\room_b/baseline/room-overview.png",
+					"phase": "room-overview",
+					"primitives": 540284.0,
+					"production_path": true
+				},
+				{
+					"camera": {
+						"distance_inches": 330.0,
+						"focus": "(0.0, 12.0, 0.0)",
+						"fov_degrees": 55.0,
+						"position": "(203.1683, 272.0435, -0.000009)",
+						"tilt_degrees": 52.0,
+						"yaw_radians": 1.5707963267949
+					},
+					"draw_calls": 970.0,
+					"fps": 49.0,
+					"path": "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale\\verification\\art_factory_production\\batch-12-lighting\\captures\\room_b/baseline/room-opposite-angle.png",
+					"phase": "room-opposite-angle",
+					"primitives": 538476.0,
+					"production_path": true
+				},
+				{
+					"camera": {
+						"distance_inches": 64.0,
+						"focus": "(-23.0, 4.0, 55.0)",
+						"fov_degrees": 55.0,
+						"position": "(-11.23315, 46.82436, 101.0827)",
+						"tilt_degrees": 42.0,
+						"yaw_radians": 0.25
+					},
+					"draw_calls": 1109.0,
+					"fps": 49.0,
+					"path": "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale\\verification\\art_factory_production\\batch-12-lighting\\captures\\room_b/baseline/settlement-gameplay.png",
+					"phase": "settlement-gameplay",
+					"primitives": 646256.0,
+					"production_path": true
+				}
+			],
+			"lighting": {
+				"ambient_energy": 0.720000028610229,
+				"background_color": "17212b",
+				"fill_energy": 1.20000004768372,
+				"glow_enabled": true,
+				"key_angular_distance": 0.0,
+				"key_color": "ffffff",
+				"key_energy": 0.800000011920929,
+				"key_shadow_blur": 1.0,
+				"key_shadow_opacity": 1.0,
+				"lantern_energy": 1.39999997615814
+			}
+		},
+		"candidate": {
+			"captures": [
+				{
+					"camera": {
+						"distance_inches": 330.0,
+						"focus": "(0.0, 12.0, 0.0)",
+						"fov_degrees": 55.0,
+						"position": "(0.0, 272.0435, 203.1683)",
+						"tilt_degrees": 52.0,
+						"yaw_radians": 0.0
+					},
+					"draw_calls": 970.0,
+					"fps": 49.0,
+					"path": "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale\\verification\\art_factory_production\\batch-12-lighting\\captures\\room_b/candidate/room-overview.png",
+					"phase": "room-overview",
+					"primitives": 540284.0,
+					"production_path": true
+				},
+				{
+					"camera": {
+						"distance_inches": 330.0,
+						"focus": "(0.0, 12.0, 0.0)",
+						"fov_degrees": 55.0,
+						"position": "(203.1683, 272.0435, -0.000009)",
+						"tilt_degrees": 52.0,
+						"yaw_radians": 1.5707963267949
+					},
+					"draw_calls": 970.0,
+					"fps": 49.0,
+					"path": "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale\\verification\\art_factory_production\\batch-12-lighting\\captures\\room_b/candidate/room-opposite-angle.png",
+					"phase": "room-opposite-angle",
+					"primitives": 538476.0,
+					"production_path": true
+				},
+				{
+					"camera": {
+						"distance_inches": 64.0,
+						"focus": "(-23.0, 4.0, 55.0)",
+						"fov_degrees": 55.0,
+						"position": "(-11.23315, 46.82436, 101.0827)",
+						"tilt_degrees": 42.0,
+						"yaw_radians": 0.25
+					},
+					"draw_calls": 1102.0,
+					"fps": 49.0,
+					"path": "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale\\verification\\art_factory_production\\batch-12-lighting\\captures\\room_b/candidate/settlement-gameplay.png",
+					"phase": "settlement-gameplay",
+					"primitives": 642128.0,
+					"production_path": true
+				}
+			],
+			"lighting": {
+				"ambient_energy": 0.560000002384186,
+				"background_color": "43566a",
+				"fill_energy": 0.649999976158142,
+				"glow_enabled": false,
+				"key_angular_distance": 0.5,
+				"key_color": "fff2e2",
+				"key_energy": 0.920000016689301,
+				"key_shadow_blur": 1.25,
+				"key_shadow_opacity": 0.819999992847443,
+				"lantern_energy": 1.39999997615814
+			}
+		}
+	},
+	"registry_path": "res://art/registry.json",
+	"renderer": "NVIDIA GeForce RTX 5090",
+	"room_file": "rooms/room_b.json",
+	"room_id": "room_b",
+	"status": "pass",
+	"viewport": {
+		"height": 720,
+		"width": 1280
+	}
+}

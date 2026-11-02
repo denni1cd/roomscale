@@ -1380,7 +1380,11 @@ func _build_lighting() -> void:
 	var light := DirectionalLight3D.new()
 	light.name = "KeyLight"
 	light.rotation_degrees = Vector3(-48.0, -34.0, 0.0)
-	light.light_energy = 0.8
+	light.light_color = Color("fff2e2")
+	light.light_energy = 0.92
+	light.light_angular_distance = 0.5
+	light.shadow_blur = 1.25
+	light.shadow_opacity = 0.82
 	light.shadow_enabled = true
 	add_child(light)
 	var camera_value: Variant = _room_definition.get("camera", {})
@@ -1392,7 +1396,7 @@ func _build_lighting() -> void:
 	fill.name = "RoomFill"
 	fill.position = RoomDefinitionLoader.vector3_from(fill_position)
 	fill.light_color = Color("dbe4ec")
-	fill.light_energy = 1.2
+	fill.light_energy = 0.65
 	fill.omni_range = maxf(190.0, ROOM_WIDTH * 0.9)
 	fill.omni_attenuation = 1.35
 	add_child(fill)
@@ -1400,12 +1404,12 @@ func _build_lighting() -> void:
 	environment.name = "WorldEnvironment"
 	var resource := Environment.new()
 	resource.background_mode = Environment.BG_COLOR
-	resource.background_color = Color("17212b")
+	resource.background_color = Color("43566a")
 	resource.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	resource.ambient_light_color = Color("d5dce4")
-	resource.ambient_light_energy = 0.72
+	resource.ambient_light_energy = 0.56
 	resource.tonemap_mode = Environment.TONE_MAPPER_FILMIC
-	resource.glow_enabled = true
+	resource.glow_enabled = false
 	resource.glow_intensity = 0.14
 	resource.glow_bloom = 0.04
 	resource.glow_hdr_threshold = 1.5

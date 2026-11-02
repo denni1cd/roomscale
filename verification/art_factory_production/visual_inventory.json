@@ -2,7 +2,7 @@
   "schema_version": 1,
   "title": "RoomScale Art Factory Production Deployment — Full Visible-Art Inventory",
   "source_commit": "1e111d37325e7ad00030266efec201796b7fc07d",
-  "generated_at_utc": "2026-11-02T08:12:02+00:00",
+  "generated_at_utc": "2026-11-02T08:35:14+00:00",
   "inventory_scope": "Playable room definitions, reconstructed/candidate RoomDefinitions, canonical and review registries, visual/material catalogs, static scenes, and runtime code that creates visible geometry/material/light/presentation nodes.",
   "coverage": {
     "room_definition_files_scanned": 21,
@@ -857,49 +857,49 @@
         },
         {
           "function": "_add_steam_emitter",
-          "line": 1946,
+          "line": 1950,
           "constructors": [
             "SphereMesh.new()"
           ]
         },
         {
           "function": "_add_box",
-          "line": 1959,
+          "line": 1963,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_add_box",
-          "line": 1961,
+          "line": 1965,
           "constructors": [
             "BoxMesh.new()"
           ]
         },
         {
           "function": "_add_cylinder",
-          "line": 1971,
+          "line": 1975,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_add_cylinder",
-          "line": 1973,
+          "line": 1977,
           "constructors": [
             "CylinderMesh.new()"
           ]
         },
         {
           "function": "_add_sphere",
-          "line": 1985,
+          "line": 1989,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_add_sphere",
-          "line": 1987,
+          "line": 1991,
           "constructors": [
             "SphereMesh.new()"
           ]
@@ -7977,13 +7977,13 @@
       "gameplay_importance": "medium — defines legibility, material response, and room scale",
       "visual_prominence": "dominant influence across every rendered asset",
       "approx_screen_space_importance": "whole-frame effect",
-      "current_visual_quality": "single directional key, broad omni fill, ambient color, and small boiler light; AO and reflections are not consistently present",
+      "current_visual_quality": "warm softened directional key, reduced cool fill and ambient, and slate blue-gray exterior; matched renders show more depth and calmer cutaway contrast, while room surfaces and furniture remain flat",
       "programmer_art_or_primitive": true,
       "photo_resemblance_required": true,
-      "recommended_production_method": "Bounded Godot environment/material tuning against matched production views, only where it improves the integrated scene",
-      "backlog_status": "lighting, glass handling, shadow/AO quality, and contrast remain in production-art backlog",
+      "recommended_production_method": "Future environment changes only when matched scene renders show a repeatable benefit; retain the current Godot lighting baseline during room-shell and furniture geometry work",
+      "backlog_status": "Batch 12 integrated a lighting-only presentation pass; flat room shell and furniture remain open Tier 1 work; no registry asset was promoted",
       "asset_factory_id": "lighting_and_environment",
-      "art_factory_id_exists_before_deployment": false,
+      "art_factory_id_exists_before_deployment": true,
       "existing_visual_catalog_id_exists": false,
       "assigned_or_reused_asset_factory_id": "lighting_and_environment",
       "category": "runtime-generated presentation system",
@@ -8007,13 +8007,13 @@
       "source_photo_resemblance_requirement": false,
       "photo_room_examples": [],
       "gameplay_geometry_coupling": "presentation-only geometry/materials; gameplay logic and collision are constructed by separate systems",
-      "canonical_registry_status": "not registered as one visual asset",
+      "canonical_registry_status": "not registered",
       "linked_art_factory_ids": [],
       "linked_art_factory_registry_state": {},
       "best_current_candidate": null,
       "strict_evaluation_path": null,
       "strict_gate_result": null,
-      "production_art_backlog_status": "lighting, glass handling, shadow/AO quality, and contrast remain in production-art backlog",
+      "production_art_backlog_status": "Batch 12 integrated a lighting-only presentation pass; flat room shell and furniture remain open Tier 1 work; no registry asset was promoted",
       "linked_runtime_geometry_sources": [
         "scripts/civilization_presentation.gd",
         "scripts/pipeline_proof.gd"

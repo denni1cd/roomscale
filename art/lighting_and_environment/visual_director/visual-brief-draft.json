@@ -1,0 +1,21 @@
+{
+  "asset_id": "lighting_and_environment",
+  "semantic_identity": "scene-wide lighting and environment treatment",
+  "intended_function": "Improve material readability, miniature scale cues, and contrast between the human room and the miniature settlement through lighting only.",
+  "scope": "Existing lights and WorldEnvironment settings in the live RoomScale scene. No standalone mesh or material asset is produced.",
+  "visual_target": "Use a restrained warm directional key, cooler neutral fill, controlled pale-surface exposure, soft readable shadows, warm existing settlement lights, and a subdued cool exterior. Preserve object geometry, positions, silhouettes, materials, textures, and gameplay.",
+  "required_view_contexts": [
+    "Room A overview at 330 inches",
+    "Room B overview at 330 inches",
+    "Photo-derived Room A overview at 330 inches",
+    "Room A, Room B, and photo-derived settlement views at 64 inches"
+  ],
+  "approved_visual_target": "art/lighting_and_environment/visual_director/round-01/approved-target-r01.png",
+  "pixel_review": "art/lighting_and_environment/visual_director/round-01/pixel-review-r01.md",
+  "implementation_constraints": [
+    "Modify only existing DirectionalLight3D, OmniLight3D, and WorldEnvironment properties.",
+    "Do not add AO, reflections, lights, geometry, material colors, textures, or decals.",
+    "Do not reproduce generated image wall/floor texture or unsupported window-shaped shadows.",
+    "Keep RoomDefinitions, collisions, navigation, selection, interactions, citizen autonomy, and simulation unchanged."
+  ]
+}

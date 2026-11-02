@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "asset_id": "lighting_and_environment",
+  "semantic_type": "scene-wide illumination and environment presentation",
+  "display_name": "RoomScale Lighting and Environment",
+  "category": "scene_presentation",
+  "intended_dimensions": [1.0, 1.0, 1.0],
+  "gameplay_invariants": {
+    "room_definition_authority_and_dimensions_unchanged": true,
+    "collision_navigation_selection_and_interaction_unchanged": true,
+    "citizen_autonomy_and_simulation_unchanged": true,
+    "only_existing_light_and_environment_settings_may_change": true
+  },
+  "reference_images": [],
+  "visual_target": "Across representative human rooms and miniature settlement views, use a restrained warm directional key, cooler neutral fill, controlled highlights, soft readable contact shadows, and a subdued cool room exterior. Keep the room materially credible and let existing settlement lamps separate the miniature world from the human room. Preserve all geometry, positions, material identities, and gameplay.",
+  "materials": {},
+  "required_features": [
+    "Pale room walls and floor retain tonal detail rather than clipping to white.",
+    "Furniture and settlement forms gain readable depth from directional light and grounded soft shadows.",
+    "Existing settlement lamps remain warmer than the room fill.",
+    "Exterior environment reads as subdued cool blue-gray without dominating the composition.",
+    "Same lighting direction and relative hierarchy hold in Room A, Room B, and the photo-derived room."
+  ],
+  "prohibited_changes": [
+    "Do not change RoomDefinition geometry, dimensions, placements, collisions, navigation, interactions, or simulation.",
+    "Do not add or remove objects, meshes, lights, windows, texture detail, material colors, or decals as part of this lighting pass.",
+    "Do not introduce unsupported window-shaped shadow patterns.",
+    "Do not use material recoloring or added shader detail to claim a lighting improvement."
+  ],
+  "camera_distances": [64.0, 330.0],
+  "quality_tier": "B",
+  "iteration_budget": 0,
+  "source_room_definition": "",
+  "allow_stylization": false,
+  "stylization_rationale": "",
+  "priority_tier": 1,
+  "screen_space_importance": 5,
+  "source_photo_required": false,
+  "faction_defining": false,
+  "current_quality": "below_target"
+}
