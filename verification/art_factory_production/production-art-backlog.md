@@ -1,10 +1,10 @@
-# Production Art Backlog — Updated after Batch 23
+# Production Art Backlog — Updated after Batch 24
 
 This is the post-POC production backlog. It preserves POC 2.5 evidence and acceptance results; the entries below are not POC 2.5 regressions or changes to its acceptance amendment.
 
-## Current priority after Batch 23
+## Current priority after Batch 24
 
-1. **Faction visual identity.** The Scavenger workshop, Depot, and housing approved-target episodes have each exhausted three strategies and remain review-only. Depot v003 reads its doors and route in the corrected Room A camera but misses the hoist/storage and close-craft gates. Housing v003 now separates the paired roof silhouettes at 64 inches and fits its 17 x 7 x 9 inch envelope; v004's alternate material pass does not raise geometry or material quality above 3/5. Continue with the next high-prominence Scavenger structure, starting with the Work Area; retain the best current review candidates and preserve all sites, dimensions, and gameplay contracts. Avoid another citizen iteration loop until a bounded role-kit batch is ready.
+1. **Faction visual identity.** The Scavenger workshop, Depot, housing, and Work Area approved-target episodes have each exhausted three strategies and remain review-only. Depot v003 reads its doors and route at 64 inches but misses the hoist/storage and close-craft gates. Housing v003 separates paired roof silhouettes but remains below the geometry/material gates. Work Area v001 is best current; v002 failed the 12-inch depth tolerance and v003's solid-color alternate still reads as a canopy, with the tool board and vise obscured. Do not make fourth variants against these targets. Select the next high-impact untried family from the inventory; avoid another citizen loop until a bounded role-kit batch is ready.
 2. **Clockwork workshop target episode.** v008 remains the best current 3D candidate; v004 remains production. v009's upper tier is oversized and disconnected, and Luna's pixel review found it less coherent than v008. The r01 episode is backlogged after three strategies. Do not make a fourth variant against the same approved target.
 3. **Room shell trim and French door.** Both approved-target episodes have exhausted three strategies. Trim v002 remains best current but misses close-craft and grain; French-door v010 has exact bounds and readable hinges but repetitive oak. The blue-gray pane capture cannot establish transparency. Preserve room dimensions; keep any garden context outside the door mesh.
 4. **Desk transfer.** The r01 episode remains at three attempts. A current matched rerender makes v061 the best 3D review candidate because its probe restores broad room reflections and its constructed underframe reads better than v007. It still renders too green and transparent against the source and target; preserve v007 in production and do not generate a fourth r01 variant.
@@ -68,6 +68,10 @@ Batch 21 selected the Scavenger settlement architecture family because it repeat
 
 The Scavenger Depot r01 target received three bounded Blender transfers. The first gameplay reviews used the default human-room fixture and did not center the Depot; corrected matched captures use the actual Room A scene. v003 is the best current candidate: its paired appliance doors and open route score 4/5 at 64 inches, with stronger Scavenger identity than v001/v002. The hand hoist and side storage remain under-readable (2/5), close craft remains 3/5, and the roof is more regular than the approved gantry. Godot validation passed at 23.63 × 12.18 × 18.61 inches, 10 meshes/surfaces, and 52,048 triangles. The episode is backlogged after attempt three; no candidate was promoted and the canonical registry remains unchanged. See [Batch 22](batch-22-scavenger-depot-final.md).
 
+## Batch 24 disposition
+
+The Luna-approved Scavenger Work Area target received three bounded strategies. v001 remains best current because v003's alternate solid PBR blocks weaken roof-to-bench separation without making the work function legible at the controlled Room A 64-inch camera. Luna scores v003 identity 1/5, bench/vise visibility 2/5, tool-board/tool visibility 1/5, and material separation 2/5. v002 generation succeeded but technical validation rejected its 7.70-inch depth against the 12-inch brief; no production render was captured for that invalid candidate. v003 passes at 22.81 × 8.045 × 10.03 inches. The review images are static Godot production-scene camera proxies, not live interactive gameplay captures. The target is backlogged, no candidate was promoted, and the accepted registry remains at 15 entries. See [Batch 24](batch-24-scavenger-workarea-final.md).
+
 ## Promoted production assets
 
 - Batch 1: `settlement_depot-v005`, `settlement_housing-v004`, and `room_bookcase_production-v001`.
@@ -76,7 +80,7 @@ The Scavenger Depot r01 target received three bounded Blender transfers. The fir
 
 These are scoped improvements. The inventory still contains substantial unregistered room furniture, runtime-generated geometry, and incomplete faction-specific art.
 
-No canonical production assets were promoted in Batches 5–22; Batch 12 changed scene-wide lighting settings, and Batch 15 added no runtime promotion. Review-only candidates remain outside accepted production, including desk-v061 (with desk-v007 retained in production), French door v010, trim v002, Room A bookcase v003, the Batch 15 furniture candidates, Scavenger workshop v003, and Scavenger Depot v003. See the batch reports linked above.
+No canonical production assets were promoted in Batches 5–24; Batch 12 changed scene-wide lighting settings, and Batch 15 added no runtime promotion. Review-only candidates remain outside accepted production, including desk-v061 (with desk-v007 retained in production), French door v010, trim v002, Room A bookcase v003, the Batch 15 furniture candidates, Scavenger workshop v003, Scavenger Depot v003, and Work Area v001. See the batch reports linked above.
 
 ## Batch 1 promotion detail
 

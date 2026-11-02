@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "method": "blender_open_handwork_salvage_bay",
+  "instructions": "Alternate Visual Director strategy informed by the v001 gameplay-read diagnosis and v002 technical proportions failure. Preserve a 23 x 9 x 12 inch work bay while receding the camera-facing canopy edge to expose the workbench, hand vise and tool board. Extend the supported rear canopy so the overall bay retains at least 9.6 inches of depth. Keep the entrance open and roof under 9 inches high. Replace the baked PBR patina maps with clear solid color-block materials and distinct roughness/metallic response so the blue tool board, warm timber and galvanized roof separate at the 64-inch Room A presentation camera. Presentation only; no simulation changes.",
+  "tool": "Blender component authoring with geometry-built work surfaces and embedded PBR salvage materials.",
+  "tool_version": "Blender 5.2.3+; Godot 4.7.2-stable Compatibility production renderer",
+  "material_method": "Solid per-part color blocks with separate Standard PBR roughness and metallic values; omit baked color, normal and roughness maps so broad work-function colors remain distinct at gameplay distance.",
+  "post_processing": [],
+  "deterministic_seed": 20261107,
+  "generator_command": [
+    "{project_root}/.venv/Scripts/python.exe",
+    "{project_root}/scripts/art_factory/generators/scavenger_workarea_pipeline.py",
+    "{project_root}",
+    "{output_dir}"
+  ],
+  "source_inputs": [
+    "art/scavenger_workarea/brief.json",
+    "art/scavenger_workarea/visual_director/round-01/approved-target-r01.png",
+    "art/scavenger_workarea/visual_director/round-01/pixel-review.md",
+    "art/scavenger_workarea/visual_director/round-01/visual-development.md",
+    "art/scavenger_workarea/iterations/v001/evaluation.json",
+    "art/scavenger_workarea/iterations/v002/technical-validation.json",
+    "scripts/art_factory/generators/scavenger_workarea_blender.py",
+    "scripts/art_factory/generators/scavenger_workarea_pipeline.py",
+    "scripts/art_factory/generators/scavenger_workshop_blender.py",
+    "scripts/art_factory/generators/production_batch01_blender.py",
+    "scripts/civilization_presentation.gd"
+  ],
+  "import_configuration": {
+    "collision_navigation_selection_and_work_contracts": "not present in visual asset",
+    "format": "GLB with embedded PBR material factors and without baked texture maps",
+    "presentation_only": true,
+    "renderer": "Godot Compatibility",
+    "units": "inches",
+    "up_axis": "glTF Y up converted from Blender Z up"
+  },
+  "parameters": {
+    "visual_director_strategy": "alternate_strategy",
+    "diagnosis_ref": "scavenger_workarea-v001",
+    "materially_different_strategy": true,
+    "layout_strategy": "open_handwork_bay_with_receded_front_and_deep_supported_rear_canopy",
+    "material_strategy": "solid_scale_blocks",
+    "material_palette": {
+      "enamel_blue": [0.10, 0.38, 0.55],
+      "enamel_cream": [0.77, 0.69, 0.54],
+      "galvanized": [0.47, 0.52, 0.52],
+      "rust": [0.40, 0.19, 0.11]
+    },
+    "output_envelope_inches": [23.0, 9.0, 12.0],
+    "gameplay_geometry_changed": false,
+    "outputs": ["scavenger_workarea.glb"]
+  }
+}

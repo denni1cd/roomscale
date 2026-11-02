@@ -1,0 +1,154 @@
+{
+  "candidate_id": "scavenger_workarea-v003",
+  "created_at_utc": "2026-11-02T15:31:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "The canopy remains the first read instead of a shared hand-work bay.",
+    "The tool board and large tools are hidden at the 64-inch camera; the bench is only a pale horizontal band and the vise is too small to read.",
+    "The alternate solid-color strategy washes the roof and bench into pale white and salmon blocks."
+  ],
+  "hard_fail_reasons": [
+    "Work-area identity scores 1/5 at the controlled Room A 64-inch camera proxy.",
+    "Tool-board and large-tool visibility scores 1/5, and the hand vise remains too small to identify.",
+    "The roof and bench material blocks lose separation, scoring 2/5."
+  ],
+  "incumbent_candidate_id": "scavenger_workarea-v001",
+  "incumbent_comparison": "Compare v003's receded roof edge and solid color-block material strategy with v001 in matched Room A production captures. v003 passes the dimensional validator and exposes more of the bench front, but the tool board and large tools remain hidden, the work-area identity is weaker, and its bright roof/bench material separation regresses.",
+  "incumbent_comparison_result": "worse",
+  "likely_causes": [
+    "geometry_loss",
+    "proportion_drift",
+    "material_generation"
+  ],
+  "next_action_hypothesis": "The three-strategy approved-target budget is exhausted. If the work area is reopened under a new target episode, shift or reduce the camera-facing roof so the blue/cream tool board, separated large tools, bench and vise become the first read beneath visibly supported cover; restore material contrast between roof and work surface.",
+  "observations": {
+    "art_direction_fit": "Timber and sheet construction suggest salvage, but the pale roof/bench treatment and shelter-first silhouette weaken the approved Scavenger hand-work target.",
+    "close_up_quality": "The close proxy confirms roof and bench construction, but Luna still cannot recover the hand-work function or tool-board read.",
+    "gameplay_readability": "Luna scores work-area identity 1/5, bench/vise visibility 2/5, and tool-board/tool visibility 1/5 at the controlled 64-inch Room A camera.",
+    "geometric_detail": "The close three-quarter capture shows a modeled bench, roof panels, posts and braces, but most work details disappear from the 64-inch views.",
+    "material_realism": "The alternate solid color blocks make the roof bright white/salmon and the bench pale; Luna rates their separation 2/5.",
+    "proportion": "The bench and tool board occupy too little visible area under the wide bright canopy; the front canopy still takes visual priority.",
+    "scale_fidelity": "Godot reports bounds 22.81 x 8.045 x 10.03 inches against the 23 x 9 x 12 inch brief.",
+    "semantic_recognizability": "Luna identifies the 64-inch read as a canopy shelter; neither the tool board nor large hand tools establish the work-area function.",
+    "silhouette_quality": "The broad roof remains the dominant shape in the Room A 64-inch front, opposite and side captures.",
+    "surface_variation": "Removing the baked patina maps leaves broad roof and bench surfaces visually even at the close camera proxy.",
+    "technical_integration": "Godot 4.7.2 imports and validates the review-only GLB through the Room A production scene; gameplay contracts remain separate."
+  },
+  "render_evidence": [
+    "art/scavenger_workarea/iterations/v003/render-runs/run-001/settlement-scale.png",
+    "art/scavenger_workarea/iterations/v003/render-runs/run-001/settlement-scale-opposite-angle.png",
+    "art/scavenger_workarea/iterations/v003/render-runs/run-001/settlement-scale-side-angle.png",
+    "art/scavenger_workarea/iterations/v003/render-runs/run-001/asset-three-quarter.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 3,
+    "gameplay_readability": 1,
+    "geometric_detail": 3,
+    "material_realism": 2,
+    "proportion": 2,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 2,
+    "silhouette_quality": 2,
+    "surface_variation": 2,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "At the close camera proxy, broad smooth roof and bench materials lack enough surface separation, while the tool board and large hand tools remain occluded from the observed angle.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "The close three-quarter capture shows sheet edges, bench thickness and timber post sections.",
+        "evidence_refs": [
+          "art/scavenger_workarea/iterations/v003/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "The Room A 64-inch images do not resolve the hand vise into readable hardware, and no other clear work-hardware focal point is visible.",
+        "evidence_refs": [
+          "art/scavenger_workarea/iterations/v003/render-runs/run-001/settlement-scale.png"
+        ],
+        "pass": false
+      },
+      "joins": {
+        "evidence": "Cross headers, roof purlins, knee braces and posts form a visible supported canopy in the close capture.",
+        "evidence_refs": [
+          "art/scavenger_workarea/iterations/v003/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "At the 64-inch camera, the board-mounted tool layout, vise and hand-work arrangement do not communicate a manufactured work bay.",
+        "evidence_refs": [
+          "art/scavenger_workarea/iterations/v003/render-runs/run-001/settlement-scale-opposite-angle.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "The solid material blocks render roof and bench as similarly pale surfaces; their separation is weak in the Room A scene.",
+        "evidence_refs": [
+          "art/scavenger_workarea/iterations/v003/render-runs/run-001/settlement-scale.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "Broad white and salmon roof panels and the pale bench have little visible wear variation after the alternate strategy removed baked maps.",
+        "evidence_refs": [
+          "art/scavenger_workarea/iterations/v003/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "The roof sheets and workbench top have visible thickness in the close capture.",
+        "evidence_refs": [
+          "art/scavenger_workarea/iterations/v003/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "evidence": "The close three-quarter production capture reads as a constructed timber and sheet-metal shelter with a bench, though the work-area identity does not survive at 64 inches.",
+      "pass": true
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "The ArtBrief does not require photographic-source character or list reference images.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": true
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Backlog the current target after three strategies. A future target should expose the tool board and bench beneath a smaller or camera-shifted canopy while restoring clear roof-to-bench material contrast.",
+    "lost_visual_information": [
+      "The 64-inch Room A first read remains a roofed shelter instead of hand-work furniture and tools.",
+      "The blue/cream tool board, separated large tools and vise are hidden or too small to read.",
+      "The alternate material approach reduces broad surface separation between roof and bench."
+    ],
+    "preserved_components": [
+      "The 23 x 9 x 12 inch presentation envelope and open entrance are preserved within validator tolerance.",
+      "The static visual asset remains separate from collision, navigation, selection and work-site behavior.",
+      "The close view retains visible timber posts, braces, roof sheet thickness and workbench geometry."
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "proportion_drift",
+      "material_generation"
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "art_direction": "RoomScale category: settlement_structure. Create a compact, visibly open Scavenger work bay within the existing 23 x 9 x 12 inch presentation envelope. At the 64-inch Room A camera, make the shared hand-work bench, one broad wall-mounted tool board, and the clear open work entrance read before small tools. Build the work area from repaired pallet timber, reused drawer boards, a faded blue or cream appliance panel, mismatched galvanized rain sheets and one restrained canvas patch. Give it a lean improvised silhouette distinct from a depot loading shed and paired housing. Show believable supports, a plain hand vise, a small parts crate and several clearly separated large tool shapes. Preserve the current landmark and all simulation-owned work-site behavior.",
+  "asset_id": "scavenger_workarea",
+  "citizen_scale": {
+    "citizen_height_inches": 0.5,
+    "ratio_or_view": "Use the exact 9-inch height against a 0.5-inch citizen; derive a schematic if generated scale is inaccurate."
+  },
+  "construction_materials": [
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "plain dark iron straps, bolts and hooks without ornate metalwork",
+      "part": "hardware"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "reclaimed pallet timber and repaired drawer-board supports with visible joinery",
+      "part": "primary_frame"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "one small side crate and a short rack for large offcuts or rods",
+      "part": "storage"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "one faded blue or cream salvaged appliance slab with a few large readable hand tools",
+      "part": "tool_board"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "one shallow irregular galvanized sheet canopy with a small canvas patch, visibly supported by timber",
+      "part": "weather_cover"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "broad worn timber bench top with a dark metal hand vise, no powered machinery",
+      "part": "work_surface"
+    }
+  ],
+  "dimensions_inches": [
+    23.0,
+    9.0,
+    12.0
+  ],
+  "faction_identity": "open shared Scavenger work bay with salvaged bench, tool wall and staged parts",
+  "gameplay_distance_readability": "Keep required features legible at the ArtBrief gameplay camera distances: 2.0, 12.0, 64.0, 330.0 inches.",
+  "intended_function": "Create a compact, visibly open Scavenger work bay within the existing 23 x 9 x 12 inch presentation envelope. At the 64-inch Room A camera, make the shared hand-work bench, one broad wall-mounted tool board, and the clear open work entrance read before small tools. Build the work area from repaired pallet timber, reused drawer boards, a faded blue or cream appliance panel, mismatched galvanized rain sheets and one restrained canvas patch. Give it a lean improvised silhouette distinct from a depot loading shed and paired housing. Show believable supports, a plain hand vise, a small parts crate and several clearly separated large tool shapes. Preserve the current landmark and all simulation-owned work-site behavior.",
+  "prohibited_failure_modes": [
+    "do not change RoomDefinition landmarks, dimensions, work-site identity or assignments",
+    "do not add render meshes to collision, navigation, selection or work-site calculations",
+    "do not add canonical-room-specific placement or simulation logic",
+    "do not use Clockwork gears, powered machinery, decorative brass or copper trim"
+  ],
+  "roomdefinition_authority": "ArtBrief dimensions are (23.0, 9.0, 12.0); source RoomDefinition: not specified. RoomDefinition remains authoritative for placement and gameplay.",
+  "semantic_identity": "open shared Scavenger work bay with salvaged bench, tool wall and staged parts",
+  "separate_room_assets": [],
+  "silhouette_requirements": [
+    "workbench, large tool board and open work entrance remain readable at the 64-inch gameplay camera",
+    "open bay and hand-work function are distinct from the Scavenger Depot and paired homes",
+    "broad reclaimed timber, faded enamel, sheet metal and restrained canvas establish Scavenger identity",
+    "roof, bench and tool board have visible supports and plausible load paths",
+    "fit the existing 23 x 9 x 12 inch presentation envelope"
+  ],
+  "source_photo_constraints": null,
+  "visual_references": []
+}

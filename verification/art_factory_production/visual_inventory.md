@@ -1,6 +1,6 @@
 # RoomScale Full Visible-Art Inventory
 
-Generated: `2026-11-02T15:07:52+00:00`
+Generated: `2026-11-02T15:35:52+00:00`
 
 Starting state: POC 2.5 closure `1e111d37325e7ad00030266efec201796b7fc07d`
 Purpose: production prioritization only; no POC 2.5 reopening.

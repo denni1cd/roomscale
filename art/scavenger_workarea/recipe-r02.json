@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "method": "blender_open_handwork_salvage_bay",
+  "instructions": "Targeted correction to scavenger_workarea-v001. Shorten the camera-facing canopy depth and overhang by about one third, set the front eave near 7.85 inches while keeping all geometry under the 9-inch envelope, and expose the broad workbench, hand vise, blue tool board and separated large tools from the Room A 64-inch presentation camera. Keep the entrance open and timber supports visible. Preserve the Scavenger salvage palette, the 23 x 9 x 12 inch envelope, and presentation-only behavior; do not change gameplay systems.",
+  "tool": "Blender component authoring with geometry-built work surfaces and embedded PBR salvage materials.",
+  "tool_version": "Blender 5.2.3+; Godot 4.7.2-stable Compatibility production renderer",
+  "material_method": "Retain broad timber, enamel and galvanized material blocks for gameplay distance; preserve the existing close-range PBR patina while correcting roof geometry only.",
+  "post_processing": [],
+  "deterministic_seed": 20261106,
+  "generator_command": [
+    "{project_root}/.venv/Scripts/python.exe",
+    "{project_root}/scripts/art_factory/generators/scavenger_workarea_pipeline.py",
+    "{project_root}",
+    "{output_dir}"
+  ],
+  "source_inputs": [
+    "art/scavenger_workarea/brief.json",
+    "art/scavenger_workarea/visual_director/round-01/approved-target-r01.png",
+    "art/scavenger_workarea/visual_director/round-01/pixel-review.md",
+    "art/scavenger_workarea/visual_director/round-01/visual-development.md",
+    "art/scavenger_workarea/iterations/v001/evaluation.json",
+    "art/scavenger_workarea/iterations/v001/review-luna-room-a.md",
+    "scripts/art_factory/generators/scavenger_workarea_blender.py",
+    "scripts/art_factory/generators/scavenger_workarea_pipeline.py",
+    "scripts/art_factory/generators/scavenger_workshop_blender.py",
+    "scripts/art_factory/generators/production_batch01_blender.py",
+    "scripts/civilization_presentation.gd"
+  ],
+  "import_configuration": {
+    "collision_navigation_selection_and_work_contracts": "not present in visual asset",
+    "format": "GLB with embedded PBR texture maps",
+    "presentation_only": true,
+    "renderer": "Godot Compatibility",
+    "units": "inches",
+    "up_axis": "glTF Y up converted from Blender Z up"
+  },
+  "parameters": {
+    "visual_director_strategy": "targeted_correction",
+    "diagnosis_ref": "scavenger_workarea-v001",
+    "layout_strategy": "open_canopy_handwork_bay",
+    "material_strategy": "broad_scale_patina",
+    "material_palette": {
+      "enamel_blue": [0.10, 0.38, 0.55],
+      "enamel_cream": [0.77, 0.69, 0.54],
+      "galvanized": [0.47, 0.52, 0.52],
+      "rust": [0.40, 0.19, 0.11]
+    },
+    "output_envelope_inches": [23.0, 9.0, 12.0],
+    "gameplay_geometry_changed": false,
+    "outputs": ["scavenger_workarea.glb"]
+  }
+}

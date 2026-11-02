@@ -1,0 +1,56 @@
+{
+  "allow_stylization": true,
+  "asset_id": "scavenger_workarea",
+  "camera_distances": [
+    2.0,
+    12.0,
+    64.0,
+    330.0
+  ],
+  "category": "settlement_structure",
+  "current_quality": "below_target",
+  "display_name": "Scavenger Settlement Work Area",
+  "faction_defining": true,
+  "gameplay_invariants": {
+    "render_meshes_do_not_create_collision_navigation_selection_or_work_contracts": true,
+    "room_definition_landmark_is_authoritative": true,
+    "work_site_behavior_and_resource_assignments_remain_simulation_owned": true
+  },
+  "intended_dimensions": [
+    23.0,
+    9.0,
+    12.0
+  ],
+  "iteration_budget": 3,
+  "materials": {
+    "hardware": "plain dark iron straps, bolts and hooks without ornate metalwork",
+    "primary_frame": "reclaimed pallet timber and repaired drawer-board supports with visible joinery",
+    "storage": "one small side crate and a short rack for large offcuts or rods",
+    "tool_board": "one faded blue or cream salvaged appliance slab with a few large readable hand tools",
+    "weather_cover": "one shallow irregular galvanized sheet canopy with a small canvas patch, visibly supported by timber",
+    "work_surface": "broad worn timber bench top with a dark metal hand vise, no powered machinery"
+  },
+  "priority_tier": 1,
+  "prohibited_changes": [
+    "do not change RoomDefinition landmarks, dimensions, work-site identity or assignments",
+    "do not add render meshes to collision, navigation, selection or work-site calculations",
+    "do not add canonical-room-specific placement or simulation logic",
+    "do not use Clockwork gears, powered machinery, decorative brass or copper trim"
+  ],
+  "quality_tier": "B",
+  "reference_images": [],
+  "required_features": [
+    "workbench, large tool board and open work entrance remain readable at the 64-inch gameplay camera",
+    "open bay and hand-work function are distinct from the Scavenger Depot and paired homes",
+    "broad reclaimed timber, faded enamel, sheet metal and restrained canvas establish Scavenger identity",
+    "roof, bench and tool board have visible supports and plausible load paths",
+    "fit the existing 23 x 9 x 12 inch presentation envelope"
+  ],
+  "schema_version": 1,
+  "screen_space_importance": 4,
+  "semantic_type": "open shared Scavenger work bay with salvaged bench, tool wall and staged parts",
+  "source_photo_required": false,
+  "source_room_definition": "",
+  "stylization_rationale": "RoomScale is a miniature diorama. Stylization is allowed when the work bay remains believable as a built, hand-operated salvage workshop and its work function reads at gameplay scale.",
+  "visual_target": "Create a compact, visibly open Scavenger work bay within the existing 23 x 9 x 12 inch presentation envelope. At the 64-inch Room A camera, make the shared hand-work bench, one broad wall-mounted tool board, and the clear open work entrance read before small tools. Build the work area from repaired pallet timber, reused drawer boards, a faded blue or cream appliance panel, mismatched galvanized rain sheets and one restrained canvas patch. Give it a lean improvised silhouette distinct from a depot loading shed and paired housing. Show believable supports, a plain hand vise, a small parts crate and several clearly separated large tool shapes. Preserve the current landmark and all simulation-owned work-site behavior."
+}

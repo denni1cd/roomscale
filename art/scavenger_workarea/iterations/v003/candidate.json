@@ -1,0 +1,321 @@
+{
+  "asset_files": [
+    "art/scavenger_workarea/iterations/v003/generated/scavenger_workarea.glb"
+  ],
+  "asset_id": "scavenger_workarea",
+  "candidate_id": "scavenger_workarea-v003",
+  "created_at_utc": "2026-11-02T15:29:14+00:00",
+  "evaluation_file": "art/scavenger_workarea/iterations/v003/evaluation.json",
+  "generation_attempts": [
+    {
+      "command": [
+        "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/.venv/Scripts/python.exe",
+        "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/scripts/art_factory/generators/scavenger_workarea_pipeline.py",
+        "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale",
+        "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale\\art\\scavenger_workarea\\iterations\\v003\\generated"
+      ],
+      "execution_number": 1,
+      "exit_code": 0,
+      "log_file": "art/scavenger_workarea/iterations/v003/generation.log",
+      "output_dir": "art/scavenger_workarea/iterations/v003/generated",
+      "recorded_at_utc": "2026-11-02T15:29:15+00:00",
+      "status": "pass"
+    }
+  ],
+  "generation_result": {
+    "command": [
+      "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/.venv/Scripts/python.exe",
+      "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/scripts/art_factory/generators/scavenger_workarea_pipeline.py",
+      "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale",
+      "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale\\art\\scavenger_workarea\\iterations\\v003\\generated"
+    ],
+    "execution_number": 1,
+    "exit_code": 0,
+    "log_file": "art/scavenger_workarea/iterations/v003/generation.log",
+    "output_dir": "art/scavenger_workarea/iterations/v003/generated",
+    "recorded_at_utc": "2026-11-02T15:29:15+00:00",
+    "status": "pass"
+  },
+  "parent_candidate_id": "scavenger_workarea-v002",
+  "recipe_file": "art/scavenger_workarea/iterations/v003/recipe.json",
+  "renders": [
+    {
+      "asset_id": "scavenger_workarea",
+      "camera": {
+        "actual_camera_position": "(0.0, 272.0435, 203.1683)",
+        "distance_inches": 330.0,
+        "focus": "(0.0, 12.0, 0.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 52.0,
+        "yaw_radians": 0.0
+      },
+      "candidate_id": "scavenger_workarea-v003",
+      "captured_at_utc": "2026-11-02T15:29:37+00:00",
+      "draw_calls": 841.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 18.0,
+      "path": "art/scavenger_workarea/iterations/v003/render-runs/run-001/room-scale.png",
+      "phase": "room-scale",
+      "primitives": 518008.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "436c81eeadcc95f12fefeab57be8766333293876af0d1b06aede9beaba23a8da"
+    },
+    {
+      "asset_id": "scavenger_workarea",
+      "camera": {
+        "actual_camera_position": "(203.1683, 272.0435, -0.000009)",
+        "distance_inches": 330.0,
+        "focus": "(0.0, 12.0, 0.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 52.0,
+        "yaw_radians": 1.5707963267949
+      },
+      "candidate_id": "scavenger_workarea-v003",
+      "captured_at_utc": "2026-11-02T15:29:37+00:00",
+      "draw_calls": 841.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 18.0,
+      "path": "art/scavenger_workarea/iterations/v003/render-runs/run-001/room-scale-opposite-angle.png",
+      "phase": "room-scale-opposite-angle",
+      "primitives": 515622.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "66961c9850fad2c18da57a62e0ade815eac7951feaddbda490c035d0b6acd4e1"
+    },
+    {
+      "asset_id": "scavenger_workarea",
+      "camera": {
+        "actual_camera_position": "(22.76685, 47.32436, 112.0827)",
+        "distance_inches": 64.0,
+        "focus": "(11.0, 4.5, 66.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 42.0,
+        "yaw_radians": 0.25
+      },
+      "candidate_id": "scavenger_workarea-v003",
+      "captured_at_utc": "2026-11-02T15:29:37+00:00",
+      "draw_calls": 1450.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 18.0,
+      "path": "art/scavenger_workarea/iterations/v003/render-runs/run-001/settlement-scale.png",
+      "phase": "settlement-scale",
+      "primitives": 997540.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "00c880557c054c0e1e4b4f0f08cd7a899be8907dd44aabc6f69727dbc33e568a"
+    },
+    {
+      "asset_id": "scavenger_workarea",
+      "camera": {
+        "actual_camera_position": "(-0.76685, 47.32436, 19.9173)",
+        "distance_inches": 64.0,
+        "focus": "(11.0, 4.5, 66.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 42.0,
+        "yaw_radians": 3.39159265358979
+      },
+      "candidate_id": "scavenger_workarea-v003",
+      "captured_at_utc": "2026-11-02T15:29:37+00:00",
+      "draw_calls": 1013.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 18.0,
+      "path": "art/scavenger_workarea/iterations/v003/render-runs/run-001/settlement-scale-opposite-angle.png",
+      "phase": "settlement-scale-opposite-angle",
+      "primitives": 885726.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "5fc8aa48312ddd2db5a8242a19ffdeb67d47700b689dd8dc5eb4369bd6e0e03f"
+    },
+    {
+      "asset_id": "scavenger_workarea",
+      "camera": {
+        "actual_camera_position": "(57.0827, 47.32436, 54.23315)",
+        "distance_inches": 64.0,
+        "focus": "(11.0, 4.5, 66.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 42.0,
+        "yaw_radians": 1.8207963267949
+      },
+      "candidate_id": "scavenger_workarea-v003",
+      "captured_at_utc": "2026-11-02T15:29:37+00:00",
+      "draw_calls": 1320.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 18.0,
+      "path": "art/scavenger_workarea/iterations/v003/render-runs/run-001/settlement-scale-side-angle.png",
+      "phase": "settlement-scale-side-angle",
+      "primitives": 974328.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "b3bb5f459dc5a25c5f6f10e71f5f313398c4a6663c88a6e9d78bef9bf5052166"
+    },
+    {
+      "asset_id": "scavenger_workarea",
+      "camera": {
+        "actual_camera_position": "(20.05217, 16.67195, 78.67973)",
+        "distance_inches": 19.7705236816406,
+        "focus": "(11.0, 4.5, 66.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 38.0,
+        "yaw_radians": 0.62
+      },
+      "candidate_id": "scavenger_workarea-v003",
+      "captured_at_utc": "2026-11-02T15:29:37+00:00",
+      "draw_calls": 1543.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 37.0,
+      "path": "art/scavenger_workarea/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+      "phase": "asset-three-quarter",
+      "primitives": 1116566.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "884d0015b413e5f89e4290155e63528117ec47f0c17d41642aa73548ea2a7e20"
+    },
+    {
+      "asset_id": "scavenger_workarea",
+      "camera": {
+        "actual_camera_position": "(1.94783, 16.67195, 53.32027)",
+        "distance_inches": 19.7705236816406,
+        "focus": "(11.0, 4.5, 66.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 38.0,
+        "yaw_radians": 3.76159265358979
+      },
+      "candidate_id": "scavenger_workarea-v003",
+      "captured_at_utc": "2026-11-02T15:29:37+00:00",
+      "draw_calls": 454.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 37.0,
+      "path": "art/scavenger_workarea/iterations/v003/render-runs/run-001/asset-opposite-three-quarter.png",
+      "phase": "asset-opposite-three-quarter",
+      "primitives": 196170.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "7e9cc6d30ee3daa9b39b66e7c5e0766136cfe6e83a0923383e0c6899390e1510"
+    },
+    {
+      "asset_id": "scavenger_workarea",
+      "camera": {
+        "actual_camera_position": "(23.67973, 16.67195, 56.94783)",
+        "distance_inches": 19.7705236816406,
+        "focus": "(11.0, 4.5, 66.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0001, 360.0)",
+        "tilt_degrees": 38.0,
+        "yaw_radians": 2.1907963267949
+      },
+      "candidate_id": "scavenger_workarea-v003",
+      "captured_at_utc": "2026-11-02T15:29:37+00:00",
+      "draw_calls": 656.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 37.0,
+      "path": "art/scavenger_workarea/iterations/v003/render-runs/run-001/asset-profile.png",
+      "phase": "asset-profile",
+      "primitives": 346698.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "dd86938aafb3e5629df86ed1e233bc2cf47e3c12af3401e09af1b401f919781e"
+    },
+    {
+      "asset_id": "scavenger_workarea",
+      "camera": {
+        "actual_camera_position": "(13.2609, 9.359031, 74.85442)",
+        "distance_inches": 10.35,
+        "focus": "(11.0, 4.5, 66.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 359.9999)",
+        "tilt_degrees": 28.0,
+        "yaw_radians": 0.25
+      },
+      "candidate_id": "scavenger_workarea-v003",
+      "captured_at_utc": "2026-11-02T15:29:37+00:00",
+      "draw_calls": 1618.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 37.0,
+      "path": "art/scavenger_workarea/iterations/v003/render-runs/run-001/asset-detail.png",
+      "phase": "asset-detail",
+      "primitives": 1207440.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "9030401de28b07d6b0252c1d592fb5e7c6801e2fc1019823c756dc1070679e7d"
+    }
+  ],
+  "schema_version": 1,
+  "status": "challenger",
+  "technical_validation": {
+    "asset_path": "res://art/scavenger_workarea/iterations/v003/generated/scavenger_workarea.glb",
+    "bounds": {
+      "position": [
+        -11.3500003814697,
+        0.349999904632568,
+        -8.03999900817871
+      ],
+      "size": [
+        22.8099994659424,
+        8.04485511779785,
+        10.0299987792969
+      ]
+    },
+    "engine": "4.7.2-stable (official)",
+    "import_exit_code": 0,
+    "issues": [],
+    "log": "art/scavenger_workarea/iterations/v003/technical-validation.log",
+    "mesh_count": 1,
+    "recorded_at_utc": "2026-11-02T15:29:23+00:00",
+    "report": "art/scavenger_workarea/iterations/v003/technical-validation.json",
+    "status": "pass",
+    "surface_count": 7,
+    "triangle_count": 15444,
+    "validation_exit_code": 0
+  },
+  "version": 3,
+  "visual_director_provenance": {
+    "approved_visual_target": {
+      "approval": "pass",
+      "approved_at_utc": "2026-11-02T15:20:15+00:00",
+      "concept_id": "direction-c-refined-r01",
+      "path": "art/scavenger_workarea/visual_director/round-01/approved-target-r01.png",
+      "review_method": "pixel inspection; review evidence recorded by Luna",
+      "review_path": "art/scavenger_workarea/visual_director/round-01/pixel-review.md",
+      "sha256": "1ea793a0673ef7b8295476c77d25adfdbb1a1287daa24e5942d413bfa8e4275f"
+    },
+    "case_file": "art/scavenger_workarea/visual_director/state.json",
+    "policy": {
+      "inputs": {
+        "category": "settlement_structure",
+        "current_quality": "below_target",
+        "faction_defining": true,
+        "inferred": [],
+        "priority_tier": 1,
+        "screen_space_importance": 4,
+        "source_images_present": false,
+        "source_photo_required": false
+      },
+      "reasons": [
+        "Tier 1 scene-defining asset",
+        "high screen-space importance",
+        "current production quality is below target"
+      ],
+      "required": true
+    },
+    "status": "approved",
+    "strategy": "alternate_strategy",
+    "target_episode_attempt": 3
+  }
+}

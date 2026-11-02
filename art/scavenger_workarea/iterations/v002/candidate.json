@@ -1,0 +1,106 @@
+{
+  "asset_files": [
+    "art/scavenger_workarea/iterations/v002/generated/scavenger_workarea.glb"
+  ],
+  "asset_id": "scavenger_workarea",
+  "candidate_id": "scavenger_workarea-v002",
+  "created_at_utc": "2026-11-02T15:26:41+00:00",
+  "evaluation_file": "",
+  "generation_attempts": [
+    {
+      "command": [
+        "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/.venv/Scripts/python.exe",
+        "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/scripts/art_factory/generators/scavenger_workarea_pipeline.py",
+        "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale",
+        "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale\\art\\scavenger_workarea\\iterations\\v002\\generated"
+      ],
+      "execution_number": 1,
+      "exit_code": 0,
+      "log_file": "art/scavenger_workarea/iterations/v002/generation.log",
+      "output_dir": "art/scavenger_workarea/iterations/v002/generated",
+      "recorded_at_utc": "2026-11-02T15:26:47+00:00",
+      "status": "pass"
+    }
+  ],
+  "generation_result": {
+    "command": [
+      "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/.venv/Scripts/python.exe",
+      "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/scripts/art_factory/generators/scavenger_workarea_pipeline.py",
+      "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale",
+      "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale\\art\\scavenger_workarea\\iterations\\v002\\generated"
+    ],
+    "execution_number": 1,
+    "exit_code": 0,
+    "log_file": "art/scavenger_workarea/iterations/v002/generation.log",
+    "output_dir": "art/scavenger_workarea/iterations/v002/generated",
+    "recorded_at_utc": "2026-11-02T15:26:47+00:00",
+    "status": "pass"
+  },
+  "parent_candidate_id": "scavenger_workarea-v001",
+  "recipe_file": "art/scavenger_workarea/iterations/v002/recipe.json",
+  "renders": [],
+  "schema_version": 1,
+  "status": "rejected",
+  "technical_validation": {
+    "asset_path": "res://art/scavenger_workarea/iterations/v002/generated/scavenger_workarea.glb",
+    "bounds": {
+      "position": [
+        -11.3500003814697,
+        0.349999904632568,
+        -5.71000051498413
+      ],
+      "size": [
+        22.8099994659424,
+        8.04485511779785,
+        7.70000076293945
+      ]
+    },
+    "engine": "4.7.2-stable (official)",
+    "import_exit_code": 0,
+    "issues": [
+      "source proportions exceed brief tolerance: ratios=(0.991739, 0.893873, 0.641667) tolerance=0.200"
+    ],
+    "log": "art/scavenger_workarea/iterations/v002/technical-validation.log",
+    "mesh_count": 1,
+    "recorded_at_utc": "2026-11-02T15:27:00+00:00",
+    "report": "art/scavenger_workarea/iterations/v002/technical-validation.json",
+    "status": "fail",
+    "surface_count": 7,
+    "triangle_count": 15444,
+    "validation_exit_code": 1
+  },
+  "version": 2,
+  "visual_director_provenance": {
+    "approved_visual_target": {
+      "approval": "pass",
+      "approved_at_utc": "2026-11-02T15:20:15+00:00",
+      "concept_id": "direction-c-refined-r01",
+      "path": "art/scavenger_workarea/visual_director/round-01/approved-target-r01.png",
+      "review_method": "pixel inspection; review evidence recorded by Luna",
+      "review_path": "art/scavenger_workarea/visual_director/round-01/pixel-review.md",
+      "sha256": "1ea793a0673ef7b8295476c77d25adfdbb1a1287daa24e5942d413bfa8e4275f"
+    },
+    "case_file": "art/scavenger_workarea/visual_director/state.json",
+    "policy": {
+      "inputs": {
+        "category": "settlement_structure",
+        "current_quality": "below_target",
+        "faction_defining": true,
+        "inferred": [],
+        "priority_tier": 1,
+        "screen_space_importance": 4,
+        "source_images_present": false,
+        "source_photo_required": false
+      },
+      "reasons": [
+        "Tier 1 scene-defining asset",
+        "high screen-space importance",
+        "current production quality is below target"
+      ],
+      "required": true
+    },
+    "status": "approved",
+    "strategy": "targeted_correction",
+    "target_episode_attempt": 2
+  }
+}

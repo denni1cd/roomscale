@@ -1,0 +1,239 @@
+{
+  "approved_visual_target": {
+    "approval": "pass",
+    "approved_at_utc": "2026-11-02T15:20:15+00:00",
+    "concept_id": "direction-c-refined-r01",
+    "path": "art/scavenger_workarea/visual_director/round-01/approved-target-r01.png",
+    "review_method": "pixel inspection; review evidence recorded by Luna",
+    "review_path": "art/scavenger_workarea/visual_director/round-01/pixel-review.md",
+    "sha256": "1ea793a0673ef7b8295476c77d25adfdbb1a1287daa24e5942d413bfa8e4275f"
+  },
+  "asset_id": "scavenger_workarea",
+  "backlog_reason": "After three approved-target strategies, the Room A 64-inch camera-proxy still reads as a canopy shelter: the tool board and large tools are obscured, the vise is too small to read, and the alternate solid materials weaken roof-to-bench separation. Preserve the best current 3D candidate and reopen only with a new visual target episode.",
+  "best_3d_candidate": {
+    "candidate_file": "art/scavenger_workarea/iterations/v001/candidate.json",
+    "candidate_id": "scavenger_workarea-v001",
+    "evaluation_file": "art/scavenger_workarea/iterations/v001/evaluation.json",
+    "updated_at_utc": "2026-11-02T15:25:11+00:00"
+  },
+  "candidate_history": [
+    {
+      "candidate_file": "art/scavenger_workarea/iterations/v001/candidate.json",
+      "candidate_id": "scavenger_workarea-v001",
+      "created_at_utc": "2026-11-02T15:20:47+00:00",
+      "parent_candidate_id": "",
+      "recipe_file": "art/scavenger_workarea/iterations/v001/recipe.json",
+      "visual_director_attempt": 1,
+      "visual_director_provenance": {
+        "approved_visual_target": {
+          "approval": "pass",
+          "approved_at_utc": "2026-11-02T15:20:15+00:00",
+          "concept_id": "direction-c-refined-r01",
+          "path": "art/scavenger_workarea/visual_director/round-01/approved-target-r01.png",
+          "review_method": "pixel inspection; review evidence recorded by Luna",
+          "review_path": "art/scavenger_workarea/visual_director/round-01/pixel-review.md",
+          "sha256": "1ea793a0673ef7b8295476c77d25adfdbb1a1287daa24e5942d413bfa8e4275f"
+        },
+        "case_file": "art/scavenger_workarea/visual_director/state.json",
+        "policy": {
+          "inputs": {
+            "category": "settlement_structure",
+            "current_quality": "below_target",
+            "faction_defining": true,
+            "inferred": [],
+            "priority_tier": 1,
+            "screen_space_importance": 4,
+            "source_images_present": false,
+            "source_photo_required": false
+          },
+          "reasons": [
+            "Tier 1 scene-defining asset",
+            "high screen-space importance",
+            "current production quality is below target"
+          ],
+          "required": true
+        },
+        "status": "approved",
+        "strategy": "initial",
+        "target_episode_attempt": 1
+      }
+    },
+    {
+      "candidate_file": "art/scavenger_workarea/iterations/v002/candidate.json",
+      "candidate_id": "scavenger_workarea-v002",
+      "created_at_utc": "2026-11-02T15:26:41+00:00",
+      "parent_candidate_id": "scavenger_workarea-v001",
+      "recipe_file": "art/scavenger_workarea/iterations/v002/recipe.json",
+      "visual_director_attempt": 2,
+      "visual_director_provenance": {
+        "approved_visual_target": {
+          "approval": "pass",
+          "approved_at_utc": "2026-11-02T15:20:15+00:00",
+          "concept_id": "direction-c-refined-r01",
+          "path": "art/scavenger_workarea/visual_director/round-01/approved-target-r01.png",
+          "review_method": "pixel inspection; review evidence recorded by Luna",
+          "review_path": "art/scavenger_workarea/visual_director/round-01/pixel-review.md",
+          "sha256": "1ea793a0673ef7b8295476c77d25adfdbb1a1287daa24e5942d413bfa8e4275f"
+        },
+        "case_file": "art/scavenger_workarea/visual_director/state.json",
+        "policy": {
+          "inputs": {
+            "category": "settlement_structure",
+            "current_quality": "below_target",
+            "faction_defining": true,
+            "inferred": [],
+            "priority_tier": 1,
+            "screen_space_importance": 4,
+            "source_images_present": false,
+            "source_photo_required": false
+          },
+          "reasons": [
+            "Tier 1 scene-defining asset",
+            "high screen-space importance",
+            "current production quality is below target"
+          ],
+          "required": true
+        },
+        "status": "approved",
+        "strategy": "targeted_correction",
+        "target_episode_attempt": 2
+      }
+    },
+    {
+      "candidate_file": "art/scavenger_workarea/iterations/v003/candidate.json",
+      "candidate_id": "scavenger_workarea-v003",
+      "created_at_utc": "2026-11-02T15:29:14+00:00",
+      "parent_candidate_id": "scavenger_workarea-v002",
+      "recipe_file": "art/scavenger_workarea/iterations/v003/recipe.json",
+      "visual_director_attempt": 3,
+      "visual_director_provenance": {
+        "approved_visual_target": {
+          "approval": "pass",
+          "approved_at_utc": "2026-11-02T15:20:15+00:00",
+          "concept_id": "direction-c-refined-r01",
+          "path": "art/scavenger_workarea/visual_director/round-01/approved-target-r01.png",
+          "review_method": "pixel inspection; review evidence recorded by Luna",
+          "review_path": "art/scavenger_workarea/visual_director/round-01/pixel-review.md",
+          "sha256": "1ea793a0673ef7b8295476c77d25adfdbb1a1287daa24e5942d413bfa8e4275f"
+        },
+        "case_file": "art/scavenger_workarea/visual_director/state.json",
+        "policy": {
+          "inputs": {
+            "category": "settlement_structure",
+            "current_quality": "below_target",
+            "faction_defining": true,
+            "inferred": [],
+            "priority_tier": 1,
+            "screen_space_importance": 4,
+            "source_images_present": false,
+            "source_photo_required": false
+          },
+          "reasons": [
+            "Tier 1 scene-defining asset",
+            "high screen-space importance",
+            "current production quality is below target"
+          ],
+          "required": true
+        },
+        "status": "approved",
+        "strategy": "alternate_strategy",
+        "target_episode_attempt": 3
+      }
+    }
+  ],
+  "case_file": "art/scavenger_workarea/visual_director/state.json",
+  "policy": {
+    "inputs": {
+      "category": "settlement_structure",
+      "current_quality": "below_target",
+      "faction_defining": true,
+      "inferred": [],
+      "priority_tier": 1,
+      "screen_space_importance": 4,
+      "source_images_present": false,
+      "source_photo_required": false
+    },
+    "reasons": [
+      "Tier 1 scene-defining asset",
+      "high screen-space importance",
+      "current production quality is below target"
+    ],
+    "required": true
+  },
+  "production_asset": null,
+  "schema_version": 1,
+  "status": "backlog",
+  "target_episode": {
+    "attempts": [
+      {
+        "attempt": 1,
+        "candidate_id": "scavenger_workarea-v001",
+        "decision": "continue",
+        "evaluated_at_utc": "2026-11-02T15:25:11+00:00",
+        "evaluation_file": "art/scavenger_workarea/iterations/v001/evaluation.json",
+        "generation_executions": 1,
+        "incumbent_comparison_result": "first_pass",
+        "status": "evaluated",
+        "strategy": "initial",
+        "visual_transfer_diagnosis": {
+          "corrective_action": "Shorten the camera-facing roof depth and overhang by about one third, raise the front eave within the 9-inch limit, and expose the blue tool board, large tools and bench from the Room A 64-inch camera.",
+          "lost_visual_information": [
+            "The approved target's workbench, hand vise and large tools are hidden behind the broad camera-facing canopy.",
+            "The 64-inch first read becomes an open shelter similar to the Depot rather than a hand-work area."
+          ],
+          "preserved_components": [
+            "Reclaimed timber posts, crossbeams and diagonal braces support the roof.",
+            "The model fits inside the 23 x 9 x 12 inch envelope and uses Scavenger materials.",
+            "The review-only presentation path leaves work-site simulation unchanged."
+          ],
+          "primary_causes": [
+            "geometry_loss",
+            "proportion_drift"
+          ]
+        }
+      },
+      {
+        "attempt": 2,
+        "candidate_id": "scavenger_workarea-v002",
+        "generation_executions": 1,
+        "status": "blocked",
+        "strategy": "targeted_correction",
+        "failure_reason": "Godot technical validation failed: source depth 7.70 in against the 12 in brief (ratio 0.642; maximum permitted deviation 0.20). Production render was correctly withheld."
+      },
+      {
+        "attempt": 3,
+        "candidate_id": "scavenger_workarea-v003",
+        "decision": "continue",
+        "evaluated_at_utc": "2026-11-02T15:32:31+00:00",
+        "evaluation_file": "art/scavenger_workarea/iterations/v003/evaluation.json",
+        "generation_executions": 1,
+        "incumbent_comparison_result": "worse",
+        "status": "evaluated",
+        "strategy": "alternate_strategy",
+        "visual_transfer_diagnosis": {
+          "corrective_action": "Backlog the current target after three strategies. A future target should expose the tool board and bench beneath a smaller or camera-shifted canopy while restoring clear roof-to-bench material contrast.",
+          "lost_visual_information": [
+            "The 64-inch Room A first read remains a roofed shelter instead of hand-work furniture and tools.",
+            "The blue/cream tool board, separated large tools and vise are hidden or too small to read.",
+            "The alternate material approach reduces broad surface separation between roof and bench."
+          ],
+          "preserved_components": [
+            "The 23 x 9 x 12 inch presentation envelope and open entrance are preserved within validator tolerance.",
+            "The static visual asset remains separate from collision, navigation, selection and work-site behavior.",
+            "The close view retains visible timber posts, braces, roof sheet thickness and workbench geometry."
+          ],
+          "primary_causes": [
+            "geometry_loss",
+            "proportion_drift",
+            "material_generation"
+          ]
+        }
+      }
+    ],
+    "backlog_reason": "After three approved-target strategies, the Room A 64-inch camera-proxy still reads as a canopy shelter: the tool board and large tools are obscured, the vise is too small to read, and the alternate solid materials weaken roof-to-bench separation. Preserve the best current 3D candidate and reopen only with a new visual target episode.",
+    "status": "backlog",
+    "target_sha256": "1ea793a0673ef7b8295476c77d25adfdbb1a1287daa24e5942d413bfa8e4275f"
+  },
+  "updated_at_utc": "2026-11-02T15:33:06+00:00",
+  "visual_brief_file": "art/scavenger_workarea/visual_director/visual-brief-draft.json"
+}

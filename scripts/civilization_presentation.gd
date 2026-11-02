@@ -202,6 +202,8 @@ func _apply_scavenger_settlement(scene: Node3D) -> void:
 	var has_scavenger_depot_art := not scavenger_depot_entry.is_empty()
 	var scavenger_housing_entry: Dictionary = resolver.registry.lookup("scavenger_housing")
 	var has_scavenger_housing_art := not scavenger_housing_entry.is_empty()
+	var scavenger_workarea_entry: Dictionary = resolver.registry.lookup("scavenger_workarea")
+	var has_scavenger_workarea_art := not scavenger_workarea_entry.is_empty()
 	var details := Node3D.new()
 	details.name = "ScavengerVisualPass"
 	details.set_meta("presentation_only", true)
@@ -289,6 +291,30 @@ func _apply_scavenger_settlement(scene: Node3D) -> void:
 					"kind": "scavenger_housing",
 					"appearance": {"asset_id": "scavenger_housing"},
 					"dimensions": [17.0, 7.0, 9.0],
+				},
+				func(_parent: Node3D, _object: Dictionary) -> void: pass
+			)
+			continue
+		if building_name == "WorkArea" and has_scavenger_workarea_art:
+			# Review-only work-area candidates replace presentation meshes only.
+			# Work-site identity and all simulation behavior remain authoritative.
+			for node_name in ["ArtPresentation", "ClockworkDetails"]:
+				var previous_art := building.get_node_or_null(node_name) as Node3D
+				if previous_art != null:
+					previous_art.visible = false
+			for child in building.get_children():
+				if child is MeshInstance3D or child is Label3D:
+					child.visible = false
+			var asset_root := Node3D.new()
+			asset_root.name = "ScavengerArtPresentation"
+			asset_root.set_meta("presentation_only", true)
+			building.add_child(asset_root)
+			resolver.render(
+				asset_root,
+				{
+					"kind": "scavenger_workarea",
+					"appearance": {"asset_id": "scavenger_workarea"},
+					"dimensions": [23.0, 9.0, 12.0],
 				},
 				func(_parent: Node3D, _object: Dictionary) -> void: pass
 			)

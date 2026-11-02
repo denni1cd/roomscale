@@ -1,0 +1,154 @@
+{
+  "candidate_id": "scavenger_workarea-v001",
+  "created_at_utc": "2026-11-02T15:25:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "The camera-facing roof covers most of the view and obscures the bench, vise, and tool board.",
+    "The 64-inch first read is a generic open shelter rather than a hand-work bay.",
+    "The close view reveals supports but does not restore the work function."
+  ],
+  "hard_fail_reasons": [
+    "Bench and tool-board visibility scores 1/5 at the 64-inch Room A gameplay camera.",
+    "Work-area identity scores 2/5; the wide roof makes the asset too similar to the Depot's roofed frame."
+  ],
+  "incumbent_candidate_id": "",
+  "incumbent_comparison": "First Scavenger Work Area candidate against the current generic presentation. The salvaged materials and supported frame establish a Scavenger shelter, but the 64-inch Room A view reads primarily as a roofed shelter and does not show the hand-work function.",
+  "incumbent_comparison_result": "first_pass",
+  "likely_causes": [
+    "geometry_loss",
+    "proportion_drift"
+  ],
+  "next_action_hypothesis": "Shorten the camera-facing roof depth and overhang by about one third, raise the front eave within the 9-inch envelope, and place the blue tool board and large hand tools in a clearly visible band above the bench. Keep the front entrance open and preserve visible roof supports.",
+  "observations": {
+    "art_direction_fit": "Reclaimed timber, galvanized sheet, faded enamel and canvas fit Scavenger materials, but the shelter silhouette is too close to the Scavenger Depot.",
+    "close_up_quality": "The close render shows supported framing and a constructed roof, but the broad canopy continues to hide most work-bench details.",
+    "gameplay_readability": "Luna scores bench/tool-board visibility 1/5 and work-area identity 2/5 in the actual 64-inch Room A view.",
+    "geometric_detail": "Posts, crossbeams and braces are visible, but work surfaces and tools are concealed from the 64-inch camera.",
+    "material_realism": "Galvanized sheets, timber and rust patches are distinct, scoring 3/5; the material treatment cannot compensate for the missing hand-work read.",
+    "proportion": "The full-width, full-depth roof carries too much visual weight relative to the bench and tool board.",
+    "scale_fidelity": "Godot validates 22.81 x 8.045 x 11.48 inches against the 23 x 9 x 12 inch envelope, but the roof-to-work-surface proportion does not preserve the target's gameplay read.",
+    "semantic_recognizability": "The structure is identifiable as a salvage shelter but the bench/tool board are hidden, so the work-area function does not read at gameplay scale.",
+    "silhouette_quality": "The broad sheet canopy dominates the 64-inch front and side views; the structure resembles a generic open shelter and overlaps visually with the Depot.",
+    "surface_variation": "The roof patches and timber show some material variation, but the work-function pieces remain visually obscured.",
+    "technical_integration": "Godot 4.7.2 imports and renders the candidate through the review-only resolver in actual Room A. Validation reports one mesh object, seven material surfaces, 15,444 triangles, and bounds within the envelope."
+  },
+  "render_evidence": [
+    "art/scavenger_workarea/iterations/v001/render-runs/run-001/settlement-scale.png",
+    "art/scavenger_workarea/iterations/v001/render-runs/run-001/settlement-scale-opposite-angle.png",
+    "art/scavenger_workarea/iterations/v001/render-runs/run-001/settlement-scale-side-angle.png",
+    "art/scavenger_workarea/iterations/v001/render-runs/run-001/asset-three-quarter.png",
+    "art/scavenger_workarea/iterations/v001/render-runs/run-001/asset-profile.png",
+    "art/scavenger_workarea/iterations/v001/render-runs/run-001/room-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 3,
+    "gameplay_readability": 2,
+    "geometric_detail": 3,
+    "material_realism": 3,
+    "proportion": 3,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 2,
+    "silhouette_quality": 3,
+    "surface_variation": 3,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The close view shows roof supports, but the large roof still obscures the workbench and tool-board function.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "Roof sheets and timber posts show readable thickness in the close Room A capture.",
+        "evidence_refs": [
+          "art/scavenger_workarea/iterations/v001/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "The work function's vise and large hand tools are obscured in the actual 64-inch Room A views.",
+        "evidence_refs": [
+          "art/scavenger_workarea/iterations/v001/render-runs/run-001/settlement-scale.png",
+          "art/scavenger_workarea/iterations/v001/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": false
+      },
+      "joins": {
+        "evidence": "Crossbeams and diagonal braces support the roof in the close view.",
+        "evidence_refs": [
+          "art/scavenger_workarea/iterations/v001/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "At 64 inches, the shelter silhouette masks the bench and tool board, so the intended hand-work assembly is not legible.",
+        "evidence_refs": [
+          "art/scavenger_workarea/iterations/v001/render-runs/run-001/settlement-scale.png",
+          "art/scavenger_workarea/iterations/v001/render-runs/run-001/settlement-scale-opposite-angle.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "Weathered timber, galvanized sheets and enamel patches remain distinct in the close render.",
+        "evidence_refs": [
+          "art/scavenger_workarea/iterations/v001/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "surface_variation": {
+        "evidence": "The roof contains multiple broad sheet materials and a small canvas patch.",
+        "evidence_refs": [
+          "art/scavenger_workarea/iterations/v001/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "thickness": {
+        "evidence": "The roof panels and support members show physical thickness at close range.",
+        "evidence_refs": [
+          "art/scavenger_workarea/iterations/v001/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "evidence": "The close view reads as a supported, assembled timber and sheet-metal structure rather than placeholder geometry.",
+      "pass": true
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "The ArtBrief has no photographic source requirement or reference image.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": true
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Shorten the camera-facing roof depth and overhang by about one third, raise the front eave within the 9-inch limit, and expose the blue tool board, large tools and bench from the Room A 64-inch camera.",
+    "lost_visual_information": [
+      "The approved target's workbench, hand vise and large tools are hidden behind the broad camera-facing canopy.",
+      "The 64-inch first read becomes an open shelter similar to the Depot rather than a hand-work area."
+    ],
+    "preserved_components": [
+      "Reclaimed timber posts, crossbeams and diagonal braces support the roof.",
+      "The model fits inside the 23 x 9 x 12 inch envelope and uses Scavenger materials.",
+      "The review-only presentation path leaves work-site simulation unchanged."
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "proportion_drift"
+    ]
+  }
+}
