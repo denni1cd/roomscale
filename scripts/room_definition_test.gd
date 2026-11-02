@@ -628,15 +628,20 @@ func _verify_v2_geometry_and_renderer(fixture: Dictionary) -> bool:
 	object_renderer.call("_build_room_object", object_parent, cabinet_fixture)
 	var display_visual := object_parent.get_node_or_null("visual_display_test")
 	var cabinet_asset := display_visual.get_node_or_null("ResolvedAsset") as Node3D if display_visual != null else null
-	if cabinet_asset == null or String(display_visual.get_meta("visual_asset_candidate_id", "")) != "display_cabinet-v002" or cabinet_asset.find_children("GlassDoor_*", "MeshInstance3D", true, false).size() != 2 or cabinet_asset.find_children("DisplayShelf_*", "MeshInstance3D", true, false).size() != 3:
-		_fail("display cabinet production resolver omitted the accepted glass doors or interior shelves")
+	if cabinet_asset == null or String(display_visual.get_meta("visual_asset_candidate_id", "")) != "display_cabinet-v003":
+		_fail("display cabinet production resolver omitted the accepted v003 asset")
 		return false
-	var cabinet_frame_mesh := cabinet_asset.find_child("SidePanel_1", true, false) as MeshInstance3D
-	var cabinet_frame_material := cabinet_frame_mesh.material_override as StandardMaterial3D if cabinet_frame_mesh != null else null
-	var cabinet_glass_mesh := cabinet_asset.find_child("GlassDoor_1", true, false) as MeshInstance3D
-	var cabinet_glass_material := cabinet_glass_mesh.material_override as StandardMaterial3D if cabinet_glass_mesh != null else null
-	if cabinet_frame_material == null or cabinet_frame_material.albedo_color.a < 0.99 or cabinet_glass_material == null or cabinet_glass_material.albedo_color.a >= 0.99:
-		_fail("display cabinet should keep its wood frame opaque while its glass remains translucent")
+	var cabinet_glazing_mesh := cabinet_asset.find_child("MaterialBatch_Quiet_clear_cabinet_glazing", true, false) as MeshInstance3D
+	var cabinet_inner_mesh := cabinet_asset.find_child("MaterialBatch_Visual_Director_inner_walnut", true, false) as MeshInstance3D
+	var cabinet_outer_mesh := cabinet_asset.find_child("MaterialBatch_Visual_Director_walnut", true, false) as MeshInstance3D
+	if cabinet_glazing_mesh == null or cabinet_inner_mesh == null or cabinet_outer_mesh == null:
+		_fail("display cabinet production asset omitted its glazing, interior, or frame material batch")
+		return false
+	var cabinet_glazing_material := cabinet_glazing_mesh.mesh.surface_get_material(0) as StandardMaterial3D
+	var cabinet_inner_material := cabinet_inner_mesh.mesh.surface_get_material(0) as StandardMaterial3D
+	var cabinet_outer_material := cabinet_outer_mesh.mesh.surface_get_material(0) as StandardMaterial3D
+	if cabinet_glazing_material == null or cabinet_glazing_material.albedo_color.a >= 0.99 or cabinet_inner_material == null or cabinet_inner_material.albedo_color.a < 0.99 or cabinet_outer_material == null or cabinet_outer_material.albedo_color.a < 0.99:
+		_fail("display cabinet should keep its frame and interior opaque while its glass remains translucent")
 		return false
 	var seat_fixture := {"id":"visual_floor_seat_test", "kind":"floor_seat", "position":[0, 0, 0], "dimensions":[24, 12, 22], "appearance":{"archetype":"floor_seat", "base_color":"73da53", "accent_color":"202b2b", "material":"plastic"}}
 	object_renderer.call("_build_room_object", object_parent, seat_fixture)

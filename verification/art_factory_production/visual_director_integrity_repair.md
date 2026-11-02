@@ -41,8 +41,9 @@ No promotion was revoked, and no new art was generated.
 
 - `scripts/test_art_factory.py` checks registry/state/evaluation/receipt candidate agreement, content hashes, per-check render references, and cross-asset window-term leakage.
 - `scripts/visuals/visual_resolver_test.gd` resolves the three production cases through the canonical runtime registry and asserts the loaded candidate/path with no fallback.
+- `scripts/room_definition_test.gd` validates the promoted cabinet v003 GLB's material-batched glazing, interior, and frame; it no longer expects the retired v002 scene's node names.
 - `.github/workflows/quality.yml` runs the Art Factory integrity tests and visual resolution checks as part of CI.
-- Local checks passed: Ruff lint, Ruff format, 23 Art Factory tests, Godot asset validation, production registry resolution, and presentation checks.
+- Local checks passed: Ruff lint, Ruff format, 24 Art Factory tests, the full fast verification suite, Godot asset validation, production registry resolution, and presentation checks.
 - The previous final-head workflow run, [41311559055](https://github.com/denni1cd/roomscale/actions/runs/41311559055), failed Ruff on unsorted imports and unused locals. Those reported issues were repaired; its stale presentation expectation for cabinet v002 was updated to v003.
 
 Final-head GitHub Actions results are attached to the repair commit and reported with its exact SHA and run ID.
