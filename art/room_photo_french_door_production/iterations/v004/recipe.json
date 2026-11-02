@@ -1,0 +1,52 @@
+{
+  "deterministic_seed": 2513,
+  "generator_command": [
+    "python",
+    "{project_root}/scripts/art_factory/generators/production_batch01_blender.py"
+  ],
+  "import_configuration": {
+    "axes": "Blender X width / Y depth / Z up exported to Godot X width / Y up / Z depth",
+    "format": "GLB with embedded PBR materials",
+    "normalization": "fit source geometry to ArtBrief dimensions without altering RoomDefinition",
+    "renderer": "gl_compatibility",
+    "units": "inches"
+  },
+  "instructions": "Apply the diagnosis from room_photo_french_door_production-v003 without changing its fitted open-frame construction. Keep two columns by five rows of clear glazing per leaf, true stiles and rails, stepped casing, jambs, threshold, and exact 66 x 82 x 4 inch bounds. Increase visible directional stained-oak grain and warmth, scale the hinge leaves and hardware to the approved target, and brighten the aged-brass response so the three hinges per leaf are distinct at close inspection. Match the approved target's coordinated handle pair: a rounded knob on the left leaf and a horizontal lever on the right leaf. Neutralize the cool tint of the transparent panes; do not add an opaque glass core or synthetic exterior backdrop. Use the Wikimedia CC BY 4.0 image for door design and the supplied RoomScale photograph for room palette only. Keep RoomDefinition geometry and gameplay state authoritative.",
+  "material_method": "Targeted correction of stained-oak albedo and normal variation, warmer edge-grain material separation, brighter aged brass, and nearly neutral low-alpha clear glazing; preserve the v003 construction and embedded GLB PBR workflow.",
+  "method": "blender_authored_targeted_french_door_correction",
+  "parameters": {
+    "asset_type": "french_door",
+    "diagnosis_ref": "room_photo_french_door_production-v003",
+    "geometry_units": "inches",
+    "outputs": [
+      "asset.glb",
+      "generation-record.json"
+    ],
+    "visual_director_strategy": "targeted_correction",
+    "visual_director_target": "art/room_photo_french_door_production/visual_director/round-01/approved-target-r01.png"
+  },
+  "post_processing": [
+    "apply manufactured edge bevels and weighted normals",
+    "unwrap authored components with scale-aware UVs",
+    "batch meshes by shared material",
+    "export GLB with embedded materials and clear glazing",
+    "validate that glass remains transparent without an opaque core behind each leaf"
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "scripts/art_factory/generators/production_batch01_blender.py",
+    "photo_holder/Sample (1).jpg",
+    "art/room_photo_french_door_production/sources/sintra-door-pair-cc-by-4.0.jpg",
+    "art/room_photo_french_door_production/visual_director/round-01/approved-target-r01.png",
+    "art/room_photo_french_door_production/brief.json",
+    "art/room_photo_french_door_production/iterations/v003/generated/asset.glb",
+    "art/room_photo_french_door_production/iterations/v003/evaluation.json",
+    "art/room_photo_french_door_production/iterations/v003/render-runs/run-003/asset-detail.png",
+    "art/room_photo_french_door_production/iterations/v003/render-runs/run-003/asset-three-quarter.png",
+    "art/room_photo_french_door_production/iterations/v003/render-runs/run-003/room-scale.png",
+    "art/room_photo_french_door_production/iterations/v003/review/room_photo_luna.json",
+    "rooms/room_photo_luna.json"
+  ],
+  "tool": "Blender background authoring through the RoomScale Art Factory generator",
+  "tool_version": "Blender 5.2.3"
+}

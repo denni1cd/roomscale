@@ -94,11 +94,11 @@ SHELL_RULES: dict[str, dict[str, Any]] = {
         "gameplay_importance": "medium — room identity and camera/light context",
         "visual_prominence": "high; windows and doors are high-contrast architectural anchors",
         "approx_screen_space_importance": "high for reconstructed rooms with large openings",
-        "current_visual_quality": "photographed window v004 is accepted and integrated; French-door candidate v002 remains continue because glazing/hardware are weak and the source image does not depict a door; other room openings retain RoomDefinition-driven presentation",
+        "current_visual_quality": "photographed window v004 is accepted and integrated; source-conditioned French-door v005 is the best review candidate but fails the strict gate for hinge readability, natural grain, and the greenery-facing glass view; other room openings retain RoomDefinition-driven presentation",
         "programmer_art_or_primitive": True,
         "photo_resemblance_required": True,
         "recommended_production_method": "Source-matched modular window/door components and physically credible glass; preserve opening dimensions",
-        "backlog_status": "Retain window v004 and document its five-versus-four transom-pane mismatch; source a French-door reference before the next bounded door attempt",
+        "backlog_status": "Retain window v004 and document its five-versus-four transom-pane mismatch; French-door v005 remains review-only after three bounded source-conditioned attempts, with hinge readability and exterior context still unresolved",
     },
 }
 

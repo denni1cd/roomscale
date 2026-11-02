@@ -8,7 +8,9 @@
     330.0
   ],
   "category": "architectural_opening",
+  "current_quality": "below_target",
   "display_name": "Reconstructed Room French Door Pair",
+  "faction_defining": false,
   "gameplay_invariants": {
     "RoomDefinition_dimensions_and_landmarks_remain_authoritative": true,
     "landmarks_activity_stations_and_citizen_assignments_are_unchanged": true,
@@ -19,12 +21,13 @@
     82.0,
     4.0
   ],
-  "iteration_budget": 1,
+  "iteration_budget": 4,
   "materials": {
-    "frame": "photographic warm stained oak with fine grain and satin wear",
-    "glass": "clear household glazing with restrained reflectance",
-    "hardware": "aged brass and steel"
+    "frame": "Reddish warm-stained oak with fine visible grain and satin wear, coordinated with the room photo's dark timber trim.",
+    "glass": "Clear residential glazing with restrained reflections and visible garden color; never dark or opaque.",
+    "hardware": "Understated aged brass or darkened steel residential hinges and a readable central lever/latch; keep the finish secondary to the wood."
   },
+  "priority_tier": 1,
   "prohibited_changes": [
     "do not change the RoomDefinition opening, object dimensions, position, collision, navigation, or simulation identity",
     "do not add presentation geometry to collision, navigation, selection, or task logic",
@@ -32,16 +35,21 @@
   ],
   "quality_tier": "B",
   "reference_images": [
-    "photo_holder/Sample (1).jpg"
+    "photo_holder/Sample (1).jpg",
+    "art/room_photo_french_door_production/sources/sintra-door-pair-cc-by-4.0.jpg"
   ],
   "required_features": [
-    "deep stained-oak casing, jambs, threshold and paired door leaves",
-    "divided glass lights with true stiles, rails, centre meeting stile and bottom panels",
-    "credible hinges, latch escutcheons, lever hardware and household glazing"
+    "deep stained-timber casing, jambs and threshold fitted to the exact reconstructed opening",
+    "paired leaves with real stiles, rails, centre meeting stile and slender true muntins",
+    "multiple clear rectangular glass lights across each leaf, preserving the tall near-full-height glazed arrangement in the primary reference",
+    "substantial bottom rails without a large invented opaque panel",
+    "three readable outer hinges per leaf and a coordinated round knob on the left leaf with a horizontal lever on the right leaf, all visible at close inspection"
   ],
   "schema_version": 1,
+  "screen_space_importance": 5,
   "semantic_type": "photographic glazed French double door",
+  "source_photo_required": true,
   "source_room_definition": "rooms/room_photo_luna.json",
   "stylization_rationale": "",
-  "visual_target": "A source-matched, paired residential French door fitted to the exact 66 by 82 inch reconstructed opening. Give each leaf real stiles, rails and divided glazing; include the central meeting stile, lower wood panels, stepped warm-oak casing, threshold, hinges, and latch hardware. Match the photographed wood and glass character instead of rendering a flat panel and muntin grid."
+  "visual_target": "A source-conditioned pair of residential French doors fitted to the exact 66 by 82 inch reconstructed opening. Use the Wikimedia reference for the reddish warm-stained timber pair, tall divided glazing, meeting stile, and threshold. Keep near-full-height glazing and the visible rail proportions; do not invent a large opaque lower panel. Coordinate the wood with the supplied room photo's warm dark window trim. Show real stiles, rails, muntins, deep casing, three readable hinges per leaf, and the target's coordinated round knob on the left leaf and horizontal lever on the right. Keep glass clear enough to read greenery through restrained reflections. Preserve every RoomDefinition, collision, navigation, selection, and simulation invariant."
 }

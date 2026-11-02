@@ -657,6 +657,11 @@ def pbr_material(
         weave = np.sin(x * size * 0.55 * math.tau) * np.sin(y * size * 0.55 * math.tau)
         height = weave * 0.035 + random_field * 0.028
         variation = weave * 0.035 + random_field * 0.016
+    elif grain == "french_oak":
+        fiber = np.sin((x * 6.5 + 0.16 * np.sin(y * 3.0 * math.tau)) * math.tau)
+        cathedral = np.sin((x * 2.0 + 0.12 * y) * math.tau + np.sin(y * 4.0 * math.tau) * 0.65)
+        height = fiber * 0.20 + cathedral * 0.14 + random_field * 0.035
+        variation = fiber * 0.24 + cathedral * 0.17 + random_field * 0.025
     elif grain == "copper":
         height = random_field * 0.055 + np.sin(x * 40.0 + y * 23.0) * 0.035
         variation = random_field * 0.035 + np.sin(x * 16.0 + y * 24.0) * 0.035
@@ -703,7 +708,7 @@ def pbr_material(
     normal_node.location = (-520, -240)
     normal_map = nodes.new("ShaderNodeNormalMap")
     normal_map.inputs["Strength"].default_value = (
-        0.24 if grain in {"wood", "stone", "fabric"} else 0.12
+        0.24 if grain in {"wood", "french_oak", "stone", "fabric"} else 0.12
     )
     normal_map.location = (-160, -220)
     links = material.node_tree.links
@@ -712,6 +717,41 @@ def pbr_material(
     links.new(normal_node.outputs["Color"], normal_map.inputs["Color"])
     links.new(normal_map.outputs["Normal"], shader.inputs["Normal"])
     return material
+
+
+def replace_base_color_with_image(material, image_path: Path, value: float = 1.0) -> None:
+    """Use an authored image for albedo while preserving generated roughness and normal maps."""
+    image_path = image_path.resolve()
+    if not image_path.is_file():
+        raise FileNotFoundError(f"French-door albedo texture is missing: {image_path}")
+    image = bpy.data.images.load(str(image_path), check_existing=True)
+    image.colorspace_settings.name = "sRGB"
+    image.pack()
+
+    nodes = material.node_tree.nodes
+    shader = next(node for node in nodes if node.type == "BSDF_PRINCIPLED")
+    color_input = shader.inputs["Base Color"]
+    links = material.node_tree.links
+    for link in list(color_input.links):
+        links.remove(link)
+
+    texture = nodes.new("ShaderNodeTexImage")
+    texture.name = "French door authored stained-oak albedo"
+    texture.label = "AI-authored seamless stained oak; source-conditioned to Visual Director target"
+    texture.image = image
+    texture.extension = "REPEAT"
+    texture.interpolation = "Linear"
+    texture.location = (-540, 220)
+    if value == 1.0:
+        links.new(texture.outputs["Color"], color_input)
+        return
+
+    tint = nodes.new("ShaderNodeHueSaturation")
+    tint.name = "French door oak material value variation"
+    tint.inputs["Value"].default_value = value
+    tint.location = (-180, 220)
+    links.new(texture.outputs["Color"], tint.inputs["Color"])
+    links.new(tint.outputs["Color"], color_input)
 
 
 def set_up_materials():
@@ -1628,65 +1668,362 @@ def build_window(mats):
 
 def build_french_door(mats):
     width, depth, height = 66.0, 4.0, 82.0
-    jamb = 2.4
-    for x in (-width * 0.5 - jamb * 0.5, width * 0.5 + jamb * 0.5):
+    jamb_width = 2.5
+    casing_front_y = -1.72
+    door_depth = 2.0
+    door_front_y = -door_depth * 0.5
+
+    # The reference has reddish, near-full-height divided glazing. Give this
+    # asset its own timber and transparent-glass materials so other batch assets
+    # retain their existing material response.
+    oak = pbr_material(
+        "French door reddish stained oak", (0.34, 0.13, 0.052), 0.0, 0.39, "french_oak"
+    )
+    oak_high = pbr_material(
+        "French door oak edge grain", (0.46, 0.19, 0.07), 0.0, 0.36, "french_oak"
+    )
+    oak_dark = pbr_material(
+        "French door dark oak reveal", (0.18, 0.055, 0.024), 0.0, 0.43, "french_oak"
+    )
+    glass = pbr_material(
+        "French door clear household glazing", (0.96, 0.98, 0.93), 0.0, 0.045, "metal", 0.08
+    )
+    hardware = pbr_material(
+        "French door aged dark brass hardware", (0.40, 0.27, 0.095), 0.72, 0.31, "metal"
+    )
+    hardware_high = pbr_material(
+        "French door brass wear highlights", (0.64, 0.45, 0.17), 0.70, 0.27, "metal"
+    )
+    if hasattr(glass, "surface_render_method"):
+        glass.surface_render_method = "BLENDED"
+    oak_albedo = (
+        Path(__file__).resolve().parents[3]
+        / "art"
+        / "room_photo_french_door_production"
+        / "sources"
+        / "ai-generated-stained-oak-albedo-r01.png"
+    )
+    replace_base_color_with_image(oak, oak_albedo, 1.0)
+    replace_base_color_with_image(oak_high, oak_albedo, 1.16)
+    replace_base_color_with_image(oak_dark, oak_albedo, 0.68)
+
+    # Keep the complete casing inside the authoritative 66 x 82 x 4 inch
+    # opening envelope. The structural jamb and front casing are separate parts.
+    for side in (-1, 1):
+        jamb_x = side * (width * 0.5 - jamb_width * 0.5)
         box(
             "French door structural jamb",
-            (x, 0.0, height * 0.5),
-            (jamb, depth * 0.74, height + jamb),
-            mats["dark_wood"],
-            0.20,
+            (jamb_x, 0.0, height * 0.5),
+            (jamb_width, depth * 0.92, height),
+            oak_dark,
+            0.10,
         )
         box(
-            "French door stepped casing",
-            (x, -depth * 0.60, height * 0.5),
-            (jamb * 0.74, depth * 0.32, height + jamb * 1.45),
-            mats["window_oak"],
-            0.26,
+            "French door stepped casing side",
+            (jamb_x, casing_front_y, height * 0.5),
+            (jamb_width, 0.54, height),
+            oak,
+            0.15,
         )
+        box(
+            "French door inner casing bead",
+            (side * (width * 0.5 - jamb_width - 0.25), -1.86, height * 0.5),
+            (0.42, 0.25, height - 0.55),
+            oak_high,
+            0.055,
+        )
+
+    head_height = jamb_width
     box(
-        "French door head casing",
-        (0.0, -depth * 0.34, height + jamb * 0.45),
-        (width + jamb * 2.1, depth * 0.56, jamb),
-        mats["window_oak"],
-        0.20,
-    )
-    place_module(
-        paneled_door,
-        (0.0, 0.0, height * 0.5),
-        width,
-        height,
-        depth,
-        mats,
-        "Photo matched French pair",
-        True,
-    )
-    # A separate central astragal and weather sill establish the double-leaf join.
-    box(
-        "French door central meeting stile",
-        (0.0, -depth * 0.66, height * 0.49),
-        (0.68, depth * 0.44, height * 0.94),
-        mats["window_oak"],
+        "French door structural head jamb",
+        (0.0, 0.0, height - head_height * 0.5),
+        (width - jamb_width * 2.0, depth * 0.92, head_height),
+        oak_dark,
         0.10,
     )
     box(
-        "French door sill",
-        (0.0, -depth * 0.05, 0.12),
-        (width + jamb * 2.0, depth * 0.60, 0.24),
-        mats["steel"],
-        0.06,
+        "French door stepped head casing",
+        (0.0, casing_front_y, height - head_height * 0.5),
+        (width, 0.54, head_height),
+        oak,
+        0.15,
     )
-    for x in (-width * 0.25, width * 0.25):
+    box(
+        "French door head casing bead",
+        (0.0, -1.86, height - head_height + 0.27),
+        (width - 0.60, 0.25, 0.42),
+        oak_high,
+        0.055,
+    )
+
+    threshold_height = 0.72
+    box(
+        "French door solid oak threshold",
+        (0.0, 0.0, threshold_height * 0.5),
+        (width, depth, threshold_height),
+        oak_high,
+        0.12,
+    )
+    box(
+        "French door threshold wear strip",
+        (0.0, -0.08, threshold_height - 0.13),
+        (width - 0.24, depth * 0.38, 0.16),
+        hardware,
+        0.04,
+    )
+
+    # Each leaf is an open timber frame; no opaque slab sits behind its glass.
+    clear_opening_width = width - jamb_width * 2.0
+    center_gap = 0.06
+    leaf_width = (clear_opening_width - center_gap) * 0.5
+    leaf_bottom = threshold_height
+    leaf_top = height - head_height
+    leaf_height = leaf_top - leaf_bottom
+    leaf_depth = door_depth
+    top_rail = 2.45
+    bottom_rail = 3.25
+    outer_stile = 1.85
+    inner_stile = 1.35
+    vertical_muntin = 0.48
+    horizontal_muntin = 0.48
+    row_count = 5
+    pane_y = 0.0
+    pane_depth = 0.10
+
+    for hinge_side in (-1, 1):
+        center_x = hinge_side * (leaf_width + center_gap) * 0.5
+        left_x = center_x - leaf_width * 0.5
+        right_x = center_x + leaf_width * 0.5
+        hinge_x = left_x if hinge_side < 0 else right_x
+        outer_x = center_x + hinge_side * (leaf_width * 0.5 - outer_stile * 0.5)
+        inner_x = center_x - hinge_side * (leaf_width * 0.5 - inner_stile * 0.5)
+        clear_left = left_x + (outer_stile if hinge_side < 0 else inner_stile)
+        clear_right = right_x - (inner_stile if hinge_side < 0 else outer_stile)
+        clear_width = clear_right - clear_left
+        clear_bottom = leaf_bottom + bottom_rail
+        clear_top = leaf_top - top_rail
+        clear_height = clear_top - clear_bottom
+        pane_width = (clear_width - vertical_muntin) * 0.5
+        pane_height = (clear_height - horizontal_muntin * (row_count - 1)) / row_count
+
+        box(
+            "French door full-height outer stile",
+            (outer_x, 0.0, (leaf_bottom + leaf_top) * 0.5),
+            (outer_stile, leaf_depth, leaf_height),
+            oak,
+            0.12,
+        )
+        box(
+            "French door central meeting stile",
+            (inner_x, 0.0, (leaf_bottom + leaf_top) * 0.5),
+            (inner_stile, leaf_depth, leaf_height),
+            oak_high,
+            0.11,
+        )
+        box(
+            "French door substantial bottom rail",
+            (center_x, 0.0, leaf_bottom + bottom_rail * 0.5),
+            (leaf_width, leaf_depth, bottom_rail),
+            oak,
+            0.12,
+        )
+        box(
+            "French door top rail",
+            (center_x, 0.0, leaf_top - top_rail * 0.5),
+            (leaf_width, leaf_depth, top_rail),
+            oak,
+            0.12,
+        )
+
+        first_column_center = clear_left + pane_width * 0.5
+        second_column_center = clear_left + pane_width + vertical_muntin + pane_width * 0.5
+        for row in range(row_count):
+            pane_z = clear_bottom + pane_height * 0.5 + row * (pane_height + horizontal_muntin)
+            for column, pane_x in enumerate((first_column_center, second_column_center), start=1):
+                box(
+                    f"French door {hinge_side} leaf clear glass light r{row + 1} c{column}",
+                    (pane_x, pane_y, pane_z),
+                    (pane_width, pane_depth, pane_height),
+                    glass,
+                    0.018,
+                )
+            if row < row_count - 1:
+                crossbar_z = (
+                    clear_bottom + (row + 1) * pane_height + (row + 0.5) * horizontal_muntin
+                )
+                box(
+                    "French door true horizontal glazing muntin",
+                    (center_x, 0.0, crossbar_z),
+                    (clear_width, leaf_depth * 0.92, horizontal_muntin),
+                    oak_high,
+                    0.09,
+                )
+
+        box(
+            "French door true vertical glazing muntin",
+            (
+                clear_left + pane_width + vertical_muntin * 0.5,
+                0.0,
+                (clear_bottom + clear_top) * 0.5,
+            ),
+            (vertical_muntin, leaf_depth * 0.92, clear_height),
+            oak_high,
+            0.09,
+        )
+
+        # The applied glass stops add a fine second profile on both faces while
+        # leaving the glazing itself as a single transparent layer.
+        for face in (-1, 1):
+            stop_y = face * (leaf_depth * 0.5 - 0.08)
+            stop_depth = 0.14
+            for row in range(row_count):
+                pane_z = clear_bottom + pane_height * 0.5 + row * (pane_height + horizontal_muntin)
+                for pane_x in (first_column_center, second_column_center):
+                    box(
+                        "French door profiled glazing stop",
+                        (pane_x - pane_width * 0.5 + 0.08, stop_y, pane_z),
+                        (0.16, stop_depth, pane_height),
+                        oak_dark,
+                        0.035,
+                    )
+                    box(
+                        "French door profiled glazing stop",
+                        (pane_x + pane_width * 0.5 - 0.08, stop_y, pane_z),
+                        (0.16, stop_depth, pane_height),
+                        oak_dark,
+                        0.035,
+                    )
+                    box(
+                        "French door profiled glazing stop",
+                        (pane_x, stop_y, pane_z - pane_height * 0.5 + 0.08),
+                        (pane_width, stop_depth, 0.16),
+                        oak_dark,
+                        0.035,
+                    )
+                    box(
+                        "French door profiled glazing stop",
+                        (pane_x, stop_y, pane_z + pane_height * 0.5 - 0.08),
+                        (pane_width, stop_depth, 0.16),
+                        oak_dark,
+                        0.035,
+                    )
+
+        # Three physically separate outer hinges per leaf with barrels and screw heads.
+        plate_leaf_x = hinge_x - hinge_side * 0.49
+        plate_jamb_x = hinge_x + hinge_side * 0.49
+        for hinge_z in (leaf_bottom + 10.0, (leaf_bottom + leaf_top) * 0.5, leaf_top - 10.0):
+            box(
+                "French door outer hinge leaf plate",
+                (plate_leaf_x, door_front_y - 0.10, hinge_z),
+                (0.78, 0.18, 4.35),
+                hardware,
+                0.075,
+            )
+            box(
+                "French door jamb hinge leaf plate",
+                (plate_jamb_x, door_front_y - 0.10, hinge_z),
+                (0.78, 0.18, 4.35),
+                hardware,
+                0.075,
+            )
+            cylinder(
+                "French door visible hinge barrel",
+                (hinge_x, door_front_y - 0.22, hinge_z),
+                0.18,
+                4.45,
+                hardware_high,
+                "Z",
+                24,
+                0.035,
+            )
+            for plate_x in (plate_leaf_x, plate_jamb_x):
+                for dx in (-0.20, 0.20):
+                    for dz in (-1.45, 1.45):
+                        cylinder(
+                            "French door hinge screw head",
+                            (plate_x + dx, door_front_y - 0.24, hinge_z + dz),
+                            0.075,
+                            0.07,
+                            hardware_high,
+                            "Y",
+                            16,
+                            0.018,
+                        )
+
+        # A camera-facing matched pair reflects the target: a knob on the left
+        # leaf and a longer lever on the right leaf, each on a readable plate.
+        handle_z = leaf_bottom + leaf_height * 0.52
+        box(
+            "French door central latch escutcheon",
+            (inner_x, door_front_y - 0.11, handle_z),
+            (1.22, 0.20, 3.75),
+            hardware,
+            0.15,
+        )
         cylinder(
-            "French door deadbolt escutcheon",
-            (x, -depth * 0.76, height * 0.46),
-            0.27,
-            0.10,
-            mats["brass"],
+            "French door lever spindle rosette",
+            (inner_x, door_front_y - 0.25, handle_z),
+            0.37,
+            0.22,
+            hardware_high,
+            "Y",
+            32,
+            0.045,
+        )
+        cylinder(
+            "French door lever spindle",
+            (inner_x, door_front_y - 0.42, handle_z),
+            0.15,
+            0.42,
+            hardware,
             "Y",
             24,
-            0.025,
+            0.03,
         )
+        if hinge_side < 0:
+            bpy.ops.mesh.primitive_uv_sphere_add(
+                segments=24,
+                ring_count=16,
+                radius=0.34,
+                location=(inner_x, door_front_y - 0.66, handle_z),
+            )
+            knob = bpy.context.object
+            knob.name = "French door rounded central knob"
+            knob.data.materials.append(hardware_high)
+            for polygon in knob.data.polygons:
+                polygon.use_smooth = True
+        else:
+            lever_direction = 1
+            lever_tip_x = inner_x + lever_direction * 4.15
+            tube(
+                "French door horizontal lever handle",
+                [
+                    (inner_x, door_front_y - 0.56, handle_z),
+                    (inner_x + lever_direction * 0.75, door_front_y - 0.56, handle_z),
+                    (inner_x + lever_direction * 2.9, door_front_y - 0.56, handle_z),
+                    (lever_tip_x, door_front_y - 0.56, handle_z - 0.08),
+                ],
+                0.12,
+                hardware_high,
+                3,
+            )
+        box(
+            "French door latch slot",
+            (inner_x, door_front_y - 0.24, handle_z - 0.95),
+            (0.18, 0.08, 0.52),
+            oak_dark,
+            0.045,
+        )
+
+    # A narrow overlapping astragal completes the central meeting joint without
+    # obscuring the matched handles or reducing the glazed area.
+    box(
+        "French door central astragal",
+        (0.0, door_front_y + 0.02, (leaf_bottom + leaf_top) * 0.5),
+        (0.18, 0.12, leaf_height - 0.4),
+        oak_dark,
+        0.045,
+    )
 
 
 def apply_modifiers_and_merge_by_material():

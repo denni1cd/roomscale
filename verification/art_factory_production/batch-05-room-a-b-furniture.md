@@ -35,6 +35,6 @@ Room A/B object dimensions, collision, navigation, construction, delivery, and t
 
 ## Cumulative status and next priority
 
-The canonical registry remains at 15 IDs. The batch increases the count of Tier 1 visual classes with a strict failed result from two room-object aliases to eight rows; six are the new furniture IDs. Eight Tier 1 rows still map to accepted production IDs, and 40 Tier 1 rows remain without a strict result. The migration is not complete and the active human-room scene did not change in this batch.
+The canonical registry remains at 15 IDs. All six Batch 5 furniture candidates failed their candidate-level strict evaluations and remain review-only. In the refreshed inventory, the 48 Tier 1 rows include eight linked accepted IDs, two desk aliases with an assigned strict failure, and 46 rows without an assigned candidate strict result; the accepted IDs are included in those 46 because they have no assigned-candidate strict failure record. The registry cross-check and review-candidate evaluation counts are separate. The migration is not complete and the active human-room scene did not change in this batch.
 
-Next, source a properly licensed French-door reference before making another source-conditioned door candidate. Keep the six furniture v003 scenes as best-current review evidence, with future geometry work backlogged for a materially stronger mesh-authoring backend.
+At Batch 5 close, the next priority was to source a properly licensed French-door reference; Batch 6 completed that source-conditioned review without a promotion. Keep the six furniture v003 scenes as best-current review evidence, with future geometry work backlogged for a materially stronger mesh-authoring backend.

@@ -1,0 +1,156 @@
+{
+  "candidate_id": "room_photo_french_door_production-v003",
+  "created_at_utc": "2026-11-02T05:48:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "The close Godot render shows only weak wood-grain variation; broad timber surfaces read as nearly uniform reddish brown.",
+    "The central lever and outer hinges are present but too small and dark to read at the target's intended inspection distance.",
+    "The glazing imports with BLEND alpha but reads as a uniform pale-blue field against the current room exterior, without the source target's greenery or convincing glass response."
+  ],
+  "hard_fail_reasons": [
+    "The approved target's prominent central lever, escutcheon, and three-per-leaf hinge hardware are not legible in the actual Godot close capture.",
+    "The approved target's richly varied stained timber does not transfer; the actual Godot close capture has little perceptible grain or surface variation.",
+    "The actual Godot close capture does not materially approach the target's clear, green-facing glazing character."
+  ],
+  "incumbent_candidate_id": "room_photo_french_door_production-v002",
+  "incumbent_comparison": "Compared in the same room_photo_luna production harness, v003 is stronger than v002: it removes the opaque core, provides two open leaf frames with ten actual glazed lights per leaf, and models separate jambs, casing, threshold, glazing stops, hinges, and central lever hardware. Godot reports the exact 66 x 82 x 4 inch envelope. The close render still falls short of the approved target because the wood reads nearly uniform, the hardware is too small and dark, and the clear panes show the room's cool exterior rather than the target's greenery.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "The generated timber albedo and normal variation are too subtle at Godot's production camera distance and the 256-pixel material maps do not provide visible grain across the broad door rails and stiles.",
+    "The hinge plates, escutcheons, and lever dimensions are underscaled relative to the approved target and use dark values that blend into the stained timber.",
+    "The low-alpha glazing is technically blended, but its cool material tint and the production room's sparse exterior context produce a pale-blue view without target-like foliage."
+  ],
+  "next_action_hypothesis": "For the single remaining Visual Director correction, retain v003's fitted pair, open 2 by 5 glazing grid per leaf, casing, threshold, and gameplay bounds. Increase visible directional timber grain and warm material separation, scale up and brighten the camera-facing lever, escutcheons, and three outer hinges per leaf, and neutralize the cool glass tint. Re-render the identical close and room cameras. Do not add opaque glazing cores or alter the RoomDefinition to manufacture a foliage backdrop.",
+  "observations": {
+    "art_direction_fit": "The reddish paired door and divided glazing fit the target's broad design, but the restrained detail and flat-looking timber do not yet meet the intended source-conditioned room style.",
+    "close_up_quality": "The asset-detail.png capture shows the central handle as a tiny dark mark and outer hinges as narrow dark slivers; fine hinge screws and latch form cannot be identified at the target's inspection scale.",
+    "gameplay_readability": "The full room render shows a recognizable double door in the existing reconstructed opening. The review-only room copy changes only the door appearance asset_id; opening dimensions, room placement, collision, navigation, and simulation state are unchanged.",
+    "geometric_detail": "The candidate has separate open leaves, two columns by five rows of true glass lights per leaf, real stiles and muntins, glazing stops, stepped casing, threshold, and distinct hinge and lever geometry. Most parts nevertheless read as thin straight bars in the production render.",
+    "material_realism": "The Godot detail capture reads the panes as pale-blue and the broad reddish timber as nearly uniform. The GLB correctly exports the glass as BLEND with alpha 0.14, but its in-room response does not resemble the target's clear greenery-facing panes.",
+    "proportion": "The pair occupies the full 66 by 82 inch envelope with tall glazing and substantial bottom rails; the modeled rail and hardware proportions are less expressive than the approved target.",
+    "scale_fidelity": "Godot 4.7.2 reports bounds at exactly 66 x 82 x 4 inches, matching the ArtBrief and unchanged opening.",
+    "semantic_recognizability": "The full-room and three-quarter captures read as a paired, divided-glass French door.",
+    "silhouette_quality": "The two tall leaves, central meeting stile, and stepped outer surround establish the expected French-door silhouette in the room.",
+    "source_resemblance": "The door pair, reddish stained frame, threshold, and divided lights transfer from the CC BY 4.0 door reference. The actual render lacks the reference's visible timber grain, readable hardware scale, and green exterior through the glazing. The supplied RoomScale photograph remains room-palette context only and does not depict a door.",
+    "surface_variation": "The stained frame has little visible grain or tonal variation in the actual Godot close capture; the large panes share one pale-blue appearance.",
+    "technical_integration": "Godot 4.7.2 imports and validates the v003 GLB with six surfaces, 59,600 triangles, no reported issues, and exact 66 x 82 x 4 inch bounds. The production resolver loaded v003 through a review-only showcase registry."
+  },
+  "render_evidence": [
+    "art/room_photo_french_door_production/iterations/v003/render-runs/run-003/asset-detail.png",
+    "art/room_photo_french_door_production/iterations/v003/render-runs/run-003/asset-three-quarter.png",
+    "art/room_photo_french_door_production/iterations/v003/render-runs/run-003/room-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 3,
+    "gameplay_readability": 4,
+    "geometric_detail": 4,
+    "material_realism": 2,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 4,
+    "source_resemblance": 3,
+    "surface_variation": 2,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "In the registered asset-detail.png capture, the lever, escutcheons, and outer hinges are too small and dark to identify clearly; broad timber and panes also show little surface variation.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "The registered asset-three-quarter.png capture shows a fitted stepped casing and beveled outer frame edges.",
+        "evidence_refs": [
+          "art/room_photo_french_door_production/iterations/v003/render-runs/run-003/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "The registered asset-detail.png capture shows hardware geometry, but the central lever, escutcheons, and hinge plates are too small and dark to read at this view.",
+        "evidence_refs": [
+          "art/room_photo_french_door_production/iterations/v003/render-runs/run-003/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "joins": {
+        "evidence": "The registered asset-detail.png capture shows the muntins meeting the continuous leaf rails and stiles, with distinct glazing stops around the lights.",
+        "evidence_refs": [
+          "art/room_photo_french_door_production/iterations/v003/render-runs/run-003/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "The registered close capture confirms a structural pane grid and separate hardware assemblies, but the operating handle and visible hinge construction are not legible enough to convey finished residential joinery.",
+        "evidence_refs": [
+          "art/room_photo_french_door_production/iterations/v003/render-runs/run-003/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "The registered asset-detail.png capture shows pale-blue panes and near-uniform reddish timber rather than restrained clear glass and varied stained wood.",
+        "evidence_refs": [
+          "art/room_photo_french_door_production/iterations/v003/render-runs/run-003/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "The registered asset-three-quarter.png capture shows broad frame surfaces with little visible grain or tonal change; the glass lights appear nearly identical in color.",
+        "evidence_refs": [
+          "art/room_photo_french_door_production/iterations/v003/render-runs/run-003/asset-three-quarter.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "The registered asset-three-quarter.png capture shows the casing, jamb, central stiles, rails, and threshold projecting as separate physical layers.",
+        "evidence_refs": [
+          "art/room_photo_french_door_production/iterations/v003/render-runs/run-003/asset-three-quarter.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The registered room-scale.png and asset-detail.png captures identify the door correctly, but the uniform timber and pale-blue panes still read as simplified game rendering rather than a finished residential opening.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "No",
+      "applicable": true,
+      "evidence": "The pair and divided glazing follow the CC BY 4.0 design reference, but the registered close render lacks its visible wood grain, readable hinge and latch proportions, and clear garden view. The RoomScale photo contains no door and is used only for palette context.",
+      "pass": false
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Keep v003's fitted open-frame geometry and ten transparent lights per leaf. Increase visible directional grain and warm timber material separation, enlarge and brighten the camera-facing lever, escutcheons, and three hinges per leaf, and reduce the cool glass tint. Re-render the same Godot views without adding an opaque glass backing or changing the RoomDefinition.",
+    "lost_visual_information": [
+      "The reference and approved target show directional timber grain and subtle tonal differences that are not discernible on the v003 door surfaces.",
+      "The target's latch, escutcheons, and three hinges per leaf are clear, while v003's corresponding hardware nearly disappears in the production close view.",
+      "The target reveals green foliage through clear panes; v003 shows a pale-blue exterior view in the current room render."
+    ],
+    "preserved_components": [
+      "Exact 66 x 82 x 4 inch opening envelope and paired-leaf silhouette",
+      "Open leaf frames with two columns by five rows of real glazing per leaf",
+      "Stepped stained casing, structural jambs, threshold, and meeting stile",
+      "Presentation-only geometry isolated from RoomDefinition gameplay topology"
+    ],
+    "primary_causes": [
+      "material_generation",
+      "geometry_loss",
+      "lighting_render_presentation"
+    ]
+  }
+}

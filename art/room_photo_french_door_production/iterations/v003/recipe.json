@@ -1,0 +1,45 @@
+{
+  "deterministic_seed": 2513,
+  "generator_command": [
+    "python",
+    "{project_root}/scripts/art_factory/generators/production_batch01_blender.py"
+  ],
+  "import_configuration": {
+    "axes": "Blender X width / Y depth / Z up exported to Godot X width / Y up / Z depth",
+    "format": "GLB with embedded PBR materials",
+    "normalization": "fit source geometry to ArtBrief dimensions without altering RoomDefinition",
+    "renderer": "gl_compatibility",
+    "units": "inches"
+  },
+  "instructions": "Produce the approved target's source-conditioned French door pair within the exact 66 x 82 x 4 inch envelope. Build two open timber leaf frames with two columns by five rows of clear glazing per leaf, true stiles, rails and muntins, stepped casing, jambs and threshold. Give each leaf three physically distinct outer hinges with barrels and visible fasteners, and add matched central lever, escutcheon and rosette hardware. Use the Wikimedia CC BY 4.0 door photograph as the primary design reference and the supplied RoomScale photograph for trim and palette context only. Preserve near-full-height glazing and the source's rail proportions. Do not place an opaque core behind the glass or invent a large lower panel. Keep all RoomDefinition geometry and gameplay state authoritative.",
+  "material_method": "Per-part authored stained oak, edge-grain oak, dark reveals, aged brass and low-iron clear glazing; separate physically based material responses with transparent GLB glazing and embedded textures.",
+  "method": "blender_authored_source_conditioned_french_door",
+  "parameters": {
+    "asset_type": "french_door",
+    "geometry_units": "inches",
+    "outputs": [
+      "asset.glb",
+      "generation-record.json"
+    ],
+    "visual_director_strategy": "initial",
+    "visual_director_target": "art/room_photo_french_door_production/visual_director/round-01/approved-target-r01.png"
+  },
+  "post_processing": [
+    "apply manufactured edge bevels and weighted normals",
+    "unwrap authored components with scale-aware UVs",
+    "batch meshes by shared material",
+    "export GLB with embedded materials and clear glazing",
+    "validate that glass remains transparent without an opaque core behind each leaf"
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "scripts/art_factory/generators/production_batch01_blender.py",
+    "photo_holder/Sample (1).jpg",
+    "art/room_photo_french_door_production/sources/sintra-door-pair-cc-by-4.0.jpg",
+    "art/room_photo_french_door_production/visual_director/round-01/approved-target-r01.png",
+    "art/room_photo_french_door_production/brief.json",
+    "rooms/room_photo_luna.json"
+  ],
+  "tool": "Blender background authoring through the RoomScale Art Factory generator",
+  "tool_version": "Blender 5.2.3"
+}

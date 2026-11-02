@@ -1,0 +1,61 @@
+{
+  "art_direction": "RoomScale category: architectural_opening. A source-conditioned pair of residential French doors fitted to the exact 66 by 82 inch reconstructed opening. Use the Wikimedia reference for the reddish warm-stained timber pair, tall divided glazing, meeting stile, and threshold. Keep near-full-height glazing and the visible rail proportions; do not invent a large opaque lower panel. Coordinate the wood with the supplied room photo's warm dark window trim. Show real stiles, rails, muntins, deep casing, three legible hinges per leaf, and a coordinated round knob on the left leaf with a horizontal lever on the right. Keep glass clear enough to read greenery through restrained reflections. Preserve every RoomDefinition, collision, navigation, selection, and simulation invariant.",
+  "asset_id": "room_photo_french_door_production",
+  "citizen_scale": {
+    "citizen_height_inches": 0.5,
+    "ratio_or_view": "Use the exact 82-inch height against a 0.5-inch citizen; derive a schematic if generated scale is inaccurate."
+  },
+  "construction_materials": [
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "Reddish warm-stained oak with fine visible grain and satin wear, coordinated with the room photo's dark timber trim.",
+      "part": "frame"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "Clear residential glazing with restrained reflections and visible garden color; never dark or opaque.",
+      "part": "glass"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "Readable aged brass residential hinges, round knob, and horizontal lever matched to the target; keep the finish secondary to the stained wood.",
+      "part": "hardware"
+    }
+  ],
+  "dimensions_inches": [
+    66.0,
+    82.0,
+    4.0
+  ],
+  "faction_identity": null,
+  "gameplay_distance_readability": "Keep required features legible at the ArtBrief gameplay camera distances: 2.0, 12.0, 64.0, 330.0 inches.",
+  "intended_function": "A source-conditioned pair of residential French doors fitted to the exact 66 by 82 inch reconstructed opening. Use the Wikimedia reference for the reddish warm-stained timber pair, tall divided glazing, meeting stile, and threshold. Keep near-full-height glazing and the visible rail proportions; do not invent a large opaque lower panel. Coordinate the wood with the supplied room photo's warm dark window trim. Show real stiles, rails, muntins, deep casing, three legible hinges per leaf, and the target's coordinated round knob on the left leaf and horizontal lever on the right. Keep glass clear enough to read greenery through restrained reflections. Preserve every RoomDefinition, collision, navigation, selection, and simulation invariant.",
+  "prohibited_failure_modes": [
+    "do not change the RoomDefinition opening, object dimensions, position, collision, navigation, or simulation identity",
+    "do not add presentation geometry to collision, navigation, selection, or task logic",
+    "do not substitute shader recoloring for the described constructed asset"
+  ],
+  "roomdefinition_authority": "ArtBrief dimensions are (66.0, 82.0, 4.0); source RoomDefinition: rooms/room_photo_luna.json. RoomDefinition remains authoritative for placement and gameplay.",
+  "semantic_identity": "photographic glazed French double door",
+  "separate_room_assets": [],
+  "silhouette_requirements": [
+    "deep stained-timber casing, jambs and threshold fitted to the exact reconstructed opening",
+    "paired leaves with real stiles, rails, centre meeting stile and slender true muntins",
+    "multiple clear rectangular glass lights across each leaf, preserving the tall near-full-height glazed arrangement in the primary reference",
+    "substantial bottom rails without a large invented opaque panel",
+    "three visible outer hinges per leaf and a target-matched round knob on the left leaf with a horizontal lever on the right, readable in the close inspection view"
+  ],
+  "source_photo_constraints": "Primary door reference (CC BY 4.0) shows reddish warm-stained timber leaves, tall divided glazing in two columns by five rows, center meeting stile, projecting threshold, and greenery through clear panes. The small handle/latch and hinge construction are partly obscured by distance; exact glass section and joinery are assumptions. The supplied RoomScale photo shows warm dark window casing and room palette but no door.",
+  "visual_references": [
+    {
+      "path": "photo_holder/Sample (1).jpg",
+      "provenance": "ArtBrief reference_images",
+      "role": "RoomScale room-context reference only; timber trim and room palette, no door."
+    },
+    {
+      "path": "art/room_photo_french_door_production/sources/sintra-door-pair-cc-by-4.0.jpg",
+      "provenance": "ArtBrief reference_images",
+      "role": "Primary paired-door design reference; CC BY 4.0, attribution in sources/source-attribution.json."
+    }
+  ]
+}

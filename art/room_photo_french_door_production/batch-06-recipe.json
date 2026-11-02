@@ -1,0 +1,56 @@
+{
+  "deterministic_seed": 2513,
+  "generator_command": [
+    "python",
+    "{project_root}/scripts/art_factory/generators/production_batch01_blender.py"
+  ],
+  "import_configuration": {
+    "axes": "Blender X width / Y depth / Z up exported to Godot X width / Y up / Z depth",
+    "format": "GLB with embedded PBR materials",
+    "normalization": "fit source geometry to ArtBrief dimensions without altering RoomDefinition",
+    "renderer": "gl_compatibility",
+    "units": "inches"
+  },
+  "instructions": "Apply the diagnosed alternate material strategy to room_photo_french_door_production-v004. Preserve its validated fitted open-frame construction, two columns by five rows of clear glazing per leaf, true stiles and rails, stepped casing, threshold, target knob/lever pair, and exact 66 x 82 x 4 inch bounds. Replace the procedural oak color field with the pixel-reviewed AI-generated stained-oak albedo texture at consistent physical scale across the stiles and rails; retain the separate generated roughness and normal maps. Keep the warm neutral low-alpha glazing and all v004 geometry. Use the Wikimedia CC BY 4.0 photograph as the door design source and the supplied RoomScale photograph for room palette only. Keep the production room and gameplay state unchanged; do not add an opaque glass core or synthetic exterior backdrop.",
+  "material_method": "Alternate image-authored material strategy: AI-generated, pixel-reviewed stained-oak albedo from the approved Visual Director target, mapped with repeat-enabled UV sampling and per-material value offsets; edge periodicity is reviewed in Godot rather than assumed. Retain separate embedded roughness and tangent-normal maps and v004 geometry.",
+  "method": "blender_targeted_geometry_with_image_authored_french_oak_material",
+  "parameters": {
+    "asset_type": "french_door",
+    "diagnosis_ref": "room_photo_french_door_production-v004",
+    "geometry_units": "inches",
+    "materially_different_strategy": true,
+    "outputs": [
+      "asset.glb",
+      "generation-record.json"
+    ],
+    "visual_director_strategy": "alternate_strategy",
+    "visual_director_target": "art/room_photo_french_door_production/visual_director/round-01/approved-target-r01.png"
+  },
+  "post_processing": [
+    "apply manufactured edge bevels and weighted normals",
+    "unwrap authored components with scale-aware UVs",
+    "batch meshes by shared material",
+    "export GLB with embedded materials and clear glazing",
+    "validate that glass remains transparent without an opaque core behind each leaf",
+    "inspect authored oak texture scale, visible grain, and any repeat seams in the same Godot close and room captures"
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "scripts/art_factory/generators/production_batch01_blender.py",
+    "photo_holder/Sample (1).jpg",
+    "art/room_photo_french_door_production/sources/sintra-door-pair-cc-by-4.0.jpg",
+    "art/room_photo_french_door_production/visual_director/round-01/approved-target-r01.png",
+    "art/room_photo_french_door_production/brief.json",
+    "art/room_photo_french_door_production/iterations/v004/generated/asset.glb",
+    "art/room_photo_french_door_production/iterations/v004/evaluation.json",
+    "art/room_photo_french_door_production/iterations/v004/render-runs/run-001/asset-detail.png",
+    "art/room_photo_french_door_production/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+    "art/room_photo_french_door_production/iterations/v004/render-runs/run-001/room-scale.png",
+    "art/room_photo_french_door_production/sources/ai-generated-stained-oak-albedo-r01.png",
+    "art/room_photo_french_door_production/sources/ai-generated-stained-oak-albedo-review.md",
+    "art/room_photo_french_door_production/iterations/v003/review/room_photo_luna.json",
+    "rooms/room_photo_luna.json"
+  ],
+  "tool": "Blender background authoring through the RoomScale Art Factory generator",
+  "tool_version": "Blender 5.2.3"
+}
