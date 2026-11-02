@@ -1,0 +1,53 @@
+{
+  "art_direction": "RoomScale category: room_architecture. Improve only the existing stained-wood room trim in the reconstructed room. Match the supplied photograph: ordinary residential baseboard, crown, and window casing in dark warm brown stained wood, with restrained grain and a low-sheen finish. Develop a coherent, modestly profiled baseboard and crown with clear manufactured edges and simple stepped or eased transitions; keep the source's plain domestic character and avoid ornate carving. Existing RoomDefinition trim dimensions, walls, openings, cutaway, furniture, and gameplay remain exact. The profile should read at the normal miniature-room overview without becoming a bright outline or visual focal point.",
+  "asset_id": "room_shell_trim",
+  "citizen_scale": {
+    "citizen_height_inches": 0.5,
+    "ratio_or_view": "The existing trim height is 5 inches, exactly 10 times the 0.5-inch citizen height; the 48-inch sample length is not a RoomDefinition dimension."
+  },
+  "construction_materials": [
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "dark warm stained wood with restrained red-brown undertone, fine visible grain, satin-matte finish",
+      "part": "baseboard"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "same stained wood family, subtle value and grain variation, low-gloss finish",
+      "part": "crown_molding"
+    }
+  ],
+  "dimensions_inches": [
+    48.0,
+    5.0,
+    1.4
+  ],
+  "faction_identity": null,
+  "gameplay_distance_readability": "Keep required features legible at the ArtBrief gameplay camera distances: 12.0, 64.0, 160.0, 330.0 inches.",
+  "intended_function": "Provide source-matched stained-wood baseboard and crown profile materials on RoomDefinition-driven shell segments in room_photo_luna; the ArtBrief 48-inch sample is only a validation board.",
+  "prohibited_failure_modes": [
+    "do not change any RoomDefinition dimensions, wall locations, wall height, opening bounds, trim height, collision, navigation, camera, cutaway, or room object placement",
+    "do not invent paneling, ornate carving, rosettes, brackets, wall decorations, or trim details unsupported by the source photograph",
+    "do not merge trim geometry into the separate window or door assets",
+    "do not substitute a flat color change, roughness-only tweak, or one decorative strip for a coherent architectural profile",
+    "do not use a high-contrast orange or glossy varnish that departs from the source wood"
+  ],
+  "roomdefinition_authority": "ArtBrief dimensions are (156.0, 5.0, 3.0); source RoomDefinition: rooms/room_photo_luna.json. RoomDefinition remains authoritative for placement and gameplay.",
+  "semantic_identity": "source-matched stained-wood baseboard and crown molding profiles",
+  "separate_room_assets": [],
+  "silhouette_requirements": [
+    "source-matched restrained stained-wood color and believable fine grain",
+    "recognizable baseboard and crown molding profiles with meaningful silhouette beyond plain cuboids",
+    "simple manufactured steps, eased edges, and clean joins consistent with ordinary residential trim in the source photo",
+    "profile scale fits the existing 5-inch baseboard and crown envelopes and remains readable at 64 to 330 inch camera distances",
+    "material remains distinct from the deep green painted wall without dominating the photographed room"
+  ],
+  "source_photo_constraints": "Inspect the listed source images and state which visible features are evidenced, which are occluded, and which construction details remain assumptions: photo_holder/Sample (1).jpg",
+  "visual_references": [
+    {
+      "path": "photo_holder/Sample (1).jpg",
+      "provenance": "ArtBrief reference_images",
+      "role": "source image"
+    }
+  ]
+}

@@ -2,7 +2,7 @@
   "schema_version": 1,
   "title": "RoomScale Art Factory Production Deployment — Full Visible-Art Inventory",
   "source_commit": "1e111d37325e7ad00030266efec201796b7fc07d",
-  "generated_at_utc": "2026-11-02T08:35:14+00:00",
+  "generated_at_utc": "2026-11-02T09:24:09+00:00",
   "inventory_scope": "Playable room definitions, reconstructed/candidate RoomDefinitions, canonical and review registries, visual/material catalogs, static scenes, and runtime code that creates visible geometry/material/light/presentation nodes.",
   "coverage": {
     "room_definition_files_scanned": 21,
@@ -51,8 +51,8 @@
       "stone",
       "wood"
     ],
-    "runtime_scripts_with_primitive_or_dynamic_mesh_builders": 12,
-    "runtime_geometry_builder_sites": 91,
+    "runtime_scripts_with_primitive_or_dynamic_mesh_builders": 13,
+    "runtime_geometry_builder_sites": 93,
     "runtime_presentation_sources_by_role": {
       "citizen cargo, badges, and fallback body geometry": [
         {
@@ -125,6 +125,13 @@
           ]
         },
         {
+          "path": "scripts/visuals/room_shell_trim_profile.gd",
+          "site_count": 1,
+          "constructors": [
+            "SurfaceTool.new()"
+          ]
+        },
+        {
           "path": "scripts/visuals/visual_geometry.gd",
           "site_count": 16,
           "constructors": [
@@ -148,7 +155,7 @@
       "room shell, room-object fallback, openings, lighting, and presentation": [
         {
           "path": "scripts/pipeline_proof.gd",
-          "site_count": 26,
+          "site_count": 27,
           "constructors": [
             "MeshInstance3D.new()",
             "BoxMesh.new()",
@@ -724,182 +731,189 @@
       "geometry_builder_sites": [
         {
           "function": "_build_data_room_shell",
-          "line": 377,
+          "line": 387,
+          "constructors": [
+            "MeshInstance3D.new()"
+          ]
+        },
+        {
+          "function": "_add_shell_segment",
+          "line": 438,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_build_octagonal_glass_table",
-          "line": 862,
+          "line": 888,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_build_octagonal_glass_table",
-          "line": 864,
+          "line": 890,
           "constructors": [
             "CylinderMesh.new()"
           ]
         },
         {
           "function": "_build_stone_fireplace",
-          "line": 904,
+          "line": 930,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_build_stone_fireplace",
-          "line": 906,
+          "line": 932,
           "constructors": [
             "CylinderMesh.new()"
           ]
         },
         {
           "function": "_build_floor_lamp",
-          "line": 994,
+          "line": 1020,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_build_floor_lamp",
-          "line": 996,
+          "line": 1022,
           "constructors": [
             "CylinderMesh.new()"
           ]
         },
         {
           "function": "_build_floor_seat",
-          "line": 1015,
+          "line": 1041,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_build_floor_seat",
-          "line": 1027,
+          "line": 1053,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_build_floor_seat",
-          "line": 1033,
+          "line": 1059,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_build_floor_seat",
-          "line": 1035,
+          "line": 1061,
           "constructors": [
             "CylinderMesh.new()"
           ]
         },
         {
           "function": "_add_hammock_fabric_stripe",
-          "line": 1118,
+          "line": 1144,
           "constructors": [
             "SurfaceTool.new()"
           ]
         },
         {
           "function": "_add_hammock_fabric_stripe",
-          "line": 1146,
+          "line": 1172,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_build_blanket_pile",
-          "line": 1237,
+          "line": 1263,
           "constructors": [
             "SurfaceTool.new()"
           ]
         },
         {
           "function": "_build_blanket_pile",
-          "line": 1266,
+          "line": 1292,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_add_art_triangle",
-          "line": 1305,
+          "line": 1331,
           "constructors": [
             "SurfaceTool.new()"
           ]
         },
         {
           "function": "_add_art_triangle",
-          "line": 1311,
+          "line": 1337,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_add_rod_between",
-          "line": 1325,
+          "line": 1351,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_add_rod_between",
-          "line": 1327,
+          "line": 1353,
           "constructors": [
             "BoxMesh.new()"
           ]
         },
         {
           "function": "_add_steam_emitter",
-          "line": 1950,
+          "line": 1977,
           "constructors": [
             "SphereMesh.new()"
           ]
         },
         {
           "function": "_add_box",
-          "line": 1963,
+          "line": 1990,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_add_box",
-          "line": 1965,
+          "line": 1992,
           "constructors": [
             "BoxMesh.new()"
           ]
         },
         {
           "function": "_add_cylinder",
-          "line": 1975,
+          "line": 2002,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_add_cylinder",
-          "line": 1977,
+          "line": 2004,
           "constructors": [
             "CylinderMesh.new()"
           ]
         },
         {
           "function": "_add_sphere",
-          "line": 1989,
+          "line": 2016,
           "constructors": [
             "MeshInstance3D.new()"
           ]
         },
         {
           "function": "_add_sphere",
-          "line": 1991,
+          "line": 2018,
           "constructors": [
             "SphereMesh.new()"
           ]
@@ -993,6 +1007,21 @@
           "line": 304,
           "constructors": [
             "MeshInstance3D.new()"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "scripts/visuals/room_shell_trim_profile.gd",
+      "constructors": [
+        "SurfaceTool.new()"
+      ],
+      "geometry_builder_sites": [
+        {
+          "function": "build_segment",
+          "line": 14,
+          "constructors": [
+            "SurfaceTool.new()"
           ]
         }
       ]
@@ -9046,13 +9075,13 @@
       "gameplay_importance": "low — presentation only",
       "visual_prominence": "medium; repeated along room perimeter",
       "approx_screen_space_importance": "low-to-medium depending on camera distance",
-      "current_visual_quality": "repeated cuboid baseboard/crown sections with basic wood shading",
+      "current_visual_quality": "the runtime still uses cuboid trim by default; Art Factory v002 is the best current review candidate, but its smooth faces and remaining contour bands miss the strict close-craft gate",
       "programmer_art_or_primitive": true,
       "photo_resemblance_required": true,
-      "recommended_production_method": "Reusable trim profile and shared wood material; retain RoomDefinition dimensions",
-      "backlog_status": "scene-foundation architecture work",
+      "recommended_production_method": "Preserve v002 as review-only; require a new close-render/mesh diagnosis before any fresh trim target episode, retaining all RoomDefinition dimensions",
+      "backlog_status": "The approved target episode exhausted three attempts; no candidate was promoted, and the default runtime remains cuboid trim",
       "asset_factory_id": "room_shell_trim",
-      "art_factory_id_exists_before_deployment": false,
+      "art_factory_id_exists_before_deployment": true,
       "existing_visual_catalog_id_exists": false,
       "assigned_or_reused_asset_factory_id": "room_shell_trim",
       "category": "room shell / architecture",
@@ -9083,7 +9112,7 @@
       "canonical_registry_status": "not registered",
       "best_current_candidate": null,
       "strict_evaluation_path": null,
-      "production_art_backlog_status": "scene-foundation architecture work",
+      "production_art_backlog_status": "The approved target episode exhausted three attempts; no candidate was promoted, and the default runtime remains cuboid trim",
       "linked_runtime_geometry_sources": [
         "scripts/pipeline_proof.gd",
         "scripts/visuals/material_library.gd"

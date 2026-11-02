@@ -234,6 +234,17 @@ func run() -> void:
 			opposite_yaw = 0.45
 			profile_yaw = -0.15
 			detail_yaw = 0.15
+		elif asset_id == "room_shell_trim":
+			var shell_value: Variant = definition.get("room_shell", {})
+			var shell: Dictionary = shell_value if shell_value is Dictionary else {}
+			var baseboard_height := float(shell.get("baseboard_height", 3.0))
+			var south_inner_z := floor_center.z + room_depth * 0.5 - float(shell.get("wall_thickness", 2.0)) * 0.5
+			target = Vector3(-10.0, floor_center.y + baseboard_height * 0.5, south_inner_z)
+			close_distance = 24.0
+			three_quarter_yaw = PI + 0.18
+			opposite_yaw = PI - 0.18
+			profile_yaw = PI
+			detail_yaw = PI
 		else:
 			# The south wall is uninterrupted in this source RoomDefinition.
 			target = Vector3(-35.0, wall_height * 0.5, room_depth * 0.5 - 1.0)
@@ -302,6 +313,21 @@ func run() -> void:
 		detail_distance = maxf(maxf(30.0, dimensions.length() * 0.88), dimensions.y * 1.25)
 	if not await _capture(scene, "asset-detail", target, detail_distance, detail_tilt, detail_yaw, follow_citizen):
 		return
+	if asset_id == "room_shell_trim":
+		var shell_value: Variant = definition.get("room_shell", {})
+		var shell: Dictionary = shell_value if shell_value is Dictionary else {}
+		var wall_thickness := float(shell.get("wall_thickness", 2.0))
+		var south_inner_z := floor_center.z + float(definition.get("dimensions", [156.0, 144.0])[1]) * 0.5 - wall_thickness * 0.5
+		var baseboard_height := float(shell.get("baseboard_height", 3.0))
+		var crown_height := float(shell.get("crown_molding_height", 0.0))
+		var baseboard_depth := maxf(1.0, wall_thickness * 0.7)
+		var baseboard_target := Vector3(-10.0, floor_center.y + baseboard_height * 0.5, south_inner_z - baseboard_depth * 0.5)
+		if not await _capture(scene, "baseboard-profile-detail", baseboard_target, 18.0, 22.0, PI):
+			return
+		var crown_depth := 0.75
+		var crown_target := Vector3(-10.0, floor_center.y + float(definition.get("wall_height", 108.0)) - crown_height * 0.5, south_inner_z - crown_depth * 0.5)
+		if crown_height > 0.0 and not await _capture(scene, "crown-profile-detail", crown_target, 18.0, 22.0, PI):
+			return
 	var controlled_citizen_yaws := OS.get_environment("ROOMSCALE_ART_FACTORY_CITIZEN_YAW_SWEEP_DEGREES")
 	var controlled_citizen_receipt: Dictionary = {}
 	if asset_id == "citizen" and not controlled_citizen_yaws.is_empty():

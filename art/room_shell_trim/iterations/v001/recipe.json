@@ -1,0 +1,42 @@
+{
+  "deterministic_seed": 1,
+  "generator_command": [
+    ".tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generators/generate_room_shell_trim.gd"
+  ],
+  "import_configuration": {
+    "coordinate_system": "Y-up; all dimensions in inches",
+    "format": "PackedScene",
+    "runtime_geometry": "shared profile helper; RoomDefinition dimensions remain authoritative",
+    "sample_envelope_inches": [
+      48.0,
+      5.0,
+      1.4
+    ]
+  },
+  "instructions": "Build one validation sample from two fitted 24-inch residential trim profiles: a 5 x 1.4-inch baseboard and a 5 x 0.75-inch crown profile. Follow the approved Visual Director target for restrained stained-wood material and shallow cove/reveal silhouette. Use the shared RoomShellTrimProfile geometry helper; keep profiles inside the measured RoomDefinition trim envelopes. The runtime remains presentation-only and RoomDefinition owns all wall, floor, opening, camera, collision, navigation, and gameplay data.",
+  "material_method": "RoomScale wood material library with source-matched dark warm stain, restrained procedural grain, and low-sheen StandardMaterial3D response",
+  "method": "godot_room_shell_trim_profile",
+  "parameters": {
+    "outputs": [
+      "asset.tscn",
+      "generation-record.json"
+    ],
+    "visual_director_strategy": "initial",
+    "visual_director_target": "art/room_shell_trim/visual_director/round-01/approved-target-r01.png"
+  },
+  "post_processing": [],
+  "schema_version": 1,
+  "source_inputs": [
+    "photo_holder/Sample (1).jpg",
+    "rooms/room_photo_luna.json",
+    "art/room_shell_trim/visual_director/round-01/approved-target-r01.png",
+    "scripts/visuals/room_shell_trim_profile.gd"
+  ],
+  "tool": "Godot GDScript + shared profile mesh builder",
+  "tool_version": "Godot 4.7.2 stable"
+}

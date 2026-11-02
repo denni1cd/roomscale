@@ -184,6 +184,25 @@ class ArtFactoryTest(unittest.TestCase):
         self.assertEqual(make_brief().validate(), [])
         self.assertEqual(make_recipe().validate(), [])
 
+    def test_visual_target_approval_records_the_actual_pixel_reviewer(self) -> None:
+        target = self.root / "art/test-desk/visual_director/round-01/target.png"
+        review = self.root / "art/test-desk/visual_director/round-01/pixel-review.md"
+        target.parent.mkdir(parents=True)
+        target.write_bytes(b"reviewed image bytes")
+        review.write_text("Pixel review evidence.", encoding="utf-8")
+
+        result = self.factory.approve_visual_target(
+            "test-desk",
+            target.relative_to(self.root).as_posix(),
+            review.relative_to(self.root).as_posix(),
+            reviewer="Codex visual review",
+        )
+
+        self.assertEqual(
+            result["approved_visual_target"]["review_method"],
+            "pixel inspection; review evidence recorded by Codex visual review",
+        )
+
     def test_unbounded_pilot_brief_can_create_more_than_eight_challengers(self) -> None:
         brief_path = self.factory.save_brief(make_brief(iteration_budget=None))
         recorded = ArtBrief.from_dict(json.loads(brief_path.read_text(encoding="utf-8")))

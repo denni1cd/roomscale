@@ -1,0 +1,256 @@
+{
+  "approved_visual_target": {
+    "approval": "pass",
+    "approved_at_utc": "2026-11-02T08:55:50+00:00",
+    "concept_id": "trim-direction-d-edit01",
+    "path": "art/room_shell_trim/visual_director/round-01/approved-target-r01.png",
+    "review_method": "pixel inspection; review evidence recorded by Codex multimodal pixel inspection",
+    "review_path": "art/room_shell_trim/visual_director/round-01/visual-development.md",
+    "sha256": "74c07d5f97a099e996538cd673d839b3ec9b2e9762d04f415b22a3186561990f"
+  },
+  "asset_id": "room_shell_trim",
+  "backlog_reason": "The three approved-target attempts did not resolve the production transfer defect: the final close captures still break broad stained-wood faces into narrow bands. Preserve v002 as the best current review candidate and keep promotion blocked pending a new mesh/material diagnosis.",
+  "best_3d_candidate": {
+    "candidate_file": "art/room_shell_trim/iterations/v002/candidate.json",
+    "candidate_id": "room_shell_trim-v002",
+    "evaluation_file": "art/room_shell_trim/iterations/v002/evaluation.json",
+    "updated_at_utc": "2026-11-02T09:14:44+00:00"
+  },
+  "candidate_history": [
+    {
+      "candidate_file": "art/room_shell_trim/iterations/v001/candidate.json",
+      "candidate_id": "room_shell_trim-v001",
+      "created_at_utc": "2026-11-02T08:59:36+00:00",
+      "parent_candidate_id": "",
+      "recipe_file": "art/room_shell_trim/iterations/v001/recipe.json",
+      "visual_director_attempt": 1,
+      "visual_director_provenance": {
+        "approved_visual_target": {
+          "approval": "pass",
+          "approved_at_utc": "2026-11-02T08:55:50+00:00",
+          "concept_id": "trim-direction-d-edit01",
+          "path": "art/room_shell_trim/visual_director/round-01/approved-target-r01.png",
+          "review_method": "pixel inspection; review evidence recorded by Codex multimodal pixel inspection",
+          "review_path": "art/room_shell_trim/visual_director/round-01/visual-development.md",
+          "sha256": "74c07d5f97a099e996538cd673d839b3ec9b2e9762d04f415b22a3186561990f"
+        },
+        "case_file": "art/room_shell_trim/visual_director/state.json",
+        "policy": {
+          "inputs": {
+            "category": "room_surface",
+            "current_quality": "below_target",
+            "faction_defining": false,
+            "inferred": [],
+            "priority_tier": 2,
+            "screen_space_importance": 5,
+            "source_images_present": true,
+            "source_photo_required": true
+          },
+          "reasons": [
+            "very high screen-space importance",
+            "source-photo character is required for a prominent asset",
+            "current production quality is below target"
+          ],
+          "required": true
+        },
+        "status": "approved",
+        "strategy": "initial",
+        "target_episode_attempt": 1
+      }
+    },
+    {
+      "candidate_file": "art/room_shell_trim/iterations/v002/candidate.json",
+      "candidate_id": "room_shell_trim-v002",
+      "created_at_utc": "2026-11-02T09:12:41+00:00",
+      "parent_candidate_id": "room_shell_trim-v001",
+      "recipe_file": "art/room_shell_trim/iterations/v002/recipe.json",
+      "visual_director_attempt": 2,
+      "visual_director_provenance": {
+        "approved_visual_target": {
+          "approval": "pass",
+          "approved_at_utc": "2026-11-02T08:55:50+00:00",
+          "concept_id": "trim-direction-d-edit01",
+          "path": "art/room_shell_trim/visual_director/round-01/approved-target-r01.png",
+          "review_method": "pixel inspection; review evidence recorded by Codex multimodal pixel inspection",
+          "review_path": "art/room_shell_trim/visual_director/round-01/visual-development.md",
+          "sha256": "74c07d5f97a099e996538cd673d839b3ec9b2e9762d04f415b22a3186561990f"
+        },
+        "case_file": "art/room_shell_trim/visual_director/state.json",
+        "policy": {
+          "inputs": {
+            "category": "room_surface",
+            "current_quality": "below_target",
+            "faction_defining": false,
+            "inferred": [],
+            "priority_tier": 2,
+            "screen_space_importance": 5,
+            "source_images_present": true,
+            "source_photo_required": true
+          },
+          "reasons": [
+            "very high screen-space importance",
+            "source-photo character is required for a prominent asset",
+            "current production quality is below target"
+          ],
+          "required": true
+        },
+        "status": "approved",
+        "strategy": "targeted_correction",
+        "target_episode_attempt": 2
+      }
+    },
+    {
+      "candidate_file": "art/room_shell_trim/iterations/v003/candidate.json",
+      "candidate_id": "room_shell_trim-v003",
+      "created_at_utc": "2026-11-02T09:15:54+00:00",
+      "parent_candidate_id": "room_shell_trim-v002",
+      "recipe_file": "art/room_shell_trim/iterations/v003/recipe.json",
+      "visual_director_attempt": 3,
+      "visual_director_provenance": {
+        "approved_visual_target": {
+          "approval": "pass",
+          "approved_at_utc": "2026-11-02T08:55:50+00:00",
+          "concept_id": "trim-direction-d-edit01",
+          "path": "art/room_shell_trim/visual_director/round-01/approved-target-r01.png",
+          "review_method": "pixel inspection; review evidence recorded by Codex multimodal pixel inspection",
+          "review_path": "art/room_shell_trim/visual_director/round-01/visual-development.md",
+          "sha256": "74c07d5f97a099e996538cd673d839b3ec9b2e9762d04f415b22a3186561990f"
+        },
+        "case_file": "art/room_shell_trim/visual_director/state.json",
+        "policy": {
+          "inputs": {
+            "category": "room_surface",
+            "current_quality": "below_target",
+            "faction_defining": false,
+            "inferred": [],
+            "priority_tier": 2,
+            "screen_space_importance": 5,
+            "source_images_present": true,
+            "source_photo_required": true
+          },
+          "reasons": [
+            "very high screen-space importance",
+            "source-photo character is required for a prominent asset",
+            "current production quality is below target"
+          ],
+          "required": true
+        },
+        "status": "approved",
+        "strategy": "alternate_strategy",
+        "target_episode_attempt": 3
+      }
+    }
+  ],
+  "case_file": "art/room_shell_trim/visual_director/state.json",
+  "policy": {
+    "inputs": {
+      "category": "room_surface",
+      "current_quality": "below_target",
+      "faction_defining": false,
+      "inferred": [],
+      "priority_tier": 2,
+      "screen_space_importance": 5,
+      "source_images_present": true,
+      "source_photo_required": true
+    },
+    "reasons": [
+      "very high screen-space importance",
+      "source-photo character is required for a prominent asset",
+      "current production quality is below target"
+    ],
+    "required": true
+  },
+  "production_asset": null,
+  "schema_version": 1,
+  "status": "backlog",
+  "target_episode": {
+    "attempts": [
+      {
+        "attempt": 1,
+        "candidate_id": "room_shell_trim-v001",
+        "decision": "continue",
+        "evaluated_at_utc": "2026-11-02T09:12:03+00:00",
+        "evaluation_file": "art/room_shell_trim/iterations/v001/evaluation.json",
+        "incumbent_comparison_result": "first_pass",
+        "status": "evaluated",
+        "strategy": "initial",
+        "visual_transfer_diagnosis": {
+          "corrective_action": "For attempt 2, keep the approved profile mesh and measured fit, remove the procedural albedo and normal maps from the trim material, and render with a matte dark-walnut base color. Recheck the broad-face coverage in the same production camera views before considering any geometry change.",
+          "lost_visual_information": [
+            "The approved target's broad, dark stained-wood faces are broken into repeated warm stripes.",
+            "The shallow cove/reveal hierarchy is harder to distinguish from the surface bands at close range."
+          ],
+          "preserved_components": [
+            "RoomDefinition-owned five-inch baseboard and crown heights",
+            "Measured 1.4-inch baseboard depth and 0.75-inch crown projection",
+            "Separate reusable baseboard and crown profile meshes",
+            "Dark warm stained-wood color family and deep green room context"
+          ],
+          "primary_causes": [
+            "material_generation",
+            "lighting_render_presentation"
+          ]
+        }
+      },
+      {
+        "attempt": 2,
+        "candidate_id": "room_shell_trim-v002",
+        "decision": "continue",
+        "evaluated_at_utc": "2026-11-02T09:14:44+00:00",
+        "evaluation_file": "art/room_shell_trim/iterations/v002/evaluation.json",
+        "incumbent_comparison_result": "better",
+        "status": "evaluated",
+        "strategy": "targeted_correction",
+        "visual_transfer_diagnosis": {
+          "corrective_action": "For the final attempt, replace the uniform solid stain with a custom low-frequency, low-contrast longitudinal grain material and reduce the contour points to a broad face with a few shallow transitions. Preserve the same profile envelope, wall placement, and RoomDefinition data.",
+          "lost_visual_information": [
+            "The target's subtle broad wood grain is absent from the solid matte faces.",
+            "Several added contour bands compete with the target's simple cove/reveal hierarchy."
+          ],
+          "preserved_components": [
+            "Continuous dark stained-wood faces without the v001 warm stripe response",
+            "Five-inch baseboard and crown heights owned by RoomDefinition",
+            "Measured 1.4-inch baseboard depth and 0.75-inch crown projection",
+            "Deep green room context and existing wall/opening geometry"
+          ],
+          "primary_causes": [
+            "geometry_loss",
+            "material_generation"
+          ]
+        }
+      },
+      {
+        "attempt": 3,
+        "candidate_id": "room_shell_trim-v003",
+        "decision": "reject",
+        "evaluated_at_utc": "2026-11-02T09:18:38+00:00",
+        "evaluation_file": "art/room_shell_trim/iterations/v003/evaluation.json",
+        "incumbent_comparison_result": "worse",
+        "status": "evaluated",
+        "strategy": "alternate_strategy",
+        "visual_transfer_diagnosis": {
+          "corrective_action": "The approved target episode has exhausted its three attempts. Preserve v002 as best current review and do not promote trim. Any future retry requires a new rendering/mesh diagnosis that explains why broad faces disappear in the room capture.",
+          "lost_visual_information": [
+            "Broad continuous stained-wood faces remain broken into narrow horizontal bands.",
+            "The target's shallow cove/reveal transitions do not read in the production views."
+          ],
+          "preserved_components": [
+            "The measured trim height and depth envelopes",
+            "RoomDefinition-owned wall, opening, and gameplay geometry",
+            "Dark warm wood color family and green room context"
+          ],
+          "primary_causes": [
+            "geometry_loss",
+            "material_generation",
+            "lighting_render_presentation"
+          ]
+        }
+      }
+    ],
+    "backlog_reason": "The three approved-target attempts did not resolve the production transfer defect: the final close captures still break broad stained-wood faces into narrow bands. Preserve v002 as the best current review candidate and keep promotion blocked pending a new mesh/material diagnosis.",
+    "status": "backlog",
+    "target_sha256": "74c07d5f97a099e996538cd673d839b3ec9b2e9762d04f415b22a3186561990f"
+  },
+  "updated_at_utc": "2026-11-02T09:18:54+00:00",
+  "visual_brief_file": "art/room_shell_trim/visual_director/visual-brief-draft.json"
+}

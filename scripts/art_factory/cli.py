@@ -98,6 +98,9 @@ def parser() -> argparse.ArgumentParser:
         "--review", required=True, help="project-relative pixel-review evidence"
     )
     visual_approve.add_argument("--concept-id", default="")
+    visual_approve.add_argument(
+        "--reviewer", default="Luna", help="reviewer identifier recorded with pixel evidence"
+    )
     visual_backlog = visual_director_commands.add_parser(
         "backlog",
         help="stop a reviewed target episode and preserve its best 3D/production assets",
@@ -173,7 +176,11 @@ def main(argv: list[str] | None = None) -> int:
             result = factory.backlog_visual_director_case(args.asset_id, args.reason)
         else:
             result = factory.approve_visual_target(
-                args.asset_id, args.target, args.review, concept_id=args.concept_id
+                args.asset_id,
+                args.target,
+                args.review,
+                concept_id=args.concept_id,
+                reviewer=args.reviewer,
             )
         print(json.dumps(result, indent=2))
     return 0

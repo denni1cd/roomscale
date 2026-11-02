@@ -1,0 +1,37 @@
+{
+  "approved_visual_target": "art/room_shell_trim/visual_director/round-01/approved-target-r01.png",
+  "asset_id": "room_shell_trim",
+  "material": {
+    "anisotropic_triplanar_scale": [
+      0.015,
+      0.04,
+      0.04
+    ],
+    "base_color": "563a28",
+    "family": "stained residential wood",
+    "grain_min": 0.94,
+    "roughness": 0.82,
+    "surface_detail": "directional_low_frequency_grain",
+    "world_triplanar_scale": 0.0
+  },
+  "method": "godot_room_shell_trim_profile",
+  "outputs": [
+    "asset.tscn",
+    "generation-record.json"
+  ],
+  "profile_sections": [
+    {
+      "depth_inches": 1.4,
+      "height_inches": 5.0,
+      "length_inches": 24.0,
+      "name": "baseboard"
+    },
+    {
+      "height_inches": 5.0,
+      "interior_projection_inches": 0.75,
+      "length_inches": 24.0,
+      "name": "crown"
+    }
+  ],
+  "runtime_geometry": "RoomDefinition-driven segments using the same profile helper; no gameplay bounds or topology change"
+}

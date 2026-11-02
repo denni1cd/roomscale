@@ -1,0 +1,152 @@
+{
+  "candidate_id": "room_shell_trim-v001",
+  "created_at_utc": "2026-11-02T09:11:25+00:00",
+  "decision": "continue",
+  "defects": [
+    "The baseboard and crown closeups show repeated narrow orange-brown bands with green wall visible between them, instead of the broad, restrained stained-wood faces in the approved target.",
+    "The source-matched color and profile are not clearly legible in the whole-room and settlement views."
+  ],
+  "hard_fail_reasons": [
+    "The source-photo character gate fails: the approved target calls for low-sheen dark stained wood, while the production captures are dominated by fine warm stripes.",
+    "The close craftsmanship gate fails: repeated surface bands obscure the broad face and shallow profile hierarchy shown in the target."
+  ],
+  "incumbent_candidate_id": "",
+  "incumbent_comparison": "This is the first Art Factory trim candidate. Compared with the RoomDefinition cuboid trim, it preserves the five-inch height and adds profile geometry, but the close captures make the material read as narrow orange stripes and the room views show little clear improvement.",
+  "incumbent_comparison_result": "first_pass",
+  "likely_causes": [
+    "The wood material's triplanar albedo and normal textures create a high-frequency striped response across the long, narrow profile faces."
+  ],
+  "next_action_hypothesis": "For attempt 2, preserve the approved cross-section and RoomDefinition dimensions, but remove the procedural albedo and normal maps and use a matte, dark stained-wood color. The broad faces should become continuous while the existing profile edges retain the cove/reveal silhouette.",
+  "observations": {
+    "art_direction_fit": "The candidate uses the source's green wall context and dark warm wood family, but the visible orange stripe pattern does not match the approved restrained finish.",
+    "close_up_quality": "The run-005 baseboard and crown captures show dense repeated horizontal bands rather than broad, calm wood faces with a few shallow transitions.",
+    "gameplay_readability": "At room and settlement distances the trim remains a narrow perimeter line; the dark profile is not yet a clear source-matched improvement over the incumbent.",
+    "geometric_detail": "The cross-section adds stepped depth beyond the original cuboid, but the production view emphasizes many close bands rather than the target's shallow cove and reveal.",
+    "material_realism": "The warm stripe response dominates the close captures and the broad stained-wood surface does not read as the low-sheen target material.",
+    "proportion": "The generated pair validates at 48 x 5 x 1.4 inches; the runtime keeps the five-inch RoomDefinition trim height and measured projection envelopes.",
+    "scale_fidelity": "Candidate bounds match the 48 x 5 x 1.4-inch ArtBrief sample; the sample length is not used as a RoomDefinition dimension.",
+    "semantic_recognizability": "The room captures identify perimeter trim and the profile sample contains separate baseboard and crown sections.",
+    "silhouette_quality": "The mesh adds shallow contour transitions, but the selected camera views do not resolve the intended broad cove/reveal hierarchy clearly.",
+    "source_resemblance": "The room context and wood family follow the source, while the repeated bright stripe response departs from its dark restrained molding.",
+    "surface_variation": "The procedural surface repeats fine bands across the long trim faces; the target's grain is subdued and broader.",
+    "technical_integration": "Godot 4.7.2 GL Compatibility rendered the registered candidate through the production room with 50 citizens; the candidate validates at two meshes, two surfaces, and 92 triangles."
+  },
+  "render_evidence": [
+    "art/room_shell_trim/iterations/v001/render-runs/run-005/room-scale.png",
+    "art/room_shell_trim/iterations/v001/render-runs/run-005/baseboard-profile-detail.png",
+    "art/room_shell_trim/iterations/v001/render-runs/run-005/crown-profile-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 2,
+    "gameplay_readability": 2,
+    "geometric_detail": 3,
+    "material_realism": 2,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "source_resemblance": 3,
+    "surface_variation": 2,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The run-005 closeups show orange-brown horizontal bands and visible wall color across the profile faces, obscuring the broad stained-wood form.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "The generated profile has continuous extruded edges, though the edge hierarchy is difficult to read under the current material response.",
+        "evidence_refs": [
+          "art/room_shell_trim/iterations/v001/render-runs/run-005/baseboard-profile-detail.png"
+        ],
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "Architectural trim has no expected hardware in the approved target; no unsupported fittings were added.",
+        "evidence_refs": [
+          "art/room_shell_trim/iterations/v001/render-runs/run-005/crown-profile-detail.png"
+        ],
+        "pass": true
+      },
+      "joins": {
+        "evidence": "The production room shows continuous wall-length sections, but the close views do not establish clean mitered corner joins.",
+        "evidence_refs": [
+          "art/room_shell_trim/iterations/v001/render-runs/run-005/room-scale.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "The close captures resolve multiple narrow bands but do not show the broad shallow cove/reveal hierarchy from the target.",
+        "evidence_refs": [
+          "art/room_shell_trim/iterations/v001/render-runs/run-005/baseboard-profile-detail.png",
+          "art/room_shell_trim/iterations/v001/render-runs/run-005/crown-profile-detail.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "Fine warm stripes dominate the exposed faces and differ from the target's dark, low-sheen stained wood.",
+        "evidence_refs": [
+          "art/room_shell_trim/iterations/v001/render-runs/run-005/baseboard-profile-detail.png",
+          "art/room_shell_trim/iterations/v001/render-runs/run-005/crown-profile-detail.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "The surface response repeats narrow bands instead of restrained broad grain across the main faces.",
+        "evidence_refs": [
+          "art/room_shell_trim/iterations/v001/render-runs/run-005/baseboard-profile-detail.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "The validated 1.4-inch baseboard depth and 0.75-inch crown projection give both sections measurable thickness within the RoomDefinition envelope.",
+        "evidence_refs": [
+          "art/room_shell_trim/iterations/v001/render-runs/run-005/crown-profile-detail.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "evidence": "The room-scale capture reads as architectural trim following the wall perimeter, despite the material issue.",
+      "pass": true
+    },
+    "photo_character": {
+      "answer": "No",
+      "applicable": true,
+      "evidence": "The dark wood family is present, but the repeated warm stripes do not approach the source photo's subdued stained molding.",
+      "pass": false
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "For attempt 2, keep the approved profile mesh and measured fit, remove the procedural albedo and normal maps from the trim material, and render with a matte dark-walnut base color. Recheck the broad-face coverage in the same production camera views before considering any geometry change.",
+    "lost_visual_information": [
+      "The approved target's broad, dark stained-wood faces are broken into repeated warm stripes.",
+      "The shallow cove/reveal hierarchy is harder to distinguish from the surface bands at close range."
+    ],
+    "preserved_components": [
+      "RoomDefinition-owned five-inch baseboard and crown heights",
+      "Measured 1.4-inch baseboard depth and 0.75-inch crown projection",
+      "Separate reusable baseboard and crown profile meshes",
+      "Dark warm stained-wood color family and deep green room context"
+    ],
+    "primary_causes": [
+      "material_generation",
+      "lighting_render_presentation"
+    ]
+  }
+}

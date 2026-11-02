@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "method": "godot_room_shell_trim_profile",
+  "instructions": "Rebuild the same two measured residential trim profiles from the approved Visual Director target. This is a targeted correction to room_shell_trim-v001: its production captures show repeated warm bands across the broad faces, unlike the target's dark, restrained stained wood. Preserve the shared profile mesh, segment envelope, and RoomDefinition ownership. Remove the generated albedo and normal maps for this attempt and use the specified matte wood color so the profile silhouette can be judged without the banding.",
+  "parameters": {
+    "visual_director_strategy": "targeted_correction",
+    "diagnosis_ref": "room_shell_trim-v001",
+    "visual_director_target": "art/room_shell_trim/visual_director/round-01/approved-target-r01.png",
+    "material": {
+      "base_color": "563a28",
+      "roughness": 0.82,
+      "surface_detail": "solid_matte"
+    },
+    "outputs": [
+      "asset.tscn",
+      "generation-record.json"
+    ]
+  },
+  "source_inputs": [
+    "photo_holder/Sample (1).jpg",
+    "rooms/room_photo_luna.json",
+    "art/room_shell_trim/visual_director/round-01/approved-target-r01.png",
+    "art/room_shell_trim/iterations/v001/evaluation.json",
+    "scripts/visuals/room_shell_trim_profile.gd"
+  ],
+  "tool": "Godot GDScript + shared profile mesh builder",
+  "tool_version": "Godot 4.7.2 stable",
+  "post_processing": [],
+  "material_method": "Matte stained-wood StandardMaterial3D without procedural albedo or normal maps, isolating the material-generation defect found in v001",
+  "import_configuration": {
+    "format": "PackedScene",
+    "coordinate_system": "Y-up; all dimensions in inches",
+    "sample_envelope_inches": [
+      48.0,
+      5.0,
+      1.4
+    ],
+    "runtime_geometry": "shared profile helper; RoomDefinition dimensions remain authoritative"
+  },
+  "deterministic_seed": 1,
+  "generator_command": [
+    ".tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generators/generate_room_shell_trim.gd"
+  ]
+}

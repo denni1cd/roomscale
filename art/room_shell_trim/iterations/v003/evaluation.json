@@ -1,0 +1,152 @@
+{
+  "candidate_id": "room_shell_trim-v003",
+  "created_at_utc": "2026-11-02T09:20:00+00:00",
+  "decision": "reject",
+  "defects": [
+    "The production closeups again show narrow warm bands instead of a stable broad wood face, despite the custom low-frequency material and reduced contour count.",
+    "The room-scale candidate does not produce a clear improvement over v002's continuous matte faces."
+  ],
+  "hard_fail_reasons": [
+    "The close-inspection and source-character gates fail because the profile faces remain visually broken into repeated stripes.",
+    "The third attempt does not transfer the approved broad-face and restrained-material hierarchy."
+  ],
+  "incumbent_candidate_id": "room_shell_trim-v002",
+  "incumbent_comparison": "The final production capture remains visibly striped at the baseboard and crown while v002 shows continuous matte faces. Keep v002 as the best current review candidate; neither candidate meets the target's close-craft threshold for promotion.",
+  "incumbent_comparison_result": "worse",
+  "likely_causes": [
+    "The profile render still emphasizes repeated contour bands; the runtime material and mesh transfer do not match the close target despite the alternate low-frequency texture."
+  ],
+  "next_action_hypothesis": "Preserve v002 as best current review and keep production promotion blocked. Revisit this trim family only with a new evidence-backed rendering or geometry diagnosis outside the exhausted target episode.",
+  "observations": {
+    "art_direction_fit": "The dark wood color and green room remain source-related, but the repeated bands dominate the close result and depart from the approved restrained target.",
+    "close_up_quality": "The run-001 baseboard and crown captures again show many narrow orange-brown horizontal lines instead of broad wood faces.",
+    "gameplay_readability": "At room and settlement distances the trim remains a narrow perimeter edge with little differentiation from surrounding opening trim.",
+    "geometric_detail": "The cross-section uses fewer points than v002, but the production close view still emphasizes repeated lines rather than the shallow cove/reveal form.",
+    "material_realism": "The alternate low-frequency grain response remains banded in the production captures and does not read as restrained stained wood.",
+    "proportion": "The candidate retains the measured 48 x 5 x 1.4-inch sample envelope and five-inch RoomDefinition-owned profile height.",
+    "scale_fidelity": "The candidate remains within the validated sample bounds; no RoomDefinition dimensions or gameplay records changed.",
+    "semantic_recognizability": "The two generated sections still represent baseboard and crown molding, although their production surfaces do not match the target.",
+    "silhouette_quality": "The reduced contour does not create a clearly legible cove/reveal silhouette in the production camera views.",
+    "source_resemblance": "The room colors and wood family persist, but the repeated warm bands remain unlike the photographed molding.",
+    "surface_variation": "The custom texture does not produce the broad restrained wood grain expected by the target; visible repeated bands dominate.",
+    "technical_integration": "Godot 4.7.2 validates the candidate at two meshes, two surfaces, and 72 triangles and renders it through the 50-citizen production room."
+  },
+  "render_evidence": [
+    "art/room_shell_trim/iterations/v003/render-runs/run-001/room-scale.png",
+    "art/room_shell_trim/iterations/v003/render-runs/run-001/baseboard-profile-detail.png",
+    "art/room_shell_trim/iterations/v003/render-runs/run-001/crown-profile-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 2,
+    "close_up_quality": 2,
+    "gameplay_readability": 2,
+    "geometric_detail": 2,
+    "material_realism": 2,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 2,
+    "source_resemblance": 2,
+    "surface_variation": 2,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The run-001 closeups retain narrow repeated bands and do not show a broad continuous profile face.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "The extruded edge remains continuous, but it does not resolve into the target's broad face and shallow transitions.",
+        "evidence_refs": [
+          "art/room_shell_trim/iterations/v003/render-runs/run-001/baseboard-profile-detail.png"
+        ],
+        "pass": false
+      },
+      "hardware": {
+        "evidence": "The trim concept has no separate hardware, so no fittings are required.",
+        "evidence_refs": [
+          "art/room_shell_trim/iterations/v003/render-runs/run-001/crown-profile-detail.png"
+        ],
+        "pass": true
+      },
+      "joins": {
+        "evidence": "The room-scale view does not establish a finished mitered corner, and the profile lacks a clean close view for join review.",
+        "evidence_refs": [
+          "art/room_shell_trim/iterations/v003/render-runs/run-001/room-scale.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "The captured profile still reads as repeated narrow lines, not the target's few shallow manufacturing transitions.",
+        "evidence_refs": [
+          "art/room_shell_trim/iterations/v003/render-runs/run-001/baseboard-profile-detail.png",
+          "art/room_shell_trim/iterations/v003/render-runs/run-001/crown-profile-detail.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "The alternate low-frequency grain and matte color still produce visible repeated warm stripes in both close captures.",
+        "evidence_refs": [
+          "art/room_shell_trim/iterations/v003/render-runs/run-001/baseboard-profile-detail.png",
+          "art/room_shell_trim/iterations/v003/render-runs/run-001/crown-profile-detail.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "The captured surface shows repeated bands rather than broad, restrained variation across the wood faces.",
+        "evidence_refs": [
+          "art/room_shell_trim/iterations/v003/render-runs/run-001/baseboard-profile-detail.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "The technical candidate bounds preserve the measured baseboard depth and crown projection.",
+        "evidence_refs": [
+          "art/room_shell_trim/iterations/v003/render-runs/run-001/crown-profile-detail.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "evidence": "The room capture reads as installed architectural trim, though the finish and profile remain below the approved target.",
+      "pass": true
+    },
+    "photo_character": {
+      "answer": "No",
+      "applicable": true,
+      "evidence": "Repeated warm bands remain visible across the profiles, unlike the source's restrained dark stained molding.",
+      "pass": false
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "The approved target episode has exhausted its three attempts. Preserve v002 as best current review and do not promote trim. Any future retry requires a new rendering/mesh diagnosis that explains why broad faces disappear in the room capture.",
+    "lost_visual_information": [
+      "Broad continuous stained-wood faces remain broken into narrow horizontal bands.",
+      "The target's shallow cove/reveal transitions do not read in the production views."
+    ],
+    "preserved_components": [
+      "The measured trim height and depth envelopes",
+      "RoomDefinition-owned wall, opening, and gameplay geometry",
+      "Dark warm wood color family and green room context"
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "material_generation",
+      "lighting_render_presentation"
+    ]
+  }
+}

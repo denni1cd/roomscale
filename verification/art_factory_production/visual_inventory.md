@@ -1,6 +1,6 @@
 # RoomScale Full Visible-Art Inventory
 
-Generated: `2026-11-02T08:35:14+00:00`
+Generated: `2026-11-02T09:24:09+00:00`
 
 Starting state: POC 2.5 closure `1e111d37325e7ad00030266efec201796b7fc07d`
 Purpose: production prioritization only; no POC 2.5 reopening.
@@ -10,7 +10,7 @@ Purpose: production prioritization only; no POC 2.5 reopening.
 - RoomDefinition files: 21 (2 playable Room A/B; 19 candidate/scenario variants).
 - Room object records / unique object classes: 318 / 79.
 - Canonical Art Factory registry entries: 15; visual catalog entries: 10; material categories: 17.
-- Runtime GDScript files with procedural/dynamic geometry: 12; geometry builder sites: 91.
+- Runtime GDScript files with procedural/dynamic geometry: 13; geometry builder sites: 93.
 - Active scenes with visible art nodes or a runtime presentation controller: 1.
 - Catalogued asset classes and presentation systems: 95.
 
@@ -74,7 +74,7 @@ The inventory joins source-defined room content with the canonical/review asset 
 | Tier 2 | `room_spilled_water` — Spilled Water | 0 | planned `room_spilled_water`; water_container → procedural fallback | Runtime source is listed below; no strict asset evaluation is attached to this room-object instance. | reuse an appropriate shared semantic asset where possible; otherwise create a bounded Art Factory candidate for this class |
 | Tier 2 | `room_water_container` — Water Container | 0 | planned `room_water_container`; water_container → procedural fallback | Runtime source is listed below; no strict asset evaluation is attached to this room-object instance. | shared modular container/resource-prop kit with material variants |
 | Tier 2 | `room_shell_ceiling` — Ceiling | 2 | planned `room_shell_ceiling`; runtime-built / shared presentation | single broad colored surface or omitted in legacy RoomDefinitions | RoomDefinition-driven surface/material reuse, with visibility tested across cutaway and standard cameras |
-| Tier 2 | `room_shell_trim` — Trim | 2 | planned `room_shell_trim`; runtime-built / shared presentation | repeated cuboid baseboard/crown sections with basic wood shading | Reusable trim profile and shared wood material; retain RoomDefinition dimensions |
+| Tier 2 | `room_shell_trim` — Trim | 2 | `room_shell_trim` exists; runtime-built / shared presentation | the runtime still uses cuboid trim by default; Art Factory v002 is the best current review candidate, but its smooth faces and remaining contour bands miss the strict close-craft gate | Preserve v002 as review-only; require a new close-render/mesh diagnosis before any fresh trim target episode, retaining all RoomDefinition dimensions |
 | Tier 2 | `construction_visuals` — Construction Visuals | None | planned `construction_visuals`; runtime-built / shared presentation | procedural component boxes/cylinders, blueprint planes, particle/glow accents, and progress markers | Reusable authored construction kit and stage-specific material/assembly variants |
 | Tier 2 | `resource_and_tool_visuals` — Resource And Tool Visuals | None | planned `resource_and_tool_visuals`; runtime-built / shared presentation | small box, cylinder, badge, and simple tool geometry assembled at runtime | Reusable shared semantic prop set with instance variation and material-family consistency |
 | Tier 2 | `traversal_machinery` — Traversal Machinery | None | `traversal_machinery` exists; linked `grapple` | integrated articulated grapple asset; strict close-workmanship result remains failure; cables and anchors partly procedural Strict result: `{'grapple': 'fail'}`. | Reuse current grapple mechanics and candidate; batch-build consistent cable/anchor/fixing presentation without changing traversal geometry |

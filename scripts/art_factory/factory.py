@@ -333,8 +333,11 @@ class ArtFactory:
         target_path: str,
         review_path: str,
         concept_id: str = "",
+        reviewer: str = "Luna",
     ) -> dict[str, Any]:
-        """Record Luna's pixel-reviewed concept as the separate appearance incumbent."""
+        """Record a pixel-reviewed concept as the separate appearance incumbent."""
+        if not reviewer.strip():
+            raise ValueError("visual target reviewer must be non-empty")
         self.prepare_visual_director(asset_id)
         target_relative = _safe_relative_path(target_path)
         review_relative = _safe_relative_path(review_path)
@@ -355,7 +358,7 @@ class ArtFactory:
             "approved_at_utc": _now_utc(),
             "concept_id": concept_id or target_file.stem,
             "approval": "pass",
-            "review_method": "pixel inspection; review evidence recorded by Luna",
+            "review_method": f"pixel inspection; review evidence recorded by {reviewer.strip()}",
         }
         state["approved_visual_target"] = target
         state["status"] = "approved"

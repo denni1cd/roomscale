@@ -13,6 +13,7 @@ const ResourceProfiles := preload("res://scripts/resource_system.gd")
 const RoomDefinitionLoader := preload("res://scripts/room_definition.gd")
 const VisualResolver := preload("res://scripts/visuals/visual_resolver.gd")
 const MaterialLibrary := preload("res://scripts/visuals/material_library.gd")
+const RoomShellTrimProfile := preload("res://scripts/visuals/room_shell_trim_profile.gd")
 const SettlementDetails := preload("res://scripts/visuals/settlement_details.gd")
 const Evidence := preload("res://scripts/verification/evidence_io.gd")
 const EntityInspector := preload("res://scripts/world_entity_inspector.gd")
@@ -301,11 +302,20 @@ func _build_data_room_shell(room: Node3D, shell: Dictionary) -> void:
 	var trim_appearance_value: Variant = shell.get("baseboard_appearance", {})
 	var trim_appearance: Dictionary = trim_appearance_value if trim_appearance_value is Dictionary else {}
 	var trim_color := _appearance_color(trim_appearance, "base_color", Color("76583f"))
+	var trim_depth := maxf(1.0, thickness * 0.7)
+	var trim_interior_offset := 0.0
+	if String(trim_appearance.get("asset_id", "")) == "room_shell_trim":
+		trim_interior_offset = thickness * 0.5 + trim_depth * 0.5
 	var crown_height_value: Variant = shell.get("crown_molding_height", 0.0)
 	var crown_height := float(crown_height_value) if RoomDefinitionLoader._positive_number(crown_height_value) else 0.0
 	var crown_appearance_value: Variant = shell.get("crown_molding_appearance", {})
 	var crown_appearance: Dictionary = crown_appearance_value if crown_appearance_value is Dictionary else {}
 	var crown_color := _appearance_color(crown_appearance, "base_color", Color("76583f"))
+	var crown_depth := thickness + CROWN_INTERIOR_PROJECTION
+	var crown_interior_offset := CROWN_INTERIOR_PROJECTION * 0.5
+	if String(crown_appearance.get("asset_id", "")) == "room_shell_trim":
+		crown_depth = CROWN_INTERIOR_PROJECTION
+		crown_interior_offset = thickness * 0.5 + CROWN_INTERIOR_PROJECTION * 0.5
 	for wall_variant in walls:
 		var wall: Dictionary = wall_variant
 		var side := String(wall.side)
@@ -351,10 +361,10 @@ func _build_data_room_shell(room: Node3D, shell: Dictionary) -> void:
 				var trim_offset := float(opening.offset)
 				var trim_width := float(opening.width)
 				if trim_offset > trim_cursor:
-					_add_shell_segment(wall_visual, "Trim_%s_%02d" % [side, int(trim_cursor)], side, floor_center, room_dimensions, trim_cursor, trim_offset - trim_cursor, 0.0, trim_height, maxf(1.0, thickness * 0.7), trim_color, trim_appearance)
+					_add_shell_segment(wall_visual, "Trim_%s_%02d" % [side, int(trim_cursor)], side, floor_center, room_dimensions, trim_cursor, trim_offset - trim_cursor, 0.0, trim_height, trim_depth, trim_color, trim_appearance, trim_interior_offset)
 				trim_cursor = trim_offset + trim_width
 			if trim_cursor < side_length:
-				_add_shell_segment(wall_visual, "Trim_%s_End" % side, side, floor_center, room_dimensions, trim_cursor, side_length - trim_cursor, 0.0, trim_height, maxf(1.0, thickness * 0.7), trim_color, trim_appearance)
+				_add_shell_segment(wall_visual, "Trim_%s_End" % side, side, floor_center, room_dimensions, trim_cursor, side_length - trim_cursor, 0.0, trim_height, trim_depth, trim_color, trim_appearance, trim_interior_offset)
 		if crown_height > 0.0:
 			var crown_cursor := 0.0
 			var crown_bottom := WALL_HEIGHT - crown_height
@@ -366,10 +376,10 @@ func _build_data_room_shell(room: Node3D, shell: Dictionary) -> void:
 				var crown_offset := float(opening.offset)
 				var crown_width := float(opening.width)
 				if crown_offset > crown_cursor:
-					_add_shell_segment(wall_visual, "Crown_%s_%02d" % [side, int(crown_cursor)], side, floor_center, room_dimensions, crown_cursor, crown_offset - crown_cursor, crown_bottom, crown_height, thickness + CROWN_INTERIOR_PROJECTION, crown_color, crown_appearance, CROWN_INTERIOR_PROJECTION * 0.5)
+					_add_shell_segment(wall_visual, "Crown_%s_%02d" % [side, int(crown_cursor)], side, floor_center, room_dimensions, crown_cursor, crown_offset - crown_cursor, crown_bottom, crown_height, crown_depth, crown_color, crown_appearance, crown_interior_offset)
 				crown_cursor = crown_offset + crown_width
 			if crown_cursor < side_length:
-				_add_shell_segment(wall_visual, "Crown_%s_End" % side, side, floor_center, room_dimensions, crown_cursor, side_length - crown_cursor, crown_bottom, crown_height, thickness + CROWN_INTERIOR_PROJECTION, crown_color, crown_appearance, CROWN_INTERIOR_PROJECTION * 0.5)
+				_add_shell_segment(wall_visual, "Crown_%s_End" % side, side, floor_center, room_dimensions, crown_cursor, side_length - crown_cursor, crown_bottom, crown_height, crown_depth, crown_color, crown_appearance, crown_interior_offset)
 	var ceiling_appearance_value: Variant = shell.get("ceiling_appearance", {})
 	if shell.has("ceiling_appearance") and ceiling_appearance_value is Dictionary:
 		var ceiling_appearance: Dictionary = ceiling_appearance_value
@@ -422,6 +432,22 @@ func _add_shell_segment(parent: Node3D, node_name: String, side: String, floor_c
 		"south": position.z -= interior_offset
 		"east": position.x -= interior_offset
 		"west": position.x += interior_offset
+	var is_profiled_trim := String(appearance.get("asset_id", "")) == "room_shell_trim" and (node_name.begins_with("Trim_") or node_name.begins_with("Crown_"))
+	if is_profiled_trim:
+		var profile_name := "crown" if node_name.begins_with("Crown_") else "baseboard"
+		var profile := MeshInstance3D.new()
+		profile.name = node_name
+		profile.mesh = RoomShellTrimProfile.build_segment(length, height, thickness, profile_name)
+		if profile.mesh == null:
+			return
+		profile.position = position
+		match side:
+			"south": profile.rotation.y = PI
+			"east": profile.rotation.y = -PI * 0.5
+			"west": profile.rotation.y = PI * 0.5
+		parent.add_child(profile)
+		profile.material_override = _appearance_material(appearance, color, 0.9)
+		return
 	var mesh := _add_box(parent, node_name, size, position, color, 0.9)
 	mesh.material_override = _appearance_material(appearance, color, 0.9)
 
@@ -1368,7 +1394,8 @@ func _appearance_material(appearance: Dictionary, color: Color, default_roughnes
 		"stone", "ceramic":
 			material.roughness = 0.72
 		"wood":
-			material.roughness = 0.76
+			if asset_id.is_empty():
+				material.roughness = 0.76
 	var transparency := float(appearance.get("transparency", 0.35 if category == "glass" else 0.0))
 	if transparency > 0.0:
 		material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA

@@ -15,7 +15,7 @@ func _run() -> void:
 	if not requested_room.is_empty():
 		benchmark_room = requested_room
 	OS.set_environment("ROOMSCALE_ROOM", benchmark_room)
-	OS.set_environment("ROOMSCALE_ROOM_FILE", "")
+	OS.set_environment("ROOMSCALE_ROOM_FILE", OS.get_environment("ROOMSCALE_PERFORMANCE_ROOM_FILE"))
 	OS.set_environment("ROOMSCALE_CIVILIZATION", "clockwork")
 	OS.set_environment("ROOMSCALE_NO_MENU", "1")
 	OS.set_environment("ROOMSCALE_DISABLE_STARTUP_CAPTURE", "1")
