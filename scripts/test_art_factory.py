@@ -444,6 +444,73 @@ class ArtFactoryTest(unittest.TestCase):
         repair.hard_fail_reasons = ["does not read as realistic furniture"]
         self.assertEqual(repair.validate(), [])
 
+    def test_visual_director_craftsmanship_must_cite_registered_production_renders(self) -> None:
+        candidate_id = self.create_candidate()
+        candidate = self.factory.load_candidate(candidate_id)
+        candidate.visual_director_provenance = {
+            "approved_visual_target": {"path": "art/test-desk/visual_director/target.png"}
+        }
+        self.factory._save_candidate(candidate)
+
+        evaluation = make_evaluation(candidate_id)
+        render_path = candidate.renders[0]["path"]
+        evaluation.render_evidence = [render_path]
+        with self.assertRaisesRegex(ValueError, "evidence_refs"):
+            self.factory.record_evaluation(evaluation)
+
+        for check in VISUAL_CRAFT_CHECKS:
+            evaluation.visual_gate["craftsmanship"][check]["evidence_refs"] = [render_path]
+        evaluation.visual_transfer_diagnosis = {
+            "primary_causes": ["geometry_loss"],
+            "lost_visual_information": ["No target detail was lost in this fixture."],
+            "preserved_components": ["The test desk frame remains present."],
+            "corrective_action": "No correction is required for this test fixture.",
+        }
+        self.factory.record_evaluation(evaluation)
+
+    def test_visual_director_rejects_copied_craftsmanship_text_from_another_asset(self) -> None:
+        candidate_id = self.create_candidate()
+        candidate = self.factory.load_candidate(candidate_id)
+        candidate.visual_director_provenance = {
+            "approved_visual_target": {"path": "art/test-desk/visual_director/target.png"}
+        }
+        self.factory._save_candidate(candidate)
+
+        evaluation = make_evaluation(candidate_id)
+        render_path = candidate.renders[0]["path"]
+        evaluation.render_evidence = [render_path]
+        for check in VISUAL_CRAFT_CHECKS:
+            evaluation.visual_gate["craftsmanship"][check]["evidence_refs"] = [render_path]
+        evaluation.visual_transfer_diagnosis = {
+            "primary_causes": ["geometry_loss"],
+            "lost_visual_information": ["No target detail was lost in this fixture."],
+            "preserved_components": ["The test desk frame remains present."],
+            "corrective_action": "No correction is required for this test fixture.",
+        }
+
+        previous_asset_assessment = (
+            self.root / "art/other-asset/visual_director/round-01/assessments/other-v001.json"
+        )
+        previous_asset_assessment.parent.mkdir(parents=True)
+        previous_asset_assessment.write_text(
+            json.dumps(
+                {
+                    "visual_gate": {
+                        "craftsmanship": {
+                            "edge_treatment": {
+                                "evidence": evaluation.visual_gate["craftsmanship"][
+                                    "edge_treatment"
+                                ]["evidence"]
+                            }
+                        }
+                    }
+                }
+            ),
+            encoding="utf-8",
+        )
+        with self.assertRaisesRegex(ValueError, "repeats wording recorded for semantic asset"):
+            self.factory.record_evaluation(evaluation)
+
     def test_only_explicit_brief_stylization_allows_style_flags(self) -> None:
         brief = make_brief(allow_stylization=True)
         self.assertEqual(brief.validate(), [])
@@ -474,6 +541,130 @@ class ArtFactoryTest(unittest.TestCase):
         self.assertEqual(sha256_file(lf_file), sha256_file(crlf_file))
         crlf_file.write_bytes(crlf_file.read_bytes().replace(b"Root", b"Other"))
         self.assertNotEqual(sha256_file(lf_file), sha256_file(crlf_file))
+
+
+class VisualDirectorIntegrityTest(unittest.TestCase):
+    root = Path(__file__).resolve().parents[1]
+
+    @staticmethod
+    def _read_json(path: Path) -> dict[str, object]:
+        return json.loads(path.read_text(encoding="utf-8"))
+
+    def test_production_state_registry_evaluation_and_receipts_agree(self) -> None:
+        registry = self._read_json(self.root / "art/registry.json")
+        cases = (
+            ("display_cabinet", "display_cabinet-v003", "production_pass", "v003"),
+            (
+                "room_photo_window_production",
+                "room_photo_window_production-v004",
+                "production_pass",
+                "v004",
+            ),
+            ("settlement_workshop", "settlement_workshop-v004", "backlog", "v004"),
+        )
+        for asset_id, production_id, expected_state, version in cases:
+            with self.subTest(asset_id=asset_id):
+                asset_root = self.root / "art" / asset_id
+                state = self._read_json(asset_root / "visual_director/state.json")
+                candidate = self._read_json(asset_root / "iterations" / version / "candidate.json")
+                evaluation = self._read_json(
+                    asset_root / "iterations" / version / "evaluation.json"
+                )
+                entry = registry["entries"][asset_id]
+                production = state["production_asset"]
+                self.assertEqual(state["status"], expected_state)
+                self.assertEqual(state["best_3d_candidate"]["candidate_id"], production_id)
+                self.assertEqual(production["candidate_id"], production_id)
+                self.assertEqual(entry["candidate_id"], production_id)
+                self.assertEqual(candidate["candidate_id"], production_id)
+                self.assertEqual(candidate["status"], "accepted")
+                self.assertEqual(evaluation["candidate_id"], production_id)
+                self.assertEqual(evaluation["decision"], "promote")
+
+                asset_path = entry["path"]
+                self.assertEqual(production["path"], asset_path)
+                self.assertIn(asset_path, candidate["asset_files"])
+                self.assertEqual(production.get("sha256", entry["sha256"]), entry["sha256"])
+                self.assertEqual(sha256_file(self.root / asset_path), entry["sha256"])
+
+                receipt_root = asset_root / "iterations" / version / "render-runs/run-001"
+                receipt = self._read_json(receipt_root / "receipt.json")
+                self.assertEqual(receipt["asset_id"], asset_id)
+                self.assertEqual(receipt["candidate_id"], production_id)
+                self.assertEqual(receipt["loaded_candidate_id"], production_id)
+                self.assertEqual(receipt["loaded_asset_path"], "res://" + asset_path)
+                self.assertTrue(receipt["production_path"])
+                if (receipt_root / "candidate-registry.json").is_file():
+                    render_registry = self._read_json(receipt_root / "candidate-registry.json")
+                    self.assertEqual(
+                        render_registry["entries"][asset_id]["candidate_id"], production_id
+                    )
+                    self.assertEqual(render_registry["entries"][asset_id]["path"], asset_path)
+
+        workshop_state = self._read_json(
+            self.root / "art/settlement_workshop/visual_director/state.json"
+        )
+        failed_candidate = self._read_json(
+            self.root / "art/settlement_workshop/iterations/v007/candidate.json"
+        )
+        failed_evaluation = self._read_json(
+            self.root / "art/settlement_workshop/iterations/v007/evaluation.json"
+        )
+        self.assertEqual(failed_candidate["candidate_id"], "settlement_workshop-v007")
+        self.assertEqual(failed_evaluation["decision"], "continue")
+        self.assertEqual(failed_evaluation["incumbent_candidate_id"], "settlement_workshop-v004")
+        self.assertIn("canopy", workshop_state["backlog_reason"].lower())
+
+    def test_batch_craftsmanship_evidence_is_asset_specific_and_render_linked(self) -> None:
+        cases = (
+            ("display_cabinet", "v003"),
+            ("room_photo_window_production", "v003"),
+            ("room_photo_window_production", "v004"),
+            ("settlement_workshop", "v007"),
+        )
+        evidence_by_asset: dict[str, set[str]] = {}
+        for asset_id, version in cases:
+            candidate_id = f"{asset_id}-{version}"
+            with self.subTest(candidate_id=candidate_id):
+                asset_root = self.root / "art" / asset_id
+                iteration_root = asset_root / "iterations" / version
+                candidate = self._read_json(iteration_root / "candidate.json")
+                evaluation = self._read_json(iteration_root / "evaluation.json")
+                assessment = self._read_json(
+                    asset_root / "visual_director/round-01/assessments" / f"{candidate_id}.json"
+                )
+                self.assertEqual(evaluation["candidate_id"], candidate_id)
+                craft = evaluation["visual_gate"]["craftsmanship"]
+                assessment_craft = assessment["visual_gate"]["craftsmanship"]
+                self.assertEqual(craft, assessment_craft)
+                registered_renders = {
+                    render["path"]: render for render in candidate.get("renders", [])
+                }
+                asset_evidence: set[str] = set()
+                for check in VISUAL_CRAFT_CHECKS:
+                    result = craft[check]
+                    self.assertTrue(result["evidence"].strip())
+                    self.assertTrue(result["evidence_refs"])
+                    for evidence_path in result["evidence_refs"]:
+                        self.assertIn(evidence_path, evaluation["render_evidence"])
+                        self.assertTrue(
+                            evidence_path.startswith(
+                                f"art/{asset_id}/iterations/{version}/render-runs/"
+                            )
+                        )
+                        self.assertTrue(registered_renders[evidence_path]["production_path"])
+                    asset_evidence.add(result["evidence"].casefold())
+                evidence_by_asset.setdefault(asset_id, set()).update(asset_evidence)
+
+        window_evidence = evidence_by_asset["room_photo_window_production"]
+        for unrelated_asset in ("display_cabinet", "settlement_workshop"):
+            unrelated_evidence = evidence_by_asset[unrelated_asset]
+            self.assertTrue(window_evidence.isdisjoint(unrelated_evidence))
+            joined = " ".join(unrelated_evidence)
+            self.assertNotRegex(joined, r"\b(?:window|sash|jambs?|transom|sill|muntin)\b")
+        self.assertRegex(
+            " ".join(window_evidence), r"\b(?:window|sash|jambs?|transom|sill|latch)\b"
+        )
 
 
 if __name__ == "__main__":

@@ -45,42 +45,65 @@
     "neutral_viewer_realism": {
       "answer": "Yes",
       "pass": true,
-      "evidence": "The render reads as the intended finished furniture or architectural assembly."
+      "evidence": "The room-scale Godot capture shows a tall walnut case with paired glazed doors and interior shelves beside the room opening."
     },
     "close_inspection": {
       "answer": "Yes",
       "pass": true,
-      "evidence": "The registered Godot asset-detail capture shows the doors, shelf separation, hinge treatment, and crown."
+      "evidence": "The registered close and three-quarter views retain the side panel, framed doors, shelf boards, crown, and plinth; the brass details are small but visible."
     },
     "craftsmanship": {
       "answer": "Yes",
       "edge_treatment": {
         "pass": true,
-        "evidence": "Manufactured radii and the frame profile hold in the close render."
+        "evidence": "The close Godot view shows the crown and plinth stepping beyond the case; the front rail edges meet the side panel without visible gaps.",
+        "evidence_refs": [
+          "art/display_cabinet/iterations/v003/render-runs/run-001/asset-detail.png"
+        ]
       },
       "joins": {
         "pass": true,
-        "evidence": "The sash, jambs, rails, and trim resolve as separate fitted components."
+        "evidence": "Three shelf boards span between the cabinet sides, and each glazed leaf has continuous rails and stiles meeting at the centre stile.",
+        "evidence_refs": [
+          "art/display_cabinet/iterations/v003/render-runs/run-001/asset-three-quarter.png"
+        ]
       },
       "thickness": {
         "pass": true,
-        "evidence": "The casing, sill, and sash members retain visible depth."
+        "evidence": "The side-facing close view shows a full-depth walnut panel, recessed glazing, and projecting crown and base.",
+        "evidence_refs": [
+          "art/display_cabinet/iterations/v003/render-runs/run-001/asset-detail.png"
+        ]
       },
       "hardware": {
         "pass": true,
-        "evidence": "The real render shows the sash latch."
+        "evidence": "The front three-quarter view shows brass hinge leaves along the outer stiles and paired small gold knobs at the meeting rail; they remain fine at this view scale.",
+        "evidence_refs": [
+          "art/display_cabinet/iterations/v003/render-runs/run-001/asset-three-quarter.png"
+        ]
       },
       "material_response": {
         "pass": true,
-        "evidence": "Wood, glass, and metal stay distinct in the production render."
+        "evidence": "Walnut on the case and lighter shelf faces remain distinct; glazing stays transparent over the shelves and the small brass pieces retain a gold response.",
+        "evidence_refs": [
+          "art/display_cabinet/iterations/v003/render-runs/run-001/asset-three-quarter.png"
+        ]
       },
       "surface_variation": {
         "pass": true,
-        "evidence": "Timber grain and layered trim break up the broad frame surfaces."
+        "evidence": "The close view separates the darker case grain from lighter shelf faces, with the door rails, crown, and plinth adding visible bands.",
+        "evidence_refs": [
+          "art/display_cabinet/iterations/v003/render-runs/run-001/asset-detail.png",
+          "art/display_cabinet/iterations/v003/render-runs/run-001/asset-three-quarter.png"
+        ]
       },
       "manufacturing_detail": {
         "pass": true,
-        "evidence": "The operating hardware remains legible."
+        "evidence": "Paired framed glass doors, three shelves, outer hinge points, central knobs, and a stepped crown/base read as a complete cabinet assembly.",
+        "evidence_refs": [
+          "art/display_cabinet/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+          "art/display_cabinet/iterations/v003/render-runs/run-001/asset-detail.png"
+        ]
       }
     },
     "photo_character": {

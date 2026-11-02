@@ -54,49 +54,71 @@
   "visual_gate": {
     "close_inspection": {
       "answer": "No",
-      "evidence": "The registered Godot asset-detail capture shows the sash construction, but the target latch is hidden behind the centre stile.",
+      "evidence": "In the registered close capture, the wide centre meeting stile covers the approved target latch at the sash meeting rail.",
       "pass": false
     },
     "craftsmanship": {
       "answer": "No",
       "edge_treatment": {
-        "evidence": "Manufactured radii and the frame profile hold in the close render.",
-        "pass": true
+        "evidence": "The three-quarter view shows stepped stained casing and a projecting sill around the opening; the sash rails sit inside that frame.",
+        "pass": true,
+        "evidence_refs": [
+          "art/room_photo_window_production/iterations/v003/render-runs/run-002/asset-three-quarter.png"
+        ]
       },
       "hardware": {
-        "evidence": "The target latch is occluded behind the wide centre stile in the actual Godot close render.",
-        "pass": false
+        "evidence": "The approved latch is hidden behind the wide centre stile in the actual Godot close capture, so no sash hardware reads at the meeting rail.",
+        "pass": false,
+        "evidence_refs": [
+          "art/room_photo_window_production/iterations/v003/render-runs/run-002/asset-detail.png"
+        ]
       },
       "joins": {
-        "evidence": "The sash, jambs, rails, and trim resolve as separate fitted components.",
-        "pass": true
+        "evidence": "The centre stile meets the lower meeting rail, while the transom bars terminate at continuous upper and lower rails.",
+        "pass": true,
+        "evidence_refs": [
+          "art/room_photo_window_production/iterations/v003/render-runs/run-002/asset-detail.png"
+        ]
       },
       "manufacturing_detail": {
-        "evidence": "Transom construction transferred, but the operating sash hardware does not read.",
-        "pass": false
+        "evidence": "Transom divisions and the meeting rail are visible, but the missing central latch leaves the expected operating sash detail incomplete.",
+        "pass": false,
+        "evidence_refs": [
+          "art/room_photo_window_production/iterations/v003/render-runs/run-002/asset-detail.png"
+        ]
       },
       "material_response": {
-        "evidence": "The glazing remains cool and uniform compared with the source window.",
-        "pass": false
+        "evidence": "The stained timber remains distinct, but the large panes share a cool, flat blue cast and weak glass response compared with the approved target.",
+        "pass": false,
+        "evidence_refs": [
+          "art/room_photo_window_production/iterations/v003/render-runs/run-002/asset-detail.png",
+          "art/room_photo_window_production/iterations/v003/render-runs/run-002/asset-three-quarter.png"
+        ]
       },
       "surface_variation": {
-        "evidence": "Timber grain and layered trim break up the broad frame surfaces.",
-        "pass": true
+        "evidence": "Wood grain differs across the casing and sash rails, and the outdoor forms vary behind the light glazing.",
+        "pass": true,
+        "evidence_refs": [
+          "art/room_photo_window_production/iterations/v003/render-runs/run-002/asset-three-quarter.png"
+        ]
       },
       "thickness": {
-        "evidence": "The casing, sill, and sash members retain visible depth.",
-        "pass": true
+        "evidence": "The casing projects from the wall plane and the lower sill projects beneath the frame; the inner sash rails are visibly recessed.",
+        "pass": true,
+        "evidence_refs": [
+          "art/room_photo_window_production/iterations/v003/render-runs/run-002/asset-three-quarter.png"
+        ]
       }
     },
     "neutral_viewer_realism": {
       "answer": "Yes",
-      "evidence": "The render reads as the intended finished furniture or architectural assembly.",
+      "evidence": "The Godot three-quarter capture reads as a divided, stained-wood residential window fitted into the room opening.",
       "pass": true
     },
     "photo_character": {
       "answer": "No",
       "applicable": true,
-      "evidence": "The warm divided window character transferred, but the latch is not visible in the Godot close view, so the source-matched functional sash detail remains incomplete.",
+      "evidence": "The warm wood and divided opening transfer, but the central sash latch from the source-matched target is absent from the Godot close view.",
       "pass": false
     },
     "style_flags": {

@@ -35,7 +35,7 @@ func _run() -> void:
 		"office_chair": "office_chair-v003",
 		"rocking_chair": "rocking_chair-v003",
 		"hammock_with_stand": "hammock_with_stand-v005",
-		"display_cabinet": "display_cabinet-v002",
+		"display_cabinet": "display_cabinet-v003",
 	}
 	var resolved_furniture: Dictionary = {}
 	for item in scene.find_children("*", "Node3D", true, false):

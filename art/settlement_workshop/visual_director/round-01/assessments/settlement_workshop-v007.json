@@ -53,42 +53,66 @@
     "neutral_viewer_realism": {
       "answer": "Yes",
       "pass": true,
-      "evidence": "The production render identifies the intended built asset."
+      "evidence": "The Godot three-quarter capture reads as a timber workshop around a boiler, flywheel, and workbench."
     },
     "close_inspection": {
       "answer": "No",
       "pass": false,
-      "evidence": "The Godot detail capture shows a disconnected canopy and unresolved support joins."
+      "evidence": "The detail capture shows the one-sided canopy ending above the work area without the approved continuous ridge and connected truss supports."
     },
     "craftsmanship": {
       "answer": "No",
       "edge_treatment": {
         "pass": true,
-        "evidence": "The window retains stepped casing, fitted sash rails, and finished sill edges."
+        "evidence": "The horizontal wall boards and canopy plate have straight exposed edges; the canopy has no fascia, while the post ends remain visibly cut square.",
+        "evidence_refs": [
+          "art/settlement_workshop/iterations/v007/render-runs/run-001/asset-detail.png"
+        ]
       },
       "joins": {
         "pass": false,
-        "evidence": "The casing, transom, sash rails, centre stile, and sill remain separate fitted parts."
+        "evidence": "Short diagonal braces meet the small canopy posts, but the canopy stops over one side and does not tie into a continuous ridge/truss frame.",
+        "evidence_refs": [
+          "art/settlement_workshop/iterations/v007/render-runs/run-001/asset-three-quarter.png",
+          "art/settlement_workshop/iterations/v007/render-runs/run-001/asset-detail.png"
+        ]
       },
       "thickness": {
         "pass": true,
-        "evidence": "Casing and projecting sill hold physical depth in the Godot close capture."
+        "evidence": "Square timber posts, stacked wall boards, and the stone pad show depth; the dark canopy is a much thinner sheet above them.",
+        "evidence_refs": [
+          "art/settlement_workshop/iterations/v007/render-runs/run-001/asset-detail.png"
+        ]
       },
       "hardware": {
         "pass": true,
-        "evidence": "The second-pass latch sits on the camera-facing centre stile and appears at the meeting rail."
+        "evidence": "Copper bands and pipe fittings remain on the boiler, and a brass gear/flywheel detail is visible beside the work area.",
+        "evidence_refs": [
+          "art/settlement_workshop/iterations/v007/render-runs/run-001/asset-detail.png",
+          "art/settlement_workshop/iterations/v007/render-runs/run-001/asset-three-quarter.png"
+        ]
       },
       "material_response": {
         "pass": true,
-        "evidence": "Warm timber, visible outdoors through low-alpha glazing, and metal hardware have separate responses in the production scene."
+        "evidence": "Warm timber boards, the dark iron boiler, copper fittings, stone pad, and dark canopy remain visibly separate in the production light.",
+        "evidence_refs": [
+          "art/settlement_workshop/iterations/v007/render-runs/run-001/asset-three-quarter.png"
+        ]
       },
       "surface_variation": {
         "pass": true,
-        "evidence": "The dark stained casing and lighter sash members remain distinguishable."
+        "evidence": "Alternating board tones and the dark posts break up the timber walls; copper and brass parts contrast against the boiler.",
+        "evidence_refs": [
+          "art/settlement_workshop/iterations/v007/render-runs/run-001/asset-detail.png"
+        ]
       },
       "manufacturing_detail": {
         "pass": false,
-        "evidence": "Upper lights, meeting rail, and the central sash latch read as a constructed double-hung assembly."
+        "evidence": "The boiler fittings and workbench remain, but the canopy load path is incomplete: the one-sided cover has no connected ridge or continuous truss assembly.",
+        "evidence_refs": [
+          "art/settlement_workshop/iterations/v007/render-runs/run-001/asset-detail.png",
+          "art/settlement_workshop/iterations/v007/render-runs/run-001/asset-three-quarter.png"
+        ]
       }
     },
     "photo_character": {

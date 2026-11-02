@@ -5,7 +5,7 @@
   "defects": [],
   "hard_fail_reasons": [],
   "incumbent_candidate_id": "room_photo_window_production-v002",
-  "incumbent_comparison": "Against the actual v002 RoomScale captures, v004 transfers the approved stained frame, divides the upper transom, adds the projecting sill and sash meeting rail, and places the target latch on the visible centre face. It fits the opening at 96 x 68 inches and clears the source-photo gate; the mild cool cast comes from the live outdoor context visible through clear glazing.",
+  "incumbent_comparison": "Against accepted v002 in matched Godot views, v004 transfers the warm divided frame, projecting sill, and visible centre latch. It has five upper transom panes versus four in the approved target, and keeps a mild cool glazing cast; these differences are recorded without opening another art attempt.",
   "incumbent_comparison_result": "better",
   "likely_causes": [],
   "next_action_hypothesis": "",
@@ -13,7 +13,7 @@
     "art_direction_fit": "Stained timber, divided glazing, and restrained hardware approach the source photo and approved target without unsupported room changes.",
     "close_up_quality": "The v004 asset-detail image shows the sash divisions and central hardware more clearly than v002 and v003.",
     "gameplay_readability": "The window attaches to the existing opening and creates no collision, navigation, or simulation state.",
-    "geometric_detail": "Five upper transom panes, split lower sashes, meeting rails, and the camera-facing centre latch transfer into the production candidate; the approved image shows four upper panes.",
+    "geometric_detail": "Five upper transom panes, split lower sashes, meeting rails, and the camera-facing centre latch transfer; the approved target has four upper panes.",
     "material_realism": "Warm stained-oak members remain separate from the low-alpha glazing and metal latch; the room's outdoor environment contributes the remaining cool tint.",
     "proportion": "Godot validates 96 x 68 x 4.1 inches; the four-inch target opening is unchanged and the depth remains within validator tolerance.",
     "scale_fidelity": "The asset validates at 96 x 68 x 4.1 inches and keeps the original 96 x 68-inch opening dimensions authoritative.",
@@ -46,49 +46,74 @@
   "visual_gate": {
     "close_inspection": {
       "answer": "Yes",
-      "evidence": "The registered Godot detail view holds up under close inspection.",
+      "evidence": "The registered close view resolves the casing, divided sash, projecting sill, and corrected centre latch in the production scene.",
       "pass": true
     },
     "craftsmanship": {
       "answer": "Yes",
       "edge_treatment": {
-        "evidence": "The window retains stepped casing, fitted sash rails, and finished sill edges.",
-        "pass": true
+        "evidence": "The close view shows stepped outer casing, an inner bead, and a nosed sill with continuous exposed edges.",
+        "pass": true,
+        "evidence_refs": [
+          "art/room_photo_window_production/iterations/v004/render-runs/run-001/asset-detail.png"
+        ]
       },
       "hardware": {
-        "evidence": "The second-pass latch sits on the camera-facing centre stile and appears at the meeting rail.",
-        "pass": true
+        "evidence": "The second-pass brass latch is visible on the camera-facing centre stile at the lower meeting rail, though it is small in the room capture.",
+        "pass": true,
+        "evidence_refs": [
+          "art/room_photo_window_production/iterations/v004/render-runs/run-001/asset-detail.png",
+          "art/room_photo_window_production/iterations/v004/render-runs/run-001/room-scale.png"
+        ]
       },
       "joins": {
-        "evidence": "The casing, transom, sash rails, centre stile, and sill remain separate fitted parts.",
-        "pass": true
+        "evidence": "Vertical transom muntins meet the horizontal rails, and the centre stile intersects the lower sash meeting rail; the render has five upper panes.",
+        "pass": true,
+        "evidence_refs": [
+          "art/room_photo_window_production/iterations/v004/render-runs/run-001/asset-three-quarter.png"
+        ]
       },
       "manufacturing_detail": {
-        "evidence": "Upper lights, meeting rail, and the central sash latch read as a constructed double-hung assembly.",
-        "pass": true
+        "evidence": "Five transom panes, lower sash rails, a central meeting stile, and the visible latch form a readable window assembly; the approved target has four upper panes.",
+        "pass": true,
+        "evidence_refs": [
+          "art/room_photo_window_production/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+          "art/room_photo_window_production/iterations/v004/render-runs/run-001/asset-detail.png"
+        ]
       },
       "material_response": {
-        "evidence": "Warm timber, visible outdoors through low-alpha glazing, and metal hardware have separate responses in the production scene.",
-        "pass": true
+        "evidence": "Warm timber stays separate from the pale glazing; outdoor forms show through the panes, with the known mild cool cast still visible.",
+        "pass": true,
+        "evidence_refs": [
+          "art/room_photo_window_production/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+          "art/room_photo_window_production/iterations/v004/render-runs/run-001/room-scale.png"
+        ]
       },
       "surface_variation": {
-        "evidence": "The dark stained casing and lighter sash members remain distinguishable.",
-        "pass": true
+        "evidence": "The stained outer casing and lighter inner sash members retain different wood values, while the panes carry the outdoor scene.",
+        "pass": true,
+        "evidence_refs": [
+          "art/room_photo_window_production/iterations/v004/render-runs/run-001/asset-detail.png",
+          "art/room_photo_window_production/iterations/v004/render-runs/run-001/asset-three-quarter.png"
+        ]
       },
       "thickness": {
-        "evidence": "Casing and projecting sill hold physical depth in the Godot close capture.",
-        "pass": true
+        "evidence": "The sill projects below the casing and the sash members sit behind the front casing plane.",
+        "pass": true,
+        "evidence_refs": [
+          "art/room_photo_window_production/iterations/v004/render-runs/run-001/asset-detail.png"
+        ]
       }
     },
     "neutral_viewer_realism": {
       "answer": "Yes",
-      "evidence": "The production render identifies the intended built asset.",
+      "evidence": "The Godot three-quarter capture reads as the stained-wood divided window that fills the existing room opening.",
       "pass": true
     },
     "photo_character": {
       "answer": "Yes",
       "applicable": true,
-      "evidence": "The source shows warm stained double-hung windows with divided upper lights, projecting sills, and small sash hardware; these features are present in the registered Godot close and three-quarter views.",
+      "evidence": "Warm stained framing, clear outdoor glazing, divided upper lights, and the centre sash latch are visible in the registered Godot captures; the glass retains a mild cool cast.",
       "pass": true
     },
     "style_flags": {

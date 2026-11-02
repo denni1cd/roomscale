@@ -11,13 +11,13 @@ import subprocess
 import sys
 from pathlib import Path
 
-
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 BLENDER_EXE = Path(
     r"C:\Users\Zero\python_projects\ai\roomscale\.tools\blender-5.2.3\blender-5.2.3-windows-x64\blender.exe"
 )
 try:
     import bpy  # type: ignore[import-not-found]
+
     IN_BLENDER = True
 except ImportError:
     bpy = None  # type: ignore[assignment]
@@ -32,8 +32,14 @@ def _sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def _material(name: str, color: tuple[float, float, float], metallic: float, roughness: float,
-              alpha: float = 1.0, clearcoat: float = 0.0) -> "bpy.types.Material":
+def _material(
+    name: str,
+    color: tuple[float, float, float],
+    metallic: float,
+    roughness: float,
+    alpha: float = 1.0,
+    clearcoat: float = 0.0,
+) -> "bpy.types.Material":
     mat = bpy.data.materials.new(name)
     mat.diffuse_color = (*color, alpha)
     mat.use_nodes = True
@@ -54,9 +60,14 @@ def _material(name: str, color: tuple[float, float, float], metallic: float, rou
     return mat
 
 
-def _beveled_box(name: str, center: tuple[float, float, float],
-                 dimensions: tuple[float, float, float], radius: float,
-                 material: "bpy.types.Material", segments: int = 4):
+def _beveled_box(
+    name: str,
+    center: tuple[float, float, float],
+    dimensions: tuple[float, float, float],
+    radius: float,
+    material: "bpy.types.Material",
+    segments: int = 4,
+):
     bpy.ops.mesh.primitive_cube_add(size=1.0, location=center)
     obj = bpy.context.object
     obj.name = name
@@ -78,9 +89,15 @@ def _beveled_box(name: str, center: tuple[float, float, float],
     return obj
 
 
-def _cylinder(name: str, center: tuple[float, float, float], radius: float,
-              depth: float, material: "bpy.types.Material", vertices: int = 24,
-              axis: str = "Y"):
+def _cylinder(
+    name: str,
+    center: tuple[float, float, float],
+    radius: float,
+    depth: float,
+    material: "bpy.types.Material",
+    vertices: int = 24,
+    axis: str = "Y",
+):
     # Cylinders default to Blender's Z axis; turn the levelers onto RoomScale Y.
     bpy.ops.mesh.primitive_cylinder_add(
         vertices=vertices,
@@ -110,44 +127,110 @@ def _build(output_dir: Path, reference: Path) -> None:
     # unreadable in RoomScale's Compatibility renderer. Match the proven v007
     # values for the same material classes while retaining v059's new geometry.
     glass = _material("Smoked Glass", (0.1882353, 0.227451, 0.239216), 0.08, 0.08, 0.58, 0.98)
-    graphite = _material("Graphite Powder-Coated Steel", (0.1411765, 0.164706, 0.172549), 0.82, 0.28)
+    graphite = _material(
+        "Graphite Powder-Coated Steel", (0.1411765, 0.164706, 0.172549), 0.82, 0.28
+    )
     satin = _material("Satin Steel Fittings", (0.572549, 0.615686, 0.635294), 0.85, 0.24)
     rubber = _material("Black Rubber Levelers", (0.066667, 0.078431, 0.086275), 0.02, 0.82)
 
     parts = []
     # RoomScale axis convention: X width, Y height, Z depth; inches are retained.
-    parts.append(_beveled_box("Continuous smoked-glass desktop", (0.0, 29.75, 0.0),
-                              (66.0, 0.50, 30.0), 0.10, glass, 5))
+    parts.append(
+        _beveled_box(
+            "Continuous smoked-glass desktop", (0.0, 29.75, 0.0), (66.0, 0.50, 30.0), 0.10, glass, 5
+        )
+    )
     # One slim width rail makes the top support and both columns a coherent assembly.
-    parts.append(_beveled_box("Slim under-glass support rail", (0.0, 28.76, 0.0),
-                              (46.0, 1.30, 1.25), 0.18, graphite, 5))
+    parts.append(
+        _beveled_box(
+            "Slim under-glass support rail",
+            (0.0, 28.76, 0.0),
+            (46.0, 1.30, 1.25),
+            0.18,
+            graphite,
+            5,
+        )
+    )
 
     for index, x in enumerate((-22.0, 22.0), start=1):
         # Two nested rectangular stages with a short overlap sleeve.
-        parts.append(_beveled_box(f"Lift column lower stage {index}", (x, 8.80, 0.0),
-                                  (3.35, 15.10, 2.50), 0.22, graphite, 5))
-        parts.append(_beveled_box(f"Lift column upper stage {index}", (x, 22.12, 0.0),
-                                  (2.70, 14.10, 1.95), 0.15, graphite, 5))
-        parts.append(_beveled_box(f"Telescoping overlap collar {index}", (x, 16.24, 0.0),
-                                  (3.60, 0.62, 2.74), 0.12, graphite, 4))
+        parts.append(
+            _beveled_box(
+                f"Lift column lower stage {index}",
+                (x, 8.80, 0.0),
+                (3.35, 15.10, 2.50),
+                0.22,
+                graphite,
+                5,
+            )
+        )
+        parts.append(
+            _beveled_box(
+                f"Lift column upper stage {index}",
+                (x, 22.12, 0.0),
+                (2.70, 14.10, 1.95),
+                0.15,
+                graphite,
+                5,
+            )
+        )
+        parts.append(
+            _beveled_box(
+                f"Telescoping overlap collar {index}",
+                (x, 16.24, 0.0),
+                (3.60, 0.62, 2.74),
+                0.12,
+                graphite,
+                4,
+            )
+        )
 
         # Compact underside saddle and isolation pad; no fitting breaks the top glass plane.
-        parts.append(_beveled_box(f"Underside column saddle {index}", (x, 29.28, 0.0),
-                                  (5.80, 0.24, 5.20), 0.12, graphite, 4))
-        parts.append(_beveled_box(f"Glass isolation pad {index}", (x, 29.44, 0.0),
-                                  (4.70, 0.08, 4.30), 0.07, rubber, 3))
+        parts.append(
+            _beveled_box(
+                f"Underside column saddle {index}",
+                (x, 29.28, 0.0),
+                (5.80, 0.24, 5.20),
+                0.12,
+                graphite,
+                4,
+            )
+        )
+        parts.append(
+            _beveled_box(
+                f"Glass isolation pad {index}", (x, 29.44, 0.0), (4.70, 0.08, 4.30), 0.07, rubber, 3
+            )
+        )
         # Two small fasteners are on the front-facing saddle, entirely below the glass.
         for bolt_index, dx in enumerate((-1.75, 1.75), start=1):
-            bolt = _cylinder(f"Underside saddle fastener {index}-{bolt_index}",
-                             (x + dx, 29.28, -2.64), 0.13, 0.08, satin, 20, axis="Z")
+            bolt = _cylinder(
+                f"Underside saddle fastener {index}-{bolt_index}",
+                (x + dx, 29.28, -2.64),
+                0.13,
+                0.08,
+                satin,
+                20,
+                axis="Z",
+            )
             parts.append(bolt)
 
         # Each broad low T-foot spans desk depth and carries two concealed levelers.
-        parts.append(_beveled_box(f"Perpendicular T-foot rail {index}", (x, 0.82, 0.0),
-                                  (3.45, 0.96, 24.0), 0.34, graphite, 7))
+        parts.append(
+            _beveled_box(
+                f"Perpendicular T-foot rail {index}",
+                (x, 0.82, 0.0),
+                (3.45, 0.96, 24.0),
+                0.34,
+                graphite,
+                7,
+            )
+        )
         for end_index, z in enumerate((-10.65, 10.65), start=1):
-            parts.append(_cylinder(f"Rubber foot leveler {index}-{end_index}",
-                                   (x, 0.18, z), 0.50, 0.36, rubber, 28))
+            parts.append(
+                _cylinder(
+                    f"Rubber foot leveler {index}-{end_index}", (x, 0.18, z), 0.50, 0.36, rubber, 28
+                )
+            )
 
     # Export as a Y-up GLB with the mesh components retained as separate scene nodes.
     root = bpy.data.objects.new("RoomScale Desk", None)
@@ -275,14 +358,18 @@ func _ready() -> void:
         "glb_sha256": _sha256(glb),
         "runtime_geometry_authority": "RoomDefinition remains authoritative; asset presentation only",
     }
-    (output_dir / "generation-record.json").write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
-    (output_dir / "model-metrics.json").write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
+    (output_dir / "generation-record.json").write_text(
+        json.dumps(record, indent=2) + "\n", encoding="utf-8"
+    )
+    (output_dir / "model-metrics.json").write_text(
+        json.dumps(record, indent=2) + "\n", encoding="utf-8"
+    )
     print("ROOMSCALE_VISUAL_DIRECTOR_DESK_GENERATION_PASS " + json.dumps(record))
 
 
 def main() -> int:
     if IN_BLENDER:
-        args = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
+        args = sys.argv[sys.argv.index("--") + 1 :] if "--" in sys.argv else []
         parser = argparse.ArgumentParser()
         parser.add_argument("--output", required=True)
         parser.add_argument("--reference", required=True)
@@ -302,8 +389,16 @@ def main() -> int:
     if not reference.is_file():
         raise SystemExit(f"approved visual target is missing: {reference}")
     command = [
-        str(parsed.blender), "--background", "--factory-startup", "--python", str(Path(__file__).resolve()),
-        "--", "--output", str(output_dir), "--reference", str(reference),
+        str(parsed.blender),
+        "--background",
+        "--factory-startup",
+        "--python",
+        str(Path(__file__).resolve()),
+        "--",
+        "--output",
+        str(output_dir),
+        "--reference",
+        str(reference),
     ]
     result = subprocess.run(command, cwd=PROJECT_ROOT, check=False)
     return result.returncode

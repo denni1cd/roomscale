@@ -9,7 +9,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-
 IN_BLENDER = False
 try:
     import bpy  # type: ignore[import-not-found]
@@ -36,7 +35,9 @@ def _corrected_window(base, mats):
     strategy = _load_strategy()
     strategy.build_window(base, mats)
     for obj in list(bpy.context.scene.objects):
-        if obj.name.startswith("Window central latch") or obj.name.startswith("Window latch fixing screw"):
+        if obj.name.startswith("Window central latch") or obj.name.startswith(
+            "Window latch fixing screw"
+        ):
             bpy.data.objects.remove(obj, do_unlink=True)
 
     # The v003 lock was placed at the right X/Z coordinate but behind the wide
@@ -44,11 +45,19 @@ def _corrected_window(base, mats):
     # the actual Godot close capture.
     brass = mats["brass"]
     steel = mats["steel"]
-    base.box("Window central latch backplate", (0.0, -2.16, 28.62), (1.56, 0.16, 0.58), brass, 0.045)
-    base.cylinder("Window central latch pivot", (0.0, -2.28, 28.66), 0.17, 0.22, steel, "Y", 20, 0.025)
-    base.box("Window central sash latch lever", (0.0, -2.35, 29.06), (0.22, 0.22, 0.80), brass, 0.07)
+    base.box(
+        "Window central latch backplate", (0.0, -2.16, 28.62), (1.56, 0.16, 0.58), brass, 0.045
+    )
+    base.cylinder(
+        "Window central latch pivot", (0.0, -2.28, 28.66), 0.17, 0.22, steel, "Y", 20, 0.025
+    )
+    base.box(
+        "Window central sash latch lever", (0.0, -2.35, 29.06), (0.22, 0.22, 0.80), brass, 0.07
+    )
     for x in (-0.52, 0.52):
-        base.cylinder("Window latch fixing screw", (x, -2.28, 28.62), 0.075, 0.10, steel, "Y", 16, 0.015)
+        base.cylinder(
+            "Window latch fixing screw", (x, -2.28, 28.62), 0.075, 0.10, steel, "Y", 16, 0.015
+        )
 
 
 def run_blender_generation(output_path: Path) -> None:
@@ -63,16 +72,28 @@ def dispatch_to_blender() -> int:
     output_path = output_dir / "asset.glb"
     blender = os.environ.get("ROOMSCALE_BLENDER_EXECUTABLE", "")
     if not blender:
-        raise RuntimeError("ROOMSCALE_BLENDER_EXECUTABLE must point to the approved local Blender install")
+        raise RuntimeError(
+            "ROOMSCALE_BLENDER_EXECUTABLE must point to the approved local Blender install"
+        )
     result = subprocess.run(
-        [blender, "--background", "--factory-startup", "--python", str(Path(__file__).resolve()), "--", str(output_path)],
+        [
+            blender,
+            "--background",
+            "--factory-startup",
+            "--python",
+            str(Path(__file__).resolve()),
+            "--",
+            str(output_path),
+        ],
         cwd=project_root,
         check=False,
     )
     if result.returncode or not output_path.is_file():
         return result.returncode or 2
     brief = json.loads(Path(os.environ["ROOMSCALE_ART_FACTORY_BRIEF"]).read_text(encoding="utf-8"))
-    recipe = json.loads(Path(os.environ["ROOMSCALE_ART_FACTORY_RECIPE"]).read_text(encoding="utf-8"))
+    recipe = json.loads(
+        Path(os.environ["ROOMSCALE_ART_FACTORY_RECIPE"]).read_text(encoding="utf-8")
+    )
     record = {
         "asset_id": "room_photo_window_production",
         "asset_type": "window",
@@ -87,7 +108,9 @@ def dispatch_to_blender() -> int:
         "geometry": "target-driven double-hung sash assembly with corrected front-mounted latch visibility",
         "materials": "embedded stained-oak PBR and restrained clear-glass response",
     }
-    (output_dir / "generation-record.json").write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
+    (output_dir / "generation-record.json").write_text(
+        json.dumps(record, indent=2) + "\n", encoding="utf-8"
+    )
     return 0
 
 

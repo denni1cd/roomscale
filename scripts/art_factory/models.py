@@ -166,7 +166,11 @@ class ArtBrief:
         if not isinstance(self.faction_defining, bool):
             errors.append("faction_defining must be boolean")
         if self.current_quality not in {
-            "unknown", "prototype", "below_target", "review", "accepted"
+            "unknown",
+            "prototype",
+            "below_target",
+            "review",
+            "accepted",
         }:
             errors.append(
                 "current_quality must be unknown, prototype, below_target, review, or accepted"
@@ -285,6 +289,7 @@ class ArtEvaluation:
         self,
         source_resemblance_required: bool = False,
         allow_stylization: bool = False,
+        require_craftsmanship_render_references: bool = False,
     ) -> list[str]:
         errors: list[str] = []
         if self.schema_version != SCHEMA_VERSION:
@@ -295,6 +300,7 @@ class ArtEvaluation:
             self._validate_visual_gate(
                 allow_stylization=allow_stylization,
                 photo_character_required=source_resemblance_required,
+                require_craftsmanship_render_references=require_craftsmanship_render_references,
             )
         )
         if self.incumbent_comparison_result and self.incumbent_comparison_result not in {
@@ -334,7 +340,9 @@ class ArtEvaluation:
             for field_name in ("lost_visual_information", "preserved_components"):
                 value = self.visual_transfer_diagnosis.get(field_name, [])
                 if not isinstance(value, list) or not all(str(item).strip() for item in value):
-                    errors.append(f"visual_transfer_diagnosis.{field_name} must be a list of observations")
+                    errors.append(
+                        f"visual_transfer_diagnosis.{field_name} must be a list of observations"
+                    )
             if not str(self.visual_transfer_diagnosis.get("corrective_action", "")).strip():
                 errors.append("visual_transfer_diagnosis.corrective_action is required")
         if self.decision == "promote":
@@ -354,6 +362,7 @@ class ArtEvaluation:
         self,
         allow_stylization: bool,
         photo_character_required: bool,
+        require_craftsmanship_render_references: bool,
     ) -> list[str]:
         errors: list[str] = []
         failures: list[str] = []
@@ -428,6 +437,19 @@ class ArtEvaluation:
                         )
                 if not str(value.get("evidence", "")).strip():
                     errors.append(f"visual_gate.craftsmanship.{check}.evidence is required")
+                if require_craftsmanship_render_references:
+                    evidence_refs = value.get("evidence_refs")
+                    if not isinstance(evidence_refs, list) or not evidence_refs:
+                        errors.append(
+                            f"visual_gate.craftsmanship.{check}.evidence_refs must cite a registered Godot render"
+                        )
+                    elif any(
+                        not isinstance(path, str) or path not in self.render_evidence
+                        for path in evidence_refs
+                    ):
+                        errors.append(
+                            f"visual_gate.craftsmanship.{check}.evidence_refs must be included in render_evidence"
+                        )
             if len(craft_checks) == len(VISUAL_CRAFT_CHECKS):
                 craft_passed = all(craft_checks)
                 if craft_disposition is not None and craft_disposition != craft_passed:

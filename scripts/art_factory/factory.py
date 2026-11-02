@@ -10,7 +10,7 @@ from datetime import UTC, datetime
 from pathlib import Path, PurePosixPath
 from typing import Any
 
-from .models import ArtBrief, ArtCandidate, ArtEvaluation, ArtRecipe
+from .models import VISUAL_CRAFT_CHECKS, ArtBrief, ArtCandidate, ArtEvaluation, ArtRecipe
 from .registry import AssetRegistry, atomic_write_json, sha256_file, validate_asset_id
 from .visual_director import (
     VisualDirectorGateRequired,
@@ -265,7 +265,9 @@ class ArtFactory:
                 "case_file": case_path.relative_to(self.project_root).as_posix(),
                 "visual_brief_file": (
                     self._visual_director_root(asset_id) / "visual-brief-draft.json"
-                ).relative_to(self.project_root).as_posix(),
+                )
+                .relative_to(self.project_root)
+                .as_posix(),
                 "production_asset": self._production_asset_record(asset_id),
             }
         )
@@ -302,7 +304,9 @@ class ArtFactory:
         approved_target = state.get("approved_visual_target")
         if state.get("status") in {"backlog", "production_pass"}:
             state_status = state["status"]
-        elif isinstance(approved_target, dict) and self._approved_target_is_current(approved_target):
+        elif isinstance(approved_target, dict) and self._approved_target_is_current(
+            approved_target
+        ):
             state_status = "approved"
         elif classify_visual_director_policy(brief)["required"]:
             state_status = "target_stale" if approved_target else "target_pending"
@@ -375,7 +379,9 @@ class ArtFactory:
             raise ValueError("cannot backlog a Visual Director case without an approved target")
         episode = state.get("target_episode", {})
         if not episode.get("attempts"):
-            raise ValueError("cannot backlog a Visual Director case before a 3D candidate is reviewed")
+            raise ValueError(
+                "cannot backlog a Visual Director case before a 3D candidate is reviewed"
+            )
         if state.get("status") == "production_pass":
             raise ValueError("a production-passed Visual Director case cannot be backlogged")
         episode["status"] = "backlog"
@@ -448,9 +454,13 @@ class ArtFactory:
         brief = self.load_brief(candidate.asset_id)
         # A RoomDefinition supplies fit/gameplay context, not a photograph.
         source_imagery_required = bool(brief.reference_images)
+        visual_director_candidate = bool(
+            candidate.visual_director_provenance.get("approved_visual_target")
+        )
         errors = evaluation.validate(
             source_resemblance_required=source_imagery_required,
             allow_stylization=brief.allow_stylization,
+            require_craftsmanship_render_references=visual_director_candidate,
         )
         if errors:
             raise ValueError("invalid ArtEvaluation: " + "; ".join(errors))
@@ -468,10 +478,30 @@ class ArtFactory:
             relative = _safe_relative_path(evidence_path)
             if not self.project_root.joinpath(*relative.parts).is_file():
                 raise ValueError(f"evaluation references missing render evidence: {evidence_path}")
-            if not any(render.get("path") == evidence_path for render in candidate.renders):
+            if not any(
+                render.get("path") == evidence_path
+                and (not visual_director_candidate or render.get("production_path") is True)
+                for render in candidate.renders
+            ):
                 raise ValueError(
                     f"evaluation evidence was not registered as a production render: {evidence_path}"
                 )
+        if visual_director_candidate:
+            registered_paths = {
+                str(render.get("path", ""))
+                for render in candidate.renders
+                if render.get("production_path") is True
+            }
+            for check in evaluation.visual_gate["craftsmanship"].values():
+                if not isinstance(check, dict):
+                    continue
+                for evidence_path in check.get("evidence_refs", []):
+                    if evidence_path not in registered_paths:
+                        raise ValueError(
+                            "Visual Director craftsmanship evidence must reference a registered "
+                            f"production Godot render: {evidence_path}"
+                        )
+            self._reject_reused_visual_evidence(candidate, evaluation)
         candidate_root = self._candidate_root(candidate)
         evaluation_path = candidate_root / "evaluation.json"
         atomic_write_json(evaluation_path, evaluation.to_dict())
@@ -483,10 +513,45 @@ class ArtFactory:
         self._save_candidate(candidate)
         self._record_visual_director_evaluation(candidate, evaluation)
         if evaluation.decision != "reject" and evaluation.incumbent_comparison_result in {
-            "better", "first_pass"
+            "better",
+            "first_pass",
         }:
             self._set_best_3d_candidate(candidate)
         return evaluation_path
+
+    def _reject_reused_visual_evidence(
+        self, candidate: ArtCandidate, evaluation: ArtEvaluation
+    ) -> None:
+        new_evidence = {
+            str(evaluation.visual_gate["craftsmanship"][check]["evidence"])
+            .strip()
+            .casefold(): check
+            for check in VISUAL_CRAFT_CHECKS
+        }
+        existing_paths = list(self.art_root.glob("*/iterations/v*/evaluation.json"))
+        existing_paths.extend(self.art_root.glob("*/visual_director/round-*/assessments/*.json"))
+        for path in existing_paths:
+            try:
+                other_asset_id = path.relative_to(self.art_root).parts[0]
+                if other_asset_id == candidate.asset_id:
+                    continue
+                other = _read_json(path)
+            except (OSError, ValueError, IndexError):
+                continue
+            other_craft = other.get("visual_gate", {}).get("craftsmanship", {})
+            if not isinstance(other_craft, dict):
+                continue
+            for item in other_craft.values():
+                if not isinstance(item, dict):
+                    continue
+                phrase = str(item.get("evidence", "")).strip().casefold()
+                if phrase in new_evidence:
+                    check = new_evidence[phrase]
+                    raise ValueError(
+                        "Visual Director craftsmanship evidence for "
+                        f"{check} repeats wording recorded for semantic asset "
+                        f"{other_asset_id} at {path.as_posix()}; write new asset-specific evidence"
+                    )
 
     def promote(self, candidate_id: str) -> dict[str, Any]:
         candidate = self.load_candidate(candidate_id)
@@ -591,9 +656,7 @@ class ArtFactory:
         except (ValueError, OSError):
             return False
 
-    def _require_visual_director_target(
-        self, brief: ArtBrief, recipe: ArtRecipe
-    ) -> dict[str, Any]:
+    def _require_visual_director_target(self, brief: ArtBrief, recipe: ArtRecipe) -> dict[str, Any]:
         state = self.prepare_visual_director(brief.asset_id)
         policy = classify_visual_director_policy(brief)
         target = state.get("approved_visual_target")
@@ -682,7 +745,8 @@ class ArtFactory:
                 )
                 first_recipe_path = (
                     self.project_root / _safe_relative_path(first.get("recipe_file", ""))
-                    if first else None
+                    if first
+                    else None
                 )
                 if not first_recipe_path or not first_recipe_path.is_file():
                     raise ValueError(
@@ -697,9 +761,11 @@ class ArtFactory:
                         "alternate_strategy must change the tool/backend or material_method from "
                         "the initial attempt"
                     )
-        case_relative = self._visual_director_case_path(brief.asset_id).relative_to(
-            self.project_root
-        ).as_posix()
+        case_relative = (
+            self._visual_director_case_path(brief.asset_id)
+            .relative_to(self.project_root)
+            .as_posix()
+        )
         return {
             "policy": policy,
             "status": "approved" if target else "bypass_allowed",
@@ -721,9 +787,9 @@ class ArtFactory:
                     "candidate_id": candidate.candidate_id,
                     "created_at_utc": candidate.created_at_utc,
                     "parent_candidate_id": candidate.parent_candidate_id,
-                    "candidate_file": (
-                        self._candidate_root(candidate) / "candidate.json"
-                    ).relative_to(self.project_root).as_posix(),
+                    "candidate_file": (self._candidate_root(candidate) / "candidate.json")
+                    .relative_to(self.project_root)
+                    .as_posix(),
                     "recipe_file": candidate.recipe_file,
                     "visual_director_attempt": candidate.visual_director_provenance.get(
                         "target_episode_attempt"
@@ -735,9 +801,9 @@ class ArtFactory:
             episode = state.setdefault(
                 "target_episode",
                 {
-                    "target_sha256": candidate.visual_director_provenance[
-                        "approved_visual_target"
-                    ]["sha256"],
+                    "target_sha256": candidate.visual_director_provenance["approved_visual_target"][
+                        "sha256"
+                    ],
                     "status": "in_progress",
                     "attempts": [],
                 },
@@ -811,14 +877,14 @@ class ArtFactory:
         evaluation_path = candidate.evaluation_file
         state["best_3d_candidate"] = {
             "candidate_id": candidate.candidate_id,
-            "candidate_file": (
-                self._candidate_root(candidate) / "candidate.json"
-            ).relative_to(self.project_root).as_posix(),
+            "candidate_file": (self._candidate_root(candidate) / "candidate.json")
+            .relative_to(self.project_root)
+            .as_posix(),
             "evaluation_file": evaluation_path,
             "updated_at_utc": _now_utc(),
         }
-        state["production_asset"] = (
-            production_asset or self._production_asset_record(candidate.asset_id)
+        state["production_asset"] = production_asset or self._production_asset_record(
+            candidate.asset_id
         )
         if production_asset is not None:
             state["status"] = "production_pass"

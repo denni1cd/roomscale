@@ -52,43 +52,67 @@
   "visual_gate": {
     "close_inspection": {
       "answer": "No",
-      "evidence": "The Godot detail capture shows a disconnected canopy and unresolved support joins.",
+      "evidence": "The detail capture shows the one-sided canopy ending above the work area without the approved continuous ridge and connected truss supports.",
       "pass": false
     },
     "craftsmanship": {
       "answer": "No",
       "edge_treatment": {
-        "evidence": "The window retains stepped casing, fitted sash rails, and finished sill edges.",
-        "pass": true
+        "evidence": "The horizontal wall boards and canopy plate have straight exposed edges; the canopy has no fascia, while the post ends remain visibly cut square.",
+        "pass": true,
+        "evidence_refs": [
+          "art/settlement_workshop/iterations/v007/render-runs/run-001/asset-detail.png"
+        ]
       },
       "hardware": {
-        "evidence": "The second-pass latch sits on the camera-facing centre stile and appears at the meeting rail.",
-        "pass": true
+        "evidence": "Copper bands and pipe fittings remain on the boiler, and a brass gear/flywheel detail is visible beside the work area.",
+        "pass": true,
+        "evidence_refs": [
+          "art/settlement_workshop/iterations/v007/render-runs/run-001/asset-detail.png",
+          "art/settlement_workshop/iterations/v007/render-runs/run-001/asset-three-quarter.png"
+        ]
       },
       "joins": {
-        "evidence": "The casing, transom, sash rails, centre stile, and sill remain separate fitted parts.",
-        "pass": false
+        "evidence": "Short diagonal braces meet the small canopy posts, but the canopy stops over one side and does not tie into a continuous ridge/truss frame.",
+        "pass": false,
+        "evidence_refs": [
+          "art/settlement_workshop/iterations/v007/render-runs/run-001/asset-three-quarter.png",
+          "art/settlement_workshop/iterations/v007/render-runs/run-001/asset-detail.png"
+        ]
       },
       "manufacturing_detail": {
-        "evidence": "Upper lights, meeting rail, and the central sash latch read as a constructed double-hung assembly.",
-        "pass": false
+        "evidence": "The boiler fittings and workbench remain, but the canopy load path is incomplete: the one-sided cover has no connected ridge or continuous truss assembly.",
+        "pass": false,
+        "evidence_refs": [
+          "art/settlement_workshop/iterations/v007/render-runs/run-001/asset-detail.png",
+          "art/settlement_workshop/iterations/v007/render-runs/run-001/asset-three-quarter.png"
+        ]
       },
       "material_response": {
-        "evidence": "Warm timber, visible outdoors through low-alpha glazing, and metal hardware have separate responses in the production scene.",
-        "pass": true
+        "evidence": "Warm timber boards, the dark iron boiler, copper fittings, stone pad, and dark canopy remain visibly separate in the production light.",
+        "pass": true,
+        "evidence_refs": [
+          "art/settlement_workshop/iterations/v007/render-runs/run-001/asset-three-quarter.png"
+        ]
       },
       "surface_variation": {
-        "evidence": "The dark stained casing and lighter sash members remain distinguishable.",
-        "pass": true
+        "evidence": "Alternating board tones and the dark posts break up the timber walls; copper and brass parts contrast against the boiler.",
+        "pass": true,
+        "evidence_refs": [
+          "art/settlement_workshop/iterations/v007/render-runs/run-001/asset-detail.png"
+        ]
       },
       "thickness": {
-        "evidence": "Casing and projecting sill hold physical depth in the Godot close capture.",
-        "pass": true
+        "evidence": "Square timber posts, stacked wall boards, and the stone pad show depth; the dark canopy is a much thinner sheet above them.",
+        "pass": true,
+        "evidence_refs": [
+          "art/settlement_workshop/iterations/v007/render-runs/run-001/asset-detail.png"
+        ]
       }
     },
     "neutral_viewer_realism": {
       "answer": "Yes",
-      "evidence": "The production render identifies the intended built asset.",
+      "evidence": "The Godot three-quarter capture reads as a timber workshop around a boiler, flywheel, and workbench.",
       "pass": true
     },
     "photo_character": {

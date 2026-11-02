@@ -95,6 +95,52 @@ func _initialize() -> void:
 	review_parent.free()
 	OS.set_environment("ROOMSCALE_ART_REGISTRY_MODE", previous_registry_mode)
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(review_registry_path))
+	var production_registry_override := OS.get_environment("ROOMSCALE_ART_REGISTRY")
+	var production_registry_mode := OS.get_environment("ROOMSCALE_ART_REGISTRY_MODE")
+	OS.set_environment("ROOMSCALE_ART_REGISTRY", "")
+	OS.set_environment("ROOMSCALE_ART_REGISTRY_MODE", "")
+	var production_resolver := Resolver.new()
+	assert(production_resolver.registry.valid, "canonical production registry must load")
+	var production_cases: Array[Dictionary] = [
+		{
+			"asset_id": "display_cabinet",
+			"candidate_id": "display_cabinet-v003",
+			"path": "res://art/display_cabinet/iterations/v003/generated/asset.glb",
+			"dimensions": [33.0, 76.0, 18.0],
+		},
+		{
+			"asset_id": "room_photo_window_production",
+			"candidate_id": "room_photo_window_production-v004",
+			"path": "res://art/room_photo_window_production/iterations/v004/generated/asset.glb",
+			"dimensions": [96.0, 68.0, 4.0],
+		},
+		{
+			"asset_id": "settlement_workshop",
+			"candidate_id": "settlement_workshop-v004",
+			"path": "res://art/settlement_workshop/iterations/v004/generated/settlement_workshop.tscn",
+			"dimensions": [26.0, 20.0, 20.0],
+		},
+	]
+	for expected in production_cases:
+		var production_fixture := {
+			"kind": expected.asset_id,
+			"dimensions": expected.dimensions,
+			"appearance": {"archetype": expected.asset_id, "asset_id": expected.asset_id},
+		}
+		var production_recipe: Dictionary = production_resolver.resolve(production_fixture)
+		assert(bool(production_recipe.get("asset_registry_required", false)))
+		assert(String(production_recipe.get("asset_registry_candidate_id", "")) == expected.candidate_id)
+		assert(String(production_recipe.get("asset", "")) == expected.path)
+		assert(String(production_recipe.get("asset_registry_error", "")).is_empty())
+		var production_parent := Node3D.new()
+		var fallbacks_before_production_render := fallback_count
+		production_resolver.render(production_parent, production_fixture, _fallback)
+		assert(fallback_count == fallbacks_before_production_render, "accepted assets must never fall back")
+		assert(String(production_parent.get_meta("visual_source", "")) == expected.path)
+		assert(String(production_parent.get_meta("visual_asset_candidate_id", "")) == expected.candidate_id)
+		production_parent.free()
+	OS.set_environment("ROOMSCALE_ART_REGISTRY", production_registry_override)
+	OS.set_environment("ROOMSCALE_ART_REGISTRY_MODE", production_registry_mode)
 	var instance := MeshInstance3D.new()
 	var mesh := BoxMesh.new()
 	mesh.size = Vector3(2, 4, 6)
@@ -105,7 +151,7 @@ func _initialize() -> void:
 	assert(bounds.size.is_equal_approx(mesh.size) and bounds.position.is_equal_approx(Vector3(9, 0, -11)))
 	parent.free()
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(empty_registry_path))
-	print("ROOMSCALE_VISUAL_RESOLVER_PASS catalog=true legacy_fallback=true required_asset_failure_visible=true transformed_bounds=true crlf_hash_normalization=true review_showcase_requires_explicit_mode=true")
+	print("ROOMSCALE_VISUAL_RESOLVER_PASS catalog=true legacy_fallback=true required_asset_failure_visible=true transformed_bounds=true crlf_hash_normalization=true review_showcase_requires_explicit_mode=true canonical_production_registry_runtime_resolution=true no_fallback=true")
 	quit()
 
 func _fallback(_parent: Node3D, _object: Dictionary) -> void:

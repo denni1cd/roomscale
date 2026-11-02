@@ -44,43 +44,66 @@
   "visual_gate": {
     "close_inspection": {
       "answer": "Yes",
-      "evidence": "The registered Godot asset-detail capture shows the doors, shelf separation, hinge treatment, and crown.",
+      "evidence": "The registered close and three-quarter views retain the side panel, framed doors, shelf boards, crown, and plinth; the brass details are small but visible.",
       "pass": true
     },
     "craftsmanship": {
       "answer": "Yes",
       "edge_treatment": {
-        "evidence": "Manufactured radii and the frame profile hold in the close render.",
-        "pass": true
+        "evidence": "The close Godot view shows the crown and plinth stepping beyond the case; the front rail edges meet the side panel without visible gaps.",
+        "pass": true,
+        "evidence_refs": [
+          "art/display_cabinet/iterations/v003/render-runs/run-001/asset-detail.png"
+        ]
       },
       "hardware": {
-        "evidence": "The real render shows the sash latch.",
-        "pass": true
+        "evidence": "The front three-quarter view shows brass hinge leaves along the outer stiles and paired small gold knobs at the meeting rail; they remain fine at this view scale.",
+        "pass": true,
+        "evidence_refs": [
+          "art/display_cabinet/iterations/v003/render-runs/run-001/asset-three-quarter.png"
+        ]
       },
       "joins": {
-        "evidence": "The sash, jambs, rails, and trim resolve as separate fitted components.",
-        "pass": true
+        "evidence": "Three shelf boards span between the cabinet sides, and each glazed leaf has continuous rails and stiles meeting at the centre stile.",
+        "pass": true,
+        "evidence_refs": [
+          "art/display_cabinet/iterations/v003/render-runs/run-001/asset-three-quarter.png"
+        ]
       },
       "manufacturing_detail": {
-        "evidence": "The operating hardware remains legible.",
-        "pass": true
+        "evidence": "Paired framed glass doors, three shelves, outer hinge points, central knobs, and a stepped crown/base read as a complete cabinet assembly.",
+        "pass": true,
+        "evidence_refs": [
+          "art/display_cabinet/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+          "art/display_cabinet/iterations/v003/render-runs/run-001/asset-detail.png"
+        ]
       },
       "material_response": {
-        "evidence": "Wood, glass, and metal stay distinct in the production render.",
-        "pass": true
+        "evidence": "Walnut on the case and lighter shelf faces remain distinct; glazing stays transparent over the shelves and the small brass pieces retain a gold response.",
+        "pass": true,
+        "evidence_refs": [
+          "art/display_cabinet/iterations/v003/render-runs/run-001/asset-three-quarter.png"
+        ]
       },
       "surface_variation": {
-        "evidence": "Timber grain and layered trim break up the broad frame surfaces.",
-        "pass": true
+        "evidence": "The close view separates the darker case grain from lighter shelf faces, with the door rails, crown, and plinth adding visible bands.",
+        "pass": true,
+        "evidence_refs": [
+          "art/display_cabinet/iterations/v003/render-runs/run-001/asset-detail.png",
+          "art/display_cabinet/iterations/v003/render-runs/run-001/asset-three-quarter.png"
+        ]
       },
       "thickness": {
-        "evidence": "The casing, sill, and sash members retain visible depth.",
-        "pass": true
+        "evidence": "The side-facing close view shows a full-depth walnut panel, recessed glazing, and projecting crown and base.",
+        "pass": true,
+        "evidence_refs": [
+          "art/display_cabinet/iterations/v003/render-runs/run-001/asset-detail.png"
+        ]
       }
     },
     "neutral_viewer_realism": {
       "answer": "Yes",
-      "evidence": "The render reads as the intended finished furniture or architectural assembly.",
+      "evidence": "The room-scale Godot capture shows a tall walnut case with paired glazed doors and interior shelves beside the room opening.",
       "pass": true
     },
     "photo_character": {
