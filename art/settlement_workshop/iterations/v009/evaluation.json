@@ -1,0 +1,156 @@
+{
+  "candidate_id": "settlement_workshop-v009",
+  "created_at_utc": "2026-11-02T11:51:14+00:00",
+  "decision": "continue",
+  "defects": [
+    "The raised canopy reads as a separate, oversized tier rather than a compact continuation of the workshop roof. Its two monitor posts end about 0.67 inches above the lower roof plane at their x positions, and the panels crowd the lower roof in close views.",
+    "The approved target's closely joined framing, small fasteners, dense workshop tools, and richly finished surfaces are only partly transferred; the candidate remains a much simpler game-scale construction and the broad roof hides part of the interior.",
+    "The settlement-scale render shows the workshop remains a small local improvement inside the sparse prototype-like settlement, not a whole-scene art transformation."
+  ],
+  "hard_fail_reasons": [
+    "Close inspection shows the raised monitor supports do not connect to the lower roof, and the oversized tier crowds the lower roof without a convincing load path; joins and manufacturing detail fail.",
+    "The candidate does not reach the approved target's close-range construction and finish quality, and Luna's matched pixel review finds it less coherent overall than v008; it cannot replace the production asset."
+  ],
+  "incumbent_candidate_id": "settlement_workshop-v008",
+  "incumbent_comparison": "Matched Godot pixels show v009 makes a two-tier roof more explicit than v008, but Luna's independent review finds the raised canopy oversized and visually separate, with thin supports that do not carry its load into the walls and roof panels that crowd the lower plane. The wider canopy also hides more of the interior. v008 is simpler but more coherent overall, so retain it as the best 3D candidate and keep accepted v004 in production.",
+  "incumbent_comparison_result": "worse",
+  "likely_causes": [
+    "The alternate geometry strategy set a separate raised-roof assembly without resolving its height and contact with the sloped lower roof or its supports into the walls.",
+    "The transfer prioritized roof coverage and silhouette while reusing simplified wall and machine detail; it did not restore target-specific framing hardware and workshop contents.",
+    "The selected structure occupies little screen space in the representative settlement view, limiting the visible whole-scene effect."
+  ],
+  "next_action_hypothesis": "Close the approved r01 episode at its three-strategy limit and return to the faction-identity queue. If a future target revision explicitly reopens this workshop, reduce and center the raised tier, land and brace its posts on continuous roof/wall supports, and restore target-specific join hardware and workshop detail before reconsidering production.",
+  "observations": {
+    "art_direction_fit": "The broad timber-and-metal canopy supports the Clockwork identity and resembles the approved raised-roof concept, but the open, intricately joined workshop in the target is reduced to a simpler enclosure with fewer small construction cues.",
+    "close_up_quality": "The detail render shows the upper canopy crowding the lower roof and the monitor posts stopping above its surface. The target's dense tool, fastener, bracket, edge, and surface detail is not present at comparable density.",
+    "gameplay_readability": "The boiler, stack, flywheel, and bench remain identifiable, but the larger two-tier canopy hides part of the interior compared with v008. Candidate geometry is presentation-only; the RoomDefinition, steam emitter, gears, and work stations remain unchanged.",
+    "geometric_detail": "The candidate contains five lower trusses, roof seams, wall courses, machinery, and a raised roof frame, but many components remain plain box forms and the monitor supports do not land on the roof.",
+    "material_realism": "Timber, dark roof metal, copper, and iron separate under production lighting, but their surface finish and small wear details are visibly less developed than the target.",
+    "proportion": "The bounds match the 26 x 20 x 20-inch envelope, but the raised assembly reads as an oversized separate canopy instead of the target's compact integrated monitor roof.",
+    "scale_fidelity": "Godot reports bounds of 26 x 19.94 x 20 inches, within the brief envelope; no RoomDefinition or gameplay geometry changed.",
+    "semantic_recognizability": "The three-quarter capture clearly reads as the Clockwork boiler-and-workbench workshop, with its flue, flywheel, and work surface visible.",
+    "silhouette_quality": "The second tier is more visible than in v008, but Luna's pixel review found the raised assembly oversized and disconnected, so the overall roof shape is less coherent than the incumbent candidate.",
+    "surface_variation": "The render shows board courses, standing seams, copper bands, and contrasting machine parts. The target's rivets, brackets, fasteners, tools, and richer surface wear remain sparse or absent.",
+    "technical_integration": "Godot 4.7.2 validation passed with no issues at 158 meshes/surfaces and 32,640 triangles. Warmed 50-citizen runs completed in the same room and renderer; v009 room median/p95 was 3.08/3.62 ms and settlement was 2.76/3.35 ms."
+  },
+  "render_evidence": [
+    "art/settlement_workshop/iterations/v009/render-runs/run-001/asset-three-quarter.png",
+    "art/settlement_workshop/iterations/v009/render-runs/run-001/asset-detail.png",
+    "art/settlement_workshop/iterations/v009/render-runs/run-001/asset-opposite-three-quarter.png",
+    "art/settlement_workshop/iterations/v009/render-runs/run-001/settlement-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 2,
+    "gameplay_readability": 3,
+    "geometric_detail": 3,
+    "material_realism": 3,
+    "proportion": 2,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 3,
+    "surface_variation": 3,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The registered detail capture shows both monitor posts stopping above the sloped lower roof. The generator places their bottoms at y=16.60 inches while the lower roof at x=±3.6 is about y=15.93, leaving an approximately 0.67-inch gap. The target's dense join and hardware detail is also not carried over.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "The three-quarter and detail captures show standing-seam edges and a ridge cap, though most timber ends and wall-board edges remain plain and square.",
+        "evidence_refs": [
+          "art/settlement_workshop/iterations/v009/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "The boiler retains copper hoops and fittings, and the flywheel and exposed gear remain visible. Roof brackets and target-like framing fasteners are largely absent.",
+        "evidence_refs": [
+          "art/settlement_workshop/iterations/v009/render-runs/run-001/asset-detail.png",
+          "art/settlement_workshop/iterations/v009/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "joins": {
+        "evidence": "In the detail render, the raised monitor posts end about 0.67 inches above the lower roof plane at x=±3.6. They do not land on a beam, bracket, or roof surface, so the raised tier is visibly disconnected from its supporting structure.",
+        "evidence_refs": [
+          "art/settlement_workshop/iterations/v009/render-runs/run-001/asset-detail.png",
+          "art/settlement_workshop/iterations/v009/render-runs/run-001/asset-opposite-three-quarter.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "The lower canopy has a repeated truss frame and stack flashing, but the upper frame has no continuous connection into the lower roof. The close view also lacks the target's dense brackets, rivets, and bench tools.",
+        "evidence_refs": [
+          "art/settlement_workshop/iterations/v009/render-runs/run-001/asset-detail.png",
+          "art/settlement_workshop/iterations/v009/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "Production lighting separates the timber frame, dark roof panels, copper flashing, and iron boiler, even though their surface wear is less detailed than the target.",
+        "evidence_refs": [
+          "art/settlement_workshop/iterations/v009/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "surface_variation": {
+        "evidence": "Board courses, roof seams, copper accents, and machine parts add variation across the close view; smaller fasteners and the target's surface wear remain underrepresented.",
+        "evidence_refs": [
+          "art/settlement_workshop/iterations/v009/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "thickness": {
+        "evidence": "Roof panels, timber trusses, wall boards, and the base have visible thickness, although the monitor supports do not reach the lower roof.",
+        "evidence_refs": [
+          "art/settlement_workshop/iterations/v009/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "evidence": "A neutral viewer can identify a timber-and-metal workshop with a boiler, stack, flywheel, and bench from the three-quarter production capture.",
+      "pass": true
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "The ArtBrief has no source photograph; its Luna-approved image is a design target.",
+      "pass": null
+    },
+    "style_evidence": "The approved brief permits miniature-scale stylization, so the candidate's low-poly box-shaped timber and roof components are recorded as visible style traits rather than an independent hard failure. The production decision is blocked by the disconnected upper supports and target-detail gap.",
+    "style_flags": {
+      "blocky_geometry": true,
+      "low_poly": true,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Close this approved r01 episode at attempt three and return to faction identity work. If a future target revision reopens it, reduce and center the raised tier, connect and brace its posts into the lower roof and walls, then restore target-specific fasteners, frame details, and bench contents.",
+    "lost_visual_information": [
+      "The approved target's compact upper canopy is supported by continuous posts, braces, and visible connections; the candidate's larger raised assembly appears separate, with monitor posts stopping above the sloped lower roof and panels crowding the lower plane.",
+      "The target carries denser roof joinery, fasteners, tool storage, bench contents, and surface wear than the current game-scale transfer.",
+      "At settlement scale, the workshop remains a small object inside a sparse scene, so its canopy does not create a broader environmental transformation."
+    ],
+    "preserved_components": [
+      "Boiler, stack, copper fittings, flywheel, gear, and workbench remain identifiable.",
+      "The 26 x 20 x 20-inch envelope, RoomDefinition ownership, work stations, steam emitter, and animated gear contract remain unchanged.",
+      "The lower canopy now spans the structure and includes a chimney clearance and a raised ridge tier."
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "proportion_drift"
+    ]
+  }
+}

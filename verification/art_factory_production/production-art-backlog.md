@@ -1,11 +1,11 @@
-# Production Art Backlog — Updated after Batch 19
+# Production Art Backlog — Updated after Batch 20
 
 This is the post-POC production backlog. It preserves POC 2.5 evidence and acceptance results; the entries below are not POC 2.5 regressions or changes to its acceptance amendment.
 
-## Current priority after Batch 19
+## Current priority after Batch 20
 
-1. **Clockwork workshop target episode.** v008 is the best current 3D review candidate and v004 remains production; make one final materially different canopy transfer attempt, then stop this episode at three strategies.
-2. **Faction visual identity.** After the bounded workshop attempt, prioritize a distinctive Verdant or Scavenger structure/silhouette with source-supported construction; preserve Clockwork building candidates and citizen-v089 as best-current review art.
+1. **Faction visual identity.** The Clockwork workshop r01 episode has exhausted its three strategies. Select a source-supported Verdant or Scavenger structure or equipment asset with strong scene/faction prominence; build a meaningful silhouette and construction upgrade, not a recolor. Keep the whole-settlement view as the integrated comparison.
+2. **Clockwork workshop target episode.** v008 remains the best current 3D candidate; v004 remains production. v009's upper tier is oversized and disconnected, and Luna's pixel review found it less coherent than v008. The r01 episode is backlogged after three strategies. Do not make a fourth variant against the same approved target.
 3. **Room shell trim and French door.** Both approved-target episodes have exhausted three strategies. Trim v002 remains best current but misses close-craft and grain; French-door v010 has exact bounds and readable hinges but repetitive oak. The blue-gray pane capture cannot establish transparency. Preserve room dimensions; keep any garden context outside the door mesh.
 4. **Desk transfer.** The r01 episode remains at three attempts. A current matched rerender makes v061 the best 3D review candidate because its probe restores broad room reflections and its constructed underframe reads better than v007. It still renders too green and transparent against the source and target; preserve v007 in production and do not generate a fourth r01 variant.
 5. **Visible ceiling.** It is hidden in the representative open-top gameplay camera and should wait for a view where it is visible.
@@ -49,6 +49,14 @@ Direct pixel review reconfirmed the trim and French-door candidate dispositions 
 ## Batch 19 disposition
 
 The Luna-approved Clockwork workshop r01 episode resumed for attempt 2. v008 replaces the split incumbent wings with a tied gable and improves the roof assembly, but omits the broad lower cover and raised upper ridge shown in the approved target. Keep v008 as best-current 3D review and v004 in the canonical production registry; no promotion occurred. Matched 50-citizen renders show a small 0.16 ms p95 increase in room/settlement views and flat citizen performance. Whole-scene settlement captures show no broad transformation. The inventory now follows Visual Director best-3D state ahead of the legacy showcase entry. One alternate strategy remains; after that, move on. See [Batch 19](batch-19-clockwork-workshop.md).
+
+## Batch 20 disposition
+
+The final materially different attempt, `settlement_workshop-v009`, uses a component-authored full-width lower canopy with a chimney opening and raised rear ridge. The raised tier is more apparent than v008, but Luna's direct review of the actual PNGs found it oversized and visually separate, with thin supports, panels crowding the lower roof, and less interior readability. Code dimensions also show the monitor posts stop about 0.67 inches above the sloped lower roof. Luna judged v008 simpler but more coherent overall; the strict v009 evaluation records `worse`, so v008 remains best current 3D. Close-range framing, fasteners, tools, and finish remain substantially under-transferred. Joins and manufacturing detail fail.
+
+Godot 4.7.2 validation passed at 26 × 19.94 × 20 inches, 158 meshes/surfaces, and 32,640 triangles. The target episode is backlogged at attempt three. The best-3D record remains v008; the production asset and canonical registry entry remain v004. There was no promotion and no gameplay or RoomDefinition change.
+
+The matched settlement-scale v008/v009 captures show a wider workshop canopy but no obvious scene-wide transformation. The workshop remains small in frame and the surrounding settlement remains visibly sparse and prototype-like. In warmed 50-citizen samples, v009 versus v008 room median/p95 was 3.080/3.620 vs 2.976/3.527 ms, settlement was 2.760/3.350 vs 2.657/3.289 ms, and citizen was 2.470/3.020 vs 2.316/2.948 ms. These single-session values indicate a small frame-time increase; settlement draw calls rose from 1,390 to 1,598. See [Batch 20](batch-20-clockwork-workshop-final.md) and its [v008](batch-20/performance-v008.json) and [v009](batch-20/performance-v009.json) raw samples.
 
 ## Promoted production assets
 

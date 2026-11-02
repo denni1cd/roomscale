@@ -1,0 +1,69 @@
+{
+  "deterministic_seed": 2519,
+  "generator_command": [
+    ".tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generators/generate_workshop_two_tier_canopy.gd"
+  ],
+  "import_configuration": {
+    "format": "native Godot PackedScene",
+    "presentation_only": true,
+    "renderer": "gl_compatibility",
+    "scale": "inches"
+  },
+  "instructions": "Make the final materially different Visual Director transfer attempt by editing the current best v008 PackedScene with an explicitly component-authored Godot canopy. Replace only the one-bay gable with a full-width lower gable spanning the workshop, preserve a real rectangular chimney opening with copper flashing, and add a compact raised ridge tier over the rear half. Tie both roofs into visible trusses, purlins, posts, and knees. Keep the front open and preserve the incumbent boiler, flue, flywheel, workbench, tools, 26 x 20 x 20 inch presentation envelope, RoomDefinition landmark, and all gameplay-owned station/animation contracts.",
+  "material_method": "Reuse the incumbent roof, copper, and timber StandardMaterial3D classes on hand-authored roof panels, chimney flashing, trusses, and joinery; change geometry construction strategy instead of baking a new Blender material set.",
+  "method": "godot_alternate_two_tier_clerestory_canopy",
+  "parameters": {
+    "canopy": {
+      "back_z": 8.9,
+      "chimney_cut_back_z": -0.55,
+      "chimney_cut_front_z": -3.45,
+      "chimney_cut_left_x": -7.95,
+      "chimney_cut_right_x": -5.05,
+      "front_z": -8.9,
+      "lower_eave_y": 14.35,
+      "lower_left_x": -11.5,
+      "lower_ridge_x": 0.0,
+      "lower_ridge_y": 16.65,
+      "lower_right_x": 11.5,
+      "upper_back_z": 8.45,
+      "upper_eave_y": 17.25,
+      "upper_front_z": 0.2,
+      "upper_left_x": -3.6,
+      "upper_ridge_x": 0.0,
+      "upper_ridge_y": 19.05,
+      "upper_right_x": 3.6
+    },
+    "diagnosis_ref": "settlement_workshop-v008",
+    "incumbent_candidate_id": "settlement_workshop-v008",
+    "incumbent_scene": "art/settlement_workshop/iterations/v008/generated/settlement_workshop.tscn",
+    "materially_different_strategy": true,
+    "outputs": [
+      "settlement_workshop.tscn",
+      "generation-record.json"
+    ],
+    "visual_director_strategy": "alternate_strategy",
+    "visual_director_target": "art/settlement_workshop/visual_director/round-01/approved-target-r01.png"
+  },
+  "post_processing": [
+    "pack the best-current v008 assembly with the alternate two-tier roof into a native PackedScene",
+    "validate the exact envelope and production resolver route",
+    "render matched asset, room, and settlement views for visual and performance review"
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "art/settlement_workshop/brief.json",
+    "art/settlement_workshop/visual_director/round-01/approved-target-r01.png",
+    "art/settlement_workshop/iterations/v008/generated/settlement_workshop.tscn",
+    "art/settlement_workshop/iterations/v008/evaluation.json",
+    "scripts/art_factory/generators/generate_workshop_two_tier_canopy.gd",
+    "scripts/visuals/visual_geometry.gd",
+    "scripts/visuals/material_library.gd"
+  ],
+  "tool": "RoomScale Art Factory alternate Godot component authoring",
+  "tool_version": "Godot 4.7.2 stable"
+}

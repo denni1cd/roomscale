@@ -734,7 +734,7 @@ class VisualDirectorIntegrityTest(unittest.TestCase):
             (
                 "settlement_workshop",
                 "settlement_workshop-v004",
-                "in_progress",
+                "backlog",
                 "v004",
                 "settlement_workshop-v008",
             ),
@@ -793,18 +793,39 @@ class VisualDirectorIntegrityTest(unittest.TestCase):
         workshop_state = self._read_json(
             self.root / "art/settlement_workshop/visual_director/state.json"
         )
-        failed_candidate = self._read_json(
-            self.root / "art/settlement_workshop/iterations/v007/candidate.json"
+        final_candidate = self._read_json(
+            self.root / "art/settlement_workshop/iterations/v009/candidate.json"
         )
-        failed_evaluation = self._read_json(
-            self.root / "art/settlement_workshop/iterations/v007/evaluation.json"
+        final_evaluation = self._read_json(
+            self.root / "art/settlement_workshop/iterations/v009/evaluation.json"
         )
-        self.assertEqual(failed_candidate["candidate_id"], "settlement_workshop-v007")
-        self.assertEqual(failed_evaluation["decision"], "continue")
-        self.assertEqual(failed_evaluation["incumbent_candidate_id"], "settlement_workshop-v004")
-        self.assertEqual(workshop_state["target_episode"]["status"], "remediation_needed")
+        self.assertEqual(final_candidate["candidate_id"], "settlement_workshop-v009")
+        self.assertEqual(final_evaluation["decision"], "continue")
+        self.assertEqual(final_evaluation["incumbent_candidate_id"], "settlement_workshop-v008")
+        self.assertEqual(final_evaluation["incumbent_comparison_result"], "worse")
+        self.assertEqual(workshop_state["status"], "backlog")
+        self.assertEqual(workshop_state["target_episode"]["status"], "backlog")
+        self.assertEqual(len(workshop_state["target_episode"]["attempts"]), 3)
+        self.assertEqual(
+            workshop_state["target_episode"]["attempts"][-1]["candidate_id"],
+            final_candidate["candidate_id"],
+        )
+        self.assertEqual(
+            workshop_state["production_asset"]["candidate_id"], "settlement_workshop-v004"
+        )
+        self.assertEqual(
+            workshop_state["best_3d_candidate"]["candidate_id"], "settlement_workshop-v008"
+        )
         self.assertNotIn("backlog_reason", workshop_state)
         self.assertNotIn("backlog_reason", workshop_state["target_episode"])
+
+        final_renders = {render["path"]: render for render in final_candidate.get("renders", [])}
+        for check in VISUAL_CRAFT_CHECKS:
+            for evidence_path in final_evaluation["visual_gate"]["craftsmanship"][check][
+                "evidence_refs"
+            ]:
+                self.assertIn(evidence_path, final_evaluation["render_evidence"])
+                self.assertTrue(final_renders[evidence_path]["production_path"])
 
     def test_batch_craftsmanship_evidence_is_asset_specific_and_render_linked(self) -> None:
         cases = (
