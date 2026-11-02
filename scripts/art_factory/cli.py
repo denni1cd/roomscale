@@ -88,7 +88,9 @@ def parser() -> argparse.ArgumentParser:
     )
     visual_approve.add_argument("asset_id")
     visual_approve.add_argument("--target", required=True, help="project-relative image path")
-    visual_approve.add_argument("--review", required=True, help="project-relative pixel-review evidence")
+    visual_approve.add_argument(
+        "--review", required=True, help="project-relative pixel-review evidence"
+    )
     visual_approve.add_argument("--concept-id", default="")
     visual_backlog = visual_director_commands.add_parser(
         "backlog",
@@ -114,17 +116,22 @@ def main(argv: list[str] | None = None) -> int:
                 args.asset_id, recipe, args.timeout, parent_candidate_id=args.parent
             )
         except VisualDirectorGateRequired as exc:
-            print(json.dumps({
-                "status": "visual_director_required",
-                "asset_id": exc.asset_id,
-                "reasons": exc.reasons,
-                "case_file": exc.case_file,
-                "visual_brief_file": exc.visual_brief_file,
-                "next_step": (
-                    "Generate and pixel-review concept directions, then record a passing target "
-                    "with `roomscale-art visual-director approve`."
-                ),
-            }, indent=2))
+            print(
+                json.dumps(
+                    {
+                        "status": "visual_director_required",
+                        "asset_id": exc.asset_id,
+                        "reasons": exc.reasons,
+                        "case_file": exc.case_file,
+                        "visual_brief_file": exc.visual_brief_file,
+                        "next_step": (
+                            "Generate and pixel-review concept directions, then record a passing target "
+                            "with `roomscale-art visual-director approve`."
+                        ),
+                    },
+                    indent=2,
+                )
+            )
             return 3
         print(json.dumps(candidate.to_dict(), indent=2))
         return 0 if candidate.generation_result.get("status") == "pass" else 2

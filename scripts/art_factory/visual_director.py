@@ -43,9 +43,11 @@ def classify_visual_director_policy(brief: Any) -> dict[str, Any]:
             inferred.append("unclassified asset defaults to supporting Tier 3")
 
     source_required = bool(getattr(brief, "source_photo_required", False))
-    if not source_required and brief.reference_images and category in {
-        "architectural_opening", "room_furniture"
-    }:
+    if (
+        not source_required
+        and brief.reference_images
+        and category in {"architectural_opening", "room_furniture"}
+    ):
         source_required = True
         inferred.append("source imagery on a room asset implies source-character review")
 
@@ -141,4 +143,3 @@ def visual_brief_scaffold(brief: Any) -> dict[str, Any]:
         ),
         "separate_room_assets": [],
     }
-
