@@ -88,13 +88,23 @@ def dispatch_to_blender() -> int:
 
 
 def _materials(base, generation_variant=""):
-    if generation_variant.startswith("bookcase_household_r01_alternate"):
+    if generation_variant.startswith("batch15_"):
+        wood_grain = "furniture_oak_calm"
+    elif generation_variant.startswith("bookcase_household_r01_alternate"):
         wood_grain = "bookcase_oak_fine"
     else:
         wood_grain = "french_oak" if "_targeted" in generation_variant else "french_oak_soft"
     targeted_bookcase = generation_variant.startswith("bookcase_household_r01_targeted")
     alternate_bookcase = generation_variant.startswith("bookcase_household_r01_alternate")
-    if targeted_bookcase or alternate_bookcase:
+    alternate_furniture = generation_variant.startswith("batch15_")
+    if alternate_furniture:
+        # Reduce the high-contrast synthetic waves and keep wood response broad,
+        # matte, and readable under the bright review-room lights.
+        oak_color = (0.33, 0.205, 0.115)
+        oak_light_color = (0.42, 0.275, 0.165)
+        walnut_color = (0.145, 0.072, 0.036)
+        oak_roughness, oak_light_roughness, walnut_roughness = 0.57, 0.59, 0.62
+    elif targeted_bookcase or alternate_bookcase:
         # The first Room A render lost the target's dark stained wood in the
         # production light, and its softer grain did not survive at gameplay scale.
         oak_color = (0.26, 0.145, 0.070)
@@ -279,6 +289,45 @@ def _cut_vertical_hole(base, obj, name, x, y, z, radius, depth):
     bpy.data.objects.remove(cutter, do_unlink=True)
 
 
+def _joined_worktop(
+    base,
+    name,
+    width,
+    depth,
+    top_z,
+    thickness,
+    material,
+    board_count,
+    dog_holes=(),
+):
+    """Build a fitted multi-board top with real joints and bores per board."""
+    gap = 0.075
+    board_width = (width - gap * (board_count - 1)) / board_count
+    for index in range(board_count):
+        center_x = -width * 0.5 + board_width * 0.5 + index * (board_width + gap)
+        board = _box(
+            base,
+            f"{name} joined plank {index + 1}",
+            (center_x, 0.0, top_z),
+            (board_width, depth, thickness),
+            material,
+            0.11,
+        )
+        left, right = center_x - board_width * 0.5, center_x + board_width * 0.5
+        for hole_index, (hole_x, hole_y) in enumerate(dog_holes, start=1):
+            if left + 0.65 < hole_x < right - 0.65:
+                _cut_vertical_hole(
+                    base,
+                    board,
+                    f"{name} dog hole {hole_index}",
+                    hole_x,
+                    hole_y,
+                    top_z,
+                    0.46,
+                    thickness + 0.6,
+                )
+
+
 def _tenon_pegs(base, name, x, y, z, count, spacing, material):
     for index in range(count):
         dx = (index - (count - 1) * 0.5) * spacing
@@ -294,23 +343,37 @@ def _tenon_pegs(base, name, x, y, z, count, spacing, material):
         )
 
 
-def build_workbench(base, mats):
+def build_workbench(base, mats, alternate=False):
     width, depth, height = 58.0, 30.0, 36.0
     top_thickness = 3.6
     top_z = height - top_thickness * 0.5
-    top = _box(
-        base,
-        "Workbench joined oak top",
-        (0.0, 0.0, top_z),
-        (width, depth, top_thickness),
-        mats["oak"],
-        0.18,
-    )
-    for x in (-22.0, -11.0, 0.0, 11.0, 22.0):
-        for y in (-9.0, 0.0, 9.0):
-            _cut_vertical_hole(
-                base, top, "Workbench dog hole", x, y, top_z, 0.48, top_thickness + 0.5
-            )
+    if alternate:
+        holes = [(x, y) for x in (-22.0, -11.0, 0.0, 11.0, 22.0) for y in (-9.0, 0.0, 9.0)]
+        _joined_worktop(
+            base,
+            "Workbench thick oak top",
+            width,
+            depth,
+            top_z,
+            top_thickness,
+            mats["oak"],
+            5,
+            holes,
+        )
+    else:
+        top = _box(
+            base,
+            "Workbench joined oak top",
+            (0.0, 0.0, top_z),
+            (width, depth, top_thickness),
+            mats["oak"],
+            0.18,
+        )
+        for x in (-22.0, -11.0, 0.0, 11.0, 22.0):
+            for y in (-9.0, 0.0, 9.0):
+                _cut_vertical_hole(
+                    base, top, "Workbench dog hole", x, y, top_z, 0.48, top_thickness + 0.5
+                )
     for side in (-1, 1):
         for fore_aft in (-1, 1):
             x, y = side * 25.0, fore_aft * 12.0
@@ -449,23 +512,37 @@ def _tapered_square_leg(base, name, x, y, height, bottom_width, top_width, mater
     return obj
 
 
-def build_assembly_table(base, mats):
+def build_assembly_table(base, mats, alternate=False):
     width, depth, height = 42.0, 32.0, 24.0
     top_thickness = 3.0
     top_z = height - top_thickness * 0.5
-    top = _box(
-        base,
-        "Assembly table solid oak top",
-        (0.0, 0.0, top_z),
-        (width, depth, top_thickness),
-        mats["oak"],
-        0.16,
-    )
-    for x in (-15.0, -7.5, 0.0, 7.5, 15.0):
-        for y in (-10.0, 0.0, 10.0):
-            _cut_vertical_hole(
-                base, top, "Assembly table dog hole", x, y, top_z, 0.42, top_thickness + 0.5
-            )
+    if alternate:
+        holes = [(x, y) for x in (-15.0, -7.5, 0.0, 7.5, 15.0) for y in (-10.0, 0.0, 10.0)]
+        _joined_worktop(
+            base,
+            "Assembly table thick oak top",
+            width,
+            depth,
+            top_z,
+            top_thickness,
+            mats["oak"],
+            5,
+            holes,
+        )
+    else:
+        top = _box(
+            base,
+            "Assembly table solid oak top",
+            (0.0, 0.0, top_z),
+            (width, depth, top_thickness),
+            mats["oak"],
+            0.16,
+        )
+        for x in (-15.0, -7.5, 0.0, 7.5, 15.0):
+            for y in (-10.0, 0.0, 10.0):
+                _cut_vertical_hole(
+                    base, top, "Assembly table dog hole", x, y, top_z, 0.42, top_thickness + 0.5
+                )
     for sx in (-1, 1):
         for sy in (-1, 1):
             x, y = sx * 17.3, sy * 13.3
@@ -569,23 +646,38 @@ def build_assembly_table(base, mats):
     )
 
 
-def _turned_leg(base, name, x, y, height, material, scale=1.0):
-    profile = [
-        (0.00, 0.72),
-        (0.05, 0.78),
-        (0.11, 0.70),
-        (0.18, 0.48),
-        (0.28, 0.42),
-        (0.36, 0.56),
-        (0.43, 0.78),
-        (0.56, 0.92),
-        (0.69, 0.76),
-        (0.76, 0.48),
-        (0.83, 0.42),
-        (0.90, 0.54),
-        (0.96, 0.64),
-        (1.00, 0.62),
-    ]
+def _turned_leg(base, name, x, y, height, material, scale=1.0, alternate=False):
+    if alternate:
+        profile = [
+            (0.00, 0.60),
+            (0.07, 0.70),
+            (0.16, 0.64),
+            (0.26, 0.49),
+            (0.42, 0.44),
+            (0.54, 0.50),
+            (0.64, 0.67),
+            (0.73, 0.72),
+            (0.82, 0.60),
+            (0.92, 0.50),
+            (1.00, 0.58),
+        ]
+    else:
+        profile = [
+            (0.00, 0.72),
+            (0.05, 0.78),
+            (0.11, 0.70),
+            (0.18, 0.48),
+            (0.28, 0.42),
+            (0.36, 0.56),
+            (0.43, 0.78),
+            (0.56, 0.92),
+            (0.69, 0.76),
+            (0.76, 0.48),
+            (0.83, 0.42),
+            (0.90, 0.54),
+            (0.96, 0.64),
+            (1.00, 0.62),
+        ]
     segments = 32
     vertices = []
     for fraction, radius in profile:
@@ -624,7 +716,7 @@ def _local_box(base, name, hinge, theta, dx, dy, z, size, material, bevel=0.04):
     return obj
 
 
-def build_tool_wardrobe(base, mats):
+def build_tool_wardrobe(base, mats, alternate=False):
     front_y = -3.0
     # Thick carcass stiles, panels, fitted shelves, back, and a stepped cornice.
     _box(
@@ -699,7 +791,7 @@ def build_tool_wardrobe(base, mats):
         hinge_x = side * 19.0
         theta = -math.radians(21.5) if side < 0 else math.radians(21.5)
         direction = 1 if side < 0 else -1
-        door_w, door_h = 18.0, 58.0
+        door_w, door_h = (16.8 if alternate else 18.0), 58.0
         _local_box(
             base,
             "Wardrobe open frame and panel door",
@@ -859,7 +951,7 @@ def build_tool_wardrobe(base, mats):
     _drawer(base, mats, "Wardrobe lower fitted drawer", 0.0, -2.6, 9.2, 16.2, 4.5, 6.0, 0.25)
 
 
-def build_floor_cabinet(base, mats):
+def build_floor_cabinet(base, mats, alternate=False):
     _box(
         base,
         "Floor cabinet left side panel",
@@ -881,17 +973,54 @@ def build_floor_cabinet(base, mats):
     )
     _box(base, "Floor cabinet bottom", (0.0, 0.0, 3.9), (22.5, 22.0, 1.4), mats["oak_light"], 0.08)
     _box(base, "Floor cabinet solid top", (0.0, 0.0, 19.8), (26.0, 24.0, 2.4), mats["oak"], 0.20)
-    _box(
-        base, "Floor cabinet plinth base", (0.0, 0.0, 1.7), (25.2, 23.2, 3.4), mats["walnut"], 0.18
-    )
-    _box(
-        base,
-        "Floor cabinet plinth bead",
-        (0.0, 0.0, 3.5),
-        (24.0, 22.4, 0.7),
-        mats["oak_light"],
-        0.09,
-    )
+    if alternate:
+        for x in (-9.5, 9.5):
+            for y in (-8.0, 8.0):
+                _turned_leg(
+                    base,
+                    "Floor cabinet shaped bun foot",
+                    x,
+                    y,
+                    4.4,
+                    mats["walnut"],
+                    1.55,
+                    alternate=True,
+                )
+        base.profile_prism(
+            "Floor cabinet shaped front skirt",
+            [
+                (-11.2, 4.2),
+                (-11.2, 7.0),
+                (11.2, 7.0),
+                (11.2, 4.2),
+                (7.8, 3.4),
+                (5.0, 4.0),
+                (0.0, 3.2),
+                (-5.0, 4.0),
+                (-7.8, 3.4),
+            ],
+            -11.0,
+            -9.8,
+            mats["oak"],
+            0.06,
+        )
+    else:
+        _box(
+            base,
+            "Floor cabinet plinth base",
+            (0.0, 0.0, 1.7),
+            (25.2, 23.2, 3.4),
+            mats["walnut"],
+            0.18,
+        )
+        _box(
+            base,
+            "Floor cabinet plinth bead",
+            (0.0, 0.0, 3.5),
+            (24.0, 22.4, 0.7),
+            mats["oak_light"],
+            0.09,
+        )
     for z in (11.0, 18.0):
         _box(
             base,
@@ -916,17 +1045,29 @@ def build_floor_cabinet(base, mats):
     _drawer(base, mats, "Floor cabinet lower dovetail drawer", 0.0, -9.4, 8.8, 20.7, 6.0, 7.0, 0.35)
 
 
-def build_side_table(base, mats):
+def build_side_table(base, mats, alternate=False):
     width, depth, height = 20.0, 17.0, 20.0
     top_thickness = 1.35
-    _box(
-        base,
-        "Side table beveled solid oak top",
-        (0.0, 0.0, height - top_thickness * 0.5),
-        (width, depth, top_thickness),
-        mats["oak"],
-        0.28,
-    )
+    if alternate:
+        _joined_worktop(
+            base,
+            "Side table hand-joined oak top",
+            width,
+            depth,
+            height - top_thickness * 0.5,
+            top_thickness,
+            mats["oak"],
+            3,
+        )
+    else:
+        _box(
+            base,
+            "Side table beveled solid oak top",
+            (0.0, 0.0, height - top_thickness * 0.5),
+            (width, depth, top_thickness),
+            mats["oak"],
+            0.28,
+        )
     for sx in (-1, 1):
         for sy in (-1, 1):
             _turned_leg(
@@ -937,6 +1078,7 @@ def build_side_table(base, mats):
                 15.0,
                 mats["oak"],
                 0.78,
+                alternate=alternate,
             )
     for y in (-7.0, 7.0):
         _box(
@@ -1251,7 +1393,10 @@ def _run_in_blender(asset_type: str, output_file: Path, generation_variant: str 
     builder = builders.get(asset_type)
     if builder is None:
         raise ValueError(f"unsupported furniture asset type: {asset_type}")
-    builder(base, mats)
+    if asset_type == "household_bookcase":
+        builder(base, mats)
+    else:
+        builder(base, mats, alternate=generation_variant.startswith("batch15_"))
     bpy.context.view_layer.update()
     corners = [
         obj.matrix_world @ Vector(corner)

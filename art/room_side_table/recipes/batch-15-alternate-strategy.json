@@ -1,0 +1,59 @@
+{
+  "method": "blender_alternate_board_joinery_furniture",
+  "instructions": "Third and final Visual Director transfer strategy for room_side_table. Use the still-current approved target at art/room_side_table/visual_director/round-03/approved-target-r03.png. A Room A side table with a three-board joined oak top, restrained bead-and-cove turned legs, a fitted drawer and apron, and a full lower display shelf with visible tenon shoulders. Keep the object within the exact 20 x 20 x 17-inch envelope and preserve the existing placement and gameplay dimensions. Use the alternate Blender construction implemented by generation_variant batch15_room_side_table_alternate: low-contrast hand-selected oak grain, joined-board topology where specified, and visible fitted construction. Preserve RoomDefinition authority: no changes to room geometry, gameplay, collision, navigation, activity stations, or simulation.",
+  "parameters": {
+    "asset_type": "side_table",
+    "diagnosis_ref": "room_side_table-v007",
+    "generation_variant": "batch15_room_side_table_alternate",
+    "outputs": [
+      "asset.glb",
+      "generation-record.json"
+    ],
+    "parent_candidate": "room_side_table-v007",
+    "visual_director_strategy": "alternate_strategy",
+    "visual_director_target": "art/room_side_table/visual_director/round-03/approved-target-r03.png",
+    "materially_different_strategy": true
+  },
+  "source_inputs": [
+    "art/room_side_table/brief.json",
+    "art/room_side_table/visual_director/round-03/approved-target-r03.png",
+    "art/room_side_table/visual_director/round-03/pixel-review-03.md",
+    "art/room_side_table/iterations/v005/candidate.json",
+    "art/room_side_table/iterations/v005/evaluation.json",
+    "art/room_side_table/iterations/v005/generated/room_side_table.tscn",
+    "art/room_side_table/iterations/v005/render-runs/run-001/asset-gameplay-distance.png",
+    "art/room_side_table/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+    "art/room_side_table/iterations/v005/render-runs/run-001/asset-detail.png",
+    "scripts/art_factory/generators/visual_director_furniture_blender.py",
+    "scripts/art_factory/generators/production_batch01_blender.py",
+    "rooms/room_a.json",
+    "art/room_side_table/iterations/v006/evaluation.json",
+    "art/room_side_table/iterations/v006/render-runs/run-001/asset-detail.png",
+    "art/room_side_table/visual_director/state.json",
+    "art/room_side_table/iterations/v007/candidate.json",
+    "art/room_side_table/iterations/v007/evaluation.json",
+    "art/room_side_table/iterations/v007/render-runs/run-001/asset-detail.png"
+  ],
+  "tool": "Blender-authored joined-board tops, shaped supports, and fitted cabinetry",
+  "tool_version": "Blender 5.2.3 LTS",
+  "post_processing": [
+    "Import the GLB through the Art Factory and validate it in Godot 4.7.2.",
+    "Reject any candidate whose generated visual geometry exceeds its ArtBrief envelope.",
+    "Keep all generated furniture meshes out of collision, navigation, selection, and simulation state.",
+    "Capture standardized candidate-specific production renders before visual evaluation."
+  ],
+  "material_method": "Low-contrast hand-selected oak/walnut PBR with true plank seams, alternate support profiles, and asset-specific joinery",
+  "import_configuration": {
+    "axis": "Blender X width / Y depth / Z height; glTF exporter and Godot importer convert Blender Z-up to Godot Y-up",
+    "format": "GLB with embedded PBR materials",
+    "normalization": "Validate visual mesh bounds against the exact ArtBrief envelope; gameplay dimensions and landmarks remain owned by RoomDefinition",
+    "renderer": "gl_compatibility",
+    "units": "inches"
+  },
+  "deterministic_seed": 5115,
+  "generator_command": [
+    "python",
+    "{project_root}/scripts/art_factory/generators/visual_director_furniture_blender.py"
+  ],
+  "schema_version": 1
+}

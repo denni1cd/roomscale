@@ -9,12 +9,12 @@
     "sha256": "4523b7b9aaa4a340259c4902116f29fe15201b00cc3a8b0d51fa529b2ff0c21c"
   },
   "asset_id": "room_tool_wardrobe",
-  "backlog_reason": "Candidates v006 and v007 establish the exact envelope and wider opening, but the production render still hides the tool-bay detail behind plain door faces and has synthetic grain. Strict realism and craftsmanship checks fail; the iteration budget is exhausted.",
+  "backlog_reason": "After the third approved-target strategy, v008 is best current for its wider center reveal and calmer grain, but the mostly closed doors conceal an empty interior without the target tools, drawers or crafted hardware.",
   "best_3d_candidate": {
-    "candidate_file": "art/room_tool_wardrobe/iterations/v007/candidate.json",
-    "candidate_id": "room_tool_wardrobe-v007",
-    "evaluation_file": "art/room_tool_wardrobe/iterations/v007/evaluation.json",
-    "updated_at_utc": "2026-11-02T07:43:05+00:00"
+    "candidate_file": "art/room_tool_wardrobe/iterations/v008/candidate.json",
+    "candidate_id": "room_tool_wardrobe-v008",
+    "evaluation_file": "art/room_tool_wardrobe/iterations/v008/evaluation.json",
+    "updated_at_utc": "2026-11-02T10:19:55+00:00"
   },
   "candidate_history": [
     {
@@ -296,6 +296,46 @@
         "strategy": "targeted_correction",
         "target_episode_attempt": 2
       }
+    },
+    {
+      "candidate_file": "art/room_tool_wardrobe/iterations/v008/candidate.json",
+      "candidate_id": "room_tool_wardrobe-v008",
+      "created_at_utc": "2026-11-02T10:05:03+00:00",
+      "parent_candidate_id": "room_tool_wardrobe-v007",
+      "recipe_file": "art/room_tool_wardrobe/iterations/v008/recipe.json",
+      "visual_director_attempt": 3,
+      "visual_director_provenance": {
+        "approved_visual_target": {
+          "approval": "pass",
+          "approved_at_utc": "2026-11-02T07:04:21+00:00",
+          "concept_id": "room_tool_wardrobe-family-r03",
+          "path": "art/room_tool_wardrobe/visual_director/round-03/approved-target-r03.png",
+          "review_method": "pixel inspection; review evidence recorded by Luna",
+          "review_path": "art/room_tool_wardrobe/visual_director/round-03/pixel-review-03.md",
+          "sha256": "4523b7b9aaa4a340259c4902116f29fe15201b00cc3a8b0d51fa529b2ff0c21c"
+        },
+        "case_file": "art/room_tool_wardrobe/visual_director/state.json",
+        "policy": {
+          "inputs": {
+            "category": "room_furniture",
+            "current_quality": "prototype",
+            "faction_defining": false,
+            "inferred": [],
+            "priority_tier": 1,
+            "screen_space_importance": 4,
+            "source_images_present": false,
+            "source_photo_required": false
+          },
+          "reasons": [
+            "Tier 1 scene-defining asset",
+            "high screen-space importance"
+          ],
+          "required": true
+        },
+        "status": "approved",
+        "strategy": "alternate_strategy",
+        "target_episode_attempt": 3
+      }
     }
   ],
   "case_file": "art/room_tool_wardrobe/visual_director/state.json",
@@ -374,12 +414,40 @@
             "uv_mapping"
           ]
         }
+      },
+      {
+        "attempt": 3,
+        "candidate_id": "room_tool_wardrobe-v008",
+        "decision": "continue",
+        "evaluated_at_utc": "2026-11-02T10:19:55+00:00",
+        "evaluation_file": "art/room_tool_wardrobe/iterations/v008/evaluation.json",
+        "generation_executions": 1,
+        "incumbent_comparison_result": "better",
+        "status": "evaluated",
+        "strategy": "alternate_strategy",
+        "visual_transfer_diagnosis": {
+          "corrective_action": "This third-strategy episode is exhausted. If reopened later, keep both leaves visibly open, construct the target’s fitted tool assortment and drawers, and shape the crown, base and door hardware as separate readable details.",
+          "lost_visual_information": [
+            "The doors remain mostly closed and conceal the wardrobe interior.",
+            "The shelves are empty; target tools, tool holders and drawers are missing.",
+            "The timber surface and cabinet profiles remain simple and uniform."
+          ],
+          "preserved_components": [
+            "Tool wardrobe v008 retains its recognizable furniture function and room placement.",
+            "The candidate remains review-only; RoomDefinitions, navigation, collision, citizen behavior and gameplay geometry are unchanged."
+          ],
+          "primary_causes": [
+            "geometry_loss",
+            "material_generation",
+            "source_concept_ambiguity"
+          ]
+        }
       }
     ],
-    "backlog_reason": "Candidates v006 and v007 establish the exact envelope and wider opening, but the production render still hides the tool-bay detail behind plain door faces and has synthetic grain. Strict realism and craftsmanship checks fail; the iteration budget is exhausted.",
+    "backlog_reason": "After the third approved-target strategy, v008 is best current for its wider center reveal and calmer grain, but the mostly closed doors conceal an empty interior without the target tools, drawers or crafted hardware.",
     "status": "backlog",
     "target_sha256": "4523b7b9aaa4a340259c4902116f29fe15201b00cc3a8b0d51fa529b2ff0c21c"
   },
-  "updated_at_utc": "2026-11-02T07:56:42+00:00",
+  "updated_at_utc": "2026-11-02T10:20:13+00:00",
   "visual_brief_file": "art/room_tool_wardrobe/visual_director/visual-brief-draft.json"
 }

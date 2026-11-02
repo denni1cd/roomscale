@@ -1,0 +1,170 @@
+{
+  "candidate_id": "room_side_table-v008",
+  "created_at_utc": "2026-11-02T10:19:37+00:00",
+  "decision": "continue",
+  "incumbent_candidate_id": "room_side_table-v007",
+  "incumbent_comparison_result": "better",
+  "incumbent_comparison": "Compared with v007, v008 reduces the strongest wood waves and exposes a joined-board top, keeping the drawer and lower shelf. It still lacks the target\u2019s strongly turned legs and shaped apron; its raw depth is 17.02 inches but runtime normalizes to 17 inches.",
+  "scores": {
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "proportion": 4,
+    "geometric_detail": 2,
+    "material_realism": 3,
+    "surface_variation": 3,
+    "close_up_quality": 2,
+    "gameplay_readability": 3,
+    "scale_fidelity": 5,
+    "art_direction_fit": 2,
+    "technical_integration": 5
+  },
+  "observations": {
+    "semantic_recognizability": "The single drawer, four supports and lower shelf make v008 recognizable as the Room A side table.",
+    "silhouette_quality": "The new leg profile is less blocky than earlier work, but the supports remain mostly straight and do not match the target\u2019s pronounced turned sections.",
+    "proportion": "The raw GLB measures 20 x 20 x 17.02 inches against 20 x 20 x 17; RoomScale normalizes the instance to the authoritative fixture.",
+    "geometric_detail": "The joined-board top, drawer and lower shelf are visible, but the target\u2019s turned legs, sculpted apron and fitted drawer details are missing.",
+    "material_realism": "The calmer finish is less synthetic than v007\u2019s broad waves, yet the wood remains smooth and uniformly colored.",
+    "surface_variation": "The top seam and subdued grain help, but there is little irregular figure across the boards or turned supports.",
+    "close_up_quality": "The detail render shows a simple drawer front and nearly straight legs; the target\u2019s shaped apron and rounded leg profiles do not transfer.",
+    "gameplay_readability": "The small table\u2019s top, front drawer and shelf remain readable at room scale, although leg craftsmanship is too subtle to register.",
+    "scale_fidelity": "Runtime normalization fits the 20 x 20 x 17-inch Room A envelope; the source geometry is 0.02 inches too deep.",
+    "art_direction_fit": "The candidate retains the small side-table function but misses the target\u2019s turned-leg construction, rich figure and shaped apron.",
+    "technical_integration": "Godot 4.7.2 imports the 4-mesh, 10,040-triangle GLB without issues and resolves it review-only in Room A."
+  },
+  "hard_fail_reasons": [
+    "The production views remain visibly simpler than the approved side-table target and fail the craftsmanship gate.",
+    "The defining turned legs and shaped apron are not readable in close or room views."
+  ],
+  "defects": [
+    "The legs remain mostly straight and do not show the approved turned profile.",
+    "The apron and single drawer face are simple and shallow.",
+    "The source GLB depth is 0.02 inches over, although runtime normalizes it to the RoomDefinition envelope."
+  ],
+  "likely_causes": [
+    "geometry_loss",
+    "material_generation",
+    "proportion_drift"
+  ],
+  "next_action_hypothesis": "This third-strategy episode is exhausted. If reopened later, use a clearly turned leg silhouette with visible bead and cove profiles, shape the apron, deepen the drawer joinery and export inside the exact 20 x 20 x 17-inch envelope.",
+  "render_evidence": [
+    "art/room_side_table/iterations/v008/render-runs/run-001/room-scale.png",
+    "art/room_side_table/iterations/v008/render-runs/run-001/room-scale-opposite-angle.png",
+    "art/room_side_table/iterations/v008/render-runs/run-001/settlement-scale.png",
+    "art/room_side_table/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+    "art/room_side_table/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+    "art/room_side_table/iterations/v008/render-runs/run-001/asset-interior-oblique.png",
+    "art/room_side_table/iterations/v008/render-runs/run-001/asset-profile.png",
+    "art/room_side_table/iterations/v008/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "visual_gate": {
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "pass": false,
+      "evidence": "Side table v008 still reads as simplified game furniture beside its approved Visual Director target."
+    },
+    "close_inspection": {
+      "answer": "No",
+      "pass": false,
+      "evidence": "The registered detail view for Side table v008 exposes missing target craftsmanship and remaining surface or hardware defects."
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "Side table v008 pixel review: Side table v008 keeps a plain top edge and lightly tapered legs rather than the target\u2019s rounded edge and turned profiles.",
+        "pass": false,
+        "evidence_refs": [
+          "art/room_side_table/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v008/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "joins": {
+        "evidence": "Side table v008 pixel review: The v008 legs meet the apron and shelf with simple blocks, without the target\u2019s shaped support transitions.",
+        "pass": false,
+        "evidence_refs": [
+          "art/room_side_table/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v008/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "thickness": {
+        "evidence": "Side table v008 pixel review: The v008 top, apron, drawer face and lower shelf retain adequate thickness in the three-quarter view.",
+        "pass": true,
+        "evidence_refs": [
+          "art/room_side_table/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v008/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "hardware": {
+        "evidence": "Side table v008 pixel review: The v008 drawer has a small plain pull rather than the target\u2019s more substantial fitted cup hardware.",
+        "pass": false,
+        "evidence_refs": [
+          "art/room_side_table/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v008/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "material_response": {
+        "evidence": "Side table v008 pixel review: The v008 finish is calmer than v007 but remains smooth and visually uniform across top and legs.",
+        "pass": false,
+        "evidence_refs": [
+          "art/room_side_table/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v008/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "surface_variation": {
+        "evidence": "Side table v008 pixel review: The joined top boards show a seam, but the grain and leg figure do not approach the target\u2019s varied timber.",
+        "pass": false,
+        "evidence_refs": [
+          "art/room_side_table/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v008/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "manufacturing_detail": {
+        "evidence": "Side table v008 pixel review: The v008 close view lacks the target\u2019s pronounced turned beads, shaped apron and crafted leg-to-shelf transitions.",
+        "pass": false,
+        "evidence_refs": [
+          "art/room_side_table/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v008/render-runs/run-001/asset-detail.png"
+        ]
+      }
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "pass": null,
+      "evidence": "The ArtBrief has no source photograph; judge this candidate against its approved Visual Director target."
+    },
+    "style_flags": {
+      "low_poly": false,
+      "blocky_geometry": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "materially_flat": true,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "primary_causes": [
+      "geometry_loss",
+      "material_generation",
+      "proportion_drift"
+    ],
+    "lost_visual_information": [
+      "The legs remain mostly straight and do not show the approved turned profile.",
+      "The apron and single drawer face are simple and shallow.",
+      "The source GLB depth is 0.02 inches over, although runtime normalizes it to the RoomDefinition envelope."
+    ],
+    "preserved_components": [
+      "Side table v008 retains its recognizable furniture function and room placement.",
+      "The candidate remains review-only; RoomDefinitions, navigation, collision, citizen behavior and gameplay geometry are unchanged."
+    ],
+    "corrective_action": "This third-strategy episode is exhausted. If reopened later, use a clearly turned leg silhouette with visible bead and cove profiles, shape the apron, deepen the drawer joinery and export inside the exact 20 x 20 x 17-inch envelope."
+  }
+}

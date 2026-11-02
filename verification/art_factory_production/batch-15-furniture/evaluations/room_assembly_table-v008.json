@@ -1,0 +1,170 @@
+{
+  "candidate_id": "room_assembly_table-v008",
+  "created_at_utc": "2026-11-02T10:19:37+00:00",
+  "decision": "continue",
+  "incumbent_candidate_id": "room_assembly_table-v007",
+  "incumbent_comparison_result": "better",
+  "incumbent_comparison": "Compared with v007, v008 removes the strongest looping grain and builds the top from separate boards with clearer seams and dog holes. It still lacks the approved table\u2019s readable end vise and substantial fitted joins.",
+  "scores": {
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "proportion": 5,
+    "geometric_detail": 3,
+    "material_realism": 3,
+    "surface_variation": 3,
+    "close_up_quality": 2,
+    "gameplay_readability": 4,
+    "scale_fidelity": 5,
+    "art_direction_fit": 3,
+    "technical_integration": 5
+  },
+  "observations": {
+    "semantic_recognizability": "The wide perforated top, drawers, leg frame and shelf make v008 clearly an assembly table in Room B.",
+    "silhouette_quality": "The tabletop and framed base match the furniture category, but the plain rails and square legs miss the target\u2019s crafted bench profile.",
+    "proportion": "The imported candidate measures exactly 42 x 24 x 32 inches, matching the authoritative brief and Room B fixture.",
+    "geometric_detail": "Separate top planks and dog holes are visible, but the target\u2019s end vise, fitted drawers and joinery are not constructed at comparable detail.",
+    "material_realism": "The wood is calmer than v007\u2019s broad bands but still has a smooth, even procedural finish without convincing board-to-board character.",
+    "surface_variation": "Top seams improve board separation, while the faint grain remains repetitive and low contrast in the detail view.",
+    "close_up_quality": "The close capture shows a small drawer and simple frame; target hardware and end-vise parts are absent or too shallow to read.",
+    "gameplay_readability": "The board-built top and frame remain identifiable at gameplay distance, though no working vise feature reads there.",
+    "scale_fidelity": "Godot reports exact 42 x 24 x 32-inch bounds and the review render matches the Room B fixture scale.",
+    "art_direction_fit": "The separate-board top moves toward the approved target, but the candidate still lacks its functional vise detail and handcrafted timber construction.",
+    "technical_integration": "Godot 4.7.2 imports the 6-mesh, 20,760-triangle GLB without issues and loads it in the review-only showcase."
+  },
+  "hard_fail_reasons": [
+    "The production views remain visibly simpler than the approved assembly-table target and fail the craftsmanship gate.",
+    "The target\u2019s functional end vise and fitted joinery do not transfer into the candidate."
+  ],
+  "defects": [
+    "No end vise assembly is legible in the close render.",
+    "Leg-to-apron joins and drawer construction remain shallow rectangular forms.",
+    "The calmer finish is still too uniform to suggest individual boards."
+  ],
+  "likely_causes": [
+    "geometry_loss",
+    "material_generation",
+    "uv_mapping"
+  ],
+  "next_action_hypothesis": "This third-strategy episode is exhausted. If reopened later, author a readable end vise with jaws and screw hardware, deepen the drawer cheeks and apron joins, and add restrained but varied board-aligned wood response.",
+  "render_evidence": [
+    "art/room_assembly_table/iterations/v008/render-runs/run-001/room-scale.png",
+    "art/room_assembly_table/iterations/v008/render-runs/run-001/room-scale-opposite-angle.png",
+    "art/room_assembly_table/iterations/v008/render-runs/run-001/settlement-scale.png",
+    "art/room_assembly_table/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+    "art/room_assembly_table/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+    "art/room_assembly_table/iterations/v008/render-runs/run-001/asset-interior-oblique.png",
+    "art/room_assembly_table/iterations/v008/render-runs/run-001/asset-profile.png",
+    "art/room_assembly_table/iterations/v008/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "visual_gate": {
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "pass": false,
+      "evidence": "Assembly table v008 still reads as simplified game furniture beside its approved Visual Director target."
+    },
+    "close_inspection": {
+      "answer": "No",
+      "pass": false,
+      "evidence": "The registered detail view for Assembly table v008 exposes missing target craftsmanship and remaining surface or hardware defects."
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "Assembly table v008 pixel review: Assembly table v008 keeps the top and legs as plain squared forms; the approved target shows shaped edges and eased transitions.",
+        "pass": false,
+        "evidence_refs": [
+          "art/room_assembly_table/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_assembly_table/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+          "art/room_assembly_table/iterations/v008/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "joins": {
+        "evidence": "Assembly table v008 pixel review: The v008 frame members meet as simple rectangular rails without the target\u2019s visible fitted joints or end-vise construction.",
+        "pass": false,
+        "evidence_refs": [
+          "art/room_assembly_table/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_assembly_table/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+          "art/room_assembly_table/iterations/v008/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "thickness": {
+        "evidence": "Assembly table v008 pixel review: The v008 top, drawer apron and leg frame retain believable substantial thickness in its production views.",
+        "pass": true,
+        "evidence_refs": [
+          "art/room_assembly_table/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_assembly_table/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+          "art/room_assembly_table/iterations/v008/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "hardware": {
+        "evidence": "Assembly table v008 pixel review: The v008 close view has no readable end vise, screw handle or substantial bench hardware from the approved design.",
+        "pass": false,
+        "evidence_refs": [
+          "art/room_assembly_table/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_assembly_table/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+          "art/room_assembly_table/iterations/v008/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "material_response": {
+        "evidence": "Assembly table v008 pixel review: The v008 surface is calmer than v007 but still reads as a uniform smooth finish across adjacent boards.",
+        "pass": false,
+        "evidence_refs": [
+          "art/room_assembly_table/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_assembly_table/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+          "art/room_assembly_table/iterations/v008/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "surface_variation": {
+        "evidence": "Assembly table v008 pixel review: Separate board seams are visible on v008, but the grain lacks the target\u2019s irregular board-specific figure.",
+        "pass": false,
+        "evidence_refs": [
+          "art/room_assembly_table/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_assembly_table/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+          "art/room_assembly_table/iterations/v008/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "manufacturing_detail": {
+        "evidence": "Assembly table v008 pixel review: The v008 detail view does not show fitted vise parts, substantial drawer cheeks or leg-to-apron joinery.",
+        "pass": false,
+        "evidence_refs": [
+          "art/room_assembly_table/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_assembly_table/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+          "art/room_assembly_table/iterations/v008/render-runs/run-001/asset-detail.png"
+        ]
+      }
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "pass": null,
+      "evidence": "The ArtBrief has no source photograph; judge this candidate against its approved Visual Director target."
+    },
+    "style_flags": {
+      "low_poly": false,
+      "blocky_geometry": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "materially_flat": true,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "primary_causes": [
+      "geometry_loss",
+      "material_generation",
+      "uv_mapping"
+    ],
+    "lost_visual_information": [
+      "No end vise assembly is legible in the close render.",
+      "Leg-to-apron joins and drawer construction remain shallow rectangular forms.",
+      "The calmer finish is still too uniform to suggest individual boards."
+    ],
+    "preserved_components": [
+      "Assembly table v008 retains its recognizable furniture function and room placement.",
+      "The candidate remains review-only; RoomDefinitions, navigation, collision, citizen behavior and gameplay geometry are unchanged."
+    ],
+    "corrective_action": "This third-strategy episode is exhausted. If reopened later, author a readable end vise with jaws and screw hardware, deepen the drawer cheeks and apron joins, and add restrained but varied board-aligned wood response."
+  }
+}

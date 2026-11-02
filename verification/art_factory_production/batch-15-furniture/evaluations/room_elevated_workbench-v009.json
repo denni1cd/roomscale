@@ -1,0 +1,170 @@
+{
+  "candidate_id": "room_elevated_workbench-v009",
+  "created_at_utc": "2026-11-02T10:19:37+00:00",
+  "decision": "continue",
+  "incumbent_candidate_id": "room_elevated_workbench-v008",
+  "incumbent_comparison_result": "better",
+  "incumbent_comparison": "Compared with v008, v009 replaces broad looping grain with a calmer wood finish and exposes separate top boards with readable dog holes. It remains a simplified bench: the large screw vise, visible joinery and target drawer proportions are missing. Runtime normalizes its raw 30.12-inch depth to RoomDefinition\u2019s 30 inches, though the generated mesh itself exceeds the brief.",
+  "scores": {
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "proportion": 4,
+    "geometric_detail": 3,
+    "material_realism": 3,
+    "surface_variation": 3,
+    "close_up_quality": 2,
+    "gameplay_readability": 4,
+    "scale_fidelity": 5,
+    "art_direction_fit": 3,
+    "technical_integration": 5
+  },
+  "observations": {
+    "semantic_recognizability": "The wide dog-hole top, front drawer bank, legs and stretchers make this clearly a woodworking bench in the Room B captures.",
+    "silhouette_quality": "The broad top and four-leg frame read at room distance, but the plain square beams lack the shaped shoulder and keyed joinery in the approved target.",
+    "proportion": "The generated GLB is 58 x 36 x 30.12 inches against a 58 x 36 x 30-inch target. RoomScale normalizes it to the authoritative 58 x 36 x 30-inch fixture; the raw overshoot remains in the asset.",
+    "geometric_detail": "Five separate top boards and dog holes are visible, but the target\u2019s screw vise, fitted cheeks, end-grain keys and articulated drawer details are absent.",
+    "material_realism": "The calmer finish is better than v008\u2019s broad waves, yet the close render remains uniformly smooth and reads more like a clean procedural wood surface than crafted oak.",
+    "surface_variation": "Board seams help separate the top, but the grain remains faint and evenly distributed across the broad surfaces.",
+    "close_up_quality": "The detail view exposes small drawer pulls, a flat dark vise plate and simple leg transitions instead of the target\u2019s prominent metal screw hub, cup pulls and joinery.",
+    "gameplay_readability": "The tabletop, drawer bank and four-leg stance remain legible at gameplay distance; small fittings do not.",
+    "scale_fidelity": "Runtime normalization fits the 58 x 36 x 30-inch RoomDefinition envelope, although the unnormalized generated depth is 0.12 inches over.",
+    "art_direction_fit": "The candidate keeps the target\u2019s woodworking-bench category and board-built top direction but misses its carved construction, metal vise assembly and richer timber figure.",
+    "technical_integration": "Godot 4.7.2 imports the 7-mesh, 28,688-triangle GLB without reported issues and resolves it only through the review showcase registry."
+  },
+  "hard_fail_reasons": [
+    "The production views remain visibly simpler than the approved workbench target and fail the craftsmanship gate.",
+    "The target vise assembly and fitted joins are absent at close and gameplay distances."
+  ],
+  "defects": [
+    "The screw vise is reduced to a dark plate without a readable hub or handle.",
+    "Drawer fronts and lower frame remain shallow, square forms without the target joinery.",
+    "The generated mesh depth is 30.12 inches, then runtime-normalized to the 30-inch RoomDefinition envelope."
+  ],
+  "likely_causes": [
+    "geometry_loss",
+    "material_generation",
+    "proportion_drift"
+  ],
+  "next_action_hypothesis": "This third-strategy episode is exhausted. If reopened in a later pass, build a full screw vise and drawer joinery as legible geometry, add shaped shoulder transitions, and export the source mesh inside the exact 58 x 36 x 30-inch envelope.",
+  "render_evidence": [
+    "art/room_elevated_workbench/iterations/v009/render-runs/run-003/room-scale.png",
+    "art/room_elevated_workbench/iterations/v009/render-runs/run-003/room-scale-opposite-angle.png",
+    "art/room_elevated_workbench/iterations/v009/render-runs/run-003/settlement-scale.png",
+    "art/room_elevated_workbench/iterations/v009/render-runs/run-003/asset-gameplay-distance.png",
+    "art/room_elevated_workbench/iterations/v009/render-runs/run-003/asset-three-quarter.png",
+    "art/room_elevated_workbench/iterations/v009/render-runs/run-003/asset-interior-oblique.png",
+    "art/room_elevated_workbench/iterations/v009/render-runs/run-003/asset-profile.png",
+    "art/room_elevated_workbench/iterations/v009/render-runs/run-003/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "visual_gate": {
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "pass": false,
+      "evidence": "Elevated workbench v009 still reads as simplified game furniture beside its approved Visual Director target."
+    },
+    "close_inspection": {
+      "answer": "No",
+      "pass": false,
+      "evidence": "The registered detail view for Elevated workbench v009 exposes missing target craftsmanship and remaining surface or hardware defects."
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "Elevated workbench v009 pixel review: The broad top and square legs retain hard, plain outlines in the v009 three-quarter and detail views; the target has softened, shaped shoulders.",
+        "pass": false,
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v009/render-runs/run-003/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v009/render-runs/run-003/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v009/render-runs/run-003/asset-detail.png"
+        ]
+      },
+      "joins": {
+        "evidence": "Elevated workbench v009 pixel review: The v009 leg-to-apron transitions are simple blocks without the target\u2019s visible keyed corners or through-tenon construction.",
+        "pass": false,
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v009/render-runs/run-003/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v009/render-runs/run-003/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v009/render-runs/run-003/asset-detail.png"
+        ]
+      },
+      "thickness": {
+        "evidence": "Elevated workbench v009 pixel review: The v009 top, legs and lower stretchers retain substantial thickness in gameplay and three-quarter views.",
+        "pass": true,
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v009/render-runs/run-003/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v009/render-runs/run-003/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v009/render-runs/run-003/asset-detail.png"
+        ]
+      },
+      "hardware": {
+        "evidence": "Elevated workbench v009 pixel review: The v009 vise appears as a small dark plate without a screw hub or handle, and its drawer pulls are tiny against the approved target.",
+        "pass": false,
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v009/render-runs/run-003/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v009/render-runs/run-003/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v009/render-runs/run-003/asset-detail.png"
+        ]
+      },
+      "material_response": {
+        "evidence": "Elevated workbench v009 pixel review: The new v009 finish removes v008\u2019s large waves but remains smooth and uniform, with little separation between adjacent boards.",
+        "pass": false,
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v009/render-runs/run-003/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v009/render-runs/run-003/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v009/render-runs/run-003/asset-detail.png"
+        ]
+      },
+      "surface_variation": {
+        "evidence": "Elevated workbench v009 pixel review: The v009 boards show seams and dog holes, but their faint, even grain does not approach the target\u2019s varied board-aligned figure.",
+        "pass": false,
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v009/render-runs/run-003/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v009/render-runs/run-003/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v009/render-runs/run-003/asset-detail.png"
+        ]
+      },
+      "manufacturing_detail": {
+        "evidence": "Elevated workbench v009 pixel review: The v009 detail view lacks the target\u2019s legible vise assembly, fitted cheeks, drawer joinery and end-grain keys.",
+        "pass": false,
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v009/render-runs/run-003/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v009/render-runs/run-003/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v009/render-runs/run-003/asset-detail.png"
+        ]
+      }
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "pass": null,
+      "evidence": "The ArtBrief has no source photograph; judge this candidate against its approved Visual Director target."
+    },
+    "style_flags": {
+      "low_poly": false,
+      "blocky_geometry": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "materially_flat": true,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "primary_causes": [
+      "geometry_loss",
+      "material_generation",
+      "proportion_drift"
+    ],
+    "lost_visual_information": [
+      "The screw vise is reduced to a dark plate without a readable hub or handle.",
+      "Drawer fronts and lower frame remain shallow, square forms without the target joinery.",
+      "The generated mesh depth is 30.12 inches, then runtime-normalized to the 30-inch RoomDefinition envelope."
+    ],
+    "preserved_components": [
+      "Elevated workbench v009 retains its recognizable furniture function and room placement.",
+      "The candidate remains review-only; RoomDefinitions, navigation, collision, citizen behavior and gameplay geometry are unchanged."
+    ],
+    "corrective_action": "This third-strategy episode is exhausted. If reopened in a later pass, build a full screw vise and drawer joinery as legible geometry, add shaped shoulder transitions, and export the source mesh inside the exact 58 x 36 x 30-inch envelope."
+  }
+}

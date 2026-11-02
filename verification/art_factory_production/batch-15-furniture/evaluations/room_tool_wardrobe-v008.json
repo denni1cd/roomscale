@@ -1,0 +1,170 @@
+{
+  "candidate_id": "room_tool_wardrobe-v008",
+  "created_at_utc": "2026-11-02T10:19:37+00:00",
+  "decision": "continue",
+  "incumbent_candidate_id": "room_tool_wardrobe-v007",
+  "incumbent_comparison_result": "better",
+  "incumbent_comparison": "Compared with v007, v008 has a wider center reveal and calmer wood surfaces, so the shelves are easier to see. The doors still cover most of the bay and the approved target\u2019s organized tools, fitted drawers and brass fittings are absent.",
+  "scores": {
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "proportion": 4,
+    "geometric_detail": 2,
+    "material_realism": 3,
+    "surface_variation": 3,
+    "close_up_quality": 2,
+    "gameplay_readability": 3,
+    "scale_fidelity": 4,
+    "art_direction_fit": 2,
+    "technical_integration": 5
+  },
+  "observations": {
+    "semantic_recognizability": "The tall paired-door cabinet and internal shelving read as a tool wardrobe, although the visible shelves are empty.",
+    "silhouette_quality": "The tall carcass and crown are present, but plain slabs and straight side walls miss the target\u2019s shaped crown, base and open door profile.",
+    "proportion": "The GLB is 42 x 69.9 x 21.511 inches against a 42 x 70 x 22-inch target; runtime normalization fits the Room B fixture.",
+    "geometric_detail": "Shelves and paired doors are present, but the approved target\u2019s fitted tools, drawers, tool holders and internal dividers are absent.",
+    "material_realism": "The calmer wood avoids the strongest v007 waves, but surfaces remain smooth and uniform compared with the target\u2019s rich oak.",
+    "surface_variation": "The new finish reduces repeating bands but offers little distinct grain across doors, carcass and shelves.",
+    "close_up_quality": "The interior-oblique and detail views show an empty shelf bay behind mostly closed door leaves, without organized tools or readable hardware.",
+    "gameplay_readability": "The tall cabinet silhouette reads in Room B, while its contents and narrow center opening disappear at gameplay distance.",
+    "scale_fidelity": "Runtime normalization fits the 42 x 70 x 22-inch RoomDefinition envelope; raw bounds are slightly short in height and depth.",
+    "art_direction_fit": "The candidate preserves a tall tool cabinet category but omits the defining fitted tool display, drawers and elaborate interior of the target.",
+    "technical_integration": "Godot 4.7.2 imports the 5-mesh, 21,964-triangle GLB without issues and loads it through the review-only showcase."
+  },
+  "hard_fail_reasons": [
+    "The production views remain visibly simpler than the approved tool-wardrobe target and fail the craftsmanship gate.",
+    "The candidate omits the target\u2019s defining organized tools and fitted interior."
+  ],
+  "defects": [
+    "The doors remain mostly closed and conceal the wardrobe interior.",
+    "The shelves are empty; target tools, tool holders and drawers are missing.",
+    "The timber surface and cabinet profiles remain simple and uniform."
+  ],
+  "likely_causes": [
+    "geometry_loss",
+    "material_generation",
+    "source_concept_ambiguity"
+  ],
+  "next_action_hypothesis": "This third-strategy episode is exhausted. If reopened later, keep both leaves visibly open, construct the target\u2019s fitted tool assortment and drawers, and shape the crown, base and door hardware as separate readable details.",
+  "render_evidence": [
+    "art/room_tool_wardrobe/iterations/v008/render-runs/run-001/room-scale.png",
+    "art/room_tool_wardrobe/iterations/v008/render-runs/run-001/room-scale-opposite-angle.png",
+    "art/room_tool_wardrobe/iterations/v008/render-runs/run-001/settlement-scale.png",
+    "art/room_tool_wardrobe/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+    "art/room_tool_wardrobe/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+    "art/room_tool_wardrobe/iterations/v008/render-runs/run-001/asset-interior-oblique.png",
+    "art/room_tool_wardrobe/iterations/v008/render-runs/run-001/asset-profile.png",
+    "art/room_tool_wardrobe/iterations/v008/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "visual_gate": {
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "pass": false,
+      "evidence": "Tool wardrobe v008 still reads as simplified game furniture beside its approved Visual Director target."
+    },
+    "close_inspection": {
+      "answer": "No",
+      "pass": false,
+      "evidence": "The registered detail view for Tool wardrobe v008 exposes missing target craftsmanship and remaining surface or hardware defects."
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "Tool wardrobe v008 pixel review: Tool wardrobe v008 retains straight slab doors, a simple crown and an unshaped base instead of the target\u2019s detailed profiles.",
+        "pass": false,
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v008/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "joins": {
+        "evidence": "Tool wardrobe v008 pixel review: The v008 carcass and shelf edges show no legible fitted frame construction or crafted door joins.",
+        "pass": false,
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v008/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "thickness": {
+        "evidence": "Tool wardrobe v008 pixel review: The v008 carcass, shelves and paired leaves retain substantial thickness in the three-quarter capture.",
+        "pass": true,
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v008/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "hardware": {
+        "evidence": "Tool wardrobe v008 pixel review: The v008 door hinges and handles are small and faint, and no target-style fitted tool hardware appears inside.",
+        "pass": false,
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v008/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "material_response": {
+        "evidence": "Tool wardrobe v008 pixel review: The v008 finish is calmer than v007 but remains even across the door faces and carcass.",
+        "pass": false,
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v008/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "surface_variation": {
+        "evidence": "Tool wardrobe v008 pixel review: The v008 doors avoid the strongest repeating waves, yet their low-contrast grain remains uniform across each large panel.",
+        "pass": false,
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v008/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "manufacturing_detail": {
+        "evidence": "Tool wardrobe v008 pixel review: The v008 interior lacks the target\u2019s chisel racks, hand planes, drawer boxes and organized tool holders.",
+        "pass": false,
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v008/render-runs/run-001/asset-detail.png"
+        ]
+      }
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "pass": null,
+      "evidence": "The ArtBrief has no source photograph; judge this candidate against its approved Visual Director target."
+    },
+    "style_flags": {
+      "low_poly": false,
+      "blocky_geometry": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "materially_flat": true,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "primary_causes": [
+      "geometry_loss",
+      "material_generation",
+      "source_concept_ambiguity"
+    ],
+    "lost_visual_information": [
+      "The doors remain mostly closed and conceal the wardrobe interior.",
+      "The shelves are empty; target tools, tool holders and drawers are missing.",
+      "The timber surface and cabinet profiles remain simple and uniform."
+    ],
+    "preserved_components": [
+      "Tool wardrobe v008 retains its recognizable furniture function and room placement.",
+      "The candidate remains review-only; RoomDefinitions, navigation, collision, citizen behavior and gameplay geometry are unchanged."
+    ],
+    "corrective_action": "This third-strategy episode is exhausted. If reopened later, keep both leaves visibly open, construct the target\u2019s fitted tool assortment and drawers, and shape the crown, base and door hardware as separate readable details."
+  }
+}

@@ -1,0 +1,293 @@
+{
+  "asset_files": [
+    "art/room_floor_cabinet/iterations/v008/generated/asset.glb",
+    "art/room_floor_cabinet/iterations/v008/generated/generation-record.json"
+  ],
+  "asset_id": "room_floor_cabinet",
+  "candidate_id": "room_floor_cabinet-v008",
+  "created_at_utc": "2026-11-02T10:05:05+00:00",
+  "evaluation_file": "art/room_floor_cabinet/iterations/v008/evaluation.json",
+  "generation_attempts": [
+    {
+      "command": [
+        "python",
+        "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/scripts/art_factory/generators/visual_director_furniture_blender.py"
+      ],
+      "execution_number": 1,
+      "exit_code": 0,
+      "log_file": "art/room_floor_cabinet/iterations/v008/generation.log",
+      "output_dir": "art/room_floor_cabinet/iterations/v008/generated",
+      "recorded_at_utc": "2026-11-02T10:05:06+00:00",
+      "status": "pass"
+    }
+  ],
+  "generation_result": {
+    "command": [
+      "python",
+      "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/scripts/art_factory/generators/visual_director_furniture_blender.py"
+    ],
+    "execution_number": 1,
+    "exit_code": 0,
+    "log_file": "art/room_floor_cabinet/iterations/v008/generation.log",
+    "output_dir": "art/room_floor_cabinet/iterations/v008/generated",
+    "recorded_at_utc": "2026-11-02T10:05:06+00:00",
+    "status": "pass"
+  },
+  "parent_candidate_id": "room_floor_cabinet-v007",
+  "recipe_file": "art/room_floor_cabinet/iterations/v008/recipe.json",
+  "renders": [
+    {
+      "asset_id": "room_floor_cabinet",
+      "camera": {
+        "actual_camera_position": "(0.0, 272.0435, 203.1683)",
+        "distance_inches": 330.0,
+        "focus": "(0.0, 12.0, 0.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 52.0,
+        "yaw_radians": 0.0
+      },
+      "candidate_id": "room_floor_cabinet-v008",
+      "captured_at_utc": "2026-11-02T10:07:20+00:00",
+      "draw_calls": 908.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 2.0,
+      "path": "art/room_floor_cabinet/iterations/v008/render-runs/run-001/room-scale.png",
+      "phase": "room-scale",
+      "primitives": 568922.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_b",
+      "sha256": "3a14bf08c349f28803910e4d56e0c39f791d814b83fc17d514f699aae7612e95"
+    },
+    {
+      "asset_id": "room_floor_cabinet",
+      "camera": {
+        "actual_camera_position": "(203.1683, 272.0435, -0.000009)",
+        "distance_inches": 330.0,
+        "focus": "(0.0, 12.0, 0.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 52.0,
+        "yaw_radians": 1.5707963267949
+      },
+      "candidate_id": "room_floor_cabinet-v008",
+      "captured_at_utc": "2026-11-02T10:07:20+00:00",
+      "draw_calls": 908.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 2.0,
+      "path": "art/room_floor_cabinet/iterations/v008/render-runs/run-001/room-scale-opposite-angle.png",
+      "phase": "room-scale-opposite-angle",
+      "primitives": 567114.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_b",
+      "sha256": "bb42f98ed8db3652ad9a39c113254fad41669628bab6b55f4f2a0e0311417642"
+    },
+    {
+      "asset_id": "room_floor_cabinet",
+      "camera": {
+        "actual_camera_position": "(-11.23315, 46.82436, 101.0827)",
+        "distance_inches": 64.0,
+        "focus": "(-23.0, 4.0, 55.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 42.0,
+        "yaw_radians": 0.25
+      },
+      "candidate_id": "room_floor_cabinet-v008",
+      "captured_at_utc": "2026-11-02T10:07:20+00:00",
+      "draw_calls": 1090.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 40.0,
+      "path": "art/room_floor_cabinet/iterations/v008/render-runs/run-001/settlement-scale.png",
+      "phase": "settlement-scale",
+      "primitives": 705082.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_b",
+      "sha256": "545d985f9fe763c41f3f0af87541ea429837198f43a830180a88a55fe93ecd64"
+    },
+    {
+      "asset_id": "room_floor_cabinet",
+      "camera": {
+        "actual_camera_position": "(74.83351, 40.54618, 54.99117)",
+        "distance_inches": 64.0,
+        "focus": "(42.0, 10.5, 9.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(639.9999, 360.0)",
+        "tilt_degrees": 28.0,
+        "yaw_radians": 0.62
+      },
+      "candidate_id": "room_floor_cabinet-v008",
+      "captured_at_utc": "2026-11-02T10:07:20+00:00",
+      "draw_calls": 650.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 40.0,
+      "path": "art/room_floor_cabinet/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+      "phase": "asset-gameplay-distance",
+      "primitives": 339136.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_b",
+      "sha256": "94cefe454e86aabd88c5b391647ce505481825c44814d94d7ea101e7de406a18"
+    },
+    {
+      "asset_id": "room_floor_cabinet",
+      "camera": {
+        "actual_camera_position": "(70.66331, 32.46378, 49.14981)",
+        "distance_inches": 54.0,
+        "focus": "(42.0, 10.5, 9.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 24.0,
+        "yaw_radians": 0.62
+      },
+      "candidate_id": "room_floor_cabinet-v008",
+      "captured_at_utc": "2026-11-02T10:07:20+00:00",
+      "draw_calls": 543.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 40.0,
+      "path": "art/room_floor_cabinet/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+      "phase": "asset-three-quarter",
+      "primitives": 298586.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_b",
+      "sha256": "415a41837297bc44e5612aa93c7b5fd6748e82dcac0994c3beaf0a96e53de663"
+    },
+    {
+      "asset_id": "room_floor_cabinet",
+      "camera": {
+        "actual_camera_position": "(54.2048, 32.46378, 56.79786)",
+        "distance_inches": 54.0,
+        "focus": "(42.0, 10.5, 9.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 24.0,
+        "yaw_radians": 0.25
+      },
+      "candidate_id": "room_floor_cabinet-v008",
+      "captured_at_utc": "2026-11-02T10:07:20+00:00",
+      "draw_calls": 266.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 40.0,
+      "path": "art/room_floor_cabinet/iterations/v008/render-runs/run-001/asset-interior-oblique.png",
+      "phase": "asset-interior-oblique",
+      "primitives": 309836.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_b",
+      "sha256": "9be8820acc92ffc1be5094cbbb52c696c2dd6add0f79c727d68dbefee820d7ed"
+    },
+    {
+      "asset_id": "room_floor_cabinet",
+      "camera": {
+        "actual_camera_position": "(47.90558, 32.46378, 57.9767)",
+        "distance_inches": 54.0,
+        "focus": "(42.0, 10.5, 9.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 24.0,
+        "yaw_radians": 0.12
+      },
+      "candidate_id": "room_floor_cabinet-v008",
+      "captured_at_utc": "2026-11-02T10:07:20+00:00",
+      "draw_calls": 182.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 20.0,
+      "path": "art/room_floor_cabinet/iterations/v008/render-runs/run-001/asset-profile.png",
+      "phase": "asset-profile",
+      "primitives": 208352.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_b",
+      "sha256": "bc36f0e86f9368b636b829579d3946912694ffa3d9dc3e08602752d0d9c439d3"
+    },
+    {
+      "asset_id": "room_floor_cabinet",
+      "camera": {
+        "actual_camera_position": "(57.902, 21.68906, 39.54489)",
+        "distance_inches": 36.2085504150391,
+        "focus": "(42.0, 10.5, 9.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0001, 360.0)",
+        "tilt_degrees": 18.0,
+        "yaw_radians": 0.48
+      },
+      "candidate_id": "room_floor_cabinet-v008",
+      "captured_at_utc": "2026-11-02T10:07:20+00:00",
+      "draw_calls": 102.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 20.0,
+      "path": "art/room_floor_cabinet/iterations/v008/render-runs/run-001/asset-detail.png",
+      "phase": "asset-detail",
+      "primitives": 292036.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_b",
+      "sha256": "5e220ef5cfd34090b644766f6e1440f55a28778dc4b0a8c55478c82ac98391ca"
+    }
+  ],
+  "schema_version": 1,
+  "status": "challenger",
+  "technical_validation": {
+    "asset_path": "res://art/room_floor_cabinet/iterations/v008/generated/asset.glb",
+    "bounds": {
+      "position": [
+        -13.0,
+        0.0,
+        -12.0
+      ],
+      "size": [
+        26.0,
+        21.0,
+        24.0
+      ]
+    },
+    "engine": "4.7.2-stable (official)",
+    "import_exit_code": 0,
+    "issues": [],
+    "log": "art/room_floor_cabinet/iterations/v008/technical-validation.log",
+    "mesh_count": 4,
+    "recorded_at_utc": "2026-11-02T10:05:36+00:00",
+    "report": "art/room_floor_cabinet/iterations/v008/technical-validation.json",
+    "status": "pass",
+    "surface_count": 4,
+    "triangle_count": 12612,
+    "validation_exit_code": 0
+  },
+  "version": 8,
+  "visual_director_provenance": {
+    "approved_visual_target": {
+      "approval": "pass",
+      "approved_at_utc": "2026-11-02T07:04:21+00:00",
+      "concept_id": "room_floor_cabinet-family-r03",
+      "path": "art/room_floor_cabinet/visual_director/round-03/approved-target-r03.png",
+      "review_method": "pixel inspection; review evidence recorded by Luna",
+      "review_path": "art/room_floor_cabinet/visual_director/round-03/pixel-review-03.md",
+      "sha256": "9326d847276e3431fb111736cc9341459654524eb5a1bbab70c34b1577d92c04"
+    },
+    "case_file": "art/room_floor_cabinet/visual_director/state.json",
+    "policy": {
+      "inputs": {
+        "category": "room_furniture",
+        "current_quality": "prototype",
+        "faction_defining": false,
+        "inferred": [],
+        "priority_tier": 1,
+        "screen_space_importance": 4,
+        "source_images_present": false,
+        "source_photo_required": false
+      },
+      "reasons": [
+        "Tier 1 scene-defining asset",
+        "high screen-space importance"
+      ],
+      "required": true
+    },
+    "status": "approved",
+    "strategy": "alternate_strategy",
+    "target_episode_attempt": 3
+  }
+}

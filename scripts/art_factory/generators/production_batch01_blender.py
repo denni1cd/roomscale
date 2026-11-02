@@ -678,6 +678,22 @@ def pbr_material(
         ray = np.sin((x * 8.5 + 0.04 * y) * math.tau + np.sin(y * 2.4 * math.tau) * 0.12)
         height = fiber * 0.035 + ray * 0.018 + random_field * 0.014
         variation = fiber * 0.052 + ray * 0.026 + random_field * 0.010
+    elif grain == "furniture_oak_calm":
+        drift = 0.035 * np.sin(y * 2.0 * math.tau) + 0.014 * np.sin(y * 7.0 * math.tau)
+        fiber = np.sin((x * 15.0 + drift + 0.004 * np.sin(y * 19.0 * math.tau)) * math.tau)
+        cathedral = np.sin(
+            (x * 2.6 + 0.07 * np.sin(y * 3.0 * math.tau)) * math.tau
+            + np.sin(y * 5.0 * math.tau) * 0.35
+        )
+        coarse = (
+            random_field
+            + np.roll(random_field, 1, axis=1)
+            + np.roll(random_field, -1, axis=1)
+            + np.roll(random_field, 2, axis=1)
+            + np.roll(random_field, -2, axis=1)
+        ) / 5.0
+        height = fiber * 0.042 + cathedral * 0.018 + coarse * 0.024
+        variation = fiber * 0.025 + cathedral * 0.027 + coarse * 0.008
     elif grain == "copper":
         height = random_field * 0.055 + np.sin(x * 40.0 + y * 23.0) * 0.035
         variation = random_field * 0.035 + np.sin(x * 16.0 + y * 24.0) * 0.035
@@ -697,7 +713,10 @@ def pbr_material(
     )
     normal /= np.maximum(np.linalg.norm(normal, axis=2, keepdims=True), 1e-6)
     normal = normal * 0.5 + 0.5
-    rough_map = np.clip(roughness + random_field * 0.025 + broad * 0.025, 0.04, 0.98)
+    if grain == "furniture_oak_calm":
+        rough_map = np.clip(roughness + random_field * 0.012 + coarse * 0.010, 0.04, 0.98)
+    else:
+        rough_map = np.clip(roughness + random_field * 0.025 + broad * 0.025, 0.04, 0.98)
     rough_rgb = np.repeat(rough_map[:, :, None], 3, axis=2)
 
     material = bpy.data.materials.new(name)
@@ -724,7 +743,9 @@ def pbr_material(
     normal_node.location = (-520, -240)
     normal_map = nodes.new("ShaderNodeNormalMap")
     normal_map.inputs["Strength"].default_value = (
-        0.18
+        0.14
+        if grain == "furniture_oak_calm"
+        else 0.18
         if grain == "bookcase_oak_fine"
         else 0.24
         if grain in {"wood", "french_oak", "stone", "fabric"}
