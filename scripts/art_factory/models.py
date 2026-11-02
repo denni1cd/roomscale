@@ -231,6 +231,7 @@ class ArtCandidate:
     created_at_utc: str
     parent_candidate_id: str = ""
     generation_result: dict[str, Any] = field(default_factory=dict)
+    generation_attempts: list[dict[str, Any]] = field(default_factory=list)
     technical_validation: dict[str, Any] = field(default_factory=dict)
     renders: list[dict[str, Any]] = field(default_factory=list)
     evaluation_file: str = ""

@@ -88,16 +88,33 @@ def dispatch_to_blender() -> int:
 
 
 def _materials(base, generation_variant=""):
-    wood_grain = "french_oak" if "_targeted" in generation_variant else "french_oak_soft"
+    if generation_variant.startswith("bookcase_household_r01_alternate"):
+        wood_grain = "bookcase_oak_fine"
+    else:
+        wood_grain = "french_oak" if "_targeted" in generation_variant else "french_oak_soft"
+    targeted_bookcase = generation_variant.startswith("bookcase_household_r01_targeted")
+    alternate_bookcase = generation_variant.startswith("bookcase_household_r01_alternate")
+    if targeted_bookcase or alternate_bookcase:
+        # The first Room A render lost the target's dark stained wood in the
+        # production light, and its softer grain did not survive at gameplay scale.
+        oak_color = (0.26, 0.145, 0.070)
+        oak_light_color = (0.34, 0.205, 0.105)
+        walnut_color = (0.105, 0.050, 0.025)
+        oak_roughness, oak_light_roughness, walnut_roughness = 0.52, 0.54, 0.56
+    else:
+        oak_color = (0.40, 0.255, 0.135)
+        oak_light_color = (0.49, 0.325, 0.185)
+        walnut_color = (0.20, 0.105, 0.052)
+        oak_roughness, oak_light_roughness, walnut_roughness = 0.43, 0.46, 0.48
     return {
         "oak": base.pbr_material(
-            "Room furniture quarter-sawn oak", (0.40, 0.255, 0.135), 0.0, 0.43, wood_grain
+            "Room furniture quarter-sawn oak", oak_color, 0.0, oak_roughness, wood_grain
         ),
         "oak_light": base.pbr_material(
-            "Room furniture light oak", (0.49, 0.325, 0.185), 0.0, 0.46, wood_grain
+            "Room furniture light oak", oak_light_color, 0.0, oak_light_roughness, wood_grain
         ),
         "walnut": base.pbr_material(
-            "Room furniture smoked walnut", (0.20, 0.105, 0.052), 0.0, 0.48, wood_grain
+            "Room furniture smoked walnut", walnut_color, 0.0, walnut_roughness, wood_grain
         ),
         "brass": base.pbr_material(
             "Room furniture aged brass", (0.53, 0.36, 0.13), 0.78, 0.29, "metal"

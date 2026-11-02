@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "method": "blender_household_bookcase_r01_alternate_fine_grain_strategy",
+  "instructions": "Apply the final alternate material strategy for the approved household bookcase target. Keep the v001 geometry, five shelf bays, books, hardware positions, and exact 32 x 63 x 17 inch envelope. Preserve v002's darker stained oak/walnut palette but replace its broad periodic waves with fine, low-contrast longitudinal fibers and subtle irregular rays. Do not introduce broad waves, repeating bands, glossy plastic response, or gameplay geometry. RoomDefinition remains authoritative for placement and gameplay.",
+  "parameters": {
+    "asset_type": "household_bookcase",
+    "generation_variant": "bookcase_household_r01_alternate_v003",
+    "outputs": [
+      "asset.glb",
+      "generation-record.json"
+    ],
+    "visual_director_strategy": "alternate_strategy",
+    "materially_different_strategy": true,
+    "visual_director_target": "art/bookcase/visual_director/round-01/candidate-bookcase-r01.png",
+    "diagnosis_ref": "bookcase-v002"
+  },
+  "source_inputs": [
+    "art/bookcase/brief.json",
+    "art/bookcase/visual_director/visual-brief-draft.json",
+    "art/bookcase/visual_director/state.json",
+    "art/bookcase/visual_director/round-01/candidate-bookcase-r01.png",
+    "art/bookcase/visual_director/round-01/pixel-review-r01.md",
+    "art/bookcase/iterations/v001/evaluation.json",
+    "art/bookcase/iterations/v002/evaluation.json",
+    "rooms/room_a.json",
+    "scripts/art_factory/generators/visual_director_furniture_blender.py",
+    "scripts/art_factory/generators/production_batch01_blender.py"
+  ],
+  "tool": "Blender-authored domestic furniture with a dedicated fine-grain material strategy",
+  "tool_version": "Blender 5.2.3 LTS",
+  "material_method": "Bookcase-only low-contrast longitudinal grain texture with irregular fine rays and a restrained matte-satin stained-oak response",
+  "deterministic_seed": 3016,
+  "generator_command": [
+    "python",
+    "{project_root}/scripts/art_factory/generators/visual_director_furniture_blender.py"
+  ],
+  "post_processing": [
+    "Import the GLB through the Art Factory and validate the exact ArtBrief envelope in Godot 4.7.2.",
+    "Capture standardized candidate-specific production renders in the authoritative Room A definition.",
+    "Inspect the same gameplay, three-quarter, interior-oblique, profile, and detail views for fine grain scale and target color balance.",
+    "Keep generated presentation meshes outside collision, navigation, selection, interaction, activity, assignment, and simulation systems."
+  ],
+  "import_configuration": {
+    "axis": "Blender X width / Y depth / Z height; glTF exporter and Godot importer convert Blender Z-up to Godot Y-up",
+    "format": "GLB with embedded PBR materials",
+    "normalization": "Validate source bounds against the exact ArtBrief envelope; RoomDefinition remains authoritative for runtime dimensions and landmarks",
+    "renderer": "gl_compatibility",
+    "units": "inches"
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "candidate_id": "bookcase-v003",
+  "created_at_utc": "2026-11-02T09:43:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "The darker palette is closer to the target, but the grain remains very evenly striped across the large side-panel fields.",
+    "Brass shelf pins and face-frame junctions are not clearly visible in the production captures.",
+    "At Room A overview scale, the darker case and sparse book groups do not create an obvious whole-scene improvement over the earlier room review render."
+  ],
+  "hard_fail_reasons": [
+    "The close-inspection gate still fails: the side-panel figure is regular and repeated rather than the approved target's more natural fine wood variation.",
+    "The craftsmanship gate still fails: shelf-pin and frame-join details are not clearly readable in the production detail, and the full-room comparison shows no obvious gameplay-distance improvement over the existing shelf presentation."
+  ],
+  "incumbent_candidate_id": "bookcase-v001",
+  "incumbent_comparison": "v003 is the strongest of the three candidates: its darker palette and finer texture improve on v001, while it avoids v002's broad waves. It still does not meet the close-craftsmanship and whole-scene improvement gates, so it remains review-only.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "The custom texture has high longitudinal frequency but still repeats with nearly uniform spacing and contrast across the normalized panel UVs.",
+    "The shelf pins and face-frame joins are modeled at a scale that does not survive the standardized gameplay and close views."
+  ],
+  "next_action_hypothesis": "Preserve v003 as the best current 3D review candidate and backlog this approved target episode at its three-strategy limit. A future pass would need a materially new target episode or geometry/material evidence that addresses irregular board-level grain and readable cabinet join details; do not create a fourth candidate under this approved target.",
+  "observations": {
+    "art_direction_fit": "The darker palette and fine grain direction move toward the approved target, but its uneven natural figure and more legible cabinet details do not fully transfer.",
+    "close_up_quality": "The close capture shows the frame and shelf construction, but the repeated grain pattern and weakly readable pin/join details keep it below the target.",
+    "gameplay_readability": "At 73 inches the object remains clearly identifiable, but its dark finish and small book groups reduce color/readability in the full Room A overview.",
+    "geometric_detail": "The production detail shows solid shelves and nosings, inset side panels, layered crown and plinth, and individually modeled book groups.",
+    "material_realism": "The dark stained oak/walnut balance is closer to the approved target, but the side-panel grain still reads as very regular parallel striping.",
+    "proportion": "The candidate preserves the approved shelf spacing and 32 x 63 x 17 inch envelope.",
+    "scale_fidelity": "Godot 4.7.2 reports 32 x 63 x 17.06 inches against the authoritative 32 x 63 x 17 inch RoomDefinition envelope.",
+    "semantic_recognizability": "The gameplay-distance and three-quarter renders read as a freestanding household bookcase with five open shelf bays.",
+    "silhouette_quality": "The case, framed side panels, crown, plinth, and feet are preserved and remain visible in the complete asset views.",
+    "surface_variation": "The broad waves are gone; fine variation is visible, though its straight repeated bands remain more uniform than the target's natural wood figure.",
+    "technical_integration": "Godot imported the GLB without issues and rendered it through the review-only registry in authoritative Room A with 50 citizens."
+  },
+  "render_evidence": [
+    "art/bookcase/iterations/v003/render-runs/run-001/asset-gameplay-distance.png",
+    "art/bookcase/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+    "art/bookcase/iterations/v003/render-runs/run-001/asset-detail.png",
+    "art/bookcase/iterations/v003/render-runs/run-001/room-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 3,
+    "gameplay_readability": 4,
+    "geometric_detail": 4,
+    "material_realism": 3,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 4,
+    "surface_variation": 3,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The detail view exposes repeated parallel grain and does not show the target's naturally varied board figure and clearly fitted construction details.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "The close detail shows softened edges on the shelf nosings, crown cap, plinth, and feet.",
+        "evidence_refs": [
+          "art/bookcase/iterations/v003/render-runs/run-001/asset-detail.png",
+          "art/bookcase/iterations/v003/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "The fitted shelf-pin geometry is too small to read clearly in the standardized close and gameplay captures.",
+        "evidence_refs": [
+          "art/bookcase/iterations/v003/render-runs/run-001/asset-detail.png",
+          "art/bookcase/iterations/v003/render-runs/run-001/asset-gameplay-distance.png"
+        ],
+        "pass": false
+      },
+      "joins": {
+        "evidence": "The side-panel frames and face stiles are present, but the production detail does not make their cabinet joins clearly legible.",
+        "evidence_refs": [
+          "art/bookcase/iterations/v003/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "The modeled shelves and panels are substantial, but their joins and fitted brass pins remain difficult to distinguish in the production detail.",
+        "evidence_refs": [
+          "art/bookcase/iterations/v003/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "The darker matte-satin brown surfaces and deeper walnut frame are closer to the approved stained-wood target than v001.",
+        "evidence_refs": [
+          "art/bookcase/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+          "art/bookcase/iterations/v003/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "surface_variation": {
+        "evidence": "Fine longitudinal lines are visible, but their even spacing and repeated appearance do not match the target's natural board-level variation.",
+        "evidence_refs": [
+          "art/bookcase/iterations/v003/render-runs/run-001/asset-detail.png",
+          "art/bookcase/iterations/v003/render-runs/run-001/asset-gameplay-distance.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "The close render shows substantial shelf boards, nosings, side panels, and layered crown and plinth construction.",
+        "evidence_refs": [
+          "art/bookcase/iterations/v003/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "evidence": "The complete Room A asset views read as a human-scale household bookcase with credible cabinet proportions and separate shelves.",
+      "pass": true
+    },
+    "photo_character": {
+      "answer": "N/A",
+      "applicable": false,
+      "evidence": "This ArtBrief has no source photograph; the approved Visual Director target supplies the appearance reference.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Backlog the target after the three allowed strategies. Preserve v003 as best current review and require a future evidenced change to grain irregularity and visible joinery before another episode is opened.",
+    "lost_visual_information": [
+      "The approved target's irregular, low-contrast wood figure still becomes evenly spaced parallel striping on the large side panels.",
+      "Small brass shelf pins, joinery at the face frame, and the fuller book group arrangement are less readable in the production render than in the approved target."
+    ],
+    "preserved_components": [
+      "The full five-bay household bookcase, framed side panels, substantial shelf boards, crown, plinth, and modeled book groups.",
+      "The approved dark stained wood direction, RoomDefinition dimensions, and separation from gameplay systems."
+    ],
+    "primary_causes": [
+      "material_generation",
+      "geometry_loss"
+    ]
+  }
+}

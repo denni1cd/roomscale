@@ -38,6 +38,11 @@ TIER_ORDER = {
     "Tier 3 — Supporting": 3,
     "Tier 4 — Low-visibility": 4,
 }
+BACKLOG_TERM_ALIASES = {
+    "computer_desk": ("desk",),
+    "elevated_workbench": ("workbench",),
+    "tool_wardrobe": ("wardrobe",),
+}
 
 SHELL_RULES: dict[str, dict[str, Any]] = {
     "room_shell_floor": {
@@ -285,6 +290,7 @@ def art_context() -> dict[str, Any]:
     catalog = load_json(ROOT / "visual/catalog.json", {}) or {}
     materials = load_json(ROOT / "visual/materials.json", {}) or {}
     art_briefs = {p.parent.name for p in (ROOT / "art").glob("*/brief.json")}
+    production_backlog_path = ROOT / "verification/art_factory_production/production-art-backlog.md"
     registry_entries = production.get("entries", {}) if isinstance(production, dict) else {}
     review_entries = review.get("entries", {}) if isinstance(review, dict) else {}
     return {
@@ -294,6 +300,9 @@ def art_context() -> dict[str, Any]:
         "catalog_defaults": catalog.get("defaults", {}) if isinstance(catalog, dict) else {},
         "materials": materials if isinstance(materials, dict) else {},
         "art_briefs": art_briefs,
+        "production_backlog": production_backlog_path.read_text(encoding="utf-8")
+        if production_backlog_path.is_file()
+        else "",
         "strict_incumbent_audit": load_json(
             ROOT / "verification/poc25/final/strict-incumbent-visual-gate-reaudit.json", {}
         )
@@ -372,10 +381,32 @@ def kind_family(kind: str, name: str) -> tuple[str, str]:
 def current_asset_state(asset_id: str, context: dict[str, Any]) -> dict[str, Any]:
     production = context["production_registry"].get(asset_id, {})
     review = context["review_registry"].get(asset_id, {})
+    visual_director = load_json(
+        ROOT / "art" / asset_id / "visual_director" / "state.json", {}
+    ) or {}
     has_brief = asset_id in context["art_briefs"]
-    exists = has_brief or bool(production) or bool(review)
-    candidate_id = str(review.get("candidate_id") or production.get("candidate_id") or "")
-    status = "best_current_review" if review else str(production.get("status", "not registered"))
+    best_3d_candidate = visual_director.get("best_3d_candidate") or {}
+    exists = has_brief or bool(production) or bool(review) or bool(best_3d_candidate)
+    candidate_id = str(
+        review.get("candidate_id")
+        or production.get("candidate_id")
+        or best_3d_candidate.get("candidate_id")
+        or ""
+    )
+    candidate_source = (
+        "legacy review registry"
+        if review
+        else "production registry"
+        if production
+        else "Visual Director best 3D candidate"
+        if best_3d_candidate
+        else None
+    )
+    status = (
+        "best_current_review"
+        if review
+        else str(production.get("status", "not registered"))
+    )
     evaluation: dict[str, Any] = {}
     candidate_match = re.search(r"-v(\d+)$", candidate_id)
     evaluation_path: Path | None = None
@@ -409,6 +440,8 @@ def current_asset_state(asset_id: str, context: dict[str, Any]) -> dict[str, Any
         "production_registry_status": str(production.get("status", "not registered")),
         "review_registry_status": status if review else "not in review registry",
         "best_current_candidate": candidate_id or None,
+        "best_current_candidate_source": candidate_source,
+        "visual_director_status": visual_director.get("status"),
         "strict_evaluation_decision": evaluation.get("decision"),
         "strict_evaluation_path": rel(evaluation_path)
         if evaluation_path is not None and evaluation_path.exists()
@@ -774,12 +807,17 @@ def inventory_rows(
                     "strict_evaluation_decision"
                 ],
                 "best_current_candidate": state["best_current_candidate"],
+                "best_current_candidate_source": state["best_current_candidate_source"],
+                "visual_director_status": state["visual_director_status"],
                 "strict_evaluation_path": state["strict_evaluation_path"],
                 "production_art_backlog_status": "covered by production-art backlog"
-                if slug(name)
-                in (ROOT / "verification/poc25/PRODUCTION_ART_BACKLOG.md")
-                .read_text(encoding="utf-8")
-                .lower()
+                if any(
+                    term in context["production_backlog"].lower()
+                    for term in (
+                        slug(name).replace("_", " "),
+                        *BACKLOG_TERM_ALIASES.get(slug(name), ()),
+                    )
+                )
                 else "not individually named in current backlog; assess by tier during batch planning",
                 "recommended_production_method": method,
                 "priority_tier": tier,
@@ -824,6 +862,8 @@ def inventory_rows(
                 "gameplay_geometry_coupling": "RoomDefinition owns shell/floor extents, wall dimensions, opening locations, trim, and camera cutaway semantics; material/mesh changes must not alter them",
                 "canonical_registry_status": state["production_registry_status"],
                 "best_current_candidate": state["best_current_candidate"],
+                "best_current_candidate_source": state["best_current_candidate_source"],
+                "visual_director_status": state["visual_director_status"],
                 "strict_evaluation_path": state["strict_evaluation_path"],
                 "production_art_backlog_status": rule["backlog_status"],
                 "linked_runtime_geometry_sources": [
@@ -916,6 +956,8 @@ def inventory_rows(
                 "best_current_candidate": state["best_current_candidate"]
                 or linked_candidates
                 or None,
+                "best_current_candidate_source": state["best_current_candidate_source"],
+                "visual_director_status": state["visual_director_status"],
                 "strict_evaluation_path": state["strict_evaluation_path"],
                 "strict_gate_result": state["strict_gate_result"]
                 or (

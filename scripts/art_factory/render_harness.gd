@@ -8,6 +8,7 @@ var expected_asset_path := ""
 var captures: Array[Dictionary] = []
 
 const ROOM_FURNITURE_ASSET_IDS := [
+	"bookcase",
 	"room_elevated_workbench",
 	"room_assembly_table",
 	"room_tool_wardrobe",
@@ -171,6 +172,17 @@ func run() -> void:
 		opposite_yaw = 2.2
 		profile_yaw = 4.71
 		detail_yaw = 3.9
+	if asset_id == "bookcase":
+		# The authoritative Room A placement is near its north-east corner.
+		# Keep every close camera inside the room while varying the view enough
+		# to inspect the face frame, shelves, and framed side panel.
+		var toward_room := floor_center - asset_node.global_position
+		toward_room.y = 0.0
+		var interior_yaw := atan2(toward_room.x, toward_room.z)
+		three_quarter_yaw = interior_yaw - 0.25
+		opposite_yaw = interior_yaw + 0.25
+		profile_yaw = interior_yaw + 0.85
+		detail_yaw = interior_yaw
 	if asset_id in ["office_chair", "rocking_chair"]:
 		# Tall seated furniture sits close to room walls in the canonical layout.
 		# Back the close views away and use the proven interior-facing camera angles

@@ -154,22 +154,163 @@ class ArtFactory:
             parent_candidate_id=parent_candidate_id,
             visual_director_provenance=visual_director_provenance,
         )
+        files, result, execution = self._run_recorded_generator(
+            asset_id=asset_id,
+            candidate_id=candidate_id,
+            recipe=recipe,
+            candidate_root=candidate_root,
+            output_dir=generated_root,
+            log_file=candidate_root / "generation.log",
+            execution_number=1,
+            timeout_seconds=timeout_seconds,
+        )
+        candidate.generation_attempts.append(execution)
+        candidate.generation_result = result
+        if result["status"] == "pass":
+            candidate.asset_files = files
+        else:
+            candidate.status = "blocked"
+            candidate.technical_validation = {
+                "status": "fail",
+                "reason": result.get("reason", "generator returned a failure"),
+                "recorded_at_utc": result["recorded_at_utc"],
+            }
+        self._save_candidate(candidate)
+        self._record_visual_director_candidate(candidate)
+        return candidate
+
+    def retry_candidate_generation(
+        self, candidate_id: str, timeout_seconds: int = 1200
+    ) -> ArtCandidate:
+        """Resume a blocked candidate without consuming another visual strategy attempt."""
+        candidate = self.load_candidate(candidate_id)
+        if candidate.status != "blocked" or candidate.generation_result.get("status") == "pass":
+            raise ValueError("only a candidate blocked during generation can be retried")
+        if candidate.asset_files or candidate.renders or candidate.evaluation_file:
+            raise ValueError(
+                "generation retry is only allowed before candidate assets, renders, or evaluations exist"
+            )
+        if candidate.technical_validation.get("status") == "pass":
+            raise ValueError("a technically validated candidate cannot be retried")
+
+        recipe_path = self.project_root / _safe_relative_path(candidate.recipe_file)
+        if not recipe_path.is_file():
+            raise ValueError(f"candidate recipe is missing: {candidate.recipe_file}")
+        recipe = ArtRecipe.from_dict(_read_json(recipe_path))
+        errors = recipe.validate()
+        if errors or not recipe.generator_command:
+            raise ValueError("candidate recipe is not runnable: " + "; ".join(errors))
+
+        provenance = candidate.visual_director_provenance
+        target = provenance.get("approved_visual_target")
+        if target:
+            case_path = self._visual_director_case_path(candidate.asset_id)
+            state = _read_json(case_path) if case_path.is_file() else {}
+            approved_target = state.get("approved_visual_target", {})
+            episode = state.get("target_episode", {})
+            attempt_record = next(
+                (
+                    item
+                    for item in episode.get("attempts", [])
+                    if item.get("candidate_id") == candidate.candidate_id
+                ),
+                None,
+            )
+            if (
+                not self._approved_target_is_current(target)
+                or approved_target.get("sha256") != target.get("sha256")
+                or episode.get("target_sha256") != target.get("sha256")
+                or not attempt_record
+                or attempt_record.get("status") != "blocked"
+                or attempt_record.get("attempt")
+                != provenance.get("target_episode_attempt")
+            ):
+                raise ValueError(
+                    "only the still-current Visual Director target's blocked generation attempt can be resumed"
+                )
+
+        candidate_root = self._candidate_root(candidate)
+        if not candidate.generation_attempts:
+            previous = candidate.generation_result
+            candidate.generation_attempts.append(
+                {
+                    "execution_number": 1,
+                    "status": previous.get("status", "fail"),
+                    "exit_code": previous.get("exit_code"),
+                    "recorded_at_utc": previous.get("recorded_at_utc", candidate.created_at_utc),
+                    "command": previous.get("command", []),
+                    "log_file": (
+                        candidate_root / "generation.log"
+                    ).relative_to(self.project_root).as_posix(),
+                    "output_dir": (candidate_root / "generated")
+                    .relative_to(self.project_root)
+                    .as_posix(),
+                    "preserved_legacy_execution": True,
+                }
+            )
+
+        execution_number = len(candidate.generation_attempts) + 1
+        execution_root = candidate_root / "generation-attempts" / f"run-{execution_number:03d}"
+        output_dir = execution_root / "generated"
+        log_file = execution_root / "generation.log"
+        if execution_root.exists():
+            raise ValueError(f"generation retry evidence already exists: {execution_root}")
+        files, result, execution = self._run_recorded_generator(
+            asset_id=candidate.asset_id,
+            candidate_id=candidate.candidate_id,
+            recipe=recipe,
+            candidate_root=candidate_root,
+            output_dir=output_dir,
+            log_file=log_file,
+            execution_number=execution_number,
+            timeout_seconds=timeout_seconds,
+        )
+        candidate.generation_attempts.append(execution)
+        candidate.generation_result = result
+        if result["status"] == "pass":
+            candidate.asset_files = files
+            candidate.status = "challenger"
+            candidate.technical_validation = {}
+        else:
+            candidate.status = "blocked"
+            candidate.technical_validation = {
+                "status": "fail",
+                "reason": result.get("reason", "generator returned a failure"),
+                "recorded_at_utc": result["recorded_at_utc"],
+            }
+        self._save_candidate(candidate)
+        self._record_visual_director_candidate(candidate)
+        return candidate
+
+    def _run_recorded_generator(
+        self,
+        *,
+        asset_id: str,
+        candidate_id: str,
+        recipe: ArtRecipe,
+        candidate_root: Path,
+        output_dir: Path,
+        log_file: Path,
+        execution_number: int,
+        timeout_seconds: int,
+    ) -> tuple[list[str], dict[str, Any], dict[str, Any]]:
+        output_dir.mkdir(parents=True, exist_ok=True)
         command = [
             argument.format(
                 project_root=str(self.project_root),
-                output_dir=str(generated_root),
+                output_dir=str(output_dir),
                 brief_path=str(self.art_root / asset_id / "brief.json"),
-                recipe_path=str(recipe_path),
+                recipe_path=str(candidate_root / "recipe.json"),
             )
             for argument in recipe.generator_command
         ]
         environment = os.environ.copy()
         environment.update(
             {
-                "ROOMSCALE_ART_FACTORY_OUTPUT_DIR": str(generated_root),
+                "ROOMSCALE_ART_FACTORY_OUTPUT_DIR": str(output_dir),
                 "ROOMSCALE_ART_FACTORY_ASSET_ID": asset_id,
                 "ROOMSCALE_ART_FACTORY_BRIEF": str(self.art_root / asset_id / "brief.json"),
-                "ROOMSCALE_ART_FACTORY_RECIPE": str(recipe_path),
+                "ROOMSCALE_ART_FACTORY_RECIPE": str(candidate_root / "recipe.json"),
                 "ROOMSCALE_ART_FACTORY_CANDIDATE": candidate_id,
             }
         )
@@ -214,8 +355,10 @@ class ArtFactory:
                     "exit_code": result.get("exit_code"),
                     "reason": f"generator emitted a script error: {script_errors[0]}",
                 }
-        (candidate_root / "generation.log").write_text(output, encoding="utf-8")
+        log_file.parent.mkdir(parents=True, exist_ok=True)
+        log_file.write_text(output, encoding="utf-8")
         declared_outputs = recipe.parameters.get("outputs", [])
+        files: list[str] = []
         if result["status"] == "pass":
             if not isinstance(declared_outputs, list) or not declared_outputs:
                 result = {
@@ -226,7 +369,7 @@ class ArtFactory:
             else:
                 for output_path in declared_outputs:
                     relative = _safe_relative_path(str(output_path))
-                    target = generated_root.joinpath(*relative.parts)
+                    target = output_dir.joinpath(*relative.parts)
                     if not target.is_file():
                         result = {
                             "status": "fail",
@@ -234,22 +377,32 @@ class ArtFactory:
                             "reason": f"declared generator output is missing: {output_path}",
                         }
                         break
-                    candidate.asset_files.append(target.relative_to(self.project_root).as_posix())
-        candidate.generation_result = {
+                    files.append(target.relative_to(self.project_root).as_posix())
+        recorded_at = _now_utc()
+        log_relative = log_file.relative_to(self.project_root).as_posix()
+        output_relative = output_dir.relative_to(self.project_root).as_posix()
+        result = {
             **result,
-            "recorded_at_utc": _now_utc(),
+            "recorded_at_utc": recorded_at,
             "command": command,
+            "execution_number": execution_number,
+            "log_file": log_relative,
+            "output_dir": output_relative,
         }
-        if result["status"] != "pass":
-            candidate.status = "blocked"
-            candidate.technical_validation = {
-                "status": "fail",
-                "reason": result.get("reason", "generator returned a failure"),
-                "recorded_at_utc": _now_utc(),
-            }
-        self._save_candidate(candidate)
-        self._record_visual_director_candidate(candidate)
-        return candidate
+        execution = {
+            "execution_number": execution_number,
+            "status": result["status"],
+            "exit_code": result.get("exit_code"),
+            "recorded_at_utc": recorded_at,
+            "command": command,
+            "log_file": log_relative,
+            "output_dir": output_relative,
+        }
+        if result.get("timed_out"):
+            execution["timed_out"] = True
+        if result.get("reason"):
+            execution["reason"] = result["reason"]
+        return files, result, execution
 
     def visual_director_status(self, asset_id: str) -> dict[str, Any]:
         """Return policy and separate visual-target / 3D / production incumbents."""
@@ -812,47 +965,84 @@ class ArtFactory:
                 },
             )
             attempts = episode.setdefault("attempts", [])
-            if not any(item.get("candidate_id") == candidate.candidate_id for item in attempts):
-                generation_result = candidate.generation_result or {}
+            attempt_record = next(
+                (
+                    item
+                    for item in attempts
+                    if item.get("candidate_id") == candidate.candidate_id
+                ),
+                None,
+            )
+            generation_result = candidate.generation_result or {}
+            blocked = (
+                candidate.status == "blocked" or generation_result.get("status") != "pass"
+            )
+            if attempt_record is None:
                 attempt_record = {
                     "candidate_id": candidate.candidate_id,
                     "strategy": candidate.visual_director_provenance.get("strategy"),
-                    "attempt": candidate.visual_director_provenance.get("target_episode_attempt"),
-                    "status": (
-                        "blocked"
-                        if candidate.status == "blocked"
-                        or generation_result.get("status") != "pass"
-                        else "awaiting_render_review"
+                    "attempt": candidate.visual_director_provenance.get(
+                        "target_episode_attempt"
                     ),
                 }
-                if attempt_record["status"] == "blocked":
-                    failure_reason = generation_result.get(
-                        "reason"
-                    ) or candidate.technical_validation.get(
-                        "reason", "generation did not produce a candidate mesh"
-                    )
-                    generation_log = self._candidate_root(candidate) / "generation.log"
-                    if generation_log.is_file():
-                        log_lines = [
-                            line.strip()
-                            for line in generation_log.read_text(
-                                encoding="utf-8", errors="replace"
-                            ).splitlines()
-                            if line.strip()
-                        ]
-                        exception_line = next(
-                            (
-                                line
-                                for line in reversed(log_lines)
-                                if line.startswith(("RuntimeError:", "ValueError:", "Error:"))
-                            ),
-                            None,
-                        )
-                        if exception_line:
-                            failure_reason = exception_line
-                    attempt_record["failure_reason"] = failure_reason
                 attempts.append(attempt_record)
-            episode["status"] = "in_progress"
+            if blocked:
+                failure_reason = generation_result.get("reason") or candidate.technical_validation.get(
+                    "reason", "generation did not produce a candidate mesh"
+                )
+                log_file = generation_result.get("log_file")
+                generation_log = (
+                    self.project_root / _safe_relative_path(log_file)
+                    if log_file
+                    else self._candidate_root(candidate) / "generation.log"
+                )
+                if generation_log.is_file():
+                    log_lines = [
+                        line.strip()
+                        for line in generation_log.read_text(
+                            encoding="utf-8", errors="replace"
+                        ).splitlines()
+                        if line.strip()
+                    ]
+                    exception_line = next(
+                        (
+                            line
+                            for line in reversed(log_lines)
+                            if line.startswith(("RuntimeError:", "ValueError:", "Error:"))
+                        ),
+                        None,
+                    )
+                    if exception_line:
+                        failure_reason = exception_line
+                attempt_record.update(
+                    {
+                        "status": "blocked",
+                        "failure_reason": failure_reason,
+                        "generation_executions": len(candidate.generation_attempts),
+                    }
+                )
+                if episode.get("status") != "backlog":
+                    episode["status"] = "in_progress"
+            elif attempt_record.get("status") == "blocked":
+                attempt_record.update(
+                    {
+                        "status": "awaiting_render_review",
+                        "generation_executions": len(candidate.generation_attempts),
+                    }
+                )
+                attempt_record.pop("failure_reason", None)
+                episode["status"] = "in_progress"
+                episode.pop("backlog_reason", None)
+                state["status"] = "in_progress"
+                state.pop("backlog_reason", None)
+            elif attempt_record.get("status") not in {"evaluated", "awaiting_render_review"}:
+                attempt_record.update(
+                    {
+                        "status": "awaiting_render_review",
+                        "generation_executions": len(candidate.generation_attempts),
+                    }
+                )
+                episode["status"] = "in_progress"
             state["target_episode"] = episode
         state["updated_at_utc"] = _now_utc()
         state["production_asset"] = self._production_asset_record(candidate.asset_id)

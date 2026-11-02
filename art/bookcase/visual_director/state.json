@@ -9,8 +9,13 @@
     "sha256": "2d0d1030622684e7a013c9f5fe01c8f69c7df524062ceb3372b5d773861426f0"
   },
   "asset_id": "bookcase",
-  "backlog_reason": "The approved household target is sound, but bookcase-v001 was blocked before Blender launched because ROOMSCALE_BLENDER_EXECUTABLE was absent from this worktree's Art Factory process. No mesh, import, or render exists, so no honest candidate evaluation or visual-transfer diagnosis can be recorded. The target episode counts the blocked attempt; preserve it and the approved target rather than mutating the counter or fabricating render evidence.",
-  "best_3d_candidate": null,
+  "backlog_reason": "After three strategies, v003 is the best current review candidate and passes Godot bounds, but it still fails close craftsmanship and surface variation: the fine grain remains evenly striped and shelf pins/joins are not readable. The Room A overview shows no clear gameplay-distance lift over the existing shelf presentation. Preserve v003 as review-only; no production asset was promoted.",
+  "best_3d_candidate": {
+    "candidate_file": "art/bookcase/iterations/v003/candidate.json",
+    "candidate_id": "bookcase-v003",
+    "evaluation_file": "art/bookcase/iterations/v003/evaluation.json",
+    "updated_at_utc": "2026-11-02T09:45:56+00:00"
+  },
   "candidate_history": [
     {
       "candidate_file": "art/bookcase/iterations/v001/candidate.json",
@@ -51,6 +56,86 @@
         "strategy": "initial",
         "target_episode_attempt": 1
       }
+    },
+    {
+      "candidate_file": "art/bookcase/iterations/v002/candidate.json",
+      "candidate_id": "bookcase-v002",
+      "created_at_utc": "2026-11-02T09:38:42+00:00",
+      "parent_candidate_id": "",
+      "recipe_file": "art/bookcase/iterations/v002/recipe.json",
+      "visual_director_attempt": 2,
+      "visual_director_provenance": {
+        "approved_visual_target": {
+          "approval": "pass",
+          "approved_at_utc": "2026-11-02T08:06:58+00:00",
+          "concept_id": "bookcase-household-r01",
+          "path": "art/bookcase/visual_director/round-01/candidate-bookcase-r01.png",
+          "review_method": "pixel inspection; review evidence recorded by Luna",
+          "review_path": "art/bookcase/visual_director/round-01/pixel-review-r01.md",
+          "sha256": "2d0d1030622684e7a013c9f5fe01c8f69c7df524062ceb3372b5d773861426f0"
+        },
+        "case_file": "art/bookcase/visual_director/state.json",
+        "policy": {
+          "inputs": {
+            "category": "room_furniture",
+            "current_quality": "prototype",
+            "faction_defining": false,
+            "inferred": [],
+            "priority_tier": 1,
+            "screen_space_importance": 4,
+            "source_images_present": false,
+            "source_photo_required": false
+          },
+          "reasons": [
+            "Tier 1 scene-defining asset",
+            "high screen-space importance"
+          ],
+          "required": true
+        },
+        "status": "approved",
+        "strategy": "targeted_correction",
+        "target_episode_attempt": 2
+      }
+    },
+    {
+      "candidate_file": "art/bookcase/iterations/v003/candidate.json",
+      "candidate_id": "bookcase-v003",
+      "created_at_utc": "2026-11-02T09:40:35+00:00",
+      "parent_candidate_id": "",
+      "recipe_file": "art/bookcase/iterations/v003/recipe.json",
+      "visual_director_attempt": 3,
+      "visual_director_provenance": {
+        "approved_visual_target": {
+          "approval": "pass",
+          "approved_at_utc": "2026-11-02T08:06:58+00:00",
+          "concept_id": "bookcase-household-r01",
+          "path": "art/bookcase/visual_director/round-01/candidate-bookcase-r01.png",
+          "review_method": "pixel inspection; review evidence recorded by Luna",
+          "review_path": "art/bookcase/visual_director/round-01/pixel-review-r01.md",
+          "sha256": "2d0d1030622684e7a013c9f5fe01c8f69c7df524062ceb3372b5d773861426f0"
+        },
+        "case_file": "art/bookcase/visual_director/state.json",
+        "policy": {
+          "inputs": {
+            "category": "room_furniture",
+            "current_quality": "prototype",
+            "faction_defining": false,
+            "inferred": [],
+            "priority_tier": 1,
+            "screen_space_importance": 4,
+            "source_images_present": false,
+            "source_photo_required": false
+          },
+          "reasons": [
+            "Tier 1 scene-defining asset",
+            "high screen-space importance"
+          ],
+          "required": true
+        },
+        "status": "approved",
+        "strategy": "alternate_strategy",
+        "target_episode_attempt": 3
+      }
     }
   ],
   "case_file": "art/bookcase/visual_director/state.json",
@@ -79,15 +164,87 @@
       {
         "attempt": 1,
         "candidate_id": "bookcase-v001",
-        "failure_reason": "RuntimeError: ROOMSCALE_BLENDER_EXECUTABLE must point to the approved local Blender install",
-        "status": "blocked",
-        "strategy": "initial"
+        "decision": "continue",
+        "evaluated_at_utc": "2026-11-02T09:38:06+00:00",
+        "evaluation_file": "art/bookcase/iterations/v001/evaluation.json",
+        "generation_executions": 2,
+        "incumbent_comparison_result": "first_pass",
+        "status": "evaluated",
+        "strategy": "initial",
+        "visual_transfer_diagnosis": {
+          "corrective_action": "Keep the v001 geometry and make a targeted, bookcase-only material correction: darken and desaturate the oak and oak-light values, strengthen fine board-aligned French-oak variation without broad waves, deepen the walnut separation, and moderate the response under the Room A production light; then compare the same camera views.",
+          "lost_visual_information": [
+            "The concept's dark stained oak and distinct deep walnut face frame render as bright orange-brown wood with weak color separation.",
+            "The fine board-aligned wood figure visible across the concept's side panel and shelves is not perceptible in the production captures.",
+            "Small fitted hardware and book-spine detailing lose readability in the 3D candidate at Room A gameplay distance."
+          ],
+          "preserved_components": [
+            "The full-height household-bookcase silhouette and five open shelf compartments.",
+            "Solid shelf thickness, front nosings, framed side panels, layered crown and plinth, and the 32 x 63 x 17 inch envelope.",
+            "Individually modeled book groups in muted covers, rendered separately from gameplay collision and navigation."
+          ],
+          "primary_causes": [
+            "material_generation",
+            "lighting_render_presentation"
+          ]
+        }
+      },
+      {
+        "attempt": 2,
+        "candidate_id": "bookcase-v002",
+        "decision": "continue",
+        "evaluated_at_utc": "2026-11-02T09:39:54+00:00",
+        "evaluation_file": "art/bookcase/iterations/v002/evaluation.json",
+        "generation_executions": 1,
+        "incumbent_comparison_result": "worse",
+        "status": "evaluated",
+        "strategy": "targeted_correction",
+        "visual_transfer_diagnosis": {
+          "corrective_action": "Replace the broad French-oak profile with a separate bookcase fine-grain profile using higher longitudinal frequency, low contrast, subtle irregularity, and the current darker palette; keep geometry unchanged and compare the same Room A views.",
+          "lost_visual_information": [
+            "The target's fine, low-contrast longitudinal grain has become a few broad, repeating waves across each side panel.",
+            "The approved target's dark stained wood remains closer in color than v001, but the wood figure is too regular and visually dominant."
+          ],
+          "preserved_components": [
+            "The same five-bay household bookcase geometry, side-panel frames, shelf nosings, crown, plinth, feet, and muted books.",
+            "The 32 x 63 x 17 inch authoritative Room A envelope and the review-only production integration."
+          ],
+          "primary_causes": [
+            "material_generation"
+          ]
+        }
+      },
+      {
+        "attempt": 3,
+        "candidate_id": "bookcase-v003",
+        "decision": "continue",
+        "evaluated_at_utc": "2026-11-02T09:45:56+00:00",
+        "evaluation_file": "art/bookcase/iterations/v003/evaluation.json",
+        "generation_executions": 1,
+        "incumbent_comparison_result": "better",
+        "status": "evaluated",
+        "strategy": "alternate_strategy",
+        "visual_transfer_diagnosis": {
+          "corrective_action": "Backlog the target after the three allowed strategies. Preserve v003 as best current review and require a future evidenced change to grain irregularity and visible joinery before another episode is opened.",
+          "lost_visual_information": [
+            "The approved target's irregular, low-contrast wood figure still becomes evenly spaced parallel striping on the large side panels.",
+            "Small brass shelf pins, joinery at the face frame, and the fuller book group arrangement are less readable in the production render than in the approved target."
+          ],
+          "preserved_components": [
+            "The full five-bay household bookcase, framed side panels, substantial shelf boards, crown, plinth, and modeled book groups.",
+            "The approved dark stained wood direction, RoomDefinition dimensions, and separation from gameplay systems."
+          ],
+          "primary_causes": [
+            "material_generation",
+            "geometry_loss"
+          ]
+        }
       }
     ],
-    "backlog_reason": "The approved household target is sound, but bookcase-v001 was blocked before Blender launched because ROOMSCALE_BLENDER_EXECUTABLE was absent from this worktree's Art Factory process. No mesh, import, or render exists, so no honest candidate evaluation or visual-transfer diagnosis can be recorded. The target episode counts the blocked attempt; preserve it and the approved target rather than mutating the counter or fabricating render evidence.",
+    "backlog_reason": "After three strategies, v003 is the best current review candidate and passes Godot bounds, but it still fails close craftsmanship and surface variation: the fine grain remains evenly striped and shelf pins/joins are not readable. The Room A overview shows no clear gameplay-distance lift over the existing shelf presentation. Preserve v003 as review-only; no production asset was promoted.",
     "status": "backlog",
     "target_sha256": "2d0d1030622684e7a013c9f5fe01c8f69c7df524062ceb3372b5d773861426f0"
   },
-  "updated_at_utc": "2026-11-02T08:11:55+00:00",
+  "updated_at_utc": "2026-11-02T09:46:05+00:00",
   "visual_brief_file": "art/bookcase/visual_director/visual-brief-draft.json"
 }

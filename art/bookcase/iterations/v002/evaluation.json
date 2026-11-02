@@ -1,0 +1,150 @@
+{
+  "candidate_id": "bookcase-v002",
+  "created_at_utc": "2026-11-02T09:41:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "Darkening improved the oak/walnut contrast, but the oak figure is now several high-contrast periodic waves across each large panel.",
+    "The strong wave pattern is visible at gameplay distance and distracts from the case construction.",
+    "Shelf-pin and joinery details remain difficult to read and were not addressed by this material-only iteration."
+  ],
+  "hard_fail_reasons": [
+    "The surface-variation gate fails: large repeated waves dominate both side panels and are explicitly prohibited by the approved brief.",
+    "The close-inspection gate fails: the wood pattern is too broad and regular to read as the target's fine board-aligned grain."
+  ],
+  "incumbent_candidate_id": "bookcase-v001",
+  "incumbent_comparison": "Compared with v001, v002 improves the dark stained color balance but the exaggerated wave pattern is more distracting and less faithful to the target; retain v001 as the best overall 3D review candidate until the final alternate is assessed.",
+  "incumbent_comparison_result": "worse",
+  "likely_causes": [
+    "The targeted French-oak procedural profile uses too few broad cycles and too much amplitude for a 63-inch bookcase face.",
+    "Per-face normalized UVs repeat the same broad pattern across separate boards and panels."
+  ],
+  "next_action_hypothesis": "Use the third and final alternate material strategy with the same darker palette but a dedicated fine-grain profile: many low-amplitude longitudinal fibers, subtle irregular rays, and no broad periodic waves. Preserve the current geometry and inspect the same production views.",
+  "observations": {
+    "art_direction_fit": "Color balance improved, but the broad repeating wood pattern moves farther from the target's fine natural grain.",
+    "close_up_quality": "The close detail makes the repeated wave pattern dominant; the grain scale looks synthetic and overwhelms the joinery.",
+    "gameplay_readability": "The bookcase remains distinct at 73 inches and the shelf bays and books remain legible.",
+    "geometric_detail": "The same solid shelf boards, nosings, side panels, crown, plinth, and individual book groups are visible.",
+    "material_realism": "The darker oak and deeper walnut move closer to the approved target, but the side panels now show conspicuous periodic waves rather than believable fine grain.",
+    "proportion": "The v002 dimensions and shelf layout are unchanged and remain within the authoritative envelope.",
+    "scale_fidelity": "Godot 4.7.2 reports 32 x 63 x 17.06 inches against the 32 x 63 x 17 inch RoomDefinition envelope.",
+    "semantic_recognizability": "The gameplay and close captures remain clearly identifiable as the same five-bay Room A household bookcase.",
+    "silhouette_quality": "The full-height case, crown, plinth, feet, and inset side panels are retained from v001.",
+    "surface_variation": "Variation is stronger than v001 but occurs as a few large repeated bands across each panel, which conflicts with the required restrained board-aligned finish.",
+    "technical_integration": "Godot imported the GLB without issues and rendered it through the review-only registry in Room A with 50 citizens."
+  },
+  "render_evidence": [
+    "art/bookcase/iterations/v002/render-runs/run-001/asset-gameplay-distance.png",
+    "art/bookcase/iterations/v002/render-runs/run-001/asset-three-quarter.png",
+    "art/bookcase/iterations/v002/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 2,
+    "close_up_quality": 2,
+    "gameplay_readability": 4,
+    "geometric_detail": 4,
+    "material_realism": 3,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 4,
+    "surface_variation": 2,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The detail capture shows a few conspicuous repeated waves across the side panels instead of the target's fine wood figure.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "The crown cap, shelf nosings, plinth, and feet retain softened edges in the close production capture.",
+        "evidence_refs": [
+          "art/bookcase/iterations/v002/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "The production capture does not make the fitted shelf pins clearly readable at the scale shown.",
+        "evidence_refs": [
+          "art/bookcase/iterations/v002/render-runs/run-001/asset-detail.png",
+          "art/bookcase/iterations/v002/render-runs/run-001/asset-gameplay-distance.png"
+        ],
+        "pass": false
+      },
+      "joins": {
+        "evidence": "The face stiles and side-panel rails remain visible, but their joins do not read convincingly beneath the dominating wave pattern.",
+        "evidence_refs": [
+          "art/bookcase/iterations/v002/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "The case structure is present, but the wave pattern obscures board-level finish and the fitted pins remain difficult to see.",
+        "evidence_refs": [
+          "art/bookcase/iterations/v002/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "The darker brown color is closer to the target, but the high-contrast broad waves are not a plausible stained-oak response.",
+        "evidence_refs": [
+          "art/bookcase/iterations/v002/render-runs/run-001/asset-three-quarter.png",
+          "art/bookcase/iterations/v002/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "Surface variation is present but too broad, repeated, and high contrast to match the fine board-aligned target grain.",
+        "evidence_refs": [
+          "art/bookcase/iterations/v002/render-runs/run-001/asset-gameplay-distance.png",
+          "art/bookcase/iterations/v002/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "The detail capture shows solid shelf thickness, nosings, side panels, and layered top and base construction.",
+        "evidence_refs": [
+          "art/bookcase/iterations/v002/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "evidence": "The candidate still reads as a household bookcase with believable cabinet proportions, although the large-panel material treatment needs correction.",
+      "pass": true
+    },
+    "photo_character": {
+      "answer": "N/A",
+      "applicable": false,
+      "evidence": "This ArtBrief has no source photograph; the approved Visual Director target supplies the appearance reference.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": true
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Replace the broad French-oak profile with a separate bookcase fine-grain profile using higher longitudinal frequency, low contrast, subtle irregularity, and the current darker palette; keep geometry unchanged and compare the same Room A views.",
+    "lost_visual_information": [
+      "The target's fine, low-contrast longitudinal grain has become a few broad, repeating waves across each side panel.",
+      "The approved target's dark stained wood remains closer in color than v001, but the wood figure is too regular and visually dominant."
+    ],
+    "preserved_components": [
+      "The same five-bay household bookcase geometry, side-panel frames, shelf nosings, crown, plinth, feet, and muted books.",
+      "The 32 x 63 x 17 inch authoritative Room A envelope and the review-only production integration."
+    ],
+    "primary_causes": [
+      "material_generation"
+    ]
+  }
+}

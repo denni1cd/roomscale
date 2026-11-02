@@ -230,7 +230,10 @@ class ArtFactoryTest(unittest.TestCase):
         recipe = ArtRecipe(
             **{
                 **recipe.to_dict(),
-                "parameters": {"outputs": ["mesh.bin"]},
+                "parameters": {
+                    "outputs": ["mesh.bin"],
+                    "visual_director_strategy": "initial",
+                },
                 "generator_command": [
                     sys.executable,
                     "-c",
@@ -257,6 +260,75 @@ class ArtFactoryTest(unittest.TestCase):
         self.assertEqual(candidate.generation_result["exit_code"], 7)
         self.assertEqual(candidate.technical_validation["status"], "fail")
         self.assertTrue((self.root / "art/test-desk/iterations/v001/generation.log").is_file())
+
+    def test_blocked_visual_director_generation_can_resume_without_spending_an_art_attempt(
+        self,
+    ) -> None:
+        brief = ArtBrief(
+            **{
+                **make_brief().to_dict(),
+                "category": "room_furniture",
+                "priority_tier": 1,
+            }
+        )
+        self.factory.save_brief(brief)
+        target_path = "art/test-desk/visual_director/round-01/target.png"
+        review_path = "art/test-desk/visual_director/round-01/pixel-review.md"
+        target_file = self.root / target_path
+        review_file = self.root / review_path
+        target_file.parent.mkdir(parents=True)
+        target_file.write_bytes(b"approved pixel target")
+        review_file.write_text("Target pixels reviewed.", encoding="utf-8")
+        self.factory.approve_visual_target(
+            "test-desk",
+            target_path=target_path,
+            review_path=review_path,
+            concept_id="test-bookcase-r01",
+            reviewer="test reviewer",
+        )
+        recipe = ArtRecipe(
+            **{
+                **make_recipe().to_dict(),
+                "source_inputs": [target_path],
+                "parameters": {
+                    "outputs": ["mesh.bin"],
+                    "visual_director_strategy": "initial",
+                },
+                "generator_command": [
+                    sys.executable,
+                    "-c",
+                    "import os, pathlib, sys; output = pathlib.Path(os.environ['ROOMSCALE_ART_FACTORY_OUTPUT_DIR']); print('initial execution blocked'); sys.exit(7) if 'run-002' not in output.as_posix() else None; (output / 'mesh.bin').write_bytes(b'generated')",
+                ],
+            }
+        )
+
+        candidate = self.factory.generate_candidate("test-desk", recipe)
+        self.assertEqual(candidate.candidate_id, "test-desk-v001")
+        self.assertEqual(candidate.status, "blocked")
+        initial_log = self.root / "art/test-desk/iterations/v001/generation.log"
+        self.assertIn("initial execution blocked", initial_log.read_text(encoding="utf-8"))
+        self.factory.backlog_visual_director_case("test-desk", "Generator dependency was unavailable.")
+
+        resumed = self.factory.retry_candidate_generation(candidate.candidate_id)
+        self.assertEqual(resumed.candidate_id, candidate.candidate_id)
+        self.assertEqual(resumed.status, "challenger")
+        self.assertEqual(resumed.generation_result["status"], "pass")
+        self.assertEqual([run["status"] for run in resumed.generation_attempts], ["fail", "pass"])
+        self.assertEqual(resumed.visual_director_provenance["target_episode_attempt"], 1)
+        self.assertTrue((self.root / resumed.asset_files[0]).is_file())
+        self.assertIn("initial execution blocked", initial_log.read_text(encoding="utf-8"))
+
+        state = json.loads(
+            (self.root / "art/test-desk/visual_director/state.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(len(state["target_episode"]["attempts"]), 1)
+        self.assertEqual(state["target_episode"]["attempts"][0]["attempt"], 1)
+        self.assertEqual(
+            state["target_episode"]["attempts"][0]["status"], "awaiting_render_review"
+        )
+        self.assertEqual(state["target_episode"]["attempts"][0]["generation_executions"], 2)
+        self.assertEqual(state["status"], "in_progress")
+        self.assertNotIn("backlog_reason", state)
 
     def test_runtime_script_error_blocks_zero_exit_generator(self) -> None:
         recipe = ArtRecipe(

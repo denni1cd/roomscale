@@ -1,0 +1,156 @@
+{
+  "candidate_id": "bookcase-v001",
+  "created_at_utc": "2026-11-02T09:40:00+00:00",
+  "decision": "continue",
+  "defects": [
+    "Oak and oak-light surfaces are too bright and orange under the Room A production lighting compared with the approved dark stained target.",
+    "Wood grain is not perceptible at the captured gameplay and close distances despite embedded texture maps and UV coordinates in the GLB.",
+    "The three-quarter capture is side-panel heavy and the small shelf-pin/spine details are difficult to see at normal gameplay distance."
+  ],
+  "hard_fail_reasons": [
+    "The close-inspection gate fails: the approved target's fine board-aligned wood figure is not readable in the Godot detail or gameplay-distance captures.",
+    "The craftsmanship gate fails: the room-rendered oak is too bright and orange, while the fitted brass pins and joined frame construction do not read clearly enough to match the target."
+  ],
+  "incumbent_candidate_id": "",
+  "incumbent_comparison": "There is no accepted bookcase incumbent; compare v001 directly with the approved Visual Director target and retain it as the current review candidate until v002 is assessed.",
+  "incumbent_comparison_result": "first_pass",
+  "likely_causes": [
+    "The initial oak base colors and soft grain profile produce insufficient value separation and surface variation in the production renderer.",
+    "The Room A lighting amplifies the warm oak values across the large flat faces."
+  ],
+  "next_action_hypothesis": "Create the required targeted-correction attempt with a bookcase-only darker, less orange oak/walnut profile, stronger but fine board-aligned French-oak variation, and a more restrained roughness response; preserve the approved geometry, dimensions, books, and gameplay authority, then capture the same Room A views.",
+  "observations": {
+    "art_direction_fit": "The candidate keeps the target's residential silhouette and muted book colors but misses its darker oak/walnut balance and visible fine wood figure.",
+    "close_up_quality": "The close detail preserves construction and book groups, but the broad wood faces look smooth and the small spine tooling and shelf hardware are difficult to read.",
+    "gameplay_readability": "At 73 inches the asset remains identifiable and the five shelf openings remain distinct, although material contrast and book detail are subdued.",
+    "geometric_detail": "The Godot captures show solid shelves with front nosings, framed side panels, a layered crown and plinth, shaped feet, and fitted shelf-pin positions.",
+    "material_realism": "The imported oak is substantially brighter and more orange than the approved dark stained wood; the walnut contrast is weak in the room lighting.",
+    "proportion": "The five compartments and broad face stiles form a plausible residential case, and the mesh fits the authoritative Room A envelope.",
+    "scale_fidelity": "Godot validation reports 32 x 63 x 17.06 inches against the authoritative 32 x 63 x 17 inch RoomDefinition dimensions.",
+    "semantic_recognizability": "The Room A gameplay-distance and three-quarter captures clearly read as a freestanding household bookcase with five shelf bays.",
+    "silhouette_quality": "The full-height carcass, crown, plinth, and framed side panel survive the production view; the close three-quarter angle shows more side panel than the approved front-dominant concept.",
+    "surface_variation": "The close and gameplay-distance captures show almost no readable board-aligned grain across the large oak panels and shelves.",
+    "technical_integration": "Godot 4.7.2 imported the GLB with no reported issues; the candidate rendered through the review-only registry in Room A with 50 citizens."
+  },
+  "render_evidence": [
+    "art/bookcase/iterations/v001/render-runs/run-003/asset-gameplay-distance.png",
+    "art/bookcase/iterations/v001/render-runs/run-003/asset-three-quarter.png",
+    "art/bookcase/iterations/v001/render-runs/run-003/asset-interior-oblique.png",
+    "art/bookcase/iterations/v001/render-runs/run-003/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 3,
+    "gameplay_readability": 4,
+    "geometric_detail": 4,
+    "material_realism": 3,
+    "proportion": 4,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 5,
+    "silhouette_quality": 4,
+    "surface_variation": 2,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The Godot detail render shows broad, nearly uniform orange-brown wood faces where the approved target has visible fine board-aligned grain and stronger oak/walnut value separation.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "The close three-quarter and detail captures show softened edges on the crown cap, shelf nosings, plinth, and foot blocks.",
+        "evidence_refs": [
+          "art/bookcase/iterations/v001/render-runs/run-003/asset-detail.png",
+          "art/bookcase/iterations/v001/render-runs/run-003/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "Shelf-pin positions exist, but individual brass pins are not clearly readable in the Room A production detail or gameplay-distance view.",
+        "evidence_refs": [
+          "art/bookcase/iterations/v001/render-runs/run-003/asset-detail.png",
+          "art/bookcase/iterations/v001/render-runs/run-003/asset-gameplay-distance.png"
+        ],
+        "pass": false
+      },
+      "joins": {
+        "evidence": "The face stiles, shelf nosings, and side-panel rails are present, but their meeting points do not read as joined cabinet construction in the production detail.",
+        "evidence_refs": [
+          "art/bookcase/iterations/v001/render-runs/run-003/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "The frame, shelf nosings, and book groups are modeled, but the close render does not expose enough readable joinery, fitted pins, or board-level finish to match the approved cabinet target.",
+        "evidence_refs": [
+          "art/bookcase/iterations/v001/render-runs/run-003/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "The candidate's oak reads much lighter and more orange than the target's dark stained oak, and the walnut frame separation is weak under production lighting.",
+        "evidence_refs": [
+          "art/bookcase/iterations/v001/render-runs/run-003/asset-three-quarter.png",
+          "art/bookcase/iterations/v001/render-runs/run-003/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "Large oak panels and shelves appear nearly uniform; the target's fine longitudinal grain does not survive at gameplay or close scale.",
+        "evidence_refs": [
+          "art/bookcase/iterations/v001/render-runs/run-003/asset-detail.png",
+          "art/bookcase/iterations/v001/render-runs/run-003/asset-gameplay-distance.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "The detail and interior-oblique captures show solid shelf boards, substantial side panels, and a layered crown and plinth.",
+        "evidence_refs": [
+          "art/bookcase/iterations/v001/render-runs/run-003/asset-detail.png",
+          "art/bookcase/iterations/v001/render-runs/run-003/asset-interior-oblique.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "evidence": "At gameplay distance the object reads as a constructed household bookcase rather than generic room clutter, with stable proportions and separate shelf openings.",
+      "pass": true
+    },
+    "photo_character": {
+      "answer": "N/A",
+      "applicable": false,
+      "evidence": "This ArtBrief has no source photograph; the approved Visual Director target supplies the appearance reference.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Keep the v001 geometry and make a targeted, bookcase-only material correction: darken and desaturate the oak and oak-light values, strengthen fine board-aligned French-oak variation without broad waves, deepen the walnut separation, and moderate the response under the Room A production light; then compare the same camera views.",
+    "lost_visual_information": [
+      "The concept's dark stained oak and distinct deep walnut face frame render as bright orange-brown wood with weak color separation.",
+      "The fine board-aligned wood figure visible across the concept's side panel and shelves is not perceptible in the production captures.",
+      "Small fitted hardware and book-spine detailing lose readability in the 3D candidate at Room A gameplay distance."
+    ],
+    "preserved_components": [
+      "The full-height household-bookcase silhouette and five open shelf compartments.",
+      "Solid shelf thickness, front nosings, framed side panels, layered crown and plinth, and the 32 x 63 x 17 inch envelope.",
+      "Individually modeled book groups in muted covers, rendered separately from gameplay collision and navigation."
+    ],
+    "primary_causes": [
+      "material_generation",
+      "lighting_render_presentation"
+    ]
+  }
+}

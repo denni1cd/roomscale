@@ -1,0 +1,27 @@
+{
+  "asset_id": "bookcase",
+  "asset_type": "household_bookcase",
+  "method": "blender_household_bookcase_r01_alternate_fine_grain_strategy",
+  "tool": "Blender 5.2.3 LTS Python/bpy",
+  "output": "asset.glb",
+  "dimensions_inches": [
+    32.0,
+    63.0,
+    17.0
+  ],
+  "source_inputs": [
+    "art/bookcase/brief.json",
+    "art/bookcase/visual_director/visual-brief-draft.json",
+    "art/bookcase/visual_director/state.json",
+    "art/bookcase/visual_director/round-01/candidate-bookcase-r01.png",
+    "art/bookcase/visual_director/round-01/pixel-review-r01.md",
+    "art/bookcase/iterations/v001/evaluation.json",
+    "art/bookcase/iterations/v002/evaluation.json",
+    "rooms/room_a.json",
+    "scripts/art_factory/generators/visual_director_furniture_blender.py",
+    "scripts/art_factory/generators/production_batch01_blender.py"
+  ],
+  "geometry": "individually authored joinery, shaped panels, and fitted hardware; no gameplay geometry",
+  "materials": "embedded oak, walnut, iron, steel, and brass PBR with deterministic per-board UV variation",
+  "generation_variant": "bookcase_household_r01_alternate_v003"
+}

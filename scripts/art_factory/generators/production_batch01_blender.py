@@ -670,6 +670,14 @@ def pbr_material(
         ray = np.sin((x * 9.0 + 0.10 * y) * math.tau + np.sin(y * 3.0 * math.tau) * 0.25)
         height = fiber * 0.12 + ray * 0.05 + random_field * 0.025
         variation = fiber * 0.06 + ray * 0.03 + random_field * 0.008
+    elif grain == "bookcase_oak_fine":
+        fiber = np.sin(
+            (x * 24.0 + 0.025 * np.sin(y * 1.8 * math.tau) + 0.008 * np.sin(y * 11.0 * math.tau))
+            * math.tau
+        )
+        ray = np.sin((x * 8.5 + 0.04 * y) * math.tau + np.sin(y * 2.4 * math.tau) * 0.12)
+        height = fiber * 0.035 + ray * 0.018 + random_field * 0.014
+        variation = fiber * 0.052 + ray * 0.026 + random_field * 0.010
     elif grain == "copper":
         height = random_field * 0.055 + np.sin(x * 40.0 + y * 23.0) * 0.035
         variation = random_field * 0.035 + np.sin(x * 16.0 + y * 24.0) * 0.035
@@ -716,7 +724,11 @@ def pbr_material(
     normal_node.location = (-520, -240)
     normal_map = nodes.new("ShaderNodeNormalMap")
     normal_map.inputs["Strength"].default_value = (
-        0.24 if grain in {"wood", "french_oak", "stone", "fabric"} else 0.12
+        0.18
+        if grain == "bookcase_oak_fine"
+        else 0.24
+        if grain in {"wood", "french_oak", "stone", "fabric"}
+        else 0.12
     )
     normal_map.location = (-160, -220)
     links = material.node_tree.links

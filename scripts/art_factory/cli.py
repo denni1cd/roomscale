@@ -41,6 +41,13 @@ def parser() -> argparse.ArgumentParser:
     generate.add_argument("--timeout", type=int, default=1200)
     generate.add_argument("--parent", default="", help="prior candidate ID this recipe responds to")
 
+    retry = commands.add_parser(
+        "retry-generation",
+        help="resume a blocked candidate in an isolated execution while preserving its first run",
+    )
+    retry.add_argument("candidate_id")
+    retry.add_argument("--timeout", type=int, default=1200)
+
     validate = commands.add_parser(
         "validate", help="Godot-import and technically validate a candidate"
     )
@@ -142,6 +149,10 @@ def main(argv: list[str] | None = None) -> int:
                 )
             )
             return 3
+        print(json.dumps(candidate.to_dict(), indent=2))
+        return 0 if candidate.generation_result.get("status") == "pass" else 2
+    elif args.command == "retry-generation":
+        candidate = factory.retry_candidate_generation(args.candidate_id, args.timeout)
         print(json.dumps(candidate.to_dict(), indent=2))
         return 0 if candidate.generation_result.get("status") == "pass" else 2
     elif args.command == "validate":

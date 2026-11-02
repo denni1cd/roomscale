@@ -1,0 +1,293 @@
+{
+  "asset_files": [
+    "art/bookcase/iterations/v003/generated/asset.glb",
+    "art/bookcase/iterations/v003/generated/generation-record.json"
+  ],
+  "asset_id": "bookcase",
+  "candidate_id": "bookcase-v003",
+  "created_at_utc": "2026-11-02T09:40:35+00:00",
+  "evaluation_file": "art/bookcase/iterations/v003/evaluation.json",
+  "generation_attempts": [
+    {
+      "command": [
+        "python",
+        "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/scripts/art_factory/generators/visual_director_furniture_blender.py"
+      ],
+      "execution_number": 1,
+      "exit_code": 0,
+      "log_file": "art/bookcase/iterations/v003/generation.log",
+      "output_dir": "art/bookcase/iterations/v003/generated",
+      "recorded_at_utc": "2026-11-02T09:40:39+00:00",
+      "status": "pass"
+    }
+  ],
+  "generation_result": {
+    "command": [
+      "python",
+      "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/scripts/art_factory/generators/visual_director_furniture_blender.py"
+    ],
+    "execution_number": 1,
+    "exit_code": 0,
+    "log_file": "art/bookcase/iterations/v003/generation.log",
+    "output_dir": "art/bookcase/iterations/v003/generated",
+    "recorded_at_utc": "2026-11-02T09:40:39+00:00",
+    "status": "pass"
+  },
+  "parent_candidate_id": "",
+  "recipe_file": "art/bookcase/iterations/v003/recipe.json",
+  "renders": [
+    {
+      "asset_id": "bookcase",
+      "camera": {
+        "actual_camera_position": "(0.0, 272.0435, 203.1683)",
+        "distance_inches": 330.0,
+        "focus": "(0.0, 12.0, 0.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 52.0,
+        "yaw_radians": 0.0
+      },
+      "candidate_id": "bookcase-v003",
+      "captured_at_utc": "2026-11-02T09:41:02+00:00",
+      "draw_calls": 935.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 2.0,
+      "path": "art/bookcase/iterations/v003/render-runs/run-001/room-scale.png",
+      "phase": "room-scale",
+      "primitives": 507208.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "87486597995071b402e658445092ebf2e507625a4d636f3d12f16945f6caefc1"
+    },
+    {
+      "asset_id": "bookcase",
+      "camera": {
+        "actual_camera_position": "(203.1683, 272.0435, -0.000009)",
+        "distance_inches": 330.0,
+        "focus": "(0.0, 12.0, 0.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 52.0,
+        "yaw_radians": 1.5707963267949
+      },
+      "candidate_id": "bookcase-v003",
+      "captured_at_utc": "2026-11-02T09:41:02+00:00",
+      "draw_calls": 935.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 2.0,
+      "path": "art/bookcase/iterations/v003/render-runs/run-001/room-scale-opposite-angle.png",
+      "phase": "room-scale-opposite-angle",
+      "primitives": 514758.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "65584aff3f4c5d7a10cb7d7525cad84666ec28448bb19bef7334b816bbbf7106"
+    },
+    {
+      "asset_id": "bookcase",
+      "camera": {
+        "actual_camera_position": "(7.266847, 46.82436, 100.0827)",
+        "distance_inches": 64.0,
+        "focus": "(-4.5, 4.0, 54.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 42.0,
+        "yaw_radians": 0.25
+      },
+      "candidate_id": "bookcase-v003",
+      "captured_at_utc": "2026-11-02T09:41:02+00:00",
+      "draw_calls": 1829.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 2.0,
+      "path": "art/bookcase/iterations/v003/render-runs/run-001/settlement-scale.png",
+      "phase": "settlement-scale",
+      "primitives": 1004028.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "9394d3e88a49b343f1d1c758b8fea52673dbaf7d1d36f733c9dac2c26acbc8d2"
+    },
+    {
+      "asset_id": "bookcase",
+      "camera": {
+        "actual_camera_position": "(30.50983, 65.80898, -40.5385)",
+        "distance_inches": 73.08,
+        "focus": "(91.0, 31.5, -63.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 28.0,
+        "yaw_radians": -1.21525166318993
+      },
+      "candidate_id": "bookcase-v003",
+      "captured_at_utc": "2026-11-02T09:41:02+00:00",
+      "draw_calls": 48.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 45.0,
+      "path": "art/bookcase/iterations/v003/render-runs/run-001/asset-gameplay-distance.png",
+      "phase": "asset-gameplay-distance",
+      "primitives": 68088.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "82cbe385423fa87a7882d0754429ad8cfbd9dc240b8077945ce49624d2752b66"
+    },
+    {
+      "asset_id": "bookcase",
+      "camera": {
+        "actual_camera_position": "(13.82042, 68.15508, -34.34131)",
+        "distance_inches": 90.1199365234375,
+        "focus": "(91.0, 31.5, -63.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 24.0,
+        "yaw_radians": -1.21525166318993
+      },
+      "candidate_id": "bookcase-v003",
+      "captured_at_utc": "2026-11-02T09:41:02+00:00",
+      "draw_calls": 44.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 45.0,
+      "path": "art/bookcase/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+      "phase": "asset-three-quarter",
+      "primitives": 58796.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "638a2d85be9e96a916934bc47fcf1bae528889ef2161b2b0c253fa8533d9ea83"
+    },
+    {
+      "asset_id": "bookcase",
+      "camera": {
+        "actual_camera_position": "(37.00826, 68.15508, -0.847771)",
+        "distance_inches": 90.1199365234375,
+        "focus": "(91.0, 31.5, -63.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 24.0,
+        "yaw_radians": -0.715251663189927
+      },
+      "candidate_id": "bookcase-v003",
+      "captured_at_utc": "2026-11-02T09:41:02+00:00",
+      "draw_calls": 45.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 45.0,
+      "path": "art/bookcase/iterations/v003/render-runs/run-001/asset-interior-oblique.png",
+      "phase": "asset-interior-oblique",
+      "primitives": 58808.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "4097fd8fc83bdcf84b2e9124a620279c066073358774ccdadb2c5a21520a744d"
+    },
+    {
+      "asset_id": "bookcase",
+      "camera": {
+        "actual_camera_position": "(81.53248, 68.15508, 18.78248)",
+        "distance_inches": 90.1199365234375,
+        "focus": "(91.0, 31.5, -63.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 359.9999)",
+        "tilt_degrees": 24.0,
+        "yaw_radians": -0.115251663189927
+      },
+      "candidate_id": "bookcase-v003",
+      "captured_at_utc": "2026-11-02T09:41:02+00:00",
+      "draw_calls": 45.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 45.0,
+      "path": "art/bookcase/iterations/v003/render-runs/run-001/asset-profile.png",
+      "phase": "asset-profile",
+      "primitives": 59348.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "90f9a58daaacacb238b69a48cc0f5692ec25b9f4102462a6bf3f26ccb2cab9e7"
+    },
+    {
+      "asset_id": "bookcase",
+      "camera": {
+        "actual_camera_position": "(29.42134, 55.83509, -20.36863)",
+        "distance_inches": 78.75,
+        "focus": "(91.0, 31.5, -63.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0001, 360.0)",
+        "tilt_degrees": 18.0,
+        "yaw_radians": -0.965251663189927
+      },
+      "candidate_id": "bookcase-v003",
+      "captured_at_utc": "2026-11-02T09:41:02+00:00",
+      "draw_calls": 46.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 45.0,
+      "path": "art/bookcase/iterations/v003/render-runs/run-001/asset-detail.png",
+      "phase": "asset-detail",
+      "primitives": 58820.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "e53caf8e354b2cfe140694ab4a544d5aca5593431393618ee2e682057392dfc5"
+    }
+  ],
+  "schema_version": 1,
+  "status": "challenger",
+  "technical_validation": {
+    "asset_path": "res://art/bookcase/iterations/v003/generated/asset.glb",
+    "bounds": {
+      "position": [
+        -16.0,
+        0.0,
+        -8.5
+      ],
+      "size": [
+        32.0,
+        63.0,
+        17.0599994659424
+      ]
+    },
+    "engine": "4.7.2-stable (official)",
+    "import_exit_code": 0,
+    "issues": [],
+    "log": "art/bookcase/iterations/v003/technical-validation.log",
+    "mesh_count": 11,
+    "recorded_at_utc": "2026-11-02T09:40:51+00:00",
+    "report": "art/bookcase/iterations/v003/technical-validation.json",
+    "status": "pass",
+    "surface_count": 11,
+    "triangle_count": 31472,
+    "validation_exit_code": 0
+  },
+  "version": 3,
+  "visual_director_provenance": {
+    "approved_visual_target": {
+      "approval": "pass",
+      "approved_at_utc": "2026-11-02T08:06:58+00:00",
+      "concept_id": "bookcase-household-r01",
+      "path": "art/bookcase/visual_director/round-01/candidate-bookcase-r01.png",
+      "review_method": "pixel inspection; review evidence recorded by Luna",
+      "review_path": "art/bookcase/visual_director/round-01/pixel-review-r01.md",
+      "sha256": "2d0d1030622684e7a013c9f5fe01c8f69c7df524062ceb3372b5d773861426f0"
+    },
+    "case_file": "art/bookcase/visual_director/state.json",
+    "policy": {
+      "inputs": {
+        "category": "room_furniture",
+        "current_quality": "prototype",
+        "faction_defining": false,
+        "inferred": [],
+        "priority_tier": 1,
+        "screen_space_importance": 4,
+        "source_images_present": false,
+        "source_photo_required": false
+      },
+      "reasons": [
+        "Tier 1 scene-defining asset",
+        "high screen-space importance"
+      ],
+      "required": true
+    },
+    "status": "approved",
+    "strategy": "alternate_strategy",
+    "target_episode_attempt": 3
+  }
+}
