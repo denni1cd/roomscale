@@ -2089,7 +2089,10 @@ def build_french_door(mats, generation_variant: str = ""):
     )
 
 
-def apply_modifiers_and_merge_by_material(randomize_french_door_oak_uvs: bool = False):
+def apply_modifiers_and_merge_by_material(
+    randomize_french_door_oak_uvs: bool = False,
+    randomize_furniture_wood_uvs: bool = False,
+):
     """Bake manufactured edge profiles, unwrap, and merge into material batches."""
     mesh_objects = [obj for obj in bpy.context.scene.objects if obj.type == "MESH"]
     for obj in mesh_objects:
@@ -2123,6 +2126,35 @@ def apply_modifiers_and_merge_by_material(randomize_french_door_oak_uvs: bool = 
             seed = sum(ord(char) for char in obj.name) + 2042
             uv_rng = np.random.default_rng(seed)
             scale = float(uv_rng.uniform(0.82, 1.18))
+            offset_u = float(uv_rng.uniform(0.0, 1.0))
+            offset_v = float(uv_rng.uniform(0.0, 1.0))
+            uv_layer = obj.data.uv_layers.active
+            if uv_layer is not None:
+                for loop in uv_layer.data:
+                    loop.uv.x = loop.uv.x * scale + offset_u
+                    loop.uv.y = loop.uv.y * scale + offset_v
+        if (
+            randomize_furniture_wood_uvs
+            and obj.data.materials
+            and obj.data.materials[0].name.startswith("Room furniture ")
+            and any(
+                material_word in obj.data.materials[0].name.lower()
+                for material_word in ("oak", "walnut")
+            )
+        ):
+            # Give each timber board a deterministic grain phase and density.
+            # The shared PBR map remains consistent across the family without
+            # repeating the same figure across adjacent rails and stiles.
+            seed_material = (
+                obj.name
+                + "|"
+                + ",".join(f"{float(value):.3f}" for value in obj.location)
+                + "|"
+                + ",".join(f"{float(value):.3f}" for value in obj.dimensions)
+            )
+            seed = sum((index + 1) * ord(char) for index, char in enumerate(seed_material)) + 3127
+            uv_rng = np.random.default_rng(seed)
+            scale = float(uv_rng.uniform(0.86, 1.16))
             offset_u = float(uv_rng.uniform(0.0, 1.0))
             offset_v = float(uv_rng.uniform(0.0, 1.0))
             uv_layer = obj.data.uv_layers.active

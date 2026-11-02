@@ -1,0 +1,29 @@
+{
+  "asset_id": "room_floor_cabinet",
+  "asset_type": "floor_cabinet",
+  "method": "blender_round03_joinery_furniture",
+  "tool": "Blender 5.2.3 LTS Python/bpy",
+  "output": "asset.glb",
+  "dimensions_inches": [
+    26.0,
+    24.0,
+    21.0
+  ],
+  "source_inputs": [
+    "art/room_floor_cabinet/brief.json",
+    "art/room_floor_cabinet/visual_director/round-03/approved-target-r03.png",
+    "art/room_floor_cabinet/visual_director/round-03/pixel-review-03.md",
+    "art/room_floor_cabinet/iterations/v005/candidate.json",
+    "art/room_floor_cabinet/iterations/v005/evaluation.json",
+    "art/room_floor_cabinet/iterations/v005/generated/room_floor_cabinet.tscn",
+    "art/room_floor_cabinet/iterations/v005/render-runs/run-001/asset-gameplay-distance.png",
+    "art/room_floor_cabinet/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+    "art/room_floor_cabinet/iterations/v005/render-runs/run-001/asset-detail.png",
+    "scripts/art_factory/generators/visual_director_furniture_blender.py",
+    "scripts/art_factory/generators/production_batch01_blender.py",
+    "rooms/room_b.json"
+  ],
+  "geometry": "individually authored joinery, shaped panels, and fitted hardware; no gameplay geometry",
+  "materials": "embedded oak, walnut, iron, steel, and brass PBR with deterministic per-board UV variation",
+  "generation_variant": "batch10_joinery_pbr"
+}

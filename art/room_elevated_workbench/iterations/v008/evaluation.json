@@ -1,0 +1,170 @@
+{
+  "candidate_id": "room_elevated_workbench-v008",
+  "created_at_utc": "2026-11-02T07:43:05+00:00",
+  "decision": "continue",
+  "defects": [
+    "The quarter-sawn oak texture forms large repetitive waves across broad faces.",
+    "Drawer and vise details remain too small and shallow to read against the target.",
+    "Square beam forms dominate the lower frame and apron."
+  ],
+  "hard_fail_reasons": [
+    "The registered production views remain visibly simpler than the approved target and fail its craftsmanship gate.",
+    "The broad repeating grain and shallow hardware obscure the candidate’s authored joinery."
+  ],
+  "incumbent_candidate_id": "room_elevated_workbench-v007",
+  "incumbent_comparison": "Compared with room_elevated_workbench-v007, room_elevated_workbench-v008 improves fit or detail in limited ways, but it does not clear the approved Visual Director target.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "uv_mapping",
+    "material_generation",
+    "geometry_loss"
+  ],
+  "next_action_hypothesis": "Replace the broad-wave grain with quieter longitudinal figure and fine pores; add clearly visible end-grain keys, a large fitted vise hub and shaped shoulder transitions, then recheck the exact 58 x 36 x 30-inch envelope.",
+  "observations": {
+    "art_direction_fit": "The hardware and silhouette are recognizable, but the repeated grain and simplified construction remain far from the approved target.",
+    "close_up_quality": "The close render shows small drawer pulls and a dark vise plate, but not the target’s prominent screw hub and finished joinery.",
+    "gameplay_readability": "The dog-hole field, wide top and three front drawers remain easy to read in the gameplay capture.",
+    "geometric_detail": "The drawer faces and frame are repeated rectangular forms; the fitted shoulders do not show enough relief at gameplay scale.",
+    "material_realism": "The oak and walnut read as bright, hard plastic because the broad repeating texture and smooth highlight dominate the captured material response.",
+    "proportion": "The registered GLB validates at exactly 58 x 36 x 30 inches.",
+    "scale_fidelity": "The candidate fits the exact 58 x 36 x 30-inch brief envelope and the Room B fixture scale.",
+    "semantic_recognizability": "v008 is unmistakably an elevated woodworking bench in the Room B production views.",
+    "silhouette_quality": "The broad top, four legs, aprons, drawer bank and stretchers form the right silhouette, but its transitions remain square and heavy.",
+    "surface_variation": "The top has conspicuous looping bands rather than the approved target’s fine, board-aligned figure.",
+    "technical_integration": "Godot 4.7.2 imports the GLB with no issues; bounds match the exact ArtBrief dimensions."
+  },
+  "render_evidence": [
+    "art/room_elevated_workbench/iterations/v008/render-runs/run-001/room-scale.png",
+    "art/room_elevated_workbench/iterations/v008/render-runs/run-001/room-scale-opposite-angle.png",
+    "art/room_elevated_workbench/iterations/v008/render-runs/run-001/settlement-scale.png",
+    "art/room_elevated_workbench/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+    "art/room_elevated_workbench/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+    "art/room_elevated_workbench/iterations/v008/render-runs/run-001/asset-interior-oblique.png",
+    "art/room_elevated_workbench/iterations/v008/render-runs/run-001/asset-profile.png",
+    "art/room_elevated_workbench/iterations/v008/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 2,
+    "close_up_quality": 2,
+    "gameplay_readability": 4,
+    "geometric_detail": 2,
+    "material_realism": 2,
+    "proportion": 5,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "surface_variation": 1,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The registered detail view for room_elevated_workbench-v008 exposes broad texture waves and shallow joinery.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "On workbench v008, the wide top and leg faces keep plain squared outlines; small bevels do not match the target’s softened, shaped edges.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v008/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "hardware": {
+        "evidence": "The v008 vise remains a small dark cheek plate and the drawer pulls read as tiny rectangles; the target has a prominent screw hub, crossbar and cup pulls.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v008/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "joins": {
+        "evidence": "Workbench v008 shows repeated flat shoulder blocks without the deep, legible dovetail and through-tenon joints visible in the approved design.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v008/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "Workbench v008 lacks the target’s clearly layered end grain, fitted drawer cheeks and visible vise assembly at the registered detail angle.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v008/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "The production captures render v008’s oak with a hard golden sheen and little separation between the timber pieces.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v008/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "The close view of workbench v008 shows broad looping bands across the top instead of natural, aligned board figure.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v008/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "The registered v008 views show a believable thick top, full-height legs and substantial lower stretchers.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v008/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v008/render-runs/run-001/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v008/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The production capture for room_elevated_workbench-v008 still reads as a simple prototype beside its approved furniture target.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "This ArtBrief has no reference photograph; judge the candidate against its approved Visual Director target.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": true,
+      "low_poly": false,
+      "materially_flat": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Replace the broad-wave grain with quieter longitudinal figure and fine pores; add clearly visible end-grain keys, a large fitted vise hub and shaped shoulder transitions, then recheck the exact 58 x 36 x 30-inch envelope.",
+    "lost_visual_information": [
+      "The quarter-sawn oak texture forms large repetitive waves across broad faces.",
+      "Drawer and vise details remain too small and shallow to read against the target.",
+      "Square beam forms dominate the lower frame and apron."
+    ],
+    "preserved_components": [
+      "room_elevated_workbench-v008 preserves the recognizable furniture function and its corrected RoomDefinition dimensions.",
+      "The candidate remains render-only and leaves canonical gameplay and RoomDefinitions untouched."
+    ],
+    "primary_causes": [
+      "uv_mapping",
+      "material_generation",
+      "geometry_loss"
+    ]
+  }
+}

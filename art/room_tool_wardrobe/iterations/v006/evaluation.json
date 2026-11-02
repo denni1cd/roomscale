@@ -1,0 +1,170 @@
+{
+  "candidate_id": "room_tool_wardrobe-v006",
+  "created_at_utc": "2026-11-02T07:26:24+00:00",
+  "decision": "continue",
+  "defects": [
+    "Source depth expands to 27.88 inches.",
+    "Door rotation and width leave the cabinet looking nearly closed.",
+    "The center tool bay is sparse and most wood members have a uniform finish."
+  ],
+  "hard_fail_reasons": [
+    "Technical validation fails: source depth is 27.88 inches versus the authoritative 22-inch depth.",
+    "The target’s broad open doors and densely fitted tool bay are not transferred."
+  ],
+  "incumbent_candidate_id": "room_tool_wardrobe-v005",
+  "incumbent_comparison": "Compared with room_tool_wardrobe-v005, room_tool_wardrobe-v006 is a useful challenger but does not clear the target’s strict transfer gate. The source proportion defect and visible detail loss keep the incumbent as the safer current review choice.",
+  "incumbent_comparison_result": "worse",
+  "likely_causes": [
+    "proportion_drift",
+    "geometry_loss",
+    "material_generation"
+  ],
+  "next_action_hypothesis": "Bake each door rotation into its mesh before material merging, update Blender bounds after transforms, and validate the exported GLB. Open the broad doors toward the cabinet sides within the 22-inch depth, then fill the tool bay with legible fitted tools and stronger wood grain.",
+  "observations": {
+    "art_direction_fit": "The closed-looking doors and sparse tool bay diverge materially from the approved open tool-wardrobe concept.",
+    "close_up_quality": "The detail render shows broad plain faces and sparse tool silhouettes; the approved target has richly fitted tools, panels, rails and hardware.",
+    "gameplay_readability": "The tall cabinet remains identifiable in the Room B scene.",
+    "geometric_detail": "Shelves, a small tool rack and a lower drawer are present, but the render leaves most of the cabinet empty and the door faces lack readable panel construction.",
+    "material_realism": "The oak/walnut distinction is present, though all wood reads as smooth and uniformly lit.",
+    "proportion": "Godot measures 42 x 69.9 x 27.88 inches; source depth exceeds the authoritative 22-inch envelope by 5.88 inches.",
+    "scale_fidelity": "The source depth is 27.88 inches against the RoomDefinition’s 22 inches, so the candidate fails exact proportion fidelity.",
+    "semantic_recognizability": "v006 reads as a tall tool cupboard in the Room B review render.",
+    "silhouette_quality": "The crown and plinth retain a wardrobe silhouette, but the two narrow, almost closed door slabs do not match the target’s broad open doors.",
+    "surface_variation": "The production render shows minimal visible grain variation across doors, carcass and shelves.",
+    "technical_integration": "Godot imports the GLB, but technical validation fails because the source proportions exceed tolerance; the diagnostic render does not change that status."
+  },
+  "render_evidence": [
+    "art/room_tool_wardrobe/iterations/v006/render-runs/run-001/room-scale.png",
+    "art/room_tool_wardrobe/iterations/v006/render-runs/run-001/room-scale-opposite-angle.png",
+    "art/room_tool_wardrobe/iterations/v006/render-runs/run-001/settlement-scale.png",
+    "art/room_tool_wardrobe/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+    "art/room_tool_wardrobe/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+    "art/room_tool_wardrobe/iterations/v006/render-runs/run-001/asset-interior-oblique.png",
+    "art/room_tool_wardrobe/iterations/v006/render-runs/run-001/asset-profile.png",
+    "art/room_tool_wardrobe/iterations/v006/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 2,
+    "close_up_quality": 2,
+    "gameplay_readability": 4,
+    "geometric_detail": 3,
+    "material_realism": 2,
+    "proportion": 2,
+    "scale_fidelity": 2,
+    "semantic_recognizability": 3,
+    "silhouette_quality": 3,
+    "surface_variation": 2,
+    "technical_integration": 1
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The registered detail capture for room_tool_wardrobe-v006 shows shallow construction relief, weak material variation and missing target-level joinery.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "Room_tool_wardrobe v006 has broad, flat door edges and simple carcass corners; the close render lacks the target’s shaped trim and layered panel treatment.",
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "hardware": {
+        "evidence": "The nearly closed wardrobe doors conceal most of the tool bay, and the visible small pulls do not provide the target’s readable hinge and fitted hardware treatment.",
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "joins": {
+        "evidence": "Room_tool_wardrobe v006 does not make its carcass intersections or door construction read as fitted joinery in the registered diagnostic views.",
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "The tool bay in room_tool_wardrobe v006 appears sparse and the doors nearly closed, so the visible construction falls well short of the approved fitted workshop wardrobe.",
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "Room_tool_wardrobe v006 uses separated wood tones, but the large door and side planes render uniformly with little finished timber response.",
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "The registered diagnostic detail of room_tool_wardrobe v006 shows almost no board-to-board grain or wear variation.",
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "The diagnostic views show plausible thickness in the cabinet sides and top, but the saved technical validation still fails because the GLB exceeds the exact 42 x 70 x 22-inch envelope.",
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "room_tool_wardrobe-v006 remains visibly simpler and flatter than its approved target in the registered RoomScale renders.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "This ArtBrief has no reference photograph; judge this candidate against its approved Visual Director target.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": true,
+      "low_poly": false,
+      "materially_flat": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Bake each door rotation into its mesh before material merging, update Blender bounds after transforms, and validate the exported GLB. Open the broad doors toward the cabinet sides within the 22-inch depth, then fill the tool bay with legible fitted tools and stronger wood grain.",
+    "lost_visual_information": [
+      "Source depth expands to 27.88 inches.",
+      "Door rotation and width leave the cabinet looking nearly closed.",
+      "The center tool bay is sparse and most wood members have a uniform finish."
+    ],
+    "preserved_components": [
+      "The candidate preserves the recognizable tool wardrobe silhouette and its main functional parts.",
+      "RoomDefinition identity, placement, interaction landmarks and runtime gameplay geometry are unchanged."
+    ],
+    "primary_causes": [
+      "proportion_drift",
+      "geometry_loss",
+      "material_generation"
+    ]
+  }
+}

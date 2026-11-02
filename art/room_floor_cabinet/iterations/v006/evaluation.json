@@ -1,0 +1,170 @@
+{
+  "candidate_id": "room_floor_cabinet-v006",
+  "created_at_utc": "2026-11-02T07:26:24+00:00",
+  "decision": "continue",
+  "defects": [
+    "Height and depth are reversed relative to RoomDefinition.",
+    "Drawer fronts are shallow and use button-like pulls.",
+    "The top, side panels and frame lack distinct grain and fitted edges."
+  ],
+  "hard_fail_reasons": [
+    "Technical validation fails: source dimensions are 26 x 24 x 21 inches versus the corrected 26 x 21 x 24-inch RoomDefinition envelope.",
+    "The strict visual gate fails for woodworking detail, hardware and material response."
+  ],
+  "incumbent_candidate_id": "room_floor_cabinet-v005",
+  "incumbent_comparison": "Compared with room_floor_cabinet-v005, room_floor_cabinet-v006 is a useful challenger but does not clear the target’s strict transfer gate. The source proportion defect and visible detail loss keep the incumbent as the safer current review choice.",
+  "incumbent_comparison_result": "worse",
+  "likely_causes": [
+    "proportion_drift",
+    "geometry_loss",
+    "material_generation"
+  ],
+  "next_action_hypothesis": "Use the corrected 26 x 21 x 24-inch RoomDefinition envelope (21 inches high, 24 inches deep), raise the carcass/top and increase its depth, then deepen the face frame, drawer reveals, joinery and cup pulls.",
+  "observations": {
+    "art_direction_fit": "The candidate captures the broad category but misses the target’s woodworking character, fitted drawer treatment and hardware.",
+    "close_up_quality": "The detail render shows rectangular fronts with small button-like pulls rather than the target’s inset construction and cup hardware.",
+    "gameplay_readability": "At normal room distance it is easy to read as a storage cabinet.",
+    "geometric_detail": "Two drawer fronts, a solid top and a plinth are present, but the frame transitions and drawer construction remain shallow.",
+    "material_realism": "The candidate separates the darker plinth from the light wood, but its broad surfaces look uniformly colored.",
+    "proportion": "The source GLB measures 26 x 24 x 21 inches, while the authoritative RoomDefinition and corrected ArtBrief are 26 x 21 x 24 inches; height and depth are reversed.",
+    "scale_fidelity": "The cabinet’s source height/depth are reversed relative to the 26 x 21 x 24-inch RoomDefinition envelope.",
+    "semantic_recognizability": "v006 reads as a two-drawer floor cabinet in the Room B review render.",
+    "silhouette_quality": "The top, side panels and plinth establish a cabinet silhouette, though the target has a more articulated face frame and shaped feet.",
+    "surface_variation": "The top and drawer faces show little grain or member-level variation.",
+    "technical_integration": "Godot imports the GLB, but validation fails its aspect-ratio tolerance; the recorded report predates correction of the stale ArtBrief dimensions."
+  },
+  "render_evidence": [
+    "art/room_floor_cabinet/iterations/v006/render-runs/run-001/room-scale.png",
+    "art/room_floor_cabinet/iterations/v006/render-runs/run-001/room-scale-opposite-angle.png",
+    "art/room_floor_cabinet/iterations/v006/render-runs/run-001/settlement-scale.png",
+    "art/room_floor_cabinet/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+    "art/room_floor_cabinet/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+    "art/room_floor_cabinet/iterations/v006/render-runs/run-001/asset-interior-oblique.png",
+    "art/room_floor_cabinet/iterations/v006/render-runs/run-001/asset-profile.png",
+    "art/room_floor_cabinet/iterations/v006/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 2,
+    "close_up_quality": 2,
+    "gameplay_readability": 4,
+    "geometric_detail": 3,
+    "material_realism": 2,
+    "proportion": 2,
+    "scale_fidelity": 2,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "surface_variation": 2,
+    "technical_integration": 1
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The registered detail capture for room_floor_cabinet-v006 shows shallow construction relief, weak material variation and missing target-level joinery.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "Room_floor_cabinet v006 reads as a plain rectangular carcass with lightly eased edges; it lacks the stronger top, plinth and panel shaping of the target.",
+        "evidence_refs": [
+          "art/room_floor_cabinet/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_floor_cabinet/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_floor_cabinet/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "hardware": {
+        "evidence": "Room_floor_cabinet v006 uses small button pulls that look shallow and do not match the more substantial functional hardware in the approved target.",
+        "evidence_refs": [
+          "art/room_floor_cabinet/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_floor_cabinet/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_floor_cabinet/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "joins": {
+        "evidence": "Room_floor_cabinet v006 shows no convincing fitted corner or panel joinery in the diagnostic production views.",
+        "evidence_refs": [
+          "art/room_floor_cabinet/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_floor_cabinet/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_floor_cabinet/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "The shallow drawer fronts and minimal panel detail on room_floor_cabinet v006 do not establish the target’s crafted cabinet construction.",
+        "evidence_refs": [
+          "art/room_floor_cabinet/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_floor_cabinet/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_floor_cabinet/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "The production view of room_floor_cabinet v006 shows mostly smooth, even oak tones without the target’s richer contrast between frame, panel and top.",
+        "evidence_refs": [
+          "art/room_floor_cabinet/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_floor_cabinet/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_floor_cabinet/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "Room_floor_cabinet v006 has no persuasive per-board grain or wear visible in its registered diagnostic close view.",
+        "evidence_refs": [
+          "art/room_floor_cabinet/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_floor_cabinet/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_floor_cabinet/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "The top and side panels of room_floor_cabinet v006 have plausible visual thickness, although its stored validation remains failed because this candidate was generated with the stale 26 x 24 x 21 dimension order.",
+        "evidence_refs": [
+          "art/room_floor_cabinet/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_floor_cabinet/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_floor_cabinet/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "room_floor_cabinet-v006 remains visibly simpler and flatter than its approved target in the registered RoomScale renders.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "This ArtBrief has no reference photograph; judge this candidate against its approved Visual Director target.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": true,
+      "low_poly": false,
+      "materially_flat": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Use the corrected 26 x 21 x 24-inch RoomDefinition envelope (21 inches high, 24 inches deep), raise the carcass/top and increase its depth, then deepen the face frame, drawer reveals, joinery and cup pulls.",
+    "lost_visual_information": [
+      "Height and depth are reversed relative to RoomDefinition.",
+      "Drawer fronts are shallow and use button-like pulls.",
+      "The top, side panels and frame lack distinct grain and fitted edges."
+    ],
+    "preserved_components": [
+      "The candidate preserves the recognizable floor cabinet silhouette and its main functional parts.",
+      "RoomDefinition identity, placement, interaction landmarks and runtime gameplay geometry are unchanged."
+    ],
+    "primary_causes": [
+      "proportion_drift",
+      "geometry_loss",
+      "material_generation"
+    ]
+  }
+}

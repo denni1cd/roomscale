@@ -1,0 +1,170 @@
+{
+  "schema_version": 1,
+  "candidate_id": "room_floor_cabinet-v007",
+  "incumbent_candidate_id": "room_floor_cabinet-v006",
+  "incumbent_comparison_result": "same",
+  "scores": {
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "proportion": 5,
+    "geometric_detail": 2,
+    "material_realism": 1,
+    "surface_variation": 1,
+    "close_up_quality": 2,
+    "gameplay_readability": 3,
+    "scale_fidelity": 5,
+    "art_direction_fit": 2,
+    "technical_integration": 5
+  },
+  "observations": {
+    "semantic_recognizability": "v007 reads as a floor cabinet with two drawers in the Room B production views.",
+    "silhouette_quality": "The overhanging top, face frame and plinth set the right proportions, but both broad drawer fronts remain plain.",
+    "proportion": "The imported candidate validates at the corrected 26 x 21 x 24-inch Room B dimensions.",
+    "geometric_detail": "The frame rails and plinth are present, but the surfaces do not show the target’s carved profiles or fitted corner keys.",
+    "material_realism": "The oak looks like a smooth gold finish, and the walnut plinth has little material separation.",
+    "surface_variation": "The top and drawer faces show repeating undulating bands rather than natural timber figure.",
+    "close_up_quality": "The gameplay view shows small centered fittings but no readable brass keyholes or cup pulls.",
+    "gameplay_readability": "The two-drawer cabinet shape remains easy to recognize in the room.",
+    "scale_fidelity": "The 26 x 21 x 24-inch GLB now matches the corrected authoritative fixture dimensions.",
+    "art_direction_fit": "The silhouette is broadly right, but the target’s shaped top, framed drawers and furniture hardware are not transferred.",
+    "technical_integration": "Godot 4.7.2 imports the model and confirms the exact authoritative bounds."
+  },
+  "hard_fail_reasons": [
+    "The registered production views remain visibly simpler than the approved target and fail its craftsmanship gate.",
+    "The broad repeating grain and shallow hardware obscure the candidate’s authored joinery."
+  ],
+  "defects": [
+    "Drawer fronts lack visible framed panels, keyholes and substantial pulls.",
+    "The overhanging top and plinth have only simple bevels.",
+    "Broad waves replace natural grain."
+  ],
+  "likely_causes": [
+    "geometry_loss",
+    "uv_mapping",
+    "material_generation"
+  ],
+  "next_action_hypothesis": "Add visible inset drawer fields, brass bail pulls and keyhole escutcheons; shape the overhanging top and plinth, and replace broad-wave grain with restrained figured oak while keeping the corrected 26 x 21 x 24-inch bounds.",
+  "incumbent_comparison": "Compared with room_floor_cabinet-v006, room_floor_cabinet-v007 improves fit or detail in limited ways, but it does not clear the approved Visual Director target.",
+  "decision": "continue",
+  "render_evidence": [
+    "art/room_floor_cabinet/iterations/v007/render-runs/run-001/room-scale.png",
+    "art/room_floor_cabinet/iterations/v007/render-runs/run-001/room-scale-opposite-angle.png",
+    "art/room_floor_cabinet/iterations/v007/render-runs/run-001/settlement-scale.png",
+    "art/room_floor_cabinet/iterations/v007/render-runs/run-001/asset-gameplay-distance.png",
+    "art/room_floor_cabinet/iterations/v007/render-runs/run-001/asset-three-quarter.png",
+    "art/room_floor_cabinet/iterations/v007/render-runs/run-001/asset-interior-oblique.png",
+    "art/room_floor_cabinet/iterations/v007/render-runs/run-001/asset-profile.png",
+    "art/room_floor_cabinet/iterations/v007/render-runs/run-001/asset-detail.png"
+  ],
+  "created_at_utc": "2026-11-02T07:43:05+00:00",
+  "visual_gate": {
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "pass": false,
+      "evidence": "The production capture for room_floor_cabinet-v007 still reads as a simple prototype beside its approved furniture target."
+    },
+    "close_inspection": {
+      "answer": "No",
+      "pass": false,
+      "evidence": "The registered detail view for room_floor_cabinet-v007 exposes broad texture waves and shallow joinery."
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "pass": false,
+        "evidence": "Floor cabinet v007 has simple eased slab edges; the target’s thick rounded top and carved lower plinth are not represented.",
+        "evidence_refs": [
+          "art/room_floor_cabinet/iterations/v007/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_floor_cabinet/iterations/v007/render-runs/run-001/asset-three-quarter.png",
+          "art/room_floor_cabinet/iterations/v007/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "joins": {
+        "pass": false,
+        "evidence": "The v007 face frame sits as plain rails and stiles without the target’s visible corner keys and fitted drawer joints.",
+        "evidence_refs": [
+          "art/room_floor_cabinet/iterations/v007/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_floor_cabinet/iterations/v007/render-runs/run-001/asset-three-quarter.png",
+          "art/room_floor_cabinet/iterations/v007/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "thickness": {
+        "pass": true,
+        "evidence": "The production capture shows two substantial drawer boxes under an overhanging top and above a broad plinth.",
+        "evidence_refs": [
+          "art/room_floor_cabinet/iterations/v007/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_floor_cabinet/iterations/v007/render-runs/run-001/asset-three-quarter.png",
+          "art/room_floor_cabinet/iterations/v007/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "hardware": {
+        "pass": false,
+        "evidence": "The drawer fittings in floor cabinet v007 are tiny and flat-looking, with no visible brass keyhole plates or cup pulls.",
+        "evidence_refs": [
+          "art/room_floor_cabinet/iterations/v007/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_floor_cabinet/iterations/v007/render-runs/run-001/asset-three-quarter.png",
+          "art/room_floor_cabinet/iterations/v007/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "material_response": {
+        "pass": false,
+        "evidence": "The v007 oak face and walnut base have nearly uniform brightness and lack a convincing finished wood response.",
+        "evidence_refs": [
+          "art/room_floor_cabinet/iterations/v007/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_floor_cabinet/iterations/v007/render-runs/run-001/asset-three-quarter.png",
+          "art/room_floor_cabinet/iterations/v007/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "surface_variation": {
+        "pass": false,
+        "evidence": "Floor cabinet v007 shows large repeating bands across the top and drawer fronts rather than restrained board figure.",
+        "evidence_refs": [
+          "art/room_floor_cabinet/iterations/v007/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_floor_cabinet/iterations/v007/render-runs/run-001/asset-three-quarter.png",
+          "art/room_floor_cabinet/iterations/v007/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "manufacturing_detail": {
+        "pass": false,
+        "evidence": "The registered detail view of floor cabinet v007 lacks the target’s keyholes, shaped rails and dovetailed drawer corners.",
+        "evidence_refs": [
+          "art/room_floor_cabinet/iterations/v007/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_floor_cabinet/iterations/v007/render-runs/run-001/asset-three-quarter.png",
+          "art/room_floor_cabinet/iterations/v007/render-runs/run-001/asset-detail.png"
+        ]
+      }
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "pass": null,
+      "evidence": "This ArtBrief has no reference photograph; judge the candidate against its approved Visual Director target."
+    },
+    "style_flags": {
+      "low_poly": false,
+      "blocky_geometry": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "materially_flat": true,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "primary_causes": [
+      "geometry_loss",
+      "uv_mapping",
+      "material_generation"
+    ],
+    "lost_visual_information": [
+      "Drawer fronts lack visible framed panels, keyholes and substantial pulls.",
+      "The overhanging top and plinth have only simple bevels.",
+      "Broad waves replace natural grain."
+    ],
+    "preserved_components": [
+      "room_floor_cabinet-v007 preserves the recognizable furniture function and its corrected RoomDefinition dimensions.",
+      "The candidate remains render-only and leaves canonical gameplay and RoomDefinitions untouched."
+    ],
+    "corrective_action": "Add visible inset drawer fields, brass bail pulls and keyhole escutcheons; shape the overhanging top and plinth, and replace broad-wave grain with restrained figured oak while keeping the corrected 26 x 21 x 24-inch bounds."
+  }
+}

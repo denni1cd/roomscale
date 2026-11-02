@@ -1,0 +1,169 @@
+{
+  "candidate_id": "room_assembly_table-v006",
+  "created_at_utc": "2026-11-02T07:26:24+00:00",
+  "decision": "continue",
+  "defects": [
+    "Top grain and end-grain boards remain too flat.",
+    "Joinery shoulders and drawer relief lack enough depth to read at close range.",
+    "The side vise and cup pull are not clearly visible in the available production views."
+  ],
+  "hard_fail_reasons": [
+    "The strict visual gate fails for craftsmanship, surface variation, material response and neutral-viewer realism."
+  ],
+  "incumbent_candidate_id": "room_assembly_table-v005",
+  "incumbent_comparison": "Compared with room_assembly_table-v005, room_assembly_table-v006 is a useful challenger but does not clear the target’s strict transfer gate. The authored joinery is a real geometry improvement; its finish, craft and exact depth need another pass.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "geometry_loss",
+    "material_generation",
+    "uv_mapping"
+  ],
+  "next_action_hypothesis": "Keep the validated 42 x 24 x 32-inch envelope; bring the top closer to the target with distinct board/end-grain pieces, deeper fitted rail joints, readable vise and cup-pull hardware, and stronger per-board grain.",
+  "observations": {
+    "art_direction_fit": "The backend switch improves authored construction, but the finish and medium-scale woodworking detail remain far below the approved target.",
+    "close_up_quality": "Close inspection finds shallow drawer relief and understated joinery; the target shows stronger end grain, rails and fitted joints.",
+    "gameplay_readability": "The low table shape and single front drawer remain recognizable at normal viewing distance.",
+    "geometric_detail": "Dog holes, breadboard ends, a drawer, tapered legs, lower stretchers and a side vise are modeled, though several details are obscured in the room capture.",
+    "material_realism": "The oak and walnut are separated, but the surface reads as flat amber material rather than figured timber.",
+    "proportion": "The GLB measures exactly 42 x 24 x 32 inches and preserves the room’s height/depth relationship.",
+    "scale_fidelity": "The validator reports an exact 42 x 24 x 32-inch source envelope.",
+    "semantic_recognizability": "v006 reads as a compact workshop assembly table in the Room B production render.",
+    "silhouette_quality": "The lower 24-inch height and broad 32-inch depth distinguish it from the elevated workbench; the top and legs remain plain compared with the concept.",
+    "surface_variation": "The detail view shows little board-to-board grain or wear variation.",
+    "technical_integration": "Godot 4.7.2 imports the embedded GLB with no issues; the candidate stays review-only because it fails the visual gate."
+  },
+  "render_evidence": [
+    "art/room_assembly_table/iterations/v006/render-runs/run-001/room-scale.png",
+    "art/room_assembly_table/iterations/v006/render-runs/run-001/room-scale-opposite-angle.png",
+    "art/room_assembly_table/iterations/v006/render-runs/run-001/settlement-scale.png",
+    "art/room_assembly_table/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+    "art/room_assembly_table/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+    "art/room_assembly_table/iterations/v006/render-runs/run-001/asset-interior-oblique.png",
+    "art/room_assembly_table/iterations/v006/render-runs/run-001/asset-profile.png",
+    "art/room_assembly_table/iterations/v006/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 2,
+    "close_up_quality": 2,
+    "gameplay_readability": 4,
+    "geometric_detail": 3,
+    "material_realism": 2,
+    "proportion": 3,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 4,
+    "surface_variation": 2,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The registered detail capture for room_assembly_table-v006 shows shallow construction relief, weak material variation and missing target-level joinery.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "On room_assembly_table v006, the breadboard corners, tapered feet and drawer rails remain mostly square; the small bevels do not reproduce the approved table’s shaped edges.",
+        "evidence_refs": [
+          "art/room_assembly_table/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_assembly_table/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_assembly_table/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "hardware": {
+        "evidence": "The side vise and small drawer button on room_assembly_table v006 are present, but the vise fittings and handle are too understated to read clearly against the target.",
+        "evidence_refs": [
+          "art/room_assembly_table/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_assembly_table/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_assembly_table/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "joins": {
+        "evidence": "Room_assembly_table v006 has modeled shelf shoulders and frame members, but their shallow relief and simple intersections do not read as fitted joinery at the detail angle.",
+        "evidence_refs": [
+          "art/room_assembly_table/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_assembly_table/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_assembly_table/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "Room_assembly_table v006 includes dog holes, breadboard ends, a drawer and stretchers, yet the details remain shallow and less deliberate than the reference construction.",
+        "evidence_refs": [
+          "art/room_assembly_table/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_assembly_table/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_assembly_table/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "Room_assembly_table v006 separates oak from walnut, though both surfaces look evenly colored and smoother than the approved workshop reference.",
+        "evidence_refs": [
+          "art/room_assembly_table/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_assembly_table/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_assembly_table/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "The close render of room_assembly_table v006 shows little distinct grain across the top boards and no convincing edge wear.",
+        "evidence_refs": [
+          "art/room_assembly_table/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_assembly_table/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_assembly_table/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "The registered views of room_assembly_table v006 show a substantial top, visible apron and lower frame whose thicknesses look credible for a low assembly bench.",
+        "evidence_refs": [
+          "art/room_assembly_table/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_assembly_table/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_assembly_table/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "room_assembly_table-v006 remains visibly simpler and flatter than its approved target in the registered RoomScale renders.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "This ArtBrief has no reference photograph; judge this candidate against its approved Visual Director target.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": true,
+      "low_poly": false,
+      "materially_flat": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Keep the validated 42 x 24 x 32-inch envelope; bring the top closer to the target with distinct board/end-grain pieces, deeper fitted rail joints, readable vise and cup-pull hardware, and stronger per-board grain.",
+    "lost_visual_information": [
+      "Top grain and end-grain boards remain too flat.",
+      "Joinery shoulders and drawer relief lack enough depth to read at close range.",
+      "The side vise and cup pull are not clearly visible in the available production views."
+    ],
+    "preserved_components": [
+      "The candidate preserves the recognizable assembly table silhouette and its main functional parts.",
+      "RoomDefinition identity, placement, interaction landmarks and runtime gameplay geometry are unchanged."
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "material_generation",
+      "uv_mapping"
+    ]
+  }
+}

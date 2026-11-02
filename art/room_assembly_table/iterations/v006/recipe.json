@@ -1,0 +1,51 @@
+{
+  "deterministic_seed": 3012,
+  "generator_command": [
+    "python",
+    "{project_root}/scripts/art_factory/generators/visual_director_furniture_blender.py"
+  ],
+  "import_configuration": {
+    "axis": "Blender X width / Y depth / Z height; glTF exporter and Godot importer convert Blender Z-up to Godot Y-up",
+    "format": "GLB with embedded PBR materials",
+    "normalization": "Validate visual mesh bounds against the exact ArtBrief envelope; gameplay dimensions and landmarks remain owned by RoomDefinition",
+    "renderer": "gl_compatibility",
+    "units": "inches"
+  },
+  "instructions": "Create a fresh, individually authored Blender furniture asset for Room B Assembly Table. Follow the approved Visual Director target at art/room_assembly_table/visual_director/round-03/approved-target-r03.png and preserve the exact 42 x 24 x 32-inch ArtBrief envelope. Required construction: thick board worktop with end-grain ends; one framed front drawer with dovetails and brass cup pull; four tapered legs with visible apron joinery; lower cross-stretcher; small iron vise with screw and handle; separated oak, walnut, iron and brass surfaces; complete fit inside 42 x 24 x 32 inches. The parent room_assembly_table-v005 remains the incumbent; its recorded transfer diagnosis identifies simple repeated beam forms and synthetic repeated grain. Replace those forms with physically modeled joinery and fitted components, and vary wood UV phase and scale deterministically per object. Use distinct quarter-sawn oak, light oak, walnut, brass, iron, and steel PBR response as appropriate. Export only render geometry: do not alter the authoritative RoomDefinition, collisions, navigation, selection, interaction targets, activities, assignments, or simulation. Room source: rooms/room_b.json.",
+  "material_method": "Embedded procedural oak/walnut and separate metal PBR with deterministic per-object UV grain variance",
+  "method": "blender_round03_joinery_furniture",
+  "parameters": {
+    "asset_type": "assembly_table",
+    "generation_variant": "batch10_joinery_pbr",
+    "outputs": [
+      "asset.glb",
+      "generation-record.json"
+    ],
+    "parent_candidate": "room_assembly_table-v005",
+    "visual_director_strategy": "initial",
+    "visual_director_target": "art/room_assembly_table/visual_director/round-03/approved-target-r03.png"
+  },
+  "post_processing": [
+    "Import the GLB through the Art Factory and validate it in Godot 4.7.2.",
+    "Reject any candidate whose generated visual geometry exceeds its ArtBrief envelope.",
+    "Keep all generated furniture meshes out of collision, navigation, selection, and simulation state.",
+    "Capture standardized candidate-specific production renders before visual evaluation."
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "art/room_assembly_table/brief.json",
+    "art/room_assembly_table/visual_director/round-03/approved-target-r03.png",
+    "art/room_assembly_table/visual_director/round-03/pixel-review-03.md",
+    "art/room_assembly_table/iterations/v005/candidate.json",
+    "art/room_assembly_table/iterations/v005/evaluation.json",
+    "art/room_assembly_table/iterations/v005/generated/room_assembly_table.tscn",
+    "art/room_assembly_table/iterations/v005/render-runs/run-001/asset-gameplay-distance.png",
+    "art/room_assembly_table/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+    "art/room_assembly_table/iterations/v005/render-runs/run-001/asset-detail.png",
+    "scripts/art_factory/generators/visual_director_furniture_blender.py",
+    "scripts/art_factory/generators/production_batch01_blender.py",
+    "rooms/room_b.json"
+  ],
+  "tool": "Blender-authored custom furniture meshes with fitted cabinetmaking joinery",
+  "tool_version": "Blender 5.2.3 LTS"
+}

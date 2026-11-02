@@ -1,0 +1,170 @@
+{
+  "candidate_id": "room_side_table-v007",
+  "created_at_utc": "2026-11-02T07:43:05+00:00",
+  "decision": "continue",
+  "defects": [
+    "The turned legs appear too slender and do not visually meet the top.",
+    "The drawer bail and dovetails are too small to read.",
+    "Top and shelf finishes lack controlled grain variation."
+  ],
+  "hard_fail_reasons": [
+    "The registered production views remain visibly simpler than the approved target and fail its craftsmanship gate.",
+    "The broad repeating grain and shallow hardware obscure the candidate’s authored joinery."
+  ],
+  "incumbent_candidate_id": "room_side_table-v006",
+  "incumbent_comparison": "Compared with room_side_table-v006, room_side_table-v007 improves fit or detail in limited ways, but it does not clear the approved Visual Director target.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "geometry_loss",
+    "material_generation",
+    "uv_mapping"
+  ],
+  "next_action_hypothesis": "Extend the turned legs to the top underside, carve the scalloped apron, widen the drawer, make its brass bail and dovetail sides visible, and replace broad-wave grain while retaining the exact 20 x 20 x 17-inch bounds.",
+  "observations": {
+    "art_direction_fit": "The corrected proportions improve the category read, but the crafted leg, drawer and shelf treatment of the approved target is not transferred.",
+    "close_up_quality": "The detail capture does not make the drawer bail, turned leg profiles or apron shaping visually convincing.",
+    "gameplay_readability": "The small-table shape remains readable at Room A scale.",
+    "geometric_detail": "The drawer field and tenon shoulders are present but appear as shallow overlays on a box-like apron.",
+    "material_realism": "The oak looks bright and uniform, while the walnut shelf is a flat dark plane.",
+    "proportion": "The generated GLB validates at exactly 20 x 20 x 17 inches.",
+    "scale_fidelity": "The GLB fits the authoritative 20 x 20 x 17-inch fixture envelope.",
+    "semantic_recognizability": "v007 reads as a compact side table with a drawer and lower shelf in the Room A capture.",
+    "silhouette_quality": "The tabletop, four legs, apron and shelf establish the target category, though the legs and apron still look plain at gameplay scale.",
+    "surface_variation": "The tabletop grain forms broad repeating waves instead of subtle individual board figure.",
+    "technical_integration": "Godot 4.7.2 imports the candidate with no reported issues and exact bounds."
+  },
+  "render_evidence": [
+    "art/room_side_table/iterations/v007/render-runs/run-001/room-scale.png",
+    "art/room_side_table/iterations/v007/render-runs/run-001/room-scale-opposite-angle.png",
+    "art/room_side_table/iterations/v007/render-runs/run-001/settlement-scale.png",
+    "art/room_side_table/iterations/v007/render-runs/run-001/asset-gameplay-distance.png",
+    "art/room_side_table/iterations/v007/render-runs/run-001/asset-three-quarter.png",
+    "art/room_side_table/iterations/v007/render-runs/run-001/asset-interior-oblique.png",
+    "art/room_side_table/iterations/v007/render-runs/run-001/asset-profile.png",
+    "art/room_side_table/iterations/v007/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 2,
+    "close_up_quality": 1,
+    "gameplay_readability": 3,
+    "geometric_detail": 2,
+    "material_realism": 1,
+    "proportion": 5,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "surface_variation": 1,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The registered detail view for room_side_table-v007 exposes broad texture waves and shallow joinery.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "Side table v007 has square shelf and apron transitions with narrow legs; the target has rounded top edges and shaped scallops.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v007/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v007/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v007/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "hardware": {
+        "evidence": "The drawer fitting on side table v007 is too small to read as the target’s prominent brass bail pull.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v007/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v007/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v007/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "joins": {
+        "evidence": "The v007 leg-to-apron and shelf shoulders appear as small blocks rather than visible fitted tenons.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v007/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v007/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v007/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "The detail capture of side table v007 does not show a convincing turned bead profile, scalloped apron or dovetail drawer sides.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v007/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v007/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v007/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "The side-table wood is bright and smooth in the captured view, with little contrast between frame and figured boards.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v007/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v007/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v007/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "The top of side table v007 carries broad undulating texture bands instead of fine, aligned grain.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v007/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v007/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v007/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "The registered production view shows a substantial top, leg sections and a distinct lower shelf.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v007/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v007/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v007/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The production capture for room_side_table-v007 still reads as a simple prototype beside its approved furniture target.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "This ArtBrief has no reference photograph; judge the candidate against its approved Visual Director target.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": true,
+      "low_poly": false,
+      "materially_flat": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Extend the turned legs to the top underside, carve the scalloped apron, widen the drawer, make its brass bail and dovetail sides visible, and replace broad-wave grain while retaining the exact 20 x 20 x 17-inch bounds.",
+    "lost_visual_information": [
+      "The turned legs appear too slender and do not visually meet the top.",
+      "The drawer bail and dovetails are too small to read.",
+      "Top and shelf finishes lack controlled grain variation."
+    ],
+    "preserved_components": [
+      "room_side_table-v007 preserves the recognizable furniture function and its corrected RoomDefinition dimensions.",
+      "The candidate remains render-only and leaves canonical gameplay and RoomDefinitions untouched."
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "material_generation",
+      "uv_mapping"
+    ]
+  }
+}

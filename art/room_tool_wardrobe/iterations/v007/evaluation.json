@@ -1,0 +1,170 @@
+{
+  "candidate_id": "room_tool_wardrobe-v007",
+  "created_at_utc": "2026-11-02T07:43:05+00:00",
+  "decision": "continue",
+  "defects": [
+    "Door stiles, rails, panels, hinges and pulls are buried behind the slab faces.",
+    "The broad leaves obscure most of the fitted tools.",
+    "The oak figure is repetitive and too strong at large scale."
+  ],
+  "hard_fail_reasons": [
+    "The registered production views remain visibly simpler than the approved target and fail its craftsmanship gate.",
+    "The broad repeating grain and shallow hardware obscure the candidate’s authored joinery."
+  ],
+  "incumbent_candidate_id": "room_tool_wardrobe-v006",
+  "incumbent_comparison": "Compared with room_tool_wardrobe-v006, room_tool_wardrobe-v007 improves fit or detail in limited ways, but it does not clear the approved Visual Director target.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "geometry_loss",
+    "material_generation",
+    "uv_mapping"
+  ],
+  "next_action_hypothesis": "Move door rails, stiles, recessed panels, hinge leaves and pull plates onto the outward face of each slab; open the leaves enough to expose tools, center the complete cabinet in its 22-inch depth, and use fine longitudinal oak grain.",
+  "observations": {
+    "art_direction_fit": "The opened silhouette improves over v006, but the plain leaves hide the distinctive workshop tools and joinery.",
+    "close_up_quality": "The gameplay and detail captures do not reveal the target’s framed door panels, clear brass hinges, fitted tool layout or carved cornice.",
+    "gameplay_readability": "The tall storage function is readable, although its visible front is dominated by closed-looking slabs.",
+    "geometric_detail": "The shelves, dividers and tools are present, but the tools are mostly hidden behind broad blank leaves.",
+    "material_realism": "The wood planes have the same bright uniform sheen as the other furniture challengers.",
+    "proportion": "The imported GLB validates at 42 x 69.9 x 21.95 inches, within the 42 x 70 x 22-inch envelope.",
+    "scale_fidelity": "The candidate remains within the authoritative 42 x 70 x 22-inch fixture bounds.",
+    "semantic_recognizability": "v007 is recognizable as a tall tool wardrobe in its Room B production view.",
+    "silhouette_quality": "The cabinet reaches the expected height and has two broad open leaves, but their plain faces visually close off most of the tool bay.",
+    "surface_variation": "The door and carcass faces carry broad repeating waves instead of restrained grain.",
+    "technical_integration": "Godot 4.7.2 imports the candidate without issues and reports bounds inside the brief."
+  },
+  "render_evidence": [
+    "art/room_tool_wardrobe/iterations/v007/render-runs/run-001/room-scale.png",
+    "art/room_tool_wardrobe/iterations/v007/render-runs/run-001/room-scale-opposite-angle.png",
+    "art/room_tool_wardrobe/iterations/v007/render-runs/run-001/settlement-scale.png",
+    "art/room_tool_wardrobe/iterations/v007/render-runs/run-001/asset-gameplay-distance.png",
+    "art/room_tool_wardrobe/iterations/v007/render-runs/run-001/asset-three-quarter.png",
+    "art/room_tool_wardrobe/iterations/v007/render-runs/run-001/asset-interior-oblique.png",
+    "art/room_tool_wardrobe/iterations/v007/render-runs/run-001/asset-profile.png",
+    "art/room_tool_wardrobe/iterations/v007/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 1,
+    "close_up_quality": 1,
+    "gameplay_readability": 3,
+    "geometric_detail": 1,
+    "material_realism": 1,
+    "proportion": 5,
+    "scale_fidelity": 5,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 2,
+    "surface_variation": 1,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The registered detail view for room_tool_wardrobe-v007 exposes broad texture waves and shallow joinery.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "Wardrobe v007 has broad, unshaped leaf edges and a simple stepped cap; the approved cabinet has rounded rails and layered cornice work.",
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v007/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v007/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v007/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "hardware": {
+        "evidence": "Wardrobe v007’s face capture hides its hinge leaves and pulls; the approved target shows repeated brass hinges and long handles.",
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v007/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v007/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v007/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "joins": {
+        "evidence": "The v007 door and carcass intersections look like overlapping slabs, with no readable framed-panel joinery.",
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v007/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v007/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v007/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "The broad blank doors on wardrobe v007 conceal the tool bays and do not expose the target’s framed panels, tool racks and drawer construction.",
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v007/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v007/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v007/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "The cabinet render of v007 is bright and uniformly glossy across doors, frame and carcass.",
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v007/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v007/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v007/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "The close view of wardrobe v007 shows large wave bands on the doors instead of natural cabinet-board grain.",
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v007/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v007/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v007/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "The registered v007 view shows substantial side panels, a stepped cap and broad doors that have plausible visual thickness.",
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v007/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v007/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v007/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The production capture for room_tool_wardrobe-v007 still reads as a simple prototype beside its approved furniture target.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "This ArtBrief has no reference photograph; judge the candidate against its approved Visual Director target.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": true,
+      "low_poly": false,
+      "materially_flat": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Move door rails, stiles, recessed panels, hinge leaves and pull plates onto the outward face of each slab; open the leaves enough to expose tools, center the complete cabinet in its 22-inch depth, and use fine longitudinal oak grain.",
+    "lost_visual_information": [
+      "Door stiles, rails, panels, hinges and pulls are buried behind the slab faces.",
+      "The broad leaves obscure most of the fitted tools.",
+      "The oak figure is repetitive and too strong at large scale."
+    ],
+    "preserved_components": [
+      "room_tool_wardrobe-v007 preserves the recognizable furniture function and its corrected RoomDefinition dimensions.",
+      "The candidate remains render-only and leaves canonical gameplay and RoomDefinitions untouched."
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "material_generation",
+      "uv_mapping"
+    ]
+  }
+}

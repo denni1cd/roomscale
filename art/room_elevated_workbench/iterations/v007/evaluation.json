@@ -1,0 +1,170 @@
+{
+  "candidate_id": "room_elevated_workbench-v007",
+  "created_at_utc": "2026-11-02T07:26:24+00:00",
+  "decision": "continue",
+  "defects": [
+    "Source depth exceeds target by 0.23 inches.",
+    "Board grain is too weak to distinguish timber members.",
+    "Drawer and vise hardware read as simple blocks and buttons."
+  ],
+  "hard_fail_reasons": [
+    "The source GLB is 58 x 36 x 30.23 inches; the ArtBrief depth is exactly 30 inches.",
+    "The approved target’s end-grain treatment, visibly fitted joinery and shoulder-vise hardware are not transferred."
+  ],
+  "incumbent_candidate_id": "room_elevated_workbench-v006",
+  "incumbent_comparison": "Compared with room_elevated_workbench-v006, room_elevated_workbench-v007 is a useful challenger but does not clear the target’s strict transfer gate. The authored joinery is a real geometry improvement; its finish, craft and exact depth need another pass.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "geometry_loss",
+    "material_generation",
+    "uv_mapping"
+  ],
+  "next_action_hypothesis": "Move the drawer bank inward enough to fit the 30-inch depth exactly; deepen the breadboard/end-grain assembly and vise details, use stronger French-oak grain with location-seeded UV variation, and retain the fitted shoulders and pegs.",
+  "observations": {
+    "art_direction_fit": "The warmer timber and fitted frame move toward the concept, but the flat finish and missing end-grain treatment remain conspicuous.",
+    "close_up_quality": "The detail render shows simple drawer faces and small round pulls; it does not carry the target’s sculpted joinery and visible vise hardware.",
+    "gameplay_readability": "At gameplay distance the bench and its dog-hole work surface remain easy to identify.",
+    "geometric_detail": "The candidate adds dog holes, three fitted drawer fronts, peg shoulders and lower stretchers; the routed faces and joinery still appear as repeated rectangular pieces.",
+    "material_realism": "The oak/walnut split is legible, but the oak finish appears smooth and nearly uniform beside the approved target’s figured boards.",
+    "proportion": "The room render normalizes the bench to its RoomDefinition envelope, while the source GLB depth is 30.23 inches rather than the exact 30-inch ArtBrief depth.",
+    "scale_fidelity": "The Room B review render places the bench at the expected gameplay scale, although the source depth overshoots the brief by 0.23 inches.",
+    "semantic_recognizability": "v007 reads as a substantial woodworking bench in its Room B gameplay and three-quarter captures.",
+    "silhouette_quality": "The wide slab, four legs, apron and lower frame establish the correct workbench silhouette, but the target has more shaped transitions and end-grain blocks.",
+    "surface_variation": "The tabletop and members do not show the target’s distinct board grain and end-grain blocks in the production captures.",
+    "technical_integration": "Godot imports and renders the GLB with no reported importer issues; the measured source depth is 30.23 inches and requires correction before promotion."
+  },
+  "render_evidence": [
+    "art/room_elevated_workbench/iterations/v007/render-runs/run-002/room-scale.png",
+    "art/room_elevated_workbench/iterations/v007/render-runs/run-002/room-scale-opposite-angle.png",
+    "art/room_elevated_workbench/iterations/v007/render-runs/run-002/settlement-scale.png",
+    "art/room_elevated_workbench/iterations/v007/render-runs/run-002/asset-gameplay-distance.png",
+    "art/room_elevated_workbench/iterations/v007/render-runs/run-002/asset-three-quarter.png",
+    "art/room_elevated_workbench/iterations/v007/render-runs/run-002/asset-interior-oblique.png",
+    "art/room_elevated_workbench/iterations/v007/render-runs/run-002/asset-profile.png",
+    "art/room_elevated_workbench/iterations/v007/render-runs/run-002/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 2,
+    "close_up_quality": 2,
+    "gameplay_readability": 4,
+    "geometric_detail": 3,
+    "material_realism": 2,
+    "proportion": 3,
+    "scale_fidelity": 3,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 4,
+    "surface_variation": 2,
+    "technical_integration": 3
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The registered detail capture for room_elevated_workbench-v007 shows shallow construction relief, weak material variation and missing target-level joinery.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "room_elevated_workbench-v007 shows simple, repeated edges in its registered gameplay, three-quarter and detail renders; the target’s more deliberate shaping is not present.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v007/render-runs/run-002/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v007/render-runs/run-002/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v007/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "hardware": {
+        "evidence": "room_elevated_workbench-v007 does not make the target’s specified functional hardware clearly readable; visible small buttons/plates do not substitute for the cup pulls, hinges or vise fittings.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v007/render-runs/run-002/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v007/render-runs/run-002/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v007/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "joins": {
+        "evidence": "room_elevated_workbench-v007 does not show fitted joints with enough relief to match the approved target in the registered production views.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v007/render-runs/run-002/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v007/render-runs/run-002/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v007/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "The registered close view shows shallow, regular details rather than the target’s fitted rails, panels and drawer construction.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v007/render-runs/run-002/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v007/render-runs/run-002/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v007/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "The production views show separated wood tones but a smooth, uniform response compared with the approved target’s finished timber.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v007/render-runs/run-002/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v007/render-runs/run-002/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v007/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "The registered production captures do not show convincing per-board grain or surface wear for room_elevated_workbench-v007.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v007/render-runs/run-002/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v007/render-runs/run-002/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v007/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "The registered views show plausible top, panel and frame thickness for room_elevated_workbench-v007; this check passes, without establishing an overall craftsmanship pass.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v007/render-runs/run-002/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v007/render-runs/run-002/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v007/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "room_elevated_workbench-v007 remains visibly simpler and flatter than its approved target in the registered RoomScale renders.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "This ArtBrief has no reference photograph; judge this candidate against its approved Visual Director target.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": true,
+      "low_poly": false,
+      "materially_flat": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Move the drawer bank inward enough to fit the 30-inch depth exactly; deepen the breadboard/end-grain assembly and vise details, use stronger French-oak grain with location-seeded UV variation, and retain the fitted shoulders and pegs.",
+    "lost_visual_information": [
+      "Source depth exceeds target by 0.23 inches.",
+      "Board grain is too weak to distinguish timber members.",
+      "Drawer and vise hardware read as simple blocks and buttons."
+    ],
+    "preserved_components": [
+      "The candidate preserves the recognizable elevated workbench silhouette and its main functional parts.",
+      "RoomDefinition identity, placement, interaction landmarks and runtime gameplay geometry are unchanged."
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "material_generation",
+      "uv_mapping"
+    ]
+  }
+}

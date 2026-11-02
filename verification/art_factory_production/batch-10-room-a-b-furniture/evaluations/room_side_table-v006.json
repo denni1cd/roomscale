@@ -1,0 +1,170 @@
+{
+  "schema_version": 1,
+  "candidate_id": "room_side_table-v006",
+  "incumbent_candidate_id": "room_side_table-v005",
+  "incumbent_comparison_result": "worse",
+  "scores": {
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "proportion": 2,
+    "geometric_detail": 3,
+    "material_realism": 2,
+    "surface_variation": 2,
+    "close_up_quality": 2,
+    "gameplay_readability": 4,
+    "scale_fidelity": 2,
+    "art_direction_fit": 2,
+    "technical_integration": 1
+  },
+  "observations": {
+    "semantic_recognizability": "v006 reads as a small occasional table with a drawer and lower shelf in Room A.",
+    "silhouette_quality": "The turned legs and lower shelf are visible, but the legs are much thinner and straighter than the target’s substantial bead-and-cove forms.",
+    "proportion": "The source measures 20 x 17 x 20 inches against the authoritative 20 x 20 x 17-inch Room A envelope; height and depth are reversed.",
+    "geometric_detail": "A drawer, turned legs, apron and shelf are modeled, but their joints and edge transitions remain shallow.",
+    "material_realism": "Oak and walnut are distinct, but the wood surfaces appear smooth and flat.",
+    "surface_variation": "The target’s strong figured grain and contrasting shelf are absent from the production render.",
+    "close_up_quality": "The detail view shows a small round drawer button and narrow legs instead of a fitted cup pull and full turned profiles.",
+    "gameplay_readability": "The object remains recognizable as a side table in the Room A furniture grouping.",
+    "scale_fidelity": "The source GLB reverses the Room A height and depth proportions, so it fails the exact 20 x 20 x 17-inch envelope.",
+    "art_direction_fit": "The candidate follows the broad table category but misses the target’s fuller turning, visible jointwork and richer wood response.",
+    "technical_integration": "Godot imports the GLB, but validation fails because its source aspect ratios exceed the brief tolerance."
+  },
+  "hard_fail_reasons": [
+    "Technical validation fails: source dimensions are 20 x 17 x 20 inches versus the 20 x 20 x 17-inch Room A envelope.",
+    "The turned-leg profile, cup pull and wood variation remain below the approved target."
+  ],
+  "defects": [
+    "Height and depth are reversed relative to RoomDefinition.",
+    "Legs are too slender for the approved turned profile.",
+    "Drawer pull and lower-shelf joinery are underdeveloped."
+  ],
+  "likely_causes": [
+    "proportion_drift",
+    "geometry_loss",
+    "material_generation"
+  ],
+  "next_action_hypothesis": "Use the Room A envelope 20 x 20 x 17 inches (20 inches high, 17 inches deep), make the turned legs fuller, expose the drawer side joinery and cup pull, and distinguish the shelf from the oak frame.",
+  "incumbent_comparison": "Compared with room_side_table-v005, room_side_table-v006 is a useful challenger but does not clear the target’s strict transfer gate. The source proportion defect and visible detail loss keep the incumbent as the safer current review choice.",
+  "decision": "continue",
+  "render_evidence": [
+    "art/room_side_table/iterations/v006/render-runs/run-001/room-scale.png",
+    "art/room_side_table/iterations/v006/render-runs/run-001/room-scale-opposite-angle.png",
+    "art/room_side_table/iterations/v006/render-runs/run-001/settlement-scale.png",
+    "art/room_side_table/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+    "art/room_side_table/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+    "art/room_side_table/iterations/v006/render-runs/run-001/asset-interior-oblique.png",
+    "art/room_side_table/iterations/v006/render-runs/run-001/asset-profile.png",
+    "art/room_side_table/iterations/v006/render-runs/run-001/asset-detail.png"
+  ],
+  "created_at_utc": "2026-11-02T07:26:24+00:00",
+  "visual_gate": {
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "pass": false,
+      "evidence": "room_side_table-v006 remains visibly simpler and flatter than its approved target in the registered RoomScale renders."
+    },
+    "close_inspection": {
+      "answer": "No",
+      "pass": false,
+      "evidence": "The registered detail capture for room_side_table-v006 shows shallow construction relief, weak material variation and missing target-level joinery."
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "pass": false,
+        "evidence": "Room_side_table v006 has simple square apron and shelf edges, while its tapered legs remain visually thin beside the approved reference.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v006/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "joins": {
+        "pass": false,
+        "evidence": "The registered views of room_side_table v006 do not show strong fitted leg-to-apron joinery or tenon detail at the visible corners.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v006/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "thickness": {
+        "pass": true,
+        "evidence": "Room_side_table v006 shows a plausible tabletop and shelf thickness in the diagnostic render, but its saved technical validation fails because height and depth were transposed.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v006/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "hardware": {
+        "pass": false,
+        "evidence": "The drawer button on room_side_table v006 is small and flat-looking rather than the target’s clear, functional furniture pull.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v006/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "material_response": {
+        "pass": false,
+        "evidence": "Room_side_table v006 separates the tabletop and walnut shelf, yet the timber reads as uniformly smooth instead of finished and varied.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v006/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "surface_variation": {
+        "pass": false,
+        "evidence": "The close view of room_side_table v006 shows little grain variation across the top, legs or drawer front.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v006/render-runs/run-001/asset-detail.png"
+        ]
+      },
+      "manufacturing_detail": {
+        "pass": false,
+        "evidence": "Room_side_table v006 has a shallow drawer and plain apron construction; its understated details do not reach the visible joinery quality of the approved target.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v006/render-runs/run-001/asset-detail.png"
+        ]
+      }
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "pass": null,
+      "evidence": "This ArtBrief has no reference photograph; judge this candidate against its approved Visual Director target."
+    },
+    "style_flags": {
+      "low_poly": false,
+      "blocky_geometry": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "materially_flat": true,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "primary_causes": [
+      "proportion_drift",
+      "geometry_loss",
+      "material_generation"
+    ],
+    "lost_visual_information": [
+      "Height and depth are reversed relative to RoomDefinition.",
+      "Legs are too slender for the approved turned profile.",
+      "Drawer pull and lower-shelf joinery are underdeveloped."
+    ],
+    "preserved_components": [
+      "The candidate preserves the recognizable side table silhouette and its main functional parts.",
+      "RoomDefinition identity, placement, interaction landmarks and runtime gameplay geometry are unchanged."
+    ],
+    "corrective_action": "Use the Room A envelope 20 x 20 x 17 inches (20 inches high, 17 inches deep), make the turned legs fuller, expose the drawer side joinery and cup pull, and distinguish the shelf from the oak frame."
+  }
+}
