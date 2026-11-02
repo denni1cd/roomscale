@@ -1,0 +1,17 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ROOMSCALE_CIVILIZATION_PROFILE id=clockwork name=Clockwork citizen_style=clockwork settlement_style=clockwork traversal_style=grapple_cable
+ROOMSCALE_ART_FACTORY_GENERATION_PASS asset=room_elevated_workbench refinement=mesh_authored_furniture_v5 meshes=0 path=C:\Users\Zero\.codex\worktrees\art-factory-production\roomscale\art\room_elevated_workbench\iterations\v004\generated/room_elevated_workbench.tscn
+SCRIPT ERROR: Parse Error: Cannot infer the type of "half_width" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://scripts/visuals/visual_geometry.gd:268)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "half_height" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://scripts/visuals/visual_geometry.gd:269)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://scripts/art_factory/generate_furniture_candidate.gd:0)
+ERROR: Failed to load script "res://scripts/art_factory/generate_furniture_candidate.gd" with error "Compilation failed".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)
+SCRIPT ERROR: Invalid call. Nonexistent function 'box' in base 'GDScript'.
+   at: _elevated_workbench (res://scripts/art_factory/generate_furniture_candidate.gd:161)
+   GDScript backtrace (most recent call first):
+       [0] _elevated_workbench (res://scripts/art_factory/generate_furniture_candidate.gd:161)
+       [1] run (res://scripts/art_factory/generate_furniture_candidate.gd:38)

@@ -1,0 +1,162 @@
+{
+  "candidate_id": "room_tool_wardrobe-v004",
+  "created_at_utc": "2026-11-02T06:30:27.087689+00:00",
+  "decision": "continue",
+  "defects": [
+    "The v004 Room B captures retain the tall paired-door cabinet, crown, plinth, hinges and open shelf bay. Routed raised panels improve the doors, but the grain is dark and regular, the panel center fields have weak separation, and the shelf bay reads mostly empty at normal gameplay distance.",
+    "The target's construction and material character are not yet transferred strongly enough for promotion."
+  ],
+  "hard_fail_reasons": [
+    "The routed panels improve the cabinet but the panel relief, tool-bay readability and dark procedural wood response still fail the close-inspection and craftsmanship gates."
+  ],
+  "incumbent_candidate_id": "room_tool_wardrobe-v003",
+  "incumbent_comparison": "Compared with room_tool_wardrobe-v003, the current candidate adds a target-specific mesh construction change while preserving the same room placement and role. The improvement is meaningful but incomplete: The v004 Room B captures retain the tall paired-door cabinet, crown, plinth, hinges and open shelf bay. Routed raised panels improve the doors, but the grain is dark and regular, the panel center fields have weak separation, and the shelf bay reads mostly empty at normal gameplay distance. The reviewed v003 remains the comparison baseline; no candidate is promoted.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "geometry_loss",
+    "material_generation"
+  ],
+  "next_action_hypothesis": "Correct the target's finish first so the routed door fields and frame contrast read; keep the current door geometry and separately review tool silhouettes if they remain lost after the material pass.",
+  "observations": {
+    "art_direction_fit": "The v004 Room B captures retain the tall paired-door cabinet, crown, plinth, hinges and open shelf bay. Routed raised panels improve the doors, but the grain is dark and regular, the panel center fields have weak separation, and the shelf bay reads mostly empty at normal gameplay distance.",
+    "close_up_quality": "The v004 Room B captures retain the tall paired-door cabinet, crown, plinth, hinges and open shelf bay. Routed raised panels improve the doors, but the grain is dark and regular, the panel center fields have weak separation, and the shelf bay reads mostly empty at normal gameplay distance.",
+    "gameplay_readability": "The v004 Room B captures retain the tall paired-door cabinet, crown, plinth, hinges and open shelf bay. Routed raised panels improve the doors, but the grain is dark and regular, the panel center fields have weak separation, and the shelf bay reads mostly empty at normal gameplay distance.",
+    "geometric_detail": "The v004 Room B captures retain the tall paired-door cabinet, crown, plinth, hinges and open shelf bay. Routed raised panels improve the doors, but the grain is dark and regular, the panel center fields have weak separation, and the shelf bay reads mostly empty at normal gameplay distance.",
+    "material_realism": "The v004 Room B captures retain the tall paired-door cabinet, crown, plinth, hinges and open shelf bay. Routed raised panels improve the doors, but the grain is dark and regular, the panel center fields have weak separation, and the shelf bay reads mostly empty at normal gameplay distance.",
+    "proportion": "The v004 Room B captures retain the tall paired-door cabinet, crown, plinth, hinges and open shelf bay. Routed raised panels improve the doors, but the grain is dark and regular, the panel center fields have weak separation, and the shelf bay reads mostly empty at normal gameplay distance.",
+    "scale_fidelity": "The v004 Room B captures retain the tall paired-door cabinet, crown, plinth, hinges and open shelf bay. Routed raised panels improve the doors, but the grain is dark and regular, the panel center fields have weak separation, and the shelf bay reads mostly empty at normal gameplay distance.",
+    "semantic_recognizability": "room tool wardrobe remains clearly identifiable from the RoomScale production capture.",
+    "silhouette_quality": "The v004 Room B captures retain the tall paired-door cabinet, crown, plinth, hinges and open shelf bay. Routed raised panels improve the doors, but the grain is dark and regular, the panel center fields have weak separation, and the shelf bay reads mostly empty at normal gameplay distance.",
+    "surface_variation": "The v004 Room B captures retain the tall paired-door cabinet, crown, plinth, hinges and open shelf bay. Routed raised panels improve the doors, but the grain is dark and regular, the panel center fields have weak separation, and the shelf bay reads mostly empty at normal gameplay distance.",
+    "technical_integration": "The v004 Room B captures retain the tall paired-door cabinet, crown, plinth, hinges and open shelf bay. Routed raised panels improve the doors, but the grain is dark and regular, the panel center fields have weak separation, and the shelf bay reads mostly empty at normal gameplay distance."
+  },
+  "render_evidence": [
+    "art/room_tool_wardrobe/iterations/v004/render-runs/run-001/room-scale.png",
+    "art/room_tool_wardrobe/iterations/v004/render-runs/run-001/room-scale-opposite-angle.png",
+    "art/room_tool_wardrobe/iterations/v004/render-runs/run-001/asset-gameplay-distance.png",
+    "art/room_tool_wardrobe/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+    "art/room_tool_wardrobe/iterations/v004/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 3,
+    "gameplay_readability": 4,
+    "geometric_detail": 3,
+    "material_realism": 2,
+    "proportion": 4,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 4,
+    "surface_variation": 2,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The v004 Room B captures retain the tall paired-door cabinet, crown, plinth, hinges and open shelf bay. Routed raised panels improve the doors, but the grain is dark and regular, the panel center fields have weak separation, and the shelf bay reads mostly empty at normal gameplay distance. Close inspection still shows simplified transitions and subdued construction relief.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "room_tool_wardrobe: the custom profiles improve selected edges, but the broad top and most carcass/member edges remain uniformly eased.",
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v004/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v004/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "hardware": {
+        "evidence": "room_tool_wardrobe: the authored hinge and drawer hardware remains visible in the current production captures.",
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v004/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v004/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "joins": {
+        "evidence": "room_tool_wardrobe: the new mesh shapes suggest fitted shoulders, but the production captures do not show convincing, consistently legible fitted joints.",
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v004/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v004/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "room_tool_wardrobe: the target's fine fitted construction and carved/routed transitions are only partly legible in the current production views.",
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v004/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v004/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "room_tool_wardrobe: directional grain is present, but the current shader response is too dark and red-brown beside the approved target.",
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v004/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v004/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "room_tool_wardrobe: grain is visible but repeats with similar scale and lacks enough board/member-level value variation.",
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v004/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v004/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "room_tool_wardrobe: the top, panels and supporting members have visible, technically plausible thickness in the three-quarter and detail captures.",
+        "evidence_refs": [
+          "art/room_tool_wardrobe/iterations/v004/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_tool_wardrobe/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+          "art/room_tool_wardrobe/iterations/v004/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The wardrobe silhouette and paired doors are clear, and the door relief is better than v003, but the dark finish and simple shelf/tool presentation still make the model read as procedural furniture rather than the approved crafted tool cabinet.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "This ArtBrief has no source photograph; compare the Godot candidate against its approved Visual Director target instead.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": true,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Correct the target's finish first so the routed door fields and frame contrast read; keep the current door geometry and separately review tool silhouettes if they remain lost after the material pass.",
+    "lost_visual_information": [
+      "The approved target's warm carved panel contrast and richer crown/door edge transitions are reduced to narrow repeated strips.",
+      "The hand-tool bay lacks enough clear tool silhouettes in the room-scale and detail captures."
+    ],
+    "preserved_components": [
+      "The 42 x 70 x 22 inch brief envelope, paired doors, open bay, crown and plinth remain intact.",
+      "Door hinges and separate brass hardware are retained in the production render."
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "material_generation"
+    ]
+  }
+}

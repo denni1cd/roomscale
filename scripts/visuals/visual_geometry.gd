@@ -114,30 +114,196 @@ static func lathe_profile(
 				var lower1 := Vector3(radial1.x * lower.y, (lower.x - 0.5) * length, radial1.z * lower.y)
 				var upper0 := Vector3(radial0.x * upper.y, (upper.x - 0.5) * length, radial0.z * upper.y)
 				var upper1 := Vector3(radial1.x * upper.y, (upper.x - 0.5) * length, radial1.z * upper.y)
-				# Godot uses clockwise front faces. Reverse the outward geometric winding.
+				# Godot uses clockwise front faces; this order emits outward-facing triangles.
 				for point in [lower0, upper1, upper0, lower0, lower1, upper1]:
 					var radial := Vector3(point.x, 0.0, point.z).normalized()
 					surface.set_normal(radial)
 					surface.set_uv(Vector2(atan2(radial.z, radial.x) / TAU, point.y / length + 0.5))
 					surface.add_vertex(point)
-			# Close both ends so splayed feet and fitted members do not show open rings.
-			var bottom := samples[0]
-			var top := samples[samples.size() - 1]
-			for segment in range(radial_segments):
-				var angle0 := TAU * float(segment) / float(radial_segments)
-				var angle1 := TAU * float(segment + 1) / float(radial_segments)
-				var p0 := Vector3(cos(angle0) * bottom.y, (bottom.x - 0.5) * length, sin(angle0) * bottom.y)
-				var p1 := Vector3(cos(angle1) * bottom.y, (bottom.x - 0.5) * length, sin(angle1) * bottom.y)
-				var q0 := Vector3(cos(angle0) * top.y, (top.x - 0.5) * length, sin(angle0) * top.y)
-				var q1 := Vector3(cos(angle1) * top.y, (top.x - 0.5) * length, sin(angle1) * top.y)
-				_append_triangle(surface, Vector3(0.0, (bottom.x - 0.5) * length, 0.0), Vector3.DOWN, Vector2(0.5, 0.5), p0, Vector3.DOWN, Vector2(0.0, 0.0), p1, Vector3.DOWN, Vector2(1.0, 0.0))
-				_append_triangle(surface, Vector3(0.0, (top.x - 0.5) * length, 0.0), Vector3.UP, Vector2(0.5, 0.5), q1, Vector3.UP, Vector2(1.0, 0.0), q0, Vector3.UP, Vector2(0.0, 0.0))
+		# Cap only the two terminal rings; intermediate caps would create seams.
+		var bottom := samples[0]
+		var top := samples[samples.size() - 1]
+		for segment in range(radial_segments):
+			var angle0 := TAU * float(segment) / float(radial_segments)
+			var angle1 := TAU * float(segment + 1) / float(radial_segments)
+			var p0 := Vector3(cos(angle0) * bottom.y, (bottom.x - 0.5) * length, sin(angle0) * bottom.y)
+			var p1 := Vector3(cos(angle1) * bottom.y, (bottom.x - 0.5) * length, sin(angle1) * bottom.y)
+			var q0 := Vector3(cos(angle0) * top.y, (top.x - 0.5) * length, sin(angle0) * top.y)
+			var q1 := Vector3(cos(angle1) * top.y, (top.x - 0.5) * length, sin(angle1) * top.y)
+			_append_triangle(surface, Vector3(0.0, (bottom.x - 0.5) * length, 0.0), Vector3.DOWN, Vector2(0.5, 0.5), p0, Vector3.DOWN, Vector2(0.0, 0.0), p1, Vector3.DOWN, Vector2(1.0, 0.0))
+			_append_triangle(surface, Vector3(0.0, (top.x - 0.5) * length, 0.0), Vector3.UP, Vector2(0.5, 0.5), q1, Vector3.UP, Vector2(1.0, 0.0), q0, Vector3.UP, Vector2(0.0, 0.0))
 		_meshes[cache_key] = surface.commit()
 	var item := MeshInstance3D.new()
 	item.name = label
 	item.mesh = _meshes[cache_key]
 	item.position = (start + finish) * 0.5
 	item.quaternion = Quaternion(Vector3.UP, direction.normalized())
+	item.material_override = Materials.get_material(category, color)
+	item.set_meta("roomscale_material_category", category)
+	parent.add_child(item)
+	return item
+
+
+static func profiled_beam(
+	parent: Node3D,
+	label: String,
+	start: Vector3,
+	finish: Vector3,
+	profile: Array[Vector3],
+	category: String,
+	color: Color,
+	corner_chamfer: float = 0.12
+) -> MeshInstance3D:
+	"""Create a fitted rectangular beam with eased corners and tenon shoulders at its ends."""
+	var direction := finish - start
+	var length := direction.length()
+	if length < 0.001 or profile.size() < 2:
+		return null
+	var cache_key := "profiled-beam:%s:%s:%s" % [length, profile, corner_chamfer]
+	if not _meshes.has(cache_key):
+		var stations: Array[Vector3] = []
+		for index in range(profile.size() - 1):
+			var p0: Vector3 = profile[maxi(index - 1, 0)]
+			var p1: Vector3 = profile[index]
+			var p2: Vector3 = profile[index + 1]
+			var p3: Vector3 = profile[mini(index + 2, profile.size() - 1)]
+			for step in range(4):
+				var t := float(step) / 4.0
+				var t2 := t * t
+				var t3 := t2 * t
+				var station := Vector3.ZERO
+				for axis in range(3):
+					station[axis] = 0.5 * (
+						2.0 * p1[axis]
+						+ (-p0[axis] + p2[axis]) * t
+						+ (2.0 * p0[axis] - 5.0 * p1[axis] + 4.0 * p2[axis] - p3[axis]) * t2
+						+ (-p0[axis] + 3.0 * p1[axis] - 3.0 * p2[axis] + p3[axis]) * t3
+					)
+				station.y = maxf(0.04, station.y)
+				station.z = maxf(0.04, station.z)
+				stations.append(station)
+		stations.append(profile[profile.size() - 1])
+		var section_count := 8
+		var surface := SurfaceTool.new()
+		surface.begin(Mesh.PRIMITIVE_TRIANGLES)
+		for station_index in range(stations.size() - 1):
+			var lower := stations[station_index]
+			var upper := stations[station_index + 1]
+			var lower_ring := _profiled_beam_ring(lower, length, corner_chamfer)
+			var upper_ring := _profiled_beam_ring(upper, length, corner_chamfer)
+			for section in range(section_count):
+				var next := (section + 1) % section_count
+				var a: Vector3 = lower_ring[section]
+				var b: Vector3 = lower_ring[next]
+				var c: Vector3 = upper_ring[next]
+				var d: Vector3 = upper_ring[section]
+				var n_a := Vector3(a.x / lower.y, 0.0, a.z / lower.z).normalized()
+				var n_b := Vector3(b.x / lower.y, 0.0, b.z / lower.z).normalized()
+				var n_c := Vector3(c.x / upper.y, 0.0, c.z / upper.z).normalized()
+				var n_d := Vector3(d.x / upper.y, 0.0, d.z / upper.z).normalized()
+				var outward := (n_a + n_b + n_c + n_d).normalized()
+				var uv_a := Vector2(float(section) / section_count, lower.x)
+				var uv_b := Vector2(float(next) / section_count, lower.x)
+				var uv_c := Vector2(float(next) / section_count, upper.x)
+				var uv_d := Vector2(float(section) / section_count, upper.x)
+				if (d - a).cross(c - a).dot(outward) >= 0.0:
+					_append_triangle(surface, a, n_a, uv_a, d, n_d, uv_d, c, n_c, uv_c)
+					_append_triangle(surface, a, n_a, uv_a, c, n_c, uv_c, b, n_b, uv_b)
+				else:
+					_append_triangle(surface, a, n_a, uv_a, c, n_c, uv_c, d, n_d, uv_d)
+					_append_triangle(surface, a, n_a, uv_a, b, n_b, uv_b, c, n_c, uv_c)
+		var bottom := _profiled_beam_ring(stations[0], length, corner_chamfer)
+		var top := _profiled_beam_ring(stations[stations.size() - 1], length, corner_chamfer)
+		var bottom_center := Vector3(0.0, (stations[0].x - 0.5) * length, 0.0)
+		var top_center := Vector3(0.0, (stations[stations.size() - 1].x - 0.5) * length, 0.0)
+		for section in range(section_count):
+			var next := (section + 1) % section_count
+			_append_triangle(surface, bottom_center, Vector3.DOWN, Vector2(0.5, 0.5), bottom[section], Vector3.DOWN, Vector2(0.0, 0.0), bottom[next], Vector3.DOWN, Vector2(1.0, 0.0))
+			_append_triangle(surface, top_center, Vector3.UP, Vector2(0.5, 0.5), top[next], Vector3.UP, Vector2(1.0, 0.0), top[section], Vector3.UP, Vector2(0.0, 0.0))
+		_meshes[cache_key] = surface.commit()
+	var item := MeshInstance3D.new()
+	item.name = label
+	item.mesh = _meshes[cache_key]
+	item.position = (start + finish) * 0.5
+	item.quaternion = Quaternion(Vector3.UP, direction.normalized())
+	item.material_override = Materials.get_material(category, color)
+	item.set_meta("roomscale_material_category", category)
+	parent.add_child(item)
+	return item
+
+
+static func _profiled_beam_ring(station: Vector3, length: float, corner_chamfer: float) -> PackedVector3Array:
+	var half_width := station.y
+	var half_depth := station.z
+	var cut := minf(corner_chamfer, minf(half_width, half_depth) * 0.45)
+	var section := PackedVector2Array([
+		Vector2(-half_width + cut, -half_depth), Vector2(half_width - cut, -half_depth),
+		Vector2(half_width, -half_depth + cut), Vector2(half_width, half_depth - cut),
+		Vector2(half_width - cut, half_depth), Vector2(-half_width + cut, half_depth),
+		Vector2(-half_width, half_depth - cut), Vector2(-half_width, -half_depth + cut)
+	])
+	var result := PackedVector3Array()
+	for point in section:
+		result.append(Vector3(point.x, (station.x - 0.5) * length, point.y))
+	return result
+
+
+static func raised_panel(
+	parent: Node3D,
+	label: String,
+	width: float,
+	height: float,
+	thickness: float,
+	at: Vector3,
+	category: String,
+	color: Color,
+	corner_chamfer: float = 0.22
+) -> MeshInstance3D:
+	"""Create a routed panel with a beveled perimeter and a subtly raised center field."""
+	var cache_key := "raised-panel:%s:%s:%s:%s:%s" % [width, height, thickness, corner_chamfer, color.to_html()]
+	if not _meshes.has(cache_key):
+		var sections: Array[Vector2] = [Vector2(1.0, -0.5), Vector2(1.0, 0.10), Vector2(0.94, 0.32), Vector2(0.82, 0.50)]
+		var loops: Array[PackedVector3Array] = []
+		for section in sections:
+			var half_width := width * 0.5 * section.x
+			var half_height := height * 0.5 * section.x
+			var cut := minf(corner_chamfer, minf(half_width, half_height) * 0.45)
+			var outline := PackedVector2Array([
+				Vector2(-half_width + cut, -half_height), Vector2(half_width - cut, -half_height),
+				Vector2(half_width, -half_height + cut), Vector2(half_width, half_height - cut),
+				Vector2(half_width - cut, half_height), Vector2(-half_width + cut, half_height),
+				Vector2(-half_width, half_height - cut), Vector2(-half_width, -half_height + cut)
+			])
+			var loop := PackedVector3Array()
+			for point in outline:
+				loop.append(Vector3(point.x, point.y, section.y * thickness))
+			loops.append(loop)
+		var surface := SurfaceTool.new()
+		surface.begin(Mesh.PRIMITIVE_TRIANGLES)
+		for ring in range(loops.size() - 1):
+			for index in range(8):
+				var next := (index + 1) % 8
+				var outer0: Vector3 = loops[ring][index]
+				var outer1: Vector3 = loops[ring][next]
+				var inner0: Vector3 = loops[ring + 1][index]
+				var inner1: Vector3 = loops[ring + 1][next]
+				var middle := (outer0 + outer1 + inner0 + inner1) * 0.25
+				var normal := Vector3(middle.x / maxf(width * 0.5, 0.01), middle.y / maxf(height * 0.5, 0.01), 0.62).normalized()
+				_append_triangle(surface, outer0, normal, Vector2(0.0, 0.0), outer1, normal, Vector2(1.0, 0.0), inner1, normal, Vector2(1.0, 1.0))
+				_append_triangle(surface, outer0, normal, Vector2(0.0, 0.0), inner1, normal, Vector2(1.0, 1.0), inner0, normal, Vector2(0.0, 1.0))
+		var center_front := Vector3(0.0, 0.0, thickness * 0.50)
+		for index in range(8):
+			var next := (index + 1) % 8
+			_append_triangle(surface, center_front, Vector3.BACK, Vector2(0.5, 0.5), loops[loops.size() - 1][next], Vector3.BACK, Vector2(1.0, 1.0), loops[loops.size() - 1][index], Vector3.BACK, Vector2(0.0, 1.0))
+		var back_center := Vector3(0.0, 0.0, -thickness * 0.50)
+		for index in range(8):
+			var next := (index + 1) % 8
+			_append_triangle(surface, back_center, Vector3.FORWARD, Vector2(0.5, 0.5), loops[0][index], Vector3.FORWARD, Vector2(0.0, 1.0), loops[0][next], Vector3.FORWARD, Vector2(1.0, 1.0))
+		_meshes[cache_key] = surface.commit()
+	var item := MeshInstance3D.new()
+	item.name = label
+	item.mesh = _meshes[cache_key]
+	item.position = at
 	item.material_override = Materials.get_material(category, color)
 	item.set_meta("roomscale_material_category", category)
 	parent.add_child(item)

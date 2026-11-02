@@ -1,0 +1,162 @@
+{
+  "candidate_id": "room_elevated_workbench-v006",
+  "created_at_utc": "2026-11-02T06:35:42.573461+00:00",
+  "decision": "continue",
+  "defects": [
+    "The v006 Room B close and gameplay captures show the 58 x 36 x 30 inch elevated workbench with its broad top, dog holes, side vise, drawer bank, profiled legs, and lower stretchers. The brighter amber finish improves the oak/walnut separation over v005, but strong longitudinal streaks remain and the shoulders, drawer fields, and joints still read as simple repeated forms.",
+    "The approved target's construction and material character are still not transferred strongly enough for promotion."
+  ],
+  "hard_fail_reasons": [
+    "The warm finish improves over v005, but the v006 production views still show repetitive high-contrast grain and simplified beam construction. Neutral-viewer realism and craftsmanship remain below promotion standard."
+  ],
+  "incumbent_candidate_id": "room_elevated_workbench-v003",
+  "incumbent_comparison": "Compared with room_elevated_workbench-v003, room elevated workbench now uses mesh-authored joinery and a target-specific material correction while keeping its RoomDefinition role and placement. Against v005, The v006 Room B close and gameplay captures show the 58 x 36 x 30 inch elevated workbench with its broad top, dog holes, side vise, drawer bank, profiled legs, and lower stretchers. The brighter amber finish improves the oak/walnut separation over v005, but strong longitudinal streaks remain and the shoulders, drawer fields, and joints still read as simple repeated forms. The v003 production candidate remains the incumbent baseline; this candidate is the best current visual attempt, and no asset is promoted.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "geometry_loss",
+    "material_generation"
+  ],
+  "next_action_hypothesis": "Keep this best-current candidate and backlog the episode; a future round needs stronger fitted joinery and board-specific, restrained grain variation while preserving the exact bench surface and dimensions.",
+  "observations": {
+    "art_direction_fit": "In the v006 Room B gameplay and detail views, the workbench reads clearly and the lighter finish is an improvement over v005. Its prominent straight beams and repetitive bright grain still look like simplified procedural woodworking beside the approved round-03 target.",
+    "close_up_quality": "In the v006 Room B gameplay and detail views, the workbench reads clearly and the lighter finish is an improvement over v005. Its prominent straight beams and repetitive bright grain still look like simplified procedural woodworking beside the approved round-03 target.",
+    "gameplay_readability": "In the v006 Room B gameplay and detail views, the workbench reads clearly and the lighter finish is an improvement over v005. Its prominent straight beams and repetitive bright grain still look like simplified procedural woodworking beside the approved round-03 target.",
+    "geometric_detail": "In the v006 Room B gameplay and detail views, the workbench reads clearly and the lighter finish is an improvement over v005. Its prominent straight beams and repetitive bright grain still look like simplified procedural woodworking beside the approved round-03 target.",
+    "material_realism": "In the v006 Room B gameplay and detail views, the workbench reads clearly and the lighter finish is an improvement over v005. Its prominent straight beams and repetitive bright grain still look like simplified procedural woodworking beside the approved round-03 target.",
+    "proportion": "In the v006 Room B gameplay and detail views, the workbench reads clearly and the lighter finish is an improvement over v005. Its prominent straight beams and repetitive bright grain still look like simplified procedural woodworking beside the approved round-03 target.",
+    "scale_fidelity": "In the v006 Room B gameplay and detail views, the workbench reads clearly and the lighter finish is an improvement over v005. Its prominent straight beams and repetitive bright grain still look like simplified procedural woodworking beside the approved round-03 target.",
+    "semantic_recognizability": "room elevated workbench remains readily identifiable in the Room B production capture.",
+    "silhouette_quality": "In the v006 Room B gameplay and detail views, the workbench reads clearly and the lighter finish is an improvement over v005. Its prominent straight beams and repetitive bright grain still look like simplified procedural woodworking beside the approved round-03 target.",
+    "surface_variation": "In the v006 Room B gameplay and detail views, the workbench reads clearly and the lighter finish is an improvement over v005. Its prominent straight beams and repetitive bright grain still look like simplified procedural woodworking beside the approved round-03 target.",
+    "technical_integration": "In the v006 Room B gameplay and detail views, the workbench reads clearly and the lighter finish is an improvement over v005. Its prominent straight beams and repetitive bright grain still look like simplified procedural woodworking beside the approved round-03 target."
+  },
+  "render_evidence": [
+    "art/room_elevated_workbench/iterations/v006/render-runs/run-001/room-scale.png",
+    "art/room_elevated_workbench/iterations/v006/render-runs/run-001/room-scale-opposite-angle.png",
+    "art/room_elevated_workbench/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+    "art/room_elevated_workbench/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+    "art/room_elevated_workbench/iterations/v006/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 3,
+    "gameplay_readability": 4,
+    "geometric_detail": 3,
+    "material_realism": 3,
+    "proportion": 4,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 4,
+    "surface_variation": 2,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The v006 Room B close and gameplay captures show the 58 x 36 x 30 inch elevated workbench with its broad top, dog holes, side vise, drawer bank, profiled legs, and lower stretchers. The brighter amber finish improves the oak/walnut separation over v005, but strong longitudinal streaks remain and the shoulders, drawer fields, and joints still read as simple repeated forms. Close inspection still shows simplified transitions and repeated surface response.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "room_elevated_workbench: v006 shapes selected beam edges, while the broad slab and repeated frame members still have uniformly simple transitions.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "hardware": {
+        "evidence": "room_elevated_workbench: the side vise, dog holes, and drawer pulls are visible and identifiable in the v006 close views.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "joins": {
+        "evidence": "room_elevated_workbench: v006 shoulders suggest fitted connections, but the leg-to-apron and stretcher joins do not read as deliberate locked joinery.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "room_elevated_workbench: the routed drawer fronts and fitted shoulders remain too shallow and regular to carry the round-03 target's workshop detail.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "room_elevated_workbench: v006 is brighter and less red than v005, though the high-contrast repeated streaks still look synthetic beside the approved target.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "room_elevated_workbench: v006 repeats similar grain scale and contrast across slab, legs, and rails instead of varying by board and member.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "room_elevated_workbench: v006 shows plausible slab thickness, substantial legs, and correctly scaled lower members in the three-quarter and detail views.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v006/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v006/render-runs/run-001/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v006/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "In the v006 Room B gameplay and detail views, the workbench reads clearly and the lighter finish is an improvement over v005. Its prominent straight beams and repetitive bright grain still look like simplified procedural woodworking beside the approved round-03 target.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "This ArtBrief has no source photograph; judge this candidate against its approved Visual Director target.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": true,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Keep this best-current candidate and backlog the episode; a future round needs stronger fitted joinery and board-specific, restrained grain variation while preserving the exact bench surface and dimensions.",
+    "lost_visual_information": [
+      "The round-03 target's crisp fitted leg/apron shoulders and distinct drawer fields remain weak at gameplay distance.",
+      "The brighter amber color is closer than v005, while repeated high-contrast grain streaks still obscure convincing board-level wood response."
+    ],
+    "preserved_components": [
+      "The validated room elevated workbench remains within its authoritative ArtBrief bounds and preserves its RoomDefinition placement and gameplay role.",
+      "This candidate changes only presentation geometry and materials; collisions, navigation, selection, surfaces, and gameplay landmarks remain unchanged."
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "material_generation"
+    ]
+  }
+}

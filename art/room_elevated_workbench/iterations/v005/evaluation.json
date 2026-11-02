@@ -1,0 +1,162 @@
+{
+  "candidate_id": "room_elevated_workbench-v005",
+  "created_at_utc": "2026-11-02T06:30:27.086173+00:00",
+  "decision": "continue",
+  "defects": [
+    "The v005 production captures retain the wide plank top, vise, dog holes, three-part drawer bank and four-leg frame. Profiled members and routed fronts add some modeled construction, but at detail distance the transitions remain subtle and the finish is too dark and red for the approved warm oak/walnut target.",
+    "The target's construction and material character are not yet transferred strongly enough for promotion."
+  ],
+  "hard_fail_reasons": [
+    "The updated mesh improves member shaping, but normal gameplay and close views still show understated joint relief and dark, repetitive wood response; both the neutral-viewer realism and craftsmanship gates fail."
+  ],
+  "incumbent_candidate_id": "room_elevated_workbench-v003",
+  "incumbent_comparison": "Compared with room_elevated_workbench-v003, the current candidate adds a target-specific mesh construction change while preserving the same room placement and role. The improvement is meaningful but incomplete: The v005 production captures retain the wide plank top, vise, dog holes, three-part drawer bank and four-leg frame. Profiled members and routed fronts add some modeled construction, but at detail distance the transitions remain subtle and the finish is too dark and red for the approved warm oak/walnut target. The reviewed v003 remains the comparison baseline; no candidate is promoted.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "geometry_loss",
+    "material_generation"
+  ],
+  "next_action_hypothesis": "Use the diagnosed material loss as a focused targeted correction: lighten the oak/walnut response and reduce the red cast while keeping the profiled geometry and its directional grain; then recheck the drawer relief and fitted shoulders.",
+  "observations": {
+    "art_direction_fit": "The v005 production captures retain the wide plank top, vise, dog holes, three-part drawer bank and four-leg frame. Profiled members and routed fronts add some modeled construction, but at detail distance the transitions remain subtle and the finish is too dark and red for the approved warm oak/walnut target.",
+    "close_up_quality": "The v005 production captures retain the wide plank top, vise, dog holes, three-part drawer bank and four-leg frame. Profiled members and routed fronts add some modeled construction, but at detail distance the transitions remain subtle and the finish is too dark and red for the approved warm oak/walnut target.",
+    "gameplay_readability": "The v005 production captures retain the wide plank top, vise, dog holes, three-part drawer bank and four-leg frame. Profiled members and routed fronts add some modeled construction, but at detail distance the transitions remain subtle and the finish is too dark and red for the approved warm oak/walnut target.",
+    "geometric_detail": "The v005 production captures retain the wide plank top, vise, dog holes, three-part drawer bank and four-leg frame. Profiled members and routed fronts add some modeled construction, but at detail distance the transitions remain subtle and the finish is too dark and red for the approved warm oak/walnut target.",
+    "material_realism": "The v005 production captures retain the wide plank top, vise, dog holes, three-part drawer bank and four-leg frame. Profiled members and routed fronts add some modeled construction, but at detail distance the transitions remain subtle and the finish is too dark and red for the approved warm oak/walnut target.",
+    "proportion": "The v005 production captures retain the wide plank top, vise, dog holes, three-part drawer bank and four-leg frame. Profiled members and routed fronts add some modeled construction, but at detail distance the transitions remain subtle and the finish is too dark and red for the approved warm oak/walnut target.",
+    "scale_fidelity": "The v005 production captures retain the wide plank top, vise, dog holes, three-part drawer bank and four-leg frame. Profiled members and routed fronts add some modeled construction, but at detail distance the transitions remain subtle and the finish is too dark and red for the approved warm oak/walnut target.",
+    "semantic_recognizability": "room elevated workbench remains clearly identifiable from the RoomScale production capture.",
+    "silhouette_quality": "The v005 production captures retain the wide plank top, vise, dog holes, three-part drawer bank and four-leg frame. Profiled members and routed fronts add some modeled construction, but at detail distance the transitions remain subtle and the finish is too dark and red for the approved warm oak/walnut target.",
+    "surface_variation": "The v005 production captures retain the wide plank top, vise, dog holes, three-part drawer bank and four-leg frame. Profiled members and routed fronts add some modeled construction, but at detail distance the transitions remain subtle and the finish is too dark and red for the approved warm oak/walnut target.",
+    "technical_integration": "The v005 production captures retain the wide plank top, vise, dog holes, three-part drawer bank and four-leg frame. Profiled members and routed fronts add some modeled construction, but at detail distance the transitions remain subtle and the finish is too dark and red for the approved warm oak/walnut target."
+  },
+  "render_evidence": [
+    "art/room_elevated_workbench/iterations/v005/render-runs/run-002/room-scale.png",
+    "art/room_elevated_workbench/iterations/v005/render-runs/run-002/room-scale-opposite-angle.png",
+    "art/room_elevated_workbench/iterations/v005/render-runs/run-002/asset-gameplay-distance.png",
+    "art/room_elevated_workbench/iterations/v005/render-runs/run-002/asset-three-quarter.png",
+    "art/room_elevated_workbench/iterations/v005/render-runs/run-002/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 3,
+    "gameplay_readability": 4,
+    "geometric_detail": 3,
+    "material_realism": 2,
+    "proportion": 4,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 4,
+    "surface_variation": 2,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The v005 production captures retain the wide plank top, vise, dog holes, three-part drawer bank and four-leg frame. Profiled members and routed fronts add some modeled construction, but at detail distance the transitions remain subtle and the finish is too dark and red for the approved warm oak/walnut target. Close inspection still shows simplified transitions and subdued construction relief.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "room_elevated_workbench: the custom profiles improve selected edges, but the broad top and most carcass/member edges remain uniformly eased.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v005/render-runs/run-002/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v005/render-runs/run-002/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v005/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "hardware": {
+        "evidence": "room_elevated_workbench: the authored vise and drawer hardware remains visible in the current production captures.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v005/render-runs/run-002/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v005/render-runs/run-002/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v005/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "joins": {
+        "evidence": "room_elevated_workbench: the new mesh shapes suggest fitted shoulders, but the production captures do not show convincing, consistently legible fitted joints.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v005/render-runs/run-002/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v005/render-runs/run-002/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v005/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "room_elevated_workbench: the target's fine fitted construction and carved/routed transitions are only partly legible in the current production views.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v005/render-runs/run-002/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v005/render-runs/run-002/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v005/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "room_elevated_workbench: directional grain is present, but the current shader response is too dark and red-brown beside the approved target.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v005/render-runs/run-002/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v005/render-runs/run-002/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v005/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "room_elevated_workbench: grain is visible but repeats with similar scale and lacks enough board/member-level value variation.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v005/render-runs/run-002/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v005/render-runs/run-002/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v005/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "room_elevated_workbench: the top, panels and supporting members have visible, technically plausible thickness in the three-quarter and detail captures.",
+        "evidence_refs": [
+          "art/room_elevated_workbench/iterations/v005/render-runs/run-002/asset-gameplay-distance.png",
+          "art/room_elevated_workbench/iterations/v005/render-runs/run-002/asset-three-quarter.png",
+          "art/room_elevated_workbench/iterations/v005/render-runs/run-002/asset-detail.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "In the Room B gameplay and detail captures, the workbench is recognizable and better assembled than v003, but much of the frame still reads as simple repeated beams and the grain is overly dark. The approved target's strong warm oak and readable fitted joints are not yet transferred.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "This ArtBrief has no source photograph; compare the Godot candidate against its approved Visual Director target instead.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": true,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Use the diagnosed material loss as a focused targeted correction: lighten the oak/walnut response and reduce the red cast while keeping the profiled geometry and its directional grain; then recheck the drawer relief and fitted shoulders.",
+    "lost_visual_information": [
+      "The r03 concept's crisp pegged shoulders and leg/apron joinery are only weakly visible in the current profiles.",
+      "The approved target's warm, varied oak and clearly routed drawer fields are not carried through with enough contrast."
+    ],
+    "preserved_components": [
+      "The exact Room B BENCH_SURFACE remains at y=36 and the mesh bounds pass the 58 x 36 x 30 inch brief.",
+      "The vise, holes, drawer bank, four legs, and lower frame remain represented as presentation-only meshes."
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "material_generation"
+    ]
+  }
+}

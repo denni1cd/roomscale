@@ -1,0 +1,64 @@
+{
+  "asset_files": [],
+  "asset_id": "room_elevated_workbench",
+  "candidate_id": "room_elevated_workbench-v004",
+  "created_at_utc": "2026-11-02T06:24:48+00:00",
+  "evaluation_file": "",
+  "generation_result": {
+    "command": [
+      "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale\\.tools\\godot-4.7.2\\Godot_v4.7.2-stable_win64_console.exe",
+      "--headless",
+      "--path",
+      "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale",
+      "--script",
+      "res://scripts/art_factory/generate_furniture_candidate.gd"
+    ],
+    "exit_code": 0,
+    "reason": "generator emitted a script error: SCRIPT ERROR: Parse Error: Cannot infer the type of \"half_width\" variable because the value doesn't have a set type.",
+    "recorded_at_utc": "2026-11-02T06:24:49+00:00",
+    "status": "fail"
+  },
+  "parent_candidate_id": "room_elevated_workbench-v003",
+  "recipe_file": "art/room_elevated_workbench/iterations/v004/recipe.json",
+  "renders": [],
+  "schema_version": 1,
+  "status": "blocked",
+  "technical_validation": {
+    "reason": "generator emitted a script error: SCRIPT ERROR: Parse Error: Cannot infer the type of \"half_width\" variable because the value doesn't have a set type.",
+    "recorded_at_utc": "2026-11-02T06:24:49+00:00",
+    "status": "fail"
+  },
+  "version": 4,
+  "visual_director_provenance": {
+    "approved_visual_target": {
+      "approval": "pass",
+      "approved_at_utc": "2026-11-02T06:18:01+00:00",
+      "concept_id": "room_elevated_workbench-family-r02",
+      "path": "art/room_elevated_workbench/visual_director/round-02/approved-target-r02.png",
+      "review_method": "pixel inspection; review evidence recorded by Luna",
+      "review_path": "art/room_elevated_workbench/visual_director/round-02/pixel-review-r02.md",
+      "sha256": "78beb8dc60d8371ec05e0fb66e9d7f3ed17080de602221f044ab4c19522394d3"
+    },
+    "case_file": "art/room_elevated_workbench/visual_director/state.json",
+    "policy": {
+      "inputs": {
+        "category": "room_furniture",
+        "current_quality": "prototype",
+        "faction_defining": false,
+        "inferred": [],
+        "priority_tier": 1,
+        "screen_space_importance": 4,
+        "source_images_present": false,
+        "source_photo_required": false
+      },
+      "reasons": [
+        "Tier 1 scene-defining asset",
+        "high screen-space importance"
+      ],
+      "required": true
+    },
+    "status": "approved",
+    "strategy": "initial",
+    "target_episode_attempt": 1
+  }
+}

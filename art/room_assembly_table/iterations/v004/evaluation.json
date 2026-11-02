@@ -1,0 +1,162 @@
+{
+  "candidate_id": "room_assembly_table-v004",
+  "created_at_utc": "2026-11-02T06:30:27.087009+00:00",
+  "decision": "continue",
+  "defects": [
+    "The v004 Room B captures show a broad assembly top, vise, drawer, tapered square legs and lower rails. The custom beam sections add end shoulders, but their transitions read quietly at this camera distance and the dark red-brown finish still suppresses separation between oak, walnut and joinery.",
+    "The target's construction and material character are not yet transferred strongly enough for promotion."
+  ],
+  "hard_fail_reasons": [
+    "The table is functional-looking and dimensionally valid, but its leg/apron construction and wood response remain visibly simplified relative to the approved target, failing the realism and craftsmanship gates."
+  ],
+  "incumbent_candidate_id": "room_assembly_table-v003",
+  "incumbent_comparison": "Compared with room_assembly_table-v003, the current candidate adds a target-specific mesh construction change while preserving the same room placement and role. The improvement is meaningful but incomplete: The v004 Room B captures show a broad assembly top, vise, drawer, tapered square legs and lower rails. The custom beam sections add end shoulders, but their transitions read quietly at this camera distance and the dark red-brown finish still suppresses separation between oak, walnut and joinery. The reviewed v003 remains the comparison baseline; no candidate is promoted.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "geometry_loss",
+    "material_generation"
+  ],
+  "next_action_hypothesis": "Apply a targeted wood-finish correction to restore warm oak against walnut and make the beam profiles read; retain the custom tenoned legs, apron and routed drawer front.",
+  "observations": {
+    "art_direction_fit": "The v004 Room B captures show a broad assembly top, vise, drawer, tapered square legs and lower rails. The custom beam sections add end shoulders, but their transitions read quietly at this camera distance and the dark red-brown finish still suppresses separation between oak, walnut and joinery.",
+    "close_up_quality": "The v004 Room B captures show a broad assembly top, vise, drawer, tapered square legs and lower rails. The custom beam sections add end shoulders, but their transitions read quietly at this camera distance and the dark red-brown finish still suppresses separation between oak, walnut and joinery.",
+    "gameplay_readability": "The v004 Room B captures show a broad assembly top, vise, drawer, tapered square legs and lower rails. The custom beam sections add end shoulders, but their transitions read quietly at this camera distance and the dark red-brown finish still suppresses separation between oak, walnut and joinery.",
+    "geometric_detail": "The v004 Room B captures show a broad assembly top, vise, drawer, tapered square legs and lower rails. The custom beam sections add end shoulders, but their transitions read quietly at this camera distance and the dark red-brown finish still suppresses separation between oak, walnut and joinery.",
+    "material_realism": "The v004 Room B captures show a broad assembly top, vise, drawer, tapered square legs and lower rails. The custom beam sections add end shoulders, but their transitions read quietly at this camera distance and the dark red-brown finish still suppresses separation between oak, walnut and joinery.",
+    "proportion": "The v004 Room B captures show a broad assembly top, vise, drawer, tapered square legs and lower rails. The custom beam sections add end shoulders, but their transitions read quietly at this camera distance and the dark red-brown finish still suppresses separation between oak, walnut and joinery.",
+    "scale_fidelity": "The v004 Room B captures show a broad assembly top, vise, drawer, tapered square legs and lower rails. The custom beam sections add end shoulders, but their transitions read quietly at this camera distance and the dark red-brown finish still suppresses separation between oak, walnut and joinery.",
+    "semantic_recognizability": "room assembly table remains clearly identifiable from the RoomScale production capture.",
+    "silhouette_quality": "The v004 Room B captures show a broad assembly top, vise, drawer, tapered square legs and lower rails. The custom beam sections add end shoulders, but their transitions read quietly at this camera distance and the dark red-brown finish still suppresses separation between oak, walnut and joinery.",
+    "surface_variation": "The v004 Room B captures show a broad assembly top, vise, drawer, tapered square legs and lower rails. The custom beam sections add end shoulders, but their transitions read quietly at this camera distance and the dark red-brown finish still suppresses separation between oak, walnut and joinery.",
+    "technical_integration": "The v004 Room B captures show a broad assembly top, vise, drawer, tapered square legs and lower rails. The custom beam sections add end shoulders, but their transitions read quietly at this camera distance and the dark red-brown finish still suppresses separation between oak, walnut and joinery."
+  },
+  "render_evidence": [
+    "art/room_assembly_table/iterations/v004/render-runs/run-001/room-scale.png",
+    "art/room_assembly_table/iterations/v004/render-runs/run-001/room-scale-opposite-angle.png",
+    "art/room_assembly_table/iterations/v004/render-runs/run-001/asset-gameplay-distance.png",
+    "art/room_assembly_table/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+    "art/room_assembly_table/iterations/v004/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 3,
+    "gameplay_readability": 4,
+    "geometric_detail": 3,
+    "material_realism": 2,
+    "proportion": 4,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 3,
+    "surface_variation": 2,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The v004 Room B captures show a broad assembly top, vise, drawer, tapered square legs and lower rails. The custom beam sections add end shoulders, but their transitions read quietly at this camera distance and the dark red-brown finish still suppresses separation between oak, walnut and joinery. Close inspection still shows simplified transitions and subdued construction relief.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "room_assembly_table: the custom profiles improve selected edges, but the broad top and most carcass/member edges remain uniformly eased.",
+        "evidence_refs": [
+          "art/room_assembly_table/iterations/v004/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_assembly_table/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+          "art/room_assembly_table/iterations/v004/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "hardware": {
+        "evidence": "room_assembly_table: the authored vise and drawer hardware remains visible in the current production captures.",
+        "evidence_refs": [
+          "art/room_assembly_table/iterations/v004/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_assembly_table/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+          "art/room_assembly_table/iterations/v004/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "joins": {
+        "evidence": "room_assembly_table: the new mesh shapes suggest fitted shoulders, but the production captures do not show convincing, consistently legible fitted joints.",
+        "evidence_refs": [
+          "art/room_assembly_table/iterations/v004/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_assembly_table/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+          "art/room_assembly_table/iterations/v004/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "room_assembly_table: the target's fine fitted construction and carved/routed transitions are only partly legible in the current production views.",
+        "evidence_refs": [
+          "art/room_assembly_table/iterations/v004/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_assembly_table/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+          "art/room_assembly_table/iterations/v004/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "room_assembly_table: directional grain is present, but the current shader response is too dark and red-brown beside the approved target.",
+        "evidence_refs": [
+          "art/room_assembly_table/iterations/v004/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_assembly_table/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+          "art/room_assembly_table/iterations/v004/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "room_assembly_table: grain is visible but repeats with similar scale and lacks enough board/member-level value variation.",
+        "evidence_refs": [
+          "art/room_assembly_table/iterations/v004/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_assembly_table/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+          "art/room_assembly_table/iterations/v004/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "room_assembly_table: the top, panels and supporting members have visible, technically plausible thickness in the three-quarter and detail captures.",
+        "evidence_refs": [
+          "art/room_assembly_table/iterations/v004/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_assembly_table/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+          "art/room_assembly_table/iterations/v004/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The assembly table reads correctly by its worktop, vise and frame, yet broad dark planes and nearly square legs keep it procedural-looking. The new shoulder profile is present but does not carry the approved target's more legible fitted assembly and warm material variation.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "This ArtBrief has no source photograph; compare the Godot candidate against its approved Visual Director target instead.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": true,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Apply a targeted wood-finish correction to restore warm oak against walnut and make the beam profiles read; retain the custom tenoned legs, apron and routed drawer front.",
+    "lost_visual_information": [
+      "The target's shaped leg and apron transitions are only faintly represented by the narrow shoulder profile.",
+      "The target's warm oak, darker walnut and clear joint separation collapse into a similar dark finish."
+    ],
+    "preserved_components": [
+      "The 42 x 24 x 32 inch RoomDefinition envelope and table identity remain intact.",
+      "The vise, bench dogs, drawer and lower rail arrangement remain visible in the production render."
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "material_generation"
+    ]
+  }
+}

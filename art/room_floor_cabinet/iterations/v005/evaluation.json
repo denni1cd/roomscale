@@ -1,0 +1,162 @@
+{
+  "candidate_id": "room_floor_cabinet-v005",
+  "created_at_utc": "2026-11-02T06:35:42.575229+00:00",
+  "decision": "continue",
+  "defects": [
+    "The v005 Room B captures show the compact cabinet's two drawers, routed fronts, cup pulls, top slab, side panels, and plinth. It is a clear improvement over v004 in oak/walnut separation, but the repeated wood streaks and simple drawer/carcass transitions remain prominent at close range.",
+    "The approved target's construction and material character are still not transferred strongly enough for promotion."
+  ],
+  "hard_fail_reasons": [
+    "The v005 wood finish improves separation from v004, but simplified drawer and carcass edges plus repeated grain fail the craftsmanship and neutral-viewer realism gates."
+  ],
+  "incumbent_candidate_id": "room_floor_cabinet-v003",
+  "incumbent_comparison": "Compared with room_floor_cabinet-v003, room floor cabinet now uses mesh-authored joinery and a target-specific material correction while keeping its RoomDefinition role and placement. Against v004, The v005 Room B captures show the compact cabinet's two drawers, routed fronts, cup pulls, top slab, side panels, and plinth. It is a clear improvement over v004 in oak/walnut separation, but the repeated wood streaks and simple drawer/carcass transitions remain prominent at close range. The v003 production candidate remains the incumbent baseline; this candidate is the best current visual attempt, and no asset is promoted.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "geometry_loss",
+    "material_generation"
+  ],
+  "next_action_hypothesis": "Keep this best-current candidate and backlog the episode; a future round should improve drawer joinery and member-specific grain response while preserving the small cabinet's exact footprint and gameplay placement.",
+  "observations": {
+    "art_direction_fit": "The v005 cabinet reads as a small two-drawer storage piece and has better color separation than v004. Its flat front arrangement and repeated directional grain remain too simple beside the approved round-02 design.",
+    "close_up_quality": "The v005 cabinet reads as a small two-drawer storage piece and has better color separation than v004. Its flat front arrangement and repeated directional grain remain too simple beside the approved round-02 design.",
+    "gameplay_readability": "The v005 cabinet reads as a small two-drawer storage piece and has better color separation than v004. Its flat front arrangement and repeated directional grain remain too simple beside the approved round-02 design.",
+    "geometric_detail": "The v005 cabinet reads as a small two-drawer storage piece and has better color separation than v004. Its flat front arrangement and repeated directional grain remain too simple beside the approved round-02 design.",
+    "material_realism": "The v005 cabinet reads as a small two-drawer storage piece and has better color separation than v004. Its flat front arrangement and repeated directional grain remain too simple beside the approved round-02 design.",
+    "proportion": "The v005 cabinet reads as a small two-drawer storage piece and has better color separation than v004. Its flat front arrangement and repeated directional grain remain too simple beside the approved round-02 design.",
+    "scale_fidelity": "The v005 cabinet reads as a small two-drawer storage piece and has better color separation than v004. Its flat front arrangement and repeated directional grain remain too simple beside the approved round-02 design.",
+    "semantic_recognizability": "room floor cabinet remains readily identifiable in the Room B production capture.",
+    "silhouette_quality": "The v005 cabinet reads as a small two-drawer storage piece and has better color separation than v004. Its flat front arrangement and repeated directional grain remain too simple beside the approved round-02 design.",
+    "surface_variation": "The v005 cabinet reads as a small two-drawer storage piece and has better color separation than v004. Its flat front arrangement and repeated directional grain remain too simple beside the approved round-02 design.",
+    "technical_integration": "The v005 cabinet reads as a small two-drawer storage piece and has better color separation than v004. Its flat front arrangement and repeated directional grain remain too simple beside the approved round-02 design."
+  },
+  "render_evidence": [
+    "art/room_floor_cabinet/iterations/v005/render-runs/run-001/room-scale.png",
+    "art/room_floor_cabinet/iterations/v005/render-runs/run-001/room-scale-opposite-angle.png",
+    "art/room_floor_cabinet/iterations/v005/render-runs/run-001/asset-gameplay-distance.png",
+    "art/room_floor_cabinet/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+    "art/room_floor_cabinet/iterations/v005/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 3,
+    "gameplay_readability": 4,
+    "geometric_detail": 3,
+    "material_realism": 3,
+    "proportion": 4,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 4,
+    "surface_variation": 2,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The v005 Room B captures show the compact cabinet's two drawers, routed fronts, cup pulls, top slab, side panels, and plinth. It is a clear improvement over v004 in oak/walnut separation, but the repeated wood streaks and simple drawer/carcass transitions remain prominent at close range. Close inspection still shows simplified transitions and repeated surface response.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "room_floor_cabinet: v005 improves the drawer rims, while the broad top slab and side panels retain plain, repeated edge treatment.",
+        "evidence_refs": [
+          "art/room_floor_cabinet/iterations/v005/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_floor_cabinet/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+          "art/room_floor_cabinet/iterations/v005/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "hardware": {
+        "evidence": "room_floor_cabinet: the v005 brass cup pulls and drawer plates are clear on both fronts in the close capture.",
+        "evidence_refs": [
+          "art/room_floor_cabinet/iterations/v005/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_floor_cabinet/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+          "art/room_floor_cabinet/iterations/v005/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "joins": {
+        "evidence": "room_floor_cabinet: the layered front rails remain visually separate, but their connections do not read as fitted cabinet joinery.",
+        "evidence_refs": [
+          "art/room_floor_cabinet/iterations/v005/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_floor_cabinet/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+          "art/room_floor_cabinet/iterations/v005/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "room_floor_cabinet: the routed drawer fronts add relief, yet v005's frame and drawer reveals are still shallow and regular.",
+        "evidence_refs": [
+          "art/room_floor_cabinet/iterations/v005/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_floor_cabinet/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+          "art/room_floor_cabinet/iterations/v005/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "room_floor_cabinet: v005 brightens the oak and reduces the red cast against walnut, though the finish still shows artificial longitudinal striping.",
+        "evidence_refs": [
+          "art/room_floor_cabinet/iterations/v005/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_floor_cabinet/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+          "art/room_floor_cabinet/iterations/v005/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "room_floor_cabinet: v005 repeats similar grain contrast on top, drawer fronts, and plinth without enough board-specific variation.",
+        "evidence_refs": [
+          "art/room_floor_cabinet/iterations/v005/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_floor_cabinet/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+          "art/room_floor_cabinet/iterations/v005/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "room_floor_cabinet: v005's top, side panels, drawer fronts, and plinth keep plausible thickness for the 26 x 21 x 24 inch cabinet.",
+        "evidence_refs": [
+          "art/room_floor_cabinet/iterations/v005/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_floor_cabinet/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+          "art/room_floor_cabinet/iterations/v005/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The v005 cabinet reads as a small two-drawer storage piece and has better color separation than v004. Its flat front arrangement and repeated directional grain remain too simple beside the approved round-02 design.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "This ArtBrief has no source photograph; judge this candidate against its approved Visual Director target.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": true,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Keep this best-current candidate and backlog the episode; a future round should improve drawer joinery and member-specific grain response while preserving the small cabinet's exact footprint and gameplay placement.",
+    "lost_visual_information": [
+      "The approved target's crisp routed drawer transitions and refined carcass edges are simplified in the v005 cabinet.",
+      "The warmer finish separates oak and walnut more clearly than v004, but repeated grain does not vary naturally across the top, drawers, and frame."
+    ],
+    "preserved_components": [
+      "The validated room floor cabinet remains within its authoritative ArtBrief bounds and preserves its RoomDefinition placement and gameplay role.",
+      "This candidate changes only presentation geometry and materials; collisions, navigation, selection, surfaces, and gameplay landmarks remain unchanged."
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "material_generation"
+    ]
+  }
+}

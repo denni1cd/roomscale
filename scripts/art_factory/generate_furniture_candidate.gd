@@ -5,6 +5,7 @@ const G := preload("res://scripts/visuals/visual_geometry.gd")
 const Materials := preload("res://scripts/visuals/material_library.gd")
 const ROOM_WOODGRAIN_V3 := preload("res://scripts/art_factory/roomscale_woodgrain_v3.gdshader")
 const ROOM_CHAIR_WOODFINISH_V4 := preload("res://scripts/art_factory/room_chair_woodfinish_v4.gdshader")
+const ROOM_FURNITURE_WOODFINISH_V5 := preload("res://scripts/art_factory/room_furniture_woodfinish_v5.gdshader")
 
 
 func _initialize() -> void:
@@ -27,7 +28,7 @@ func run() -> void:
 		_fail("unsupported room furniture generator method")
 		return
 	var refinement := String(recipe.get("parameters", {}).get("refinement", ""))
-	if refinement not in ["blockout_v1", "joinery_and_fabric_v2", "visibility_and_material_v3", "floor_contact_joinery_v3", "double_sided_canvas_v4", "roomscale_joinery_v1", "roomscale_joinery_v2_material_correction", "roomscale_directional_woodgrain_v3", "mesh_authored_joinery_v4", "mesh_authored_leaf_joinery_v5"]:
+	if refinement not in ["blockout_v1", "joinery_and_fabric_v2", "visibility_and_material_v3", "floor_contact_joinery_v3", "double_sided_canvas_v4", "roomscale_joinery_v1", "roomscale_joinery_v2_material_correction", "roomscale_directional_woodgrain_v3", "mesh_authored_joinery_v4", "mesh_authored_leaf_joinery_v5", "mesh_authored_furniture_v5", "mesh_authored_furniture_warm_finish_v6"]:
 		_fail("unsupported room furniture refinement: %s" % refinement)
 		return
 	var asset_id := String(brief.get("asset_id", ""))
@@ -35,16 +36,16 @@ func run() -> void:
 	asset.name = "Generated_%s" % asset_id
 	asset.set_meta("presentation_only", true)
 	match asset_id:
-		"room_elevated_workbench": _elevated_workbench(asset)
-		"room_assembly_table": _assembly_table(asset)
-		"room_tool_wardrobe": _tool_wardrobe(asset)
-		"room_floor_cabinet": _floor_cabinet(asset)
+		"room_elevated_workbench": _elevated_workbench(asset, refinement)
+		"room_assembly_table": _assembly_table(asset, refinement)
+		"room_tool_wardrobe": _tool_wardrobe(asset, refinement)
+		"room_floor_cabinet": _floor_cabinet(asset, refinement)
 		"room_chair":
 			if refinement in ["mesh_authored_joinery_v4", "mesh_authored_leaf_joinery_v5"]:
 				_low_room_chair_mesh_authored(asset)
 			else:
 				_low_room_chair(asset)
-		"room_side_table": _side_table(asset)
+		"room_side_table": _side_table(asset, refinement)
 		"office_chair": _office_chair(asset, refinement)
 		"rocking_chair": _rocking_chair(asset, refinement)
 		"hammock_with_stand": _hammock(asset, refinement)
@@ -55,11 +56,12 @@ func run() -> void:
 			return
 	if asset_id in ["room_elevated_workbench", "room_assembly_table", "room_tool_wardrobe", "room_floor_cabinet", "room_chair", "room_side_table"] and refinement == "roomscale_joinery_v2_material_correction":
 		_apply_roomscale_wood_correction(asset)
-	if asset_id in ["room_elevated_workbench", "room_assembly_table", "room_tool_wardrobe", "room_floor_cabinet", "room_chair", "room_side_table"] and refinement in ["roomscale_directional_woodgrain_v3", "mesh_authored_joinery_v4", "mesh_authored_leaf_joinery_v5"]:
+	if asset_id in ["room_elevated_workbench", "room_assembly_table", "room_tool_wardrobe", "room_floor_cabinet", "room_chair", "room_side_table"] and refinement in ["roomscale_directional_woodgrain_v3", "mesh_authored_joinery_v4", "mesh_authored_leaf_joinery_v5", "mesh_authored_furniture_v5", "mesh_authored_furniture_warm_finish_v6"]:
 		_apply_roomscale_directional_woodgrain(
 			asset,
-			0.86 if refinement == "mesh_authored_leaf_joinery_v5" else (0.78 if refinement == "mesh_authored_joinery_v4" else 0.68),
-			refinement == "mesh_authored_leaf_joinery_v5"
+			0.96 if refinement == "mesh_authored_furniture_warm_finish_v6" else (0.86 if refinement == "mesh_authored_leaf_joinery_v5" else (0.78 if refinement == "mesh_authored_joinery_v4" else 0.68)),
+			refinement == "mesh_authored_leaf_joinery_v5",
+			refinement == "mesh_authored_furniture_warm_finish_v6"
 		)
 	_assign_owner(asset, asset)
 	root.add_child(asset)
@@ -105,7 +107,7 @@ func _apply_roomscale_wood_correction(parent: Node3D) -> void:
 		mesh_instance.material_override = corrected_by_color[key]
 
 
-func _apply_roomscale_directional_woodgrain(parent: Node3D, tone_scale: float = 0.68, chair_finish_v4: bool = false) -> void:
+func _apply_roomscale_directional_woodgrain(parent: Node3D, tone_scale: float = 0.68, chair_finish_v4: bool = false, furniture_finish_v5: bool = false) -> void:
 	# Round 02 still used the shared isotropic noise texture and produced pale,
 	# mottled surfaces. Round 03 uses a per-wood-part shader with grain aligned
 	# to the component's long axis; hardware keeps its authored metal material.
@@ -120,9 +122,19 @@ func _apply_roomscale_directional_woodgrain(parent: Node3D, tone_scale: float = 
 		var key := source.albedo_color.to_html()
 		if not materials_by_color.has(key):
 			var wood_material := ShaderMaterial.new()
-			wood_material.shader = ROOM_CHAIR_WOODFINISH_V4 if chair_finish_v4 else ROOM_WOODGRAIN_V3
+			wood_material.shader = ROOM_CHAIR_WOODFINISH_V4 if chair_finish_v4 else (ROOM_FURNITURE_WOODFINISH_V5 if furniture_finish_v5 else ROOM_WOODGRAIN_V3)
 			var timber_tint := source.albedo_color
-			if chair_finish_v4 and timber_tint.get_luminance() > 0.08:
+			if furniture_finish_v5 and timber_tint.get_luminance() > 0.08:
+				# The first mesh-authored furniture pass kept the target grain but
+				# rendered the oak too dark and red. Restore yellow/brown midtones.
+				timber_tint.r *= 0.98
+				timber_tint.g *= 0.88
+				timber_tint.b *= 0.76
+			elif furniture_finish_v5:
+				timber_tint.r *= 0.98
+				timber_tint.g *= 0.90
+				timber_tint.b *= 0.82
+			elif chair_finish_v4 and timber_tint.get_luminance() > 0.08:
 				# The chair-specific finish reduces the orange cast while keeping
 				# distinct oak and walnut values from the authored part palette.
 				timber_tint.r *= 0.84
@@ -149,7 +161,11 @@ func _apply_roomscale_directional_woodgrain(parent: Node3D, tone_scale: float = 
 		mesh_instance.material_override = materials_by_color[key]
 
 
-func _elevated_workbench(parent: Node3D) -> void:
+func _uses_mesh_authored_furniture(refinement: String) -> bool:
+	return refinement in ["mesh_authored_furniture_v5", "mesh_authored_furniture_warm_finish_v6"]
+
+
+func _elevated_workbench(parent: Node3D, refinement: String) -> void:
 	var oak := Color("9a693d")
 	var oak_light := Color("b1814e")
 	var walnut := Color("503620")
@@ -166,21 +182,43 @@ func _elevated_workbench(parent: Node3D) -> void:
 		for z_side in [-1, 1]:
 			var x := float(x_side) * 24.4
 			var z := float(z_side) * 10.2
-			G.box(parent, "Leg_%d_%d" % [x_side, z_side], Vector3(5.2, 32.0, 5.2), Vector3(x, 16.0, z), "wood", walnut if z_side < 0 else oak, 0.34)
+			if _uses_mesh_authored_furniture(refinement):
+				var leg_profile: Array[Vector3] = [
+					Vector3(0.0, 2.58, 2.58), Vector3(0.06, 2.58, 2.58), Vector3(0.12, 2.43, 2.43),
+					Vector3(0.82, 2.43, 2.43), Vector3(0.90, 2.72, 2.72), Vector3(1.0, 2.45, 2.45)
+				]
+				G.profiled_beam(parent, "Shouldered_Mortise_Leg_%d_%d" % [x_side, z_side], Vector3(x, 0.0, z), Vector3(x, 32.0, z), leg_profile, "wood", walnut if z_side < 0 else oak, 0.18)
+			else:
+				G.box(parent, "Leg_%d_%d" % [x_side, z_side], Vector3(5.2, 32.0, 5.2), Vector3(x, 16.0, z), "wood", walnut if z_side < 0 else oak, 0.34)
 			G.box(parent, "MortiseShoulder_%d_%d" % [x_side, z_side], Vector3(5.45, 1.3, 5.45), Vector3(x, 29.7, z), "wood", oak_light, 0.12)
 			G.box(parent, "FootShoe_%d_%d" % [x_side, z_side], Vector3(5.35, 1.4, 5.35), Vector3(x, 1.0, z), "wood", walnut, 0.13)
 	for z_side in [-1, 1]:
-		G.box(parent, "ApronLong_%d" % z_side, Vector3(44.8, 5.6, 1.8), Vector3(0, 27.4, float(z_side) * 9.6), "wood", oak, 0.18)
-		G.box(parent, "LowerStretcherLong_%d" % z_side, Vector3(43.8, 3.2, 2.0), Vector3(0, 6.0, float(z_side) * 9.4), "wood", walnut, 0.14)
+		if _uses_mesh_authored_furniture(refinement):
+			var apron_profile: Array[Vector3] = [Vector3(0.0, 2.15, 0.55), Vector3(0.08, 2.8, 0.9), Vector3(0.92, 2.8, 0.9), Vector3(1.0, 2.15, 0.55)]
+			var stretcher_profile: Array[Vector3] = [Vector3(0.0, 1.0, 0.55), Vector3(0.10, 1.6, 1.0), Vector3(0.90, 1.6, 1.0), Vector3(1.0, 1.0, 0.55)]
+			G.profiled_beam(parent, "Shouldered_Front_Apron_%d" % z_side, Vector3(-22.4, 27.4, float(z_side) * 9.6), Vector3(22.4, 27.4, float(z_side) * 9.6), apron_profile, "wood", oak, 0.12)
+			G.profiled_beam(parent, "Shouldered_Lower_Stretcher_%d" % z_side, Vector3(-21.9, 6.0, float(z_side) * 9.4), Vector3(21.9, 6.0, float(z_side) * 9.4), stretcher_profile, "wood", walnut, 0.10)
+		else:
+			G.box(parent, "ApronLong_%d" % z_side, Vector3(44.8, 5.6, 1.8), Vector3(0, 27.4, float(z_side) * 9.6), "wood", oak, 0.18)
+			G.box(parent, "LowerStretcherLong_%d" % z_side, Vector3(43.8, 3.2, 2.0), Vector3(0, 6.0, float(z_side) * 9.4), "wood", walnut, 0.14)
 	for x_side in [-1, 1]:
-		G.box(parent, "ApronEnd_%d" % x_side, Vector3(1.8, 5.6, 16.8), Vector3(float(x_side) * 23.0, 27.4, 0), "wood", oak, 0.18)
-		G.box(parent, "LowerStretcherEnd_%d" % x_side, Vector3(2.0, 3.2, 16.8), Vector3(float(x_side) * 22.9, 6.0, 0), "wood", walnut, 0.14)
+		if _uses_mesh_authored_furniture(refinement):
+			var apron_profile: Array[Vector3] = [Vector3(0.0, 2.15, 0.55), Vector3(0.08, 2.8, 0.9), Vector3(0.92, 2.8, 0.9), Vector3(1.0, 2.15, 0.55)]
+			var stretcher_profile: Array[Vector3] = [Vector3(0.0, 1.0, 0.55), Vector3(0.10, 1.6, 1.0), Vector3(0.90, 1.6, 1.0), Vector3(1.0, 1.0, 0.55)]
+			G.profiled_beam(parent, "Shouldered_End_Apron_%d" % x_side, Vector3(float(x_side) * 23.0, 27.4, -8.4), Vector3(float(x_side) * 23.0, 27.4, 8.4), apron_profile, "wood", oak, 0.12)
+			G.profiled_beam(parent, "Shouldered_End_Stretcher_%d" % x_side, Vector3(float(x_side) * 22.9, 6.0, -8.4), Vector3(float(x_side) * 22.9, 6.0, 8.4), stretcher_profile, "wood", walnut, 0.10)
+		else:
+			G.box(parent, "ApronEnd_%d" % x_side, Vector3(1.8, 5.6, 16.8), Vector3(float(x_side) * 23.0, 27.4, 0), "wood", oak, 0.18)
+			G.box(parent, "LowerStretcherEnd_%d" % x_side, Vector3(2.0, 3.2, 16.8), Vector3(float(x_side) * 22.9, 6.0, 0), "wood", walnut, 0.14)
 	# Dovetailed drawer bank: distinct reveals and three individually fitted fronts.
 	for index in range(3):
 		var y := 28.7 - float(index) * 3.0
 		var width := 18.0 if index < 2 else 38.0
 		var x := -11.0 if index == 0 else (10.0 if index == 1 else 0.0)
-		G.box(parent, "DrawerFront_%02d" % index, Vector3(width, 2.45, 0.7), Vector3(x, y, 10.62), "wood", oak_light if index == 1 else oak, 0.1)
+		if _uses_mesh_authored_furniture(refinement):
+			G.raised_panel(parent, "Reeded_Drawer_Front_%02d" % index, width, 2.45, 0.7, Vector3(x, y, 10.62), "wood", oak_light if index == 1 else oak, 0.1)
+		else:
+			G.box(parent, "DrawerFront_%02d" % index, Vector3(width, 2.45, 0.7), Vector3(x, y, 10.62), "wood", oak_light if index == 1 else oak, 0.1)
 		for dovetail_side in [-1, 1]:
 			G.box(parent, "DrawerDovetail_%02d_%d" % [index, dovetail_side], Vector3(0.48, 0.75, 0.10), Vector3(x + float(dovetail_side) * (width * 0.5 - 1.1), y - 0.7, 11.02), "wood", walnut, 0.02)
 		G.cylinder(parent, "DrawerPull_%02d" % index, 0.42, 0.42, Vector3(x, y, 11.1), "brass", brass).rotation.x = PI * 0.5
@@ -201,7 +239,7 @@ func _elevated_workbench(parent: Node3D) -> void:
 		G.cylinder(parent, "ViseHandleKnob_%d" % side, 0.48, 0.72, Vector3(-20.8, 27.1 + float(side) * 1.8, 14.55), "wood", walnut)
 
 
-func _assembly_table(parent: Node3D) -> void:
+func _assembly_table(parent: Node3D, refinement: String) -> void:
 	var oak := Color("a87846")
 	var walnut := Color("523920")
 	var iron := Color("383d3c")
@@ -213,15 +251,34 @@ func _assembly_table(parent: Node3D) -> void:
 		for z_side in [-1, 1]:
 			var x := float(x_side) * 17.2
 			var z := float(z_side) * 12.7
-			G.cylinder(parent, "TaperedLeg_%d_%d" % [x_side, z_side], 1.55, 19.4, Vector3(x, 10.0, z), "wood", walnut, 1.05)
-			G.cylinder(parent, "TurnedFoot_%d_%d" % [x_side, z_side], 1.5, 2.0, Vector3(x, 1.0, z), "wood", oak, 1.1)
+			if _uses_mesh_authored_furniture(refinement):
+				var leg_profile: Array[Vector3] = [Vector3(0.0, 1.1, 1.1), Vector3(0.08, 1.45, 1.45), Vector3(0.18, 1.3, 1.3), Vector3(0.86, 1.0, 1.0), Vector3(0.94, 1.4, 1.4), Vector3(1.0, 1.2, 1.2)]
+				G.profiled_beam(parent, "Tapered_Tenoned_Leg_%d_%d" % [x_side, z_side], Vector3(x, 0.0, z), Vector3(x, 19.4, z), leg_profile, "wood", walnut, 0.10)
+			else:
+				G.cylinder(parent, "TaperedLeg_%d_%d" % [x_side, z_side], 1.55, 19.4, Vector3(x, 10.0, z), "wood", walnut, 1.05)
+				G.cylinder(parent, "TurnedFoot_%d_%d" % [x_side, z_side], 1.5, 2.0, Vector3(x, 1.0, z), "wood", oak, 1.1)
 	for z_side in [-1, 1]:
-		G.box(parent, "FrontBackApron_%d" % z_side, Vector3(33.4, 4.0, 1.35), Vector3(0, 18.3, float(z_side) * 11.9), "wood", walnut, 0.14)
-		G.box(parent, "LowerStretcher_%d" % z_side, Vector3(31.5, 2.2, 1.5), Vector3(0, 5.2, float(z_side) * 10.9), "wood", oak, 0.10)
+		if _uses_mesh_authored_furniture(refinement):
+			var apron_profile: Array[Vector3] = [Vector3(0.0, 1.4, 0.42), Vector3(0.08, 2.0, 0.68), Vector3(0.92, 2.0, 0.68), Vector3(1.0, 1.4, 0.42)]
+			var stretcher_profile: Array[Vector3] = [Vector3(0.0, 0.58, 0.38), Vector3(0.1, 1.1, 0.75), Vector3(0.9, 1.1, 0.75), Vector3(1.0, 0.58, 0.38)]
+			G.profiled_beam(parent, "Fitted_Front_Apron_%d" % z_side, Vector3(-16.7, 18.3, float(z_side) * 11.9), Vector3(16.7, 18.3, float(z_side) * 11.9), apron_profile, "wood", walnut, 0.08)
+			G.profiled_beam(parent, "Shouldered_Lower_Stretcher_%d" % z_side, Vector3(-15.75, 5.2, float(z_side) * 10.9), Vector3(15.75, 5.2, float(z_side) * 10.9), stretcher_profile, "wood", oak, 0.08)
+		else:
+			G.box(parent, "FrontBackApron_%d" % z_side, Vector3(33.4, 4.0, 1.35), Vector3(0, 18.3, float(z_side) * 11.9), "wood", walnut, 0.14)
+			G.box(parent, "LowerStretcher_%d" % z_side, Vector3(31.5, 2.2, 1.5), Vector3(0, 5.2, float(z_side) * 10.9), "wood", oak, 0.10)
 	for x_side in [-1, 1]:
-		G.box(parent, "EndApron_%d" % x_side, Vector3(1.4, 4.0, 22.8), Vector3(float(x_side) * 16.4, 18.3, 0), "wood", walnut, 0.14)
-		G.box(parent, "EndStretcher_%d" % x_side, Vector3(1.5, 2.2, 20.8), Vector3(float(x_side) * 15.9, 5.2, 0), "wood", oak, 0.10)
-	G.box(parent, "DrawerFront", Vector3(13.8, 3.1, 0.65), Vector3(-3.7, 18.2, 12.85), "wood", oak, 0.1)
+		if _uses_mesh_authored_furniture(refinement):
+			var apron_profile: Array[Vector3] = [Vector3(0.0, 1.4, 0.42), Vector3(0.08, 2.0, 0.68), Vector3(0.92, 2.0, 0.68), Vector3(1.0, 1.4, 0.42)]
+			var stretcher_profile: Array[Vector3] = [Vector3(0.0, 0.58, 0.38), Vector3(0.1, 1.1, 0.75), Vector3(0.9, 1.1, 0.75), Vector3(1.0, 0.58, 0.38)]
+			G.profiled_beam(parent, "Fitted_End_Apron_%d" % x_side, Vector3(float(x_side) * 16.4, 18.3, -11.4), Vector3(float(x_side) * 16.4, 18.3, 11.4), apron_profile, "wood", walnut, 0.08)
+			G.profiled_beam(parent, "Fitted_End_Stretcher_%d" % x_side, Vector3(float(x_side) * 15.9, 5.2, -10.4), Vector3(float(x_side) * 15.9, 5.2, 10.4), stretcher_profile, "wood", oak, 0.08)
+		else:
+			G.box(parent, "EndApron_%d" % x_side, Vector3(1.4, 4.0, 22.8), Vector3(float(x_side) * 16.4, 18.3, 0), "wood", walnut, 0.14)
+			G.box(parent, "EndStretcher_%d" % x_side, Vector3(1.5, 2.2, 20.8), Vector3(float(x_side) * 15.9, 5.2, 0), "wood", oak, 0.10)
+	if _uses_mesh_authored_furniture(refinement):
+		G.raised_panel(parent, "Routed_Drawer_Front", 13.8, 3.1, 0.65, Vector3(-3.7, 18.2, 12.85), "wood", oak, 0.08)
+	else:
+		G.box(parent, "DrawerFront", Vector3(13.8, 3.1, 0.65), Vector3(-3.7, 18.2, 12.85), "wood", oak, 0.1)
 	for side in [-1, 1]:
 		G.box(parent, "DrawerDovetail_%d" % side, Vector3(0.55, 0.7, 0.08), Vector3(-3.7 + float(side) * 5.8, 17.4, 13.22), "wood", walnut, 0.03)
 	G.cylinder(parent, "DrawerCupPull", 0.48, 0.32, Vector3(-3.7, 18.2, 13.25), "brass", brass).rotation.x = PI * 0.5
@@ -234,7 +291,7 @@ func _assembly_table(parent: Node3D) -> void:
 		G.cylinder(parent, "BenchDog_%d" % int(x), 0.32, 0.07, Vector3(x, 23.48, -7.0), "iron", iron)
 
 
-func _tool_wardrobe(parent: Node3D) -> void:
+func _tool_wardrobe(parent: Node3D, refinement: String) -> void:
 	var oak := Color("91613a")
 	var panel := Color("a67645")
 	var walnut := Color("49311f")
@@ -262,7 +319,10 @@ func _tool_wardrobe(parent: Node3D) -> void:
 			G.box(parent, "DoorStile_%d_%d" % [door, x_side], Vector3(1.0, 51.2, 0.9), Vector3(cx + float(x_side) * 6.3, 35.0, 10.95), "wood", oak, 0.07)
 		for y_side in [-1, 1]:
 			G.box(parent, "DoorRail_%d_%d" % [door, y_side], Vector3(12.7, 1.4, 0.9), Vector3(cx, 35.0 + float(y_side) * 24.5, 10.95), "wood", oak, 0.07)
-		G.box(parent, "RaisedPanel_%d" % door, Vector3(10.8, 45.0, 0.32), Vector3(cx, 35.0, 11.16), "wood", panel.darkened(0.07), 0.18)
+		if _uses_mesh_authored_furniture(refinement):
+			G.raised_panel(parent, "Routed_RaisedPanel_%d" % door, 10.8, 45.0, 0.32, Vector3(cx, 35.0, 11.16), "wood", panel.darkened(0.07), 0.18)
+		else:
+			G.box(parent, "RaisedPanel_%d" % door, Vector3(10.8, 45.0, 0.32), Vector3(cx, 35.0, 11.16), "wood", panel.darkened(0.07), 0.18)
 		G.cylinder(parent, "DoorPull_%d" % door, 0.42, 1.2, Vector3(cx + float(door) * 5.2, 34.5, 10.2), "brass", brass).rotation.x = PI * 0.5
 		for y in [12.0, 35.0, 58.0]:
 			var hinge := G.box(parent, "HingePlate_%d_%d" % [door, int(y)], Vector3(1.15, 2.7, 0.18), Vector3(cx + float(door) * 6.75, y, 10.8), "brass", brass, 0.07)
@@ -284,7 +344,7 @@ func _tool_wardrobe(parent: Node3D) -> void:
 			G.cylinder(parent, "ToolEndCap_%d_%d" % [row, tool], 0.46, 0.34, Vector3(x, base_y + 8.0, z), "wood", walnut)
 
 
-func _floor_cabinet(parent: Node3D) -> void:
+func _floor_cabinet(parent: Node3D, refinement: String) -> void:
 	var oak := Color("a47443")
 	var walnut := Color("4a321f")
 	var brass := Color("ad884b")
@@ -298,7 +358,10 @@ func _floor_cabinet(parent: Node3D) -> void:
 	for index in range(2):
 		var y := 14.0 - float(index) * 6.7
 		G.box(parent, "DrawerBox_%d" % index, Vector3(18.6, 5.8, 8.2), Vector3(0, y, 5.8), "wood", walnut, 0.06)
-		G.box(parent, "DrawerFront_%d" % index, Vector3(19.5, 5.5, 0.8), Vector3(0, y, 11.15), "wood", oak, 0.10)
+		if _uses_mesh_authored_furniture(refinement):
+			G.raised_panel(parent, "Routed_DrawerFront_%d" % index, 19.5, 5.5, 0.8, Vector3(0, y, 11.15), "wood", oak, 0.10)
+		else:
+			G.box(parent, "DrawerFront_%d" % index, Vector3(19.5, 5.5, 0.8), Vector3(0, y, 11.15), "wood", oak, 0.10)
 		for side in [-1, 1]:
 			G.box(parent, "Dovetail_%d_%d" % [index, side], Vector3(0.55, 1.0, 0.08), Vector3(float(side) * 7.4, y - 1.9, 11.58), "wood", walnut, 0.025)
 		G.box(parent, "CupPullBackplate_%d" % index, Vector3(2.2, 1.25, 0.18), Vector3(0, y, 11.66), "brass", walnut, 0.06)
@@ -414,7 +477,7 @@ func _low_room_chair_mesh_authored(parent: Node3D) -> void:
 		G.cylinder(parent, "Seat_Fascia_Peg_%d" % x_side, 0.16, 0.10, Vector3(float(x_side) * 8.1, 10.15, 8.48), "wood", peg_color).rotation.x = PI * 0.5
 
 
-func _side_table(parent: Node3D) -> void:
+func _side_table(parent: Node3D, refinement: String) -> void:
 	var oak := Color("a97745")
 	var walnut := Color("4b321e")
 	var brass := Color("ad8849")
@@ -424,19 +487,44 @@ func _side_table(parent: Node3D) -> void:
 		for z_side in [-1, 1]:
 			var x := float(x_side) * 7.7
 			var z := float(z_side) * 6.1
-			G.cylinder(parent, "Foot_%d_%d" % [x_side, z_side], 0.82, 2.0, Vector3(x, 1.0, z), "wood", walnut, 0.62)
-			G.cylinder(parent, "LowerShaft_%d_%d" % [x_side, z_side], 0.62, 4.5, Vector3(x, 4.25, z), "wood", oak, 0.72)
-			G.cylinder(parent, "TurnedBulb_%d_%d" % [x_side, z_side], 0.92, 2.4, Vector3(x, 7.7, z), "wood", walnut, 0.74)
-			G.cylinder(parent, "UpperShaft_%d_%d" % [x_side, z_side], 0.62, 9.2, Vector3(x, 13.5, z), "wood", oak, 0.74)
-			G.cylinder(parent, "LegCollar_%d_%d" % [x_side, z_side], 0.84, 1.0, Vector3(x, 17.4, z), "wood", walnut, 0.78)
+			if _uses_mesh_authored_furniture(refinement):
+				var turned_leg: Array[Vector2] = []
+				if refinement == "mesh_authored_furniture_warm_finish_v6":
+					turned_leg = [
+						Vector2(0.0, 0.58), Vector2(0.08, 0.72), Vector2(0.16, 0.72),
+						Vector2(0.24, 0.62), Vector2(0.42, 0.68), Vector2(0.50, 0.82),
+						Vector2(0.58, 0.90), Vector2(0.68, 0.78), Vector2(0.78, 0.64),
+						Vector2(0.90, 0.70), Vector2(1.0, 0.78)
+					]
+				else:
+					turned_leg = [
+						Vector2(0.0, 0.52), Vector2(0.07, 0.70), Vector2(0.16, 0.72),
+						Vector2(0.22, 0.48), Vector2(0.40, 0.48), Vector2(0.48, 0.74),
+						Vector2(0.57, 0.92), Vector2(0.66, 0.76), Vector2(0.73, 0.52),
+						Vector2(0.88, 0.54), Vector2(0.94, 0.82), Vector2(1.0, 0.70)
+					]
+				G.lathe_profile(parent, "Continuous_Turned_Leg_%d_%d" % [x_side, z_side], Vector3(x, 0.5, z), Vector3(x, 18.1, z), turned_leg, "wood", oak)
+			else:
+				G.cylinder(parent, "Foot_%d_%d" % [x_side, z_side], 0.82, 2.0, Vector3(x, 1.0, z), "wood", walnut, 0.62)
+				G.cylinder(parent, "LowerShaft_%d_%d" % [x_side, z_side], 0.62, 4.5, Vector3(x, 4.25, z), "wood", oak, 0.72)
+				G.cylinder(parent, "TurnedBulb_%d_%d" % [x_side, z_side], 0.92, 2.4, Vector3(x, 7.7, z), "wood", walnut, 0.74)
+				G.cylinder(parent, "UpperShaft_%d_%d" % [x_side, z_side], 0.62, 9.2, Vector3(x, 13.5, z), "wood", oak, 0.74)
+				G.cylinder(parent, "LegCollar_%d_%d" % [x_side, z_side], 0.84, 1.0, Vector3(x, 17.4, z), "wood", walnut, 0.78)
 	for side in [-1, 1]:
 		G.box(parent, "ApronLong_%d" % side, Vector3(14.4, 3.6, 1.1), Vector3(0, 16.4, float(side) * 6.2), "wood", walnut, 0.16)
 		G.box(parent, "ApronEnd_%d" % side, Vector3(1.1, 3.6, 11.6), Vector3(float(side) * 7.6, 16.4, 0), "wood", walnut, 0.16)
-	G.box(parent, "DrawerFront", Vector3(8.2, 2.5, 0.62), Vector3(0, 16.5, 6.95), "wood", oak, 0.1)
+	if _uses_mesh_authored_furniture(refinement):
+		G.raised_panel(parent, "Routed_DrawerFront", 8.2, 2.5, 0.62, Vector3(0, 16.5, 6.95), "wood", oak, 0.1)
+	else:
+		G.box(parent, "DrawerFront", Vector3(8.2, 2.5, 0.62), Vector3(0, 16.5, 6.95), "wood", oak, 0.1)
 	for side in [-1, 1]:
 		G.box(parent, "DrawerDovetail_%d" % side, Vector3(0.45, 0.62, 0.08), Vector3(float(side) * 3.0, 15.9, 7.28), "wood", walnut, 0.025)
 	G.cylinder(parent, "DrawerPull", 0.34, 0.3, Vector3(0, 16.5, 7.35), "brass", brass).rotation.x = PI * 0.5
-	G.box(parent, "LowerShelf", Vector3(15.3, 1.05, 12.0), Vector3(0, 5.8, 0), "wood", walnut, 0.12)
+	if _uses_mesh_authored_furniture(refinement):
+		var routed_shelf := G.raised_panel(parent, "Routed_Lower_Shelf", 15.3, 12.0, 1.05, Vector3(0, 5.8, 0), "wood", walnut, 0.12)
+		routed_shelf.rotation.x = -PI * 0.5
+	else:
+		G.box(parent, "LowerShelf", Vector3(15.3, 1.05, 12.0), Vector3(0, 5.8, 0), "wood", walnut, 0.12)
 	for side in [-1, 1]:
 		G.box(parent, "ShelfRail_%d" % side, Vector3(0.6, 1.3, 12.2), Vector3(float(side) * 7.35, 6.0, 0), "wood", oak, 0.08)
 	G.box(parent, "FrontRail", Vector3(15.4, 1.2, 0.8), Vector3(0, 6.0, 5.9), "wood", oak, 0.08)

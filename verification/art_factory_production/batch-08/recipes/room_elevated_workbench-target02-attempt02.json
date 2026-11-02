@@ -1,0 +1,56 @@
+{
+  "deterministic_seed": 2801,
+  "generator_command": [
+    "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale\\.tools\\godot-4.7.2\\Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "{project_root}",
+    "--script",
+    "res://scripts/art_factory/generate_furniture_candidate.gd"
+  ],
+  "import_configuration": {
+    "axis": "Godot X width / Y up / Z depth",
+    "format": "Godot-native PackedScene",
+    "normalization": "mesh bounds validated against exact ArtBrief envelope; runtime visual normalization preserves RoomDefinition dimensions",
+    "renderer": "gl_compatibility",
+    "units": "inches"
+  },
+  "instructions": "Targeted correction for room_elevated_workbench-v005: preserve the mesh-authored 58 x 36 x 30 inch workbench, profiled legs/aprons/stretchers, raised drawer fronts, dog holes, vise and exact BENCH_SURFACE at y=36. Correct the recorded material loss by lifting the oak and walnut midtones, reducing the red cast, and using a warmer satin response with controlled directional grain. Do not replace or simplify the geometry, and keep brass and iron separate.",
+  "material_method": "Mesh-authored profiled beams, routed panels and lathe forms are retained; new room furniture warm-finish v5 shader uses brighter amber midtones, restrained anisotropic grain and satin response; brass, iron and steel remain separate.",
+  "method": "godot_procedural_room_furniture",
+  "parameters": {
+    "outputs": [
+      "room_elevated_workbench.tscn"
+    ],
+    "refinement": "mesh_authored_furniture_warm_finish_v6",
+    "visual_director_strategy": "targeted_correction",
+    "diagnosis_ref": "room_elevated_workbench-v005",
+    "visual_director_target": "art/room_elevated_workbench/visual_director/round-03/approved-target-r03.png"
+  },
+  "post_processing": [
+    "import the candidate as a native Godot PackedScene",
+    "retain the evaluated mesh-authored construction from the diagnosed candidate",
+    "apply the targeted warm satin finish only to explicitly categorized wood meshes",
+    "preserve separate brass, iron and steel materials",
+    "keep all mesh bounds inside the authoritative ArtBrief and RoomDefinition envelopes",
+    "keep collision, navigation, selection, surfaces and gameplay landmarks unchanged"
+  ],
+  "schema_version": 1,
+  "source_inputs": [
+    "art/room_elevated_workbench/brief.json",
+    "art/room_elevated_workbench/visual_director/round-03/approved-target-r03.png",
+    "art/room_elevated_workbench/visual_director/round-03/pixel-review-r03.md",
+    "art/room_elevated_workbench/iterations/v005/evaluation.json",
+    "art/room_elevated_workbench/iterations/v005/generated/room_elevated_workbench.tscn",
+    "art/room_elevated_workbench/iterations/v005/render-runs/run-002/asset-detail.png",
+    "art/room_elevated_workbench/iterations/v005/render-runs/run-002/asset-three-quarter.png",
+    "scripts/art_factory/generate_furniture_candidate.gd",
+    "scripts/art_factory/room_furniture_woodfinish_v5.gdshader",
+    "scripts/art_factory/roomscale_woodgrain_v3.gdshader",
+    "scripts/visuals/visual_geometry.gd",
+    "scripts/visuals/material_library.gd",
+    "rooms/room_b.json"
+  ],
+  "tool": "Godot native custom furniture meshes with a targeted warm satin directional wood finish",
+  "tool_version": "Godot 4.7.2"
+}

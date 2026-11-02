@@ -1,0 +1,162 @@
+{
+  "candidate_id": "room_floor_cabinet-v004",
+  "created_at_utc": "2026-11-02T06:30:27.088341+00:00",
+  "decision": "continue",
+  "defects": [
+    "The v004 Room B captures show the slab top, two drawers, stiles, plinth and cup pulls. Routed fronts improve the component shape and the board-seamed top remains clear, but the relief and drawer reveals are still understated and the oak/walnut values are too dark.",
+    "The target's construction and material character are not yet transferred strongly enough for promotion."
+  ],
+  "hard_fail_reasons": [
+    "The routed drawers are a meaningful mesh change, but their relief and material separation remain too weak for realistic crafted storage; strict close-inspection and craftsmanship gates fail."
+  ],
+  "incumbent_candidate_id": "room_floor_cabinet-v003",
+  "incumbent_comparison": "Compared with room_floor_cabinet-v003, the current candidate adds a target-specific mesh construction change while preserving the same room placement and role. The improvement is meaningful but incomplete: The v004 Room B captures show the slab top, two drawers, stiles, plinth and cup pulls. Routed fronts improve the component shape and the board-seamed top remains clear, but the relief and drawer reveals are still understated and the oak/walnut values are too dark. The reviewed v003 remains the comparison baseline; no candidate is promoted.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "geometry_loss",
+    "material_generation"
+  ],
+  "next_action_hypothesis": "Use a targeted warmer wood finish and stronger face contrast while retaining the current routed drawer fronts, board-seamed top and hardware.",
+  "observations": {
+    "art_direction_fit": "The v004 Room B captures show the slab top, two drawers, stiles, plinth and cup pulls. Routed fronts improve the component shape and the board-seamed top remains clear, but the relief and drawer reveals are still understated and the oak/walnut values are too dark.",
+    "close_up_quality": "The v004 Room B captures show the slab top, two drawers, stiles, plinth and cup pulls. Routed fronts improve the component shape and the board-seamed top remains clear, but the relief and drawer reveals are still understated and the oak/walnut values are too dark.",
+    "gameplay_readability": "The v004 Room B captures show the slab top, two drawers, stiles, plinth and cup pulls. Routed fronts improve the component shape and the board-seamed top remains clear, but the relief and drawer reveals are still understated and the oak/walnut values are too dark.",
+    "geometric_detail": "The v004 Room B captures show the slab top, two drawers, stiles, plinth and cup pulls. Routed fronts improve the component shape and the board-seamed top remains clear, but the relief and drawer reveals are still understated and the oak/walnut values are too dark.",
+    "material_realism": "The v004 Room B captures show the slab top, two drawers, stiles, plinth and cup pulls. Routed fronts improve the component shape and the board-seamed top remains clear, but the relief and drawer reveals are still understated and the oak/walnut values are too dark.",
+    "proportion": "The v004 Room B captures show the slab top, two drawers, stiles, plinth and cup pulls. Routed fronts improve the component shape and the board-seamed top remains clear, but the relief and drawer reveals are still understated and the oak/walnut values are too dark.",
+    "scale_fidelity": "The v004 Room B captures show the slab top, two drawers, stiles, plinth and cup pulls. Routed fronts improve the component shape and the board-seamed top remains clear, but the relief and drawer reveals are still understated and the oak/walnut values are too dark.",
+    "semantic_recognizability": "room floor cabinet remains clearly identifiable from the RoomScale production capture.",
+    "silhouette_quality": "The v004 Room B captures show the slab top, two drawers, stiles, plinth and cup pulls. Routed fronts improve the component shape and the board-seamed top remains clear, but the relief and drawer reveals are still understated and the oak/walnut values are too dark.",
+    "surface_variation": "The v004 Room B captures show the slab top, two drawers, stiles, plinth and cup pulls. Routed fronts improve the component shape and the board-seamed top remains clear, but the relief and drawer reveals are still understated and the oak/walnut values are too dark.",
+    "technical_integration": "The v004 Room B captures show the slab top, two drawers, stiles, plinth and cup pulls. Routed fronts improve the component shape and the board-seamed top remains clear, but the relief and drawer reveals are still understated and the oak/walnut values are too dark."
+  },
+  "render_evidence": [
+    "art/room_floor_cabinet/iterations/v004/render-runs/run-001/room-scale.png",
+    "art/room_floor_cabinet/iterations/v004/render-runs/run-001/room-scale-opposite-angle.png",
+    "art/room_floor_cabinet/iterations/v004/render-runs/run-001/asset-gameplay-distance.png",
+    "art/room_floor_cabinet/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+    "art/room_floor_cabinet/iterations/v004/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 3,
+    "gameplay_readability": 4,
+    "geometric_detail": 3,
+    "material_realism": 2,
+    "proportion": 4,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 4,
+    "surface_variation": 2,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The v004 Room B captures show the slab top, two drawers, stiles, plinth and cup pulls. Routed fronts improve the component shape and the board-seamed top remains clear, but the relief and drawer reveals are still understated and the oak/walnut values are too dark. Close inspection still shows simplified transitions and subdued construction relief.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "room_floor_cabinet: the custom profiles improve selected edges, but the broad top and most carcass/member edges remain uniformly eased.",
+        "evidence_refs": [
+          "art/room_floor_cabinet/iterations/v004/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_floor_cabinet/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+          "art/room_floor_cabinet/iterations/v004/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "hardware": {
+        "evidence": "room_floor_cabinet: the authored drawer and brass hardware remains visible in the current production captures.",
+        "evidence_refs": [
+          "art/room_floor_cabinet/iterations/v004/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_floor_cabinet/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+          "art/room_floor_cabinet/iterations/v004/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "joins": {
+        "evidence": "room_floor_cabinet: the new mesh shapes suggest fitted shoulders, but the production captures do not show convincing, consistently legible fitted joints.",
+        "evidence_refs": [
+          "art/room_floor_cabinet/iterations/v004/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_floor_cabinet/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+          "art/room_floor_cabinet/iterations/v004/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "room_floor_cabinet: the target's fine fitted construction and carved/routed transitions are only partly legible in the current production views.",
+        "evidence_refs": [
+          "art/room_floor_cabinet/iterations/v004/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_floor_cabinet/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+          "art/room_floor_cabinet/iterations/v004/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "room_floor_cabinet: directional grain is present, but the current shader response is too dark and red-brown beside the approved target.",
+        "evidence_refs": [
+          "art/room_floor_cabinet/iterations/v004/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_floor_cabinet/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+          "art/room_floor_cabinet/iterations/v004/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "room_floor_cabinet: grain is visible but repeats with similar scale and lacks enough board/member-level value variation.",
+        "evidence_refs": [
+          "art/room_floor_cabinet/iterations/v004/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_floor_cabinet/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+          "art/room_floor_cabinet/iterations/v004/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "room_floor_cabinet: the top, panels and supporting members have visible, technically plausible thickness in the three-quarter and detail captures.",
+        "evidence_refs": [
+          "art/room_floor_cabinet/iterations/v004/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_floor_cabinet/iterations/v004/render-runs/run-001/asset-three-quarter.png",
+          "art/room_floor_cabinet/iterations/v004/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The cabinet reads correctly and its drawers are more shaped than v003, but the close view still shows broad flat fields with weak center-frame separation and a dark, repetitive wood response rather than the target's warm crafted finish.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "This ArtBrief has no source photograph; compare the Godot candidate against its approved Visual Director target instead.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": true,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Use a targeted warmer wood finish and stronger face contrast while retaining the current routed drawer fronts, board-seamed top and hardware.",
+    "lost_visual_information": [
+      "The approved target's raised center fields and crisp drawer frame relief remain too shallow to read at typical inspection.",
+      "Warm oak/walnut separation and board-level variation remain weak in the captured material response."
+    ],
+    "preserved_components": [
+      "The 26 x 21 x 24 inch brief envelope, two-drawer layout, top slab, plinth and cup pulls remain represented.",
+      "The production render shows no change to Room B placement or gameplay state."
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "material_generation"
+    ]
+  }
+}

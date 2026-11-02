@@ -1,0 +1,162 @@
+{
+  "candidate_id": "room_side_table-v005",
+  "created_at_utc": "2026-11-02T06:35:42.575719+00:00",
+  "decision": "continue",
+  "defects": [
+    "The v005 Room A captures show the 20 x 20 x 17 inch side table with a fuller continuous turned-leg waist, routed drawer front, brass pull, and lower shelf. The leg silhouette is better balanced than v004 and the finish is brighter, but the shelf remains dark and the repeated streaky grain reads synthetic.",
+    "The approved target's construction and material character are still not transferred strongly enough for promotion."
+  ],
+  "hard_fail_reasons": [
+    "The fuller leg waist and warmer color improve v005 over v004, but the shallow construction relief and repetitive grain still fail craftsmanship and neutral-viewer realism."
+  ],
+  "incumbent_candidate_id": "room_side_table-v003",
+  "incumbent_comparison": "Compared with room_side_table-v003, room side table now uses mesh-authored joinery and a target-specific material correction while keeping its RoomDefinition role and placement. Against v004, The v005 Room A captures show the 20 x 20 x 17 inch side table with a fuller continuous turned-leg waist, routed drawer front, brass pull, and lower shelf. The leg silhouette is better balanced than v004 and the finish is brighter, but the shelf remains dark and the repeated streaky grain reads synthetic. The v003 production candidate remains the incumbent baseline; this candidate is the best current visual attempt, and no asset is promoted.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "geometry_loss",
+    "material_generation"
+  ],
+  "next_action_hypothesis": "Keep this best-current candidate and backlog the episode; a future revision should give the turned profiles more controlled bead-and-cove transitions and use varied low-contrast grain across the drawer, top, legs, and shelf.",
+  "observations": {
+    "art_direction_fit": "The v005 side table improves the pinched v004 leg profile and raises the oak toward the approved target's warmer finish. Its shelf and drawer relief remain shallow, while repeated grain prevents the furniture from reading as naturally finished wood.",
+    "close_up_quality": "The v005 side table improves the pinched v004 leg profile and raises the oak toward the approved target's warmer finish. Its shelf and drawer relief remain shallow, while repeated grain prevents the furniture from reading as naturally finished wood.",
+    "gameplay_readability": "The v005 side table improves the pinched v004 leg profile and raises the oak toward the approved target's warmer finish. Its shelf and drawer relief remain shallow, while repeated grain prevents the furniture from reading as naturally finished wood.",
+    "geometric_detail": "The v005 side table improves the pinched v004 leg profile and raises the oak toward the approved target's warmer finish. Its shelf and drawer relief remain shallow, while repeated grain prevents the furniture from reading as naturally finished wood.",
+    "material_realism": "The v005 side table improves the pinched v004 leg profile and raises the oak toward the approved target's warmer finish. Its shelf and drawer relief remain shallow, while repeated grain prevents the furniture from reading as naturally finished wood.",
+    "proportion": "The v005 side table improves the pinched v004 leg profile and raises the oak toward the approved target's warmer finish. Its shelf and drawer relief remain shallow, while repeated grain prevents the furniture from reading as naturally finished wood.",
+    "scale_fidelity": "The v005 side table improves the pinched v004 leg profile and raises the oak toward the approved target's warmer finish. Its shelf and drawer relief remain shallow, while repeated grain prevents the furniture from reading as naturally finished wood.",
+    "semantic_recognizability": "room side table remains readily identifiable in the Room A production capture.",
+    "silhouette_quality": "The v005 side table improves the pinched v004 leg profile and raises the oak toward the approved target's warmer finish. Its shelf and drawer relief remain shallow, while repeated grain prevents the furniture from reading as naturally finished wood.",
+    "surface_variation": "The v005 side table improves the pinched v004 leg profile and raises the oak toward the approved target's warmer finish. Its shelf and drawer relief remain shallow, while repeated grain prevents the furniture from reading as naturally finished wood.",
+    "technical_integration": "The v005 side table improves the pinched v004 leg profile and raises the oak toward the approved target's warmer finish. Its shelf and drawer relief remain shallow, while repeated grain prevents the furniture from reading as naturally finished wood."
+  },
+  "render_evidence": [
+    "art/room_side_table/iterations/v005/render-runs/run-001/room-scale.png",
+    "art/room_side_table/iterations/v005/render-runs/run-001/room-scale-opposite-angle.png",
+    "art/room_side_table/iterations/v005/render-runs/run-001/asset-gameplay-distance.png",
+    "art/room_side_table/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+    "art/room_side_table/iterations/v005/render-runs/run-001/asset-detail.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 3,
+    "gameplay_readability": 4,
+    "geometric_detail": 4,
+    "material_realism": 3,
+    "proportion": 4,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 4,
+    "silhouette_quality": 4,
+    "surface_variation": 2,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The v005 Room A captures show the 20 x 20 x 17 inch side table with a fuller continuous turned-leg waist, routed drawer front, brass pull, and lower shelf. The leg silhouette is better balanced than v004 and the finish is brighter, but the shelf remains dark and the repeated streaky grain reads synthetic. Close inspection still shows simplified transitions and repeated surface response.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "room_side_table: v005 rounds the turned leg silhouette, but the broad top and shelf edges remain uniformly softened rather than finely finished.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v005/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v005/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "hardware": {
+        "evidence": "room_side_table: the v005 brass drawer pull is visible and centered, and the lower shelf remains clearly positioned below the apron.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v005/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v005/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      },
+      "joins": {
+        "evidence": "room_side_table: continuous lathed legs improve the form, but their connections to the apron and shelf do not show convincing fitted joints.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v005/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v005/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "room_side_table: the routed drawer and shelf surfaces are present, though their relief stays shallow in the production close-up.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v005/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v005/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "room_side_table: v005 is brighter and less pinched-looking than v004, but the warm finish still carries repeated high-contrast streaks and an unnaturally dark shelf.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v005/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v005/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "room_side_table: the v005 table repeats similar grain streaks on its top, turned legs, and lower shelf instead of distinguishing each wood member.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v005/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v005/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "room_side_table: v005 preserves plausible thickness in the top, drawer front, legs, and inset lower shelf.",
+        "evidence_refs": [
+          "art/room_side_table/iterations/v005/render-runs/run-001/asset-gameplay-distance.png",
+          "art/room_side_table/iterations/v005/render-runs/run-001/asset-three-quarter.png",
+          "art/room_side_table/iterations/v005/render-runs/run-001/asset-detail.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "No",
+      "evidence": "The v005 side table improves the pinched v004 leg profile and raises the oak toward the approved target's warmer finish. Its shelf and drawer relief remain shallow, while repeated grain prevents the furniture from reading as naturally finished wood.",
+      "pass": false
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "This ArtBrief has no source photograph; judge this candidate against its approved Visual Director target.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": true,
+      "simplified_programmer_art": true,
+      "substantially_stylized": false
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Keep this best-current candidate and backlog the episode; a future revision should give the turned profiles more controlled bead-and-cove transitions and use varied low-contrast grain across the drawer, top, legs, and shelf.",
+    "lost_visual_information": [
+      "The round-02 target's fuller turned legs are better represented in v005, but its carved leg transitions and routed shelf details remain subdued.",
+      "The brighter finish moves toward warm oak, while a dark shelf and repeated high-contrast streaks weaken material realism."
+    ],
+    "preserved_components": [
+      "The validated room side table remains within its authoritative ArtBrief bounds and preserves its RoomDefinition placement and gameplay role.",
+      "This candidate changes only presentation geometry and materials; collisions, navigation, selection, surfaces, and gameplay landmarks remain unchanged."
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "material_generation"
+    ]
+  }
+}

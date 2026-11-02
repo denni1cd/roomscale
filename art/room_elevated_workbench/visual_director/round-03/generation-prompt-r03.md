@@ -1,0 +1,3 @@
+# Generation prompt — Room B elevated workbench round 03
+
+Edit the round-02 approved workbench concept image. Preserve furniture identity, overall silhouette, 58 x 36 x 30 inch proportions, warm oak and dark walnut palette, aged brass and iron, three-quarter product view, lighting and background. Make fitted shoulder transitions and pegged mortise-and-tenon construction visible where the four stout legs meet the apron; show the apron shoulders and lower stretcher end joints; give the three drawer fronts shallow routed fields with restrained raised rails; clarify hand-softened top edges and breadboard end grain. Preserve the thick six-board top, dog holes, shoulder vise and handle. Do not add props, text, tools or drawers.
