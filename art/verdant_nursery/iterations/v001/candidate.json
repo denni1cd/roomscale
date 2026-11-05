@@ -1,0 +1,106 @@
+{
+  "asset_files": [
+    "art/verdant_nursery/iterations/v001/generated/verdant_nursery.glb"
+  ],
+  "asset_id": "verdant_nursery",
+  "candidate_id": "verdant_nursery-v001",
+  "created_at_utc": "2026-11-05T03:46:15+00:00",
+  "evaluation_file": "",
+  "generation_attempts": [
+    {
+      "command": [
+        "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/.venv/Scripts/python.exe",
+        "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/scripts/art_factory/generators/verdant_nursery_pipeline.py",
+        "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale",
+        "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale\\art\\verdant_nursery\\iterations\\v001\\generated"
+      ],
+      "execution_number": 1,
+      "exit_code": 0,
+      "log_file": "art/verdant_nursery/iterations/v001/generation.log",
+      "output_dir": "art/verdant_nursery/iterations/v001/generated",
+      "recorded_at_utc": "2026-11-05T03:46:20+00:00",
+      "status": "pass"
+    }
+  ],
+  "generation_result": {
+    "command": [
+      "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/.venv/Scripts/python.exe",
+      "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/scripts/art_factory/generators/verdant_nursery_pipeline.py",
+      "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale",
+      "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale\\art\\verdant_nursery\\iterations\\v001\\generated"
+    ],
+    "execution_number": 1,
+    "exit_code": 0,
+    "log_file": "art/verdant_nursery/iterations/v001/generation.log",
+    "output_dir": "art/verdant_nursery/iterations/v001/generated",
+    "recorded_at_utc": "2026-11-05T03:46:20+00:00",
+    "status": "pass"
+  },
+  "parent_candidate_id": "",
+  "recipe_file": "art/verdant_nursery/iterations/v001/recipe.json",
+  "renders": [],
+  "schema_version": 1,
+  "status": "rejected",
+  "technical_validation": {
+    "asset_path": "res://art/verdant_nursery/iterations/v001/generated/verdant_nursery.glb",
+    "bounds": {
+      "position": [
+        -11.6309175491333,
+        -0.0269287824630737,
+        -5.82904720306396
+      ],
+      "size": [
+        23.2637004852295,
+        9.43897533416748,
+        10.5239963531494
+      ]
+    },
+    "engine": "4.7.2-stable (official)",
+    "import_exit_code": 0,
+    "issues": [
+      "source proportions exceed brief tolerance: ratios=(0.894758, 0.943898, 0.584666) tolerance=0.200"
+    ],
+    "log": "art/verdant_nursery/iterations/v001/technical-validation.log",
+    "mesh_count": 1,
+    "recorded_at_utc": "2026-11-05T03:53:28+00:00",
+    "report": "art/verdant_nursery/iterations/v001/technical-validation.json",
+    "status": "fail",
+    "surface_count": 10,
+    "triangle_count": 24600,
+    "validation_exit_code": 1
+  },
+  "version": 1,
+  "visual_director_provenance": {
+    "approved_visual_target": {
+      "approval": "pass",
+      "approved_at_utc": "2026-11-02T15:47:17+00:00",
+      "concept_id": "direction-c-refined-r02",
+      "path": "art/verdant_nursery/visual_director/round-01/approved-target-r01.png",
+      "review_method": "pixel inspection; review evidence recorded by Luna",
+      "review_path": "art/verdant_nursery/visual_director/round-01/pixel-review.md",
+      "sha256": "909389cfa988f686b6da8f1304245deff71c36695bfe5690a2ba51e4f4df4c27"
+    },
+    "case_file": "art/verdant_nursery/visual_director/state.json",
+    "policy": {
+      "inputs": {
+        "category": "settlement_structure",
+        "current_quality": "below_target",
+        "faction_defining": true,
+        "inferred": [],
+        "priority_tier": 2,
+        "screen_space_importance": 4,
+        "source_images_present": false,
+        "source_photo_required": false
+      },
+      "reasons": [
+        "Tier 2 faction-defining asset",
+        "high screen-space importance",
+        "current production quality is below target"
+      ],
+      "required": true
+    },
+    "status": "approved",
+    "strategy": "initial",
+    "target_episode_attempt": 1
+  }
+}

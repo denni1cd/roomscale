@@ -1,0 +1,321 @@
+{
+  "asset_files": [
+    "art/verdant_nursery/iterations/v003/generated/verdant_nursery.glb"
+  ],
+  "asset_id": "verdant_nursery",
+  "candidate_id": "verdant_nursery-v003",
+  "created_at_utc": "2026-11-05T04:05:13+00:00",
+  "evaluation_file": "art/verdant_nursery/iterations/v003/evaluation.json",
+  "generation_attempts": [
+    {
+      "command": [
+        "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/.venv/Scripts/python.exe",
+        "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/scripts/art_factory/generators/verdant_nursery_pipeline.py",
+        "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale",
+        "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale\\art\\verdant_nursery\\iterations\\v003\\generated"
+      ],
+      "execution_number": 1,
+      "exit_code": 0,
+      "log_file": "art/verdant_nursery/iterations/v003/generation.log",
+      "output_dir": "art/verdant_nursery/iterations/v003/generated",
+      "recorded_at_utc": "2026-11-05T04:05:14+00:00",
+      "status": "pass"
+    }
+  ],
+  "generation_result": {
+    "command": [
+      "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/.venv/Scripts/python.exe",
+      "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale/scripts/art_factory/generators/verdant_nursery_pipeline.py",
+      "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale",
+      "C:\\Users\\Zero\\.codex\\worktrees\\art-factory-production\\roomscale\\art\\verdant_nursery\\iterations\\v003\\generated"
+    ],
+    "execution_number": 1,
+    "exit_code": 0,
+    "log_file": "art/verdant_nursery/iterations/v003/generation.log",
+    "output_dir": "art/verdant_nursery/iterations/v003/generated",
+    "recorded_at_utc": "2026-11-05T04:05:14+00:00",
+    "status": "pass"
+  },
+  "parent_candidate_id": "verdant_nursery-v002",
+  "recipe_file": "art/verdant_nursery/iterations/v003/recipe.json",
+  "renders": [
+    {
+      "asset_id": "verdant_nursery",
+      "camera": {
+        "actual_camera_position": "(0.0, 272.0435, 203.1683)",
+        "distance_inches": 330.0,
+        "focus": "(0.0, 12.0, 0.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 52.0,
+        "yaw_radians": 0.0
+      },
+      "candidate_id": "verdant_nursery-v003",
+      "captured_at_utc": "2026-11-05T04:05:38+00:00",
+      "draw_calls": 1085.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 2.0,
+      "path": "art/verdant_nursery/iterations/v003/render-runs/run-001/room-scale.png",
+      "phase": "room-scale",
+      "primitives": 330138.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "f806f28927cb11f44b9402defba67169011edfaa6358149eddcde883f91398c7"
+    },
+    {
+      "asset_id": "verdant_nursery",
+      "camera": {
+        "actual_camera_position": "(203.1683, 272.0435, -0.000009)",
+        "distance_inches": 330.0,
+        "focus": "(0.0, 12.0, 0.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 52.0,
+        "yaw_radians": 1.5707963267949
+      },
+      "candidate_id": "verdant_nursery-v003",
+      "captured_at_utc": "2026-11-05T04:05:38+00:00",
+      "draw_calls": 1085.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 2.0,
+      "path": "art/verdant_nursery/iterations/v003/render-runs/run-001/room-scale-opposite-angle.png",
+      "phase": "room-scale-opposite-angle",
+      "primitives": 330522.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "832e3ac706d140ea69c5d7ce4a1a6a0081dfc8a2daadfa0be10d9d986a4c8f3c"
+    },
+    {
+      "asset_id": "verdant_nursery",
+      "camera": {
+        "actual_camera_position": "(-8.233153, 47.82436, 88.0827)",
+        "distance_inches": 64.0,
+        "focus": "(-20.0, 5.0, 42.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 42.0,
+        "yaw_radians": 0.25
+      },
+      "candidate_id": "verdant_nursery-v003",
+      "captured_at_utc": "2026-11-05T04:05:38+00:00",
+      "draw_calls": 1776.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 43.0,
+      "path": "art/verdant_nursery/iterations/v003/render-runs/run-001/settlement-scale.png",
+      "phase": "settlement-scale",
+      "primitives": 511188.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "5c3fafbece96f9c2a06dffbca3314ce18aae522be5bcb85d5a0509e00042c462"
+    },
+    {
+      "asset_id": "verdant_nursery",
+      "camera": {
+        "actual_camera_position": "(-31.76685, 47.82436, -4.082703)",
+        "distance_inches": 64.0,
+        "focus": "(-20.0, 5.0, 42.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 42.0,
+        "yaw_radians": 3.39159265358979
+      },
+      "candidate_id": "verdant_nursery-v003",
+      "captured_at_utc": "2026-11-05T04:05:38+00:00",
+      "draw_calls": 1882.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 43.0,
+      "path": "art/verdant_nursery/iterations/v003/render-runs/run-001/settlement-scale-opposite-angle.png",
+      "phase": "settlement-scale-opposite-angle",
+      "primitives": 579104.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "c123d66f3caa59b4eeac7c019a76b65d34689a53d8aa3cc07158ebff24941f92"
+    },
+    {
+      "asset_id": "verdant_nursery",
+      "camera": {
+        "actual_camera_position": "(26.0827, 47.82436, 30.23315)",
+        "distance_inches": 64.0,
+        "focus": "(-20.0, 5.0, 42.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 42.0,
+        "yaw_radians": 1.8207963267949
+      },
+      "candidate_id": "verdant_nursery-v003",
+      "captured_at_utc": "2026-11-05T04:05:38+00:00",
+      "draw_calls": 1363.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 43.0,
+      "path": "art/verdant_nursery/iterations/v003/render-runs/run-001/settlement-scale-side-angle.png",
+      "phase": "settlement-scale-side-angle",
+      "primitives": 428804.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "928a2f2ca4f9413c61159d6aaf512694a06261ec478c7ec8fa541fd92b3f497f"
+    },
+    {
+      "asset_id": "verdant_nursery",
+      "camera": {
+        "actual_camera_position": "(-9.066395, 19.70181, 57.31512)",
+        "distance_inches": 23.8796987915039,
+        "focus": "(-20.0, 5.0, 42.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 38.0,
+        "yaw_radians": 0.62
+      },
+      "candidate_id": "verdant_nursery-v003",
+      "captured_at_utc": "2026-11-05T04:05:38+00:00",
+      "draw_calls": 851.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 43.0,
+      "path": "art/verdant_nursery/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+      "phase": "asset-three-quarter",
+      "primitives": 385372.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "b9b3430247c45ec0425feb1965ee6d939323d8cbe7d875566098b3efd403cdad"
+    },
+    {
+      "asset_id": "verdant_nursery",
+      "camera": {
+        "actual_camera_position": "(-30.93361, 19.70181, 26.68488)",
+        "distance_inches": 23.8796987915039,
+        "focus": "(-20.0, 5.0, 42.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 38.0,
+        "yaw_radians": 3.76159265358979
+      },
+      "candidate_id": "verdant_nursery-v003",
+      "captured_at_utc": "2026-11-05T04:05:38+00:00",
+      "draw_calls": 1614.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 43.0,
+      "path": "art/verdant_nursery/iterations/v003/render-runs/run-001/asset-opposite-three-quarter.png",
+      "phase": "asset-opposite-three-quarter",
+      "primitives": 455620.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "2a1f1a7d0418674f2664383c3b376b9b1be76e263eb28211ed4ef7bd0b183163"
+    },
+    {
+      "asset_id": "verdant_nursery",
+      "camera": {
+        "actual_camera_position": "(-4.684876, 19.70181, 31.06639)",
+        "distance_inches": 23.8796987915039,
+        "focus": "(-20.0, 5.0, 42.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(640.0, 360.0)",
+        "tilt_degrees": 38.0,
+        "yaw_radians": 2.1907963267949
+      },
+      "candidate_id": "verdant_nursery-v003",
+      "captured_at_utc": "2026-11-05T04:05:38+00:00",
+      "draw_calls": 896.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 22.0,
+      "path": "art/verdant_nursery/iterations/v003/render-runs/run-001/asset-profile.png",
+      "phase": "asset-profile",
+      "primitives": 338876.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "256c086185f2ca13906deaf05542050d73063af216524f1172e03449970985cf"
+    },
+    {
+      "asset_id": "verdant_nursery",
+      "camera": {
+        "actual_camera_position": "(-17.48788, 10.39892, 51.83824)",
+        "distance_inches": 11.5,
+        "focus": "(-20.0, 5.0, 42.0)",
+        "fov_degrees": 55.0,
+        "subject_screen_position": "(639.9999, 360.0)",
+        "tilt_degrees": 28.0,
+        "yaw_radians": 0.25
+      },
+      "candidate_id": "verdant_nursery-v003",
+      "captured_at_utc": "2026-11-05T04:05:38+00:00",
+      "draw_calls": 783.0,
+      "engine": "4.7.2-stable (official)",
+      "fps": 22.0,
+      "path": "art/verdant_nursery/iterations/v003/render-runs/run-001/asset-detail.png",
+      "phase": "asset-detail",
+      "primitives": 381464.0,
+      "production_path": true,
+      "renderer": "gl_compatibility",
+      "room_id": "room_a",
+      "sha256": "12dc81d4aa581803b0c26cc73daeca929d292edd8a025cbde7f1323a047420b7"
+    }
+  ],
+  "schema_version": 1,
+  "status": "challenger",
+  "technical_validation": {
+    "asset_path": "res://art/verdant_nursery/iterations/v003/generated/verdant_nursery.glb",
+    "bounds": {
+      "position": [
+        -11.6309175491333,
+        -0.0269287824630737,
+        -8.57205009460449
+      ],
+      "size": [
+        23.2637004852295,
+        9.57817935943604,
+        16.0839691162109
+      ]
+    },
+    "engine": "4.7.2-stable (official)",
+    "import_exit_code": 0,
+    "issues": [],
+    "log": "art/verdant_nursery/iterations/v003/technical-validation.log",
+    "mesh_count": 1,
+    "recorded_at_utc": "2026-11-05T04:05:26+00:00",
+    "report": "art/verdant_nursery/iterations/v003/technical-validation.json",
+    "status": "pass",
+    "surface_count": 10,
+    "triangle_count": 20872,
+    "validation_exit_code": 0
+  },
+  "version": 3,
+  "visual_director_provenance": {
+    "approved_visual_target": {
+      "approval": "pass",
+      "approved_at_utc": "2026-11-05T03:54:20+00:00",
+      "concept_id": "dimension-corrected-c-r01",
+      "path": "art/verdant_nursery/visual_director/round-02/approved-target-r01.png",
+      "review_method": "pixel inspection; review evidence recorded by Luna",
+      "review_path": "art/verdant_nursery/visual_director/round-02/pixel-review.md",
+      "sha256": "708ec18bd82148890486bd7bac9080ebf585936dfadb78179e03e3998516dc71"
+    },
+    "case_file": "art/verdant_nursery/visual_director/state.json",
+    "policy": {
+      "inputs": {
+        "category": "settlement_structure",
+        "current_quality": "below_target",
+        "faction_defining": true,
+        "inferred": [],
+        "priority_tier": 2,
+        "screen_space_importance": 4,
+        "source_images_present": false,
+        "source_photo_required": false
+      },
+      "reasons": [
+        "Tier 2 faction-defining asset",
+        "high screen-space importance",
+        "current production quality is below target"
+      ],
+      "required": true
+    },
+    "status": "approved",
+    "strategy": "targeted_correction",
+    "target_episode_attempt": 2
+  }
+}

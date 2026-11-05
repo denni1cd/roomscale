@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "method": "asymmetrical_branched_cultivation_tree_with_thick_individual_leaves",
+  "instructions": "Translate the approved Verdant Growth Nursery target into a 26 x 10 x 18 inch presentation-only model. Build an asymmetrical braided trunk, four clearly separated tiers of individually curved and thick leaves, dark plum undersides, several large ochre hanging seed pods, a raised rear work platform, and an open front approach with a small potting surface and ladder. Keep foliage leaves physically shaped rather than planes, avoid a closed canopy roof and sphere crown, and keep the entrance/work bay visible at 64 inches. Do not add collision, navigation, selection, work, or growth behavior.",
+  "tool": "Blender procedural component authoring with joined GLB mesh and solid PBR materials.",
+  "tool_version": "Blender 5.2.3+; Godot 4.7.2-stable Compatibility production renderer",
+  "material_method": "Broad solid natural greens, contrasting plum undersides, warm living rootwood, and ochre seed pods carry the faction read at settlement distance; roughness variation separates organic materials at close view.",
+  "post_processing": [],
+  "deterministic_seed": 20261109,
+  "generator_command": [
+    "{project_root}/.venv/Scripts/python.exe",
+    "{project_root}/scripts/art_factory/generators/verdant_nursery_pipeline.py",
+    "{project_root}",
+    "{output_dir}"
+  ],
+  "source_inputs": [
+    "art/verdant_nursery/brief.json",
+    "art/verdant_nursery/visual_director/round-01/approved-target-r01.png",
+    "art/verdant_nursery/visual_director/round-01/pixel-review.md",
+    "art/verdant_nursery/visual_director/round-01/visual-development.md",
+    "scripts/art_factory/generators/verdant_nursery_blender.py",
+    "scripts/art_factory/generators/verdant_nursery_pipeline.py",
+    "scripts/civilization_presentation.gd"
+  ],
+  "import_configuration": {
+    "collision_navigation_selection_and_work_contracts": "not present in the visual asset",
+    "format": "GLB with embedded solid PBR material factors",
+    "presentation_only": true,
+    "renderer": "Godot Compatibility",
+    "units": "inches",
+    "up_axis": "glTF Y up converted from Blender Z up"
+  },
+  "parameters": {
+    "visual_director_strategy": "initial",
+    "layout_strategy": "open_front_work_bay_with_raised_rear_growing_platform",
+    "material_strategy": "solid_gameplay_scale_color_blocks",
+    "output_envelope_inches": [26.0, 10.0, 18.0],
+    "target_gameplay_distance_inches": 64.0,
+    "gameplay_geometry_changed": false,
+    "outputs": ["verdant_nursery.glb"]
+  }
+}

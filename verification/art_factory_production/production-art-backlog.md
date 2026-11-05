@@ -72,6 +72,10 @@ The Scavenger Depot r01 target received three bounded Blender transfers. The fir
 
 The Luna-approved Scavenger Work Area target received three bounded strategies. v001 remains best current because v003's alternate solid PBR blocks weaken roof-to-bench separation without making the work function legible at the controlled Room A 64-inch camera. Luna scores v003 identity 1/5, bench/vise visibility 2/5, tool-board/tool visibility 1/5, and material separation 2/5. v002 generation succeeded but technical validation rejected its 7.70-inch depth against the 12-inch brief; no production render was captured for that invalid candidate. v003 passes at 22.81 × 8.045 × 10.03 inches. The review images are static Godot production-scene camera proxies, not live interactive gameplay captures. The target is backlogged, no candidate was promoted, and the accepted registry remains at 15 entries. See [Batch 24](batch-24-scavenger-workarea-final.md).
 
+## Batch 25 disposition
+
+The Verdant Growth Nursery transfer received three candidates. v001 failed technical proportions because its depth was only 10.52 inches against the 18-inch Room A site. A revised low/broad target was reviewed and approved. v002 passed fit but read as a leafy platform at the 64-inch camera. v003 improves the visible trunk and ochre pods, but Luna finds the access ladder still merges with the deck and the open work bay remains unclear. v003 is best current 3D review art; the episode is backlogged at the three-candidate budget. No asset was promoted; the canonical registry remains at 15. These are static Room A production-scene camera proxies, not live gameplay captures. See [Batch 25](batch-25-verdant-nursery.md).
+
 ## Promoted production assets
 
 - Batch 1: `settlement_depot-v005`, `settlement_housing-v004`, and `room_bookcase_production-v001`.
@@ -80,7 +84,7 @@ The Luna-approved Scavenger Work Area target received three bounded strategies. 
 
 These are scoped improvements. The inventory still contains substantial unregistered room furniture, runtime-generated geometry, and incomplete faction-specific art.
 
-No canonical production assets were promoted in Batches 5–24; Batch 12 changed scene-wide lighting settings, and Batch 15 added no runtime promotion. Review-only candidates remain outside accepted production, including desk-v061 (with desk-v007 retained in production), French door v010, trim v002, Room A bookcase v003, the Batch 15 furniture candidates, Scavenger workshop v003, Scavenger Depot v003, and Work Area v001. See the batch reports linked above.
+No canonical production assets were promoted in Batches 5–25; Batch 12 changed scene-wide lighting settings, and Batch 15 added no runtime promotion. Review-only candidates remain outside accepted production, including desk-v061 (with desk-v007 retained in production), French door v010, trim v002, Room A bookcase v003, the Batch 15 furniture candidates, Scavenger workshop v003, Scavenger Depot v003, Work Area v001, and Verdant Nursery v003. See the batch reports linked above.
 
 ## Batch 1 promotion detail
 

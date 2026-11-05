@@ -1,0 +1,156 @@
+{
+  "candidate_id": "verdant_nursery-v003",
+  "created_at_utc": "2026-11-05T04:08:07+00:00",
+  "decision": "continue",
+  "defects": [
+    "At 64 inches, the front deck and ladder overlap and read as one slatted base rather than an open nursery work bay with a distinct access ladder.",
+    "The structure remains a small object in the full Room A settlement view, so the nursery/workshop function is not fully clear.",
+    "Several close-range leaf and platform details collapse at normal settlement distance."
+  ],
+  "hard_fail_reasons": [
+    "Luna pixel review finds the 64-inch work bay and ladder remain indistinct across settlement, opposite, and side views; this prevents the gameplay-readability gate from passing."
+  ],
+  "incumbent_candidate_id": "verdant_nursery-v002",
+  "incumbent_comparison": "v003 improves the gameplay read over v002: the brown trunk is visible, the larger ochre pods register as fruit, and dark foliage and plum accents survive. The entry ladder and front deck still merge at the 64-inch Room A camera.",
+  "incumbent_comparison_result": "better",
+  "likely_causes": [
+    "geometry_loss",
+    "proportion_drift"
+  ],
+  "next_action_hypothesis": "For any future transfer, separate the access ladder from the front deck edge and open a clear gap between them; simplify the front work-surface outline and frame the empty bay with two high-contrast supports. Keep the corrected 26 x 10 x 18 inch envelope and retain the trunk and pod improvements.",
+  "observations": {
+    "art_direction_fit": "The living trunk, dark green/plum leaves, and ochre pods are more distinctly Verdant than v002. The work function still needs a clearer front opening at settlement scale.",
+    "close_up_quality": "The close view clearly shows a central trunk and separate fruit-like pods, but deck and ladder remain crowded and some leaves still read as paddles.",
+    "gameplay_readability": "Luna pixel review: in the 1280 x 720 view the object spans about x=555-715, y=330-440. The trunk at x=637-653, y=350-394 and pods at x=600-680, y=370-410 now register; deck and ladder overlap around x=590-680, y=395-435 and do not read as an open bay with access.",
+    "geometric_detail": "At close range the model shows a widened braided trunk, individual shaped leaves, larger seed pods, root supports, platform planks, and ladder rungs. At 64 inches the front work geometry merges.",
+    "material_realism": "Darkened green foliage, brown trunk and ochre pods separate better than v002 under Room A lighting; some leaf underside accents remain subtle.",
+    "proportion": "Godot validates 23.2637 x 9.5782 x 16.0840 inches against the 26 x 10 x 18 inch module envelope. The camera-scale deck and ladder proportions remain crowded.",
+    "scale_fidelity": "Godot 4.7.2 technical validation passes with source bounds 23.2637 x 9.5782 x 16.0840 inches; all three ratios remain within the 20% tolerance for 26 x 10 x 18 inches.",
+    "semantic_recognizability": "The central brown stem and ochre pods now identify a cultivated tree better than v002, but the complete object still reads partly as a slatted platform at normal settlement distance.",
+    "silhouette_quality": "Dark green foliage, plum accents, brown trunk, and ochre pods create more separation. The open bay is not distinct from the front platform in the gameplay views.",
+    "surface_variation": "Raised veins, multiple leaf greens, plum accents, dark joins, and pod ridges are visible in close captures, with useful broad color blocks at 64 inches.",
+    "technical_integration": "The candidate loads through the review-only production resolver in Room A; nine Godot captures were registered. No room landmarks, construction behavior, or simulation geometry changed."
+  },
+  "render_evidence": [
+    "art/verdant_nursery/iterations/v003/render-runs/run-001/settlement-scale.png",
+    "art/verdant_nursery/iterations/v003/render-runs/run-001/settlement-scale-opposite-angle.png",
+    "art/verdant_nursery/iterations/v003/render-runs/run-001/settlement-scale-side-angle.png",
+    "art/verdant_nursery/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+    "art/verdant_nursery/iterations/v003/render-runs/run-001/asset-profile.png",
+    "art/verdant_nursery/iterations/v003/render-runs/run-001/room-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 3,
+    "close_up_quality": 3,
+    "gameplay_readability": 2,
+    "geometric_detail": 3,
+    "material_realism": 3,
+    "proportion": 3,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 3,
+    "silhouette_quality": 3,
+    "surface_variation": 3,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "The close view clarifies the trunk and pods, but the front ladder still crowds the deck and the leaf forms remain broad paddles.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "Leaves have modeled edges and thick geometry; root ends and platform members have rounded transitions.",
+        "evidence_refs": [
+          "art/verdant_nursery/iterations/v003/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "No metal hardware is needed for this living structure; rootwood joins connect the work platform and ladder.",
+        "evidence_refs": [
+          "art/verdant_nursery/iterations/v003/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "joins": {
+        "evidence": "The widened trunk joins visible branching members; close view shows the platform and support roots assembled together.",
+        "evidence_refs": [
+          "art/verdant_nursery/iterations/v003/render-runs/run-001/asset-three-quarter.png",
+          "art/verdant_nursery/iterations/v003/render-runs/run-001/asset-profile.png"
+        ],
+        "pass": true
+      },
+      "manufacturing_detail": {
+        "evidence": "The access ladder overlaps the front deck, so the intended open work bay does not read at the 64-inch production camera.",
+        "evidence_refs": [
+          "art/verdant_nursery/iterations/v003/render-runs/run-001/settlement-scale.png",
+          "art/verdant_nursery/iterations/v003/render-runs/run-001/settlement-scale-opposite-angle.png",
+          "art/verdant_nursery/iterations/v003/render-runs/run-001/settlement-scale-side-angle.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "Dark green leaves, brown wood, and ochre pods remain distinct under Room A lighting.",
+        "evidence_refs": [
+          "art/verdant_nursery/iterations/v003/render-runs/run-001/settlement-scale.png",
+          "art/verdant_nursery/iterations/v003/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "surface_variation": {
+        "evidence": "Close view shows raised veins, plum accents, pod ridges, and multiple living materials.",
+        "evidence_refs": [
+          "art/verdant_nursery/iterations/v003/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "thickness": {
+        "evidence": "Individual leaves and bark members show physical thickness in the close render, though leaf forms are still broad.",
+        "evidence_refs": [
+          "art/verdant_nursery/iterations/v003/render-runs/run-001/asset-three-quarter.png"
+        ],
+        "pass": true
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "evidence": "The close view reads as a stylized, assembled living structure with a trunk, raised work surface, root supports, ladder, foliage, and fruit pods.",
+      "pass": true
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "The ArtBrief has no photo reference or source-resemblance requirement.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": false,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": true
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "If this asset is revisited, move the ladder forward and laterally away from the deck edge so there is a visible floor gap, reduce front slat clutter, and preserve an open framed work bay. Keep the current dark trunk, dark foliage, and larger front-facing ochre pods.",
+    "lost_visual_information": [
+      "The front work-bay opening collapses into the slatted platform silhouette at 64 inches.",
+      "The ladder rungs overlap the deck edge and lose their access function in the settlement view.",
+      "Some leaf vein and underside accents disappear at game distance."
+    ],
+    "preserved_components": [
+      "The corrected envelope passes Godot technical validation.",
+      "The main trunk and ochre pods now register in the settlement capture.",
+      "The review-only production integration preserves all simulation and RoomDefinition behavior."
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "proportion_drift"
+    ]
+  }
+}

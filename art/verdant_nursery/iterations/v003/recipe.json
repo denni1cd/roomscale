@@ -1,0 +1,56 @@
+{
+  "deterministic_seed": 20261111,
+  "generator_command": [
+    "{project_root}/.venv/Scripts/python.exe",
+    "{project_root}/scripts/art_factory/generators/verdant_nursery_pipeline.py",
+    "{project_root}",
+    "{output_dir}"
+  ],
+  "import_configuration": {
+    "collision_navigation_selection_and_work_contracts": "not present in the visual asset",
+    "format": "GLB with embedded solid PBR material factors",
+    "presentation_only": true,
+    "renderer": "Godot Compatibility",
+    "units": "inches",
+    "up_axis": "glTF Y up converted from Blender Z up"
+  },
+  "instructions": "Respond to v002's registered 64-inch Room A evidence while keeping the revised target and proven 26 x 10 x 18 inch fit. Reduce overlapping foliage, expose a visibly broad dark central trunk, pitch a few leaves to show plum undersides, enlarge and lower ochre pods on the front-facing branches, and darken the rootwood and foliage materials for the actual room lighting. Keep the work bay open and make its entry supports and ladder distinct. Do not change gameplay, simulation, navigation, or work behavior.",
+  "material_method": "Darkened natural green and plum color blocks plus warm rootwood and ochre pods preserve broad gameplay-scale separation under the Room A production lighting.",
+  "method": "open_trunk_and_front_facing_seed_pods_for_gameplay_read",
+  "parameters": {
+    "approved_visual_target": "art/verdant_nursery/visual_director/round-02/approved-target-r01.png",
+    "depth_scale": 1.6,
+    "diagnosis_ref": "verdant_nursery-v002",
+    "gameplay_geometry_changed": false,
+    "height_scale": 0.53,
+    "layout_strategy": "visible_trunk_and_front_facing_ochre_pod_clusters_with_open_work_bay",
+    "material_strategy": "darkened_gameplay_scale_color_blocks",
+    "output_envelope_inches": [
+      26.0,
+      10.0,
+      18.0
+    ],
+    "outputs": [
+      "verdant_nursery.glb"
+    ],
+    "target_gameplay_distance_inches": 64.0,
+    "visual_director_strategy": "targeted_correction"
+  },
+  "post_processing": [],
+  "schema_version": 1,
+  "source_inputs": [
+    "art/verdant_nursery/brief.json",
+    "art/verdant_nursery/visual_director/round-02/approved-target-r01.png",
+    "art/verdant_nursery/visual_director/round-02/pixel-review.md",
+    "art/verdant_nursery/visual_director/round-02/visual-development.md",
+    "art/verdant_nursery/iterations/v002/evaluation.json",
+    "art/verdant_nursery/iterations/v002/render-runs/run-003/settlement-scale.png",
+    "art/verdant_nursery/iterations/v002/render-runs/run-003/asset-three-quarter.png",
+    "scripts/art_factory/generators/verdant_nursery_blender.py",
+    "scripts/art_factory/generators/verdant_nursery_pipeline.py",
+    "scripts/civilization_presentation_runtime.gd",
+    "scripts/art_factory/render_harness.gd"
+  ],
+  "tool": "Blender procedural component authoring with joined GLB mesh and solid PBR materials.",
+  "tool_version": "Blender 5.2.3+; Godot 4.7.2-stable Compatibility production renderer"
+}

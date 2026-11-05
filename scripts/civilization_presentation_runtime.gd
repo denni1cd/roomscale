@@ -6,6 +6,8 @@ extends "res://scripts/civilization_presentation.gd"
 ## animated gears, boiler lights and other Clockwork presentation nodes, so Verdant
 ## hides those existing children rather than freeing/replacing their parent objects.
 
+const VerdantAssetResolver := preload("res://scripts/visuals/visual_resolver.gd")
+
 
 func _apply_verdant_settlement(scene: Node3D) -> void:
 	var settlement := scene.get_node("Settlement") as Node3D
@@ -21,6 +23,8 @@ func _apply_verdant_settlement(scene: Node3D) -> void:
 		"housing": "Housing",
 		"work_area": "WorkArea",
 	}
+	var resolver := VerdantAssetResolver.new()
+	var verdant_nursery_entry: Dictionary = resolver.registry.lookup("verdant_nursery")
 	for role in roles:
 		if role not in infrastructure:
 			continue
@@ -28,7 +32,24 @@ func _apply_verdant_settlement(scene: Node3D) -> void:
 		if building == null:
 			continue
 		_hide_existing_presentation(building)
-		_build_verdant_overlay(building, role)
+		if role == "workshop" and not verdant_nursery_entry.is_empty():
+			# A candidate appears only through the explicit Art Factory review
+			# registry; ordinary production keeps the procedural Verdant fallback.
+			var asset_root := Node3D.new()
+			asset_root.name = "VerdantArtPresentation"
+			asset_root.set_meta("presentation_only", true)
+			building.add_child(asset_root)
+			resolver.render(
+				asset_root,
+				{
+					"kind": "settlement_workshop",
+					"appearance": {"asset_id": "verdant_nursery"},
+					"dimensions": [26.0, 10.0, 18.0],
+				},
+				func(_parent: Node3D, _object: Dictionary) -> void: pass
+			)
+		else:
+			_build_verdant_overlay(building, role)
 	var streets := settlement.get_node_or_null("SettlementStreets") as Node3D
 	if streets != null:
 		# Retain the ordinary human pencil/coin scale cues, but hide industrial

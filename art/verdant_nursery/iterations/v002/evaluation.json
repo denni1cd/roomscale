@@ -1,0 +1,162 @@
+{
+  "candidate_id": "verdant_nursery-v002",
+  "created_at_utc": "2026-11-05T04:01:42+00:00",
+  "decision": "continue",
+  "defects": [
+    "At 64 inches the structure reads as a small leafy platform, not a Verdant nursery or workshop.",
+    "The central trunk and ochre seed pods are too small or occluded to identify in the settlement, opposite, and side views.",
+    "The front work bay and ladder collapse into the platform outline at gameplay distance.",
+    "Close foliage is broad and pale; dark plum undersides and material contrast do not survive the Room A lighting."
+  ],
+  "hard_fail_reasons": [
+    "Luna pixel review rates the gameplay-distance transfer as backlog: in the 1280x720 settlement capture the subject occupies only about x=560-700, y=330-440 and does not read as a nursery/workshop.",
+    "The trunk, pods, work-bay opening, and ladder are not distinct in the 64-inch production views."
+  ],
+  "incumbent_candidate_id": "",
+  "incumbent_comparison": "First dimension-correct candidate for the revised low/broad target. Godot validates 23.26 x 9.44 x 16.84 inches against the 26 x 10 x 18 inch Room A site, but the 64-inch production captures lose the nursery identity and work function.",
+  "incumbent_comparison_result": "first_pass",
+  "likely_causes": [
+    "geometry_loss",
+    "material_generation",
+    "lighting_render_presentation"
+  ],
+  "next_action_hypothesis": "Keep the proven 26 x 10 x 18 inch fit. Reduce overlapping leaf coverage, leave a clear view through to a wider dark central trunk, bring several larger ochre pods onto the front-facing branches, and darken the green, plum, and rootwood materials so the trunk, pod clusters, and open bay survive the 64-inch Room A camera.",
+  "observations": {
+    "art_direction_fit": "The living root platform and broad foliage remain Verdant, but the burgundy underside, large hanging pods, and cultivated-tree silhouette from the target are not prominent at gameplay distance.",
+    "close_up_quality": "The platform and ladder are clear in the close view, while the central trunk is weak, hanging pods are faint, and broad leaves still read as paddles.",
+    "gameplay_readability": "Luna pixel review: the 64-inch subject occupies approximately x=560-700, y=330-440 in the 1280x720 settlement view and reads as a small leafy platform. Opposite and side views show the same information loss.",
+    "geometric_detail": "At close range the platform slats, roots, ladder rungs, and shaped leaves are visible. At the actual 64-inch camera, the trunk, pods, and open bay collapse into the silhouette.",
+    "material_realism": "The solid wood and leaf materials are distinct in the source mesh, but Room A lighting makes the leaves pale lime and washes out the warm surfaces. Plum undersides are not visible in the first read.",
+    "proportion": "The candidate now uses the low/broad room proportions and passes the source fit gate at 23.26 x 9.44 x 16.84 inches. The work surface and access approach still have too little screen presence.",
+    "scale_fidelity": "Godot 4.7.2 technical validation passes with source bounds 23.2637 x 9.4390 x 16.8384 inches against the brief 26 x 10 x 18 inches; all dimension ratios are within the 20% tolerance.",
+    "semantic_recognizability": "Luna reports a small leafy platform at 64 inches rather than a nursery or workshop; close view restores the assembled platform but not the tree-work function.",
+    "silhouette_quality": "The settlement, opposite, and side angles show a low foliage patch over a platform. Branch and trunk silhouette do not separate from the leaf canopy.",
+    "surface_variation": "Close view shows separate materials and modeled veins, but the gameplay capture compresses the palette to bright green with tiny ochre points.",
+    "technical_integration": "The review-only candidate registry resolves verdant_nursery-v002 in the actual Room A production scene. Nine Godot 4.7.2 captures were registered; no simulation or RoomDefinition data changed."
+  },
+  "render_evidence": [
+    "art/verdant_nursery/iterations/v002/render-runs/run-003/settlement-scale.png",
+    "art/verdant_nursery/iterations/v002/render-runs/run-003/settlement-scale-opposite-angle.png",
+    "art/verdant_nursery/iterations/v002/render-runs/run-003/settlement-scale-side-angle.png",
+    "art/verdant_nursery/iterations/v002/render-runs/run-003/asset-three-quarter.png",
+    "art/verdant_nursery/iterations/v002/render-runs/run-003/asset-profile.png",
+    "art/verdant_nursery/iterations/v002/render-runs/run-003/room-scale.png"
+  ],
+  "schema_version": 1,
+  "scores": {
+    "art_direction_fit": 2,
+    "close_up_quality": 2,
+    "gameplay_readability": 1,
+    "geometric_detail": 2,
+    "material_realism": 2,
+    "proportion": 3,
+    "scale_fidelity": 4,
+    "semantic_recognizability": 2,
+    "silhouette_quality": 2,
+    "surface_variation": 2,
+    "technical_integration": 5
+  },
+  "visual_gate": {
+    "close_inspection": {
+      "answer": "No",
+      "evidence": "In the close and profile renders, broad leaves dominate; the trunk is weak and the ochre seed pods are faint. Luna also finds the front bay and ladder unreadable at 64 inches.",
+      "pass": false
+    },
+    "craftsmanship": {
+      "answer": "No",
+      "edge_treatment": {
+        "evidence": "Leaf edges and bark roots have modeled thickness and rounded transitions in the close capture.",
+        "evidence_refs": [
+          "art/verdant_nursery/iterations/v002/render-runs/run-003/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "hardware": {
+        "evidence": "This living structure requires no metal hardware; the wooden platform and ladder are joined with shaped rootwood members.",
+        "evidence_refs": [
+          "art/verdant_nursery/iterations/v002/render-runs/run-003/asset-three-quarter.png"
+        ],
+        "pass": true
+      },
+      "joins": {
+        "evidence": "Root strands, branch forks, and platform members are visibly assembled, but the main trunk-to-canopy join is obscured.",
+        "evidence_refs": [
+          "art/verdant_nursery/iterations/v002/render-runs/run-003/asset-three-quarter.png",
+          "art/verdant_nursery/iterations/v002/render-runs/run-003/asset-profile.png"
+        ],
+        "pass": false
+      },
+      "manufacturing_detail": {
+        "evidence": "Platform slats and ladder rungs are modeled, but the essential nursery cues—trunk, pod clusters, and open work bay—do not read in the registered settlement-scale views.",
+        "evidence_refs": [
+          "art/verdant_nursery/iterations/v002/render-runs/run-003/settlement-scale.png",
+          "art/verdant_nursery/iterations/v002/render-runs/run-003/settlement-scale-opposite-angle.png",
+          "art/verdant_nursery/iterations/v002/render-runs/run-003/settlement-scale-side-angle.png"
+        ],
+        "pass": false
+      },
+      "material_response": {
+        "evidence": "Separate leaf, plum, pod, and rootwood materials exist, but the 64-inch Room A view washes them toward pale green and tan.",
+        "evidence_refs": [
+          "art/verdant_nursery/iterations/v002/render-runs/run-003/settlement-scale.png",
+          "art/verdant_nursery/iterations/v002/render-runs/run-003/asset-three-quarter.png"
+        ],
+        "pass": false
+      },
+      "surface_variation": {
+        "evidence": "Modeled leaf veins and material surfaces appear close up, but contrast is too weak to survive at settlement scale.",
+        "evidence_refs": [
+          "art/verdant_nursery/iterations/v002/render-runs/run-003/asset-three-quarter.png",
+          "art/verdant_nursery/iterations/v002/render-runs/run-003/settlement-scale.png"
+        ],
+        "pass": false
+      },
+      "thickness": {
+        "evidence": "Individual leaves have geometric thickness, though their broad paddles read almost flat from the close three-quarter camera.",
+        "evidence_refs": [
+          "art/verdant_nursery/iterations/v002/render-runs/run-003/asset-three-quarter.png"
+        ],
+        "pass": false
+      }
+    },
+    "neutral_viewer_realism": {
+      "answer": "Yes",
+      "evidence": "The close capture shows an intentionally assembled stylized miniature structure with a platform, roots, ladder, and shaped foliage rather than placeholder primitives.",
+      "pass": true
+    },
+    "photo_character": {
+      "answer": "Not applicable",
+      "applicable": false,
+      "evidence": "The ArtBrief has no photo reference or source-resemblance requirement.",
+      "pass": null
+    },
+    "style_flags": {
+      "blocky_geometry": false,
+      "low_poly": false,
+      "materially_flat": true,
+      "placeholder_geometry": false,
+      "primitive_geometry": false,
+      "simplified_programmer_art": false,
+      "substantially_stylized": true
+    }
+  },
+  "visual_transfer_diagnosis": {
+    "corrective_action": "Keep the passing envelope and revise the foliage composition: open a clear central sightline onto a wider dark trunk, use fewer overlapping leaves with some front-pitched plum undersides, enlarge and lower several ochre pod clusters on camera-facing branches, and darken the green/rootwood materials for the actual Room A lighting. Simplify the entry ladder/platform outline so it remains distinct at 64 inches.",
+    "lost_visual_information": [
+      "The central trunk is hidden by overlapping foliage in all three settlement-scale views.",
+      "Ochre seed pods reduce to tiny pale dots and do not read as harvested seed clusters.",
+      "The front work-bay opening and access ladder collapse into the platform outline.",
+      "The target plum leaf undersides and dark living rootwood are largely absent from the first gameplay read."
+    ],
+    "preserved_components": [
+      "The candidate passes the 26 x 10 x 18 inch source-proportion gate.",
+      "A raised work platform, open approach, ladder, branching roots, thick modeled leaves, and seed pods are present in the close geometry.",
+      "Candidate loading uses the production Room A resolver and review-only registry."
+    ],
+    "primary_causes": [
+      "geometry_loss",
+      "material_generation",
+      "lighting_render_presentation"
+    ]
+  }
+}

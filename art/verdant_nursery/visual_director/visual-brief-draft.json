@@ -1,0 +1,58 @@
+{
+  "art_direction": "RoomScale category: settlement_structure. A believable miniature living-architecture nursery centered on an asymmetrical branching trunk and a distinctive mature canopy. At the 64-inch Room A settlement camera, the nursery should read as a cultivated tree-workshop rather than a green roof or generic shelter. Keep an open, usable ground-level work area, visible root supports and several large seed pods. Build the foliage from curved, tapered, visibly thick individual leaves; avoid flat cards and sphere crowns. Use deep natural greens, warm living wood and restrained seed-ochre or bloom accents. Preserve the existing 26 x 10 x 18 inch presentation site and all simulation-owned growth and work behavior.",
+  "asset_id": "verdant_nursery",
+  "citizen_scale": {
+    "citizen_height_inches": 0.5,
+    "ratio_or_view": "Use the exact 10-inch height against a 0.5-inch citizen; derive a schematic if generated scale is inaccurate."
+  },
+  "construction_materials": [
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "few restrained cream or plum living accents",
+      "part": "blooms"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "deep and muted natural greens on curved leaves with visible thickness and vein structure",
+      "part": "leaves"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "layered, branching rootwood with tapered growth and visible joins",
+      "part": "living_wood"
+    },
+    {
+      "construction": "Specify the visible assembly and joins during visual development.",
+      "material": "warm natural ochre, small but visible at gameplay distance",
+      "part": "seed_pods"
+    }
+  ],
+  "dimensions_inches": [
+    26.0,
+    10.0,
+    18.0
+  ],
+  "faction_identity": "living Verdant Growth Nursery structure",
+  "gameplay_distance_readability": "Keep required features legible at the ArtBrief gameplay camera distances: 2.0, 12.0, 64.0, 330.0 inches.",
+  "intended_function": "A believable miniature living-architecture nursery centered on an asymmetrical branching trunk and a distinctive mature canopy. At the 64-inch Room A settlement camera, the nursery should read as a cultivated tree-workshop rather than a green roof or generic shelter. Keep an open, usable ground-level work area, visible root supports and several large seed pods. Build the foliage from curved, tapered, visibly thick individual leaves; avoid flat cards and sphere crowns. Use deep natural greens, warm living wood and restrained seed-ochre or bloom accents. Preserve the existing 26 x 10 x 18 inch presentation site and all simulation-owned growth and work behavior.",
+  "prohibited_failure_modes": [
+    "do not change RoomDefinition landmarks, site dimensions, work-site identity, growth stages or assignments",
+    "do not add visual geometry to collision, navigation, selection, pathfinding or work calculations",
+    "do not add canonical-room-specific placement or simulation logic",
+    "do not use Clockwork gears, industrial roofs, metal cladding or simple green recoloring",
+    "do not use flat leaf cards, smooth sphere crowns or a closed roof that hides the work area"
+  ],
+  "roomdefinition_authority": "ArtBrief dimensions are (26.0, 10.0, 18.0); source RoomDefinition: rooms/room_a.json. RoomDefinition remains authoritative for placement and gameplay.",
+  "semantic_identity": "living Verdant Growth Nursery structure",
+  "separate_room_assets": [],
+  "silhouette_requirements": [
+    "a recognizable asymmetrical trunk and branching nursery canopy",
+    "curved, tapered leaves with visible thickness rather than broad flat cards",
+    "an open, readable ground-level work area that preserves the actual module's work surface and entrance",
+    "large separated seed pods that remain visible at the 64-inch settlement camera",
+    "a Verdant silhouette distinct from the generic Scavenger canopy and Clockwork roof forms",
+    "fit the existing 26 x 10 x 18 inch presentation envelope"
+  ],
+  "source_photo_constraints": null,
+  "visual_references": []
+}

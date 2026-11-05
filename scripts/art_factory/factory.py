@@ -567,6 +567,9 @@ class ArtFactory:
         if result["status"] == "fail":
             candidate.status = "rejected"
         self._save_candidate(candidate)
+        # Keep the Visual Director episode honest: a generated GLB that fails
+        # the technical gate cannot advance to production rendering or review.
+        self._record_visual_director_candidate(candidate)
         return candidate
 
     def record_render(
@@ -976,6 +979,7 @@ class ArtFactory:
             generation_result = candidate.generation_result or {}
             blocked = (
                 candidate.status == "blocked" or generation_result.get("status") != "pass"
+                or candidate.technical_validation.get("status") == "fail"
             )
             if attempt_record is None:
                 attempt_record = {
@@ -987,9 +991,15 @@ class ArtFactory:
                 }
                 attempts.append(attempt_record)
             if blocked:
-                failure_reason = generation_result.get("reason") or candidate.technical_validation.get(
-                    "reason", "generation did not produce a candidate mesh"
-                )
+                technical_issues = candidate.technical_validation.get("issues", [])
+                if candidate.technical_validation.get("status") == "fail" and technical_issues:
+                    failure_reason = "technical validation failed: " + "; ".join(
+                        str(issue) for issue in technical_issues
+                    )
+                else:
+                    failure_reason = generation_result.get("reason") or candidate.technical_validation.get(
+                        "reason", "generation did not produce a candidate mesh"
+                    )
                 log_file = generation_result.get("log_file")
                 generation_log = (
                     self.project_root / _safe_relative_path(log_file)

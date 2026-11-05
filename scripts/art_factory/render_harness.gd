@@ -147,6 +147,7 @@ func run() -> void:
 	if workshop != null and work_area != null:
 		var settlement_focus := (workshop.global_position + work_area.global_position) * 0.5 + Vector3.UP * 4.0
 		var settlement_subject_names := {
+			"verdant_nursery": "Workshop",
 			"scavenger_workshop": "Workshop",
 			"settlement_workshop": "Workshop",
 			"scavenger_depot": "Depot",

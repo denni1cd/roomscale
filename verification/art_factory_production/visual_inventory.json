@@ -2,7 +2,7 @@
   "schema_version": 1,
   "title": "RoomScale Art Factory Production Deployment — Full Visible-Art Inventory",
   "source_commit": "1e111d37325e7ad00030266efec201796b7fc07d",
-  "generated_at_utc": "2026-11-02T15:35:52+00:00",
+  "generated_at_utc": "2026-11-05T04:12:16+00:00",
   "inventory_scope": "Playable room definitions, reconstructed/candidate RoomDefinitions, canonical and review registries, visual/material catalogs, static scenes, and runtime code that creates visible geometry/material/light/presentation nodes.",
   "coverage": {
     "room_definition_files_scanned": 21,
@@ -9414,11 +9414,11 @@
       "gameplay_importance": "high — faction identity and living infrastructure",
       "visual_prominence": "medium-to-high in Verdant settlement views",
       "approx_screen_space_importance": "medium; repeated low buildings, vines, and vegetation",
-      "current_visual_quality": "runtime-built root deck and branching nursery canopy with leaf cards, pods, vines, moss, and labels; the nursery is more structured but foliage remains visibly flat and supporting architecture remains primitive",
+      "current_visual_quality": "production still uses the runtime-built root deck and nursery overlay with broad leaf forms. Review-only Art Factory verdant_nursery-v003 passes fit and improves trunk/pod visibility at 64 inches, but the ladder merges with the deck and the work bay remains unclear; no Verdant structure was promoted",
       "programmer_art_or_primitive": true,
       "photo_resemblance_required": false,
       "recommended_production_method": "Blender-authored modular organic structures and reusable instanced foliage/materials, fitted to existing sites",
-      "backlog_status": "Verdant architecture and material treatment are a major production batch",
+      "backlog_status": "Batch 25 backlogged the three-candidate nursery transfer; preserve verdant_nursery-v003 as best current review art. Ladder/deck separation and broader Verdant architecture remain in backlog",
       "asset_factory_id": "verdant_settlement",
       "art_factory_id_exists_before_deployment": false,
       "existing_visual_catalog_id_exists": false,
@@ -9451,7 +9451,7 @@
       "visual_director_status": null,
       "strict_evaluation_path": null,
       "strict_gate_result": null,
-      "production_art_backlog_status": "Verdant architecture and material treatment are a major production batch",
+      "production_art_backlog_status": "Batch 25 backlogged the three-candidate nursery transfer; preserve verdant_nursery-v003 as best current review art. Ladder/deck separation and broader Verdant architecture remain in backlog",
       "linked_runtime_geometry_sources": [
         "scripts/visuals/settlement_composition.gd"
       ]

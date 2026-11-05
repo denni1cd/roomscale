@@ -150,11 +150,11 @@ SYSTEM_RULES: dict[str, dict[str, Any]] = {
         "gameplay_importance": "high — faction identity and living infrastructure",
         "visual_prominence": "medium-to-high in Verdant settlement views",
         "approx_screen_space_importance": "medium; repeated low buildings, vines, and vegetation",
-        "current_visual_quality": "runtime-built root deck and branching nursery canopy with leaf cards, pods, vines, moss, and labels; the nursery is more structured but foliage remains visibly flat and supporting architecture remains primitive",
+        "current_visual_quality": "production still uses the runtime-built root deck and nursery overlay with broad leaf forms. Review-only Art Factory verdant_nursery-v003 passes fit and improves trunk/pod visibility at 64 inches, but the ladder merges with the deck and the work bay remains unclear; no Verdant structure was promoted",
         "programmer_art_or_primitive": True,
         "photo_resemblance_required": False,
         "recommended_production_method": "Blender-authored modular organic structures and reusable instanced foliage/materials, fitted to existing sites",
-        "backlog_status": "Verdant architecture and material treatment are a major production batch",
+        "backlog_status": "Batch 25 backlogged the three-candidate nursery transfer; preserve verdant_nursery-v003 as best current review art. Ladder/deck separation and broader Verdant architecture remain in backlog",
     },
     "scavenger_citizen": {
         "semantic_identity": "civilization.scavenger.citizen",

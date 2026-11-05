@@ -1,0 +1,56 @@
+{
+  "allow_stylization": true,
+  "asset_id": "verdant_nursery",
+  "camera_distances": [
+    2.0,
+    12.0,
+    64.0,
+    330.0
+  ],
+  "category": "settlement_structure",
+  "current_quality": "below_target",
+  "display_name": "Verdant Growth Nursery",
+  "faction_defining": true,
+  "gameplay_invariants": {
+    "growth_stage_and_nursery_work_behavior_remain_simulation_owned": true,
+    "room_definition_landmark_is_authoritative": true,
+    "visual_mesh_has_no_collision_navigation_selection_or_work_contracts": true
+  },
+  "intended_dimensions": [
+    26.0,
+    10.0,
+    18.0
+  ],
+  "iteration_budget": 3,
+  "materials": {
+    "blooms": "few restrained cream or plum living accents",
+    "leaves": "deep and muted natural greens on curved leaves with visible thickness and vein structure",
+    "living_wood": "layered, branching rootwood with tapered growth and visible joins",
+    "seed_pods": "warm natural ochre, small but visible at gameplay distance"
+  },
+  "priority_tier": 2,
+  "prohibited_changes": [
+    "do not change RoomDefinition landmarks, site dimensions, work-site identity, growth stages or assignments",
+    "do not add visual geometry to collision, navigation, selection, pathfinding or work calculations",
+    "do not add canonical-room-specific placement or simulation logic",
+    "do not use Clockwork gears, industrial roofs, metal cladding or simple green recoloring",
+    "do not use flat leaf cards, smooth sphere crowns or a closed roof that hides the work area"
+  ],
+  "quality_tier": "B",
+  "reference_images": [],
+  "required_features": [
+    "a recognizable asymmetrical trunk and branching nursery canopy",
+    "curved, tapered leaves with visible thickness rather than broad flat cards",
+    "an open, readable ground-level work area that preserves the actual module's work surface and entrance",
+    "large separated seed pods that remain visible at the 64-inch settlement camera",
+    "a Verdant silhouette distinct from the generic Scavenger canopy and Clockwork roof forms",
+    "fit the existing 26 x 10 x 18 inch presentation envelope"
+  ],
+  "schema_version": 1,
+  "screen_space_importance": 4,
+  "semantic_type": "living Verdant Growth Nursery structure",
+  "source_photo_required": false,
+  "source_room_definition": "rooms/room_a.json",
+  "stylization_rationale": "RoomScale is a miniature diorama. Stylization may clarify the cultivated-tree silhouette, but the nursery must remain physically assembled, organically varied, faction-distinct and readable at normal settlement distance.",
+  "visual_target": "A believable miniature living-architecture nursery centered on an asymmetrical branching trunk and a distinctive mature canopy. At the 64-inch Room A settlement camera, the nursery should read as a cultivated tree-workshop rather than a green roof or generic shelter. Keep an open, usable ground-level work area, visible root supports and several large seed pods. Build the foliage from curved, tapered, visibly thick individual leaves; avoid flat cards and sphere crowns. Use deep natural greens, warm living wood and restrained seed-ochre or bloom accents. Preserve the existing 26 x 10 x 18 inch presentation site and all simulation-owned growth and work behavior."
+}
