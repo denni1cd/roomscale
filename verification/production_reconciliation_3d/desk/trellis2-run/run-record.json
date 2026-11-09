@@ -1,0 +1,54 @@
+{
+  "started_at_utc": "2026-11-09T16:02:57.960281+00:00",
+  "space": "microsoft/TRELLIS.2",
+  "api_path": [
+    "/preprocess_image",
+    "/image_to_3d",
+    "/extract_glb"
+  ],
+  "parameters": {
+    "seed": 0,
+    "resolution": "1024",
+    "ss_guidance_strength": 7.5,
+    "ss_guidance_rescale": 0.7,
+    "ss_sampling_steps": 12,
+    "ss_rescale_t": 5.0,
+    "shape_slat_guidance_strength": 7.5,
+    "shape_slat_guidance_rescale": 0.5,
+    "shape_slat_sampling_steps": 12,
+    "shape_slat_rescale_t": 3.0,
+    "tex_slat_guidance_strength": 1.0,
+    "tex_slat_guidance_rescale": 0.0,
+    "tex_slat_sampling_steps": 12,
+    "tex_slat_rescale_t": 3.0,
+    "decimation_target": 100000,
+    "texture_size": 2048
+  },
+  "space_revision": "ebf60b20fc5a4607f90a1c11c0aab0ceeda5429d",
+  "space_runtime_stage": "RUNNING",
+  "space_runtime_hardware": "zero-a10g",
+  "preprocess_seconds": 7.485,
+  "preprocessed_image": {
+    "path": "C:\\Users\\Zero\\.codex\\worktrees\\roomscale-production-reconciliation\\verification\\production_reconciliation_3d\\desk\\trellis2-run\\01-trellis-preprocessed.png",
+    "size_bytes": 94739,
+    "sha256": "b72b29d57e543d2d1adbb844c52adfaea1fb7145670a192b4c23f5fd935fc491"
+  },
+  "image_to_3d_seconds": 24.281,
+  "preview_html_chars": 2037915,
+  "glb_export_seconds": 20.859,
+  "generated_glb": {
+    "path": "C:\\Users\\Zero\\.codex\\worktrees\\roomscale-production-reconciliation\\verification\\production_reconciliation_3d\\desk\\trellis2-run\\03-trellis2-desk.glb",
+    "size_bytes": 3861220,
+    "sha256": "0d62e85b807abe77a821c3fa730937893e48f97de848f0ab31ab4904cc4198f4"
+  },
+  "total_seconds": 52.625,
+  "finished_at_utc": "2026-11-09T16:03:52.475990+00:00",
+  "status": "complete",
+  "asset_id": "desk",
+  "input_image": {
+    "path": "C:\\Users\\Zero\\.codex\\worktrees\\roomscale-production-reconciliation\\art\\desk\\visual_director\\round-01\\incumbent-edit-r01.png",
+    "size_bytes": 1725541,
+    "sha256": "4a84c2e1f348f051cc634a90271d65c8e5d18bfbb3046b226691af40d79f4fef",
+    "purpose": "approved RoomScale Visual Director hero target"
+  }
+}
